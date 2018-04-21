@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B1F75C3A46D2EA4D06FC44BB3811AFB /* NGAParallaxMotion.h in Headers */ = {isa = PBXBuildFile; fileRef = 61143218B0A419AF2A8FB65EC29C7D47 /* NGAParallaxMotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		20AB91F12BCD09258EB2FF06279754A3 /* NGAParallaxMotion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8AFDC49AEE342E316A56E2B92CE9C /* NGAParallaxMotion-dummy.m */; };
+		45E38C13277A01C7B31726DDAF17BC4D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		55E8A2D932C76AA9EC8DFCAD708EEABA /* NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EFCED88D1E58CFF45D0A20E9B00311 /* NGAParallaxMotion.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7C501F8C0111BFF21BDBE77CA3BD15D0 /* Pods-Kurozora-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C68F1AE9A859C22964ADD6E222D80E7B /* Pods-Kurozora-dummy.m */; };
+		9AC2BCB010398EA2711435D60C046E80 /* NGAParallaxMotion-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7183A5CCF757D76308C3F2E1FC81B3D3 /* NGAParallaxMotion-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A17ADB8C54685C608CAF01DCC435E16C /* Pods-Kurozora-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D8D56B7C5C1D64C0E7CC9561F11BF72D /* Pods-Kurozora-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D00BCC3210BEBF0550B01211493E617E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
+		EFB8CED6CCE09EB38B0D2FCDD3E11133 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3F8646F71A7AD077B447B6C697D100E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 273CE6DC83C0CC88121187976BB9A5EE;
+			remoteInfo = NGAParallaxMotion;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0122B910251C4E679B1BF806E7E0830E /* NGAParallaxMotion.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NGAParallaxMotion.xcconfig; sourceTree = "<group>"; };
+		106A6B3F84AA61363A5BF7313293B388 /* Pods-Kurozora-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Kurozora-resources.sh"; sourceTree = "<group>"; };
+		1A27F9C5D3F15D2EDB1819A7F23EAF21 /* Pods-Kurozora-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Kurozora-acknowledgements.plist"; sourceTree = "<group>"; };
+		1DA2955CE30E8BC2FC45B9477B96A30A /* NGAParallaxMotion-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NGAParallaxMotion-prefix.pch"; sourceTree = "<group>"; };
+		38F95F803049B27858377D875A698C5C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FD8AFDC49AEE342E316A56E2B92CE9C /* NGAParallaxMotion-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NGAParallaxMotion-dummy.m"; sourceTree = "<group>"; };
+		61143218B0A419AF2A8FB65EC29C7D47 /* NGAParallaxMotion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NGAParallaxMotion.h; path = Classes/NGAParallaxMotion.h; sourceTree = "<group>"; };
+		70A772900E8B690786C7AD50102D8AC2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7183A5CCF757D76308C3F2E1FC81B3D3 /* NGAParallaxMotion-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NGAParallaxMotion-umbrella.h"; sourceTree = "<group>"; };
+		81415039FB6889F85EEAD685F037867D /* Pods-Kurozora.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Kurozora.modulemap"; sourceTree = "<group>"; };
+		81FA12C2A2AFF4209FCB517A8512D347 /* NGAParallaxMotion.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NGAParallaxMotion.modulemap; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A9372A14A64A773D5B7C9FF508129822 /* NGAParallaxMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NGAParallaxMotion.framework; path = NGAParallaxMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24FCA0A46EB9E393FEA402A31DCEB93 /* Pods-Kurozora-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Kurozora-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		C151B7499D09D20329D4AFED3BF65821 /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Kurozora.framework; path = "Pods-Kurozora.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C68F1AE9A859C22964ADD6E222D80E7B /* Pods-Kurozora-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Kurozora-dummy.m"; sourceTree = "<group>"; };
+		CFA387130442CCC962EC004928D5CB4A /* Pods-Kurozora-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Kurozora-frameworks.sh"; sourceTree = "<group>"; };
+		D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D8D56B7C5C1D64C0E7CC9561F11BF72D /* Pods-Kurozora-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Kurozora-umbrella.h"; sourceTree = "<group>"; };
+		E1EFCED88D1E58CFF45D0A20E9B00311 /* NGAParallaxMotion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NGAParallaxMotion.m; path = Classes/NGAParallaxMotion.m; sourceTree = "<group>"; };
+		E5F76821FFE8D8EE1BE8CB3D71C19C15 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
+		F6FAF8AB32FC4733A8906CE48206443A /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		11023DBFF3BD597B1DFEA47089595F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45E38C13277A01C7B31726DDAF17BC4D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86CA450C2E03523627B8293B8F53FDC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00BCC3210BEBF0550B01211493E617E /* Foundation.framework in Frameworks */,
+				EFB8CED6CCE09EB38B0D2FCDD3E11133 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B4D381DFD2C6034D70AFDCB70511C0F /* Pods-Kurozora */ = {
+			isa = PBXGroup;
+			children = (
+				38F95F803049B27858377D875A698C5C /* Info.plist */,
+				81415039FB6889F85EEAD685F037867D /* Pods-Kurozora.modulemap */,
+				B24FCA0A46EB9E393FEA402A31DCEB93 /* Pods-Kurozora-acknowledgements.markdown */,
+				1A27F9C5D3F15D2EDB1819A7F23EAF21 /* Pods-Kurozora-acknowledgements.plist */,
+				C68F1AE9A859C22964ADD6E222D80E7B /* Pods-Kurozora-dummy.m */,
+				CFA387130442CCC962EC004928D5CB4A /* Pods-Kurozora-frameworks.sh */,
+				106A6B3F84AA61363A5BF7313293B388 /* Pods-Kurozora-resources.sh */,
+				D8D56B7C5C1D64C0E7CC9561F11BF72D /* Pods-Kurozora-umbrella.h */,
+				F6FAF8AB32FC4733A8906CE48206443A /* Pods-Kurozora.debug.xcconfig */,
+				E5F76821FFE8D8EE1BE8CB3D71C19C15 /* Pods-Kurozora.release.xcconfig */,
+			);
+			name = "Pods-Kurozora";
+			path = "Target Support Files/Pods-Kurozora";
+			sourceTree = "<group>";
+		};
+		0DE2FA3B0C1E54323A0A7FFC33277DA2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CC0D3A3E4910FCB5055EBE41A1FF573B /* NGAParallaxMotion */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				438B396F6B4147076630CAEFE34282C1 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		438B396F6B4147076630CAEFE34282C1 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */,
+				B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		6F296BA3894476E635B533018B27F265 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9372A14A64A773D5B7C9FF508129822 /* NGAParallaxMotion.framework */,
+				C151B7499D09D20329D4AFED3BF65821 /* Pods_Kurozora.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74196FE843972D0CBBC1146D82155483 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				70A772900E8B690786C7AD50102D8AC2 /* Info.plist */,
+				81FA12C2A2AFF4209FCB517A8512D347 /* NGAParallaxMotion.modulemap */,
+				0122B910251C4E679B1BF806E7E0830E /* NGAParallaxMotion.xcconfig */,
+				5FD8AFDC49AEE342E316A56E2B92CE9C /* NGAParallaxMotion-dummy.m */,
+				1DA2955CE30E8BC2FC45B9477B96A30A /* NGAParallaxMotion-prefix.pch */,
+				7183A5CCF757D76308C3F2E1FC81B3D3 /* NGAParallaxMotion-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/NGAParallaxMotion";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
+				0DE2FA3B0C1E54323A0A7FFC33277DA2 /* Pods */,
+				6F296BA3894476E635B533018B27F265 /* Products */,
+				9D4EDD2E25A1DC6827DDD138D3AFAD60 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		9D4EDD2E25A1DC6827DDD138D3AFAD60 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0B4D381DFD2C6034D70AFDCB70511C0F /* Pods-Kurozora */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		CC0D3A3E4910FCB5055EBE41A1FF573B /* NGAParallaxMotion */ = {
+			isa = PBXGroup;
+			children = (
+				61143218B0A419AF2A8FB65EC29C7D47 /* NGAParallaxMotion.h */,
+				E1EFCED88D1E58CFF45D0A20E9B00311 /* NGAParallaxMotion.m */,
+				74196FE843972D0CBBC1146D82155483 /* Support Files */,
+			);
+			name = NGAParallaxMotion;
+			path = NGAParallaxMotion;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C069AFA97A96A7AD39C08A180039FB6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A17ADB8C54685C608CAF01DCC435E16C /* Pods-Kurozora-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57C02716FC4485B411CA88E9D9FFA4B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AC2BCB010398EA2711435D60C046E80 /* NGAParallaxMotion-umbrella.h in Headers */,
+				0B1F75C3A46D2EA4D06FC44BB3811AFB /* NGAParallaxMotion.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		273CE6DC83C0CC88121187976BB9A5EE /* NGAParallaxMotion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B64A3E49FBAB1C0834303F62AD1963FD /* Build configuration list for PBXNativeTarget "NGAParallaxMotion" */;
+			buildPhases = (
+				2677E85381C92ED7EEBA8C7CDC298CDC /* Sources */,
+				F86CA450C2E03523627B8293B8F53FDC /* Frameworks */,
+				D57C02716FC4485B411CA88E9D9FFA4B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NGAParallaxMotion;
+			productName = NGAParallaxMotion;
+			productReference = A9372A14A64A773D5B7C9FF508129822 /* NGAParallaxMotion.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A3603A50868935F96093EF5F8F5D4B76 /* Pods-Kurozora */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DDA91E3F4329B3965DD35BFCF9AE88F /* Build configuration list for PBXNativeTarget "Pods-Kurozora" */;
+			buildPhases = (
+				FBCD8EFD9CF678E2404EECE7A2C697FE /* Sources */,
+				11023DBFF3BD597B1DFEA47089595F9E /* Frameworks */,
+				C069AFA97A96A7AD39C08A180039FB6B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3326DC3FC37ADE2D1EAE389B89973CA /* PBXTargetDependency */,
+			);
+			name = "Pods-Kurozora";
+			productName = "Pods-Kurozora";
+			productReference = C151B7499D09D20329D4AFED3BF65821 /* Pods_Kurozora.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 6F296BA3894476E635B533018B27F265 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				273CE6DC83C0CC88121187976BB9A5EE /* NGAParallaxMotion */,
+				A3603A50868935F96093EF5F8F5D4B76 /* Pods-Kurozora */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2677E85381C92ED7EEBA8C7CDC298CDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20AB91F12BCD09258EB2FF06279754A3 /* NGAParallaxMotion-dummy.m in Sources */,
+				55E8A2D932C76AA9EC8DFCAD708EEABA /* NGAParallaxMotion.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBCD8EFD9CF678E2404EECE7A2C697FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C501F8C0111BFF21BDBE77CA3BD15D0 /* Pods-Kurozora-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3326DC3FC37ADE2D1EAE389B89973CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = NGAParallaxMotion;
+			target = 273CE6DC83C0CC88121187976BB9A5EE /* NGAParallaxMotion */;
+			targetProxy = C3F8646F71A7AD077B447B6C697D100E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		124D1ED2799BD320EE33866344291FBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0122B910251C4E679B1BF806E7E0830E /* NGAParallaxMotion.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NGAParallaxMotion/NGAParallaxMotion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NGAParallaxMotion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NGAParallaxMotion/NGAParallaxMotion.modulemap";
+				PRODUCT_MODULE_NAME = NGAParallaxMotion;
+				PRODUCT_NAME = NGAParallaxMotion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		553022A828EE1991F07D2D73F565AEF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		58CE816B060A41D32CEC095441D0E3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		78034F952707DEB9E8622DC7FF53A328 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0122B910251C4E679B1BF806E7E0830E /* NGAParallaxMotion.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NGAParallaxMotion/NGAParallaxMotion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NGAParallaxMotion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NGAParallaxMotion/NGAParallaxMotion.modulemap";
+				PRODUCT_MODULE_NAME = NGAParallaxMotion;
+				PRODUCT_NAME = NGAParallaxMotion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8CBFEE2EA55243039FC93B6026E16A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5F76821FFE8D8EE1BE8CB3D71C19C15 /* Pods-Kurozora.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Kurozora/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Kurozora/Pods-Kurozora.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E095D4A41A9F5AB5154F68D327F83753 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6FAF8AB32FC4733A8906CE48206443A /* Pods-Kurozora.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Kurozora/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Kurozora/Pods-Kurozora.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DDA91E3F4329B3965DD35BFCF9AE88F /* Build configuration list for PBXNativeTarget "Pods-Kurozora" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E095D4A41A9F5AB5154F68D327F83753 /* Debug */,
+				8CBFEE2EA55243039FC93B6026E16A61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				553022A828EE1991F07D2D73F565AEF8 /* Debug */,
+				58CE816B060A41D32CEC095441D0E3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B64A3E49FBAB1C0834303F62AD1963FD /* Build configuration list for PBXNativeTarget "NGAParallaxMotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				124D1ED2799BD320EE33866344291FBB /* Debug */,
+				78034F952707DEB9E8622DC7FF53A328 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

@@ -1,0 +1,16 @@
+PODS:
+  - NGAParallaxMotion (1.1.0)
+
+DEPENDENCIES:
+  - NGAParallaxMotion
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - NGAParallaxMotion
+
+SPEC CHECKSUMS:
+  NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
+
+PODFILE CHECKSUM: b999babea3d65c654b2462ada11121f5c1e5e712
+
+COCOAPODS: 1.5.0
