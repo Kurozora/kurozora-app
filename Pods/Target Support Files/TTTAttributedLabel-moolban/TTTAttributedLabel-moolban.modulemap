@@ -1,0 +1,6 @@
+framework module TTTAttributedLabel_moolban {
+  umbrella header "TTTAttributedLabel-moolban-umbrella.h"
+
+  export *
+  module * { export * }
+}

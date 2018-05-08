@@ -1,0 +1,10 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Bolts-Swift" "${PODS_CONFIGURATION_BUILD_DIR}/Cache" "${PODS_CONFIGURATION_BUILD_DIR}/Hue" "${PODS_CONFIGURATION_BUILD_DIR}/Imaginary" "${PODS_CONFIGURATION_BUILD_DIR}/Keys" "${PODS_CONFIGURATION_BUILD_DIR}/Lightbox" "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion" "${PODS_CONFIGURATION_BUILD_DIR}/WhatsNew" "${PODS_CONFIGURATION_BUILD_DIR}/XLPagerTabStrip"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks' '@executable_path/../../Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Bolts-Swift/BoltsSwift.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Cache/Cache.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Hue/Hue.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Imaginary/Imaginary.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Keys/Keys.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Lightbox/Lightbox.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/WhatsNew/WhatsNew.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "BoltsSwift" -framework "Cache" -framework "Hue" -framework "Imaginary" -framework "Keys" -framework "Lightbox" -framework "NGAParallaxMotion" -framework "WhatsNew" -framework "XLPagerTabStrip"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods

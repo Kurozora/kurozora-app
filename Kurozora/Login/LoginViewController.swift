@@ -8,14 +8,17 @@
 
 import Foundation
 import KCommonKit
+import Alamofire
 
-protocol LoginViewControllerDelegate: class {
-    
-    func LoginViewControllerLoggedIn()
-
-}
+//protocol LoginViewControllerDelegate: class {
+//
+//    func LoginViewControllerLoggedIn()
+//
+//}
 
 class LoginViewController: UIViewController {
+
+    let defaultValues = UserDefaults.standard
     
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
@@ -23,8 +26,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
-    var isInWindowRoot = true
-    weak var delegate: LoginViewControllerDelegate?
+//    var isInWindowRoot = true
+//    weak var delegate: LoginViewControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
@@ -46,18 +49,68 @@ class LoginViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @objc func textFieldDidChange(textField: UITextField) {
+        if usernameTextField.text == "" || passwordTextField.text == "" {
+            loginButton.isUserInteractionEnabled = false
+        } else {
+            loginButton.isUserInteractionEnabled = true
+        }
+    }
+    
     @IBAction func loginPressed(sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ViewControllerID") as UIViewController
-        present(vc, animated: true, completion: nil)
+//        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
+//        present(vc, animated: true, completion: nil)
         
-//        usernameTextField.trimSpaces()
-//
-//        guard let username = usernameTextField.text, let password = passwordTextField.text else {
-//            presentBasicAlertWithTitle(title: "Username or password field is empty")
-//            return
-//        }
+        usernameTextField.trimSpaces()
+
+        let username = usernameTextField.text
+        let password = passwordTextField.text
         
+        usernameTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+
+        var headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        
+        if let authorizationHeader = Request.authorizationHeader(user: username!, password: password!) {
+            headers[authorizationHeader.key] = authorizationHeader.value
+        }
+        
+        let endpoint = GlobalVariables().BaseURLString + "login"
+
+        Alamofire.request(endpoint, method: .post, headers: headers)
+        .responseJSON { response in
+            switch response.result {
+                case .success/*(let data)*/:
+                    if let result = response.result.value{
+                        let jsonData = result as! NSDictionary
+                        let responseSuccess = jsonData.value(forKey: "success") as! Bool
+//                        let responseMessage = jsonData.value(forKey: "message") as! String
+                        
+                        if responseSuccess {
+//                            self.presentBasicAlertWithTitle(title: "Authenticated")
+                            
+                            
+                        }else{
+                            
+//                            self.presentBasicAlertWithTitle(title: responseMessage)
+                        }
+                    }
+    //                NSLog("------------------DATA START-------------------")
+    //                NSLog("Response String: \(String(describing: data))")
+    //                self.presentBasicAlertWithTitle(title: "Authenticated")
+    //                NSLog("------------------DATA END-------------------")
+                case .failure/*(let error)*/:
+                    let storyboard:UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "Home") as! HomeViewController
+                    self.show(vc, sender: self)
+//                    print(error)
+//                    self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            }
+        }
+
 //        User.logInWithUsernameInBackground(username.lowercaseString, password:password) {
 //            (user: PFUser?, error: NSError?) -> Void in
 //            if let _ = error {
@@ -72,7 +125,7 @@ class LoginViewController: UIViewController {
 //        }
     }
 
-    func loginWithUsername(username: String, password: String) {
+//    func loginWithUsername(username: String, password: String) {
 //        User.logInWithUsernameInBackground(usernameTextField.text!, password:passwordTextField.text!) {
 //            (user: PFUser?, error: NSError?) -> Void in
 //
@@ -90,7 +143,7 @@ class LoginViewController: UIViewController {
 //                })
 //            }
 //        }
-    }
+//    }
 
 }
 
@@ -102,15 +155,15 @@ extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate
     
 }
 
-extension LoginViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        if textField == passwordTextField {
-            loginPressed(sender: textField)
-        }
-        return true
-    }
-
-}
+//extension LoginViewController: UITextFieldDelegate {
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        view.endEditing(true)
+//        if textField == passwordTextField {
+//            loginPressed(sender: textField)
+//        }
+//        return true
+//    }
+//
+//}
 

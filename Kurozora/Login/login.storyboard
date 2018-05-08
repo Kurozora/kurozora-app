@@ -8,11 +8,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AllerDisplay.ttf">
+            <string>AllerDisplay</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Welcome View Controller-->
         <scene sceneID="b5C-cf-MYh">
             <objects>
-                <viewController storyboardIdentifier="Welcome" id="z99-fr-eSh" customClass="WelcomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Welcome" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z99-fr-eSh" customClass="WelcomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PJX-we-HM3"/>
                         <viewControllerLayoutGuide type="bottom" id="Lif-yq-sTy"/>
@@ -100,14 +105,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="right" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B">
-                                <rect key="frame" x="108.66666666666667" y="123.99999999999999" width="158.33333333333331" height="40.333333333333329"/>
-                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                <rect key="frame" x="109.33333333333333" y="123.99999999999999" width="157.33333333333337" height="42.333333333333329"/>
+                                <fontDescription key="fontDescription" name="AllerDisplay" family="Aller Display" pointSize="36"/>
                                 <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA">
-                                <rect key="frame" x="16" y="174.33333333333334" width="343" height="40.666666666666657"/>
+                                <rect key="frame" x="16" y="176.33333333333334" width="343" height="40.666666666666657"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The largest mobile app for ">
                                         <attributes>
@@ -164,17 +169,10 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
-                                <rect key="frame" x="108.66666666666667" y="100" width="158.33333333333331" height="24"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="黒空">
-                                        <attributes>
-                                            <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="17" name="PingFangSC-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黒空" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
+                                <rect key="frame" x="109.33333333333333" y="103.66666666666667" width="157.33333333333337" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
@@ -246,6 +244,7 @@
                             <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-Jq-aLt">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textAttributes key="titleTextAttributes">
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 </textAttributes>
@@ -300,7 +299,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="signInPressedWithSender:" destination="z1G-pN-YZx" eventType="touchUpInside" id="lvm-Jz-8r6"/>
+                                    <action selector="loginPressedWithSender:" destination="z1G-pN-YZx" eventType="touchUpInside" id="kBn-dH-ax7"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -411,6 +410,9 @@
                                         <integer key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="registerPressedWithSender:" destination="VSj-jZ-zJW" eventType="touchUpInside" id="r91-82-n6H"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture">
                                 <rect key="frame" x="16" y="109" width="60" height="60"/>
@@ -462,7 +464,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="mxT-kb-wjP" id="6R0-AW-y1x"/>
                         <outlet property="navigationBar" destination="mOd-x1-Yh6" id="07V-FU-Dc7"/>
+                        <outlet property="passwordTextField" destination="WhX-QR-jOO" id="F3h-EP-emF"/>
+                        <outlet property="registerButton" destination="xwY-OW-6rP" id="6DW-jj-TKD"/>
+                        <outlet property="usernameTextField" destination="F4k-8e-thL" id="7Ce-3x-iRq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTP-XS-ViW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -530,6 +536,9 @@
                                         <integer key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="resetPressedWithSender:" destination="H2e-ia-XEL" eventType="touchUpInside" id="F8C-uD-CMR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
@@ -549,6 +558,8 @@
                     </view>
                     <connections>
                         <outlet property="navigationBar" destination="0bk-7O-769" id="gvg-qk-7Ja"/>
+                        <outlet property="resetButton" destination="t4u-TJ-OFg" id="Rcy-8d-z6p"/>
+                        <outlet property="usernameTextField" destination="BEp-na-6qS" id="ueQ-wQ-pfK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edG-lm-8X7" userLabel="First Responder" sceneMemberID="firstResponder"/>

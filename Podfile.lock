@@ -1,16 +1,80 @@
 PODS:
+  - Alamofire (4.7.2)
+  - Bolts-Swift (1.3.0)
+  - Cache (4.2.0)
+  - FLAnimatedImage (1.0.12)
+  - Hue (3.0.1)
+  - Imaginary (3.0.3):
+    - Cache (~> 4.0)
+  - Keys (1.0.1)
+  - Lightbox (2.1.2):
+    - Hue (~> 3.0)
+    - Imaginary (~> 3.0)
   - NGAParallaxMotion (1.1.0)
+  - SDWebImage (4.3.3):
+    - SDWebImage/Core (= 4.3.3)
+  - SDWebImage/Core (4.3.3)
+  - SDWebImage/GIF (4.3.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - TTTAttributedLabel-moolban (2.0.0.2)
+  - WhatsNew (0.4.3)
+  - XLPagerTabStrip (8.0.1)
 
 DEPENDENCIES:
-  - NGAParallaxMotion
+  - Alamofire (= 4.7.2)
+  - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
+  - FLAnimatedImage (= 1.0.12)
+  - Keys (from `Pods/CocoaPodsKeys`)
+  - Lightbox (= 2.1.2)
+  - NGAParallaxMotion (= 1.1.0)
+  - SDWebImage (= 4.3.3)
+  - SDWebImage/GIF (= 4.3.3)
+  - TTTAttributedLabel-moolban (= 2.0.0.2)
+  - WhatsNew (= 0.4.3)
+  - XLPagerTabStrip
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Cache
+    - FLAnimatedImage
+    - Hue
+    - Imaginary
+    - Lightbox
     - NGAParallaxMotion
+    - SDWebImage
+    - TTTAttributedLabel-moolban
+    - WhatsNew
+    - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  Bolts-Swift:
+    :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
+    :git: https://github.com/BoltsFramework/Bolts-Swift
+  Keys:
+    :path: Pods/CocoaPodsKeys
+
+CHECKOUT OPTIONS:
+  Bolts-Swift:
+    :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
+    :git: https://github.com/BoltsFramework/Bolts-Swift
 
 SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
+  Cache: f28f8dd64b632155aabf9b3906b036a659048251
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
+  Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
+  Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
+  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
+  WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
+  XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: b999babea3d65c654b2462ada11121f5c1e5e712
+PODFILE CHECKSUM: 67c16d87d06caa7bf8aa3f981848e98e1a97733f
 
 COCOAPODS: 1.5.0

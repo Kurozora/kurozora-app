@@ -11,7 +11,7 @@ import Foundation
 
 class WelcomeViewController: UIViewController {
     
-//    var isInWindowRoot = true
+    var isInWindowRoot = true
 
     override func viewWillAppear(_ animated: Bool) {
         // Sets the status bar to hidden when the view has finished appearing

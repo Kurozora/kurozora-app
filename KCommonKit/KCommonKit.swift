@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 public class KCommonKit {
-    
     public class func bundle() -> Bundle {
         return Bundle(for: self)
     }
@@ -19,17 +18,23 @@ public class KCommonKit {
         return UIStoryboard(name: "Action", bundle: bundle())
     }
     
-//    public class func actionListViewController() -> ActionListViewController {
-//        let controller = defaultStoryboard().instantiateViewControllerWithIdentifier("ActionList") as! ActionListViewController
-//        return controller
-//    }
-//
-//    public class func dropDownListViewController() -> DropDownListViewController {
-//        let controller = defaultStoryboard().instantiateViewControllerWithIdentifier("DropDownList") as! DropDownListViewController
-//        return controller
-//    }
+    public class func actionListViewController() -> ActionListViewController {
+        let controller = defaultStoryboard().instantiateViewController(withIdentifier: "ActionList") as! ActionListViewController
+        return controller
+    }
+
+    public class func dropDownListViewController() -> DropDownListViewController {
+        let controller = defaultStoryboard().instantiateViewController(withIdentifier: "DropDownList") as! DropDownListViewController
+        return controller
+    }
+}
+
+public struct GlobalVariables{
+    public init() {
+        // This initializer intentionally left empty
+    }
     
-    
+    public let BaseURLString = "https://k.kusa.com/api/v1/"
 }
 
 public enum FontAwesome: String {

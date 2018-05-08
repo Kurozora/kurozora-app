@@ -1,9 +1,12 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion"
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire" "${PODS_CONFIGURATION_BUILD_DIR}/Bolts-Swift" "${PODS_CONFIGURATION_BUILD_DIR}/Cache" "${PODS_CONFIGURATION_BUILD_DIR}/FLAnimatedImage" "${PODS_CONFIGURATION_BUILD_DIR}/Hue" "${PODS_CONFIGURATION_BUILD_DIR}/Imaginary" "${PODS_CONFIGURATION_BUILD_DIR}/Keys" "${PODS_CONFIGURATION_BUILD_DIR}/Lightbox" "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage" "${PODS_CONFIGURATION_BUILD_DIR}/TTTAttributedLabel-moolban" "${PODS_CONFIGURATION_BUILD_DIR}/WhatsNew" "${PODS_CONFIGURATION_BUILD_DIR}/XLPagerTabStrip"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "NGAParallaxMotion"
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Bolts-Swift/BoltsSwift.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Cache/Cache.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/FLAnimatedImage/FLAnimatedImage.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Hue/Hue.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Imaginary/Imaginary.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Keys/Keys.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Lightbox/Lightbox.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/TTTAttributedLabel-moolban/TTTAttributedLabel_moolban.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/WhatsNew/WhatsNew.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "Alamofire" -framework "BoltsSwift" -framework "Cache" -framework "FLAnimatedImage" -framework "Hue" -framework "Imaginary" -framework "Keys" -framework "Lightbox" -framework "NGAParallaxMotion" -framework "SDWebImage" -framework "TTTAttributedLabel_moolban" -framework "WhatsNew" -framework "XLPagerTabStrip"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
+USER_HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/FLAnimatedImage/FLAnimatedImage
