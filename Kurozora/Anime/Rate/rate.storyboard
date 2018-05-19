@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kdu-78-UAQ">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Rate View Controller-->
+        <scene sceneID="dCP-TT-nvE">
+            <objects>
+                <viewController id="kdu-78-UAQ" userLabel="Rate View Controller" customClass="RateViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G03-oo-Lag"/>
+                        <viewControllerLayoutGuide type="bottom" id="PBr-9W-I24"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s92-Gx-Wey">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fth-SV-9bk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bAI-ON-f6a">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1l-Hs-2Bl" userLabel="Rate View">
+                                            <rect key="frame" x="0.0" y="277.5" width="375" height="112"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Bd-Xj-5Lw" userLabel="StarRating" customClass="HCSStarRatingView">
+                                                    <rect key="frame" x="112.5" y="96" width="150" height="44"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="Ekj-ZR-d1U"/>
+                                                        <constraint firstAttribute="height" constant="44" id="r4i-A0-m8B"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate ReZero!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Bb-MD-AzB" userLabel="Message Label">
+                                                    <rect key="frame" x="132" y="68" width="113" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" red="0.18823529410000001" green="0.1960784314" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="3Bb-MD-AzB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="y1l-Hs-2Bl" secondAttribute="leading" id="32Z-PN-Tcc"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Bb-MD-AzB" secondAttribute="trailing" id="SgU-qD-Rug"/>
+                                                <constraint firstItem="3Bb-MD-AzB" firstAttribute="centerX" secondItem="y1l-Hs-2Bl" secondAttribute="centerX" constant="0.75" id="Yw2-PZ-6iB"/>
+                                                <constraint firstItem="3Bb-MD-AzB" firstAttribute="centerY" secondItem="y1l-Hs-2Bl" secondAttribute="centerY" constant="24" id="lbn-YL-YnP"/>
+                                                <constraint firstAttribute="height" constant="112" id="rFe-VB-CZm"/>
+                                                <constraint firstItem="6Bd-Xj-5Lw" firstAttribute="centerX" secondItem="y1l-Hs-2Bl" secondAttribute="centerX" id="utz-cg-NNo"/>
+                                                <constraint firstItem="6Bd-Xj-5Lw" firstAttribute="top" secondItem="3Bb-MD-AzB" secondAttribute="bottom" constant="4" id="vDF-yJ-sgi"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="y1l-Hs-2Bl" firstAttribute="leading" secondItem="bAI-ON-f6a" secondAttribute="leading" id="Tuv-eO-Z1E"/>
+                                        <constraint firstAttribute="trailing" secondItem="y1l-Hs-2Bl" secondAttribute="trailing" id="j4g-dU-qiS"/>
+                                        <constraint firstItem="y1l-Hs-2Bl" firstAttribute="centerY" secondItem="bAI-ON-f6a" secondAttribute="centerY" id="lFu-di-skK"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="PBr-9W-I24" firstAttribute="top" secondItem="fth-SV-9bk" secondAttribute="bottom" id="cGJ-On-7jt"/>
+                            <constraint firstItem="fth-SV-9bk" firstAttribute="leading" secondItem="s92-Gx-Wey" secondAttribute="leadingMargin" constant="-16" id="dkK-YY-0b2"/>
+                            <constraint firstItem="fth-SV-9bk" firstAttribute="top" secondItem="G03-oo-Lag" secondAttribute="bottom" constant="-20" id="hed-b4-vua"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fth-SV-9bk" secondAttribute="trailing" constant="-16" id="vBA-jU-tos"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ygj-ed-ll4" appends="YES" id="vw6-6k-p9s"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2xI-ln-p8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ygj-ed-ll4"/>
+            </objects>
+            <point key="canvasLocation" x="295" y="-129"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+</document>

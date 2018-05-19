@@ -10,11 +10,11 @@ import Foundation
 import KCommonKit
 import Alamofire
 
-//protocol LoginViewControllerDelegate: class {
-//
-//    func LoginViewControllerLoggedIn()
-//
-//}
+protocol LoginViewControllerDelegate: class {
+
+    func LoginViewControllerLoggedIn()
+
+}
 
 class LoginViewController: UIViewController {
 
@@ -26,8 +26,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
-//    var isInWindowRoot = true
-//    weak var delegate: LoginViewControllerDelegate?
+    var isInWindowRoot = true
+    weak var delegate: LoginViewControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
@@ -35,7 +35,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        loginButton.isEnabled = false
+        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,35 +52,24 @@ class LoginViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func textFieldDidChange(textField: UITextField) {
-        if usernameTextField.text == "" || passwordTextField.text == "" {
-            loginButton.isUserInteractionEnabled = false
-        } else {
-            loginButton.isUserInteractionEnabled = true
-        }
-    }
-    
     @IBAction func loginPressed(sender: AnyObject) {
 //        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
 //        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
 //        present(vc, animated: true, completion: nil)
-        
+
         usernameTextField.trimSpaces()
 
         let username = usernameTextField.text
         let password = passwordTextField.text
-        
-        usernameTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
 
         var headers: HTTPHeaders = [
             "Content-Type": "application/json"
         ]
-        
+
         if let authorizationHeader = Request.authorizationHeader(user: username!, password: password!) {
             headers[authorizationHeader.key] = authorizationHeader.value
         }
-        
+
         let endpoint = GlobalVariables().BaseURLString + "login"
 
         Alamofire.request(endpoint, method: .post, headers: headers)
@@ -91,10 +83,7 @@ class LoginViewController: UIViewController {
                         
                         if responseSuccess {
 //                            self.presentBasicAlertWithTitle(title: "Authenticated")
-                            
-                            
                         }else{
-                            
 //                            self.presentBasicAlertWithTitle(title: responseMessage)
                         }
                     }
@@ -148,22 +137,38 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-    
+
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
-    
+
 }
 
-//extension LoginViewController: UITextFieldDelegate {
-//
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        view.endEditing(true)
-//        if textField == passwordTextField {
-//            loginPressed(sender: textField)
-//        }
-//        return true
-//    }
-//
-//}
+extension LoginViewController: UITextFieldDelegate {
+    
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        guard
+            let username = usernameTextField.text, !username.isEmpty,
+            let password = passwordTextField.text, !password.isEmpty
+            else {
+                loginButton.isEnabled = false
+                return
+        }
+        loginButton.isEnabled = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        if textField == passwordTextField {
+            loginPressed(sender: textField)
+        }
+        return true
+    }
 
+}

@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Fabric</key>
+    <dict>
+        <key>APIKey</key>
+        <string>9e543b5cc9cebe2a1afe003834b3b886a10891bc</string>
+        <key>Kits</key>
+        <array>
+            <dict>
+                <key>KitInfo</key>
+                <dict/>
+                <key>KitName</key>
+                <string>Crashlytics</string>
+            </dict>
+        </array>
+    </dict>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -32,11 +48,6 @@
 	<array>
 		<string>FontAwesome.ttf</string>
 		<string>Aller_Bd.ttf</string>
-		<string>Aller_BdIt.ttf</string>
-		<string>Aller_It.ttf</string>
-		<string>Aller_Lt.ttf</string>
-		<string>Aller_LtIt.ttf</string>
-		<string>Aller_Rg.ttf</string>
 		<string>AllerDisplay.ttf</string>
 	</array>
 	<key>UIRequiresFullScreen</key>

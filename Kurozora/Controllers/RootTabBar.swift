@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-//import ANParseKit
+import KDatabaseKit
 import KCommonKit
 
 public class RootTabBar: UITabBarController {
@@ -18,7 +18,7 @@ public class RootTabBar: UITabBarController {
 //    override public func viewDidLoad() {
 //        super.viewDidLoad()
 //        // Load library
-//        LibraryController.sharedInstance.fetchAnimeList(false)
+//        LibraryController.sharedInstance.fetchAnimeList(isRefreshing: false)
 //        delegate = self as UITabBarControllerDelegate
 //    }
 //
@@ -67,9 +67,9 @@ public class RootTabBar: UITabBarController {
 //            notificationVC.fetchNotifications()
 //        }
 //    }
-}
+//}
 
-// MARK: - NotificationsViewControllerDelegate
+// // MARK: - NotificationsViewControllerDelegate
 //extension RootTabBar: NotificationsViewControllerDelegate {
 //    func notificationsViewControllerHasUnreadNotifications(count: Int) {
 //        newNotifications(count: count)
@@ -103,7 +103,7 @@ public class RootTabBar: UITabBarController {
 //                UserDefaults.standard.set(true, forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
 //                UserDefaults.standard.synchronize()
 //
-//                let loginController = ANParseKit.loginViewController()
+//                let loginController = KDatabaseKit.loginViewController()
 //                loginController.delegate = self
 //                presentViewController(loginController, animated: true, completion: nil)
 //                return false
@@ -114,9 +114,12 @@ public class RootTabBar: UITabBarController {
 //        return true
 //    }
 //}
-
+//
 //extension RootTabBar: LoginViewControllerDelegate {
+//    func LoginViewControllerLoggedIn() {
+//    }
+//
 //    public func loginViewControllerPressedDoesntHaveAnAccount() {
 //        selectedIndex = 1
 //    }
-//}
+}

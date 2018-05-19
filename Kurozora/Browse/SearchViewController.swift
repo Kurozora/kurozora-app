@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-//import ANParseKit
+import KDatabaseKit
 import KCommonKit
 //import Bolts
 
@@ -18,7 +18,7 @@ enum SearchScope: Int {
 }
 
 class SearchViewController: UIViewController {
-    
+//
 //    @IBOutlet weak var searchBar: UISearchBar!
 //    @IBOutlet weak var collectionView: UICollectionView!
 //
@@ -29,6 +29,7 @@ class SearchViewController: UIViewController {
 //            collectionView.reloadData()
 //        }
 //    }
+//
 //    var emptyDataSource: [[AnyObject]] = [[],[],[],[]]
 //
 //    var currentOperation = Operation()
@@ -54,11 +55,11 @@ class SearchViewController: UIViewController {
 //        searchBar.placeholder = "Enter your search"
 //        searchBar.becomeFirstResponder()
 //
-//        NotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(updateETACells), name: NSNotification.Name(rawValue: LibraryUpdatedNotification), object: nil)
 //
 //        var allBrowseTypes = BrowseType.allItems()
 //        allBrowseTypes.append(BrowseType.Filtering.rawValue)
-//        emptyDataSource[0] = allBrowseTypes
+//        emptyDataSource[0] = allBrowseTypes as [AnyObject]
 //    }
 //
 //    override func viewWillDisappear(_ animated: Bool) {
@@ -75,9 +76,9 @@ class SearchViewController: UIViewController {
 //        navigationController?.setNavigationBarHidden(true, animated: true)
 //    }
 //
-//    func updateETACells() {
-//        let indexPaths = collectionView.indexPathsForVisibleItems()
-//        collectionView.reloadItemsAtIndexPaths(indexPaths)
+//    @objc func updateETACells() {
+//        let indexPaths = collectionView.indexPathsForVisibleItems
+//        collectionView.reloadItems(at: indexPaths)
 //    }
 //
 //    func fetchDataWithQuery(text: String, searchScope: SearchScope) {
@@ -92,10 +93,10 @@ class SearchViewController: UIViewController {
 //                if anime.progress == nil {
 //                    return false
 //                }
-//                if let title = anime.title, title.lowercaseString.rangeOfString(text.lowercaseString) != nil {
+//                if let title = anime.title, title.lowercaseString.range(of: text.lowercaseString) != nil {
 //                    return true
 //                }
-//                if let titleEnglish = anime.titleEnglish, titleEnglish.lowercaseString.rangeOfString(text.lowercaseString) != nil {
+//                if let titleEnglish = anime.titleEnglish, titleEnglish.lowercaseString.range(of: text.lowercaseString) != nil {
 //                    return true
 //                }
 //                return false
@@ -126,8 +127,8 @@ class SearchViewController: UIViewController {
 //        case .Users:
 //            query = User.query()!
 //            query.limit = 40
-//            query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
-//            query.orderByAscending("aozoraUsername")
+//            query.whereKey("kurozoraUsername", matchesRegex: text, modifiers: "i")
+//            query.orderByAscending("kurozoraUsername")
 //
 //        case .Forum:
 //            query = Thread.query()!
@@ -175,11 +176,11 @@ class SearchViewController: UIViewController {
 //        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
 //        dispatch_after(time, queue, block)
 //    }
-}
-
+//}
+//
 //extension SearchViewController: UICollectionViewDataSource {
 //
-//    func objectAtIndex(indexPath: NSIndexPath) -> AnyObject {
+//    func objectAtIndex(indexPath: IndexPath) -> AnyObject {
 //        return dataSource.count > 0 ? dataSource[indexPath.row] : emptyDataSource[searchBar.selectedScopeButtonIndex][indexPath.row]
 //    }
 //
@@ -187,31 +188,32 @@ class SearchViewController: UIViewController {
 //        return dataSource.count > 0 ? dataSource.count : emptyDataSource[searchBar.selectedScopeButtonIndex].count
 //    }
 //
-//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //
-//        let object = objectAtIndex(indexPath)
+//        let object = objectAtIndex(indexPath: indexPath)
 //
 //        if let anime = object as? Anime {
-//            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AnimeCell.id, forIndexPath: indexPath) as! AnimeCell
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnimeCell.id, for: indexPath) as! AnimeCell
 //            cell.configureWithAnime(anime)
 //            return cell
 //
 //        } else if let profile = object as? User {
-//            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UserCell", forIndexPath: indexPath) as! BasicCollectionCell
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! BasicCollectionCell
+//
 //            if let avatarFile = profile.avatarThumb {
 //                cell.titleimageView.setImageWithPFFile(avatarFile)
 //            }
-//            cell.titleLabel.text = profile.aozoraUsername
+//            cell.titleLabel.text = profile.kurozoraUsername
 //            cell.layoutIfNeeded()
 //            return cell
 //
 //        } else if let thread = object as? Thread {
-//            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThreadCell", forIndexPath: indexPath) as! BasicCollectionCell
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreadCell", for: indexPath) as! BasicCollectionCell
 //            cell.titleLabel.text = thread.title
 //            cell.layoutIfNeeded()
 //            return cell
 //        } else if let string = object as? String {
-//            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThreadCell", forIndexPath: indexPath) as! BasicCollectionCell
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreadCell", for: indexPath) as! BasicCollectionCell
 //            cell.titleLabel.text = string
 //            cell.layoutIfNeeded()
 //            return cell
@@ -224,16 +226,16 @@ class SearchViewController: UIViewController {
 //extension SearchViewController: UICollectionViewDelegate {
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //
-//        let object = objectAtIndex(indexPath)
+//        let object = objectAtIndex(indexPath: indexPath)
 //
 //        if let anime = object as? Anime {
-//            self.animator = presentAnimeModal(anime)
+//            self.animator = presentAnimeModal(anime: anime)
 //        } else if let user = object as? User {
-//            let profileController = ANAnimeKit.profileViewController()
-//            profileController.initWithUser(user)
+//            let profileController = KAnimeKit.profileViewController()
+//            profileController.initWithUser(user: user)
 //            navigationController?.pushViewController(profileController, animated: true)
 //        } else if let thread = object as? Thread {
-//            let threadController = ANAnimeKit.customThreadViewController()
+//            let threadController = KAnimeKit.customThreadViewController()
 //
 //            if let episode = thread.episode, let anime = thread.anime {
 //                threadController.initWithEpisode(episode, anime: anime)
@@ -259,7 +261,7 @@ class SearchViewController: UIViewController {
 //extension SearchViewController: UICollectionViewDelegateFlowLayout {
 //
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let object = objectAtIndex(indexPath)
+//        let object = objectAtIndex(indexPath: indexPath)
 //
 //        if let _ = object as? Anime {
 //            return CGSize(width: view.bounds.size.width, height: 132)
@@ -271,7 +273,7 @@ class SearchViewController: UIViewController {
 //            return CGSize(width: view.bounds.size.width, height: 44)
 //        }
 //
-//        return CGSizeZero
+//        return CGSize.zero
 //    }
 //}
 //
@@ -303,7 +305,7 @@ class SearchViewController: UIViewController {
 //                return
 //        }
 //
-//        fetchDataWithQuery(query, searchScope: searchScope)
+//        fetchDataWithQuery(text: query, searchScope: searchScope)
 //    }
 //}
 //
@@ -317,4 +319,4 @@ class SearchViewController: UIViewController {
 //    var transitionScrollView: UIScrollView? {
 //        return collectionView
 //    }
-//}
+}

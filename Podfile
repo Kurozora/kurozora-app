@@ -24,11 +24,14 @@ def common_pods
 end
 
 def project_pods
+    pod 'Fabric'
+    pod 'Crashlytics'
     pod 'NGAParallaxMotion', '1.1.0'
+    pod 'Shimmer', '1.0.2'
+    pod 'XLPagerTabStrip', '8.0.1'
     pod 'Lightbox', '2.1.2'
     pod 'WhatsNew', '0.4.3'
     pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
-    pod 'XLPagerTabStrip', '8.0.1'
 end
 
 target 'Kurozora' do

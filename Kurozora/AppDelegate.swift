@@ -7,15 +7,27 @@
 //
 
 import UIKit
+import KDatabaseKit
+import KCommonKit
+import Fabric
+import Crashlytics
+//import XCDYouTubeKit
+//import JTSImageViewController
+//import iRate
+//import FBSDKShareKit
+//import Fabric
+//import Crashlytics
+//import ParseFacebookUtilsV4
+import SDWebImage
+//import MMWormhole
+import Keys
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Fabric.with([Crashlytics.self])
         return true
     }
 

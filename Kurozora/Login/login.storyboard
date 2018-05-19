@@ -26,8 +26,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="login_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
-                                <rect key="frame" x="-478" y="-80" width="1408" height="940"/>
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
+                                <rect key="frame" x="0.0" y="-80" width="375" height="940"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="812" id="YzP-QX-n8O"/>
                                     <constraint firstAttribute="width" constant="1212" id="duG-2g-wgp"/>

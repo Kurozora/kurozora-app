@@ -24,7 +24,7 @@ public class KAnimeKit {
     }
     
     public class func profileViewController() -> ProfileViewController {
-        let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         return controller
     }
     
@@ -34,7 +34,7 @@ public class KAnimeKit {
     }
     
     public class func customThreadViewController() -> CustomThreadViewController {
-        let controller = KAnimeKit.threadStoryboard().instantiateViewControllerWithIdentifier("CustomThread") as! CustomThreadViewController
+        let controller = KAnimeKit.threadStoryboard().instantiateViewController(withIdentifier: "CustomThread") as! CustomThreadViewController
         return controller
     }
     
