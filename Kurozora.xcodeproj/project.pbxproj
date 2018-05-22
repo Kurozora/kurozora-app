@@ -163,7 +163,7 @@
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
 		66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6420A9877900F98375 /* NotificationController.swift */; };
 		66CF6D6720A987D100F98375 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* UserProfileViewController.swift */; };
-		66CF6D6920A98CAA00F98375 /* UserFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserFriendsViewController.swift */; };
+		66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserListViewController.swift */; };
 		66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */; };
 		66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */; };
 		66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationViewController.swift */; };
@@ -436,7 +436,7 @@
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
 		66CF6D6420A9877900F98375 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
-		66CF6D6820A98CAA00F98375 /* UserFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFriendsViewController.swift; sourceTree = "<group>"; };
+		66CF6D6820A98CAA00F98375 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		66CF6D6E20A9921000F98375 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -1071,7 +1071,7 @@
 			children = (
 				66CF6D6420A9877900F98375 /* NotificationController.swift */,
 				66CF6D6620A987D100F98375 /* UserProfileViewController.swift */,
-				66CF6D6820A98CAA00F98375 /* UserFriendsViewController.swift */,
+				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
 				66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */,
 				66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */,
 				66CF6D6E20A9921000F98375 /* NotificationViewController.swift */,
@@ -1563,6 +1563,7 @@
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Shimmer/Shimmer.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel-moolban/TTTAttributedLabel_moolban.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
@@ -1580,6 +1581,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Shimmer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel_moolban.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
@@ -1647,7 +1649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66CF6D6920A98CAA00F98375 /* UserFriendsViewController.swift in Sources */,
+				66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */,
 				66112347208F6ABA00E6033A /* RootTabBar.swift in Sources */,
 				66112349208F6ACE00E6033A /* WorkflowController.swift in Sources */,
 				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
@@ -1879,7 +1881,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KCommonKit;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KCommonKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SKIP_INSTALL = YES;
@@ -1937,7 +1939,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KCommonKit;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KCommonKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SKIP_INSTALL = YES;
@@ -2160,7 +2162,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.anime;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.anime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				PUBLIC_HEADERS_FOLDER_PATH = Kurozora.app/Headers;
@@ -2191,7 +2193,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.anime;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.anime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				PUBLIC_HEADERS_FOLDER_PATH = Kurozora.app/Headers;
@@ -2283,14 +2285,17 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "KDatabaseKit/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KDatabaseKit;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KDatabaseKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SKIP_INSTALL = YES;
@@ -2319,14 +2324,17 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "KDatabaseKit/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KDatabaseKit;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KDatabaseKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SKIP_INSTALL = YES;

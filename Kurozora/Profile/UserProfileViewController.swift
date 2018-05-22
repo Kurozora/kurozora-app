@@ -13,40 +13,41 @@ import TTTAttributedLabel_moolban
 import KDatabaseKit
 
 public class ProfileViewController: ThreadViewController {
-//
-//    enum SelectedFeed: Int {
-//        case Feed = 0
-//        case Popular
-//        case Me
-//    }
-//
-//    @IBOutlet weak var settingsButton: UIButton!
-//
-//    @IBOutlet weak var userAvatar: UIImageView!
-//    @IBOutlet weak var usernameLabel: UILabel!
-//    @IBOutlet weak var userBanner: UIImageView!
-//    @IBOutlet weak var animeListButton: UIButton!
-//    @IBOutlet weak var followButton: UIButton!
-//    @IBOutlet weak var followingButton: UIButton!
-//    @IBOutlet weak var followersButton: UIButton!
-//    @IBOutlet weak var aboutLabel: TTTAttributedLabel!
-//    @IBOutlet weak var activeAgo: UILabel!
-//
-//    @IBOutlet weak var proBadge: UILabel!
-//    @IBOutlet weak var postsBadge: UILabel!
-//    @IBOutlet weak var tagBadge: UILabel!
-//
-//    @IBOutlet weak var segmentedControlView: UIView!
-//
-//    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
-//
-//    @IBOutlet weak var segmentedControl: UISegmentedControl!
-//    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
-//
+
+    enum SelectedFeed: Int {
+        case Feed = 0
+        case Popular
+        case Global
+        case Profile
+    }
+
+    @IBOutlet weak var settingsButton: UIButton!
+
+    @IBOutlet weak var userAvatar: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var userBanner: UIImageView!
+    @IBOutlet weak var animeListButton: UIButton!
+    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    @IBOutlet weak var followersButton: UIButton!
+    @IBOutlet weak var aboutLabel: TTTAttributedLabel!
+    @IBOutlet weak var activeAgo: UILabel!
+
+    @IBOutlet weak var proBadge: UILabel!
+    @IBOutlet weak var postsBadge: UILabel!
+    @IBOutlet weak var tagBadge: UILabel!
+
+    @IBOutlet weak var segmentedControlView: UIView!
+
+    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
+
 //    public var userProfile: User?
 //    var username: String?
 //

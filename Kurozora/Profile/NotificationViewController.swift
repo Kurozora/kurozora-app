@@ -16,9 +16,9 @@ protocol NotificationsViewControllerDelegate: class {
 }
 
 class NotificationsViewController: UIViewController {
-//
-//    @IBOutlet weak var tableView: UITableView!
-//
+
+    @IBOutlet weak var tableView: UITableView!
+
 //    var fetchController = FetchController()
 //    var animator: ZFModalTransitionAnimator!
 //

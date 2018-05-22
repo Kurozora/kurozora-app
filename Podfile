@@ -17,6 +17,7 @@ use_frameworks!
 
 def common_pods
     pod 'Alamofire', '4.7.2'
+    pod 'SwiftyJSON', '4.1.0'
     pod 'TTTAttributedLabel-moolban', '2.0.0.2'
     pod 'SDWebImage', '4.3.3'
     pod 'SDWebImage/GIF', '4.3.3'
@@ -24,8 +25,8 @@ def common_pods
 end
 
 def project_pods
-    pod 'Fabric'
-    pod 'Crashlytics'
+    pod 'Fabric', '1.7.6'
+    pod 'Crashlytics', '3.10.1'
     pod 'NGAParallaxMotion', '1.1.0'
     pod 'Shimmer', '1.0.2'
     pod 'XLPagerTabStrip', '8.0.1'
@@ -41,6 +42,7 @@ target 'Kurozora' do
 end
 
 target 'KDatabaseKit' do
+    common_pods
     project_pods
 end
 

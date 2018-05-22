@@ -21,6 +21,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - Shimmer (1.0.2)
+  - SwiftyJSON (4.1.0)
   - TTTAttributedLabel-moolban (2.0.0.2)
   - WhatsNew (0.4.3)
   - XLPagerTabStrip (8.0.1)
@@ -28,8 +29,8 @@ PODS:
 DEPENDENCIES:
   - Alamofire (= 4.7.2)
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
-  - Crashlytics
-  - Fabric
+  - Crashlytics (= 3.10.1)
+  - Fabric (= 1.7.6)
   - FLAnimatedImage (= 1.0.12)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Lightbox (= 2.1.2)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - SDWebImage (= 4.3.3)
   - SDWebImage/GIF (= 4.3.3)
   - Shimmer (= 1.0.2)
+  - SwiftyJSON (= 4.1.0)
   - TTTAttributedLabel-moolban (= 2.0.0.2)
   - WhatsNew (= 0.4.3)
   - XLPagerTabStrip (= 8.0.1)
@@ -54,6 +56,7 @@ SPEC REPOS:
     - NGAParallaxMotion
     - SDWebImage
     - Shimmer
+    - SwiftyJSON
     - TTTAttributedLabel-moolban
     - WhatsNew
     - XLPagerTabStrip
@@ -84,10 +87,11 @@ SPEC CHECKSUMS:
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: f8ef1a0b0efdeaecc002ccba10682419a0eb24ad
+PODFILE CHECKSUM: 375cc14be8de0d1fda15a54175ff8516d57319a3
 
 COCOAPODS: 1.5.0

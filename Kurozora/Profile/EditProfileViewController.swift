@@ -15,18 +15,18 @@ protocol EditProfileViewControllerProtocol: class {
 }
 
 public class EditProfileViewController: UIViewController {
-//
-//    @IBOutlet weak var avatarImageView: UIImageView!
-//    @IBOutlet weak var bannerImageView: UIImageView!
-//
-//    @IBOutlet weak var emailTextField: UITextField!
-//    @IBOutlet weak var aboutTextView: UITextView!
-//
-//    @IBOutlet weak var saveBBI: UIBarButtonItem!
-//
-//    @IBOutlet weak var formWidthConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
-//
+
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var bannerImageView: UIImageView!
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var aboutTextView: UITextView!
+
+    @IBOutlet weak var saveBBI: UIBarButtonItem!
+
+    @IBOutlet weak var formWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
+
 //    weak var delegate: EditProfileViewControllerProtocol?
 //    var user = User.currentUser()!
 //    var userProfileManager = UserProfileManager()

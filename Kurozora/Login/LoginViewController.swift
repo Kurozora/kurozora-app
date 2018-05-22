@@ -9,6 +9,7 @@
 import Foundation
 import KCommonKit
 import Alamofire
+import SwiftyJSON
 
 protocol LoginViewControllerDelegate: class {
 
@@ -17,7 +18,7 @@ protocol LoginViewControllerDelegate: class {
 }
 
 class LoginViewController: UIViewController {
-
+    
     let defaultValues = UserDefaults.standard
     
     @IBOutlet weak var usernameTextField: CustomTextField!
@@ -35,7 +36,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
         loginButton.isEnabled = false
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -59,42 +60,63 @@ class LoginViewController: UIViewController {
 
         usernameTextField.trimSpaces()
 
-        let username = usernameTextField.text
-        let password = passwordTextField.text
+        let username = usernameTextField.text!
+        let password = passwordTextField.text!
 
-        var headers: HTTPHeaders = [
-            "Content-Type": "application/json"
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
         ]
-
-        if let authorizationHeader = Request.authorizationHeader(user: username!, password: password!) {
-            headers[authorizationHeader.key] = authorizationHeader.value
-        }
+        
+        let parameters:Parameters = [
+            "username": username,
+            "password": password
+        ]
+        
+//        if let authorizationHeader = Request.authorizationHeader(user: username, password: password) {
+//            headers[authorizationHeader.key] = authorizationHeader.value
+//        }
 
         let endpoint = GlobalVariables().BaseURLString + "login"
 
-        Alamofire.request(endpoint, method: .post, headers: headers)
+        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
         .responseJSON { response in
             switch response.result {
                 case .success/*(let data)*/:
-                    if let result = response.result.value{
-                        let jsonData = result as! NSDictionary
-                        let responseSuccess = jsonData.value(forKey: "success") as! Bool
-//                        let responseMessage = jsonData.value(forKey: "message") as! String
-                        
-                        if responseSuccess {
-//                            self.presentBasicAlertWithTitle(title: "Authenticated")
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+                    
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                    
+                        if responseSuccess.boolValue {
+                            self.presentBasicAlertWithTitle(title: "Authenticated")
                         }else{
-//                            self.presentBasicAlertWithTitle(title: responseMessage)
+                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
                         }
+//                    if let result = response.result.value {
+//                        let jsonData = result as! NSDictionary
+//                        let responseSuccess = jsonData.value(forKey: "success") as! Bool
+////                        let responseMessage = jsonData.value(forKey: "message") as! String
+//
+//                        if responseSuccess {
+////                            self.presentBasicAlertWithTitle(title: "Authenticated")
+//                        }else{
+////                            self.presentBasicAlertWithTitle(title: responseMessage)
+//                        }
+//                    }
+//    //                NSLog("------------------DATA START-------------------")
+//    //                NSLog("Response String: \(String(describing: data))")
+//    //                self.presentBasicAlertWithTitle(title: "Authenticated")
+//    //                NSLog("------------------DATA END-------------------")
                     }
-    //                NSLog("------------------DATA START-------------------")
-    //                NSLog("Response String: \(String(describing: data))")
-    //                self.presentBasicAlertWithTitle(title: "Authenticated")
-    //                NSLog("------------------DATA END-------------------")
-                case .failure/*(let error)*/:
-                    let storyboard:UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "Home") as! HomeViewController
-                    self.show(vc, sender: self)
+                case .failure(let err):
+                    NSLog("------------------DATA START-------------------")
+                    NSLog("Response String: \(String(describing: err))")
+                    self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    NSLog("------------------DATA END-------------------")
+//                    let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+//                    let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+//                    self.show(vc, sender: self)
 //                    print(error)
 //                    self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             }
@@ -162,7 +184,7 @@ extension LoginViewController: UITextFieldDelegate {
         }
         loginButton.isEnabled = true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         if textField == passwordTextField {

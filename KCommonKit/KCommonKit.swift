@@ -34,7 +34,7 @@ public struct GlobalVariables{
         // This initializer intentionally left empty
     }
     
-    public let BaseURLString = "https://k.kusa.com/api/v1/"
+    public let BaseURLString = "https://kurozora.app/api/v1/"
 }
 
 public enum FontAwesome: String {

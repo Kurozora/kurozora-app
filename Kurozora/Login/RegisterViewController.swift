@@ -9,6 +9,7 @@
 import Foundation
 import KCommonKit
 import Alamofire
+import SwiftyJSON
 
 class RegisterViewController: UIViewController {
     
@@ -20,12 +21,17 @@ class RegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
+        registerButton.isEnabled = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         navigationBar.delegate = self
+        
+        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,14 +45,6 @@ class RegisterViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func textFieldDidChange(textField: UITextField) {
-        if usernameTextField.text == "" || emailTextField.text == "" || passwordTextField.text == "" {
-            registerButton.isEnabled = false
-        } else {
-            registerButton.isEnabled = true
-        }
-    }
-    
     @IBAction func registerPressed(sender: AnyObject) {
         //        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         //        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
@@ -55,16 +53,12 @@ class RegisterViewController: UIViewController {
         usernameTextField.trimSpaces()
         emailTextField.trimSpaces()
         
-        let username = usernameTextField.text as Any
-        let email = emailTextField.text as Any
-        let password = passwordTextField.text as Any
-        
-        usernameTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
-        emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        let username = usernameTextField.text!
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
         
         let headers: HTTPHeaders = [
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
         ]
         
         let parameters:Parameters = [
@@ -79,17 +73,17 @@ class RegisterViewController: UIViewController {
         .responseJSON { response in
             switch response.result {
                 case .success/*(let data)*/:
-                    if let result = response.result.value{
-                        let jsonData = result as! NSDictionary
-                        let responseSuccess = jsonData.value(forKey: "success") as! Bool
-                        let responseMessage:String
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+//                        let jsonData = result as! NSDictionary
                         
-                        if responseSuccess {
-                            responseMessage = jsonData.value(forKey: "success_message") as! String
-                            self.presentBasicAlertWithTitle(title: responseMessage)
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                        
+                        if responseSuccess.boolValue {
+                            self.presentBasicAlertWithTitle(title: "Account created successfully! Please check your email for confirmation!")
                         }else{
-                            responseMessage = jsonData.value(forKey: "error_message") as! String
-                            self.presentBasicAlertWithTitle(title: responseMessage)
+                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
                         }
                     }
 //                    NSLog("------------------DATA START-------------------")
@@ -109,6 +103,28 @@ extension RegisterViewController: UINavigationBarDelegate, UIBarPositioningDeleg
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
+    }
+    
+}
+
+extension RegisterViewController: UITextFieldDelegate {
+    
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        guard
+            let username = usernameTextField.text, !username.isEmpty,
+            let email = emailTextField.text, !email.isEmpty,
+            let password = passwordTextField.text, !password.isEmpty
+            else {
+                registerButton.isEnabled = false
+                return
+        }
+        registerButton.isEnabled = true
     }
     
 }

@@ -17,7 +17,7 @@
         <!--Administrate-->
         <scene sceneID="SPe-Qq-1JG">
             <objects>
-                <viewController title="Administrate" id="hSM-6Z-w8C" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Administrate" title="Administrate" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hSM-6Z-w8C" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="uUH-Ia-TXi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -41,7 +41,7 @@
         <!--Profile-->
         <scene sceneID="Jud-Yj-vIR">
             <objects>
-                <viewController id="fRy-jQ-iyE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fRy-jQ-iyE" customClass="ProfileViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WTe-VQ-zEw"/>
                         <viewControllerLayoutGuide type="bottom" id="Tfx-dZ-08k"/>
@@ -95,7 +95,7 @@
                                             <color key="textColor" red="0.6470588235294118" green="0.6470588235294118" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAE-PF-wjE" userLabel="AboutLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAE-PF-wjE" userLabel="AboutLabel" customClass="TTTAttributedLabel">
                                             <rect key="frame" x="12" y="201" width="355" height="41"/>
                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -291,6 +291,26 @@
                         <barButtonItem key="rightBarButtonItem" image="search" id="3o4-Ng-7cv" userLabel="Search"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="aboutLabel" destination="iAE-PF-wjE" id="mTF-VV-vLo"/>
+                        <outlet property="activeAgo" destination="2v8-E8-bC4" id="SAg-bU-BFD"/>
+                        <outlet property="followButton" destination="bkn-1Z-yJM" id="Fc2-ib-aXq"/>
+                        <outlet property="followersButton" destination="ggb-4z-Awv" id="qOt-b0-ZYc"/>
+                        <outlet property="followingButton" destination="T5J-l1-I4p" id="4cR-wp-mMt"/>
+                        <outlet property="postsBadge" destination="pWM-55-z3M" id="rLv-w7-g5K"/>
+                        <outlet property="proBadge" destination="VTV-4N-c4n" id="AJm-u8-NDl"/>
+                        <outlet property="proBottomLayoutConstraint" destination="8dj-Gf-Zfd" id="EWj-zh-abR"/>
+                        <outlet property="segmentedControl" destination="xtq-jD-uZ1" id="hDW-OB-juN"/>
+                        <outlet property="segmentedControlHeight" destination="OtQ-b1-7Uv" id="Cas-kg-0zF"/>
+                        <outlet property="segmentedControlTopSpaceConstraint" destination="ci3-eJ-cuH" id="RM1-TT-kWO"/>
+                        <outlet property="segmentedControlView" destination="xtq-jD-uZ1" id="e3b-QC-vxm"/>
+                        <outlet property="settingsButton" destination="vil-by-3j0" id="NAc-KL-YYN"/>
+                        <outlet property="settingsTrailingSpaceConstraint" destination="aPf-Ak-osY" id="tvJ-es-RmL"/>
+                        <outlet property="tableBottomSpaceConstraint" destination="Lu4-nF-JWk" id="mmw-Lb-HKA"/>
+                        <outlet property="tableHeaderViewBottomSpaceConstraint" destination="XiQ-tr-qi3" id="482-5V-zZR"/>
+                        <outlet property="tagBadge" destination="LVr-xt-3ir" id="9Yr-XP-0g1"/>
+                        <outlet property="userAvatar" destination="NzS-ZZ-Ald" id="NAV-OL-qTQ"/>
+                        <outlet property="userBanner" destination="zl8-rJ-jxV" id="dEK-Hb-8Ec"/>
+                        <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="fX4-5z-PNT"/>
                         <segue destination="mmJ-VQ-ep9" kind="show" identifier="showUserList" id="FIg-UR-5i1"/>
                     </connections>
                 </viewController>
@@ -328,7 +348,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVd-mL-oJU" userLabel="Follow Button">
-                                                    <rect key="frame" x="313" y="8" width="54" height="30"/>
+                                                    <rect key="frame" x="313" y="7.5" width="54" height="30"/>
                                                     <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="nxw-CP-4Wc"/>
@@ -394,6 +414,9 @@
                         </constraints>
                     </view>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="sem-4M-Vtv" id="8cy-bp-hga"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wfK-x5-Bz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -402,7 +425,7 @@
         <!--Profile-->
         <scene sceneID="XAq-UG-xa6">
             <objects>
-                <viewController id="Gnf-FN-LFE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProfile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gnf-FN-LFE" customClass="EditProfileViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zXJ-bM-v59"/>
                         <viewControllerLayoutGuide type="bottom" id="XuU-6Q-GY6"/>
@@ -525,7 +548,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="58" id="D7m-cP-IKb"/>
                                                 </constraints>
-                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <color key="textColor" red="0.18823529411764706" green="0.19607843137254902" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -580,6 +603,14 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="eo9-y9-ftt"/>
+                    <connections>
+                        <outlet property="aboutTextView" destination="Q3J-fn-xMh" id="CU1-MY-Y0e"/>
+                        <outlet property="avatarImageView" destination="VoG-ye-SR5" id="erd-Bi-XrA"/>
+                        <outlet property="bannerImageView" destination="ToS-ND-3M8" id="DbO-Bg-Wbp"/>
+                        <outlet property="emailTextField" destination="Obg-Fp-6zr" id="wbW-4D-593"/>
+                        <outlet property="saveBBI" destination="hsX-kj-zha" id="m1j-Vp-xen"/>
+                        <outlet property="scrollViewBottomSpaceConstraint" destination="Gij-2g-RHv" id="bQL-4Q-Ovu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rWc-DY-CKU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="Xse-SC-gBK"/>
@@ -678,6 +709,9 @@
                     <navigationItem key="navigationItem" title="Notifications" id="qAR-rD-xS6">
                         <barButtonItem key="rightBarButtonItem" image="search" id="WlI-hP-JxM" userLabel="Serach"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="t1a-4J-1I3" id="PMO-DH-WDg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRb-ag-XYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -710,7 +744,7 @@
         <!--Notifications-->
         <scene sceneID="aAN-rS-jXP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Djo-ID-C8E" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NotificationNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Djo-ID-C8E" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Notifications" image="globe" id="dab-Cd-LEM"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>

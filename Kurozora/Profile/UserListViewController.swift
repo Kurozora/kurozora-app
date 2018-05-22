@@ -1,5 +1,5 @@
 //
-//  UserFriendsViewController.swift
+//  UserListViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 14/05/2018.
@@ -13,9 +13,9 @@ import KCommonKit
 import KDatabaseKit
 
 class UserListViewController: UIViewController {
-//
-//    @IBOutlet weak var tableView: UITableView!
-//
+
+    @IBOutlet weak var tableView: UITableView!
+
 //    var loadingView: LoaderView!
 //
 //    var dataSource: [User] = []

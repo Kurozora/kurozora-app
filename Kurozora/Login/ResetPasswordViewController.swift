@@ -9,6 +9,7 @@
 import Foundation
 import KCommonKit
 import Alamofire
+import SwiftyJSON
 
 class ResetPasswordViewController: UIViewController {
 
@@ -24,6 +25,9 @@ class ResetPasswordViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationBar.delegate = self
+        
+        resetButton.isEnabled = false
+        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -37,14 +41,6 @@ class ResetPasswordViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func textFieldDidChange(textField: UITextField) {
-        if usernameTextField.text == "" {
-            resetButton.isEnabled = false
-        } else {
-            resetButton.isEnabled = true
-        }
-    }
-    
     @IBAction func resetPressed(sender: AnyObject) {
         //        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         //        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
@@ -52,12 +48,10 @@ class ResetPasswordViewController: UIViewController {
         
         usernameTextField.trimSpaces()
         
-        let username = usernameTextField.text as Any
-        
-         usernameTextField.addTarget(self, action: #selector(textFieldDidChange), for: UIControlEvents.editingChanged)
+        let username = usernameTextField.text!
         
         let headers:HTTPHeaders = [
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
         ]
         
         let parameters:Parameters = [
@@ -69,26 +63,27 @@ class ResetPasswordViewController: UIViewController {
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
         .responseJSON { response in
             switch response.result {
-            case .success/*(let data)*/:
-                if let result = response.result.value{
-                    let jsonData = result as! NSDictionary
-                    let responseSuccess = jsonData.value(forKey: "success") as! Bool
-                    let errorMessage = jsonData.value(forKey: "error_message") as! String
-                    let successMessage = jsonData.value(forKey: "success_message") as! String
-                    
-                    if responseSuccess {
-                        self.presentBasicAlertWithTitle(title: successMessage)
-                    }else{
-                        self.presentBasicAlertWithTitle(title: errorMessage)
+                case .success/*(let data)*/:
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+                        
+//                        let jsonData = result as! NSDictionary
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                        
+                        if responseSuccess.boolValue {
+                           self.presentBasicAlertWithTitle(title: "Please check your email for the password reset link!")
+                        }else{
+                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
+                        }
                     }
-                }
 //                    NSLog("------------------DATA START-------------------")
 //                    NSLog("Response String: \(String(describing: data))")
 //                    self.presentBasicAlertWithTitle(title: "Authenticated")
 //                    NSLog("------------------DATA END-------------------")
-            case .failure(let error):
-                print(error)
-                self.presentBasicAlertWithTitle(title: "There was an error while resetting your password.  If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                case .failure(let error):
+                    print(error)
+                    self.presentBasicAlertWithTitle(title: "There was an error while resetting your password.  If this error persists, check out our Twitter account @KurozoraApp for more information!")
             }
         }
     }
@@ -100,4 +95,24 @@ extension ResetPasswordViewController: UINavigationBarDelegate, UIBarPositioning
         return .topAttached
     }
 
+}
+
+extension ResetPasswordViewController: UITextFieldDelegate {
+    
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        guard
+            let username = usernameTextField.text, !username.isEmpty
+            else {
+                resetButton.isEnabled = false
+                return
+        }
+        resetButton.isEnabled = true
+    }
+    
 }
