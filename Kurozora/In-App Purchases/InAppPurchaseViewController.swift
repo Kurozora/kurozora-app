@@ -8,6 +8,7 @@
 
 //import RMStore
 import KCommonKit
+import UIKit
 
 class InAppPurchaseViewController: UITableViewController {
     

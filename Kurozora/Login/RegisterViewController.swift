@@ -19,6 +19,11 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var registerButton: UIButton!
     
+    @IBOutlet weak var selectButton: UIButton!
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    var imagePicker = UIImagePickerController()
+
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
         registerButton.isEnabled = false
@@ -81,7 +86,14 @@ class RegisterViewController: UIViewController {
                         let responseMessage = swiftyJsonVar["error_message"]
                         
                         if responseSuccess.boolValue {
-                            self.presentBasicAlertWithTitle(title: "Account created successfully! Please check your email for confirmation!")
+                            let alertController = UIAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation!", preferredStyle: UIAlertControllerStyle.alert)
+                            alertController.addAction(UIAlertAction(title: "Ok 😊", style: .default, handler: { action in
+                                //run your function here
+                                self.dismiss(animated: true, completion: nil)
+                            }))
+                            
+                            self.present(alertController, animated: true, completion: nil)
+//                            self.presentBasicAlertWithTitle(title: "Account created successfully! Please check your email for confirmation!")
                         }else{
                             self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
                         }
@@ -92,9 +104,66 @@ class RegisterViewController: UIViewController {
 //                    NSLog("------------------DATA END-------------------")
                 case .failure(let error):
                     print(error)
-                    self.presentBasicAlertWithTitle(title: "There was an error while creating your account.  If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    self.presentBasicAlertWithTitle(title: "Errrrr", message: "There was an error while creating your account.  If this error persists, check out our Twitter account @KurozoraApp for more information!" )
             }
         }
+    }
+    
+    
+//    Image picker
+    @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "Profile Picture 🖼", message: "Choose an awesome picture 😉", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+            self.openPhotoLibrary()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        //If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            alert.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: - Open the camera
+    func openCamera(){
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+
+            //If you dont want to edit the photo then you can set allowsEditing to false
+            imagePicker.allowsEditing = true
+            imagePicker.delegate = self
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else{
+            let alert  = UIAlertController(title: "⚠️ Warning ⚠️", message: "You don't seem to have a camera 😢", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    //MARK: - Choose image from camera roll
+    func openPhotoLibrary(){
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+
+        //If you dont want to edit the photo then you can set allowsEditing to false
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
 }
@@ -127,5 +196,41 @@ extension RegisterViewController: UITextFieldDelegate {
         registerButton.isEnabled = true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+            case usernameTextField:
+                emailTextField.becomeFirstResponder()
+            case emailTextField:
+                passwordTextField.becomeFirstResponder()
+            case passwordTextField:
+                registerPressed(sender: passwordTextField)
+            default:
+                usernameTextField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
 }
 
+//MARK: - UIImagePickerControllerDelegate
+extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        /*
+         Get the image from the info dictionary.
+         If no need to edit the photo, use `UIImagePickerControllerOriginalImage`
+         instead of `UIImagePickerControllerEditedImage`
+         */
+        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
+            self.profileImage.image = editedImage
+        }
+        
+        //Dismiss the UIImagePicker after selection
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+}

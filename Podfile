@@ -22,12 +22,15 @@ def common_pods
     pod 'SDWebImage', '4.3.3'
     pod 'SDWebImage/GIF', '4.3.3'
     pod 'FLAnimatedImage', '1.0.12'
+    pod 'SwifterSwift', '4.3.0'
 end
 
 def project_pods
-    pod 'Fabric', '1.7.6'
-    pod 'Crashlytics', '3.10.1'
+    pod 'Fabric'
+    pod 'Crashlytics'
+    pod 'IQKeyboardManagerSwift', '6.0.3'
     pod 'NGAParallaxMotion', '1.1.0'
+    pod 'ImagePicker', '3.0.0'
     pod 'Shimmer', '1.0.2'
     pod 'XLPagerTabStrip', '8.0.1'
     pod 'Lightbox', '2.1.2'
@@ -57,4 +60,3 @@ post_install do |installer|
         config.build_settings.delete('CODE_SIGNING_REQUIRED')
     end
 end
-

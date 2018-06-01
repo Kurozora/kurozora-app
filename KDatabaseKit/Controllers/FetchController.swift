@@ -15,7 +15,7 @@ public protocol FetchControllerDelegate: class {
 }
 
 public protocol FetchControllerQueryDelegate: class {
-///    func queriesForSkip(skip: Int) -> [PFQuery]?
+//    func queriesForSkip(skip: Int) -> [PFQuery]?
 //    func processResult(result: [PFObject], dataSource: [PFObject]) -> [PFObject]
 }
 

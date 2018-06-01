@@ -54,9 +54,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-//        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
-//        present(vc, animated: true, completion: nil)
 
         usernameTextField.trimSpaces()
 
@@ -71,10 +68,6 @@ class LoginViewController: UIViewController {
             "username": username,
             "password": password
         ]
-        
-//        if let authorizationHeader = Request.authorizationHeader(user: username, password: password) {
-//            headers[authorizationHeader.key] = authorizationHeader.value
-//        }
 
         let endpoint = GlobalVariables().BaseURLString + "login"
 
@@ -93,17 +86,7 @@ class LoginViewController: UIViewController {
                         }else{
                             self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
                         }
-//                    if let result = response.result.value {
-//                        let jsonData = result as! NSDictionary
-//                        let responseSuccess = jsonData.value(forKey: "success") as! Bool
-////                        let responseMessage = jsonData.value(forKey: "message") as! String
-//
-//                        if responseSuccess {
-////                            self.presentBasicAlertWithTitle(title: "Authenticated")
-//                        }else{
-////                            self.presentBasicAlertWithTitle(title: responseMessage)
-//                        }
-//                    }
+                        
 //    //                NSLog("------------------DATA START-------------------")
 //    //                NSLog("Response String: \(String(describing: data))")
 //    //                self.presentBasicAlertWithTitle(title: "Authenticated")
@@ -136,26 +119,6 @@ class LoginViewController: UIViewController {
 //        }
     }
 
-//    func loginWithUsername(username: String, password: String) {
-//        User.logInWithUsernameInBackground(usernameTextField.text!, password:passwordTextField.text!) {
-//            (user: PFUser?, error: NSError?) -> Void in
-//
-//            if let error = error {
-//                let errorMessage = error.userInfo["error"] as! String
-//                let alert = UIAlertController(title: "Hmm", message: errorMessage+". If you signed in with Facebook, login in with Facebook is required.", preferredStyle: UIAlertControllerStyle.Alert)
-//                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//
-//
-//                self.presentViewController(alert, animated: true, completion: nil)
-//            } else {
-//                self.view.endEditing(true)
-//                self.dismiss(animated: true, completion: { () -> Void in
-//                    self.delegate?.LoginViewControllerLoggedIn()
-//                })
-//            }
-//        }
-//    }
-
 }
 
 extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
@@ -184,13 +147,18 @@ extension LoginViewController: UITextFieldDelegate {
         }
         loginButton.isEnabled = true
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        if textField == passwordTextField {
-            loginPressed(sender: textField)
+        switch textField {
+            case usernameTextField:
+                passwordTextField.becomeFirstResponder()
+            case passwordTextField:
+                loginPressed(sender: passwordTextField)
+            default:
+                usernameTextField.resignFirstResponder()
         }
+        
         return true
     }
-
+    
 }

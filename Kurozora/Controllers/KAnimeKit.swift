@@ -7,6 +7,7 @@
 //
 
 import KDatabaseKit
+import UIKit
 
 public class KAnimeKit {
     

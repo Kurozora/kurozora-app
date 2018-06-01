@@ -7,20 +7,9 @@
 //
 
 import UIKit
-import KDatabaseKit
-import KCommonKit
 import Fabric
 import Crashlytics
-//import XCDYouTubeKit
-//import JTSImageViewController
-//import iRate
-//import FBSDKShareKit
-//import Fabric
-//import Crashlytics
-//import ParseFacebookUtilsV4
-import SDWebImage
-//import MMWormhole
-import Keys
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,17 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
-        
-        // Setting the Appropriate initialViewController
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-        let storyboard = UIStoryboard(name: "login", bundle: nil)
-        
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "Welcome")
-        
-        self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
+
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
         return true
     }

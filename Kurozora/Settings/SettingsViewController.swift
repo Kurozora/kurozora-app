@@ -7,6 +7,7 @@
 //
 
 import KCommonKit
+import UIKit
 
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIViewController {
     public func addRefreshControl(refreshControl: UIRefreshControl, action: Selector, forTableView tableView: UITableView) {

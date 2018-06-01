@@ -7,6 +7,7 @@
 //
 
 import KCommonKit
+import UIKit
 //import ANParseKit
 
 enum FilterSection: String {

@@ -8,6 +8,7 @@
 
 import KDatabaseKit
 import KCommonKit
+import UIKit
 //import Bolts
 
 enum SearchScope: Int {

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIImage {
     public class func imageWithImage(image: UIImage, newSize: CGSize) -> UIImage {

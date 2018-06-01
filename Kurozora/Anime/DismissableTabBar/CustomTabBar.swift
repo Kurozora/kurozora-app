@@ -8,6 +8,7 @@
 
 import KDatabaseKit
 import KCommonKit
+import UIKit
 
 protocol CustomAnimatorProtocol {
     func scrollView() -> UIScrollView

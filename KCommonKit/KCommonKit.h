@@ -15,6 +15,3 @@ FOUNDATION_EXPORT double KCommonKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char KCommonKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <KCommonKit/PublicHeader.h>
-
-
-#import <KCommonKit/ZFModalTransitionAnimator.h>

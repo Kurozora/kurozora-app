@@ -115,4 +115,15 @@ extension ResetPasswordViewController: UITextFieldDelegate {
         resetButton.isEnabled = true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case usernameTextField:
+            resetPressed(sender: usernameTextField)
+        default:
+            usernameTextField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
 }
