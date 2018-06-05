@@ -34,6 +34,9 @@ public struct GlobalVariables{
     }
     
     public let BaseURLString = "https://kurozora.app/api/v1/"
+    
+    public let KDefaults = UserDefaults.standard
+    
 }
 
 public enum FontAwesome: String {

@@ -11,24 +11,13 @@ import KCommonKit
 import Alamofire
 import SwiftyJSON
 
-protocol LoginViewControllerDelegate: class {
-
-    func LoginViewControllerLoggedIn()
-
-}
-
 class LoginViewController: UIViewController {
-    
-    let defaultValues = UserDefaults.standard
-    
+
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    
-    var isInWindowRoot = true
-    weak var delegate: LoginViewControllerDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .lightContent
@@ -59,6 +48,7 @@ class LoginViewController: UIViewController {
 
         let username = usernameTextField.text!
         let password = passwordTextField.text!
+        let device = UIDevice.modelName
 
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -66,7 +56,8 @@ class LoginViewController: UIViewController {
         
         let parameters:Parameters = [
             "username": username,
-            "password": password
+            "password": password,
+            "device": device
         ]
 
         let endpoint = GlobalVariables().BaseURLString + "login"
@@ -80,43 +71,30 @@ class LoginViewController: UIViewController {
                     
                         let responseSuccess = swiftyJsonVar["success"]
                         let responseMessage = swiftyJsonVar["error_message"]
-                    
-                        if responseSuccess.boolValue {
-                            self.presentBasicAlertWithTitle(title: "Authenticated")
-                        }else{
-                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
-                        }
+                        let responseSession = swiftyJsonVar["session_id"]
                         
-//    //                NSLog("------------------DATA START-------------------")
-//    //                NSLog("Response String: \(String(describing: data))")
-//    //                self.presentBasicAlertWithTitle(title: "Authenticated")
-//    //                NSLog("------------------DATA END-------------------")
+                        if responseSession != JSON.null {
+                            GlobalVariables().KDefaults.set(responseSession, forKey: "session_id")
+                            GlobalVariables().KDefaults.set(username, forKey: "username")
+                            
+                            if responseSuccess.boolValue {
+                                let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+                                let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+                                self.show(vc, sender: self)
+                            }else{
+                                self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
+                            }
+                        }else{
+                            self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                        }
                     }
                 case .failure(let err):
                     NSLog("------------------DATA START-------------------")
                     NSLog("Response String: \(String(describing: err))")
                     self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     NSLog("------------------DATA END-------------------")
-//                    let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-//                    let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
-//                    self.show(vc, sender: self)
-//                    print(error)
-//                    self.presentBasicAlertWithTitle(title: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             }
         }
-
-//        User.logInWithUsernameInBackground(username.lowercaseString, password:password) {
-//            (user: PFUser?, error: NSError?) -> Void in
-//            if let _ = error {
-//                // The login failed. Check error to see why.
-//                self.loginWithUsername(username, password: password)
-//            } else {
-//                self.view.endEditing(true)
-//                self.dismiss(animated: true, completion: { () -> Void in
-//                    self.delegate?.LoginViewControllerLoggedIn()
-//                })
-//            }
-//        }
     }
 
 }
@@ -160,5 +138,5 @@ extension LoginViewController: UITextFieldDelegate {
         
         return true
     }
-    
+
 }

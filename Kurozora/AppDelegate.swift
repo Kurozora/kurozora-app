@@ -10,6 +10,7 @@ import UIKit
 import Fabric
 import Crashlytics
 import IQKeyboardManagerSwift
+import KCommonKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,11 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
 
+//        IQKeyoardManager
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
+//        User session manager
+        if GlobalVariables().KDefaults.string(forKey: "session_id") != nil {
+            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        }
+        
         return true
     }
 

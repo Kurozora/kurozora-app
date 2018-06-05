@@ -27,7 +27,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        facebookLikeButton.objectID = "https://www.facebook.com/AozoraApp"
+//        facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
     }
     
     override func viewWillAppear(_ animated: Bool) {

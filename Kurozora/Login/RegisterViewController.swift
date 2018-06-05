@@ -51,16 +51,15 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func registerPressed(sender: AnyObject) {
-        //        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        //        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
-        //        present(vc, animated: true, completion: nil)
-        
+        registerButton.isEnabled = false
+
         usernameTextField.trimSpaces()
         emailTextField.trimSpaces()
         
         let username = usernameTextField.text!
         let email = emailTextField.text!
         let password = passwordTextField.text!
+        let image = profileImage.image
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -74,39 +73,48 @@ class RegisterViewController: UIViewController {
         
         let endpoint = GlobalVariables().BaseURLString + "register"
         
-        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
-        .responseJSON { response in
-            switch response.result {
-                case .success/*(let data)*/:
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            if image != nil {
+                if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                    multipartFormData.append(imageData, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
+                }
+            }
+            
+            for (key, value) in parameters {
+                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
+            }}, to: endpoint, method: .post, headers: headers) { response in
+                switch response {
+                case .success(let upload, _,  _):
+                upload.responseJSON { response in
+                    switch response.result {
+                    case .success:
                     if response.result.value != nil{
                         let swiftyJsonVar = JSON(response.result.value!)
-//                        let jsonData = result as! NSDictionary
-                        
+
                         let responseSuccess = swiftyJsonVar["success"]
                         let responseMessage = swiftyJsonVar["error_message"]
-                        
+
                         if responseSuccess.boolValue {
                             let alertController = UIAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation!", preferredStyle: UIAlertControllerStyle.alert)
                             alertController.addAction(UIAlertAction(title: "Ok 😊", style: .default, handler: { action in
-                                //run your function here
+                                
                                 self.dismiss(animated: true, completion: nil)
                             }))
-                            
+
                             self.present(alertController, animated: true, completion: nil)
-//                            self.presentBasicAlertWithTitle(title: "Account created successfully! Please check your email for confirmation!")
                         }else{
                             self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
                         }
                     }
-//                    NSLog("------------------DATA START-------------------")
-//                    NSLog("Response String: \(String(describing: data))")
-//                    self.presentBasicAlertWithTitle(title: "Authenticated")
-//                    NSLog("------------------DATA END-------------------")
-                case .failure(let error):
-                    print(error)
-                    self.presentBasicAlertWithTitle(title: "Errrrr", message: "There was an error while creating your account.  If this error persists, check out our Twitter account @KurozoraApp for more information!" )
+                    case .failure:
+                        self.presentBasicAlertWithTitle(title: "Errrrr", message: "There was an error while creating your account.  If this error persists, check out our Twitter account @KurozoraApp for more information!" )
+                    }
+                    NSLog("success:\(response)")
+                }
+                case .failure(let encodingError):
+                    NSLog("error:\(encodingError)")
+                }
             }
-        }
     }
     
     
@@ -141,8 +149,6 @@ class RegisterViewController: UIViewController {
     func openCamera(){
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-
-            //If you dont want to edit the photo then you can set allowsEditing to false
             imagePicker.allowsEditing = true
             imagePicker.delegate = self
             
@@ -158,8 +164,6 @@ class RegisterViewController: UIViewController {
     //MARK: - Choose image from camera roll
     func openPhotoLibrary(){
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-
-        //If you dont want to edit the photo then you can set allowsEditing to false
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
@@ -216,11 +220,6 @@ extension RegisterViewController: UITextFieldDelegate {
 //MARK: - UIImagePickerControllerDelegate
 extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        /*
-         Get the image from the info dictionary.
-         If no need to edit the photo, use `UIImagePickerControllerOriginalImage`
-         instead of `UIImagePickerControllerEditedImage`
-         */
         if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
             self.profileImage.image = editedImage
         }
