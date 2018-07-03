@@ -72,14 +72,16 @@ class LoginViewController: UIViewController {
                         let responseSuccess = swiftyJsonVar["success"]
                         let responseMessage = swiftyJsonVar["error_message"]
                         let responseSession = swiftyJsonVar["session_id"]
+                        let responseUserId = swiftyJsonVar["user_id"]
                         
                         if responseSession != JSON.null {
-                            GlobalVariables().KDefaults.set(responseSession, forKey: "session_id")
+                            GlobalVariables().KDefaults.set(responseSession.rawValue, forKey: "session_id")
+                            GlobalVariables().KDefaults.set(responseUserId.rawValue, forKey: "user_id")
                             GlobalVariables().KDefaults.set(username, forKey: "username")
                             
                             if responseSuccess.boolValue {
                                 let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-                                let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+                                let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as! UINavigationController
                                 self.show(vc, sender: self)
                             }else{
                                 self.presentBasicAlertWithTitle(title: responseMessage.stringValue)

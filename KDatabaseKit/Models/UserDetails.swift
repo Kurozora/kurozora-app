@@ -10,13 +10,8 @@ import Foundation
 //import Parse
 
 public class UserDetails {
-    
-    public class func parseClassName() -> String {
-        return "UserDetails"
-    }
-    
+
     @NSManaged public var about: String
-    @NSManaged public var gender: String
     @NSManaged public var planningAnimeCount: Int
     @NSManaged public var watchingAnimeCount: Int
     @NSManaged public var completedAnimeCount: Int
@@ -25,10 +20,9 @@ public class UserDetails {
     @NSManaged public var joinDate: Date
     @NSManaged public var posts: Int
     @NSManaged public var watchedTime: Double
-    @NSManaged public var avatarRegular: UIImage?
-    @NSManaged public var banner: UIImage?
     @NSManaged public var mutedUntil: Date?
-    
+
     @NSManaged public var followingCount: Int
     @NSManaged public var followersCount: Int
+
 }

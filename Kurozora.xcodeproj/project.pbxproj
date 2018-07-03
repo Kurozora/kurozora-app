@@ -36,6 +36,8 @@
 		6625F95720B5F59E004DB533 /* KDatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6625F95620B5F59D004DB533 /* KDatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		6659E70F20C1E76C007F139D /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70E20C1E76C007F139D /* SessionManager.swift */; };
+		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
+		665A0B7B20CDB5B30024E2E2 /* SessionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7A20CDB5B30024E2E2 /* SessionsTableViewCell.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
 		66647B6B2084995E00CF624F /* KurozoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B6A2084995E00CF624F /* KurozoraTests.swift */; };
@@ -163,7 +165,7 @@
 		66CF6D6020A9793600F98375 /* rate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D5F20A9793600F98375 /* rate.storyboard */; };
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
 		66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6420A9877900F98375 /* NotificationController.swift */; };
-		66CF6D6720A987D100F98375 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* UserProfileViewController.swift */; };
+		66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileViewController.swift */; };
 		66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserListViewController.swift */; };
 		66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */; };
 		66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */; };
@@ -302,6 +304,8 @@
 		6625F95620B5F59D004DB533 /* KDatabaseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDatabaseKit.h; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		6659E70E20C1E76C007F139D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
+		665A0B7A20CDB5B30024E2E2 /* SessionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsTableViewCell.swift; sourceTree = "<group>"; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66647B5C2084995E00CF624F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -436,7 +440,7 @@
 		66CF6D5F20A9793600F98375 /* rate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = rate.storyboard; sourceTree = "<group>"; };
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
 		66CF6D6420A9877900F98375 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		66CF6D6620A987D100F98375 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		66CF6D6620A987D100F98375 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		66CF6D6820A98CAA00F98375 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
@@ -601,6 +605,7 @@
 				66CE1AF2209B2C3D0007A4DE /* Controller */,
 				6614DF6D2089397500B0BC69 /* Extensions */,
 				6614DF662089381F00B0BC69 /* View */,
+				665A0B7920CDB5840024E2E2 /* UITableViewCell */,
 				66BF02CA209F9B7A00BDAF41 /* ViewControllers */,
 				6614DF672089384100B0BC69 /* Supporting Files */,
 			);
@@ -672,6 +677,14 @@
 				6659E70E20C1E76C007F139D /* SessionManager.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		665A0B7920CDB5840024E2E2 /* UITableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				665A0B7A20CDB5B30024E2E2 /* SessionsTableViewCell.swift */,
+			);
+			path = UITableViewCell;
 			sourceTree = "<group>";
 		};
 		66647B472084995500CF624F = {
@@ -762,6 +775,7 @@
 			children = (
 				66707834208B842E00471FBC /* settings.storyboard */,
 				66707837208B846C00471FBC /* SettingsViewController.swift */,
+				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1064,7 +1078,7 @@
 			isa = PBXGroup;
 			children = (
 				66CF6D6420A9877900F98375 /* NotificationController.swift */,
-				66CF6D6620A987D100F98375 /* UserProfileViewController.swift */,
+				66CF6D6620A987D100F98375 /* ProfileViewController.swift */,
 				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
 				66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */,
 				66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */,
@@ -1565,10 +1579,12 @@
 				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
@@ -1586,10 +1602,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
@@ -1624,6 +1642,7 @@
 				66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */,
 				66BF02C5209F9A6D00BDAF41 /* BasicCollectionReusableView.swift in Sources */,
 				6611235A2090907200E6033A /* Kurozora.swift in Sources */,
+				665A0B7B20CDB5B30024E2E2 /* SessionsTableViewCell.swift in Sources */,
 				66BF02BF209F844600BDAF41 /* BasicView.swift in Sources */,
 				66CE1B07209BAE1B0007A4DE /* ShowMoreCell.swift in Sources */,
 				6614DF652089380E00B0BC69 /* CustomTextField.swift in Sources */,
@@ -1681,13 +1700,14 @@
 				66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */,
 				66E748BC20987E3A0039A105 /* HomeViewController.swift in Sources */,
 				66112341208E28C200E6033A /* InAppTransactionController.swift in Sources */,
+				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				66A8AF22209991310011A342 /* AnimeCell.swift in Sources */,
 				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,
 				6674A0BA20A39EF800AAB527 /* ReminderController.swift in Sources */,
 				6674A0CC20A45F0C00AAB527 /* CustomTabBar.swift in Sources */,
 				66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */,
 				6674A0D420A5849D00AAB527 /* ThreadViewController.swift in Sources */,
-				66CF6D6720A987D100F98375 /* UserProfileViewController.swift in Sources */,
+				66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,

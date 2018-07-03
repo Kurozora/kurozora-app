@@ -6,11 +6,13 @@ PODS:
     - Fabric (~> 1.7.7)
   - Fabric (1.7.7)
   - FLAnimatedImage (1.0.12)
+  - Hero (1.2.0)
   - Hue (3.0.1)
   - ImagePicker (3.0.0)
   - Imaginary (3.0.3):
     - Cache (~> 4.0)
   - IQKeyboardManagerSwift (6.0.3)
+  - KeychainAccess (3.1.1)
   - Keys (1.0.1)
   - Lightbox (2.1.2):
     - Hue (~> 3.0)
@@ -49,8 +51,10 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - FLAnimatedImage (= 1.0.12)
-  - ImagePicker
+  - Hero
+  - ImagePicker (= 3.0.0)
   - IQKeyboardManagerSwift (= 6.0.3)
+  - KeychainAccess
   - Keys (from `Pods/CocoaPodsKeys`)
   - Lightbox (= 2.1.2)
   - NGAParallaxMotion (= 1.1.0)
@@ -70,10 +74,12 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - FLAnimatedImage
+    - Hero
     - Hue
     - ImagePicker
     - Imaginary
     - IQKeyboardManagerSwift
+    - KeychainAccess
     - Lightbox
     - NGAParallaxMotion
     - SDWebImage
@@ -103,10 +109,12 @@ SPEC CHECKSUMS:
   Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
   Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
   Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
   IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
+  KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
@@ -118,6 +126,6 @@ SPEC CHECKSUMS:
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 83b5b38a24078b5272da6fed039a76d1364cfd8b
+PODFILE CHECKSUM: 78bd54b5524aeab398864b416bc4938be11ae6e2
 
 COCOAPODS: 1.5.0

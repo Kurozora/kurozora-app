@@ -1,5 +1,5 @@
 //
-//  UserProfileViewController.swift
+//  ProfileViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 14/05/2018.
@@ -7,10 +7,9 @@
 //
 
 import KCommonKit
+import KDatabaseKit
 import TTTAttributedLabel_moolban
 //import XCDYouTubeKit
-//import Parse
-import KDatabaseKit
 
 public class ProfileViewController: ThreadViewController {
 
@@ -26,7 +25,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userBanner: UIImageView!
-    @IBOutlet weak var animeListButton: UIButton!
+//    @IBOutlet weak var animeListButton: UIButton!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
@@ -39,60 +38,37 @@ public class ProfileViewController: ThreadViewController {
 
     @IBOutlet weak var segmentedControlView: UIView!
 
-    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
 
-//    public var userProfile: User?
-//    var username: String?
-//
-//    public func initWithUser(user: User) {
-//        self.userProfile = user
-//    }
-//
-//    public func initWithUsername(username: String) {
-//        self.username = username
-//    }
-//
-//    override public func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        segmentedControlView.isHidden = true
-//
-//        if userProfile == nil && username == nil {
-//            userProfile = User.currentUser()!
-//            segmentedControl.selectedSegmentIndex = SelectedFeed.Feed.rawValue
-//        } else {
-//            segmentedControl.selectedSegmentIndex = SelectedFeed.Me.rawValue
-//            tableBottomSpaceConstraint.constant = 0
-//        }
-//
-//        if tabBarController == nil {
-//            navigationItem.rightBarButtonItem = nil
-//        }
-//
+    let username = GlobalVariables().KDefaults.string(forKey: "username")
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
 //        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
 //        aboutLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
 //        aboutLabel.delegate = self as! TTTAttributedLabelDelegate;
-//
-//        fetchPosts()
-//    }
-//
-//    public override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        usernameLabel.text = username!
+
 //        navigationController?.setNavigationBarHidden(false, animated: true)
-//
+
 //        if let profile = userProfile, profile.details.dataAvailable {
 //            updateFollowingButtons()
 //        }
-//    }
-//
+    }
+
 //    deinit {
 //        NotificationCenter.default.removeObserver(self)
 //    }
@@ -131,62 +107,38 @@ public class ProfileViewController: ThreadViewController {
 //    }
 //
 //    func fetchUserDetails(username: String) {
-//
-//        if let _ = self.userProfile {
-//            configureFetchController()
+
+//        self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+//            return attributedString
+//        })
+
+//        let activeEndString = user.activeEnd.timeAgo()
+//        let activeEndStringFormatted = activeEndString == "Just now" ? "active now" : "\(activeEndString) ago"
+//        self.activeAgo.text = user.active ? "active now" : activeEndStringFormatted
+
+//        if user.details.posts >= 1000 {
+//            self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
+//        } else {
+//            self.postsBadge.text = user.details.posts.description
 //        }
+
+//        if !user.isTheCurrentUser() {
+//            let relationQuery = User.currentUser()!.following().query()
+//            relationQuery.whereKey("kurozoraUsername", equalTo: username)
+//            relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+//                if let _ = result?.last as? User {
+//                    // Following this user
+//                    self.followButton.setTitle("  Following", forState: .Normal)
+//                    user.followingThisUser = true
+//                } else if let _ = error {
+//                    // TODO: Show error
 //
-//        let query = User.query()!
-//        query.whereKey("aozoraUsername", equalTo: username)
-//        query.includeKey("details")
-//        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-//
-//            guard let user = result?.last as? User else {
-//                return
-//            }
-//
-//            self.userProfile = user
-//            self.updateViewWithUser(user)
-//            self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
-//                return attributedString
-//            })
-//
-//            let activeEndString = user.activeEnd.timeAgo()
-//            let activeEndStringFormatted = activeEndString == "Just now" ? "active now" : "\(activeEndString) ago"
-//            self.activeAgo.text = user.active ? "active now" : activeEndStringFormatted
-//
-//            if user.details.posts >= 1000 {
-//                self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
-//            } else {
-//                self.postsBadge.text = user.details.posts.description
-//            }
-//
-//            self.updateFollowingButtons()
-//            self.sizeHeaderToFit()
-//            // Start fetching if didn't had User class
-//            if let _ = self.username {
-//                self.configureFetchController()
-//            }
-//
-//
-//            if !user.isTheCurrentUser() && !User.currentUserIsGuest() {
-//                let relationQuery = User.currentUser()!.following().query()
-//                relationQuery.whereKey("kurozoraUsername", equalTo: username)
-//                relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-//                    if let _ = result?.last as? User {
-//                        // Following this user
-//                        self.followButton.setTitle("  Following", forState: .Normal)
-//                        user.followingThisUser = true
-//                    } else if let _ = error {
-//                        // TODO: Show error
-//
-//                    } else {
-//                        // NOT following this user
-//                        self.followButton.setTitle("  Follow", forState: .Normal)
-//                        user.followingThisUser = false
-//                    }
-//                    self.followButton.layoutIfNeeded()
+//                } else {
+//                    // NOT following this user
+//                    self.followButton.setTitle("  Follow", forState: .Normal)
+//                    user.followingThisUser = false
 //                }
+//                self.followButton.layoutIfNeeded()
 //            }
 //        }
 //    }
@@ -594,4 +546,9 @@ public class ProfileViewController: ThreadViewController {
 //        userProfile = user
 //        fetchUserDetails(username: user.kurozoraUsername)
 //    }
+    @IBAction func settingsBtnPressed(_ sender: Any) {
+        let storyboard:UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsController") as! UINavigationController
+        self.show(vc, sender: self)
+    }
 }

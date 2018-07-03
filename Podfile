@@ -23,6 +23,7 @@ def common_pods
     pod 'SDWebImage/GIF', '4.3.3'
     pod 'FLAnimatedImage', '1.0.12'
     pod 'SwifterSwift', '4.3.0'
+    pod 'KeychainAccess'
 end
 
 def project_pods
@@ -38,8 +39,13 @@ def project_pods
     pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
 end
 
+def kurozora_pods
+    pod 'Hero'
+end
+
 target 'Kurozora' do
     # Pods for Kurozora
+    kurozora_pods
     common_pods
     project_pods
 end

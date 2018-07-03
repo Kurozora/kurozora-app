@@ -7,29 +7,19 @@
 //
 
 import Foundation
-//import Parse
 
 public class User {
 
-    @NSManaged public var avatarThumb: UIImage
+    @NSManaged public var username: String
+    @NSManaged public var avatar: UIImage
     @NSManaged public var banner: UIImage
+    @NSManaged public var bio: String
     @NSManaged public var badges: [String]
-    @NSManaged public var unlockedContent: [String]
     @NSManaged public var joinDate: Date
-    @NSManaged public var kurozoraUsername: String
-    @NSManaged public var myAnimeListUsername: String?
-    @NSManaged public var anilistUsername: String
-    @NSManaged public var details: String
     
     @NSManaged public var activeStart: Date
     @NSManaged public var activeEnd: Date
     @NSManaged public var active: Bool
-    
-    @NSManaged public var trialExpiration: Date?
-    
-    public var followingThisUser: Bool?
-    
-    static let MyAnimeListPasswordKey = "MyAnimeList.Password"
     
 //    public func following() {
 //        return self.relationForKey("following")

@@ -18,7 +18,7 @@ public class SessionManager {
         if GlobalVariables().KDefaults.string(forKey: "session_id") != nil {
             
             let session = GlobalVariables().KDefaults.string(forKey: "session_id")!
-            let username = GlobalVariables().KDefaults.string(forKey: "username")!
+            let username = GlobalVariables().KDefaults.string(forKey: "user_id")!
             let device   = UIDevice.modelName
             
             let headers: HTTPHeaders = [
@@ -26,8 +26,8 @@ public class SessionManager {
             ]
             
             let parameters:Parameters = [
-                "sessionKey": session,
-                "username": username,
+                "session_id": session,
+                "user_id": username,
                 "device": device
             ]
             

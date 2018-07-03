@@ -11,6 +11,8 @@ import Fabric
 import Crashlytics
 import IQKeyboardManagerSwift
 import KCommonKit
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,14 +29,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
+        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
+        
 //        User session manager
-        if GlobalVariables().KDefaults.string(forKey: "session_id") != nil {
-            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        }
+        if GlobalVariables().KDefaults.string(forKey: "session_id") != nil && GlobalVariables().KDefaults.string(forKey: "user_id") != nil {
+            
+            let sessionId = GlobalVariables().KDefaults.string(forKey: "session_id")!
+            let userId = GlobalVariables().KDefaults.string(forKey: "user_id")!
+            
+            let headers: HTTPHeaders = [
+                "Content-Type": "application/x-www-form-urlencoded"
+            ]
+            
+            let parameters:Parameters = [
+                "session_id": sessionId,
+                "user_id": userId
+            ]
+            
+            let endpoint = GlobalVariables().BaseURLString + "validate_session"
+            
+            Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success/*(let data)*/:
+                        if response.result.value != nil{
+                            let swiftyJsonVar = JSON(response.result.value!)
+
+                            let responseSuccess = swiftyJsonVar["success"]
+
+                        if responseSuccess.boolValue {
+                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+                            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as? UINavigationController
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            self.window?.rootViewController = vc
+                            self.window?.makeKeyAndVisible()
+                        }else{
+                            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            self.window?.rootViewController = vc
+                            self.window?.makeKeyAndVisible()
+                        }
+                    }
+                    case .failure(let err):
+                        NSLog("------------------DATA START-------------------")
+                        NSLog("Response String: \(String(describing: err))")
+                        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                        self.window?.rootViewController = vc
+                        self.window?.makeKeyAndVisible()
+                        NSLog("------------------DATA END-------------------")
+                    }
+                }
+            }
         
         return true
     }

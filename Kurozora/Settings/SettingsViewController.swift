@@ -21,8 +21,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var linkWithMyAnimeListLabel: UILabel!
     @IBOutlet weak var linkWithKitsuLabel: UILabel!
-    @IBOutlet weak var termsOfServicesLabel: UILabel!
-    //    @IBOutlet weak var facebookLikeButton: FBSDKLikeButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +52,12 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - IBActions
     
+    @IBAction func followOnTwitterPressed(sender: AnyObject) {
+        if let twitterUrl = URL(string: "https://twitter.com/kurozoraapp"){
+            UIApplication.shared.open(twitterUrl)
+        }
+    }
+    
     @IBAction func dismissPressed(sender: AnyObject) {
         
         dismiss(animated: true, completion: nil)
@@ -63,10 +67,10 @@ class SettingsViewController: UITableViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let segueIdentifier: String
+//        let segueIdentifier: String
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
-//        guard let cell = tableView.cellForRow(at: indexPath as IndexPath) else {
+//        guard let settingsCell = tableView.cellForRow(at: indexPath as IndexPath) else {
 //            return
 //        }
 
@@ -191,10 +195,6 @@ class SettingsViewController: UITableViewController {
 //                url = NSURL(string: TwitterPageURL)
 //            }
 //            UIApplication.shared.openURL(url! as URL)
-        case (4,0):
-            // Segue to legal page
-            segueIdentifier = "LegalSegue"
-            self.performSegue(withIdentifier: segueIdentifier, sender: self)
         default:
             break
         }

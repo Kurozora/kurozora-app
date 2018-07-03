@@ -103,6 +103,9 @@ class DesignableTextField: UITextField {
 
 }
 
+@IBDesignable
+class DesignableTableView: UITableViewCell {
+}
 
 
 extension UIView {
