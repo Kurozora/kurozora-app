@@ -23,7 +23,8 @@ def common_pods
     pod 'SDWebImage/GIF', '4.3.3'
     pod 'FLAnimatedImage', '1.0.12'
     pod 'SwifterSwift', '4.3.0'
-    pod 'KeychainAccess'
+    pod 'KeychainAccess', '3.1.1'
+    pod 'SCLAlertView', '0.8'
 end
 
 def project_pods

@@ -30,16 +30,16 @@ class ManageActiveSessionsController: UITableViewController {
     }
     
     func getSessions(){
-        let sessionId = GlobalVariables().KDefaults.string(forKey: "session_id")!
-        let userId = GlobalVariables().KDefaults.string(forKey: "user_id")!
+        let sessionId = try? GlobalVariables().KDefaults.getString("session_id")!
+        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         
         let parameters:Parameters = [
-            "session_id": sessionId,
-            "user_id": userId,
+            "session_id": sessionId!,
+            "user_id": userId!,
             "device": device
         ]
         

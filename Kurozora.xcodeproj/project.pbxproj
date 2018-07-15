@@ -19,6 +19,7 @@
 		6611234E208F70CB00E6033A /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234D208F70CB00E6033A /* UIViewController+Navigation.swift */; };
 		66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234F208F70D200E6033A /* UIApplication+Navigation.swift */; };
 		6611235A2090907200E6033A /* Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661123592090907200E6033A /* Kurozora.swift */; };
+		6613F02420F6423000071CAE /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613F02320F6423000071CAE /* BackendController.swift */; };
 		6614DF412088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -286,6 +287,7 @@
 		6611234D208F70CB00E6033A /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		6611234F208F70D200E6033A /* UIApplication+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Navigation.swift"; sourceTree = "<group>"; };
 		661123592090907200E6033A /* Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kurozora.swift; sourceTree = "<group>"; };
+		6613F02320F6423000071CAE /* BackendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendController.swift; sourceTree = "<group>"; };
 		6614DF382088D1C600B0BC69 /* KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614DF402088D1C600B0BC69 /* KCommonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCommonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614DF492088D1C600B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -594,6 +596,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		6613F02520FBD9C200071CAE /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6613F02320F6423000071CAE /* BackendController.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		6614DF392088D1C600B0BC69 /* KCommonKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -895,6 +905,7 @@
 				6625F95620B5F59D004DB533 /* KDatabaseKit.h */,
 				66CEFCE920AD6CC600792B1B /* KDatabaseKit.swift */,
 				66CEFCE720AD6B6000792B1B /* InAppController.swift */,
+				6613F02520FBD9C200071CAE /* API */,
 				66CEFD2520ADBD7C00792B1B /* Browser */,
 				66CEFCF020AD7ADE00792B1B /* Extensions */,
 				66CEFCFD20AD8C1300792B1B /* Models */,
@@ -1588,6 +1599,7 @@
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Shimmer/Shimmer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
@@ -1611,6 +1623,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Shimmer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
@@ -1784,6 +1797,7 @@
 				66CEFD1720ADA95900792B1B /* ThreadTag.swift in Sources */,
 				66CEFD3720ADF76200792B1B /* TagsViewController.swift in Sources */,
 				66CEFD0920ADA37B00792B1B /* AnimeReview.swift in Sources */,
+				6613F02420F6423000071CAE /* BackendController.swift in Sources */,
 				66CEFD2C20ADCDAF00792B1B /* LoginVieewController.swift in Sources */,
 				66CEFCF620AD7DBA00792B1B /* UIImageView+KDatabaseKit.swift in Sources */,
 				66CEFD0320AD9BF100792B1B /* SeasonalChart.swift in Sources */,

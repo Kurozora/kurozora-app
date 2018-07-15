@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainAccess
 
 public class KCommonKit {
     public class func bundle() -> Bundle {
@@ -35,7 +36,7 @@ public struct GlobalVariables{
     
     public let BaseURLString = "https://kurozora.app/api/v1/"
     
-    public let KDefaults = UserDefaults.standard
+    public let KDefaults = Keychain(service: "app.kurozora.anime")
     
 }
 

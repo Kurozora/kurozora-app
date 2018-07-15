@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KCommonKit
 
 public class User {
 
@@ -25,14 +26,13 @@ public class User {
 //        return self.relationForKey("following")
 //    }
     
-//    public override class func currentUser() -> User? {
-//        return !currentUserIsGuest() ? User.currentUser() : nil
-//    }
+    public class func currentUser() -> String? {
+        return GlobalVariables().KDefaults["username"]!
+    }
     
-//    public class func currentUserLoggedIn() -> Bool {
-//
-//        return User.currentUser() != nil && !currentUserIsGuest()
-//    }
+    public class func currentUserLoggedIn() -> Bool {
+        return User.currentUser() != nil
+    }
 //
 //    public class func currentUserIsGuest() -> Bool {
 //

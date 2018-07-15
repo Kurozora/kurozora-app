@@ -14,11 +14,12 @@ import SwiftyJSON
 public class SessionManager {
     class func verify() -> Bool{
         var segue = false
+        let sessionId = try? GlobalVariables().KDefaults.getString("session_id")
         
-        if GlobalVariables().KDefaults.string(forKey: "session_id") != nil {
+        if sessionId != nil {
             
-            let session = GlobalVariables().KDefaults.string(forKey: "session_id")!
-            let username = GlobalVariables().KDefaults.string(forKey: "user_id")!
+            let session = try? GlobalVariables().KDefaults.getString("session_id")!
+            let username = try? GlobalVariables().KDefaults.getString("user_id")!
             let device   = UIDevice.modelName
             
             let headers: HTTPHeaders = [
@@ -26,8 +27,8 @@ public class SessionManager {
             ]
             
             let parameters:Parameters = [
-                "session_id": session,
-                "user_id": username,
+                "session_id": session!,
+                "user_id": username!,
                 "device": device
             ]
             

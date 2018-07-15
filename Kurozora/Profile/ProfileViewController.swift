@@ -47,7 +47,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
 
-    let username = GlobalVariables().KDefaults.string(forKey: "username")
+    let username = User.currentUser()
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ public class ProfileViewController: ThreadViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        usernameLabel.text = username!
+        usernameLabel.text = username
 
 //        navigationController?.setNavigationBarHidden(false, animated: true)
 

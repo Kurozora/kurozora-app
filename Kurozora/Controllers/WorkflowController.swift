@@ -8,11 +8,11 @@
 
 import Foundation
 import UIKit
-//import ANParseKit
 import KCommonKit
+import KDatabaseKit
 
 class WorkflowController {
-    
+
     class func presentRootTabBar(animated: Bool) {
         
         let home = UIStoryboard(name: "Home", bundle: nil).instantiateInitialViewController() as! UINavigationController
@@ -88,23 +88,22 @@ class WorkflowController {
         return UIApplication.shared.delegate!.window!!
     }
     
-//    class func logoutUser() -> BFTask {
-//        // Remove cookies
-//        let storage = HTTPCookieStorage.shared
-//        for cookie in storage.cookies! {
-//            storage.deleteCookie(cookie)
-//        }
-//
-//        // Logout MAL
+    class func logoutUser() {
+        // Send request to server
+
+
+        // Logout MAL
 //        User.logoutMyAnimeList()
-//
-//        // Remove defaults
-//        UserDefaults.standardUserDefaults().removeObjectForKey(LibraryController.LastSyncDateDefaultsKey)
+
+        // Remove defaults
+//        UserDefaults.standard.removeObject(forKey: LibraryController.LastSyncDateDefaultsKey)
 //        UserDefaults.standard.removeObject(forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
 //        UserDefaults.standard.synchronize()
-//
-//        // Logout user
+        try? GlobalVariables().KDefaults.remove("username")
+        try? GlobalVariables().KDefaults.remove("password")
+        try? GlobalVariables().KDefaults.remove("session_id")
+        // Logout user
 //        return User.logOutInBackground()
-//
-//    }
+
+    }
 }

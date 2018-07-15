@@ -7,17 +7,19 @@
 //
 
 import KCommonKit
+import KDatabaseKit
 import UIKit
+import SCLAlertView
 
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 
 class SettingsViewController: UITableViewController {
     
 //    let FacebookPageDeepLink = "fb://profile/713541968752502";
-//    let FacebookPageURL = "https://www.facebook.com/AozoraApp";
-//    let TwitterPageDeepLink = "twitter://user?id=3366576341";
-//    let TwitterPageURL = "https://www.twitter.com/AozoraApp";
-    
+//    let FacebookPageURL = "https://www.facebook.com/KurozoraApp";
+    let TwitterPageDeepLink = "twitter://user?id=991929359052177409";
+    let TwitterPageURL = "https://www.twitter.com/KurozoraApp";
+
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var linkWithMyAnimeListLabel: UILabel!
     @IBOutlet weak var linkWithKitsuLabel: UILabel!
@@ -51,6 +53,16 @@ class SettingsViewController: UITableViewController {
 //    }
     
     // MARK: - IBActions
+    @IBAction func logoutPressed(sender: AnyObject) {
+        if User.currentUserLoggedIn() {
+            // Logged In both, logout
+            WorkflowController.logoutUser()
+            
+            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+            self.present(vc, animated: false)
+        }
+    }
     
     @IBAction func followOnTwitterPressed(sender: AnyObject) {
         if let twitterUrl = URL(string: "https://twitter.com/kurozoraapp"){
@@ -58,14 +70,16 @@ class SettingsViewController: UITableViewController {
         }
     }
     
+    
+    
     @IBAction func dismissPressed(sender: AnyObject) {
         
         dismiss(animated: true, completion: nil)
     }
     
     // MARK: - TableView functions
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
 //        let segueIdentifier: String
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
@@ -75,36 +89,18 @@ class SettingsViewController: UITableViewController {
 //        }
 
         switch (indexPath.section, indexPath.row) {
-//        case (0,0):
-//            // Login / Logout
-//            if User.currentUserLoggedIn() {
-//                // Logged In both, logout
-//                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-//                alert.popoverPresentationController?.sourceView = cell.superview
-//                alert.popoverPresentationController?.sourceRect = cell.frame
-//
-//                alert.addAction(UIAlertAction(title: "Logout", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
-//
-//                    WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject? in
-//
-//                        if let error = task.error {
-//                            print("Failed loggin out: \(error)")
-//                        } else {
-//                            print("Logout succeeded")
-//                        }
-//                        WorkflowController.presentOnboardingController(true)
-//                        return nil
-//                    })
-//                }))
-//                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
-//                }))
-//
-//                self.present(alert, animated: true, completion: nil)
-//
-//            } else if User.currentUserIsGuest() {
-//                // User is guest, login
-//                WorkflowController.presentOnboardingController(true)
-//            }
+        case (0,0):
+//             Login / Logout
+            if User.currentUserLoggedIn() {
+//                 Logged In both, logout
+                
+                WorkflowController.logoutUser()
+
+                let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                self.present(vc, animated: false)
+
+            }
 //        case (0,1):
 //            // Sync with MyAnimeList
 //            if User.syncingWithMyAnimeList() {
@@ -130,29 +126,29 @@ class SettingsViewController: UITableViewController {
 //                UserDefaults.standard.synchronize()
 //            }
 //
-        case (0,2):
-            // Select initial tab
-            let alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-                UserDefaults.standard.setValue("Season", forKey: DefaultLoadingScreen)
-                UserDefaults.standard.synchronize()
-            }))
-            alert.addAction(UIAlertAction(title: "Library", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-                UserDefaults.standard.setValue("Library", forKey: DefaultLoadingScreen)
-                UserDefaults.standard.synchronize()
-            }))
-            alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-                UserDefaults.standard.setValue("Profile", forKey: DefaultLoadingScreen)
-                UserDefaults.standard.synchronize()
-            }))
-            alert.addAction(UIAlertAction(title: "Forum", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-                UserDefaults.standard.setValue("Forum", forKey: DefaultLoadingScreen)
-                UserDefaults.standard.synchronize()
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
-            }))
-
-            self.present(alert, animated: true, completion: nil)
+//        case (0,2):
+//            // Select initial tab
+//            let alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+//                UserDefaults.standard.setValue("Season", forKey: DefaultLoadingScreen)
+//                UserDefaults.standard.synchronize()
+//            }))
+//            alert.addAction(UIAlertAction(title: "Library", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+//                UserDefaults.standard.setValue("Library", forKey: DefaultLoadingScreen)
+//                UserDefaults.standard.synchronize()
+//            }))
+//            alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+//                UserDefaults.standard.setValue("Profile", forKey: DefaultLoadingScreen)
+//                UserDefaults.standard.synchronize()
+//            }))
+//            alert.addAction(UIAlertAction(title: "Forum", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+//                UserDefaults.standard.setValue("Forum", forKey: DefaultLoadingScreen)
+//                UserDefaults.standard.synchronize()
+//            }))
+//            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
+//            }))
+//
+//            self.present(alert, animated: true, completion: nil)
 
 //        case (1,0):
 //            // Unlock features
@@ -177,29 +173,20 @@ class SettingsViewController: UITableViewController {
 //        case (2,1):
 //            // Recommend to friends
 //            DialogController.sharedInstance.showFBAppInvite(self)
-//        case (3,0):
-//            // Open Facebook
-//            var url: NSURL?
-//            if let twitterScheme = NSURL(string: "fb://requests"), UIApplication.shared.canOpenURL(twitterScheme as URL) {
-//                url = NSURL(string: FacebookPageDeepLink)
-//            } else {
-//                url = NSURL(string: FacebookPageURL)
-//            }
-//            UIApplication.shared.openURL(url! as URL)
-//        case (3,1):
-//            // Open Twitter
-//            var url: NSURL?
-//            if let twitterScheme = NSURL(string: "twitter://"), UIApplication.shared.canOpenURL(twitterScheme as URL) {
-//                url = NSURL(string: TwitterPageDeepLink)
-//            } else {
-//                url = NSURL(string: TwitterPageURL)
-//            }
-//            UIApplication.shared.openURL(url! as URL)
+        case (4,0):
+            // Open Twitter
+            var url: URL?
+            let twitterScheme = URL(string: "twitter://")!
+            
+            if UIApplication.shared.canOpenURL(twitterScheme) {
+                url = URL(string: TwitterPageDeepLink)
+            } else {
+                url = URL(string: TwitterPageURL)
+            }
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         default:
-            break
+            SCLAlertView().showInfo(String(indexPath.section), subTitle: String(indexPath.row))
         }
-
-
     }
     
 //    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {

@@ -36,10 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
 //        User session manager
-        if GlobalVariables().KDefaults.string(forKey: "session_id") != nil && GlobalVariables().KDefaults.string(forKey: "user_id") != nil {
+        if GlobalVariables().KDefaults["session_id"] != nil &&  GlobalVariables().KDefaults["user_id"] != nil {
             
-            let sessionId = GlobalVariables().KDefaults.string(forKey: "session_id")!
-            let userId = GlobalVariables().KDefaults.string(forKey: "user_id")!
+            let sessionId = GlobalVariables().KDefaults["session_id"]!
+            let userId = GlobalVariables().KDefaults["user_id"]!
             
             let headers: HTTPHeaders = [
                 "Content-Type": "application/x-www-form-urlencoded"
