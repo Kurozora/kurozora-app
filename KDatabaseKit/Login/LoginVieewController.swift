@@ -5,30 +5,30 @@
 //  Created by Khoren Katklian on 17/05/2018.
 //  Copyright © 2018 Kusa. All rights reserved.
 //
+//
+//import KCommonKit
+//import Alamofire
+//
+//public protocol LoginViewControllerDelegate: class {
+//    func loginViewControllerPressedDoesntHaveAnAccount()
+//}
+//
+//public class LoginViewController: UIViewController {
+//
+//    @IBOutlet weak var usernameTextField: CustomTextField!
+//    @IBOutlet weak var passwordTextField: CustomTextField!
+//
+//    public weak var delegate: LoginViewControllerDelegate?
+//    var loadingView: LoaderView!
+//
+//    override public func viewDidLoad() {
+//        super.viewDidLoad()
+//        loadingView = LoaderView(parentView: view)
+//    }
 
-import KCommonKit
-import Alamofire
-
-public protocol LoginViewControllerDelegate: class {
-    func loginViewControllerPressedDoesntHaveAnAccount()
-}
-
-public class LoginViewController: UIViewController {
-    
-    @IBOutlet weak var usernameTextField: CustomTextField!
-    @IBOutlet weak var passwordTextField: CustomTextField!
-    
-    public weak var delegate: LoginViewControllerDelegate?
-    var loadingView: LoaderView!
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        loadingView = LoaderView(parentView: view)
-    }
-    
     // MARK: - Internal methods
     
-    func verifyCredentials() /*-> BFTask! */{
+//    func verifyCredentials() /*-> BFTask! */{
 //        let completionSource = BFTaskCompletionSource()
 //
 //        loadingView.startAnimating()
@@ -50,16 +50,16 @@ public class LoginViewController: UIViewController {
 //        }
 //
 //        return completionSource.task
-    }
-    
+//    }
+
     
     // MARK: - Actions
-    @IBAction func dismissKeyboardPressed(sender: AnyObject) {
-        
-        view.endEditing(true)
-    }
-    
-    @IBAction func loginPressed(sender: AnyObject) {
+//    @IBAction func dismissKeyboardPressed(sender: AnyObject) {
+//
+//        view.endEditing(true)
+//    }
+//
+//    @IBAction func loginPressed(sender: AnyObject) {
 //        verifyCredentials().continueWithBlock
 //            { (task: BFTask!) -> AnyObject? in
 //
@@ -79,10 +79,10 @@ public class LoginViewController: UIViewController {
 //                }
 //                return nil
 //        }
-    }
-    
-    @IBAction func cancelPressed(sender: AnyObject) {
-        delegate?.loginViewControllerPressedDoesntHaveAnAccount()
-        dismiss(animated: true, completion: nil)
-    }
-}
+//    }
+//
+//    @IBAction func cancelPressed(sender: AnyObject) {
+//        delegate?.loginViewControllerPressedDoesntHaveAnAccount()
+//        dismiss(animated: true, completion: nil)
+//    }
+//}

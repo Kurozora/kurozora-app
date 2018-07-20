@@ -8,7 +8,6 @@
 
 import Foundation
 import KCommonKit
-import KDatabaseKit
 import Alamofire
 import SwiftyJSON
 import SCLAlertView
@@ -52,7 +51,17 @@ class LoginViewController: UIViewController {
         let password = passwordTextField.text!
         let device = UIDevice.modelName
         
-        Backend().loginRequest(username: username, password: password)
+        Request.login(username,
+                      password,
+                      device,
+                      withSuccess: { (success) in
+                        let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+                        self.present(vc, animated: true, completion: nil)
+        }) { (errorMsg) in
+            SCLAlertView().showError("Error logging in", subTitle: errorMsg)
+        }
+//        Request.login(username, password, device)
 //
 //        if loginBool {
 //            let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)

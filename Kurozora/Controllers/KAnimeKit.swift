@@ -6,6 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
+import KCommonKit
 import KDatabaseKit
 import UIKit
 
@@ -24,7 +25,7 @@ public class KAnimeKit {
         return tabBarController
     }
     
-    public class func profileViewController() -> ProfileViewController {
+    class func profileViewController() -> ProfileViewController {
         let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         return controller
     }
@@ -53,3 +54,5 @@ public class KAnimeKit {
         return (navigation, controller)
     }
 }
+
+

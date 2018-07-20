@@ -11,7 +11,7 @@ import UIKit
 import KCommonKit
 import KDatabaseKit
 
-class WorkflowController {
+public class WorkflowController {
 
     class func presentRootTabBar(animated: Bool) {
         
@@ -22,38 +22,38 @@ class WorkflowController {
 //        let notificationVC = notifications.viewControllers.first as! NotificationsViewController
         
         
-        let forum = UIStoryboard(name: "Forums", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        
-        let tabBarController = RootTabBar()
-        
-//        notificationVC.delegate = tabBarController
-        
-        tabBarController.viewControllers = [home, library, profile, notifications, forum]
-        
-        if animated {
-            changeRootViewController(vc: tabBarController, animationDuration: 0.5)
-        } else {
-            if let window = UIApplication.shared.delegate!.window {
-                window?.rootViewController = tabBarController
-                window?.makeKeyAndVisible()
-            }
-        }
+//        let forum = UIStoryboard(name: "Forums", bundle: nil).instantiateInitialViewController() as! UINavigationController
+//
+//        let tabBarController = RootTabBar()
+//
+////        notificationVC.delegate = tabBarController
+//
+//        tabBarController.viewControllers = [home, library, profile, notifications, forum]
+//
+//        if animated {
+//            changeRootViewController(vc: tabBarController, animationDuration: 0.5)
+//        } else {
+//            if let window = UIApplication.shared.delegate!.window {
+//                window?.rootViewController = tabBarController
+//                window?.makeKeyAndVisible()
+//            }
+//        }
         
     }
     
-    class func presentWelcomeController(asRoot: Bool) {
-        
-        let welcome = UIStoryboard(name: "Welcome", bundle: nil).instantiateInitialViewController() as! WelcomeViewController
-        
-        if asRoot {
-            welcome.isInWindowRoot = true
-            applicationWindow().rootViewController = welcome
-            applicationWindow().makeKeyAndVisible()
-        } else {
-            applicationWindow().rootViewController?.present(welcome, animated: true, completion: nil)
-        }
-        
-    }
+//    class func presentWelcomeController(asRoot: Bool) {
+//
+//        let welcome = UIStoryboard(name: "Welcome", bundle: nil).instantiateInitialViewController() as! WelcomeViewController
+//
+//        if asRoot {
+//            welcome.isInWindowRoot = true
+//            applicationWindow().rootViewController = welcome
+//            applicationWindow().makeKeyAndVisible()
+//        } else {
+//            applicationWindow().rootViewController?.present(welcome, animated: true, completion: nil)
+//        }
+//
+//    }
     
     class func changeRootViewController(vc: UIViewController, animationDuration: TimeInterval = 0.5) {
         

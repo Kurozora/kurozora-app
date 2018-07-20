@@ -90,16 +90,20 @@ class SettingsViewController: UITableViewController {
 
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-//             Login / Logout
             if User.currentUserLoggedIn() {
-//                 Logged In both, logout
                 
-                WorkflowController.logoutUser()
-
-                let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                self.present(vc, animated: false)
-
+                let sessionId = GlobalVariables().KDefaults["session_id"]!
+                let userId = GlobalVariables().KDefaults["user_id"]!
+                
+                Request.logout(sessionId,
+                              userId,
+                              withSuccess: { (success) in
+                                let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                                self.present(vc, animated: true, completion: nil)
+                }) { (errorMsg) in
+                    SCLAlertView().showError("Error loggin out", subTitle: errorMsg)
+                }
             }
 //        case (0,1):
 //            // Sync with MyAnimeList

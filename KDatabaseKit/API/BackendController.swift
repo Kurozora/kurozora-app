@@ -12,12 +12,9 @@ import Alamofire
 import SwiftyJSON
 import SCLAlertView
 
-public class Request : UIViewController {
+public class Request {
 
-   @IBAction public func login(_ username:Any, password:Any)  {
-        
-//        var loginSuccess = false
-        let usernameString = username as! String
+    public class func login(_ username:String, _ password:String, _ device:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -26,7 +23,7 @@ public class Request : UIViewController {
         let parameters:Parameters = [
             "username": username,
             "password": password,
-            "device": "iPhone 7"
+            "device": device
         ]
 
         let endpoint = GlobalVariables().BaseURLString + "login"
@@ -43,47 +40,35 @@ public class Request : UIViewController {
                 let responseSession = swiftyJsonVar["session_id"]
                 let responseUserId = swiftyJsonVar["user_id"]
 
-                if responseSession != JSON.null {
-                //                            try? GlobalVariables().KDefaults.set(responseSession.rawValue, key: "session_id")
-                //                            try? GlobalVariables().KDefaults.set(responseUserId.rawValue, key: "user_id")
-                GlobalVariables().KDefaults["user_id"] = responseUserId.rawValue as? String
-                GlobalVariables().KDefaults["session_id"] =  responseSession.rawValue as? String
-                try? GlobalVariables().KDefaults.set(usernameString, key: "username")
-    
-                    if responseSuccess.boolValue {
-                        let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as! UINavigationController
-                        self.present(vc, animated: false)
-                    }else{
-                        SCLAlertView().showNotice("Warning!", subTitle: responseMessage.stringValue)
+                    if responseSuccess != JSON.null {
+                        GlobalVariables().KDefaults["user_id"] = responseUserId.rawValue as? String
+                        GlobalVariables().KDefaults["session_id"] =  responseSession.rawValue as? String
+                        try? GlobalVariables().KDefaults.set(username, key: "username")
+                        
+                        if responseSession.boolValue {
+                            successHandler(true)
+                        } else {
+                            failureHandler(responseMessage.stringValue)
+                        }
+                    } else {
+                        failureHandler("There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     }
-                }else{
-                    SCLAlertView().showError("Error logging in", subTitle: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                 }
-            }
-            case .failure(let err):
-                NSLog("------------------DATA START-------------------")
-                NSLog("Response String: \(String(describing: err))")
-                SCLAlertView().showError("Error logging in", subTitle: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
-                NSLog("------------------DATA END-------------------")
+                case .failure/*(let err)*/:
+                    failureHandler("There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             }
         }
-//        return loginSuccess
     }
     
-    @IBAction public func logout(_ sessionId:Any, userId:Any)  {
-        
-        //        var loginSuccess = false
-        let sessionIdString = sessionId as! String
-        
+    public class func logout(_ sessionId:String, _ userId:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
+
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         
         let parameters:Parameters = [
             "session_id": sessionId,
-            "user_id": userId,
-            "device": "iPhone 7"
+            "user_id": userId
         ]
         
         let endpoint = GlobalVariables().BaseURLString + "logout"
@@ -100,12 +85,9 @@ public class Request : UIViewController {
                         
                         if responseSuccess.boolValue {
                             WorkflowController.logoutUser()
-                            
-                            let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-                            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as! UINavigationController
-                            self.present(vc, animated: false)
-                        }else{
-                            SCLAlertView().showNotice("Warning!", subTitle: responseMessage.stringValue)
+                            successHandler(true)
+                        } else {
+                            failureHandler(responseMessage.stringValue)
                         }
                     }
                 case .failure(let err):
@@ -115,6 +97,6 @@ public class Request : UIViewController {
                     NSLog("------------------DATA END-------------------")
                 }
         }
-        //        return loginSuccess
     }
 }
+
