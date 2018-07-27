@@ -13,12 +13,12 @@ import KDatabaseKit
 
 public class WorkflowController {
 
-    class func presentRootTabBar(animated: Bool) {
-        
-        let home = UIStoryboard(name: "Home", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        let profile = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        let notifications = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "NotificationNav") as! UINavigationController
+//    class func presentRootTabBar(animated: Bool) {
+    
+//        let home = UIStoryboard(name: "Home", bundle: nil).instantiateInitialViewController() as! UINavigationController
+//        let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
+//        let profile = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+//        let notifications = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "NotificationNav") as! UINavigationController
 //        let notificationVC = notifications.viewControllers.first as! NotificationsViewController
         
         
@@ -39,7 +39,7 @@ public class WorkflowController {
 //            }
 //        }
         
-    }
+//    }
     
 //    class func presentWelcomeController(asRoot: Bool) {
 //
@@ -55,38 +55,38 @@ public class WorkflowController {
 //
 //    }
     
-    class func changeRootViewController(vc: UIViewController, animationDuration: TimeInterval = 0.5) {
-        
-        var window: UIWindow?
-        
-        let appDelegate = UIApplication.shared.delegate!
-        
-        if appDelegate.responds(to: #selector(getter: UIApplicationDelegate.window)) {
-            window = appDelegate.window!
-        }
-        
-        if let window = window {
-            if window.rootViewController == nil {
-                window.rootViewController = vc
-                return
-            }
-            
-            let snapshot = window.snapshotView(afterScreenUpdates: true)
-            vc.view.addSubview(snapshot!)
-            window.rootViewController = vc
-            window.makeKeyAndVisible()
-            
-            UIView.animate(withDuration: animationDuration, animations: { () -> Void in
-                snapshot?.alpha = 0.0
-            }, completion: {(finished) in
-                snapshot?.removeFromSuperview()
-            })
-        }
-    }
-    
-    class func applicationWindow() -> UIWindow {
-        return UIApplication.shared.delegate!.window!!
-    }
+//    class func changeRootViewController(vc: UIViewController, animationDuration: TimeInterval = 0.5) {
+//
+//        var window: UIWindow?
+//
+//        let appDelegate = UIApplication.shared.delegate!
+//
+//        if appDelegate.responds(to: #selector(getter: UIApplicationDelegate.window)) {
+//            window = appDelegate.window!
+//        }
+//
+//        if let window = window {
+//            if window.rootViewController == nil {
+//                window.rootViewController = vc
+//                return
+//            }
+//
+//            let snapshot = window.snapshotView(afterScreenUpdates: true)
+//            vc.view.addSubview(snapshot!)
+//            window.rootViewController = vc
+//            window.makeKeyAndVisible()
+//
+//            UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+//                snapshot?.alpha = 0.0
+//            }, completion: {(finished) in
+//                snapshot?.removeFromSuperview()
+//            })
+//        }
+//    }
+//
+//    class func applicationWindow() -> UIWindow {
+//        return UIApplication.shared.delegate!.window!!
+//    }
     
     class func logoutUser() {
         // Send request to server

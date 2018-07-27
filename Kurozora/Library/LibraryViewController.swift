@@ -1,5 +1,5 @@
 //
-//  AnimeLibraryViewController.swift
+//  LibraryViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
@@ -30,7 +30,7 @@ enum LibraryLayout: String {
     }
 }
 
-class AnimeLibraryViewController: ButtonBarPagerTabStripViewController {
+class LibraryViewController: UIViewController {
 //
 //    let SortTypeDefault = "Library.SortType."
 //    let LayoutTypeDefault = "Library.LayoutType."
@@ -253,7 +253,7 @@ class AnimeLibraryViewController: ButtonBarPagerTabStripViewController {
 //}
 //
 //
-//extension AnimeLibraryViewController: FilterViewControllerDelegate {
+//extension LibraryViewController: FilterViewControllerDelegate {
 //    func finishedWith(configuration: Configuration, selectedGenres: [String]) {
 //        
 //        let currentListIndex = Int(currentIndex)
@@ -273,13 +273,13 @@ class AnimeLibraryViewController: ButtonBarPagerTabStripViewController {
 //    }
 //}
 //
-//extension AnimeLibraryViewController: AnimeListControllerDelegate {
+//extension LibraryViewController: AnimeListControllerDelegate {
 //    func controllerRequestRefresh() -> BFTask {
 //        return fetchAnimeList(true)
 //    }
 //}
 //
-//extension AnimeLibraryViewController: LibraryControllerDelegate {
+//extension LibraryViewController: LibraryControllerDelegate {
 //    func libraryControllerFinishedFetchingLibrary(library: [Anime]) {
 //        updateListViewControllers(animeList: library)
 //    }

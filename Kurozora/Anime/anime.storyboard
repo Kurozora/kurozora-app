@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -866,7 +866,7 @@
         <image name="download" width="30" height="30"/>
         <image name="exit" width="30" height="30"/>
         <image name="list" width="30" height="30"/>
-        <image name="more_dark" width="17" height="17"/>
+        <image name="more_dark" width="67" height="67"/>
         <image name="note" width="30" height="30"/>
         <image name="paper_plane" width="30" height="30"/>
         <image name="play_white" width="30" height="30"/>

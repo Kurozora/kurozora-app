@@ -4,6 +4,7 @@ PODS:
   - Cache (4.2.0)
   - Crashlytics (3.10.5):
     - Fabric (~> 1.7.9)
+  - ESTabBarController-swift (2.6.2)
   - Fabric (1.7.9)
   - FLAnimatedImage (1.0.12)
   - Hero (1.2.0)
@@ -50,6 +51,7 @@ DEPENDENCIES:
   - Alamofire (= 4.7.2)
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - Crashlytics
+  - ESTabBarController-swift
   - Fabric
   - FLAnimatedImage (= 1.0.12)
   - Hero
@@ -74,6 +76,7 @@ SPEC REPOS:
     - Alamofire
     - Cache
     - Crashlytics
+    - ESTabBarController-swift
     - Fabric
     - FLAnimatedImage
     - Hero
@@ -110,6 +113,7 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   Cache: f28f8dd64b632155aabf9b3906b036a659048251
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
+  ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
   Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
@@ -130,6 +134,6 @@ SPEC CHECKSUMS:
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: d4990f98891fe88ee37a0aad5fc569f5f05ddbdb
+PODFILE CHECKSUM: d5ce7c78769c5b26dfbff664b058ec871dc8f598
 
 COCOAPODS: 1.5.0

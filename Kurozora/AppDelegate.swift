@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        
+//        WorkflowController.logoutUser()
 
         let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
@@ -62,11 +64,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let responseSuccess = swiftyJsonVar["success"]
 
                         if responseSuccess.boolValue {
-                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-                            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as? UINavigationController
+//                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+//                            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as? UINavigationController
                             self.window = UIWindow(frame: UIScreen.main.bounds)
-                            self.window?.rootViewController = vc
                             self.window?.makeKeyAndVisible()
+                            
+                            let customTabBar = KurozoraTabBarController()
+                            
+                            self.window?.rootViewController = customTabBar
                         }else{
                             let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                             let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
@@ -112,7 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

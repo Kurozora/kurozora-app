@@ -13,6 +13,7 @@ import SwiftyJSON
 import SCLAlertView
 
 class LoginViewController: UIViewController {
+    var window: UIWindow?
 
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
@@ -55,9 +56,12 @@ class LoginViewController: UIViewController {
                       password,
                       device,
                       withSuccess: { (success) in
-                        let storyboard:UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+                        
+                        let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
                         let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
-                        self.present(vc, animated: true, completion: nil)
+                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                        self.window?.rootViewController = vc
+                        self.window?.makeKeyAndVisible()
         }) { (errorMsg) in
             SCLAlertView().showError("Error logging in", subTitle: errorMsg)
         }

@@ -31,9 +31,9 @@ class ForumsViewController: UIViewController {
 //        }
 //    }
 //
-//    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
 //    @IBOutlet weak var navigationBarTitle: UILabel!
-//    @IBOutlet weak var createThreadButton: UIButton!
+    @IBOutlet weak var createThreadButton: UIButton!
 //
 //    var fetchController = FetchController()
 //    var refreshControl = UIRefreshControl()

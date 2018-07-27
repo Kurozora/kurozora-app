@@ -11,7 +11,7 @@ import KDatabaseKit
 import TTTAttributedLabel_moolban
 //import XCDYouTubeKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: ThreadViewController {
 
     enum SelectedFeed: Int {
         case Feed = 0
@@ -51,7 +51,9 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        self.automaticallyAdjustsScrollViewInsets = false
+//        self.extendedLayoutIncludesOpaqueBars = true
+        
 //        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
 //        aboutLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
 //        aboutLabel.delegate = self as! TTTAttributedLabelDelegate;
@@ -59,10 +61,8 @@ class ProfileViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        usernameLabel.text = username
 
-//        navigationController?.setNavigationBarHidden(false, animated: true)
+        usernameLabel.text = username
 
 //        if let profile = userProfile, profile.details.dataAvailable {
 //            updateFollowingButtons()

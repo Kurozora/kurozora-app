@@ -27,7 +27,7 @@ public class User {
 //    }
     
     public class func currentUser() -> String? {
-        return GlobalVariables().KDefaults["username"]!
+        return GlobalVariables().KDefaults["username"]
     }
     
     public class func currentUserLoggedIn() -> Bool {

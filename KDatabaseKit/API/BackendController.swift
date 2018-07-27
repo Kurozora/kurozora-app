@@ -40,18 +40,18 @@ public class Request {
                 let responseSession = swiftyJsonVar["session_id"]
                 let responseUserId = swiftyJsonVar["user_id"]
 
-                    if responseSuccess != JSON.null {
+                    if responseSession != JSON.null {
                         GlobalVariables().KDefaults["user_id"] = responseUserId.rawValue as? String
                         GlobalVariables().KDefaults["session_id"] =  responseSession.rawValue as? String
                         try? GlobalVariables().KDefaults.set(username, key: "username")
-                        
-                        if responseSession.boolValue {
+
+                        if responseSuccess.boolValue {
                             successHandler(true)
                         } else {
                             failureHandler(responseMessage.stringValue)
                         }
                     } else {
-                        failureHandler("There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                        failureHandler(responseMessage.stringValue)
                     }
                 }
                 case .failure/*(let err)*/:
