@@ -25,7 +25,9 @@ def common_pods
     pod 'SwifterSwift', '4.3.0'
     pod 'KeychainAccess', '3.1.1'
     pod 'SCLAlertView', '0.8'
+    pod 'UIImageColors', '2.0.0'
     pod 'ESTabBarController-swift', '2.6.2'
+    pod 'SwiftTheme'
 end
 
 def project_pods

@@ -9,9 +9,10 @@
 import KCommonKit
 import KDatabaseKit
 import TTTAttributedLabel_moolban
+import UIImageColors
 //import XCDYouTubeKit
 
-class ProfileViewController: ThreadViewController {
+class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableViewDataSource  {
 
     enum SelectedFeed: Int {
         case Feed = 0
@@ -19,7 +20,11 @@ class ProfileViewController: ThreadViewController {
         case Global
         case Profile
     }
-
+    
+    var refreshControl   = UIRefreshControl()
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var settingsButton: UIButton!
 
     @IBOutlet weak var userAvatar: UIImageView!
@@ -36,6 +41,8 @@ class ProfileViewController: ThreadViewController {
     @IBOutlet weak var postsBadge: UILabel!
     @IBOutlet weak var tagBadge: UILabel!
 
+    @IBOutlet weak var postButton: UIButton!
+    
     @IBOutlet weak var segmentedControlView: UIView!
 
 //    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
@@ -46,27 +53,55 @@ class ProfileViewController: ThreadViewController {
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
-
-    let username = User.currentUser()
+    
+    let username = User.username()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.automaticallyAdjustsScrollViewInsets = false
-//        self.extendedLayoutIncludesOpaqueBars = true
+
+        let colors =  userBanner.image!.getColors()
         
+        backgroundView.backgroundColor = colors.background
+        segmentedControl.tintColor = colors.detail
+        aboutLabel.textColor = colors.secondary
+        postButton.backgroundColor = colors.primary
+        
+        // Refresh control add in tableview.
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileCell")
+
 //        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
 //        aboutLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
 //        aboutLabel.delegate = self as! TTTAttributedLabelDelegate;
     }
-
+    
+    @objc func refresh(_ sender: Any) {
+        // Call webservice here after reload tableview.
+        self.tableView.reloadData()
+        self.refreshControl.endRefreshing()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         usernameLabel.text = username
+        userBanner.image = UIImage(named: "colorful")
 
 //        if let profile = userProfile, profile.details.dataAvailable {
 //            updateFollowingButtons()
 //        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let profileCell:UITableViewCell = (tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as UITableViewCell?)!
+        
+        return profileCell
     }
 
 //    deinit {

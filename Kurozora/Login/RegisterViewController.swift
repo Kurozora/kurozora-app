@@ -71,7 +71,7 @@ class RegisterViewController: UIViewController {
             "password": password
         ]
         
-        let endpoint = GlobalVariables().BaseURLString + "register"
+        let endpoint = GlobalVariables().BaseURLString + "user/register"
         
         Alamofire.upload(multipartFormData: { multipartFormData in
             if image != nil {

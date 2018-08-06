@@ -14,12 +14,11 @@ import SwiftyJSON
 public class SessionManager {
     class func verify() -> Bool{
         var segue = false
-        let sessionId = try? GlobalVariables().KDefaults.getString("session_id")
         
-        if sessionId != nil {
+        if User.currentSessionId() != nil {
             
-            let session = try? GlobalVariables().KDefaults.getString("session_id")!
-            let username = try? GlobalVariables().KDefaults.getString("user_id")!
+            let sessionId = User.currentSessionId()
+            let userId = User.currentId()
             let device   = UIDevice.modelName
             
             let headers: HTTPHeaders = [
@@ -27,12 +26,12 @@ public class SessionManager {
             ]
             
             let parameters:Parameters = [
-                "session_id": session!,
-                "user_id": username!,
+                "session_id": sessionId!,
+                "user_id": userId!,
                 "device": device
             ]
             
-            let endpoint = GlobalVariables().BaseURLString + "login"
+            let endpoint = GlobalVariables().BaseURLString + "user/login"
             
             Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
             .responseJSON { response in

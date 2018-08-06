@@ -16,10 +16,61 @@ protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerClearedAllNotifications()
 }
 
-class NotificationsViewController: UIViewController {
+class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
 
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Other sessions"
+//    }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UIView()
+//        headerView.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
+//
+//        let headerLabel = UILabel(frame: CGRect(x: 8, y: 0, width:
+//            tableView.bounds.size.width, height: tableView.bounds.size.height))
+//        headerLabel.font = UIFont(name: "System", size: 17)
+//        headerLabel.textColor = UIColor.white
+//        headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
+//        headerLabel.sizeToFit()
+//        headerView.addSubview(headerLabel)
+//
+//        return headerView
+//    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let notificationCell:NotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath as IndexPath) as! NotificationCell
+    
+        notificationCell.notificationType.text = "MESSAGE"
+        notificationCell.notificationDate.text = "18m ago"
+        notificationCell.notificationIcon.image = UIImage(named: "chat.png")
+        notificationCell.profileImage.image = UIImage(named: "user_male.png")
+        notificationCell.username.text = "Usopp"
+        notificationCell.notificationTextLable.text = "This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!"
+        
+        NSLog("------------------DATA START-------------------")
+        NSLog("Response String: \(String(describing: indexPath.row))")
+        NSLog("------------------DATA END-------------------")
+        
+        return notificationCell
+    }
+    
 //    var fetchController = FetchController()
 //    var animator: ZFModalTransitionAnimator!
 //

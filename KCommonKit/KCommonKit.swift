@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 import KeychainAccess
 
 public class KCommonKit {
@@ -29,14 +30,14 @@ public class KCommonKit {
     }
 }
 
-public struct GlobalVariables{
+public struct GlobalVariables {
     public init() {
         // This initializer intentionally left empty
     }
-    
+
     public let BaseURLString = "https://kurozora.app/api/v1/"
-    
     public let KDefaults = Keychain(service: "app.kurozora.anime")
+    public var sessionsArray:[JSON] = []
     
 }
 

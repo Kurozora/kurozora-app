@@ -42,8 +42,10 @@ PODS:
   - SwifterSwift/MapKit (4.3.0)
   - SwifterSwift/SwiftStdlib (4.3.0)
   - SwifterSwift/UIKit (4.3.0)
+  - SwiftTheme (0.4.1)
   - SwiftyJSON (4.1.0)
   - TTTAttributedLabel-moolban (2.0.0.2)
+  - UIImageColors (2.0.0)
   - WhatsNew (0.4.3)
   - XLPagerTabStrip (8.0.1)
 
@@ -51,7 +53,7 @@ DEPENDENCIES:
   - Alamofire (= 4.7.2)
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - Crashlytics
-  - ESTabBarController-swift
+  - ESTabBarController-swift (= 2.6.2)
   - Fabric
   - FLAnimatedImage (= 1.0.12)
   - Hero
@@ -66,8 +68,10 @@ DEPENDENCIES:
   - SDWebImage/GIF (= 4.3.3)
   - Shimmer (= 1.0.2)
   - SwifterSwift (= 4.3.0)
+  - SwiftTheme
   - SwiftyJSON (= 4.1.0)
   - TTTAttributedLabel-moolban (= 2.0.0.2)
+  - UIImageColors (= 2.0.0)
   - WhatsNew (= 0.4.3)
   - XLPagerTabStrip (= 8.0.1)
 
@@ -91,8 +95,10 @@ SPEC REPOS:
     - SDWebImage
     - Shimmer
     - SwifterSwift
+    - SwiftTheme
     - SwiftyJSON
     - TTTAttributedLabel-moolban
+    - UIImageColors
     - WhatsNew
     - XLPagerTabStrip
 
@@ -129,11 +135,13 @@ SPEC CHECKSUMS:
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
+  SwiftTheme: 36d71c4eed4b2c401c782cf036e4586c749a8173
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
+  UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: d5ce7c78769c5b26dfbff664b058ec871dc8f598
+PODFILE CHECKSUM: 1312fc9e8fcc223dea7b9b37dfef54d8b4e72359
 
 COCOAPODS: 1.5.0

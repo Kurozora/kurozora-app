@@ -22,7 +22,6 @@ class KurozoraNavigationController: UINavigationController {
             self.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)]
         }
 
-
         self.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18.0)]
     }
     

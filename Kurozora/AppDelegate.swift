@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import IQKeyboardManagerSwift
 import KCommonKit
+import KDatabaseKit
 import Alamofire
 import SwiftyJSON
 
@@ -20,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-//         Override point for customization after application launch.
+//        Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
         
 //        IQKeyoardManager
@@ -37,61 +38,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
         
-//        User session manager
-        if GlobalVariables().KDefaults["session_id"] != nil &&  GlobalVariables().KDefaults["user_id"] != nil {
-            
-            let sessionId = GlobalVariables().KDefaults["session_id"]!
-            let userId = GlobalVariables().KDefaults["user_id"]!
-            
-            let headers: HTTPHeaders = [
-                "Content-Type": "application/x-www-form-urlencoded"
-            ]
-            
-            let parameters:Parameters = [
-                "session_id": sessionId,
-                "user_id": userId
-            ]
-            
-            let endpoint = GlobalVariables().BaseURLString + "validate_session"
-            
-            Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success/*(let data)*/:
-                        if response.result.value != nil{
-                            let swiftyJsonVar = JSON(response.result.value!)
-
-                            let responseSuccess = swiftyJsonVar["success"]
-
-                        if responseSuccess.boolValue {
-//                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-//                            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileNavigation") as? UINavigationController
-                            self.window = UIWindow(frame: UIScreen.main.bounds)
-                            self.window?.makeKeyAndVisible()
-                            
-                            let customTabBar = KurozoraTabBarController()
-                            
-                            self.window?.rootViewController = customTabBar
-                        }else{
-                            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-                            self.window = UIWindow(frame: UIScreen.main.bounds)
-                            self.window?.rootViewController = vc
-                            self.window?.makeKeyAndVisible()
-                        }
-                    }
-                    case .failure(let err):
-                        NSLog("------------------DATA START-------------------")
-                        NSLog("Response String: \(String(describing: err))")
-                        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-                        self.window = UIWindow(frame: UIScreen.main.bounds)
-                        self.window?.rootViewController = vc
-                        self.window?.makeKeyAndVisible()
-                        NSLog("------------------DATA END-------------------")
-                    }
-                }
+        Request.validateSession(withSuccess: { (success) in
+            if success {
+                let customTabBar = KurozoraTabBarController()
+                self.window?.rootViewController = customTabBar
+            } else {
+                let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = vc
+                self.window?.makeKeyAndVisible()
             }
+        })
         
         return true
     }
@@ -116,6 +74,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        let sessionId = GlobalVariables().KDefaults["session_id"]
+        Request.deleteSession(sessionId!, withSuccess: { (success) in
+
+        }) { (errorMsg) in
+            
+        }
     }
 
 }

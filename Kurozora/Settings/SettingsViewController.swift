@@ -53,16 +53,28 @@ class SettingsViewController: UITableViewController {
 //    }
     
     // MARK: - IBActions
-    @IBAction func logoutPressed(sender: AnyObject) {
-        if User.currentUserLoggedIn() {
-            // Logged In both, logout
-            WorkflowController.logoutUser()
-            
-            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-            self.present(vc, animated: false)
-        }
-    }
+//    @IBAction func logoutPressed(sender: AnyObject) {
+//        if User.isLoggedIn() {
+//            let sessionId = User.currentSessionId()
+//            let userId = User.currentId()
+//
+//            // Logged In both, logout
+//            Request.logout(sessionId!,
+//                          userId!,
+//                          withSuccess: { (success) in
+//                            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+//                            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+//                            self.present(vc, animated: false)
+////                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+////                            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+////                            self.window = UIWindow(frame: UIScreen.main.bounds)
+////                            self.window?.rootViewController = vc
+////                            self.window?.makeKeyAndVisible()
+//            }) { (errorMsg) in
+//                SCLAlertView().showError("Error logging out", subTitle: errorMsg)
+//            }
+//        }
+//    }
     
     @IBAction func followOnTwitterPressed(sender: AnyObject) {
         if let twitterUrl = URL(string: "https://twitter.com/kurozoraapp"){
@@ -90,19 +102,19 @@ class SettingsViewController: UITableViewController {
 
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-            if User.currentUserLoggedIn() {
+            if User.isLoggedIn() {
                 
-                let sessionId = GlobalVariables().KDefaults["session_id"]!
-                let userId = GlobalVariables().KDefaults["user_id"]!
+                let sessionId = User.currentSessionId()
+                let userId = User.currentId()
                 
-                Request.logout(sessionId,
-                              userId,
+                Request.logout(sessionId!,
+                              userId!,
                               withSuccess: { (success) in
                                 let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                                 let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
                                 self.present(vc, animated: true, completion: nil)
                 }) { (errorMsg) in
-                    SCLAlertView().showError("Error loggin out", subTitle: errorMsg)
+                    SCLAlertView().showError("Error logging out", subTitle: errorMsg)
                 }
             }
 //        case (0,1):

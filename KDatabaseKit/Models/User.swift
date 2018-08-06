@@ -26,13 +26,27 @@ public class User {
 //        return self.relationForKey("following")
 //    }
     
-    public class func currentUser() -> String? {
+    public class func username() -> String? {
         return GlobalVariables().KDefaults["username"]
     }
     
-    public class func currentUserLoggedIn() -> Bool {
-        return User.currentUser() != nil
+    public class func isLoggedIn() -> Bool {
+        return User.username() != nil
     }
+    
+    public class func currentId() -> String? {
+        return GlobalVariables().KDefaults["user_id"]
+    }
+    
+    public class func currentSessionId() -> String? {
+        return GlobalVariables().KDefaults["session_id"]
+    }
+    
+    public class func currentDevice() -> String? {
+        return UIDevice.modelName
+    }
+    
+    
 //
 //    public class func currentUserIsGuest() -> Bool {
 //
