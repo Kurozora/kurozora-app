@@ -25,7 +25,8 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    //    @IBOutlet weak var settingsButton: UIButton!
 
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -53,8 +54,6 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
-    
-    let username = User.username()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +69,6 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
-        
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileCell")
 
 //        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
@@ -85,8 +83,9 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        let username = User.username()
         usernameLabel.text = username
+        
         userBanner.image = UIImage(named: "colorful")
 
 //        if let profile = userProfile, profile.details.dataAvailable {

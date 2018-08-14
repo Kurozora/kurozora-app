@@ -233,6 +233,41 @@ public class Request {
                 }
         }
     }
-    
-}
 
+    //MARK: Anime Requests
+
+    //Get Anime
+    public class func getAnime(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+
+        let endpoint = GlobalVariables().BaseURLString + "anime/explore"
+        
+        Alamofire.request(endpoint, method: .get, headers: headers)
+            .responseJSON { response in
+                switch response.result {
+                case .success/*(let data)*/:
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+                        
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                        let responseData = swiftyJsonVar["anime"].array!
+                        
+                        if responseSuccess.boolValue {
+                            successHandler(responseData)
+                        }else{
+                            failureHandler(responseMessage.stringValue)
+                        }
+                    }
+                case .failure(let err):
+                    NSLog("------------------DATA START-------------------")
+                    NSLog("Response String: \(String(describing: err))")
+                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    NSLog("------------------DATA END-------------------")
+                }
+        }
+    }
+}

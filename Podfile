@@ -27,7 +27,9 @@ def common_pods
     pod 'SCLAlertView', '0.8'
     pod 'UIImageColors', '2.0.0'
     pod 'ESTabBarController-swift', '2.6.2'
-    pod 'SwiftTheme'
+    pod 'FSPagerView', :git => 'https://github.com/WenchaoD/FSPagerView', commit: '6e0a2b7fc95d7ba262b324337e1479f81a829da6'
+#    pod 'SwiftTheme', '0.4.1'
+#    pod 'CRRefresh', '1.0.0'
 end
 
 def project_pods
@@ -36,7 +38,7 @@ def project_pods
     pod 'IQKeyboardManagerSwift', '6.0.3'
     pod 'NGAParallaxMotion', '1.1.0'
     pod 'ImagePicker', '3.0.0'
-    pod 'Shimmer', '1.0.2'
+#    pod 'Shimmer', '1.0.2'
     pod 'XLPagerTabStrip', '8.0.1'
     pod 'Lightbox', '2.1.2'
     pod 'WhatsNew', '0.4.3'
@@ -44,7 +46,7 @@ def project_pods
 end
 
 def kurozora_pods
-    pod 'Hero'
+    # pod 'Hero'
 end
 
 target 'Kurozora' do

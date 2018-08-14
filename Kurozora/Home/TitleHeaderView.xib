@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,39 +12,38 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TitleHeaderView" rowHeight="30" id="KGk-i7-Jjw" customClass="TitleHeaderView" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="21"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="39.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="20.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News &amp; Updates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUP-3x-dCs" userLabel="Title Label">
-                        <rect key="frame" x="10" y="8" width="122" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="10" y="0.0" width="135.5" height="21.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osp-tM-r73" userLabel="Action Content View">
-                        <rect key="frame" x="504" y="0.0" width="96" height="39.5"/>
+                        <rect key="frame" x="504" y="0.0" width="96" height="20.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="OKj-Zm-47O" userLabel="Arrow">
-                                <rect key="frame" x="74" y="12" width="15" height="15"/>
-                                <color key="tintColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="74" y="2.5" width="15" height="15"/>
+                                <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="6ff-du-FVI"/>
                                     <constraint firstAttribute="width" constant="15" id="ogf-Il-v35"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UiQ-NH-m06" userLabel="Action Button">
-                                <rect key="frame" x="26" y="4" width="45" height="30"/>
+                                <rect key="frame" x="26" y="0.0" width="45" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Wtu-6c-btd"/>
+                                    <constraint firstAttribute="height" constant="21" id="Wtu-6c-btd"/>
                                     <constraint firstAttribute="width" constant="66" id="feO-i5-tmm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="See All">
-                                    <color key="titleColor" red="0.80784313725490198" green="0.81176470588235294" blue="0.81960784313725488" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="0.80784313725490198" green="0.81176470588235294" blue="0.81960784313725488" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -65,28 +64,19 @@
                             <constraint firstItem="OKj-Zm-47O" firstAttribute="centerY" secondItem="osp-tM-r73" secondAttribute="centerY" id="lLv-ik-rp6"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wednesday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NU0-hA-esQ" userLabel="Subtitle Label">
-                        <rect key="frame" x="10" y="25" width="66" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.41176470588235292" green="0.41176470588235292" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="osp-tM-r73" secondAttribute="trailing" id="BXB-WX-pTZ"/>
-                    <constraint firstItem="NU0-hA-esQ" firstAttribute="leading" secondItem="NUP-3x-dCs" secondAttribute="leading" id="M3I-Qz-XoT"/>
-                    <constraint firstItem="NUP-3x-dCs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-2" id="Pfy-Df-xc1"/>
+                    <constraint firstItem="NUP-3x-dCs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Pfy-Df-xc1"/>
                     <constraint firstItem="osp-tM-r73" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bRo-fh-Der"/>
                     <constraint firstItem="NUP-3x-dCs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="fBH-Xv-Vqg"/>
                     <constraint firstAttribute="bottom" secondItem="osp-tM-r73" secondAttribute="bottom" id="jjv-sn-2oK"/>
-                    <constraint firstItem="NU0-hA-esQ" firstAttribute="top" secondItem="NUP-3x-dCs" secondAttribute="bottom" constant="-3" id="zdM-fc-6hx"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="actionButton" destination="UiQ-NH-m06" id="HD8-TT-0or"/>
                 <outlet property="actionContentView" destination="osp-tM-r73" id="SN4-ZG-CbH"/>
-                <outlet property="subtitleLabel" destination="NU0-hA-esQ" id="9Sf-Sa-PQC"/>
                 <outlet property="titleLabel" destination="NUP-3x-dCs" id="X8N-nu-kGG"/>
             </connections>
         </tableViewCell>

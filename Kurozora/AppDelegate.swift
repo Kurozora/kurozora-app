@@ -32,16 +32,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        WorkflowController.logoutUser()
 
-        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = vc
-        self.window?.makeKeyAndVisible()
+//        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        self.window?.rootViewController = vc
+//        self.window?.makeKeyAndVisible()
         
         Request.validateSession(withSuccess: { (success) in
             if success {
                 let customTabBar = KurozoraTabBarController()
+                self.window = UIWindow(frame: UIScreen.main.bounds)
                 self.window?.rootViewController = customTabBar
+                self.window?.makeKeyAndVisible()
             } else {
                 let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
@@ -74,12 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        let sessionId = GlobalVariables().KDefaults["session_id"]
-        Request.deleteSession(sessionId!, withSuccess: { (success) in
-
-        }) { (errorMsg) in
-            
-        }
+//        let sessionId = GlobalVariables().KDefaults["session_id"]
+//        Request.deleteSession(sessionId!, withSuccess: { (success) in
+//
+//        }) { (errorMsg) in
+//
+//        }
     }
 
 }

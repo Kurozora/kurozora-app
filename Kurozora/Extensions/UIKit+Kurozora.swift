@@ -22,6 +22,67 @@ class DesignableLabel: UILabel {
 
 @IBDesignable
 class DesignableImageView: UIImageView {
+    @IBInspectable var topLeftRadius : CGFloat = 0{
+        didSet{
+            self.applyMask()
+        }
+    }
+    
+    @IBInspectable var topRightRadius : CGFloat = 0{
+        didSet{
+            self.applyMask()
+        }
+    }
+    @IBInspectable var bottomRightRadius : CGFloat = 0{
+        didSet{
+            self.applyMask()
+        }
+    }
+    
+    @IBInspectable var bottomLeftRadius : CGFloat = 0{
+        didSet{
+            self.applyMask()
+        }
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.applyMask()
+    }
+    
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    /*override func draw(_ rect: CGRect) {
+     super.draw(rect)
+     
+     }*/
+    
+    func applyMask()
+    {
+        let shapeLayer = CAShapeLayer(layer: self.layer)
+        shapeLayer.path = self.pathForCornersRounded(rect:self.bounds).cgPath
+        shapeLayer.frame = self.bounds
+        shapeLayer.masksToBounds = true
+        self.layer.mask = shapeLayer
+    }
+    
+    func pathForCornersRounded(rect:CGRect) ->UIBezierPath
+    {
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0 + topLeftRadius, y: 0))
+        path.addLine(to: CGPoint(x: rect.size.width - topRightRadius , y: 0))
+        path.addQuadCurve(to: CGPoint(x: rect.size.width , y: topRightRadius), controlPoint: CGPoint(x: rect.size.width, y: 0))
+        path.addLine(to: CGPoint(x: rect.size.width , y: rect.size.height - bottomRightRadius))
+        path.addQuadCurve(to: CGPoint(x: rect.size.width - bottomRightRadius , y: rect.size.height), controlPoint: CGPoint(x: rect.size.width, y: rect.size.height))
+        path.addLine(to: CGPoint(x: bottomLeftRadius , y: rect.size.height))
+        path.addQuadCurve(to: CGPoint(x: 0 , y: rect.size.height - bottomLeftRadius), controlPoint: CGPoint(x: 0, y: rect.size.height))
+        path.addLine(to: CGPoint(x: 0 , y: topLeftRadius))
+        path.addQuadCurve(to: CGPoint(x: 0 + topLeftRadius , y: 0), controlPoint: CGPoint(x: 0, y: 0))
+        path.close()
+        
+        return path
+    }
 }
 
 @IBDesignable

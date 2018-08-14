@@ -13,14 +13,15 @@ import UIKit
 class AnimeCell: UICollectionViewCell {
     
     static let id = "AnimeCell"
-    @IBOutlet weak var posterImageView: UIImageView?
+
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var etaLabel: UILabel?
-    @IBOutlet weak var informationLabel: UILabel?
-    @IBOutlet weak var ratingLabel: UILabel?
-    @IBOutlet weak var genresLabel: UILabel?
+    @IBOutlet weak var etaLabel: UILabel!
+    @IBOutlet weak var informationLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var statisticsLabel: UILabel!
+    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var inLibraryView: UIView?
-    
+
     // Poster only
     @IBOutlet weak var nextEpisodeNumberLabel: UILabel?
     @IBOutlet weak var etaTimeLabel: UILabel?

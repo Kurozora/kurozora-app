@@ -8,7 +8,6 @@
 
 import KCommonKit
 import UIKit
-//import ANParseKit
 
 class TableCellWithCollection: UITableViewCell {
     
@@ -16,12 +15,12 @@ class TableCellWithCollection: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-//    var dataSource: [Anime] = []
+    var dataSource : Array = [["title": "michael", "poster_url": "jackson"], ["title" : "bill", "poster_url" : "gates"], ["title" : "steve", "poster_url" : "jobs"], ["title" : "mark", "poster_url" : "zuckerberg"], ["title" : "anthony", "poster_url" : "quinn"]]
 //    var selectedAnimeCallBack: (Anime -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        AnimePosterCell.registerNibFor(collectionView: collectionView)
+        PosterCell.registerNibFor(collectionView: collectionView)
     }
     
     class func registerNibFor(tableView: UITableView) {
@@ -30,27 +29,27 @@ class TableCellWithCollection: UITableViewCell {
     }
 }
 
-//extension TableCellWithCollection: UICollectionViewDataSource, UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dataSource.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimePosterCell", for: indexPath as IndexPath) as? AnimePosterCell else {
-//            return UICollectionViewCell()
-//        }
-//
-//        let anime = dataSource[indexPath.row]
-//
-//        cell.imageView.setImageFrom(urlString: anime.imageUrl)
-//        cell.titleLabel.text = anime.title ?? ""
-//
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+extension TableCellWithCollection: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath as IndexPath) as? PosterCell else {
+            return UICollectionViewCell()
+        }
+
+        let anime = dataSource[indexPath.row]
+
+        cell.imageView.image = UIImage(named: anime["image_url"]!)
+        cell.titleLabel.text = anime["title"] ?? ""
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let anime = dataSource[indexPath.row]
 //        selectedAnimeCallBack?(anime)
-//    }
-//}
+    }
+}

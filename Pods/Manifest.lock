@@ -7,7 +7,7 @@ PODS:
   - ESTabBarController-swift (2.6.2)
   - Fabric (1.7.9)
   - FLAnimatedImage (1.0.12)
-  - Hero (1.2.0)
+  - FSPagerView (0.7.2)
   - Hue (3.0.1)
   - ImagePicker (3.0.0)
   - Imaginary (3.0.3):
@@ -26,7 +26,6 @@ PODS:
   - SDWebImage/GIF (4.3.3):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - Shimmer (1.0.2)
   - SwifterSwift (4.3.0):
     - SwifterSwift/AppKit (= 4.3.0)
     - SwifterSwift/CoreGraphics (= 4.3.0)
@@ -42,7 +41,6 @@ PODS:
   - SwifterSwift/MapKit (4.3.0)
   - SwifterSwift/SwiftStdlib (4.3.0)
   - SwifterSwift/UIKit (4.3.0)
-  - SwiftTheme (0.4.1)
   - SwiftyJSON (4.1.0)
   - TTTAttributedLabel-moolban (2.0.0.2)
   - UIImageColors (2.0.0)
@@ -56,7 +54,7 @@ DEPENDENCIES:
   - ESTabBarController-swift (= 2.6.2)
   - Fabric
   - FLAnimatedImage (= 1.0.12)
-  - Hero
+  - FSPagerView (from `https://github.com/WenchaoD/FSPagerView`, commit `6e0a2b7fc95d7ba262b324337e1479f81a829da6`)
   - ImagePicker (= 3.0.0)
   - IQKeyboardManagerSwift (= 6.0.3)
   - KeychainAccess (= 3.1.1)
@@ -66,9 +64,7 @@ DEPENDENCIES:
   - SCLAlertView (= 0.8)
   - SDWebImage (= 4.3.3)
   - SDWebImage/GIF (= 4.3.3)
-  - Shimmer (= 1.0.2)
   - SwifterSwift (= 4.3.0)
-  - SwiftTheme
   - SwiftyJSON (= 4.1.0)
   - TTTAttributedLabel-moolban (= 2.0.0.2)
   - UIImageColors (= 2.0.0)
@@ -83,7 +79,6 @@ SPEC REPOS:
     - ESTabBarController-swift
     - Fabric
     - FLAnimatedImage
-    - Hero
     - Hue
     - ImagePicker
     - Imaginary
@@ -93,9 +88,7 @@ SPEC REPOS:
     - NGAParallaxMotion
     - SCLAlertView
     - SDWebImage
-    - Shimmer
     - SwifterSwift
-    - SwiftTheme
     - SwiftyJSON
     - TTTAttributedLabel-moolban
     - UIImageColors
@@ -106,6 +99,9 @@ EXTERNAL SOURCES:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
+  FSPagerView:
+    :commit: 6e0a2b7fc95d7ba262b324337e1479f81a829da6
+    :git: https://github.com/WenchaoD/FSPagerView
   Keys:
     :path: Pods/CocoaPodsKeys
 
@@ -113,6 +109,9 @@ CHECKOUT OPTIONS:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
+  FSPagerView:
+    :commit: 6e0a2b7fc95d7ba262b324337e1479f81a829da6
+    :git: https://github.com/WenchaoD/FSPagerView
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -122,7 +121,7 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
   Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
+  FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
   Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
@@ -133,15 +132,13 @@ SPEC CHECKSUMS:
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
-  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
-  SwiftTheme: 36d71c4eed4b2c401c782cf036e4586c749a8173
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 1312fc9e8fcc223dea7b9b37dfef54d8b4e72359
+PODFILE CHECKSUM: 34da611a8dbf3e86bb25685b3c3487beb3eb76cf
 
 COCOAPODS: 1.5.0

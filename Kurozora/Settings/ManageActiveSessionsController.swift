@@ -25,7 +25,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     override func viewWillAppear(_ animated: Bool) {
         Request.getSessions( withSuccess: { (array) in
             self.sessionsArray = array
-            
+//            Update table with new information
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
             }
@@ -41,6 +41,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
         tableView.dataSource = self
     }
     
+//    MARK: - IBActions
     @IBAction func removeSession(sender: UIButton!) {
         let alertView = SCLAlertView()
         alertView.addButton("Yes!", action: {
@@ -66,6 +67,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
         alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
     }
     
+//    MARK: - Table
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Other sessions"
     }
@@ -104,10 +106,9 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
             sessionsCell.dateValueLable?.text = sessionsArray[indexPath.row]["last_validated"].stringValue
             sessionsCell.extraLable.text = sessionsArray[indexPath.row]["id"].stringValue
             sessionsCell.removeSessionButton.tag = indexPath.row
-            NSLog("------------------DATA START-------------------")
-            NSLog("Response String: \(String(describing: indexPath.row))")
-            NSLog("------------------DATA END-------------------")
-            
+//            NSLog("------------------DATA START-------------------")
+//            NSLog("Response String: \(String(describing: indexPath.row))")
+//            NSLog("------------------DATA END-------------------")
         }
         
         return sessionsCell

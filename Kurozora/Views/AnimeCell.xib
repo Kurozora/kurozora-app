@@ -1,21 +1,116 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AnimeCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCell" id="gTV-IL-0wX" customClass="AnimeCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="132"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <rect key="frame" x="0.0" y="0.0" width="340" height="132"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re:Zero Kara Hajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VjR-xI-VdN">
+                        <rect key="frame" x="107" y="0.0" width="218" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 6 - 6d 19h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60p-5p-Sb7">
+                        <rect key="frame" x="107" y="36" width="218" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                        <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV · Studio Feel · Manga" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08M-9D-uLA">
+                        <rect key="frame" x="107" y="53" width="218" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 9.12 ·  18342" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnG-0n-g7w">
+                        <rect key="frame" x="107" y="118" width="218" height="13.5"/>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
+                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DSB-NS-JPV" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="16" y="0.0" width="83" height="116"/>
+                        <color key="backgroundColor" red="1" green="0.9411680496" blue="0.33898008509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="83" id="Bs1-oJ-bEF"/>
+                            <constraint firstAttribute="height" constant="116" id="QDT-8b-Tyx"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFN-Gi-ZLc">
+                        <rect key="frame" x="333" y="0.0" width="7" height="132"/>
+                        <color key="backgroundColor" red="1" green="0.30112682070000002" blue="0.26366087329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="dcy-67-yNF"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action, Adventure, Drama" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xb5-Jf-fHg">
+                        <rect key="frame" x="107" y="70" width="218" height="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="DSB-NS-JPV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="1IS-ye-Ox2"/>
+                <constraint firstItem="Xb5-Jf-fHg" firstAttribute="top" secondItem="08M-9D-uLA" secondAttribute="bottom" id="5fo-MP-sP8"/>
+                <constraint firstItem="zFN-Gi-ZLc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7Be-V6-IL3"/>
+                <constraint firstItem="hnG-0n-g7w" firstAttribute="leading" secondItem="Xb5-Jf-fHg" secondAttribute="leading" id="8in-LI-4wl"/>
+                <constraint firstItem="08M-9D-uLA" firstAttribute="leading" secondItem="60p-5p-Sb7" secondAttribute="leading" id="8vA-AZ-gWf"/>
+                <constraint firstItem="zFN-Gi-ZLc" firstAttribute="leading" secondItem="VjR-xI-VdN" secondAttribute="trailing" constant="8" id="CBn-m4-eqO"/>
+                <constraint firstItem="VjR-xI-VdN" firstAttribute="leading" secondItem="DSB-NS-JPV" secondAttribute="trailing" constant="8" id="IUW-Pg-8dx"/>
+                <constraint firstItem="60p-5p-Sb7" firstAttribute="trailing" secondItem="VjR-xI-VdN" secondAttribute="trailing" id="LWN-p7-OqH"/>
+                <constraint firstAttribute="bottom" secondItem="zFN-Gi-ZLc" secondAttribute="bottom" id="LbP-S6-TVw"/>
+                <constraint firstAttribute="bottom" secondItem="DSB-NS-JPV" secondAttribute="bottom" constant="16" id="MS7-Ax-9d3"/>
+                <constraint firstItem="08M-9D-uLA" firstAttribute="trailing" secondItem="60p-5p-Sb7" secondAttribute="trailing" id="QhD-0h-yZA"/>
+                <constraint firstItem="60p-5p-Sb7" firstAttribute="leading" secondItem="VjR-xI-VdN" secondAttribute="leading" id="T5m-Lz-rOe"/>
+                <constraint firstAttribute="bottom" secondItem="hnG-0n-g7w" secondAttribute="bottom" constant="0.5" id="Tae-ye-WGA"/>
+                <constraint firstItem="08M-9D-uLA" firstAttribute="top" secondItem="60p-5p-Sb7" secondAttribute="bottom" id="aIK-L7-jfq"/>
+                <constraint firstItem="hnG-0n-g7w" firstAttribute="trailing" secondItem="Xb5-Jf-fHg" secondAttribute="trailing" id="d8h-Lu-rPc"/>
+                <constraint firstItem="Xb5-Jf-fHg" firstAttribute="leading" secondItem="08M-9D-uLA" secondAttribute="leading" id="gPZ-Bj-z0p"/>
+                <constraint firstItem="Xb5-Jf-fHg" firstAttribute="trailing" secondItem="08M-9D-uLA" secondAttribute="trailing" id="hQe-VA-Jwd"/>
+                <constraint firstItem="VjR-xI-VdN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lJg-jK-Yjf"/>
+                <constraint firstItem="DSB-NS-JPV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="pTm-5o-zoq"/>
+                <constraint firstAttribute="trailing" secondItem="zFN-Gi-ZLc" secondAttribute="trailing" id="rPU-HP-ewJ"/>
+                <constraint firstItem="60p-5p-Sb7" firstAttribute="top" secondItem="VjR-xI-VdN" secondAttribute="bottom" id="riX-kg-ba0"/>
+            </constraints>
+            <size key="customSize" width="276" height="161"/>
+            <connections>
+                <outlet property="etaLabel" destination="60p-5p-Sb7" id="Zx7-VF-pmA"/>
+                <outlet property="genreLabel" destination="Xb5-Jf-fHg" id="amd-N8-YyQ"/>
+                <outlet property="inLibraryView" destination="zFN-Gi-ZLc" id="TOu-HN-Mku"/>
+                <outlet property="informationLabel" destination="08M-9D-uLA" id="PRd-W7-hry"/>
+                <outlet property="posterImageView" destination="DSB-NS-JPV" id="jjL-2x-faG"/>
+                <outlet property="statisticsLabel" destination="hnG-0n-g7w" id="wy3-dU-Yhm"/>
+                <outlet property="titleLabel" destination="VjR-xI-VdN" id="GeV-ER-ung"/>
+            </connections>
+            <point key="canvasLocation" x="147" y="109"/>
         </collectionViewCell>
     </objects>
 </document>

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class TitleHeaderView: UITableViewCell {
@@ -14,8 +13,6 @@ class TitleHeaderView: UITableViewCell {
     static let id = "TitleHeaderView"
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var actionContentView: UIView!
     

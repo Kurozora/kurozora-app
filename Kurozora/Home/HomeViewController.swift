@@ -10,16 +10,30 @@ import Foundation
 import UIKit
 import KDatabaseKit
 import KCommonKit
-//import iAd
+import SCLAlertView
+import SwiftyJSON
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     enum HomeSection: Int {
-        case AiringToday, CurrentSeason, ExploreAll
+        case TopTVShows, LatestTVEpisodes, CurrentSeason
     }
     
+    var itemSize = CGSize(width: 0, height: 0)
+    
     @IBOutlet weak var headerViewController: UICollectionView!
-    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var horizontalShelfViewController: UICollectionView!
+    @IBOutlet weak var topAnimeHorizontalShelfViewController: UICollectionView!
+    @IBOutlet weak var newAnimeEpisodesHorizontalShelfViewController: UICollectionView!
+    
+    let horizontalShelfCollectionViewIdentifier = "HorizontalShelfCollectionCell"
+    let topAnimeShelfCollectionViewIdentifier = "PosterCell"
+    let topAnimeEpisodesShelfCollectionViewIdentifier = "topAnimeEpisodesShelfCollectionCell"
+    
+    var animeArray:[JSON] = []
+    
+//    fileprivate let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
 //    let sections: [String] = ["Airing Today", "Current Season", "Explore all anime"]
 //    var sectionDetails: [String] = ["", "", "with advanced filters"]
@@ -47,8 +61,8 @@ class HomeViewController: UIViewController {
 //        return airingDataSource[0]
 //    }
 //
-//    let currentSeasonalChartWithFanart: [Anime] = []
-//
+    let currentSeasonalChartWithFanart : Array = [["title": "Re:Zero Kara Hajimeru Isekai Seikatsu", "fanart": "colorful.png", "score": "9.99", "genre": "Action, Adventure & Drama"], ["title" : "Naruto", "fanart" : "colorful.png", "score": "9.78", "genre": "Action & Adventure"], ["title" : "One Piece", "fanart" : "colorful.png", "score": "9.89", "genre": "Action & Adventure"], ["title" : "Joey no Pico", "fanart" : "colorful.png", "score": "10.00", "genre": "Gay shit"]]
+    
 //    let chartsDataSource: [SeasonalChart] = []
     
 //    var headerTimer: Timer!
@@ -56,6 +70,41 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let posterCellNib = UINib.init(nibName: "PosterCell", bundle: nil)
+        self.topAnimeHorizontalShelfViewController.register(posterCellNib, forCellWithReuseIdentifier: "PosterCell")
+        self.newAnimeEpisodesHorizontalShelfViewController.register(posterCellNib, forCellWithReuseIdentifier: "PosterCell")
+        
+        horizontalShelfViewController.delegate = self
+        topAnimeHorizontalShelfViewController.delegate = self
+        newAnimeEpisodesHorizontalShelfViewController.delegate = self
+        
+        horizontalShelfViewController.dataSource = self
+        topAnimeHorizontalShelfViewController.dataSource = self
+        newAnimeEpisodesHorizontalShelfViewController.dataSource = self
+        
+        self.view.addSubview(horizontalShelfViewController)
+        self.view.addSubview(topAnimeHorizontalShelfViewController)
+        self.view.addSubview(newAnimeEpisodesHorizontalShelfViewController)
+        
+        let searchController = UISearchController(searchResultsController: nil)
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+        }
+        
+//        if let layout = horizontalShelfViewController.collectionViewLayout as? UICollectionViewFlowLayout {
+//            layout.minimumLineSpacing = 10
+//            layout.minimumInteritemSpacing = 10
+//        }
+//        horizontalShelfViewController.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+//        horizontalShelfViewController.isPagingEnabled = false
+//        view.layoutIfNeeded()
+//
+//        let width = horizontalShelfViewController.bounds.size.width-24
+//        let height = width * (3/4)
+//        itemSize = CGSize(width: width, height: height)
+//        view.layoutIfNeeded()
         
         // FIXME: WARNING CHECK THIS OUT
 //        TitleHeaderView.registerNibFor(tableView: tableView)
@@ -73,7 +122,7 @@ class HomeViewController: UIViewController {
 //        var frame = tableView.tableHeaderView!.frame
 //        frame.size.height = UIDevice.current.userInterfaceIdiom == .pad ? 250 : 185
 //        tableView.tableHeaderView!.frame = frame
-        
+//
 //        updateHeaderViewControllerLayout(withSize: CGSize(width: view.bounds.width, height: frame.size.height))
     }
     
@@ -85,10 +134,18 @@ class HomeViewController: UIViewController {
 //    }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 //        headerTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(moveHeaderView), userInfo: nil, repeats: true)
+        Request.getAnime( withSuccess: { (array) in
+            self.animeArray = array
+            
+            DispatchQueue.main.async() {
+                self.topAnimeHorizontalShelfViewController.reloadData()
+            }
+        }) { (errorMsg) in
+            SCLAlertView().showError("Anime", subTitle: errorMsg)
+        }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 //        if let timer = headerTimer {
@@ -97,16 +154,134 @@ class HomeViewController: UIViewController {
 //        headerTimer = nil
     }
     
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        let pageWidth = itemSize.width
+//        targetContentOffset.pointee = scrollView.contentOffset
+//        var factor: CGFloat = 0.5
 //
-//        defer {
-//            super.viewWillTransition(to: size, with: coordinator)
+//        if velocity.x < 0 {
+//            factor = -factor
+//            print("right")
+//        } else {
+//            print("left")
 //        }
 //
+//        let a:CGFloat = scrollView.contentOffset.x/pageWidth
+//        var index = Int( round(a+factor) )
+//
+//        if index < 0 {
+//            index = 0
+//        }
+//
+//        if index > 6 - 1 {
+//            index = 6 - 1
+//        }
+//
+////        let indexPath = IndexPath(row: index, section: 0)
+////        horizontalShelfCollectionView?.scrollToItem(at: indexPath, at: .left, animated: true)
+//    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout protocol
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInsets
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return itemSize
+//    }
+    
+    // MARK: - UICollectionViewDataSource protocol
+    
+    // My function
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.horizontalShelfViewController {
+            return 6 // Replace with count of your data for collectionViewA
+        }else if collectionView == self.topAnimeHorizontalShelfViewController {
+            return animeArray.count
+        }
+
+        return animeArray.count // Replace with count of your data for collectionViewB
+    }
+    
+//     make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == self.horizontalShelfViewController {
+            // get a reference to our storyboard cell
+            let horizontalShelfCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalShelfCollectionCell", for: indexPath as IndexPath) as! HorizontalShelfCollectionCell
+            
+            // Use the outlet in our custom class to get a reference in the cell
+            horizontalShelfCollectionCell.titleLabel.text = "ReZero: Kara Hajimeru Isekai Seikatsu"
+            horizontalShelfCollectionCell.subtitleLabel.text = "Action - Adventure - Fantasy - Game - Romance"
+            horizontalShelfCollectionCell.bannerImageView.image = UIImage(named: "aozora.png")
+            horizontalShelfCollectionCell.shadowImageView.image = UIImage(named: "shadow.png")
+            
+            //        self.collectionView.register(PosterCell.self, forCellWithReuseIdentifier: "PosterCell")
+            
+            return horizontalShelfCollectionCell
+        }
+        else if collectionView == self.topAnimeHorizontalShelfViewController {
+            // get a reference to our storyboard cell
+            let topAnimeShelfCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath as IndexPath) as! PosterCell
+            
+            // Use the outlet in our custom class to get a reference in the cell
+            topAnimeShelfCollectionCell.titleLabel.text = animeArray[indexPath.row]["title"].stringValue
+            topAnimeShelfCollectionCell.scoreLabel.text = "9.99"
+            topAnimeShelfCollectionCell.genreLabel.text = "Action & Adventure"
+
+            do {
+                let url = URL(string: animeArray[indexPath.row]["poster_url"].stringValue)
+                let data = try Data(contentsOf: url!)
+                topAnimeShelfCollectionCell.imageView.image = UIImage(data: data)
+            }
+            catch{
+                print(error)
+            }
+            
+            return topAnimeShelfCollectionCell
+        }
+        else {
+            // get a reference to our storyboard cell
+            let newAnimeEpisodesShelfCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath as IndexPath) as! PosterCell
+            
+            // Use the outlet in our custom class to get a reference in the cell
+            newAnimeEpisodesShelfCollectionCell.titleLabel.text = animeArray[indexPath.row]["title"].stringValue
+            newAnimeEpisodesShelfCollectionCell.scoreLabel.text = "9.99"
+            newAnimeEpisodesShelfCollectionCell.genreLabel.text = "Action & Adventure"
+            
+            do {
+                let url = URL(string: animeArray[indexPath.row]["poster_url"].stringValue)
+                let data = try Data(contentsOf: url!)
+                newAnimeEpisodesShelfCollectionCell.imageView.image = UIImage(data: data)
+            }
+            catch{
+                print(error)
+            }
+            
+            return newAnimeEpisodesShelfCollectionCell
+        }
+    }
+    
+    // MARK: - UICollectionViewDelegate protocol
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        horizontalShelfViewController.scrollToItem(at: indexPath, at: .left, animated: true)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+
+        defer {
+            super.viewWillTransition(to: size, with: coordinator)
+        }
+
 //        if !UIDevice.current.userInterfaceIdiom == .pad {
 //            return
 //        }
-        
+//
 //        let nextIndexPath = self.headerCellIndexPath(next: false)
 //        let headerSize = CGSize(width: size.width, height: self.headerViewController.bounds.size.height)
 //
@@ -124,7 +299,7 @@ class HomeViewController: UIViewController {
 //        }) { (context) in
 //
 //        }
-//    }
+    }
 //
 //    func updateHeaderViewControllerLayout(withSize: CGSize) {
 //        guard let layout = headerViewController.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -283,7 +458,7 @@ class HomeViewController: UIViewController {
 //        let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
 //        navigationController?.pushViewController(controller, animated: true)
 //    }
-    
+//
 //    func showSeasonalCharts() {
 //        let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateViewController(withIdentifier: "ChartViewController")
 //        navigationController?.pushViewController(seasons, animated: true)
@@ -297,10 +472,12 @@ class HomeViewController: UIViewController {
 //    }
 //}
 
+// MARK: TableCellWithCollection
+
 //extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 //
 //    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        return sections.count
+//        return 1
 //    }
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return 1
@@ -312,16 +489,12 @@ class HomeViewController: UIViewController {
 //        }
 //
 //        switch HomeSection(rawValue: indexPath.section)! {
-//        case .AiringToday:
-//            cell.dataSource = airingToday
-//        case .CurrentSeason:
-//            cell.dataSource = currentSeasonalChartDataSource
-//        case .ExploreAll:
-//            cell.dataSource = exploreAllAnimeDataSource
-//        }
-//
-//        cell.selectedAnimeCallBack = { anime in
-//            self.animator = self.presentAnimeModal(anime)
+//        case .TopTVShows: break
+////            cell.dataSource = airingToday
+//        case .LatestTVEpisodes: break
+////            cell.dataSource = currentSeasonalChartDataSource
+//        case .CurrentSeason: break
+////            cell.dataSource = exploreAllAnimeDataSource
 //        }
 //
 //        cell.collectionView.reloadData()
@@ -337,30 +510,31 @@ class HomeViewController: UIViewController {
 //        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TitleHeaderView") as? TitleHeaderView else {
 //            return UIView()
 //        }
-//        cell.titleLabel.text = sections[section]
-//        cell.subtitleLabel.text = sectionDetails[section]
-//        cell.section = section
+//        cell.titleLabel.text = "Top TV Shows"
+//        cell.section = 1
 //
 //        switch HomeSection(rawValue: section)! {
-//        case .AiringToday:
-//            cell.actionButton.setTitle("Calendar", for: .normal)
+//        case .TopTVShows:
+//            cell.actionButton.setTitle("Top TV Shows", for: .normal)
+//        case .LatestTVEpisodes:
+//            cell.actionButton.setTitle("Latest TV Episodes", for: .normal)
 //        case .CurrentSeason:
-//            cell.actionButton.setTitle("Seasons", for: .normal)
-//        case .ExploreAll:
-//            cell.actionButton.setTitle("Discover", for: .normal)
+//            cell.actionButton.setTitle("Current Season", for: .normal)
 //        }
-        
+//
+//        cell.actionButton.setTitle("Top TV Shows", for: .normal)
+//
 //        cell.actionButtonCallback = { section in
 //            switch HomeSection(rawValue: section)! {
-//            case .AiringToday:
-//                self.showCalendar()
-//            case .CurrentSeason:
-//                self.showSeasonalCharts()
-//            case .ExploreAll:
-//                self.showBrowse()
+//            case .TopTVShows: break
+////                self.showCalendar()
+//            case .LatestTVEpisodes: break
+////                self.showSeasonalCharts()
+//            case .CurrentSeason: break
+////                self.showBrowse()
 //            }
 //        }
-        
+//
 //        return cell
 //    }
 //
@@ -371,31 +545,31 @@ class HomeViewController: UIViewController {
 
 // MARK: - HeaderViewController DataSource, Delegate
 
-//extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+//extension HomeViewController {
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return currentSeasonalChartWithFanart.count
+//        return 4
 //    }
 //
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //
-//        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BasicCollectionCell", forIndexPath: indexPath) as? BasicCollectionCell else {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as? PosterCell else {
 //            return UICollectionViewCell()
 //        }
 //
 //        let anime = currentSeasonalChartWithFanart[indexPath.row]
 //
-//        if let fanart = anime.fanart {
-//            cell.titleimageView.setImageFrom(urlString: fanart)
+//        if let fanart = anime["fanart"] {
+//            cell.imageView.image = UIImage(named: fanart)
 //        }
 //
-//        AnimeCell.updateInformationLabel(anime, informationLabel: cell.subtitleLabel)
-//        cell.titleLabel.text = anime.title ?? ""
+//        cell.titleLabel.text = anime["title"] ?? ""
+//        cell.scoreLabel.text = anime["score"] ?? ""
+//        cell.genreLabel.text = anime["genre"] ?? ""
 //
 //        return cell
 //    }
 //
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let anime = currentSeasonalChartWithFanart[indexPath.row]
-//        animator = presentAnimeModal(anime)
+//
 //    }
 //}
