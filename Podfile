@@ -28,7 +28,8 @@ def common_pods
     pod 'UIImageColors', '2.0.0'
     pod 'ESTabBarController-swift', '2.6.2'
     pod 'FSPagerView', :git => 'https://github.com/WenchaoD/FSPagerView', commit: '6e0a2b7fc95d7ba262b324337e1479f81a829da6'
-#    pod 'SwiftTheme', '0.4.1'
+#    pod 'SnowGlobe'
+    pod 'SwiftTheme', '0.4.1'
 #    pod 'CRRefresh', '1.0.0'
 end
 
