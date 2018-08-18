@@ -104,15 +104,14 @@ class SettingsViewController: UITableViewController {
         case (0,0):
             if User.isLoggedIn() {
                 
-                let sessionId = User.currentSessionId()
+                let sessionId = User.currentSessionSecret()
                 let userId = User.currentId()
                 
-                Request.logout(sessionId!,
-                              userId!,
-                              withSuccess: { (success) in
-                                let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                                self.present(vc, animated: true, completion: nil)
+                Request.logout(sessionId!, userId!, withSuccess: { (success) in
+                    let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                    
+                    self.present(vc, animated: true, completion: nil)
                 }) { (errorMsg) in
                     SCLAlertView().showError("Error logging out", subTitle: errorMsg)
                 }

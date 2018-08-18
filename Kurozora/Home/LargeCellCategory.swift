@@ -29,11 +29,48 @@ class LargeCategoryCell: CategoryCell {
     
     private class LargeShowCell: ShowCell {
         
+        private let shadowView: UIImageView = {
+            let iv = UIImageView()
+            iv.image = UIImage(named: "shadow")
+            iv.contentMode = .scaleToFill
+            iv.layer.cornerRadius = 10
+            iv.layer.masksToBounds = true
+            return iv
+        }()
+        
         fileprivate override func setupViews() {
-            addSubview(imageView)
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imageView]))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imageView]))
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .vertical)
+            
+            shadowView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+            shadowView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
+            
+            // Prepare auto layout
+            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            shadowView.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            // Add them to the view
+            addSubview(bannerView)
+            addSubview(shadowView)
+            addSubview(titleLabel)
+            
+            // Banner view constraint
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            
+            // Shadow view constraint
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerView, attribute: .trailing, multiplier: 1.0, constant: 0))
+            
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .top, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerView, attribute: .bottom, multiplier: 1.0, constant: 0))
+            
+            // Title label constraint
+            addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 8))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: titleLabel, attribute: .trailing, multiplier: 1.0, constant: 8))
+            
+            addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0))
         }
         
     }

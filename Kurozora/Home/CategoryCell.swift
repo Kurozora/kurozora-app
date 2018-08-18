@@ -14,9 +14,15 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     var showCategory: ShowCategory? {
         didSet {
-            if let name = showCategory?.title {
-                nameLabel.text = name
+            if let title = showCategory?.title {
+                titleLabel.text = title
             }
+            showsCollectionView.reloadData()
+        }
+    }
+    
+    var featuredShows: [Show]? {
+        didSet {
             showsCollectionView.reloadData()
         }
     }
@@ -24,7 +30,10 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
     let showsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -37,9 +46,10 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
         return view
     }()
     
-    private let nameLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -48,41 +58,49 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
     
     override func setupViews() {
         super.setupViews()
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         
+        // Prepare auto layout
         showsCollectionView.register(ShowCell.self, forCellWithReuseIdentifier: showCellId)
         showsCollectionView.dataSource = self
         showsCollectionView.delegate = self
         
+        // Add them to the view
         addSubview(showsCollectionView)
         addSubview(dividerLineView)
-        addSubview(nameLabel)
+        addSubview(titleLabel)
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["v0": nameLabel]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["v0": dividerLineView]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["v0": showsCollectionView]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["nameLabel": nameLabel, "v0": showsCollectionView, "v1": dividerLineView]))
+        // Category collection view constraint
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[titleLabel]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["titleLabel": titleLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[dividerLineView]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["dividerLineView": dividerLineView]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[showsCollectionView]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["showsCollectionView": showsCollectionView]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[titleLabel(30)][showsCollectionView][dividerLineView(0.5)]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["titleLabel": titleLabel, "showsCollectionView": showsCollectionView, "dividerLineView": dividerLineView]))
     }
     
+    // Collection view items in section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = showCategory?.shows?.count { return count }
         return 0
     }
     
+    // Collection view item cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: showCellId, for: indexPath) as! ShowCell
         cell.show = showCategory?.shows?[indexPath.item]
         return cell
     }
     
+    // Collection view item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: frame.height - 32)
     }
     
+    // Collection view insets
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
     }
     
+    // Collection view item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let show = showCategory?.shows?[indexPath.item] {
             featuredShowsViewController?.showDetailFor(show)

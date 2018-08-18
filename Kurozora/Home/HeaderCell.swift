@@ -10,44 +10,133 @@ import UIKit
 
 class Header: CategoryCell {
     
-    let bannerCellId = "bannerCellid"
+    let bannerCellId = "bannerCellId"
     
     override func setupViews() {
         super.setupViews()
+        titleLabel.removeFromSuperview()
+        
         showsCollectionView.register(BannerCell.self, forCellWithReuseIdentifier: bannerCellId)
+        
         showsCollectionView.dataSource = self
         showsCollectionView.delegate = self
         showsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Shows collection view constraint
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": showsCollectionView]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": showsCollectionView]))
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    // Collection view items in section
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let count = featuredShows?.count { return count }
+        return 0
     }
     
+    // Collection header item cell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: bannerCellId, for: indexPath) as! ShowCell
-        cell.show = showCategory?.shows?[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: bannerCellId, for: indexPath) as! BannerCell
+        cell.banner = featuredShows?[indexPath.item]
         return cell
     }
     
+    // Collection header item size
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width / 2 + 50, height: frame.height)
     }
     
-    private class BannerCell: ShowCell {
+    // Collection header insets
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    // Collection view item selected
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let banner = featuredShows?[indexPath.item] {
+            featuredShowsViewController?.showDetailFor(banner)
+        }
+    }
+    
+    // Top banner
+    fileprivate class BannerCell: ShowCell {
         
-        fileprivate override func setupViews() {
-            imageView.layer.cornerRadius = 0
-            imageView.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
-            imageView.layer.borderWidth = 0.5
-            addSubview(imageView)
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imageView]))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imageView]))
+        var banner: Show? {
+            didSet {
+                guard let banner = banner else { return }
+                configure(banner)
+            }
         }
         
+        private let shadowView: UIImageView = {
+            let iv = UIImageView()
+            iv.image = UIImage(named: "shadow")
+            iv.contentMode = .scaleToFill
+            iv.layer.cornerRadius = 10
+            iv.layer.masksToBounds = true
+            return iv
+        }()
+        
+        fileprivate override func setupViews() {
+            
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .vertical)
+            
+            // Prepare auto layout
+            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            shadowView.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            genreLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            // Add them to the view
+            addSubview(bannerView)
+            addSubview(shadowView)
+            addSubview(titleLabel)
+            addSubview(genreLabel)
+            
+            // Banner view constraint
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            
+            // Shaodw view constraint
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerView, attribute: .trailing, multiplier: 1.0, constant: 0))
+            
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .top, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerView, attribute: .bottom, multiplier: 1.0, constant: 0))
+            
+            // Title label constraint
+            addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: shadowView, attribute: .leading, multiplier: 1.0, constant: 8))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: titleLabel, attribute: .trailing, multiplier: 1.0, constant: 8))
+            
+            // Genre label constraint
+            addConstraint(NSLayoutConstraint(item: genreLabel, attribute: .leading, relatedBy: .equal, toItem: titleLabel, attribute: .leading, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: genreLabel, attribute: .trailing, relatedBy: .equal, toItem: titleLabel, attribute: .trailing, multiplier: 1.0, constant: 0))
+            
+            addConstraint(NSLayoutConstraint(item: genreLabel, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: genreLabel, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0))
+        }
+        
+        fileprivate override func configure(_ show: Show?) {
+            // Configure title label
+            if let title = show?.title {
+                titleLabel.text = title
+            } else {
+                titleLabel.text = "Undefined"
+            }
+            
+            // Configure genre label
+            if let genre = show?.genre {
+                genreLabel.text = genre
+            } else {
+                genreLabel.text = "N/A"
+            }
+            
+            // Configure banner url
+            if let bannerUrl = show?.bannerUrl {
+                bannerView.loadImage(urlString: bannerUrl)
+            } else {
+                bannerView.image = UIImage(named: "colorful")
+            }
+        }
     }
 }

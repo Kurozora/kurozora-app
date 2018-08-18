@@ -15,9 +15,9 @@ public class SessionManager {
     class func verify() -> Bool{
         var segue = false
         
-        if User.currentSessionId() != nil {
+        if User.currentSessionSecret() != nil {
             
-            let sessionId = User.currentSessionId()
+            let sessionId = User.currentSessionSecret()
             let userId = User.currentId()
             let device   = UIDevice.modelName
             

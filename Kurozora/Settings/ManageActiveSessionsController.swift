@@ -25,6 +25,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     override func viewWillAppear(_ animated: Bool) {
         Request.getSessions( withSuccess: { (array) in
             self.sessionsArray = array
+            
 //            Update table with new information
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
@@ -49,9 +50,9 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
             let point = sender.superview!.convert(center, to:self.tableView)
             let indexPath = self.tableView.indexPathForRow(at: point)
             let cell = self.tableView.cellForRow(at: indexPath!) as! SessionsCell
-            let sessionId =  cell.extraLable.text
+            let sessionSecret =  Int(cell.extraLable.text!)
             
-            Request.deleteSession(sessionId!, withSuccess: { (success) in
+            Request.deleteSession(sessionSecret!, withSuccess: { (success) in
                 if success {
                     let buttonPosition: CGPoint = sender.convert(sender.bounds.origin, to: self.tableView)
                     let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
@@ -94,7 +95,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sessionsCell:SessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath as IndexPath) as! SessionsCell
         
-        if sessionsArray[indexPath.row]["id"].stringValue == GlobalVariables().KDefaults["session_id"] {
+        if sessionsArray[indexPath.row]["secret"].stringValue == GlobalVariables().KDefaults["session_secret"] {
             currentIPAddress.text = sessionsArray[indexPath.row]["ip"].stringValue
             currentDeviceType.text = "Kurozora for iOS " + platform + " on " +  sessionsArray[indexPath.row]["device"].stringValue
         } else {

@@ -55,17 +55,16 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
         loginButton.isEnabled = false
         
-        Request.login(username,
-                      password,
-                      device,
-                      withSuccess: { (success) in
-                        let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-                        self.window = UIWindow(frame: UIScreen.main.bounds)
-                        self.window?.rootViewController = vc
-                        self.window?.makeKeyAndVisible()
-                        let customTabBar = KurozoraTabBarController()
-                        self.window?.rootViewController = customTabBar
+        Request.login(username, password, device, withSuccess: { (success) in
+            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            
+            let customTabBar = KurozoraTabBarController()
+            self.window?.rootViewController = customTabBar
         }) { (errorMsg) in
             SCLAlertView().showError("Error logging in", subTitle: errorMsg)
         }

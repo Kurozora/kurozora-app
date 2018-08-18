@@ -31,7 +31,7 @@ class ShowDetailViewController: UICollectionViewController, UICollectionViewDele
         }
     }
     
-    private func fetchShowDetailsFor(_ id: String, completionHandler: @escaping (Show) -> ()) {
+    private func fetchShowDetailsFor(_ id: Int, completionHandler: @escaping (Show) -> ()) {
         let urlString = "https://api.letsbuildthatapp.com/appstore/appdetail?id=\(id)"
         URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
             guard let data = data else { return }

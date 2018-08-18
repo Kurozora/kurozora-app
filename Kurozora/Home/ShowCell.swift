@@ -17,82 +17,125 @@ class ShowCell: BaseCell {
         }
     }
     
-    let imageView: UIImageView = {
-        let iv = UIImageView()
+    private let posterView: CachedImageView = {
+        let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 16
+        iv.layer.cornerRadius = 10
         iv.layer.masksToBounds = true
         return iv
     }()
     
-    private let nameLabel: UILabel = {
+    let bannerView: CachedImageView = {
+        let iv = CachedImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 10
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         label.textColor = .white
         label.numberOfLines = 2
         return label
     }()
     
-    private let categoryLabel: UILabel = {
+    let genreLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .darkGray
+        label.textColor = UIColor.init(red: 149/255.0, green: 157/255.0, blue: 173/255.0, alpha: 1.0)
         return label
     }()
     
-    private let priceLabel: UILabel = {
+    let scoreLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .darkGray
+        label.font = UIFont(name: "FontAwesome", size: 13)
+        label.textColor = .white
+        label.backgroundColor = UIColor.init(red: 255/255.0, green: 177/255.0, blue: 10/255.0, alpha: 1.0)
+        label.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.textAlignment = .center
         return label
     }()
     
     override func setupViews() {
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(categoryLabel)
-        addSubview(priceLabel)
+        // Prepare auto layout
+        posterView.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        genreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
-        nameLabel.frame = CGRect(x: 0, y: frame.width + 2, width: frame.width, height: 40)
-        categoryLabel.frame = CGRect(x: 0, y: frame.width + 38, width: frame.width, height: 20)
-        priceLabel.frame = CGRect(x: 0, y: frame.width + 56, width: frame.width, height: 20)
+        // Add them to the view
+        addSubview(posterView)
+        addSubview(titleLabel)
+        addSubview(genreLabel)
+        addSubview(scoreLabel)
+        
+        // Place them nicely
+        posterView.frame = CGRect(x: 0, y: 10, width: 85, height: 124)
+        titleLabel.frame = CGRect(x: 0, y: posterView.frame.maxY + 2, width: 85, height: titleLabel.frame.height)
+        genreLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY, width: 85, height: 16)
+        scoreLabel.frame = CGRect(x: 18, y: 0, width: 48, height: 20)
     }
     
-    private func configure(_ show: Show) {
-        if let name = show.title {
-            nameLabel.text = name
-            let rect = String(name).boundingRect(with: CGSize(width: frame.width, height: 1000), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+    func configure(_ show: Show?) {
+        
+        // Configure title label
+        if let title = show?.title {
+            titleLabel.text = title
+            
+            // Emulate a label with title inside - NEEDS TO BE REWRITTEN MORE EFFICIENTLY
+            let rect = String(title).boundingRect(with: CGSize(width: 85, height: 168), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13)], context: nil)
+            
+            // Change label height programmatically
             if rect.height > 20 {
-                categoryLabel.frame = CGRect(x: 0, y: frame.width + 38, width: frame.width, height: 20)
-                priceLabel.frame = CGRect(x: 0, y: frame.width + 56, width: frame.width, height: 20)
+                genreLabel.frame = CGRect(x: 0, y: 168, width: 85, height: 16)
             } else {
-                categoryLabel.frame = CGRect(x: 0, y: frame.width + 22, width: frame.width, height: 20)
-                priceLabel.frame = CGRect(x: 0, y: frame.width + 40, width: frame.width, height: 20)
+                genreLabel.frame = CGRect(x: 0, y: 152.5, width: 85, height: 16)
             }
-            nameLabel.frame = CGRect(x: 0, y: frame.width + 5, width: frame.width, height: 40)
-            nameLabel.sizeToFit()
-        }
-        
-        if let category = show.genre {
-            categoryLabel.text = category
-        }
-        
-        if let price = show.score {
-            priceLabel.text = "Rank: \(price)"
+            
+            titleLabel.sizeToFit()
         } else {
-            priceLabel.text = "Rank: 9999"
+            titleLabel.text = "Undefined"
+            titleLabel.sizeToFit()
         }
         
-        if let imageName = show.imageName {
-            do {
-                let url = URL(string: imageName)
-                let data = try Data(contentsOf: url!)
-                imageView.image = UIImage(data: data)
+        // Configure genre label
+        if let genre = show?.genre {
+            genreLabel.text = genre
+        } else {
+            genreLabel.text = "N/A"
+        }
+        
+        // Configure score label
+        if let score = show?.score {
+            scoreLabel.text = " \(score)"
+            
+            // Change color based on score
+            if score > 5.0 {
+                scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 177/255.0, blue: 10/255.0, alpha: 1.0)
+            } else {
+                scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
             }
-            catch{
-                print(error)
-            }
+        } else {
+            scoreLabel.text = " 0.00"
+            scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
+        }
+        
+        // Configure poster url
+        if let posterUrl = show?.posterUrl {
+            posterView.loadImage(urlString: posterUrl)
+        } else {
+            posterView.image = UIImage(named: "colorful")
+        }
+        
+        // Configure banner url
+        if let bannerUrl = show?.bannerUrl {
+            bannerView.loadImage(urlString: bannerUrl)
+        } else {
+            bannerView.image = UIImage(named: "aozora")
         }
     }
     

@@ -14,6 +14,8 @@ import SCLAlertView
 
 public class Request {
 
+//    MARK: - User
+    
 //    Login user
     public class func login(_ username:String, _ password:String, _ device:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         
@@ -38,12 +40,12 @@ public class Request {
 
                     let responseSuccess = swiftyJsonVar["success"]
                     let responseMessage = swiftyJsonVar["error_message"]
-                    let responseSession = swiftyJsonVar["session_id"]
-                    let responseUserId = swiftyJsonVar["user_id"]
+                    let responseSession = swiftyJsonVar["session_secret"]
+                    let responseUserId = swiftyJsonVar["user_id"].intValue
 
                     if responseSession != JSON.null {
-                        GlobalVariables().KDefaults["user_id"] = responseUserId.rawValue as? String
-                        GlobalVariables().KDefaults["session_id"] =  responseSession.rawValue as? String
+                        try? GlobalVariables().KDefaults.set("\(responseUserId)", key: "user_id")
+                        try? GlobalVariables().KDefaults.set((responseSession.rawValue as? String)!, key: "session_secret")
                         try? GlobalVariables().KDefaults.set(username, key: "username")
 
                         if responseSuccess.boolValue {
@@ -62,14 +64,14 @@ public class Request {
     }
     
 //    Logout user
-    public class func logout(_ sessionId:String, _ userId:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
+    public class func logout(_ sessionSecret:String, _ userId:Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
 
         let headers: HTTPHeaders = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         
         let parameters:Parameters = [
-            "session_id": sessionId,
+            "session_secret": sessionSecret,
             "user_id": userId
         ]
         
@@ -94,18 +96,20 @@ public class Request {
                 }
             case .failure(let err):
                 NSLog("------------------DATA START-------------------")
-                NSLog("Response String: \(String(describing: err))")
+                NSLog("Logout Response String: \(String(describing: err))")
                 SCLAlertView().showError("Error logging in", subTitle: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                 NSLog("------------------DATA END-------------------")
             }
         }
     }
-
+    
+//    MARK: - Sessions
+    
 //    Validate session
     public class func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
-        if User.currentSessionId() != nil &&  User.currentId() != nil {
+        if User.currentSessionSecret() != nil &&  User.currentId() != nil {
             
-            let sessionId = User.currentSessionId()!
+            let sessionSecret = User.currentSessionSecret()!
             let userId = User.currentId()!
             
             let headers: HTTPHeaders = [
@@ -113,7 +117,7 @@ public class Request {
             ]
             
             let parameters:Parameters = [
-                "session_id": sessionId,
+                "session_secret": sessionSecret,
                 "user_id": userId
             ]
             
@@ -136,17 +140,18 @@ public class Request {
                         }
                     case .failure(let err):
                         NSLog("------------------DATA START-------------------")
-                        NSLog("Response String: \(String(describing: err))")
+                        NSLog("Validate Session Response String: \(String(describing: err))")
                         successHandler(false)
                         NSLog("------------------DATA END-------------------")
                 }
             }
         }
+        successHandler(false)
     }
     
 //    Get sessions
     public class func getSessions(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void){
-        let sessionId = User.currentSessionId()
+        let sessionSecret = User.currentSessionSecret()
         let userId = User.currentId()
         
         let headers: HTTPHeaders = [
@@ -154,7 +159,7 @@ public class Request {
         ]
         
         let parameters:Parameters = [
-            "session_id": sessionId!,
+            "session_secret": sessionSecret!,
             "user_id": userId!
         ]
         
@@ -183,7 +188,7 @@ public class Request {
                     }
                 case .failure(let err):
                     NSLog("------------------DATA START-------------------")
-                    NSLog("Response String: \(String(describing: err))")
+                    NSLog("Get Session Response String: \(String(describing: err))")
                     failureHandler("There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     NSLog("------------------DATA END-------------------")
                 }
@@ -191,10 +196,10 @@ public class Request {
     }
     
 //    Delete session
-    public class func deleteSession (_ id: String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+    public class func deleteSession(_ id: Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         
         let delSessionId = id
-        let sessionId = try? GlobalVariables().KDefaults.getString("session_id")!
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
         let userId = try? GlobalVariables().KDefaults.getString("user_id")!
         
         let headers: HTTPHeaders = [
@@ -202,7 +207,7 @@ public class Request {
         ]
         
         let parameters:Parameters = [
-            "session_id": sessionId!,
+            "session_secret": sessionSecret!,
             "user_id": userId!,
             "del_session_id": delSessionId
         ]
@@ -227,25 +232,34 @@ public class Request {
                     }
                 case .failure(let err):
                     NSLog("------------------DATA START-------------------")
-                    NSLog("Response String: \(String(describing: err))")
+                    NSLog("Delete Session Response String: \(String(describing: err))")
                     SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     NSLog("------------------DATA END-------------------")
                 }
         }
     }
-
-    //MARK: Anime Requests
-
-    //Get Anime
-    public class func getAnime(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+    
+    
+//    MARK: - Theme Store
+    
+//    Get Themes
+    public class func getThemes(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+//        let sessionId = User.currentSessionId()
+//        let userId = User.currentId()
         
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-
-        let endpoint = GlobalVariables().BaseURLString + "anime/explore"
+//        let headers: HTTPHeaders = [
+//            "Content-Type": "application/x-www-form-urlencoded"
+//        ]
         
-        Alamofire.request(endpoint, method: .get, headers: headers)
+//        let parameters:Parameters = [
+//            "session_id": sessionId!,
+//            "user_id": userId!
+//        ]
+        
+//        let endpoint = GlobalVariables().BaseURLString + "user/get_themes"
+        let endpoint = "https://api.jsonbin.io/b/5b758d1be013915146d55c8f"
+        
+        Alamofire.request(endpoint, method: .get /*, parameters: parameters, headers: headers*/)
             .responseJSON { response in
                 switch response.result {
                 case .success/*(let data)*/:
@@ -254,18 +268,22 @@ public class Request {
                         
                         let responseSuccess = swiftyJsonVar["success"]
                         let responseMessage = swiftyJsonVar["error_message"]
-                        let responseData = swiftyJsonVar["anime"].array!
+                        let responseThemes = swiftyJsonVar["themes"].array!
                         
                         if responseSuccess.boolValue {
-                            successHandler(responseData)
+                            if responseThemes.isEmpty {
+                                failureHandler("Themes aren't available at this time!")
+                            }else{
+                                successHandler(responseThemes)
+                            }
                         }else{
                             failureHandler(responseMessage.stringValue)
                         }
                     }
                 case .failure(let err):
                     NSLog("------------------DATA START-------------------")
-                    NSLog("Response String: \(String(describing: err))")
-                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    NSLog("Get Theme Response String: \(String(describing: err))")
+                    failureHandler("There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     NSLog("------------------DATA END-------------------")
                 }
         }

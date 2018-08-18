@@ -8,25 +8,39 @@
 
 import UIKit
 
-struct FeaturedShows: Decodable {
+public struct FeaturedShows: Decodable {
 //    let success: Bool
-    let banners: ShowCategory
+    var banners: [Show]?
     let categories: [ShowCategory]
 }
 
 struct ShowCategory: Decodable {
     var title: String?
     var shows: [Show]?
-//    var type: String?
+    var type: String?
 }
 
+//struct Banner: Decodable {
+//    let id: Int?
+//    let title: String?
+//    let genre: String?
+//    let bannerUrl: String?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id = "id"
+//        case title = "title"
+//        case genre = "genre"
+//        case bannerUrl = "background_url"
+//    }
+//}
+
 struct Show: Decodable {
-    let id: String?
+    let id: Int?
     let title: String?
     let genre: String?
-    let imageName: String?
+    let posterUrl: String?
+    let bannerUrl: String?
     let score: Double?
-    let nsfw: Bool?
     
     let screenshots: [String]?
     let desc: String?
@@ -36,9 +50,9 @@ struct Show: Decodable {
         case id = "id"
         case title = "title"
         case genre = "genre"
-        case imageName = "poster_url"
+        case posterUrl = "poster_url"
+        case bannerUrl = "background_url"
         case score = "score"
-        case nsfw = "nsfw"
         
         case screenshots = "Screenshots"
         case desc = "description"

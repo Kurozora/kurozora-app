@@ -34,12 +34,12 @@ public class User {
         return User.username() != nil
     }
     
-    public class func currentId() -> String? {
-        return GlobalVariables().KDefaults["user_id"]
+    public class func currentId() -> Int? {
+        return Int(GlobalVariables().KDefaults["user_id"]!)
     }
     
-    public class func currentSessionId() -> String? {
-        return GlobalVariables().KDefaults["session_id"]
+    public class func currentSessionSecret() -> String? {
+        return GlobalVariables().KDefaults["session_secret"]
     }
     
     public class func currentDevice() -> String? {

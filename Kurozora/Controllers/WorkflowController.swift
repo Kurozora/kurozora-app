@@ -100,8 +100,7 @@ public class WorkflowController {
 //        UserDefaults.standard.removeObject(forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
 //        UserDefaults.standard.synchronize()
         try? GlobalVariables().KDefaults.remove("username")
-        try? GlobalVariables().KDefaults.remove("password")
-        try? GlobalVariables().KDefaults.remove("session_id")
+        try? GlobalVariables().KDefaults.remove("session_secret")
         // Logout user
 //        return User.logOutInBackground()
 
