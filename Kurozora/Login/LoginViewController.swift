@@ -50,7 +50,7 @@ class LoginViewController: UIViewController {
 
         let username = usernameTextField.text!
         let password = passwordTextField.text!
-        let device = UIDevice.modelName
+        let device = UIDevice.modelName + " on iOS " + UIDevice.current.systemVersion
         
         passwordTextField.text = ""
         loginButton.isEnabled = false

@@ -18,6 +18,8 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     private let cellId = "cellId"
     private let largeCellId = "largeCellId"
     
+    let autoScrollDuration: TimeInterval = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
@@ -26,7 +28,7 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(LargeCategoryCell.self, forCellWithReuseIdentifier: largeCellId)
         collectionView?.register(Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        
+
         // Fetch shows
         fetchFeaturedShows { (featuredShows) in
             self.showCategories = featuredShows.categories
@@ -49,7 +51,7 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
                     completionHandler(featuredShows)
                 }
             } catch let err{
-                NSLog("------ ERROR: \(err)")
+                NSLog("------ EXPLORE ERROR: \(err)")
             }
         }.resume()
     }
@@ -61,6 +63,15 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
         showDetailViewController.show = show
         
         navigationController?.pushViewController(showDetailViewController, animated: true)
+    }
+    
+    // Colletion view number of sections
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let count = showCategories?.count {
+            return count
+        }
+        
+        return 0
     }
     
     // Collection view item cell
@@ -82,16 +93,7 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
         return cell
     }
     
-    // Colletion view number of sections
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = showCategories?.count {
-            return count
-        }
-        
-        return 0
-    }
-    
-    // Collection view layout/type
+    // Collection view view item size/type
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if showCategories?[indexPath.item].type == "large" {
             return CGSize(width: view.frame.width, height: 160)
@@ -100,7 +102,7 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
         return CGSize(width: view.frame.width, height: 230)
     }
     
-    // MARK: - Collection header
+    // Collection header
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! Header
 
@@ -109,8 +111,25 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
         return header
     }
     
+    // Collection view header size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if UIDevice.isLandscape() {
+            if UIDevice.isPad() {
+//                return CGSize(width: view.frame.width, height: 264)
+                return CGSize(width: view.frame.width, height: view.frame.height / 2.5)
+            }
+        }
+        
+        if UIDevice.isPad() {
+            return CGSize(width: view.frame.width, height: 264)
+        }
+        
         return CGSize(width: view.frame.width, height: 144)
     }
     
+    // Reload collection to fix layout - NEEDS A BETTER FIX IF POSSIBLE
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super .viewWillTransition(to: size, with: coordinator)
+        collectionView?.reloadData()
+    }
 }

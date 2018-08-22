@@ -10,9 +10,6 @@
 		0DD2C86AE4714F771AA2EE20 /* Pods_KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */; };
 		233E29E40A1E0D87423E79EA /* Pods_KDatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */; };
 		6601F1AC2118488D0074C1DD /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* NotificationCell.swift */; };
-		6605C67C21262FC500DDA66A /* explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6605C67B21262FC500DDA66A /* explore.storyboard */; };
-		6605C67E2126347100DDA66A /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6605C67D2126347100DDA66A /* CategoryCell.xib */; };
-		6605C680212634F800DDA66A /* ShowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6605C67F212634F800DDA66A /* ShowCell.xib */; };
 		660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42A621259E300051EF66 /* ManageThemesController.swift */; };
 		660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660B42A82125A07C0051EF66 /* ThemeCell.xib */; };
 		660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42AA2125AF830051EF66 /* ThemeCell.swift */; };
@@ -83,7 +80,7 @@
 		66938FD2211CD21B00ADA5D6 /* FeaturedShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD1211CD21B00ADA5D6 /* FeaturedShowsViewController.swift */; };
 		66938FD4211CD2FE00ADA5D6 /* ScreenshotsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD3211CD2FE00ADA5D6 /* ScreenshotsCell.swift */; };
 		66938FD6211CD3A800ADA5D6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD5211CD3A800ADA5D6 /* Models.swift */; };
-		66938FD8211CD3E600ADA5D6 /* ShowDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailController.swift */; };
+		66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */; };
 		66938FDA211CD41800ADA5D6 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD9211CD41800ADA5D6 /* CategoryCell.swift */; };
 		66938FDE211DD08C00ADA5D6 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FDD211DD08C00ADA5D6 /* BaseCell.swift */; };
 		66938FE0211E185200ADA5D6 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FDF211E185200ADA5D6 /* ShowCell.swift */; };
@@ -136,7 +133,7 @@
 		66C2C52121049DD90020E21F /* ZFModalTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C2C51F21049DD80020E21F /* ZFModalTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		66C2C5262107ACA10020E21F /* KurozoraTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */; };
 		66CBFB6021217F38006A5E4F /* ShowDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB5F21217F38006A5E4F /* ShowDetailHeader.swift */; };
-		66CBFB6221217F60006A5E4F /* ShowDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* ShowDetailDescriptionCell.swift */; };
+		66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */; };
 		66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF3209B2C710007A4DE /* AnimeController.swift */; };
 		66CE1AF7209B2E7D0007A4DE /* AnimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */; };
 		66CE1AFB209B304A0007A4DE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF9209B304A0007A4DE /* PostCell.swift */; };
@@ -302,9 +299,6 @@
 		211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.release.xcconfig"; sourceTree = "<group>"; };
 		268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
 		6601F1AB2118488D0074C1DD /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
-		6605C67B21262FC500DDA66A /* explore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = explore.storyboard; sourceTree = "<group>"; };
-		6605C67D2126347100DDA66A /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
-		6605C67F212634F800DDA66A /* ShowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowCell.xib; sourceTree = "<group>"; };
 		660B42A621259E300051EF66 /* ManageThemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageThemesController.swift; sourceTree = "<group>"; };
 		660B42A82125A07C0051EF66 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
 		660B42AA2125AF830051EF66 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
@@ -379,7 +373,7 @@
 		66938FD1211CD21B00ADA5D6 /* FeaturedShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedShowsViewController.swift; sourceTree = "<group>"; };
 		66938FD3211CD2FE00ADA5D6 /* ScreenshotsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotsCell.swift; sourceTree = "<group>"; };
 		66938FD5211CD3A800ADA5D6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		66938FD7211CD3E600ADA5D6 /* ShowDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailController.swift; sourceTree = "<group>"; };
+		66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailViewController.swift; sourceTree = "<group>"; };
 		66938FD9211CD41800ADA5D6 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		66938FDD211DD08C00ADA5D6 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		66938FDF211E185200ADA5D6 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
@@ -430,7 +424,7 @@
 		66C2C51F21049DD80020E21F /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraTabBarController.swift; sourceTree = "<group>"; };
 		66CBFB5F21217F38006A5E4F /* ShowDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailHeader.swift; sourceTree = "<group>"; };
-		66CBFB6121217F60006A5E4F /* ShowDetailDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailDescriptionCell.swift; sourceTree = "<group>"; };
+		66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailCell.swift; sourceTree = "<group>"; };
 		66CE1AF3209B2C710007A4DE /* AnimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeController.swift; sourceTree = "<group>"; };
 		66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeData.swift; sourceTree = "<group>"; };
 		66CE1AF9209B304A0007A4DE /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -497,6 +491,7 @@
 		66CF6D7020A9934F00F98375 /* profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profile.storyboard; sourceTree = "<group>"; };
 		66D16C9C2128CD6400B6B882 /* UIImageView+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache.swift"; sourceTree = "<group>"; };
 		66D16C9E2128CE5D00B6B882 /* DiscardableImageCacheItem+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiscardableImageCacheItem+Cache.swift"; sourceTree = "<group>"; };
+		66D16CA2212D533D00B6B882 /* details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = details.storyboard; sourceTree = "<group>"; };
 		66D6236820A0376400304914 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D6236B20A09E5400304914 /* ChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
 		66D6236D20A09F6B00304914 /* season.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = season.storyboard; sourceTree = "<group>"; };
@@ -1177,6 +1172,30 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		66D16CA0212D52AB00B6B882 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */,
+				66D16CA2212D533D00B6B882 /* details.storyboard */,
+				66CBFB5F21217F38006A5E4F /* ShowDetailHeader.swift */,
+				66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */,
+				66938FD3211CD2FE00ADA5D6 /* ScreenshotsCell.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		66D16CA1212D52D200B6B882 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				66938FDD211DD08C00ADA5D6 /* BaseCell.swift */,
+				66938FD9211CD41800ADA5D6 /* CategoryCell.swift */,
+				66938FE12121625300ADA5D6 /* HeaderCell.swift */,
+				66938FE3212163B700ADA5D6 /* LargeCellCategory.swift */,
+				66938FDF211E185200ADA5D6 /* ShowCell.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
 		66D6236A20A09DB900304914 /* Season */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,20 +1234,10 @@
 		66E748BA20987E1A0039A105 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				6605C67D2126347100DDA66A /* CategoryCell.xib */,
-				6605C67F212634F800DDA66A /* ShowCell.xib */,
-				6605C67B21262FC500DDA66A /* explore.storyboard */,
 				66938FD1211CD21B00ADA5D6 /* FeaturedShowsViewController.swift */,
 				66938FD5211CD3A800ADA5D6 /* Models.swift */,
-				66938FDD211DD08C00ADA5D6 /* BaseCell.swift */,
-				66938FD9211CD41800ADA5D6 /* CategoryCell.swift */,
-				66938FE12121625300ADA5D6 /* HeaderCell.swift */,
-				66938FE3212163B700ADA5D6 /* LargeCellCategory.swift */,
-				66938FD3211CD2FE00ADA5D6 /* ScreenshotsCell.swift */,
-				66938FDF211E185200ADA5D6 /* ShowCell.swift */,
-				66938FD7211CD3E600ADA5D6 /* ShowDetailController.swift */,
-				66CBFB5F21217F38006A5E4F /* ShowDetailHeader.swift */,
-				66CBFB6121217F60006A5E4F /* ShowDetailDescriptionCell.swift */,
+				66D16CA1212D52D200B6B882 /* Explore */,
+				66D16CA0212D52AB00B6B882 /* Details */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1528,12 +1537,10 @@
 				66BF02D3209FBA1700BDAF41 /* Resources.xcassets in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
-				6605C67C21262FC500DDA66A /* explore.storyboard in Resources */,
 				66E1B86C20911F4A00D7AC1A /* browse.storyboard in Resources */,
 				661F9F812087282500CF4153 /* login.storyboard in Resources */,
 				66A552D920A2E53100E515DB /* anime.storyboard in Resources */,
 				66A8AF23209991310011A342 /* AnimeCell.xib in Resources */,
-				6605C67E2126347100DDA66A /* CategoryCell.xib in Resources */,
 				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
 				66D6236E20A09F6B00304914 /* season.storyboard in Resources */,
 				668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */,
@@ -1546,7 +1553,6 @@
 				66CF6D6020A9793600F98375 /* rate.storyboard in Resources */,
 				6670783A208BBB4F00471FBC /* Default-568h@2x.png in Resources */,
 				668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */,
-				6605C680212634F800DDA66A /* ShowCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,7 +1813,7 @@
 				66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */,
 				66938FE22121625300ADA5D6 /* HeaderCell.swift in Sources */,
 				66112341208E28C200E6033A /* InAppTransactionController.swift in Sources */,
-				66938FD8211CD3E600ADA5D6 /* ShowDetailController.swift in Sources */,
+				66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				66A8AF22209991310011A342 /* AnimeCell.swift in Sources */,
 				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,
@@ -1846,7 +1852,7 @@
 				66D6237420A1A8B000304914 /* DayViewController.swift in Sources */,
 				6674A0C920A45EB700AAB527 /* TopicCell.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicView.swift in Sources */,
-				66CBFB6221217F60006A5E4F /* ShowDetailDescriptionCell.swift in Sources */,
+				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
 				6625F95320B5F283004DB533 /* UIKit+Kurozora.swift in Sources */,
 				66112345208F6AA600E6033A /* KAnimeKit.swift in Sources */,

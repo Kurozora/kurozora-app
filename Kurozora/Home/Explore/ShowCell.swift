@@ -17,7 +17,7 @@ class ShowCell: BaseCell {
         }
     }
     
-    private let posterView: CachedImageView = {
+    private let posterThumbnail: CachedImageView = {
         let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10
@@ -25,7 +25,7 @@ class ShowCell: BaseCell {
         return iv
     }()
     
-    let bannerView: CachedImageView = {
+    let bannerThumbnail: CachedImageView = {
         let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10
@@ -61,21 +61,21 @@ class ShowCell: BaseCell {
     
     override func setupViews() {
         // Prepare auto layout
-        posterView.translatesAutoresizingMaskIntoConstraints = false
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        posterThumbnail.translatesAutoresizingMaskIntoConstraints = false
+        bannerThumbnail.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         genreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         
         // Add them to the view
-        addSubview(posterView)
+        addSubview(posterThumbnail)
         addSubview(titleLabel)
         addSubview(genreLabel)
         addSubview(scoreLabel)
         
         // Place them nicely
-        posterView.frame = CGRect(x: 0, y: 10, width: 85, height: 124)
-        titleLabel.frame = CGRect(x: 0, y: posterView.frame.maxY + 2, width: 85, height: titleLabel.frame.height)
+        posterThumbnail.frame = CGRect(x: 0, y: 10, width: 85, height: 124)
+        titleLabel.frame = CGRect(x: 0, y: posterThumbnail.frame.maxY + 2, width: 85, height: titleLabel.frame.height)
         genreLabel.frame = CGRect(x: 0, y: titleLabel.frame.maxY, width: 85, height: 16)
         scoreLabel.frame = CGRect(x: 18, y: 0, width: 48, height: 20)
     }
@@ -125,17 +125,17 @@ class ShowCell: BaseCell {
         }
         
         // Configure poster url
-        if let posterUrl = show?.posterUrl {
-            posterView.loadImage(urlString: posterUrl)
+        if let posterThumbnailUrl = show?.posterThumbnail {
+            posterThumbnail.loadImage(urlString: posterThumbnailUrl)
         } else {
-            posterView.image = UIImage(named: "colorful")
+            posterThumbnail.image = UIImage(named: "colorful")
         }
         
         // Configure banner url
-        if let bannerUrl = show?.bannerUrl {
-            bannerView.loadImage(urlString: bannerUrl)
+        if let bannerThumbnailUrl = show?.bannerThumbnail {
+            bannerThumbnail.loadImage(urlString: bannerThumbnailUrl)
         } else {
-            bannerView.image = UIImage(named: "aozora")
+            bannerThumbnail.image = UIImage(named: "aozora")
         }
     }
     

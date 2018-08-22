@@ -46,28 +46,28 @@ class LargeCategoryCell: CategoryCell {
             shadowView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
             
             // Prepare auto layout
-            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            bannerThumbnail.translatesAutoresizingMaskIntoConstraints = false
             shadowView.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             
             // Add them to the view
-            addSubview(bannerView)
+            addSubview(bannerThumbnail)
             addSubview(shadowView)
             addSubview(titleLabel)
             
             // Banner view constraint
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerThumbnail]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerThumbnail]))
             
             // Shadow view constraint
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 0))
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerView, attribute: .trailing, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerThumbnail, attribute: .leading, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerThumbnail, attribute: .trailing, multiplier: 1.0, constant: 0))
             
             addConstraint(NSLayoutConstraint(item: shadowView, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .top, multiplier: 1.0, constant: 0))
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerView, attribute: .bottom, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerThumbnail, attribute: .bottom, multiplier: 1.0, constant: 0))
             
             // Title label constraint
-            addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 8))
+            addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: bannerThumbnail, attribute: .leading, multiplier: 1.0, constant: 8))
             addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: titleLabel, attribute: .trailing, multiplier: 1.0, constant: 8))
             
             addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0))

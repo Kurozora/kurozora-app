@@ -20,42 +20,49 @@ struct ShowCategory: Decodable {
     var type: String?
 }
 
-//struct Banner: Decodable {
-//    let id: Int?
-//    let title: String?
-//    let genre: String?
-//    let bannerUrl: String?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id = "id"
-//        case title = "title"
-//        case genre = "genre"
-//        case bannerUrl = "background_url"
-//    }
-//}
+struct ShowDetails: Decodable {
+//    let success: Bool?
+    var anime: Show?
+}
 
 struct Show: Decodable {
     let id: Int?
     let title: String?
     let genre: String?
-    let posterUrl: String?
-    let bannerUrl: String?
+    let poster: String?
+    let posterThumbnail: String?
+    let banner: String?
+    let bannerThumbnail: String?
     let score: Double?
     
     let screenshots: [String]?
-    let desc: String?
-    let appInformation: [[String:String]]?
+    let synopsis: String?
+    let type: String?
+    let episodes: Int?
+    let status: String?
+    let aired: String?
+    let runtime: Int?
+    let watchRating: String?
+    let nsfw: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case title = "title"
         case genre = "genre"
-        case posterUrl = "poster_url"
-        case bannerUrl = "background_url"
+        case posterThumbnail = "poster_thumbnail"
+        case poster = "poster"
+        case bannerThumbnail = "background_thumbnail"
+        case banner = "background"
         case score = "score"
         
-        case screenshots = "Screenshots"
-        case desc = "description"
-        case appInformation = "appInformation"
+        case screenshots = "screenshots"
+        case synopsis = "synopsis"
+        case type = "type"
+        case episodes = "episodes"
+        case status = "status"
+        case aired = "aired"
+        case runtime = "runtime"
+        case watchRating = "watch_rating"
+        case nsfw = "nsfw"
     }
 }

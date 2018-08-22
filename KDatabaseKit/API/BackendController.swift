@@ -174,13 +174,13 @@ public class Request {
                         
                         let responseSuccess = swiftyJsonVar["success"]
                         let responseMessage = swiftyJsonVar["error_message"]
-                        let responseSessions = swiftyJsonVar["sessions"].array!
+                        let responseSessions = swiftyJsonVar["sessions"].array
                         
                         if responseSuccess.boolValue {
-                            if responseSessions.isEmpty {
+                            if responseSessions!.isEmpty {
                                 failureHandler("No sessions were found!")
                             }else{
-                                successHandler(responseSessions)
+                                successHandler(responseSessions!)
                             }
                         }else{
                             failureHandler(responseMessage.stringValue)

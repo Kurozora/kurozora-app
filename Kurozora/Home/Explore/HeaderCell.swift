@@ -42,6 +42,11 @@ class Header: CategoryCell {
     
     // Collection header item size
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if UIDevice.isLandscape() {
+            if UIDevice.isPad() {
+                return CGSize(width: frame.width / 2 + 15, height: frame.height)
+            }
+        }
         return CGSize(width: frame.width / 2 + 50, height: frame.height)
     }
     
@@ -77,32 +82,31 @@ class Header: CategoryCell {
         }()
         
         fileprivate override func setupViews() {
-            
             titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .vertical)
             
             // Prepare auto layout
-            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            bannerThumbnail.translatesAutoresizingMaskIntoConstraints = false
             shadowView.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             genreLabel.translatesAutoresizingMaskIntoConstraints = false
             
             // Add them to the view
-            addSubview(bannerView)
+            addSubview(bannerThumbnail)
             addSubview(shadowView)
             addSubview(titleLabel)
             addSubview(genreLabel)
             
             // Banner view constraint
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerView]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerThumbnail]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bannerView]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["bannerView": bannerThumbnail]))
             
             // Shaodw view constraint
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerView, attribute: .leading, multiplier: 1.0, constant: 0))
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerView, attribute: .trailing, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .leading, relatedBy: .equal, toItem: bannerThumbnail, attribute: .leading, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .trailing, relatedBy: .equal, toItem: bannerThumbnail, attribute: .trailing, multiplier: 1.0, constant: 0))
             
             addConstraint(NSLayoutConstraint(item: shadowView, attribute: .top, relatedBy: .equal, toItem: titleLabel, attribute: .top, multiplier: 1.0, constant: 0))
-            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerView, attribute: .bottom, multiplier: 1.0, constant: 0))
+            addConstraint(NSLayoutConstraint(item: shadowView, attribute: .bottom, relatedBy: .equal, toItem: bannerThumbnail, attribute: .bottom, multiplier: 1.0, constant: 0))
             
             // Title label constraint
             addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: shadowView, attribute: .leading, multiplier: 1.0, constant: 8))
@@ -132,10 +136,10 @@ class Header: CategoryCell {
             }
             
             // Configure banner url
-            if let bannerUrl = show?.bannerUrl {
-                bannerView.loadImage(urlString: bannerUrl)
+            if let bannerThumbnailUrl = show?.bannerThumbnail {
+                bannerThumbnail.loadImage(urlString: bannerThumbnailUrl)
             } else {
-                bannerView.image = UIImage(named: "colorful")
+                bannerThumbnail.image = UIImage(named: "colorful")
             }
         }
     }

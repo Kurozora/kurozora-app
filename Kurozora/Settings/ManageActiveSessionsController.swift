@@ -18,7 +18,6 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!
     
-    let platform = UIDevice.current.systemVersion
     let device = UIDevice.modelName
     var sessionsArray:[JSON] = []
     
@@ -84,10 +83,10 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
         headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
         headerLabel.sizeToFit()
         headerView.addSubview(headerLabel)
-        
+
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sessionsArray.count
     }
@@ -97,12 +96,12 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
         
         if sessionsArray[indexPath.row]["secret"].stringValue == GlobalVariables().KDefaults["session_secret"] {
             currentIPAddress.text = sessionsArray[indexPath.row]["ip"].stringValue
-            currentDeviceType.text = "Kurozora for iOS " + platform + " on " +  sessionsArray[indexPath.row]["device"].stringValue
+            currentDeviceType.text = "Kurozora for " + sessionsArray[indexPath.row]["device"].stringValue
         } else {
             sessionsCell.ipAddressLable.text = "IP-Adress:"
             sessionsCell.ipAddressValueLable.text = sessionsArray[indexPath.row]["ip"].stringValue
             sessionsCell.deviceTypeLable.text = "Device Type:"
-            sessionsCell.deviceTypeValueLable.text = "Kurozora for iOS " + platform + " on " +  sessionsArray[indexPath.row]["device"].stringValue
+            sessionsCell.deviceTypeValueLable.text = "Kurozora for " + sessionsArray[indexPath.row]["device"].stringValue
             sessionsCell.dateLable.text = "Last Accessed:"
             sessionsCell.dateValueLable?.text = sessionsArray[indexPath.row]["last_validated"].stringValue
             sessionsCell.extraLable.text = sessionsArray[indexPath.row]["id"].stringValue

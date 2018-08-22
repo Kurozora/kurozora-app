@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension UIApplication {
