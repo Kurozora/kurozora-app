@@ -110,18 +110,18 @@ class ShowCell: BaseCell {
         }
         
         // Configure score label
-        if let score = show?.score {
+        if let score = show?.averageRating, (show?.averageRating)! > 0.0 {
             scoreLabel.text = " \(score)"
             
             // Change color based on score
-            if score > 5.0 {
+            if score > 2.5 {
                 scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 177/255.0, blue: 10/255.0, alpha: 1.0)
             } else {
                 scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
             }
         } else {
-            scoreLabel.text = " 0.00"
-            scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
+            scoreLabel.text = "New"
+            scoreLabel.backgroundColor = UIColor.init(red: 51/255.0, green: 204/255.0, blue: 0/255.0, alpha: 1.0)
         }
         
         // Configure poster url

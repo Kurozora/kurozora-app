@@ -6,4 +6,10 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ShowSynopsisCell: UITableViewCell {
+
+    @IBOutlet weak var synopsisLabel: UILabel!
+
+}

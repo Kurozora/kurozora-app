@@ -14,7 +14,7 @@ public class AnimeData: NSObject, NSCoding {
     public var firstAired = Date()
     public var currentEpisode = 1
     public var episodes = 1
-    public var status = AnimeStatus.NotYetAired
+    public var status = AnimeStatus.notYetAired
     
     public init(title: String, firstAired: Date, currentEpisode: Int, episodes: Int, status: AnimeStatus) {
         self.title = title
@@ -42,7 +42,7 @@ public class AnimeData: NSObject, NSCoding {
         self.firstAired = firstAired
         self.currentEpisode = currentEpisode
         self.episodes = episodes
-        self.status = AnimeStatus(rawValue: status) ?? .NotYetAired
+        self.status = AnimeStatus(rawValue: status) ?? .notYetAired
         
         super.init()
     }

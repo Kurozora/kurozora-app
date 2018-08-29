@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Request.validateSession(withSuccess: { (success) in
             if success {
-                let customTabBar = KurozoraTabBarController()
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-                self.window?.rootViewController = customTabBar
-                self.window?.makeKeyAndVisible()
+//                let customTabBar = KurozoraTabBarController()
+//                self.window = UIWindow(frame: UIScreen.main.bounds)
+//                self.window?.rootViewController = customTabBar
+//                self.window?.makeKeyAndVisible()
             } else {
                 let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController

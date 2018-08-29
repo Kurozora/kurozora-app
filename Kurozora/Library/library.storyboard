@@ -15,24 +15,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Season-->
-        <scene sceneID="As8-I3-PBD">
-            <objects>
-                <navigationController hidesBarsOnSwipe="YES" id="Zrt-ey-gj9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Season" image="air_play" id="HN3-NL-adh"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bRB-KK-dpL">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="TLH-5L-MUi" kind="relationship" relationship="rootViewController" id="gy9-g2-xu1"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w0v-vW-ndK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-786" y="154"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Au8-Ad-oj1">
             <objects>
@@ -371,7 +353,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jdw-Es-8xG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="44" maxX="0.0" maxY="0.0"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="mcL-LI-1vf">
@@ -414,28 +396,29 @@
                                 </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uK-Yg-uZU" userLabel="FilterBar">
-                                <rect key="frame" x="0.0" y="24" width="375" height="84"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" placeholder="Filter" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yah-3O-d5n">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="56"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" red="0.18823529411764706" green="0.19607843137254902" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Yah-3O-d5n" firstAttribute="leading" secondItem="9uK-Yg-uZU" secondAttribute="leading" id="56c-4s-WcT"/>
+                                    <constraint firstItem="Yah-3O-d5n" firstAttribute="top" secondItem="9uK-Yg-uZU" secondAttribute="top" id="6bs-IY-PY8"/>
                                     <constraint firstAttribute="trailing" secondItem="Yah-3O-d5n" secondAttribute="trailing" id="Z45-g7-ngy"/>
-                                    <constraint firstAttribute="height" constant="84" id="m3Z-Io-xPp"/>
+                                    <constraint firstAttribute="height" constant="44" id="m3Z-Io-xPp"/>
                                     <constraint firstAttribute="bottom" secondItem="Yah-3O-d5n" secondAttribute="bottom" id="u4C-YI-O5L"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9uK-Yg-uZU" firstAttribute="top" secondItem="Oe1-TG-Tz2" secondAttribute="bottom" constant="-40" id="4Ve-Il-FTD"/>
-                            <constraint firstItem="Jdw-Es-8xG" firstAttribute="top" secondItem="Oe1-TG-Tz2" secondAttribute="bottom" constant="-64" id="8WH-FG-4YW"/>
+                            <constraint firstItem="Jdw-Es-8xG" firstAttribute="top" secondItem="Oe1-TG-Tz2" secondAttribute="bottom" id="8WH-FG-4YW"/>
                             <constraint firstAttribute="trailing" secondItem="Jdw-Es-8xG" secondAttribute="trailing" id="9G3-Ja-uMA"/>
                             <constraint firstItem="9uK-Yg-uZU" firstAttribute="leading" secondItem="cSP-9k-0V2" secondAttribute="leading" id="A9k-tI-iZT"/>
+                            <constraint firstItem="9uK-Yg-uZU" firstAttribute="top" secondItem="Oe1-TG-Tz2" secondAttribute="bottom" id="BJX-o8-hoj"/>
                             <constraint firstItem="Jdw-Es-8xG" firstAttribute="leading" secondItem="cSP-9k-0V2" secondAttribute="leading" id="FmA-OZ-L5y"/>
                             <constraint firstItem="dEg-b2-nGe" firstAttribute="top" secondItem="Jdw-Es-8xG" secondAttribute="bottom" id="GZU-Cz-2aL"/>
                             <constraint firstAttribute="trailing" secondItem="9uK-Yg-uZU" secondAttribute="trailing" id="hnx-Et-h8W"/>
@@ -447,11 +430,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bas-Lq-jp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-100" y="153"/>
+            <point key="canvasLocation" x="-100" y="152.47376311844079"/>
         </scene>
     </scenes>
     <resources>
-        <image name="air_play" width="30" height="30"/>
         <image name="filter" width="30" height="30"/>
         <image name="search" width="30" height="30"/>
     </resources>

@@ -58,7 +58,7 @@ class ResetPasswordViewController: UIViewController {
             "username" : username
         ]
     
-        let endpoint = GlobalVariables().BaseURLString + "user/reset"
+        let endpoint = GlobalVariables().baseUrlString + "user/reset"
         
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
         .responseJSON { response in

@@ -13,6 +13,7 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     
     private var showCategories: [ShowCategory]?
     private var bannersCategory: FeaturedShows?
+    var window: UIWindow?
     
     private let headerId = "headerId"
     private let cellId = "cellId"
@@ -37,9 +38,9 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
             self.collectionView?.reloadData()
         }
     }
-    
+
     private func fetchFeaturedShows(completionHandler: @escaping (FeaturedShows) -> ()) {
-        let urlString = GlobalVariables().BaseURLString + "anime/explore"
+        let urlString = GlobalVariables().baseUrlString + "anime/explore"
         
         URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, _, _) in
             guard let data = data else { return }
@@ -57,12 +58,17 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     }
     
     func showDetailFor(_ show: Show) {
-        let layout = UICollectionViewFlowLayout()
-        let showDetailViewController = ShowDetailViewController(collectionViewLayout: layout)
+//        let showDetailViewController = ShowDetailViewController()
+//        showDetailViewController.show = show
+//        navigationController?.pushViewController(showDetailViewController, animated: true)
         
-        showDetailViewController.show = show
+        let storyboard = UIStoryboard(name: "details", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as? ShowDetailViewController
+        let customTabBar = ShowTabBarController()
+        self.window?.rootViewController = customTabBar
+        controller?.show = show
         
-        navigationController?.pushViewController(showDetailViewController, animated: true)
+        self.present(controller!, animated: true, completion: nil)
     }
     
     // Colletion view number of sections

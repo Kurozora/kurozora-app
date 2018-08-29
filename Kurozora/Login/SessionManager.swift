@@ -31,7 +31,7 @@ public class SessionManager {
                 "device": device
             ]
             
-            let endpoint = GlobalVariables().BaseURLString + "user/login"
+            let endpoint = GlobalVariables().baseUrlString + "user/login"
             
             Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
             .responseJSON { response in

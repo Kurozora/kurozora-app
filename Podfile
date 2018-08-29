@@ -21,6 +21,7 @@ def common_pods
     pod 'TTTAttributedLabel-moolban', '2.0.0.2'
     pod 'SDWebImage', '4.3.3'
     pod 'SDWebImage/GIF', '4.3.3'
+    pod 'Lightbox', '2.1.2'
     pod 'FLAnimatedImage', '1.0.12'
     pod 'SwifterSwift', '4.3.0'
     pod 'KeychainAccess', '3.1.1'
@@ -41,13 +42,13 @@ def project_pods
     pod 'ImagePicker', '3.0.0'
 #    pod 'Shimmer', '1.0.2'
     pod 'XLPagerTabStrip', '8.0.1'
-    pod 'Lightbox', '2.1.2'
     pod 'WhatsNew', '0.4.3'
     pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
 end
 
 def kurozora_pods
     # pod 'Hero'
+    pod 'Cosmos', '~> 16.0'
 end
 
 target 'Kurozora' do

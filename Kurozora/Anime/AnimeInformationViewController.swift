@@ -32,7 +32,7 @@ import KDatabaseKit
 //    }
 //}
 
-public class AnimeInformationViewController: AnimeBaseViewController {
+//public class AnimeInformationViewController: AnimeBaseViewController {
 //
 //    let HeaderCellHeight: CGFloat = 39
 //    var HeaderViewHeight: CGFloat = 0
@@ -152,7 +152,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
 //            }
 //
 //            ratingLabel.text = String(format:"%.2f / %d", anime.membersScore, anime.progress?.score ?? 0)
-//            membersCountLabel.text = String(anime.membersCount)
+//            membersCountLabel.text = String(anime.ratingCount)
 //            scoreRankLabel.text = "#\(anime.rank)"
 //            popularityRankLabel.text = "#\(anime.popularityRank)"
 //
@@ -659,4 +659,4 @@ public class AnimeInformationViewController: AnimeBaseViewController {
 //        RateViewController.updateAnime(anime, withRating: rating*2.0)
 //        updateInformationWithAnime()
 //    }
-}
+//}

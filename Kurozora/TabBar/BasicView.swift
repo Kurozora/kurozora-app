@@ -9,7 +9,7 @@
 import UIKit
 import ESTabBarController_swift
 
-class BasicView: ESTabBarItemContentView {
+class BasicTabBarItemContentView: ESTabBarItemContentView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

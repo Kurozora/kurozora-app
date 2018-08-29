@@ -29,7 +29,7 @@ public class Request {
             "device": device
         ]
 
-        let endpoint = GlobalVariables().BaseURLString + "user/login"
+        let endpoint = GlobalVariables().baseUrlString + "user/login"
 
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
         .responseJSON { response in
@@ -75,7 +75,7 @@ public class Request {
             "user_id": userId
         ]
         
-        let endpoint = GlobalVariables().BaseURLString + "user/logout"
+        let endpoint = GlobalVariables().baseUrlString + "user/logout"
         
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
         .responseJSON { response in
@@ -121,7 +121,7 @@ public class Request {
                 "user_id": userId
             ]
             
-            let endpoint = GlobalVariables().BaseURLString + "session/validate"
+            let endpoint = GlobalVariables().baseUrlString + "session/validate"
             
             Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
             .responseJSON { response in
@@ -163,7 +163,7 @@ public class Request {
             "user_id": userId!
         ]
         
-        let endpoint = GlobalVariables().BaseURLString + "user/get_sessions"
+        let endpoint = GlobalVariables().baseUrlString + "user/get_sessions"
         
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
             .responseJSON { response in
@@ -212,7 +212,7 @@ public class Request {
             "del_session_id": delSessionId
         ]
         
-        let endpoint = GlobalVariables().BaseURLString + "user/delete_session"
+        let endpoint = GlobalVariables().baseUrlString + "user/delete_session"
         
         Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
             .responseJSON { response in
@@ -256,7 +256,7 @@ public class Request {
 //            "user_id": userId!
 //        ]
         
-//        let endpoint = GlobalVariables().BaseURLString + "user/get_themes"
+//        let endpoint = GlobalVariables().baseURLString + "user/get_themes"
         let endpoint = "https://api.jsonbin.io/b/5b758d1be013915146d55c8f"
         
         Alamofire.request(endpoint, method: .get /*, parameters: parameters, headers: headers*/)
@@ -284,6 +284,98 @@ public class Request {
                     NSLog("------------------DATA START-------------------")
                     NSLog("Get Theme Response String: \(String(describing: err))")
                     failureHandler("There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    NSLog("------------------DATA END-------------------")
+                }
+        }
+    }
+    
+    // Featch anime
+    public class func fetchAnime(showId: Int?, score: Double?, withSuccess successHandler:@escaping (FeaturedShows) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        
+        let rating = score
+        guard let id = showId else { return }
+        
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        
+        let parameters:Parameters = [
+            "session_secret": sessionSecret!,
+            "user_id": userId!,
+            "rating": rating!
+        ]
+        
+        let endpoint = GlobalVariables().baseUrlString + "anime/\(id)/rate"
+        
+        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
+            .responseJSON { response in
+                switch response.result {
+                case .success/*(let data)*/:
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+                        
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                        
+                        if responseSuccess.boolValue {
+                            successHandler(true)
+                        }else{
+                            failureHandler(responseMessage.stringValue)
+                        }
+                    }
+                case .failure(let err):
+                    NSLog("------------------DATA START-------------------")
+                    NSLog("Delete Session Response String: \(String(describing: err))")
+                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+                    NSLog("------------------DATA END-------------------")
+                }
+        }
+    }
+    
+    // Rate anime
+    public class func rate(showId: Int?, score: Double?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        
+        let rating = score
+        guard let id = showId else { return }
+        
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        
+        let parameters:Parameters = [
+            "session_secret": sessionSecret!,
+            "user_id": userId!,
+            "rating": rating!
+        ]
+        
+        let endpoint = GlobalVariables().baseUrlString + "anime/\(id)/rate"
+        
+        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
+            .responseJSON { response in
+                switch response.result {
+                case .success/*(let data)*/:
+                    if response.result.value != nil{
+                        let swiftyJsonVar = JSON(response.result.value!)
+                        
+                        let responseSuccess = swiftyJsonVar["success"]
+                        let responseMessage = swiftyJsonVar["error_message"]
+                        
+                        if responseSuccess.boolValue {
+                            successHandler(true)
+                        }else{
+                            failureHandler(responseMessage.stringValue)
+                        }
+                    }
+                case .failure(let err):
+                    NSLog("------------------DATA START-------------------")
+                    NSLog("Delete Session Response String: \(String(describing: err))")
+                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
                     NSLog("------------------DATA END-------------------")
                 }
         }

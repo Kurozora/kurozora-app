@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BounceAnimation: BasicView {
+class BounceAnimation: BasicTabBarItemContentView {
     
     public var duration = 0.3
     

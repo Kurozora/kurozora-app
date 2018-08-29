@@ -23,7 +23,7 @@ public class AiringController {
         let nextEpisodeToWatchDate = firstAired.dateByAddingWeeks(weeks: currentEpisode)
         let (nextAirEpisodeDate, _) = AiringController.nextEpisodeToAirForStartDate(startDate: firstAired)
         
-        if airingStatus != AnimeStatus.FinishedAiring && nextEpisodeToWatchDate.compare(Date()) == .orderedDescending {
+        if airingStatus != AnimeStatus.finishedAiring && nextEpisodeToWatchDate.compare(Date()) == .orderedDescending {
             // Future episode
             print("Future Episode")
             
@@ -37,7 +37,7 @@ public class AiringController {
             
             var lastAiredEpisode: Date
             
-            if airingStatus == AnimeStatus.FinishedAiring {
+            if airingStatus == AnimeStatus.finishedAiring {
                 lastAiredEpisode = firstAired.dateByAddingWeeks(weeks: totalEpisodes - 1)
             } else {
                 lastAiredEpisode = nextAirEpisodeDate

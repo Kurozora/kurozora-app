@@ -6,4 +6,11 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ShowLinkCell: UITableViewCell {
+    
+    @IBOutlet weak var linkLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+
+}

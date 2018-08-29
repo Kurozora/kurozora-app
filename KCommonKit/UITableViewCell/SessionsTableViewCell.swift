@@ -33,7 +33,7 @@ import SwiftyJSON
 //            "user_id": userId!
 //        ]
 //
-//        let endpoint = GlobalVariables().BaseURLString + "user/delete_session"
+//        let endpoint = GlobalVariables().baseURLString + "user/delete_session"
 //
 //        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
 //            .responseJSON { response in

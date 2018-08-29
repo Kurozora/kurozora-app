@@ -6,41 +6,32 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-//import Foundation
-//import Lightbox
-//
-//extension UIViewController {
-//
-//    public func presentImageViewController(imageView: UIImageView, imageUrl: NSURL) {
-//
-//        let imageInfo = JTSImageInfo()
-//        if let image = imageView.image {
-//            imageInfo.image = image
-//        }
-//
-//        imageInfo.imageURL = imageUrl
-//
-//        imageInfo.referenceRect = imageView.frame
-//        imageInfo.referenceView = imageView
-//
-//        let controller = LightboxController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
-//        controller.interactionsDelegate = self
-//        controller.showFromViewController(self, transition: JTSImageViewControllerTransition.FromOriginalPosition)
-//    }
-//}
-//
-//extension UIViewController: JTSImageViewControllerInteractionsDelegate {
-//    public func imageViewerDidLongPress(imageViewer: JTSImageViewController!, atRect rect: CGRect) {
-//
-//        let imageUrl = imageViewer.imageInfo.imageURL
-//
-//        guard let imageData = NSData(contentsOfURL: imageUrl) else {
-//            return
-//        }
-//        let objectsToShare = [imageData]
-//
-//        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-//        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList,UIActivityTypePrint];
-//        imageViewer.presentViewController(activityVC, animated: true, completion: nil)
-//    }
-//}
+import Foundation
+import Lightbox
+
+extension UIViewController {
+    public func presentLightboxViewController(imageUrl: String?, text: String?, videoUrl: String?) {
+        let image = [LightboxImage(imageURL: URL(fileURLWithPath: imageUrl!), text: text!, videoURL: URL(fileURLWithPath: videoUrl!))]
+        let controller = LightboxController(images: image)
+        
+        // Set delegates.
+        controller.pageDelegate = self
+        controller.dismissalDelegate = self
+        
+        // Use dynamic background.
+        controller.dynamicBackground = true
+
+    }
+}
+
+extension UIViewController: LightboxControllerPageDelegate {
+    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        print(page)
+    }
+}
+
+extension UIViewController: LightboxControllerDismissalDelegate {
+    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        // ...
+    }
+}
