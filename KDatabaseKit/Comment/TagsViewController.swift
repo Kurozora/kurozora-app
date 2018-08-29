@@ -9,7 +9,6 @@
 import Foundation
 import KCommonKit
 //import Bolts
-import SDWebImage
 //import Parse
 
 //protocol TagsViewControllerDelegate: class {

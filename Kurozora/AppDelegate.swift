@@ -21,10 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-//        Override point for customization after application launch.
+        // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
         
-//        IQKeyoardManager
+        // IQKeyoardManager
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Request.validateSession(withSuccess: { (success) in
             if success {
-//                let customTabBar = KurozoraTabBarController()
-//                self.window = UIWindow(frame: UIScreen.main.bounds)
-//                self.window?.rootViewController = customTabBar
-//                self.window?.makeKeyAndVisible()
+                let customTabBar = KurozoraTabBarController()
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = customTabBar
+                self.window?.makeKeyAndVisible()
             } else {
                 let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController

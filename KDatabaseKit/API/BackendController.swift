@@ -290,50 +290,50 @@ public class Request {
     }
     
     // Featch anime
-    public class func fetchAnime(showId: Int?, score: Double?, withSuccess successHandler:@escaping (FeaturedShows) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
-        
-        let rating = score
-        guard let id = showId else { return }
-        
-        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
-        
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        
-        let parameters:Parameters = [
-            "session_secret": sessionSecret!,
-            "user_id": userId!,
-            "rating": rating!
-        ]
-        
-        let endpoint = GlobalVariables().baseUrlString + "anime/\(id)/rate"
-        
-        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
-            .responseJSON { response in
-                switch response.result {
-                case .success/*(let data)*/:
-                    if response.result.value != nil{
-                        let swiftyJsonVar = JSON(response.result.value!)
-                        
-                        let responseSuccess = swiftyJsonVar["success"]
-                        let responseMessage = swiftyJsonVar["error_message"]
-                        
-                        if responseSuccess.boolValue {
-                            successHandler(true)
-                        }else{
-                            failureHandler(responseMessage.stringValue)
-                        }
-                    }
-                case .failure(let err):
-                    NSLog("------------------DATA START-------------------")
-                    NSLog("Delete Session Response String: \(String(describing: err))")
-                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
-                    NSLog("------------------DATA END-------------------")
-                }
-        }
-    }
+//    public class func fetchAnime(showId: Int?, score: Double?, withSuccess successHandler:@escaping (FeaturedShows) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+//        
+//        let rating = score
+//        guard let id = showId else { return }
+//        
+//        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+//        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+//        
+//        let headers: HTTPHeaders = [
+//            "Content-Type": "application/x-www-form-urlencoded"
+//        ]
+//        
+//        let parameters:Parameters = [
+//            "session_secret": sessionSecret!,
+//            "user_id": userId!,
+//            "rating": rating!
+//        ]
+//        
+//        let endpoint = GlobalVariables().baseUrlString + "anime/\(id)/rate"
+//        
+//        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
+//            .responseJSON { response in
+//                switch response.result {
+//                case .success/*(let data)*/:
+//                    if response.result.value != nil{
+//                        let swiftyJsonVar = JSON(response.result.value!)
+//                        
+//                        let responseSuccess = swiftyJsonVar["success"]
+//                        let responseMessage = swiftyJsonVar["error_message"]
+//                        
+//                        if responseSuccess.boolValue {
+//                            successHandler(true)
+//                        }else{
+//                            failureHandler(responseMessage.stringValue)
+//                        }
+//                    }
+//                case .failure(let err):
+//                    NSLog("------------------DATA START-------------------")
+//                    NSLog("Delete Session Response String: \(String(describing: err))")
+//                    SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+//                    NSLog("------------------DATA END-------------------")
+//                }
+//        }
+//    }
     
     // Rate anime
     public class func rate(showId: Int?, score: Double?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {

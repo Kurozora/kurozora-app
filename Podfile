@@ -16,13 +16,11 @@ inhibit_all_warnings!
 use_frameworks!
 
 def common_pods
-    pod 'Alamofire', '4.7.2'
-    pod 'SwiftyJSON', '4.1.0'
+#    pod 'Alamofire', '4.7.2'
+#    pod 'SwiftyJSON', '4.1.0'
+    pod 'TRON', '~> 4.0'
     pod 'TTTAttributedLabel-moolban', '2.0.0.2'
-    pod 'SDWebImage', '4.3.3'
-    pod 'SDWebImage/GIF', '4.3.3'
     pod 'Lightbox', '2.1.2'
-    pod 'FLAnimatedImage', '1.0.12'
     pod 'SwifterSwift', '4.3.0'
     pod 'KeychainAccess', '3.1.1'
     pod 'SCLAlertView', '0.8'

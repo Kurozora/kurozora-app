@@ -107,7 +107,6 @@
 		66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF282099A52D0011A342 /* UIView+Animation.swift */; };
 		66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */; };
 		66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */; };
-		66A8AF312099BA5D0011A342 /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF302099BA5D0011A342 /* UIImageView+SDWebImage.swift */; };
 		66A8AF332099E6370011A342 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */; };
 		66A8AF352099E7A80011A342 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF342099E7A70011A342 /* UIViewController+Image.swift */; };
 		66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */; };
@@ -343,7 +342,6 @@
 		6625F95120B5E87A004DB533 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6625F95620B5F59D004DB533 /* KDatabaseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDatabaseKit.h; sourceTree = "<group>"; };
 		66488B8B212F7FF2001E8C82 /* KCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCommonKit.h; sourceTree = "<group>"; };
-		66488B90212F80CC001E8C82 /* KCommonKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KCommonKit.swift; path = KCommonKit/KCommonKit.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		6659E70E20C1E76C007F139D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
@@ -407,7 +405,6 @@
 		66A8AF282099A52D0011A342 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
-		66A8AF302099BA5D0011A342 /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Appearance.swift"; sourceTree = "<group>"; };
 		66A8AF342099E7A70011A342 /* UIViewController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Image.swift"; sourceTree = "<group>"; };
 		66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Dates.swift"; sourceTree = "<group>"; };
@@ -765,7 +762,6 @@
 				66A8AF282099A52D0011A342 /* UIView+Animation.swift */,
 				66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */,
 				66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */,
-				66A8AF302099BA5D0011A342 /* UIImageView+SDWebImage.swift */,
 				66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */,
 				66A8AF342099E7A70011A342 /* UIViewController+Image.swift */,
 				66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */,
@@ -800,7 +796,6 @@
 		66647B472084995500CF624F = {
 			isa = PBXGroup;
 			children = (
-				66488B90212F80CC001E8C82 /* KCommonKit.swift */,
 				66707839208BBB4F00471FBC /* Default-568h@2x.png */,
 				66647B522084995500CF624F /* Kurozora */,
 				66647B692084995E00CF624F /* KurozoraTests */,
@@ -1725,7 +1720,6 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -1736,10 +1730,10 @@
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TRON/TRON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel-moolban/TTTAttributedLabel_moolban.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
@@ -1752,7 +1746,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
@@ -1763,10 +1756,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel_moolban.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
@@ -1787,7 +1780,6 @@
 				6614DF6C2089394A00B0BC69 /* UIViewController+Alert.swift in Sources */,
 				66BF02BB209F80F800BDAF41 /* CustomLabel.swift in Sources */,
 				66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */,
-				66A8AF312099BA5D0011A342 /* UIImageView+SDWebImage.swift in Sources */,
 				66BF02C9209F9ABC00BDAF41 /* UserCell.swift in Sources */,
 				66C2C52021049DD90020E21F /* ZFModalTransitionAnimator.m in Sources */,
 				66CE1AFF209B59600007A4DE /* CommentCell.swift in Sources */,

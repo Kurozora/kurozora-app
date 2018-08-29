@@ -10,7 +10,6 @@ import Foundation
 //import Parse
 //import Bolts
 import KCommonKit
-import SDWebImage
 
 //public protocol CommentViewControllerDelegate: class {
 //    func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool)

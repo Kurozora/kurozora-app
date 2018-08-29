@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FLAnimatedImage
 
 protocol ImageViewControllerDelegate: class {
     func imageViewControllerSelected(imageData: ImageData)

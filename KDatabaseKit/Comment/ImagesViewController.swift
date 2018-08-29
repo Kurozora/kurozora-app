@@ -9,8 +9,6 @@
 import Foundation
 import KCommonKit
 //import Bolts
-import SDWebImage
-import FLAnimatedImage
 
 //protocol ImagesViewControllerDelegate: class {
 //    func imagesViewControllerSelected(imageData: ImageData)

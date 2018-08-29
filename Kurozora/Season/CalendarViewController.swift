@@ -8,7 +8,6 @@
 
 import UIKit
 import KDatabaseKit
-import SDWebImage
 import Alamofire
 import KCommonKit
 import XLPagerTabStrip
