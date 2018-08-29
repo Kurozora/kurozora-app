@@ -15,7 +15,7 @@ public protocol RateViewControllerProtocol: class {
     func rateControllerDidFinishedWith(anime: Anime, rating: Float)
 }
 
-public class RateViewController: UIViewController {    
+public class RateViewController: UIViewController {
 //
 //    @IBOutlet weak var messageLabel: UILabel!
 //    @IBOutlet weak var starRating: HCSStarRatingView!

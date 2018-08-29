@@ -68,7 +68,7 @@ class AnimeCell: UICollectionViewCell {
 //
 //        AnimeCell.updateInformationLabel(anime, informationLabel: informationLabel)
 //
-//        ratingLabel?.text = FontAwesome.Ranking.rawValue + String(format: " %.2f    ", anime.membersScore) + FontAwesome.Members.rawValue + " " + numberFormatter.stringFromNumber(anime.membersCount)!
+//        ratingLabel?.text = FontAwesome.Ranking.rawValue + String(format: " %.2f    ", anime.membersScore) + FontAwesome.Members.rawValue + " " + numberFormatter.stringFromNumber(anime.ratingCount)!
 //
 //        if let nextEpisode = anime.nextEpisode {
 //
