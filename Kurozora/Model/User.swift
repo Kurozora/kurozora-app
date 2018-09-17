@@ -39,11 +39,25 @@ struct User: JSONDecodable {
     }
     
     static func currentId() -> Int? {
-        return Int(GlobalVariables().KDefaults["user_id"]!)
+        let userId = GlobalVariables().KDefaults["user_id"]
+        
+        if(userId == nil) {
+            return nil
+        }
+        else {
+            return Int(userId!)
+        }
     }
     
     static func currentSessionSecret() -> String? {
-        return GlobalVariables().KDefaults["session_secret"]
+        let sessionSecret = GlobalVariables().KDefaults["session_secret"]
+        
+        if(sessionSecret == nil) {
+            return nil
+        }
+        else {
+            return sessionSecret
+        }
     }
     
     static func currentDevice() -> String? {

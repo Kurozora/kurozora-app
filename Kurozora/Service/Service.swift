@@ -90,7 +90,7 @@ struct Service {
     
 //    Validate session
     func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
-        if User.currentSessionSecret() != nil &&  User.currentId() != nil {
+        if User.currentSessionSecret() != nil && User.currentId() != nil {
             let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("session/validate")
             
             let userId = User.currentId()!
