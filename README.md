@@ -1,2 +1,2 @@
 # Kurozora
-Aozroa Remastered
+Aozora Remastered
