@@ -103,7 +103,6 @@ class SettingsViewController: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0,0):
             if User.isLoggedIn() {
-                
                 let sessionId = User.currentSessionSecret()
                 let userId = User.currentId()
                 

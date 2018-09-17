@@ -31,7 +31,11 @@ struct User: JSONDecodable {
     let active: Bool?
     
     static func username() -> String? {
-        return GlobalVariables().KDefaults["username"]
+        if let username = GlobalVariables().KDefaults["username"] {
+            return username
+        } else {
+            return nil
+        }
     }
     
     static func isLoggedIn() -> Bool {
@@ -39,24 +43,18 @@ struct User: JSONDecodable {
     }
     
     static func currentId() -> Int? {
-        let userId = GlobalVariables().KDefaults["user_id"]
-        
-        if(userId == nil) {
+        if let userId = GlobalVariables().KDefaults["user_id"] {
+            return Int(userId)
+        } else {
             return nil
-        }
-        else {
-            return Int(userId!)
         }
     }
     
     static func currentSessionSecret() -> String? {
-        let sessionSecret = GlobalVariables().KDefaults["session_secret"]
-        
-        if(sessionSecret == nil) {
-            return nil
-        }
-        else {
+        if let sessionSecret = GlobalVariables().KDefaults["session_secret"] {
             return sessionSecret
+        } else {
+            return nil
         }
     }
     

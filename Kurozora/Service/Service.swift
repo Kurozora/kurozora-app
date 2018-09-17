@@ -22,7 +22,9 @@ struct Service {
 //    Login user
     func login(_ username:String, _ password:String, _ device:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/login")
-        
+
+        try? GlobalVariables().KDefaults.set(username, key: "username")
+
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
@@ -33,10 +35,14 @@ struct Service {
             "password": password,
             "device": device
         ]
-        
+
         request.perform(withSuccess: { user in
             if let success = user.success {
                 if success {
+                    if let userId = user.id {
+                        try? GlobalVariables().KDefaults.set(String(userId), key: "user_id")
+                    }
+                    
                     if let sessionSecret = user.session {
                         try? GlobalVariables().KDefaults.set(sessionSecret, key: "session_secret")
                     }
