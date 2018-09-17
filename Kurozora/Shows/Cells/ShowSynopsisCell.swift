@@ -9,7 +9,5 @@
 import UIKit
 
 class ShowSynopsisCell: UITableViewCell {
-
-    @IBOutlet weak var synopsisLabel: UILabel!
-
+    @IBOutlet weak var synopsisTextView: UITextView!
 }

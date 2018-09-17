@@ -1,59 +1,86 @@
 //
 //  User.swift
-//  KDatabaseKit
+//  Kurozora
 //
 //  Created by Khoren Katklian on 17/05/2018.
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import KCommonKit
+import TRON
+import SwiftyJSON
 
-public class User {
-
-    @NSManaged public var username: String
-    @NSManaged public var avatar: UIImage
-    @NSManaged public var banner: UIImage
-    @NSManaged public var bio: String
-    @NSManaged public var badges: [String]
-    @NSManaged public var joinDate: Date
+struct User: JSONDecodable {
+    let success: Bool?
+    let message: String?
     
-    @NSManaged public var activeStart: Date
-    @NSManaged public var activeEnd: Date
-    @NSManaged public var active: Bool
+    let id: Int?
+    let session: String?
+    let sessionArray: [JSON]?
+    let username: String?
+    let avatar: String?
+    let banner: String?
+    let bio: String?
+    let badges: [String]?
+    let joinDate: String?
     
-//    public func following() {
-//        return self.relationForKey("following")
-//    }
+    let rating: Double?
     
-    public class func username() -> String? {
+    let activeStart: String?
+    let activeEnd: String?
+    let active: Bool?
+    
+    static func username() -> String? {
         return GlobalVariables().KDefaults["username"]
     }
     
-    public class func isLoggedIn() -> Bool {
+    static func isLoggedIn() -> Bool {
         return User.username() != nil
     }
     
-    public class func currentId() -> Int? {
+    static func currentId() -> Int? {
         return Int(GlobalVariables().KDefaults["user_id"]!)
     }
     
-    public class func currentSessionSecret() -> String? {
+    static func currentSessionSecret() -> String? {
         return GlobalVariables().KDefaults["session_secret"]
     }
     
-    public class func currentDevice() -> String? {
+    static func currentDevice() -> String? {
         return UIDevice.modelName
     }
     
+    init(json: JSON) {
+        success = json["success"].boolValue
+        message = json["error_message"].stringValue
+        
+        id = json["user_id"].intValue
+        session = json["session_secret"].stringValue
+        sessionArray = json["sessions"].arrayValue
+        username = json["username"].stringValue
+        avatar = json["avatar"].stringValue
+        banner = json["banner"].stringValue
+        bio = json["bio"].stringValue
+        badges = json["badges"].rawValue as? [String]
+        joinDate = json["join_date"].stringValue
+        
+        rating = json["rating"].doubleValue
+        
+        activeStart = json["active_start"].stringValue
+        activeEnd = json["active_end"].stringValue
+        active = json["active"].boolValue
+    }
     
+//    func following() {
+//        return self.relationForKey("following")
+//    }
 //
-//    public class func currentUserIsGuest() -> Bool {
+//    class func currentUserIsGuest() -> Bool {
 //
 //        return PFAnonymousUtils.isLinkedWithUser(User.currentUser())
 //    }
     
-//    public var myAnimeListPassword: String? {
+//    var myAnimeListPassword: String? {
 //        get {
 //            return UserDefaults.standard.object(forKey: User.MyAnimeListPasswordKey) as! String?
 //        }
@@ -63,33 +90,33 @@ public class User {
 //        }
 //    }
 //    
-//    public class func logoutMyAnimeList() {
+//    class func logoutMyAnimeList() {
 //        UserDefaults.standard.removeObject(forKey: User.MyAnimeListPasswordKey)
 //        UserDefaults.standard.synchronize()
 //    }
     
-//    public class func syncingWithMyAnimeList() -> Bool {
+//    class func syncingWithMyAnimeList() -> Bool {
 //        guard let user = User.currentUser() else {
 //            return false
 //        }
 //        return user.myAnimeListPassword != nil
 //    }
 //
-//    public func incrementPostCount(byAmount: Int) {
+//    func incrementPostCount(byAmount: Int) {
 //        details.incrementKey("posts", byAmount: byAmount)
 //        details.saveInBackground()
 //    }
     
-//    public func isAdmin() -> Bool {
+//    func isAdmin() -> Bool {
 //        return badges.contains("Admin") || isTopAdmin()
 //    }
 //
-//    public func isTopAdmin() -> Bool {
+//    func isTopAdmin() -> Bool {
 //        return badges.contains("Top Admin")
 //    }
     
     // Don't ever name the function isCurrentUser it will conflict with Parse framework
-//    public func isTheCurrentUser() -> Bool {
+//    func isTheCurrentUser() -> Bool {
 //        guard let id1 = self.objectId, let currentUser = User.currentUser(), let id2 = currentUser.objectId else {
 //            return false
 //        }
@@ -97,11 +124,11 @@ public class User {
 //    }
     
     // Trial
-//    public func hasTrial() -> Bool {
+//    func hasTrial() -> Bool {
 //        return trialExpiration?.compare(Date()) == .orderedDescending
 //    }
     
-//    public func followUser(user: User, follow: Bool) {
+//    func followUser(user: User, follow: Bool) {
 //
 //        var incrementer = 0
 //        if follow {
@@ -124,7 +151,7 @@ public class User {
 //    }
     
     // Muting
-//    public class func muted(viewController: UIViewController) -> Bool {
+//    class func muted(viewController: UIViewController) -> Bool {
     
         
 //        guard let currentUser = User.currentUser() else {

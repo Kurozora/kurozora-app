@@ -9,10 +9,8 @@
 import UIKit
 
 class ShowDetailCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
-
 }
 
 //import UIKit

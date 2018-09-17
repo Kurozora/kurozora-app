@@ -607,7 +607,7 @@ Kurozora 1.0.0 (1)</string>
         <!--Legal ⚖️-->
         <scene sceneID="Gfa-CA-E5h">
             <objects>
-                <viewController storyboardIdentifier="Legal" title="Legal ⚖️" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Oz-dy-aVA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Legal" title="Legal ⚖️" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Oz-dy-aVA" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xN2-5I-hke"/>
                         <viewControllerLayoutGuide type="bottom" id="1Tw-af-dWo"/>
@@ -616,27 +616,41 @@ Kurozora 1.0.0 (1)</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mua-0K-XJT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="726"/>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mua-0K-XJT">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="609.66666666666663"/>
                                 <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Last updated at: 9 Sep, 2018 at 14:02" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afI-PN-SXp">
+                                <rect key="frame" x="10" y="617.66666666666663" width="355" height="20.333333333333371"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="LoC-UF-quL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="mua-0K-XJT" firstAttribute="top" secondItem="xN2-5I-hke" secondAttribute="bottom" id="7of-jc-m0Z"/>
-                            <constraint firstItem="1Tw-af-dWo" firstAttribute="top" secondItem="mua-0K-XJT" secondAttribute="bottom" constant="-88" id="ENm-yF-ZeO"/>
-                            <constraint firstItem="mua-0K-XJT" firstAttribute="leading" secondItem="48S-PY-FuF" secondAttribute="leading" id="LpQ-GB-yYP"/>
-                            <constraint firstAttribute="trailing" secondItem="mua-0K-XJT" secondAttribute="trailing" id="rRk-Gh-mms"/>
+                            <constraint firstAttribute="trailing" secondItem="mua-0K-XJT" secondAttribute="trailing" id="A1M-ES-m2Q"/>
+                            <constraint firstItem="afI-PN-SXp" firstAttribute="top" secondItem="mua-0K-XJT" secondAttribute="bottom" constant="7.9999999999998863" id="Dcj-Yz-EN1"/>
+                            <constraint firstAttribute="trailing" secondItem="afI-PN-SXp" secondAttribute="trailing" constant="10" id="FYQ-9s-NmX"/>
+                            <constraint firstItem="mua-0K-XJT" firstAttribute="top" secondItem="xN2-5I-hke" secondAttribute="bottom" id="jMk-YS-KMh"/>
+                            <constraint firstItem="mua-0K-XJT" firstAttribute="leading" secondItem="48S-PY-FuF" secondAttribute="leading" id="mBS-lS-Cnk"/>
+                            <constraint firstItem="afI-PN-SXp" firstAttribute="leading" secondItem="48S-PY-FuF" secondAttribute="leading" constant="10" id="thp-ij-A4Q"/>
+                            <constraint firstItem="1Tw-af-dWo" firstAttribute="top" secondItem="afI-PN-SXp" secondAttribute="bottom" id="yRF-yQ-nRQ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lastUpdatedLabel" destination="afI-PN-SXp" id="BxP-kr-TNN"/>
+                        <outlet property="legalTextView" destination="mua-0K-XJT" id="wUi-4G-Wgr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XYf-wy-Cd7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="145"/>
+            <point key="canvasLocation" x="949.60000000000002" y="144.82758620689657"/>
         </scene>
         <!--Theme Store-->
         <scene sceneID="6FY-28-CmN">

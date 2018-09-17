@@ -58,15 +58,11 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     }
     
     func showDetailFor(_ show: Show) {
-//        let showDetailViewController = ShowDetailViewController()
-//        showDetailViewController.show = show
-//        navigationController?.pushViewController(showDetailViewController, animated: true)
-        
         let storyboard = UIStoryboard(name: "details", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as? ShowDetailViewController
+        controller?.show = show
         let customTabBar = ShowTabBarController()
         self.window?.rootViewController = customTabBar
-        controller?.show = show
         
         self.present(controller!, animated: true, completion: nil)
     }

@@ -117,7 +117,7 @@ extension DropDownListViewController: UIGestureRecognizerDelegate {
 
 extension DropDownListViewController: UITableViewDataSource {
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
     }
     

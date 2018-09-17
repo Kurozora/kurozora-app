@@ -22,7 +22,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     var sessionsArray:[JSON] = []
     
     override func viewWillAppear(_ animated: Bool) {
-        Request.getSessions( withSuccess: { (array) in
+        Service.shared.getSessions( withSuccess: { (array) in
             self.sessionsArray = array
             
 //            Update table with new information
@@ -51,7 +51,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
             let cell = self.tableView.cellForRow(at: indexPath!) as! SessionsCell
             let sessionSecret =  Int(cell.extraLable.text!)
             
-            Request.deleteSession(sessionSecret!, withSuccess: { (success) in
+            Service.shared.deleteSession(sessionSecret!, withSuccess: { (success) in
                 if success {
                     let buttonPosition: CGPoint = sender.convert(sender.bounds.origin, to: self.tableView)
                     let indexPath = self.tableView.indexPathForRow(at: buttonPosition)

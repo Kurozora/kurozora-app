@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.window?.rootViewController = vc
 //        self.window?.makeKeyAndVisible()
         
-        Request.validateSession(withSuccess: { (success) in
+        Service.shared.validateSession(withSuccess: { (success) in
             if success {
                 let customTabBar = KurozoraTabBarController()
                 self.window = UIWindow(frame: UIScreen.main.bounds)

@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
         loginButton.isEnabled = false
         
-        Request.login(username, password, device, withSuccess: { (success) in
+        Service.shared.login(username, password, device, withSuccess: { (success) in
             let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
             

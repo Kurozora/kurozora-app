@@ -53,9 +53,9 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private let showCellId = "showCellId"
-    
+
     override func setupViews() {
         super.setupViews()
         backgroundColor = .clear
@@ -76,35 +76,34 @@ class CategoryCell: BaseCell, UICollectionViewDelegateFlowLayout, UICollectionVi
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[showsCollectionView]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["showsCollectionView": showsCollectionView]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[titleLabel(30)][showsCollectionView][dividerLineView(0.5)]|", options: NSLayoutFormatOptions(), metrics: nil, views:  ["titleLabel": titleLabel, "showsCollectionView": showsCollectionView, "dividerLineView": dividerLineView]))
     }
-    
+
     // Collection view items in section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = showCategory?.shows?.count { return count }
         return 0
     }
-    
+
     // Collection view item cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: showCellId, for: indexPath) as! ShowCell
         cell.show = showCategory?.shows?[indexPath.item]
         return cell
     }
-    
+
     // Collection view item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: frame.height - 32)
     }
-    
+
     // Collection view insets
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
     }
-    
+
     // Collection view item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let show = showCategory?.shows?[indexPath.item] {
             featuredShowsViewController?.showDetailFor(show)
         }
     }
-    
 }

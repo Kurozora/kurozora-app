@@ -206,7 +206,7 @@ public class ThreadViewController: UIViewController {
 //
 //extension ThreadViewController: UITableViewDataSource {
 //
-//    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//    func numberOfSections(in tableView: UITableView) -> Int {
 //        return fetchController.dataCount()
 //    }
 //

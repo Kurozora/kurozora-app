@@ -19,7 +19,7 @@ class ManageThemesController: UIViewController, UICollectionViewDelegate, UIColl
     var themeArray:[JSON] = []
     
     override func viewWillAppear(_ animated: Bool) {
-        Request.getThemes( withSuccess: { (array) in
+        Service.shared.getThemes( withSuccess: { (array) in
             self.themeArray = array
             
 //            Update collection with new information

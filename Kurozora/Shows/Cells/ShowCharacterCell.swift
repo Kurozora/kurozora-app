@@ -10,9 +10,9 @@ import UIKit
 
 class ShowCharacterCell: UITableViewCell {
     
-    @IBOutlet weak var characterImageView: UIImageView!
-    @IBOutlet weak var characterName: UILabel!
-    @IBOutlet weak var characterRole: UILabel!
+//    @IBOutlet weak var characterImageView: UIImageView!
+//    @IBOutlet weak var characterName: UILabel!
+//    @IBOutlet weak var characterRole: UILabel!
     
     @IBOutlet weak var actorImageView: UIImageView!
     @IBOutlet weak var actorName: UILabel!

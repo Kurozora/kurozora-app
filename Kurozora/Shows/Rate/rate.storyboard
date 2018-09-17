@@ -22,13 +22,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rSD-SO-MMg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="-24" width="375" height="735"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="THx-94-gIN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="735"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate Re:Zero kara hajimeru isekai seikatsu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaZ-x9-e9S">
+                                            <rect key="frame" x="27" y="323.5" width="321" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jb9-oV-rrP" customClass="CosmosView" customModule="Cosmos">
-                                            <rect key="frame" x="102.5" y="318.5" width="170" height="30"/>
+                                            <rect key="frame" x="102.5" y="352.5" width="170" height="30"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                                     <real key="value" value="2.5"/>
@@ -58,27 +64,39 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="jb9-oV-rrP" firstAttribute="centerX" secondItem="THx-94-gIN" secondAttribute="centerX" id="Flw-np-mWL"/>
+                                        <constraint firstItem="jb9-oV-rrP" firstAttribute="top" secondItem="qaZ-x9-e9S" secondAttribute="bottom" constant="8.5" id="J13-5M-bRR"/>
+                                        <constraint firstItem="qaZ-x9-e9S" firstAttribute="leading" secondItem="THx-94-gIN" secondAttribute="leading" constant="27" id="Wx0-rX-dcT"/>
+                                        <constraint firstAttribute="trailing" secondItem="qaZ-x9-e9S" secondAttribute="trailing" constant="27" id="qtF-8Z-uPx"/>
                                         <constraint firstItem="jb9-oV-rrP" firstAttribute="centerY" secondItem="THx-94-gIN" secondAttribute="centerY" id="rUp-WA-fJN"/>
                                     </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="ngv-fa-vBb" appends="YES" id="oSW-y4-S5R"/>
+                                    </connections>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rSD-SO-MMg" firstAttribute="top" secondItem="kcG-NY-DPn" secondAttribute="bottom" constant="-20" id="3oQ-vd-vQ1"/>
+                            <constraint firstItem="rSD-SO-MMg" firstAttribute="top" secondItem="kcG-NY-DPn" secondAttribute="bottom" constant="-44" id="3oQ-vd-vQ1"/>
                             <constraint firstAttribute="trailing" secondItem="rSD-SO-MMg" secondAttribute="trailing" id="Ccn-tL-wA9"/>
-                            <constraint firstItem="Jyh-nx-5ja" firstAttribute="top" secondItem="rSD-SO-MMg" secondAttribute="bottom" id="HEh-nl-8Xl"/>
+                            <constraint firstItem="Jyh-nx-5ja" firstAttribute="top" secondItem="rSD-SO-MMg" secondAttribute="bottom" constant="-44" id="HEh-nl-8Xl"/>
                             <constraint firstItem="rSD-SO-MMg" firstAttribute="leading" secondItem="Eg9-n3-hkB" secondAttribute="leading" id="aOy-fJ-1o7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cosmosView" destination="jb9-oV-rrP" id="ES2-0L-fDO"/>
+                        <outlet property="rateTextLabel" destination="qaZ-x9-e9S" id="3AC-tg-Uvp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FKg-QA-kjb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ngv-fa-vBb">
+                    <connections>
+                        <action selector="dismissViewControllerWithSender:" destination="akB-gy-PkX" id="QaV-CQ-Gx8"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="92" y="84"/>
         </scene>

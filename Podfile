@@ -16,8 +16,6 @@ inhibit_all_warnings!
 use_frameworks!
 
 def common_pods
-#    pod 'Alamofire', '4.7.2'
-#    pod 'SwiftyJSON', '4.1.0'
     pod 'TRON', '~> 4.0'
     pod 'TTTAttributedLabel-moolban', '2.0.0.2'
     pod 'Lightbox', '2.1.2'
@@ -50,7 +48,6 @@ def kurozora_pods
 end
 
 target 'Kurozora' do
-    # Pods for Kurozora
     kurozora_pods
     common_pods
     project_pods

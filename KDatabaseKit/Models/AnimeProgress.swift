@@ -24,7 +24,7 @@ public class AnimeProgress {
     }
     
     public var anime: Anime?
-    public var user: User?
+//    public var user: User?
     
     @NSManaged public var startDate: Date
     @NSManaged public var endDate: Date

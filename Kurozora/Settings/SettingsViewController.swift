@@ -107,7 +107,7 @@ class SettingsViewController: UITableViewController {
                 let sessionId = User.currentSessionSecret()
                 let userId = User.currentId()
                 
-                Request.logout(sessionId!, userId!, withSuccess: { (success) in
+                Service.shared.logout(sessionId!, userId!, withSuccess: { (success) in
                     let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
                     

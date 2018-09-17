@@ -481,7 +481,7 @@ import KDatabaseKit
 //
 //extension AnimeInformationViewController: UITableViewDataSource {
 //
-//    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//    func numberOfSections(in tableView: UITableView) -> Int {
 //        return anime.dataAvailable ? AnimeSection.allSections.count : 0
 //    }
 //

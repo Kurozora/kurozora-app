@@ -49,7 +49,7 @@ public class CharactersViewController: AnimeBaseViewController {
 //
 //
 //extension CharactersViewController: UITableViewDataSource {
-//    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//    func numberOfSections(in tableView: UITableView) -> Int {
 //        return anime.characters.dataAvailable ? CharacterSection.allSections.count : 0
 //    }
 //    

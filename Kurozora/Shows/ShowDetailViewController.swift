@@ -8,46 +8,46 @@
 
 import UIKit
 import KCommonKit
+import TRON
+import SwiftyJSON
+import SCLAlertView
 
 enum AnimeSection: Int {
-    case synopsis = 0
-//    case relations
+    case synopsis
     case information
-//    case externalLinks
+    case cast
 
-    static var allSections: [AnimeSection] = [.synopsis, /*.relations,*/ .information/*, .externalLinks*/]
+    static var allSections: [AnimeSection] = [.synopsis, .information, .cast]
 }
 
 class ShowDetailViewController: UIViewController {
-    
+
+    let tron = TRON(baseURL: "https://kurozora.app/api/v1/")
+
     let HeaderCellHeight: CGFloat = 39
     var loadingView: LoaderView!
     var window: UIWindow?
-    
-    private var showDetails: ShowDetails?
+
+    var showDetails: ShowDetails?
     var show: Show?
-    
+    var castDetails: CastDetails?
+
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet public weak var collectionView: UICollectionView!
-    
+
     // MARK: - IBoutlet
-//    @IBOutlet weak var shimeringView: FBShimmeringView!
-    @IBOutlet weak var separatorView: UIView!
-//    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
-    
+
     // Compact detail view
     @IBOutlet weak var showTitleLabel: UILabel!
     @IBOutlet weak var tagsLabel: UILabel!
-    
+
     // Action buttons
     @IBOutlet weak var listButton: UIButton!
     @IBOutlet weak var ratingButton: UIButton!
     @IBOutlet weak var reminderButton: UIButton!
-    
+
     // Quick details view
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var trailerButton: UIButton!
@@ -57,100 +57,147 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var membersCountLabel: UILabel!
-    
+
+    @IBAction func favoriteBtnPressed(_ sender: Any) {
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
-//        tableView?.delegate = self
-//        tableView?.dataSource = self
-        
+
         // Prepare view for data
         loadingView = LoaderView(parentView: view)
 
         // Fetch details
         if let id = show?.id {
             fetchShowDetailsFor(id) { (showDetails) in
-                NSLog("--------------- FETCH DETAILS -------------")
-                NSLog("--------------- \(showDetails) -------------")
-                
-                self.updateDetailWithShow(self.show)
                 self.showDetails = showDetails
-                self.tableView?.reloadData()
+                self.updateDetailWithShow(self.showDetails)
+                self.tableView.reloadData()
+            }
+
+            Service.shared.getCastFor(id, withSuccess: { (cast) in
+                DispatchQueue.main.async {
+                    self.castDetails = cast
+                }
+//                self.updateDetailWithCast(self.castDetails)
+            }) { (errorMsg) in
+                SCLAlertView().showError("Can't get cast details", subTitle: "There was an error while retrieving cast details. Please check your internet connection and refresh this page.")
             }
         }
+
+        tableView.dataSource = self
+        tableView.delegate = self
     }
-    
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        statusBar.isHidden = true
     }
-    
+
     // MARK: - IBAction
-    
+
     @IBAction func showRating(_ sender: Any) {
         let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
+        vc?.showDetails = showDetails
         vc?.modalTransitionStyle = .crossDissolve
         vc?.modalPresentationStyle = .overCurrentContext
         self.present(vc!, animated: true, completion: nil)
     }
-    
-    // Fetch show details
-    private func fetchShowDetailsFor(_ id: Int, completionHandler: @escaping (ShowDetails) -> ()) {
-        loadingView.startAnimating()
-        
-        NSLog("--------------- LOADING -------------")
-        
-        let urlString = GlobalVariables().baseUrlString + "anime/\(id)/details"
-        
-        URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
-            guard let data = data else { return }
-            
-            do {
-                let showDetails = try JSONDecoder().decode(ShowDetails.self, from: data)
-                
-                NSLog("--------------- DECODING -------------")
-                NSLog("--------------- \(showDetails) -------------")
-                DispatchQueue.main.async {
-                    NSLog("--------------- DISPATCHED -------------")
-                    completionHandler(showDetails)
-                }
-            } catch let err{
-                NSLog("------ DETAILS ERROR: \(err)")
-            }
-        }.resume()
+
+    @IBAction func closeButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
-    
+
+    // Throw json error
+    class JSONError: JSONDecodable {
+        required init(json: JSON) throws {
+            print("JSON ERROR \(json)")
+        }
+    }
+
+    // Fetch show details
+    private func fetchShowDetailsFor(_ id: Int?, completionHandler: @escaping (ShowDetails) -> ()) {
+        loadingView.startAnimating()
+
+        guard let id = id else { return }
+
+        let request : APIRequest<ShowDetails,JSONError> = tron.swiftyJSON.request("anime/\(id)/details")
+
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .post
+        request.parameters = [
+            "session_secret": sessionSecret!,
+            "user_id": userId!
+        ]
+
+        request.perform(withSuccess: { showDetails in
+            DispatchQueue.main.async {
+                completionHandler(showDetails)
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received rating error: \(error)")
+        })
+    }
+
     // Update view with details
-    func updateDetailWithShow(_ show: Show?) {
-        
-        NSLog("--------------- about to succeeded -------------")
-        NSLog("--------------- \(String(describing: show)) -------------")
+    func updateDetailWithShow(_ show: ShowDetails?) {
         if show != nil {
-            
-            NSLog("--------------- If succeeded -------------")
-            NSLog("--------------- \(String(describing: showDetails?.anime)) -------------")
-            
 //            if let progress = show?.progress {
 //                updateListButtonTitle(progress.list)
 //            } else {
 //                updateListButtonTitle(string: "Add to list ")
-//            }
-            
+//           }
+
             // Configure title label
-            if let title = show?.title {
+            if let title = showDetails?.title {
                 showTitleLabel.text = title
             } else {
                 showTitleLabel.text = "Unknown"
             }
-            
+
+            // Configure rating button
+            if let rating = showDetails?.currentRating {
+                if rating == 0.0 {
+                    ratingButton.setTitle("", for: .normal)
+                } else if rating <= 1.0 {
+                    ratingButton.setTitle("", for: .normal)
+                } else if rating <= 2.0, rating > 1.0 {
+                    ratingButton.setTitle("", for: .normal)
+                } else if rating <= 3.0, rating > 2.0  {
+                    ratingButton.setTitle("", for: .normal)
+                } else if rating <= 4.0, rating > 3.0  {
+                    ratingButton.setTitle("", for: .normal)
+                } else if rating <= 5.0, rating > 4.0  {
+                    ratingButton.setTitle("", for: .normal)
+                } else {
+                    ratingButton.setTitle("", for: .normal)
+                }
+            } else {
+                ratingButton.setTitle("", for: .normal)
+            }
+
             // Configure tags label
-            if let tags = show?.informationString() {
+            if let tags = showDetails?.informationString() {
                 tagsLabel.text = tags
             } else {
                 tagsLabel.text = "Unknown · N/A · 0 eps · 0 min · 0000"
             }
-            
+
             // Configure status label
             if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
                 switch status {
@@ -162,32 +209,37 @@ class ShowDetailViewController: UIViewController {
                     statusLabel.backgroundColor = UIColor.completed()
                 case .notYetAired:
                     statusLabel.text = "Not Aired"
-                    statusLabel.backgroundColor = UIColor.planning()
+                    statusLabel.backgroundColor = UIColor.onHold()
                 }
             }
-        
+
             // Configure ratings label
-            ratingLabel.text = String(format:"%.2f / %d", (show?.averageRating)!, /*show?.progress?.score ??*/ 5)
-            if let ratingCount = show?.ratingCount {
+            if let average = showDetails?.averageRating {
+                ratingLabel.text = String(format:"%.2f / %d", average, /*show?.progress?.score ??*/ 5)
+            } else {
+                ratingLabel.text = "-"
+            }
+
+            if let ratingCount = showDetails?.ratingCount {
                 membersCountLabel.text = String(ratingCount)
             } else {
-                membersCountLabel.text = "0"
+                membersCountLabel.text = "-"
             }
-            
+
             // Configure rank label
-            if let scoreRank = show?.rank {
+            if let scoreRank = showDetails?.rank {
                 scoreRankLabel.text = String(scoreRank)
             } else {
-                scoreRankLabel.text = "0"
+                scoreRankLabel.text = "-"
             }
-            
-            if let popularRank = show?.popularityRank {
+
+            if let popularRank = showDetails?.popularityRank {
                 popularityRankLabel.text = String(popularRank)
             } else {
-                popularityRankLabel.text = "9999"
+                popularityRankLabel.text = "-"
             }
-            
-            if let posterThumb = show?.posterThumbnail {
+
+            if let posterThumb = showDetails?.posterThumbnail {
                 do {
                     let url = URL(string: posterThumb)
                     let data = try Data(contentsOf: url!)
@@ -199,8 +251,8 @@ class ShowDetailViewController: UIViewController {
             } else {
                 posterImageView.image = UIImage(named: "colorful")
             }
-            
-            if let bannerImage = show?.banner {
+
+            if let bannerImage = showDetails?.banner {
                 do {
                     let url = URL(string: bannerImage)
                     let data = try Data(contentsOf: url!)
@@ -212,31 +264,25 @@ class ShowDetailViewController: UIViewController {
             } else {
                 bannerImageView.image = UIImage(named: "aozora")
             }
-            
-            if let youtubeID = show?.youtubeId, youtubeID.count > 0 {
+
+            if let youtubeID = showDetails?.youtubeId, youtubeID.count > 0 {
                 trailerButton.isHidden = false
                 trailerButton.layer.borderWidth = 1.0;
                 trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor;
             } else {
                 trailerButton.isHidden = true
             }
-            
-            loadingView.stopAnimating()
-            tableView.dataSource = self
-            tableView.delegate = self
-            tableView.reloadData()
         }
     }
-    
+
     // MARK: - IBActions
-    
     @IBAction func showBanner(sender: AnyObject) {
         var bannerUrl: String?
         
-        if let banner = show?.banner {
+        if let banner = showDetails?.banner {
             bannerUrl = banner
         } else {
-            bannerUrl = show?.bannerThumbnail
+            bannerUrl = showDetails?.bannerThumbnail
         }
         
         presentLightboxViewController(imageUrl: bannerUrl, text: "", videoUrl: "")
@@ -245,12 +291,12 @@ class ShowDetailViewController: UIViewController {
     @IBAction func showPoster(sender: AnyObject) {
         var posterUrl: String?
         
-        if let poster = show?.poster {
+        if let poster = showDetails?.poster {
             posterUrl = poster
         } else {
-            posterUrl = show?.posterThumbnail
+            posterUrl = showDetails?.posterThumbnail
         }
-        
+
         presentLightboxViewController(imageUrl: posterUrl, text: "", videoUrl: "")
     }
     
@@ -259,25 +305,30 @@ class ShowDetailViewController: UIViewController {
     }
     
     @IBAction func playTrailerPressed(sender: AnyObject) {
-        if let trailerURL = show?.youtubeId {
+        if let trailerURL = showDetails?.youtubeId {
             presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
         }
     }
 }
 
 extension ShowDetailViewController: UITableViewDataSource {
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return show != nil ? AnimeSection.allSections.count : 0
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numberOfRows = 0
+        
         switch AnimeSection(rawValue: section)! {
         case .synopsis: numberOfRows = 1
-//        case .relations: numberOfRows = show?.relations.totalRelations
         case .information: numberOfRows = 11
-//        case .externalLinks: numberOfRows = (show?.externalLinks?.count)!
+        case .cast:
+            if let actors = castDetails?.actors {
+                numberOfRows = actors.count
+            } else {
+                numberOfRows = 1
+            }
         }
         
         return numberOfRows
@@ -288,91 +339,115 @@ extension ShowDetailViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: indexPath.section)! {
         case .synopsis:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! ShowSynopsisCell
-            cell.synopsisLabel.attributedText = show?.attributedSynopsis()
+            cell.synopsisTextView.attributedText = showDetails?.attributedSynopsis()
             cell.layoutIfNeeded()
+            loadingView.stopAnimating()
             return cell
-//        case .relations:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "InformationCell") as! ShowDetailCell
-//            let relation = show?.relations.relationAtIndex(indexPath.row)
-//            cell.titleLabel.text = relation.relationType.rawValue
-//            cell.detailLabel.text = relation.title
-//            cell.layoutIfNeeded()
-//            return cell
         case .information:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! ShowDetailCell
 
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "Type"
-                cell.detailLabel.text = show?.type
+                if let type = showDetails?.type {
+                    cell.detailLabel.text = type
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 1:
                 cell.titleLabel.text = "Episodes"
-                cell.detailLabel.text = (show?.episodes != 0) ? show?.episodes?.description : "?"
+                if let episode = showDetails?.episodes {
+                    cell.detailLabel.text = episode.description
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 2:
                 cell.titleLabel.text = "Status"
-                cell.detailLabel.text = show?.status?.capitalized
+                if let status = showDetails?.status {
+                    cell.detailLabel.text = status.capitalized
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 3:
                 cell.titleLabel.text = "Aired"
-                let startDate = show?.startDate != nil && show?.startDate?.compare(Date(timeIntervalSince1970: 0)) != ComparisonResult.orderedAscending ? show?.startDate!.mediumDate() : "?"
-                let endDate = show?.endDate != nil && show?.endDate?.compare(Date(timeIntervalSince1970: 0)) != ComparisonResult.orderedAscending ? show?.endDate!.mediumDate() : "?"
-                cell.detailLabel.text = "\(startDate ?? "N/A") - \(endDate ?? "N/A")"
+                if let startDate = showDetails?.startDate, let endDate = showDetails?.endDate {
+                    cell.detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
+                } else {
+                    cell.detailLabel.text = "N/A - N/A"
+                }
             case 4:
                 cell.titleLabel.text = "Producers"
-                cell.detailLabel.text = show?.producers
+                if let producer = showDetails?.producers {
+                    cell.detailLabel.text = producer
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 5:
                 cell.titleLabel.text = "Genres"
-                cell.detailLabel.text = show?.genre
+                if let genre = showDetails?.genre {
+                    cell.detailLabel.text = genre
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 6:
                 cell.titleLabel.text = "Duration"
-                let duration = (show?.runtime != 0) ? show?.runtime : 0
-                cell.detailLabel.text = "\(String(describing: duration)) min"
+                if let duration = showDetails?.runtime {
+                    cell.detailLabel.text = "\(duration) min"
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 7:
                 cell.titleLabel.text = "Classification"
-                cell.detailLabel.text = show?.type
+                if let watchRating = showDetails?.watchRating {
+                    cell.detailLabel.text = watchRating
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 8:
                 cell.titleLabel.text = "English Titles"
-                cell.detailLabel.text = (show?.englishTitles?.count)! != 0 ? show?.englishTitles : "-"
+                if let englishTitle = showDetails?.englishTitles {
+                    cell.detailLabel.text = englishTitle
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 9:
                 cell.titleLabel.text = "Japanese Titles"
-                cell.detailLabel.text = (show?.japaneseTitles?.count)! != 0 ? show?.japaneseTitles : "-"
+                if let japaneseTitle = showDetails?.japaneseTitles {
+                    cell.detailLabel.text = japaneseTitle
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             case 10:
                 cell.titleLabel.text = "Synonyms"
-                cell.detailLabel.text = (show?.synonyms?.count)! != 0 ? show?.synonyms : "-"
+                if let synonyms = showDetails?.synonyms {
+                    cell.detailLabel.text = synonyms
+                } else {
+                    cell.detailLabel.text = "-"
+                }
             default:
                 break
             }
             cell.layoutIfNeeded()
             return cell
-            
-//        case .externalLinks:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ShowLinkCell") as! ShowLinkCell
-//
-//            let link = show?.linkAtIndex(indexPath.row)
-//            cell.linkLabel.text = link.site.rawValue
-//            switch link.site {
-//            case .crunchyroll:
-//                cell.linkLabel.backgroundColor = UIColor.crunchyroll()
-//            case .OfficialSite:
-//                cell.linkLabel.backgroundColor = UIColor.officialSite()
-//            case .daisuki:
-//                cell.linkLabel.backgroundColor = UIColor.daisuki()
-//            case .funimation:
-//                cell.linkLabel.backgroundColor = UIColor.funimation()
-//            case .myAnimeList:
-//                cell.linkLabel.backgroundColor = UIColor.myAnimeList()
-//            case .hummingbird:
-//                cell.linkLabel.backgroundColor = UIColor.hummingbird()
-//            case .kitsu:
-//                cell.linkLabel.backgroundColor = UIColor.hummingbird()
-//            case .anilist:
-//                cell.linkLabel.backgroundColor = UIColor.anilist()
-//            case .other:
-//                cell.linkLabel.backgroundColor = UIColor.other()
+        case .cast:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
+            cell.actorName.text = castDetails?.castName
+            cell.actorJob.text = castDetails?.castRole
+//            do {
+//                if let castImage = castDetails?.castImage {
+//                    let url = URL(string: castImage)
+//                    let data = try Data(contentsOf: url!)
+//                    cell.actorImageView.image = UIImage(data: data)
+//                }
 //            }
-//            return cell
+//            catch{
+//                print(error)
+//            }
+            cell.layoutIfNeeded()
+            return cell
         }
     }
-    
+
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
         var title = ""
@@ -380,18 +455,16 @@ extension ShowDetailViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: section)! {
         case .synopsis:
             title = "Synopsis"
-//        case .relations:
-//            title = "Relations"
         case .information:
             title = "Information"
-//        case .externalLinks:
-//            title = "External Links"
+        case .cast:
+            title = "Actors"
         }
-        
+
         cell.titleLabel.text = title
         return cell.contentView
     }
-    
+
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? HeaderCellHeight : 1
     }
@@ -401,33 +474,18 @@ extension ShowDetailViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = AnimeSection(rawValue: indexPath.section)!
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         switch section {
-        case .synopsis:
-            let synopsisCell = tableView.cellForRow(at: indexPath) as! ShowSynopsisCell
-            synopsisCell.synopsisLabel.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 8) ? 0 : 8
-            
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            })
-//        case .relations:
-//            let relation = show?.relations.relationAtIndex(indexPath.row)
-//            // TODO: Parse is fetching again inside presenting AnimeInformationVC
-//            let query = show?.queryWith(malID: relation.animeID)
-//            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-//                if let anime = objects?.first as? Anime {
-//                    self.subAnimator = self.presentAnimeModal(anime)
-//                }
-//            }
+        case .synopsis: break
+//            let synopsisCell = tableView.cellForRow(at: indexPath) as! ShowSynopsisCell
+//            synopsisCell.synopsisTextView.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 8) ? 0 : 8
+
+//            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//            })
         case .information: break
-//        case .externalLinks:
-//            let link = show.linkAtIndex(indexPath.row)
-//
-//            let (navController, webController) = KDatabaseKit.webViewController()
-//            let initialUrl = URL(string: link.url)
-//            webController.initWithInitialUrl(initialUrl)
-//            presentViewController(navController, animated: true, completion: nil)
+        case .cast: break
         }
     }
 }

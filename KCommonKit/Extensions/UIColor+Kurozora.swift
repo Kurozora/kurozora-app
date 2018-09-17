@@ -96,22 +96,27 @@ extension UIColor {
     }
     
     // Over clear color
+    // Green
     public class func watching() -> UIColor! {
-        return UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
+        return UIColor(red: 86/255.0, green: 255/255.0, blue: 67/255.0, alpha: 1.0)
     }
     
+    // Blue
     public class func completed() -> UIColor! {
-        return UIColor(red: 112/255.0, green: 154/255.0, blue: 225/255.0, alpha: 1.0)
+        return UIColor(red: 3/255.0, green: 169/255.0, blue: 244/255.0, alpha: 1.0)
     }
     
+    // Yellow
     public class func planning() -> UIColor! {
-        return UIColor(red: 225/255.0, green: 215/255.0, blue: 124/255.0, alpha: 1.0)
+        return UIColor(red: 225/255.0, green: 240/255.0, blue: 86/255.0, alpha: 1.0)
     }
     
+    // Red
     public class func onHold() -> UIColor! {
-        return UIColor(red: 211/255.0, green: 84/255.0, blue: 0/255.0, alpha: 1.0)
+        return UIColor(red: 255/255.0, green: 147/255.0, blue: 0/255.0, alpha: 1.0)
     }
     
+    // Gray
     public class func dropped() -> UIColor! {
         return UIColor(red: 100/255.0, green: 100/255.0, blue: 100/255.0, alpha: 1.0)
     }
