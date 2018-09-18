@@ -59,7 +59,6 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var membersCountLabel: UILabel!
 
     @IBAction func favoriteBtnPressed(_ sender: Any) {
-        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.reloadData()
     }
 
@@ -91,6 +90,8 @@ class ShowDetailViewController: UIViewController {
 
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -397,7 +398,7 @@ extension ShowDetailViewController: UITableViewDataSource {
                     cell.detailLabel.text = "-"
                 }
             case 7:
-                cell.titleLabel.text = "Classification"
+                cell.titleLabel.text = "Rating"
                 if let watchRating = showDetails?.watchRating {
                     cell.detailLabel.text = watchRating
                 } else {
