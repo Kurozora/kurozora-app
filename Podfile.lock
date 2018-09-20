@@ -19,6 +19,7 @@ PODS:
     - Hue (~> 3.0)
     - Imaginary (~> 3.0)
   - NGAParallaxMotion (1.1.0)
+  - ReadMoreTextView (3.0.0)
   - SCLAlertView (0.8)
   - SwifterSwift (4.3.0):
     - SwifterSwift/AppKit (= 4.3.0)
@@ -64,6 +65,7 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - Lightbox (= 2.1.2)
   - NGAParallaxMotion (= 1.1.0)
+  - ReadMoreTextView
   - SCLAlertView (= 0.8)
   - SwifterSwift (= 4.3.0)
   - SwiftTheme (= 0.4.1)
@@ -88,6 +90,7 @@ SPEC REPOS:
     - KeychainAccess
     - Lightbox
     - NGAParallaxMotion
+    - ReadMoreTextView
     - SCLAlertView
     - SwifterSwift
     - SwiftTheme
@@ -133,6 +136,7 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
+  ReadMoreTextView: d872de55c5850c702f8d8ce591fb70e5d00c873a
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
   SwiftTheme: 36d71c4eed4b2c401c782cf036e4586c749a8173
@@ -143,6 +147,6 @@ SPEC CHECKSUMS:
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 0df1b53283c0896ef7732e3bf2091a6bb04fc8c9
+PODFILE CHECKSUM: 1af7399fa872505b63f1534e3e706e28304637ab
 
 COCOAPODS: 1.5.3

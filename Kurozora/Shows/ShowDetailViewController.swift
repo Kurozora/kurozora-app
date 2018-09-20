@@ -28,6 +28,8 @@ class ShowDetailViewController: UIViewController {
     var loadingView: LoaderView!
     var window: UIWindow?
 
+    let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+
     var showDetails: ShowDetails?
     var show: Show?
     var castDetails: CastDetails?
@@ -97,8 +99,7 @@ class ShowDetailViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        statusBar.isHidden = true
+        self.statusBar.isHidden = true
     }
 
     // MARK: - IBAction
@@ -113,6 +114,7 @@ class ShowDetailViewController: UIViewController {
     }
 
     @IBAction func closeButton(_ sender: Any) {
+        self.statusBar.isHidden = false
         dismiss(animated: true, completion: nil)
     }
 
@@ -341,8 +343,8 @@ extension ShowDetailViewController: UITableViewDataSource {
         case .synopsis:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! ShowSynopsisCell
             cell.synopsisTextView.attributedText = showDetails?.attributedSynopsis()
+            cell.synopsisTextView.isSelectable = true
             cell.layoutIfNeeded()
-            loadingView.stopAnimating()
             return cell
         case .information:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! ShowDetailCell
@@ -477,14 +479,14 @@ extension ShowDetailViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         switch section {
-        case .synopsis: break
+        case .synopsis:
 //            let synopsisCell = tableView.cellForRow(at: indexPath) as! ShowSynopsisCell
 //            synopsisCell.synopsisTextView.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 8) ? 0 : 8
 
-//            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-//                tableView.beginUpdates()
-//                tableView.endUpdates()
-//            })
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            })
         case .information: break
         case .cast: break
         }

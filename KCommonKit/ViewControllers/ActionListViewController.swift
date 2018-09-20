@@ -46,7 +46,7 @@ public class ActionListViewController: UIViewController {
         
         if showTableView {
             showTableView = false
-            UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+            UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 1.0, options: UIView.AnimationOptions.curveEaseOut, animations: { () -> Void in
                 
                 self.tableTopSpaceConstraint.constant = 0
                 self.view.layoutIfNeeded()

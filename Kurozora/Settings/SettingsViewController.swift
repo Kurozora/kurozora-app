@@ -184,10 +184,7 @@ class SettingsViewController: UITableViewController {
 //        case (2,0):
 //            // Rate app
 //            iRate.sharedInstance().openRatingsPageInAppStore()
-//        case (2,1):
-//            // Recommend to friends
-//            DialogController.sharedInstance.showFBAppInvite(self)
-        case (4,0):
+        case (5,0):
             // Open Twitter
             var url: URL?
             let twitterScheme = URL(string: "twitter://")!

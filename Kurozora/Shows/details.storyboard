@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,7 +109,7 @@
                                                             </state>
                                                         </button>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY RATING" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgb-bP-r31" userLabel="MY RATING">
-                                                            <rect key="frame" x="50" y="4" width="55" height="12"/>
+                                                            <rect key="frame" x="50" y="4" width="54.666666666666657" height="12"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="54.5" id="1hx-FT-rfp"/>
                                                                 <constraint firstAttribute="height" constant="12" id="ZJC-yI-fcS"/>
@@ -141,7 +139,7 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 6, 2017 11:00 pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NsY-33-bXn" userLabel="First Aired Label">
-                                                            <rect key="frame" x="149" y="14" width="137" height="17"/>
+                                                            <rect key="frame" x="149" y="13.666666666666657" width="137" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -224,7 +222,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="DiE-0V-qDj">
-                                <rect key="frame" x="0.0" y="88" width="375" height="685"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="734"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="xzv-Wg-d1q">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="380"/>
@@ -237,10 +235,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JKu-lF-rem">
-                                                            <rect key="frame" x="8" y="5.9999999999999982" width="359" height="30.333333333333329"/>
+                                                            <rect key="frame" x="8" y="6" width="359" height="30"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nwz-Ab-FoP" customClass="DesignableButton" customModule="Kurozora">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="114.33333333333333" height="30.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="114.33333333333333" height="30"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="Iqa-Wl-ieY"/>
@@ -276,7 +274,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFd-a7-Y7J" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="244.66666666666666" y="0.33333333333334281" width="114.33333333333334" height="30"/>
+                                                                    <rect key="frame" x="244.66666666666663" y="0.0" width="114.33333333333334" height="30"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="6em-KD-Sl1"/>
@@ -316,7 +314,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3od-pz-xva" customClass="DesignableButton" customModule="Kurozora">
-                                                    <rect key="frame" x="27" y="86" width="44" height="44"/>
+                                                    <rect key="frame" x="27.666666666666671" y="86" width="44" height="44"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="O4b-mq-wG1"/>
@@ -529,27 +527,35 @@
                                             <outlet property="titleLabel" destination="dZg-GF-81P" id="fhn-UN-Q3u"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowSynopsisCell" rowHeight="100" id="byQ-7d-1fB" customClass="ShowSynopsisCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="518.33333333333337" width="375" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowSynopsisCell" rowHeight="140" id="byQ-7d-1fB" customClass="ShowSynopsisCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="518.33333333333337" width="375" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="byQ-7d-1fB" id="lkr-Xp-aAC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="clM-0b-Dkj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clM-0b-Dkj" customClass="ReadMoreTextView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="140"/>
                                                     <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="... Read more"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="maximumNumberOfLines">
+                                                            <integer key="value" value="6"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value="Read less"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </textView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="clM-0b-Dkj" firstAttribute="top" secondItem="lkr-Xp-aAC" secondAttribute="top" id="CQv-mp-RhS"/>
-                                                <constraint firstItem="clM-0b-Dkj" firstAttribute="leading" secondItem="lkr-Xp-aAC" secondAttribute="leading" id="ExW-JW-XrD"/>
+                                                <constraint firstItem="clM-0b-Dkj" firstAttribute="leading" secondItem="lkr-Xp-aAC" secondAttribute="leading" constant="8" id="ExW-JW-XrD"/>
                                                 <constraint firstAttribute="bottom" secondItem="clM-0b-Dkj" secondAttribute="bottom" id="Fb4-m2-p6v"/>
-                                                <constraint firstAttribute="trailing" secondItem="clM-0b-Dkj" secondAttribute="trailing" id="gAo-Cz-aLx"/>
+                                                <constraint firstAttribute="trailing" secondItem="clM-0b-Dkj" secondAttribute="trailing" constant="8" id="gAo-Cz-aLx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -558,7 +564,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowCastCell" rowHeight="72" id="VUy-sa-0Bc" customClass="ShowCharacterCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="618.33333333333337" width="375" height="72"/>
+                                        <rect key="frame" x="0.0" y="658.33333333333337" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUy-sa-0Bc" id="rfT-Oc-x79">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
@@ -634,12 +640,12 @@
                                     <constraint firstAttribute="bottom" secondItem="yHr-oO-0Th" secondAttribute="bottom" constant="5" id="xd2-RW-Kq2"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v0a-oF-Mhw">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorful" translatesAutoresizingMaskIntoConstraints="NO" id="v0a-oF-Mhw">
+                                <rect key="frame" x="0.0" y="44" width="375" height="210"/>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mqj-Hw-JwI" userLabel="More Button" customClass="DesignableButton" customModule="Kurozora">
-                                <rect key="frame" x="329" y="8" width="30" height="30"/>
+                                <rect key="frame" x="329" y="52" width="30" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="RTN-Wc-mbP"/>
@@ -656,7 +662,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64J-9a-XaZ" customClass="DesignableButton" customModule="Kurozora">
-                                <rect key="frame" x="16" y="8" width="30" height="30"/>
+                                <rect key="frame" x="16" y="52" width="30" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="h80-Hw-FQ2"/>
@@ -688,7 +694,7 @@
                             <constraint firstItem="DiE-0V-qDj" firstAttribute="leading" secondItem="gQX-eK-s31" secondAttribute="leading" id="HbK-5Z-52p"/>
                             <constraint firstAttribute="trailing" secondItem="v0a-oF-Mhw" secondAttribute="trailing" id="Iwb-mU-gsz"/>
                             <constraint firstItem="mqj-Hw-JwI" firstAttribute="top" secondItem="v0a-oF-Mhw" secondAttribute="top" constant="8" id="TsP-HH-o55"/>
-                            <constraint firstItem="v0a-oF-Mhw" firstAttribute="top" secondItem="WAy-sr-Qea" secondAttribute="bottom" constant="-44" id="bpH-VM-fyK"/>
+                            <constraint firstItem="v0a-oF-Mhw" firstAttribute="top" secondItem="WAy-sr-Qea" secondAttribute="bottom" id="bpH-VM-fyK"/>
                             <constraint firstItem="DiE-0V-qDj" firstAttribute="top" secondItem="WAy-sr-Qea" secondAttribute="bottom" constant="44" id="fN2-BO-Ynd"/>
                             <constraint firstAttribute="trailing" secondItem="VoV-Xo-Jbv" secondAttribute="trailing" id="gYK-x6-VzB"/>
                             <constraint firstItem="v0a-oF-Mhw" firstAttribute="bottom" secondItem="VoV-Xo-Jbv" secondAttribute="top" id="iFN-rv-c8v"/>
@@ -705,7 +711,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="58U-uY-dSr"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="bannerImageView" destination="v0a-oF-Mhw" id="vZa-ij-yTc"/>
                         <outlet property="closeButton" destination="64J-9a-XaZ" id="nSV-za-3S4"/>
@@ -731,7 +737,7 @@
                 <tapGestureRecognizer id="GdL-32-9xW" userLabel="PosterTap"/>
                 <swipeGestureRecognizer direction="right" id="7H7-rF-wes"/>
             </objects>
-            <point key="canvasLocation" x="860" y="-1187.4384236453202"/>
+            <point key="canvasLocation" x="858.39999999999998" y="-1188.9162561576354"/>
         </scene>
         <!--Custom Tab Bar Controller-->
         <scene sceneID="zcs-hc-2CY">
@@ -794,11 +800,12 @@
     <resources>
         <image name="chat" width="30" height="30"/>
         <image name="checked_checkbox" width="30" height="30"/>
+        <image name="colorful" width="1130" height="706"/>
         <image name="download" width="30" height="30"/>
-        <image name="more_dark" width="66" height="66"/>
+        <image name="more_dark" width="66.666664123535156" height="66.666664123535156"/>
         <image name="paper_plane" width="30" height="30"/>
         <image name="play_white" width="30" height="30"/>
-        <image name="shadow" width="6" height="30"/>
+        <image name="shadow" width="6.6666665077209473" height="30"/>
     </resources>
     <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
 </document>

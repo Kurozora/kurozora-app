@@ -131,7 +131,7 @@ struct Service {
     
 //    Get sessions
     func getSessions(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void){
-        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/get_sessions")
+        let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/get_sessions")
         
         let userId = User.currentId()!
         let sessionSecret = User.currentSessionSecret()!
@@ -146,10 +146,10 @@ struct Service {
             "session_secret": sessionSecret
         ]
         
-        request.perform(withSuccess: { user in
-            if let success = user.success {
+        request.perform(withSuccess: { session in
+            if let success = session.success {
                 if success {
-                    if let sessions = user.sessionArray {
+                    if let sessions = session.sessions {
                         successHandler(sessions)
                     }else{
                         failureHandler("No sessions were found!")
@@ -165,7 +165,7 @@ struct Service {
     
 //    Delete session
     func deleteSession(_ id: Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
-        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/login")
+        let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/delete_session")
         
         let delSessionId = id
         let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
@@ -182,12 +182,12 @@ struct Service {
             "del_session_id": delSessionId
         ]
         
-        request.perform(withSuccess: { user in
-            if let success = user.success {
+        request.perform(withSuccess: { session in
+            if let success = session.success {
                 if success {
                     successHandler(success)
                 } else {
-                    if let responseMessage = user.message {
+                    if let responseMessage = session.message {
                         failureHandler(responseMessage)
                     }
                 }

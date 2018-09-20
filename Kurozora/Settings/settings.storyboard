@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DWJ-o0-xnp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DWJ-o0-xnp">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -333,8 +333,8 @@ Kurozora 1.0.0 (1)</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Terms of Services" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HU5-4I-0VM">
-                                                    <rect key="frame" x="16" y="11" width="137" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HU5-4I-0VM">
+                                                    <rect key="frame" x="16" y="11" width="106" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -415,8 +415,8 @@ Kurozora 1.0.0 (1)</string>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="86.250.1.23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl6-i5-Avt" userLabel="IP-Address Value Label">
-                                            <rect key="frame" x="102" y="45" width="67" height="15"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="xx.xxx.x.xx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl6-i5-Avt" userLabel="IP-Address Value Label">
+                                            <rect key="frame" x="101.66666666666669" y="44.666666666666664" width="62" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -427,8 +427,8 @@ Kurozora 1.0.0 (1)</string>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora for iOS on iPhone 7 iOS 11.3.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFP-dK-snn" userLabel="Device type Value Label">
-                                            <rect key="frame" x="102" y="65" width="220" height="15"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora for iOS on iPhone # iOS vv.v.v" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFP-dK-snn" userLabel="Device type Value Label">
+                                            <rect key="frame" x="101.66666666666669" y="65.666666666666671" width="220" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -458,7 +458,7 @@ Kurozora 1.0.0 (1)</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j3A-kr-Oll" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="6" width="359" height="71"/>
+                                                    <rect key="frame" x="8" y="6" width="359" height="70"/>
                                                     <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -472,8 +472,8 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="86.250.1.23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfe-25-hUx" userLabel="IP-Address Value Label">
-                                                    <rect key="frame" x="102" y="13" width="67" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="xy.xyz.x.xy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfe-25-hUx" userLabel="IP-Address Value Label">
+                                                    <rect key="frame" x="102" y="12.333333333333336" width="61" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -484,8 +484,8 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora for iOS on iPhone 7 iOS 11.3.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlr-6A-fGi" userLabel="Device Value Label">
-                                                    <rect key="frame" x="102" y="34" width="220" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora for iOS on iPhone # iOS vv.v.v" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlr-6A-fGi" userLabel="Device Value Label">
+                                                    <rect key="frame" x="102" y="33.333333333333336" width="220" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -496,8 +496,8 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="May 14, 2018 at 10:34pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y6-bv-0bT" userLabel="Date Label">
-                                                    <rect key="frame" x="120" y="55" width="143" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="May dd, yyyy at hh:mm pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y6-bv-0bT" userLabel="Date Label">
+                                                    <rect key="frame" x="120" y="54.333333333333336" width="153" height="15.000000000000007"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -549,6 +549,7 @@ Kurozora 1.0.0 (1)</string>
                                                 <constraint firstItem="qeL-92-Ufc" firstAttribute="leading" secondItem="5gn-vi-UuH" secondAttribute="leading" id="BKS-K5-Jkw"/>
                                                 <constraint firstItem="j3A-kr-Oll" firstAttribute="centerX" secondItem="dCe-U6-RQT" secondAttribute="centerX" id="E11-C4-CAZ"/>
                                                 <constraint firstItem="j3A-kr-Oll" firstAttribute="top" secondItem="dCe-U6-RQT" secondAttribute="top" constant="6" id="GLn-hM-dMO"/>
+                                                <constraint firstItem="j3A-kr-Oll" firstAttribute="centerY" secondItem="5gn-vi-UuH" secondAttribute="centerY" id="OSc-F2-Yi9"/>
                                                 <constraint firstItem="2EL-fh-Zrs" firstAttribute="leading" secondItem="dCe-U6-RQT" secondAttribute="leading" id="SQt-7T-Lz8"/>
                                                 <constraint firstAttribute="bottom" secondItem="srJ-k0-BoX" secondAttribute="bottom" constant="29.666666666666643" id="UMd-od-eoh"/>
                                                 <constraint firstAttribute="trailing" secondItem="srJ-k0-BoX" secondAttribute="trailing" constant="16" id="Uu3-tC-G8b"/>
@@ -581,6 +582,31 @@ Kurozora 1.0.0 (1)</string>
                                             <outlet property="removeSessionButton" destination="srJ-k0-BoX" id="8fq-eM-9nV"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="NoSessionsCell" rowHeight="83" id="aqn-Gy-wz9" customClass="NoSessionsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="203" width="375" height="83"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aqn-Gy-wz9" id="GDY-pW-pzs">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No other sessions found!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8W-0f-q4e">
+                                                    <rect key="frame" x="88.000000000000014" y="31.333333333333336" width="199.33333333333337" height="20.333333333333336"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="c8W-0f-q4e" firstAttribute="centerX" secondItem="GDY-pW-pzs" secondAttribute="centerX" id="ITK-y6-Qlp"/>
+                                                <constraint firstItem="c8W-0f-q4e" firstAttribute="centerY" secondItem="GDY-pW-pzs" secondAttribute="centerY" id="XJV-rP-j6e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="noSessionsLabel" destination="c8W-0f-q4e" id="E11-ow-fe9"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                             </tableView>
@@ -604,10 +630,10 @@ Kurozora 1.0.0 (1)</string>
             </objects>
             <point key="canvasLocation" x="950" y="-548"/>
         </scene>
-        <!--Legal ⚖️-->
+        <!--Privacy Policy-->
         <scene sceneID="Gfa-CA-E5h">
             <objects>
-                <viewController storyboardIdentifier="Legal" title="Legal ⚖️" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Oz-dy-aVA" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Legal" title="Privacy Policy" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Oz-dy-aVA" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xN2-5I-hke"/>
                         <viewControllerLayoutGuide type="bottom" id="1Tw-af-dWo"/>
@@ -617,13 +643,13 @@ Kurozora 1.0.0 (1)</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mua-0K-XJT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="609.66666666666663"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="610"/>
                                 <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Last updated at: 9 Sep, 2018 at 14:02" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afI-PN-SXp">
-                                <rect key="frame" x="10" y="617.66666666666663" width="355" height="20.333333333333371"/>
+                                <rect key="frame" x="10" y="618" width="355" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="LoC-UF-quL"/>
                                 </constraints>
@@ -644,13 +670,13 @@ Kurozora 1.0.0 (1)</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lastUpdatedLabel" destination="afI-PN-SXp" id="BxP-kr-TNN"/>
-                        <outlet property="legalTextView" destination="mua-0K-XJT" id="wUi-4G-Wgr"/>
+                        <outlet property="lastUpdatedLabel" destination="afI-PN-SXp" id="a0Q-G4-DyT"/>
+                        <outlet property="privacyPolicyTextView" destination="mua-0K-XJT" id="Dfs-Ib-mUI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XYf-wy-Cd7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949.60000000000002" y="144.82758620689657"/>
+            <point key="canvasLocation" x="950" y="146"/>
         </scene>
         <!--Theme Store-->
         <scene sceneID="6FY-28-CmN">

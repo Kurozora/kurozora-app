@@ -37,7 +37,7 @@ public struct GlobalVariables {
 
     public let baseUrlString = "https://kurozora.app/api/v1/"
     public let KDefaults = Keychain(service: "app.kurozora.anime")
-    public var sessionsArray:[JSON] = []
+//    public var sessionsArray:[JSON] = []
     
 }
 

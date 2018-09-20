@@ -1,5 +1,5 @@
 //
-//  Legal.swift
+//  PrivacyPolicy.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/09/2018.
@@ -10,7 +10,7 @@ import UIKit
 import SCLAlertView
 
 class LegalViewController : UIViewController {
-    @IBOutlet weak var legalTextView: UITextView!
+    @IBOutlet weak var privacyPolicyTextView: UITextView!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -18,8 +18,8 @@ class LegalViewController : UIViewController {
         
         Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
             if let privacyPolicyText = privacyPolicy.text {
-                self.legalTextView.textColor = .white
-                self.legalTextView.text = privacyPolicyText
+                self.privacyPolicyTextView.textColor = .white
+                self.privacyPolicyTextView.text = privacyPolicyText
             }
             
             if let lastUpdatedAt = privacyPolicy.lastUpdate {

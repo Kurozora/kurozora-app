@@ -7,7 +7,8 @@
 //
 
 import UIKit
+import ReadMoreTextView
 
 class ShowSynopsisCell: UITableViewCell {
-    @IBOutlet weak var synopsisTextView: UITextView!
+    @IBOutlet weak var synopsisTextView: ReadMoreTextView!
 }

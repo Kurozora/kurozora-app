@@ -7,13 +7,9 @@
 //
 
 import UIKit
-import KCommonKit
-import Alamofire
-import SwiftyJSON
 import SCLAlertView
 
 class SessionsCell: UITableViewCell {
-    
     @IBOutlet weak var bubbleView: DesignableView!
     @IBOutlet weak var ipAddressLable: UILabel!
     @IBOutlet weak var ipAddressValueLable: UILabel!
@@ -24,5 +20,4 @@ class SessionsCell: UITableViewCell {
     @IBOutlet weak var removeSessionButton: DesignableButton!
     
     @IBOutlet weak var extraLable: UILabel!
-    
 }

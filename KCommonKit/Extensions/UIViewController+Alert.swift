@@ -9,10 +9,10 @@
 import Foundation
 
 extension UIViewController {
-    public func presentBasicAlertWithTitle(title: String, message: String? = nil, style: UIAlertControllerStyle = .alert) {
+    public func presentBasicAlertWithTitle(title: String, message: String? = nil, style: UIAlertController.Style = .alert) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

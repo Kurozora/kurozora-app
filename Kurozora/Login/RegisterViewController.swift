@@ -116,8 +116,7 @@ class RegisterViewController: UIViewController {
                 }
             }
     }
-    
-    
+
 //    Image picker
     @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
         
