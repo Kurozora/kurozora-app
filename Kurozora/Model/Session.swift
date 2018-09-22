@@ -12,10 +12,10 @@ import SwiftyJSON
 struct Session: JSONDecodable {
     let success: Bool?
     let message: String?
-    var sessions: [JSON]?
+    let otherSessions: [JSON]?
     
+    // Current session
     let id: Int?
-    let secret: String?
     let device: String?
     let ip: String?
     let lastValidated: String?
@@ -23,20 +23,12 @@ struct Session: JSONDecodable {
     init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
-        sessions = json["sessions"].arrayValue
+        otherSessions = json["other_sessions"].arrayValue
         
-        id = json["sessions"]["id"].intValue
-        secret = json["sessions"]["secret"].stringValue
-        device = json["sessions"]["device"].stringValue
-        ip = json["sessions"]["ip"].stringValue
-        lastValidated = json["sessions"]["last_validated"].stringValue
-    }
-    
-    func getSessionId() -> Int {
-        if let sessionId = self.id {
-            return sessionId
-        }
-
-        return 0
+        // Current session
+        id = json["current_session"]["id"].intValue
+        device = json["current_session"]["device"].stringValue
+        ip = json["current_session"]["ip"].stringValue
+        lastValidated = json["current_session"]["last_validated"].stringValue
     }
 }

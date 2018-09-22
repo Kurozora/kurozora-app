@@ -10,15 +10,16 @@ import UIKit
 import Fabric
 import Crashlytics
 import IQKeyboardManagerSwift
-import KCommonKit
-import KDatabaseKit
-import Alamofire
-import SwiftyJSON
+import RevealingSplashView
+
+let showExploreNotification = Notification.Name("showExploreNotification")
+let showLoginNotification = Notification.Name("showLoginNotification")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "kurozora_icon")!,iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: UIColor(hex: "#353A50"))
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,31 +32,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         
 //        WorkflowController.logoutUser()
+        
+        // Main view controller
+        window = UIWindow()
+        window?.makeKeyAndVisible()
 
-//        let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        self.window?.rootViewController = vc
-//        self.window?.makeKeyAndVisible()
+        if User.username() != nil {
+            let customTabBar = KurozoraTabBarController()
+            self.window?.rootViewController = customTabBar
+        } else {
+            revealingSplashView.heartAttack = true
+            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+            self.window?.rootViewController = vc
+        }
         
-        Service.shared.validateSession(withSuccess: { (success) in
-            if success {
-                let customTabBar = KurozoraTabBarController()
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-                self.window?.rootViewController = customTabBar
-                self.window?.makeKeyAndVisible()
-            } else {
-                let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-                self.window?.rootViewController = vc
-                self.window?.makeKeyAndVisible()
-            }
-        })
+        window?.addSubview(revealingSplashView)
+        revealingSplashView.playHeartBeatAnimation()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleExploreNotification), name: showExploreNotification, object: nil)
+
         return true
     }
-
+    
+    @objc func handleExploreNotification() {
+        revealingSplashView.heartAttack = true
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

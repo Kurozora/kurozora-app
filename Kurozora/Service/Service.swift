@@ -130,7 +130,7 @@ struct Service {
     }
     
 //    Get sessions
-    func getSessions(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+    func getSessions(withSuccess successHandler:@escaping (Session?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
         let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/get_sessions")
         
         let userId = User.currentId()!
@@ -149,11 +149,7 @@ struct Service {
         request.perform(withSuccess: { session in
             if let success = session.success {
                 if success {
-                    if let sessions = session.sessions {
-                        successHandler(sessions)
-                    }else{
-                        failureHandler("No sessions were found!")
-                    }
+                    successHandler(session)
                 }
             }
         }, failure: { error in
@@ -336,7 +332,7 @@ struct Service {
     // MARK: - Anime Details
     
     // Cast
-    func getCastFor(_ id: Int?, withSuccess successHandler:@escaping (CastDetails) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+    func getCastFor(_ id: Int?, withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         
         guard let id = id else { return }
         
@@ -350,8 +346,10 @@ struct Service {
         request.perform(withSuccess: { cast in
             if let success = cast.success {
                 if success {
-                    DispatchQueue.main.async {
+                    if let cast = cast.actors {
                         successHandler(cast)
+                    } else {
+                        failureHandler("No actors were found!")
                     }
                 } else {
                     if let responseMessage = cast.message {

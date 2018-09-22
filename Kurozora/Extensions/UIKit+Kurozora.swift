@@ -21,7 +21,7 @@ class DesignableLabel: UILabel {
 }
 
 @IBDesignable
-class DesignableImageView: UIImageView {
+class DesignableImageView: CachedImageView {
     @IBInspectable var topLeftRadius : CGFloat = 0{
         didSet{
             self.applyMask()

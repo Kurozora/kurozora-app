@@ -32,12 +32,12 @@ class ShowDetailViewController: UIViewController {
 
     var showDetails: ShowDetails?
     var show: Show?
-    var castDetails: CastDetails?
+    var castDetails: [JSON]?
 
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - IBoutlet
-    @IBOutlet weak var bannerImageView: UIImageView!
+    @IBOutlet weak var bannerImageView: CachedImageView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
 
@@ -51,7 +51,7 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var reminderButton: UIButton!
 
     // Quick details view
-    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterImageView: CachedImageView!
     @IBOutlet weak var trailerButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
@@ -66,7 +66,7 @@ class ShowDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
 
         // Prepare view for data
@@ -81,10 +81,11 @@ class ShowDetailViewController: UIViewController {
             }
 
             Service.shared.getCastFor(id, withSuccess: { (cast) in
-                DispatchQueue.main.async {
-                    self.castDetails = cast
+                self.castDetails = cast
+                
+                DispatchQueue.main.async() {
+                    self.tableView.reloadData()
                 }
-//                self.updateDetailWithCast(self.castDetails)
             }) { (errorMsg) in
                 SCLAlertView().showError("Can't get cast details", subTitle: "There was an error while retrieving cast details. Please check your internet connection and refresh this page.")
             }
@@ -243,27 +244,13 @@ class ShowDetailViewController: UIViewController {
             }
 
             if let posterThumb = showDetails?.posterThumbnail {
-                do {
-                    let url = URL(string: posterThumb)
-                    let data = try Data(contentsOf: url!)
-                    self.posterImageView.image = UIImage(data: data)
-                }
-                catch{
-                    print(error)
-                }
+                self.posterImageView.loadImage(urlString: posterThumb)
             } else {
                 posterImageView.image = UIImage(named: "colorful")
             }
 
             if let bannerImage = showDetails?.banner {
-                do {
-                    let url = URL(string: bannerImage)
-                    let data = try Data(contentsOf: url!)
-                    self.bannerImageView.image = UIImage(data: data)
-                }
-                catch{
-                    print(error)
-                }
+                self.bannerImageView.loadImage(urlString: bannerImage)
             } else {
                 bannerImageView.image = UIImage(named: "aozora")
             }
@@ -327,8 +314,8 @@ extension ShowDetailViewController: UITableViewDataSource {
         case .synopsis: numberOfRows = 1
         case .information: numberOfRows = 11
         case .cast:
-            if let actors = castDetails?.actors {
-                numberOfRows = actors.count
+            if let actors = castDetails?.count {
+                numberOfRows = actors
             } else {
                 numberOfRows = 1
             }
@@ -434,18 +421,18 @@ extension ShowDetailViewController: UITableViewDataSource {
             return cell
         case .cast:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
-            cell.actorName.text = castDetails?.castName
-            cell.actorJob.text = castDetails?.castRole
-//            do {
-//                if let castImage = castDetails?.castImage {
-//                    let url = URL(string: castImage)
-//                    let data = try Data(contentsOf: url!)
-//                    cell.actorImageView.image = UIImage(data: data)
-//                }
-//            }
-//            catch{
-//                print(error)
-//            }
+            if let actorName = castDetails?[indexPath.row]["name"] {
+                cell.actorName.text = actorName.stringValue
+            }
+            
+            if let actorRole = castDetails?[indexPath.row]["role"] {
+                cell.actorJob.text = actorRole.stringValue
+            }
+
+            if let castImage = castDetails?[indexPath.row]["image"].stringValue {
+                cell.actorImageView.loadImage(urlString: castImage)
+            }
+            
             cell.layoutIfNeeded()
             return cell
         }

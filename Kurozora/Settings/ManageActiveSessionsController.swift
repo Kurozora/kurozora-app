@@ -17,15 +17,16 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!
-    
-    let device = UIDevice.modelName
-    var sessionsArray:[JSON] = []
+
+    var sessionsArray: [JSON]?
     
     override func viewWillAppear(_ animated: Bool) {
-        Service.shared.getSessions( withSuccess: { (array) in
-            self.sessionsArray = array
-            
-//            Update table with new information
+        Service.shared.getSessions( withSuccess: { (sessions) in
+            if let session = sessions {
+                self.sessionsArray = session.otherSessions
+                self.updateCurrentSession(with: session)
+            }
+
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
             }
@@ -36,9 +37,18 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    func updateCurrentSession(with session: Session?) {
+        if let sessionIp = session?.ip {
+            currentIPAddress.text = sessionIp
+        }
+        if let sessionDevice = session?.device {
+            currentDeviceType.text = "Kurozora for " + sessionDevice
+        }
     }
     
 //    MARK: - IBActions
@@ -59,15 +69,8 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
                         
                         // Start delete process
                         self.tableView.beginUpdates()
-                        
-                        if self.sessionsArray.count == 2 {
-                            self.sessionsArray.removeAll()
-                        } else {
-                            self.sessionsArray.remove(at: indexPath.row)
-                        }
-                        
+                        self.sessionsArray?.remove(at: indexPath.row)
                         self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
-                        
                         self.tableView.endUpdates()
                     }
                 }
@@ -102,24 +105,17 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
 
     // Number of rows in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sessionsCount = sessionsArray.count
+        guard let sessionsCount = sessionsArray?.count else {return 0}
         
-        if sessionsCount <= 1 {
-            return sessionsCount
-        }
-        
-        return sessionsCount - 1
+        return sessionsCount
     }
 
     // Initialize cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sessionsCount = sessionsArray.count
+        let sessionsCount = sessionsArray?.count
         
         // No other sessions
-        if sessionsCount == 1 {
-            currentIPAddress.text = sessionsArray[indexPath.row]["ip"].stringValue
-            currentDeviceType.text = "Kurozora for " + sessionsArray[indexPath.row]["device"].stringValue
-            
+        if sessionsCount == 0 {
             let sessionsCell:NoSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath as IndexPath) as! NoSessionsCell
             sessionsCell.noSessionsLabel.text = "No other sessions found!"
             return sessionsCell
@@ -128,30 +124,29 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
         // Other sessions found
         let sessionsCell:SessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath as IndexPath) as! SessionsCell
         
-        var index = indexPath.row
-     
-        if sessionsArray[index]["secret"].stringValue == User.currentSessionSecret() {
-            currentIPAddress.text = sessionsArray[index]["ip"].stringValue
-            currentDeviceType.text = "Kurozora for " + sessionsArray[index]["device"].stringValue
-        }
-        
-        index = index + 1
-        
         // Init IP Address
         sessionsCell.ipAddressLable.text = "IP-Adress:"
-        sessionsCell.ipAddressValueLable.text = sessionsArray[index]["ip"].stringValue
+        if let ipAddress = sessionsArray?[indexPath.row]["ip"].stringValue {
+            sessionsCell.ipAddressValueLable.text = ipAddress
+        }
         
         // Init Device Type
         sessionsCell.deviceTypeLable.text = "Device Type:"
-        sessionsCell.deviceTypeValueLable.text = "Kurozora for " + sessionsArray[index]["device"].stringValue
+        if let deviceType = sessionsArray?[indexPath.row]["device"].stringValue {
+            sessionsCell.deviceTypeValueLable.text = "Kurozora for " + deviceType
+        }
         
         // Init Last Accessed
         sessionsCell.dateLable.text = "Last Accessed:"
-        sessionsCell.dateValueLable?.text = sessionsArray[index]["last_validated"].stringValue
+        if let lastValidated = sessionsArray?[indexPath.row]["last_validated"].stringValue {
+            sessionsCell.dateValueLable?.text = lastValidated
+        }
         
-        // Init ID
-        sessionsCell.extraLable.text = sessionsArray[index]["id"].stringValue
-        sessionsCell.removeSessionButton.tag = index
+        // Init misc
+        if let id = sessionsArray?[indexPath.row]["id"].stringValue {
+            sessionsCell.extraLable.text = id
+        }
+        sessionsCell.removeSessionButton.tag = indexPath.row
 
         return sessionsCell
     }

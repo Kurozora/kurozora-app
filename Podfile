@@ -28,6 +28,7 @@ def common_pods
 #    pod 'SnowGlobe'
     pod 'SwiftTheme', '0.4.1'
     pod 'ReadMoreTextView'
+    pod 'RevealingSplashView'
 #    pod 'CRRefresh', '1.0.0'
 end
 

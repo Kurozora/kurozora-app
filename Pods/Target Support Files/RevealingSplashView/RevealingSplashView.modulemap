@@ -1,0 +1,6 @@
+framework module RevealingSplashView {
+  umbrella header "RevealingSplashView-umbrella.h"
+
+  export *
+  module * { export * }
+}

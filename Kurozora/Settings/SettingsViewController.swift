@@ -102,19 +102,24 @@ class SettingsViewController: UITableViewController {
 
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-            if User.isLoggedIn() {
-                let sessionId = User.currentSessionSecret()
-                let userId = User.currentId()
-                
-                Service.shared.logout(sessionId!, userId!, withSuccess: { (success) in
-                    let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                    
-                    self.present(vc, animated: true, completion: nil)
-                }) { (errorMsg) in
-                    SCLAlertView().showError("Error logging out", subTitle: errorMsg)
+            let alertView = SCLAlertView()
+            alertView.addButton("Yes, sign me out 😞", action: {
+                if User.isLoggedIn() {
+                    let sessionId = User.currentSessionSecret()
+                    let userId = User.currentId()
+
+                    Service.shared.logout(sessionId!, userId!, withSuccess: { (success) in
+                        let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                        
+                        self.present(vc, animated: true, completion: nil)
+                    }) { (errorMsg) in
+                        SCLAlertView().showError("Error logging out", subTitle: errorMsg)
+                    }
                 }
-            }
+            })
+
+            alertView.showNotice("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
 //        case (0,1):
 //            // Sync with MyAnimeList
 //            if User.syncingWithMyAnimeList() {

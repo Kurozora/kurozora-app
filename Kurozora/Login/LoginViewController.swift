@@ -56,11 +56,7 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
         
         Service.shared.login(username, password, device, withSuccess: { (success) in
-            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-            
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = vc
+            self.window = UIWindow()
             self.window?.makeKeyAndVisible()
             
             let customTabBar = KurozoraTabBarController()

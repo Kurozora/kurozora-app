@@ -42,7 +42,7 @@ open class CachedImageView: UIImageView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     /**
@@ -71,22 +71,38 @@ open class CachedImageView: UIImageView {
             }
             return
         }
+
         URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
             if error != nil {
                 return
             }
             
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data!) {
-                    let cacheItem = DiscardableImageCacheItem(image: image)
-                    CachedImageView.imageCache.setObject(cacheItem, forKey: urlKey)
-                    
-                    if urlString == self?.urlStringForChecking {
+            let status = (response as! HTTPURLResponse).statusCode
+                
+            if status == 200 {
+                DispatchQueue.main.async {
+                    if let image = UIImage(data: data!) {
+                        let cacheItem = DiscardableImageCacheItem(image: image)
+                        CachedImageView.imageCache.setObject(cacheItem, forKey: urlKey)
+                        
+                        if urlString == self?.urlStringForChecking {
+                            self?.image = image
+                            completion?()
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    if let image = UIImage(named: "colorful") {
+                        let cacheItem = DiscardableImageCacheItem(image: image)
+                        CachedImageView.imageCache.setObject(cacheItem, forKey: urlKey)
+
                         self?.image = image
                         completion?()
                     }
                 }
             }
+            
             
         }).resume()
     }

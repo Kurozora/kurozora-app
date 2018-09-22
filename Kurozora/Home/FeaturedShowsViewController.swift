@@ -23,6 +23,13 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Service.shared.validateSession(withSuccess: { (success) in
+            if success {
+                NotificationCenter.default.post(name: showExploreNotification, object: nil)
+            }
+        })
+        
         collectionView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
         
         // Register cells

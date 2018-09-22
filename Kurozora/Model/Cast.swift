@@ -12,19 +12,15 @@ import SwiftyJSON
 struct CastDetails: JSONDecodable {
     let success: Bool?
     let message: String?
-    let actors: Array<Any>?
-    
-    let castImage: String?
-    let castName: String?
-    let castRole: String?
-    
+    let actors: [JSON]?
+
     init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
         actors = json["actors"].arrayValue
         
-        castImage = json["actors"]["image"].stringValue
-        castName = json["actors"]["name"].stringValue
-        castRole = json["actors"]["role"].stringValue
+//        castImage = json["actors"]["image"].stringValue
+//        castName = json["actors"]["name"].stringValue
+//        castRole = json["actors"]["role"].stringValue
     }
 }
