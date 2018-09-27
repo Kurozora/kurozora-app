@@ -6,9 +6,10 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
+import UIKit
 import KCommonKit
 import KDatabaseKit
-import UIKit
+import Kingfisher
 import SCLAlertView
 
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
@@ -20,77 +21,93 @@ class SettingsViewController: UITableViewController {
     let TwitterPageDeepLink = "twitter://user?id=991929359052177409";
     let TwitterPageURL = "https://www.twitter.com/KurozoraApp";
 
-    @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var linkWithMyAnimeListLabel: UILabel!
-    @IBOutlet weak var linkWithKitsuLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var userAvatar: UIImageView!
+    @IBOutlet weak var cacheSizeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let isAdmin = User.isAdmin() {
+            if !isAdmin {
+                tableView.contentInset = UIEdgeInsets(top: -1, left: 0, bottom: 0, right: 0)
+            }
+        }
 //        facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
+        
+        ImageCache.default.calculateDiskCacheSize { size in
+            // Convert from bytes to mebibytes (2^20)
+            let sizeInMiB = Double(size/1048576)
+            self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        updateLoginButton()
+        
+        let imageUrl = GlobalVariables().KDefaults["user_avatar"]
+        
+        if let avatar = imageUrl, avatar != "" {
+            if let avatar = imageUrl, avatar != "" {
+                let avatar = URL(string: avatar)
+                let resource = ImageResource(downloadURL: avatar!)
+                userAvatar.kf.indicatorType = .activity
+                userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "DefaultAvatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            }
+        }
+        
+        usernameLabel.text = GlobalVariables().KDefaults["username"]
+        
+        // Calculate cache size
+        caculateCache()
     }
     
-//    func updateLoginButton() {
-//        if User.currentUserLoggedIn() {
-//            // Logged In both
-//            loginLabel.text = "Logout from Kurozora"
-//        } else if User.currentUserIsGuest() {
-//            // User is guest
-//            loginLabel.text = "Login to Kurozora"
-//        }
-//
-//        if User.syncingWithMyAnimeList() {
-//            linkWithMyAnimeListLabel.text = "Unlink MyAnimeList"
-//        } else {
-//            linkWithMyAnimeListLabel.text = "Sync with MyAnimeList"
-//        }
-//
-//    }
-    
-    // MARK: - IBActions
-//    @IBAction func logoutPressed(sender: AnyObject) {
-//        if User.isLoggedIn() {
-//            let sessionId = User.currentSessionId()
-//            let userId = User.currentId()
-//
-//            // Logged In both, logout
-//            Request.logout(sessionId!,
-//                          userId!,
-//                          withSuccess: { (success) in
-//                            let storyboard : UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-//                            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-//                            self.present(vc, animated: false)
-////                            let storyboard : UIStoryboard = UIStoryboard(name: "profile", bundle: nil)
-////                            let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
-////                            self.window = UIWindow(frame: UIScreen.main.bounds)
-////                            self.window?.rootViewController = vc
-////                            self.window?.makeKeyAndVisible()
-//            }) { (errorMsg) in
-//                SCLAlertView().showError("Error logging out", subTitle: errorMsg)
-//            }
-//        }
-//    }
-    
-    @IBAction func followOnTwitterPressed(sender: AnyObject) {
-        if let twitterUrl = URL(string: "https://twitter.com/kurozoraapp"){
-            UIApplication.shared.open(twitterUrl)
+    // MARK: - Functions
+    func caculateCache() {
+        ImageCache.default.calculateDiskCacheSize { size in
+            // Convert from bytes to mebibytes (2^20)
+            let sizeInMiB = Double(size/1048576)
+            self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
         }
     }
     
-    
-    
+    // MARK: - IBAction
+
     @IBAction func dismissPressed(sender: AnyObject) {
-        
         dismiss(animated: true, completion: nil)
     }
     
     // MARK: - TableView functions
-
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let isAdmin = User.isAdmin() {
+            if !isAdmin && section == 0 {
+                return 1.0
+            }
+        }
+        return 32
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let count = super.tableView(tableView, numberOfRowsInSection: section)
+        if let isAdmin = User.isAdmin() {
+            if !isAdmin && section == 0 {
+                return count - 1
+            }
+        }
+        return count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let isAdmin = User.isAdmin() {
+            if !isAdmin && indexPath.section == 0 {
+                return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
+            }
+        }
+        return super.tableView(tableView, cellForRowAt: indexPath)
+    }
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
 //        let segueIdentifier: String
@@ -101,50 +118,26 @@ class SettingsViewController: UITableViewController {
 //        }
 
         switch (indexPath.section, indexPath.row) {
-        case (0,0):
+//        case (0,0): break
+//        case (1,0): break
+//        case (2,0): break
+        case (2,1):
             let alertView = SCLAlertView()
-            alertView.addButton("Yes, sign me out 😞", action: {
-                if User.isLoggedIn() {
-                    let sessionId = User.currentSessionSecret()
-                    let userId = User.currentId()
-
-                    Service.shared.logout(sessionId!, userId!, withSuccess: { (success) in
-                        let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                        
-                        self.present(vc, animated: true, completion: nil)
-                    }) { (errorMsg) in
-                        SCLAlertView().showError("Error logging out", subTitle: errorMsg)
-                    }
-                }
+            alertView.addButton("Clear 🗑", action: {
+                // Clear memory cache right away.
+                KingfisherManager.shared.cache.clearMemoryCache()
+                
+                // Clear disk cache. This is an async operation.
+                KingfisherManager.shared.cache.clearDiskCache()
+                
+                // Clean expired or size exceeded disk cache. This is an async operation.
+                KingfisherManager.shared.cache.cleanExpiredDiskCache()
+                
+                // Refresh cacheSizeLabel
+                self.caculateCache()
             })
-
-            alertView.showNotice("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
-//        case (0,1):
-//            // Sync with MyAnimeList
-//            if User.syncingWithMyAnimeList() {
-//                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-//                alert.popoverPresentationController?.sourceView = cell.superview
-//                alert.popoverPresentationController?.sourceRect = cell.frame
-//
-//                alert.addAction(UIAlertAction(title: "Stop syncing with MyAnimeList", style: UIAlertActionStyle.destructive, handler: { (action) -> Void in
-//
-//                    User.logoutMyAnimeList()
-//                    self.updateLoginButton()
-//                }))
-//                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
-//                }))
-//
-//                self.present(alert, animated: true, completion: nil)
-//            } else {
-//
-//                let loginController = ANParseKit.loginViewController()
-//                presentViewController(loginController, animated: true, completion: nil)
-//
-//                UserDefaults.standardUserDefaults().setBool(true, forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
-//                UserDefaults.standard.synchronize()
-//            }
-//
+            
+            alertView.showNotice("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 //        case (0,2):
 //            // Select initial tab
 //            let alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.alert)
@@ -169,11 +162,11 @@ class SettingsViewController: UITableViewController {
 //
 //            self.present(alert, animated: true, completion: nil)
 
-//        case (1,0):
+//        case (3,0):
 //            // Unlock features
 //            let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
 //            navigationController?.pushViewController(controller, animated: true)
-//        case (1,1):
+//        case (3,1):
 //            // Restore purchases
 //            InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
 //
@@ -186,7 +179,7 @@ class SettingsViewController: UITableViewController {
 //
 //                return nil
 //            })
-//        case (2,0):
+//        case (4,0):
 //            // Rate app
 //            iRate.sharedInstance().openRatingsPageInAppStore()
         case (5,0):

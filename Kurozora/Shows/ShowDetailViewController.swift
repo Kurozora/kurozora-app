@@ -10,6 +10,7 @@ import UIKit
 import KCommonKit
 import TRON
 import SwiftyJSON
+import Kingfisher
 import SCLAlertView
 
 enum AnimeSection: Int {
@@ -37,7 +38,7 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - IBoutlet
-    @IBOutlet weak var bannerImageView: CachedImageView!
+    @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
 
@@ -51,7 +52,7 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var reminderButton: UIButton!
 
     // Quick details view
-    @IBOutlet weak var posterImageView: CachedImageView!
+    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var trailerButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
@@ -218,39 +219,45 @@ class ShowDetailViewController: UIViewController {
             }
 
             // Configure ratings label
-            if let average = showDetails?.averageRating {
-                ratingLabel.text = String(format:"%.2f / %d", average, /*show?.progress?.score ??*/ 5)
+            if let averageRating = showDetails?.averageRating, averageRating > 0.00 {
+                ratingLabel.text = String(format:"%.2f / %d", averageRating, /*show?.progress?.score ??*/ 5.00)
             } else {
-                ratingLabel.text = "-"
+                ratingLabel.text = "Not enough ratings"
             }
 
-            if let ratingCount = showDetails?.ratingCount {
+            if let ratingCount = showDetails?.ratingCount, ratingCount > 0 {
                 membersCountLabel.text = String(ratingCount)
             } else {
                 membersCountLabel.text = "-"
             }
 
             // Configure rank label
-            if let scoreRank = showDetails?.rank {
+            if let scoreRank = showDetails?.rank, scoreRank > 0 {
                 scoreRankLabel.text = String(scoreRank)
             } else {
                 scoreRankLabel.text = "-"
             }
 
-            if let popularRank = showDetails?.popularityRank {
+            if let popularRank = showDetails?.popularityRank, popularRank > 0 {
                 popularityRankLabel.text = String(popularRank)
             } else {
                 popularityRankLabel.text = "-"
             }
 
-            if let posterThumb = showDetails?.posterThumbnail {
-                self.posterImageView.loadImage(urlString: posterThumb)
+            if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
+                let posterThumb = URL(string: posterThumb)
+                let resource = ImageResource(downloadURL: posterThumb!)
+                posterImageView.kf.indicatorType = .activity
+                posterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "colorful"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             } else {
                 posterImageView.image = UIImage(named: "colorful")
             }
 
-            if let bannerImage = showDetails?.banner {
-                self.bannerImageView.loadImage(urlString: bannerImage)
+            if let bannerImage = showDetails?.banner, bannerImage != "" {
+                let bannerImage = URL(string: bannerImage)
+                let resource = ImageResource(downloadURL: bannerImage!)
+                bannerImageView.kf.indicatorType = .activity
+                bannerImageView.kf.setImage(with: resource, placeholder: UIImage(named: "aozora"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             } else {
                 bannerImageView.image = UIImage(named: "aozora")
             }
@@ -312,7 +319,7 @@ extension ShowDetailViewController: UITableViewDataSource {
         
         switch AnimeSection(rawValue: section)! {
         case .synopsis: numberOfRows = 1
-        case .information: numberOfRows = 11
+        case .information: numberOfRows = 6
         case .cast:
             if let actors = castDetails?.count {
                 numberOfRows = actors
@@ -339,21 +346,21 @@ extension ShowDetailViewController: UITableViewDataSource {
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "Type"
-                if let type = showDetails?.type {
+                if let type = showDetails?.type, type != "" {
                     cell.detailLabel.text = type
                 } else {
                     cell.detailLabel.text = "-"
                 }
             case 1:
                 cell.titleLabel.text = "Episodes"
-                if let episode = showDetails?.episodes {
+                if let episode = showDetails?.episodes, episode > 0 {
                     cell.detailLabel.text = episode.description
                 } else {
                     cell.detailLabel.text = "-"
                 }
             case 2:
                 cell.titleLabel.text = "Status"
-                if let status = showDetails?.status {
+                if let status = showDetails?.status, status != "" {
                     cell.detailLabel.text = status.capitalized
                 } else {
                     cell.detailLabel.text = "-"
@@ -365,55 +372,55 @@ extension ShowDetailViewController: UITableViewDataSource {
                 } else {
                     cell.detailLabel.text = "N/A - N/A"
                 }
-            case 4:
-                cell.titleLabel.text = "Producers"
-                if let producer = showDetails?.producers {
-                    cell.detailLabel.text = producer
-                } else {
-                    cell.detailLabel.text = "-"
-                }
-            case 5:
-                cell.titleLabel.text = "Genres"
-                if let genre = showDetails?.genre {
-                    cell.detailLabel.text = genre
-                } else {
-                    cell.detailLabel.text = "-"
-                }
+//            case 4:
+//                cell.titleLabel.text = "Producers"
+//                if let producer = showDetails?.producers, producer != "" {
+//                    cell.detailLabel.text = producer
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
+//            case 5:
+//                cell.titleLabel.text = "Genres"
+//                if let genre = showDetails?.genre, genre != "" {
+//                    cell.detailLabel.text = genre
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
             case 6:
                 cell.titleLabel.text = "Duration"
-                if let duration = showDetails?.runtime {
+                if let duration = showDetails?.runtime, duration > 0 {
                     cell.detailLabel.text = "\(duration) min"
                 } else {
                     cell.detailLabel.text = "-"
                 }
             case 7:
                 cell.titleLabel.text = "Rating"
-                if let watchRating = showDetails?.watchRating {
+                if let watchRating = showDetails?.watchRating, watchRating != "" {
                     cell.detailLabel.text = watchRating
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 8:
-                cell.titleLabel.text = "English Titles"
-                if let englishTitle = showDetails?.englishTitles {
-                    cell.detailLabel.text = englishTitle
-                } else {
-                    cell.detailLabel.text = "-"
-                }
-            case 9:
-                cell.titleLabel.text = "Japanese Titles"
-                if let japaneseTitle = showDetails?.japaneseTitles {
-                    cell.detailLabel.text = japaneseTitle
-                } else {
-                    cell.detailLabel.text = "-"
-                }
-            case 10:
-                cell.titleLabel.text = "Synonyms"
-                if let synonyms = showDetails?.synonyms {
-                    cell.detailLabel.text = synonyms
-                } else {
-                    cell.detailLabel.text = "-"
-                }
+//            case 8:
+//                cell.titleLabel.text = "English Titles"
+//                if let englishTitle = showDetails?.englishTitles, englishTitle != "" {
+//         er           cell.detailLabel.text = englishTitle
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
+//            case 9:
+//                cell.titleLabel.text = "Japanese Titles"
+//                if let japaneseTitle = showDetails?.japaneseTitles, japaneseTitle != "" {
+//                    cell.detailLabel.text = japaneseTitle
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
+//            case 10:
+//                cell.titleLabel.text = "Synonyms"
+//                if let synonyms = showDetails?.synonyms, synonyms != "" {
+//                    cell.detailLabel.text = synonyms
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
             default:
                 break
             }
@@ -430,7 +437,10 @@ extension ShowDetailViewController: UITableViewDataSource {
             }
 
             if let castImage = castDetails?[indexPath.row]["image"].stringValue {
-                cell.actorImageView.loadImage(urlString: castImage)
+                let castImage = URL(string: castImage)
+                let resource = ImageResource(downloadURL: castImage!)
+                cell.actorImageView.kf.indicatorType = .activity
+                cell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "PersonPlaceholder"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             }
             
             cell.layoutIfNeeded()

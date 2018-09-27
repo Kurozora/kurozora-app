@@ -22,6 +22,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -29,6 +30,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
  
         loginButton.isEnabled = false
+        usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
@@ -56,11 +58,13 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
         
         Service.shared.login(username, password, device, withSuccess: { (success) in
-            self.window = UIWindow()
-            self.window?.makeKeyAndVisible()
-            
+//            self.window = UIWindow()
+//            self.window?.makeKeyAndVisible()
+
             let customTabBar = KurozoraTabBarController()
-            self.window?.rootViewController = customTabBar
+//            self.window?.rootViewController = customTabBar
+            customTabBar.modalTransitionStyle = .flipHorizontal
+            self.present(customTabBar, animated: true, completion: nil)
         }) { (errorMsg) in
             SCLAlertView().showError("Error logging in", subTitle: errorMsg)
         }

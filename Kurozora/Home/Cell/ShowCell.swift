@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ShowCell: BaseCell {
     
@@ -17,16 +18,16 @@ class ShowCell: BaseCell {
         }
     }
     
-    private let posterThumbnail: CachedImageView = {
-        let iv = CachedImageView()
+    private let posterThumbnail: UIImageView = {
+        let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10
         iv.layer.masksToBounds = true
         return iv
     }()
     
-    let bannerThumbnail: CachedImageView = {
-        let iv = CachedImageView()
+    let bannerThumbnail: UIImageView = {
+        let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10
         iv.layer.masksToBounds = true
@@ -126,14 +127,20 @@ class ShowCell: BaseCell {
         
         // Configure poster url
         if let posterThumbnailUrl = show?.posterThumbnail {
-            posterThumbnail.loadImage(urlString: posterThumbnailUrl)
+            let posterThumbnailUrl = URL(string: posterThumbnailUrl)
+            let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+            posterThumbnail.kf.indicatorType = .activity
+            posterThumbnail.kf.setImage(with: resource, placeholder: UIImage(named: "colorful"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         } else {
             posterThumbnail.image = UIImage(named: "colorful")
         }
         
         // Configure banner url
         if let bannerThumbnailUrl = show?.bannerThumbnail {
-            bannerThumbnail.loadImage(urlString: bannerThumbnailUrl)
+            let bannerThumbnailUrl = URL(string: bannerThumbnailUrl)
+            let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
+            bannerThumbnail.kf.indicatorType = .activity
+            bannerThumbnail.kf.setImage(with: resource, placeholder: UIImage(named: "aozora"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         } else {
             bannerThumbnail.image = UIImage(named: "aozora")
         }

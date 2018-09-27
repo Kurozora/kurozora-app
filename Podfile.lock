@@ -3,10 +3,7 @@ PODS:
   - Bolts-Swift (1.3.0)
   - Cache (4.2.0)
   - Cosmos (16.0.0)
-  - Crashlytics (3.10.7):
-    - Fabric (~> 1.7.11)
   - ESTabBarController-swift (2.6.2)
-  - Fabric (1.7.11)
   - FSPagerView (0.7.2)
   - Hue (3.0.1)
   - ImagePicker (3.0.0)
@@ -15,6 +12,7 @@ PODS:
   - IQKeyboardManagerSwift (6.0.3)
   - KeychainAccess (3.1.1)
   - Keys (1.0.1)
+  - Kingfisher (4.10.0)
   - Lightbox (2.1.2):
     - Hue (~> 3.0)
     - Imaginary (~> 3.0)
@@ -56,14 +54,13 @@ PODS:
 DEPENDENCIES:
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - Cosmos (~> 16.0)
-  - Crashlytics
   - ESTabBarController-swift (= 2.6.2)
-  - Fabric
   - FSPagerView (from `https://github.com/WenchaoD/FSPagerView`, commit `6e0a2b7fc95d7ba262b324337e1479f81a829da6`)
   - ImagePicker (= 3.0.0)
   - IQKeyboardManagerSwift (= 6.0.3)
   - KeychainAccess (= 3.1.1)
   - Keys (from `Pods/CocoaPodsKeys`)
+  - Kingfisher (~> 4.0)
   - Lightbox (= 2.1.2)
   - NGAParallaxMotion (= 1.1.0)
   - ReadMoreTextView
@@ -82,14 +79,13 @@ SPEC REPOS:
     - Alamofire
     - Cache
     - Cosmos
-    - Crashlytics
     - ESTabBarController-swift
-    - Fabric
     - Hue
     - ImagePicker
     - Imaginary
     - IQKeyboardManagerSwift
     - KeychainAccess
+    - Kingfisher
     - Lightbox
     - NGAParallaxMotion
     - ReadMoreTextView
@@ -127,9 +123,7 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   Cache: f28f8dd64b632155aabf9b3906b036a659048251
   Cosmos: 7bcee0fa858a9355a214f2a181be5dffcee42c81
-  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
   ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
-  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
@@ -137,6 +131,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
+  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   ReadMoreTextView: d872de55c5850c702f8d8ce591fb70e5d00c873a
@@ -151,6 +146,6 @@ SPEC CHECKSUMS:
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 5b9e9aa609184dce513b88ac2347e0eb7136f503
+PODFILE CHECKSUM: 7e086f6c86469b1bd2e9b79b559c0c488a915765
 
 COCOAPODS: 1.5.3

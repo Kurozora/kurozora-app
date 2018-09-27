@@ -570,7 +570,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="flk-vZ-b4V" customClass="CachedImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="flk-vZ-b4V">
                                                     <rect key="frame" x="8" y="8" width="65" height="104"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="65" id="sme-L7-PaC"/>
@@ -649,7 +649,7 @@
                                     <constraint firstAttribute="bottom" secondItem="yHr-oO-0Th" secondAttribute="bottom" constant="5" id="xd2-RW-Kq2"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorful" translatesAutoresizingMaskIntoConstraints="NO" id="v0a-oF-Mhw" customClass="CachedImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorful" translatesAutoresizingMaskIntoConstraints="NO" id="v0a-oF-Mhw">
                                 <rect key="frame" x="0.0" y="44" width="375" height="210"/>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>

@@ -1,5 +1,5 @@
 //
-//  NSDate+Kurozora.swift
+//  Date+Kurozora.swift
 //  KCommonKit
 //
 //  Created by Khoren Katklian on 02/05/2018.
@@ -43,7 +43,7 @@ extension Date {
     
     public func timeAgo() -> String {
         
-        let timeInterval = Int(-timeIntervalSince(NSDate() as Date))
+        let timeInterval = Int(-timeIntervalSince(Date()))
         
         if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
             return "\(weeksAgo) " + (weeksAgo == 1 ? "week" : "weeks")

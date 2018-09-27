@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class Header: CategoryCell {
     
@@ -122,22 +123,25 @@ class Header: CategoryCell {
         
         fileprivate override func configure(_ show: Show?) {
             // Configure title label
-            if let title = show?.title {
+            if let title = show?.title, title != "" {
                 titleLabel.text = title
             } else {
                 titleLabel.text = "Undefined"
             }
             
             // Configure genre label
-            if let genre = show?.genre {
+            if let genre = show?.genre, genre != "" {
                 genreLabel.text = genre
             } else {
                 genreLabel.text = "N/A"
             }
             
             // Configure banner url
-            if let bannerThumbnailUrl = show?.bannerThumbnail {
-                bannerThumbnail.loadImage(urlString: bannerThumbnailUrl)
+            if let bannerThumbnailUrl = show?.bannerThumbnail, bannerThumbnailUrl != "" {
+                let bannerThumbnailUrl = URL(string: bannerThumbnailUrl)
+                let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
+                bannerThumbnail.kf.indicatorType = .activity
+                bannerThumbnail.kf.setImage(with: resource, placeholder: UIImage(named: "colorful"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             } else {
                 bannerThumbnail.image = UIImage(named: "colorful")
             }

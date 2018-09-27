@@ -6,18 +6,17 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import KCommonKit
-import Alamofire
-import SwiftyJSON
+import SCLAlertView
 
 class ResetPasswordViewController: UIViewController {
 
-    @IBOutlet weak var usernameTextField: CustomTextField!
+    @IBOutlet weak var userEmailTextField: CustomTextField!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -27,7 +26,8 @@ class ResetPasswordViewController: UIViewController {
         navigationBar.delegate = self
         
         resetButton.isEnabled = false
-        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        userEmailTextField.becomeFirstResponder()
+        userEmailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,49 +42,14 @@ class ResetPasswordViewController: UIViewController {
     }
     
     @IBAction func resetPressed(sender: AnyObject) {
-        //        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-        //        let vc = storyboard.instantiateViewController(withIdentifier: "Main") as UIViewController
-        //        present(vc, animated: true, completion: nil)
+        userEmailTextField.trimSpaces()
         
-        usernameTextField.trimSpaces()
+        let userEmail = userEmailTextField.text!
         
-        let username = usernameTextField.text!
-        
-        let headers:HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        
-        let parameters:Parameters = [
-            "username" : username
-        ]
-    
-        let endpoint = GlobalVariables().baseUrlString + "user/reset"
-        
-        Alamofire.request(endpoint, method: .post, parameters: parameters, headers: headers)
-        .responseJSON { response in
-            switch response.result {
-                case .success/*(let data)*/:
-                    if response.result.value != nil{
-                        let swiftyJsonVar = JSON(response.result.value!)
-                        
-//                        let jsonData = result as! NSDictionary
-                        let responseSuccess = swiftyJsonVar["success"]
-                        let responseMessage = swiftyJsonVar["error_message"]
-                        
-                        if responseSuccess.boolValue {
-                           self.presentBasicAlertWithTitle(title: "Please check your email for the password reset link!")
-                        }else{
-                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
-                        }
-                    }
-//                    NSLog("------------------DATA START-------------------")
-//                    NSLog("Response String: \(String(describing: data))")
-//                    self.presentBasicAlertWithTitle(title: "Authenticated")
-//                    NSLog("------------------DATA END-------------------")
-                case .failure(let error):
-                    print(error)
-                    self.presentBasicAlertWithTitle(title: "There was an error while resetting your password.  If this error persists, check out our Twitter account @KurozoraApp for more information!")
-            }
+        Service.shared.resetPassword(userEmail, withSuccess: { (reset) in
+            SCLAlertView().showSuccess("Success!", subTitle: "If an account exists with this email address, you should recieve an email with your reset link shortly.")
+        }) { (errorMessage) in
+            SCLAlertView().showError("Error resetting password", subTitle: errorMessage)
         }
     }
 }
@@ -107,7 +72,7 @@ extension ResetPasswordViewController: UITextFieldDelegate {
             }
         }
         guard
-            let username = usernameTextField.text, !username.isEmpty
+            let username = userEmailTextField.text, !username.isEmpty
             else {
                 resetButton.isEnabled = false
                 return
@@ -117,10 +82,10 @@ extension ResetPasswordViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
-        case usernameTextField:
-            resetPressed(sender: usernameTextField)
+        case userEmailTextField:
+            resetPressed(sender: userEmailTextField)
         default:
-            usernameTextField.resignFirstResponder()
+            userEmailTextField.resignFirstResponder()
         }
         
         return true

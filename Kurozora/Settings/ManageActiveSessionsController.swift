@@ -13,7 +13,6 @@ import SwiftyJSON
 import SCLAlertView
 
 class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!

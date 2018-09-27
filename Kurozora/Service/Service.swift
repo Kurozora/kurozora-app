@@ -46,6 +46,10 @@ struct Service {
                     if let sessionSecret = user.session {
                         try? GlobalVariables().KDefaults.set(sessionSecret, key: "session_secret")
                     }
+                    
+                    if let role = user.role {
+                        try? GlobalVariables().KDefaults.set(String(role), key: "user_role")
+                    }
                     successHandler(success)
                 } else {
                     if let responseMessage = user.message {
@@ -57,6 +61,36 @@ struct Service {
             failureHandler("There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
             print("Received login error: \(error)")
+        })
+    }
+    
+//    Reset password
+    func resetPassword(_ email:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
+        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/reset_password")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .post
+        request.parameters = [
+            "email": email,
+        ]
+        
+        request.perform(withSuccess: { reset in
+            if let success = reset.success {
+                if success {
+                    successHandler(success)
+                } else {
+                    if let responseMessage = reset.message {
+                        failureHandler(responseMessage)
+                    }
+                }
+            }
+        }, failure: { error in
+            failureHandler("There was an error while requesting the reset link. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received reset password error: \(error)")
         })
     }
     
@@ -86,9 +120,43 @@ struct Service {
                 }
             }
         }, failure: { error in
-            SCLAlertView().showError("Error logging in", subTitle: "There was an error while logging in to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            SCLAlertView().showError("Error logging out", subTitle: "There was an error while logging out to your account. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
             print("Received logout error: \(error)")
+        })
+    }
+    
+//    User details
+    func getUserProfile(_ userId:Int?, withSuccess successHandler:@escaping (User?) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
+        guard let id = userId else { return }
+        
+        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/\(id)/profile")
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .post
+        request.parameters = [
+            "user_id": userId!,
+            "session_secret": sessionSecret!
+        ]
+        
+        request.perform(withSuccess: { userProfile in
+            if let success = userProfile.success {
+                if success {
+                    successHandler(userProfile)
+                } else {
+                    if let responseMessage = userProfile.message {
+                        failureHandler(responseMessage)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Error getting user", subTitle: "There was an error while getting user details. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received user profile error: \(error)")
         })
     }
     
@@ -125,8 +193,9 @@ struct Service {
                 
                 print("Received validate session error: \(error)")
             })
+        } else {
+            successHandler(false)
         }
-        successHandler(false)
     }
     
 //    Get sessions
@@ -303,7 +372,7 @@ struct Service {
     // MARK: - Settings
     
     // Legal
-    func getPrivacyPolicy(withSuccess successHandler:@escaping (Privacy) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+    func getPrivacyPolicy(withSuccess successHandler:@escaping (Privacy?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         
         let request: APIRequest<Privacy,JSONError> = tron.swiftyJSON.request("misc/get_privacy_policy")
         

@@ -25,6 +25,7 @@ class RegisterViewController: UIViewController {
     var imagePicker = UIImagePickerController()
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
         registerButton.isEnabled = false
     }
@@ -34,6 +35,7 @@ class RegisterViewController: UIViewController {
         
         navigationBar.delegate = self
         
+        usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -75,7 +77,7 @@ class RegisterViewController: UIViewController {
         
         Alamofire.upload(multipartFormData: { multipartFormData in
             if image != nil {
-                if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                if let imageData = UIImageJPEGRepresentation(image!, 0.1) {
                     multipartFormData.append(imageData, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
                 }
             }

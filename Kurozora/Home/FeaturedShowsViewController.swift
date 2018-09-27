@@ -21,13 +21,21 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
     
     let autoScrollDuration: TimeInterval = 4
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(statusManager), name: .flagsChanged, object: Network.reachability)
+        updateUserInterface()
         Service.shared.validateSession(withSuccess: { (success) in
-            if success {
-                NotificationCenter.default.post(name: showExploreNotification, object: nil)
+            if !success {
+                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                self.present(vc, animated: true, completion: nil)
             }
+            NotificationCenter.default.post(name: heartAttackNotification, object: nil)
         })
         
         collectionView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
@@ -45,7 +53,33 @@ class FeaturedShowsViewController: UICollectionViewController, UICollectionViewD
             self.collectionView?.reloadData()
         }
     }
-
+    
+    // MARK: - Reachabiltiy functions
+    func updateUserInterface() {
+        guard let status = Network.reachability?.status else { return }
+        switch status {
+        case .unreachable:
+            if !UIAccessibilityIsReduceTransparencyEnabled() {
+                let storyboard: UIStoryboard = UIStoryboard(name: "reachability", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Reachability")
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationStyle = .overCurrentContext
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                view.backgroundColor = .white
+            }
+        case .wifi:
+            view.backgroundColor = .green
+        case .wwan:
+            view.backgroundColor = .yellow
+        }
+    }
+    
+    @objc func statusManager(_ notification: Notification) {
+        updateUserInterface()
+    }
+    
+    // MARK: - Show functions
     private func fetchFeaturedShows(completionHandler: @escaping (FeaturedShows) -> ()) {
         let urlString = GlobalVariables().baseUrlString + "anime/explore"
         

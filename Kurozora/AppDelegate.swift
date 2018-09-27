@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
 import IQKeyboardManagerSwift
 import RevealingSplashView
+import Kingfisher
 
-let showExploreNotification = Notification.Name("showExploreNotification")
-let showLoginNotification = Notification.Name("showLoginNotification")
+let heartAttackNotification = Notification.Name("heartAttackNotification")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +21,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self])
+        
+        // Max disk cache size
+        ImageCache.default.maxDiskCacheSize = 60 * 1024 * 1024
+        
+        // Reachability
+        do {
+            Network.reachability = try Reachability(hostname: "www.google.com")
+            do {
+                try Network.reachability?.start()
+            } catch let error as Network.Error {
+                NSLog("---Reachability error 1: \(error)")
+            } catch {
+                NSLog("---Reachability error 2: \(error)")
+            }
+        } catch {
+            NSLog("---Reachability error 3: \(error)")
+        }
         
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true
@@ -50,12 +64,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.addSubview(revealingSplashView)
         revealingSplashView.playHeartBeatAnimation()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleExploreNotification), name: showExploreNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
 
         return true
     }
     
-    @objc func handleExploreNotification() {
+    @objc func handleHeartAttackNotification() {
         revealingSplashView.heartAttack = true
     }
     
@@ -71,6 +85,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Service.shared.validateSession(withSuccess: { (success) in
+            if !success {
+                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                self.window?.rootViewController = vc
+            }
+        })
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -19,34 +19,37 @@
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Account ⛩" id="5iq-VI-mgw" userLabel="Account">
+                            <tableViewSection headerTitle="Admin 🛠🌚🌝" id="5iq-VI-mgw">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="I6m-kr-QWm" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nyz-5a-Lp3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I6m-kr-QWm" id="6pA-YB-zhA">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyz-5a-Lp3" id="oQD-zb-t8q">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign out of Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNi-FI-ymC">
-                                                    <rect key="frame" x="55" y="11.666666666666657" width="156" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bell" translatesAutoresizingMaskIntoConstraints="NO" id="eze-94-ihF" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="7.6666666666666679" width="29" height="29.000000000000004"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="0.30112682072269226" blue="0.26366087330880783" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="8"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kdefaults_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rQ-9R-U80">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="aQm-bQ-FbW"/>
+                                                        <constraint firstAttribute="height" constant="28" id="mDP-zn-n3k"/>
+                                                    </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KDefaults Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEB-c5-bue">
+                                                    <rect key="frame" x="52" y="12" width="146" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="8" id="424-qF-M27"/>
+                                                <constraint firstItem="IEB-c5-bue" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="12" id="GPV-3G-n3C"/>
+                                                <constraint firstAttribute="bottom" secondItem="IEB-c5-bue" secondAttribute="bottom" constant="12" id="MCy-6J-TYm"/>
+                                                <constraint firstItem="IEB-c5-bue" firstAttribute="leading" secondItem="4rQ-9R-U80" secondAttribute="trailing" constant="8" id="nyQ-BB-mhz"/>
+                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="leading" secondItem="oQD-zb-t8q" secondAttribute="leading" constant="16" id="oaT-RU-6sk"/>
+                                                <constraint firstAttribute="bottom" secondItem="4rQ-9R-U80" secondAttribute="bottom" constant="8" id="uav-4x-mD8"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -58,123 +61,120 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                 <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Br3-SS-Aq6" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="99.333333333333343" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Br3-SS-Aq6" id="yZe-e0-Nnp" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sync with MyAnimeList" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTd-Br-TNS">
-                                                    <rect key="frame" x="16" y="11.000000000000028" width="177" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sfh-sc-V9I" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="143.33333333333334" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sfh-sc-V9I" id="fYI-5Y-IQQ" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sync with Kitsu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAd-jA-C0H">
-                                                    <rect key="frame" x="16" y="11" width="118" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Security 🔐" id="s82-yE-1l5">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="6a7-Dx-nz9" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="243.33333333333337" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6a7-Dx-nz9" id="hyf-yR-zjI">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-nr-UgD">
-                                                    <rect key="frame" x="16" y="11" width="186" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="aMv-CM-v45" kind="show" id="HHb-19-Zow"/>
+                                            <segue destination="zdX-uq-aKt" kind="show" id="nwp-Fh-w5D"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Theme 🎨" id="ioH-6n-97y" userLabel="Theme 🎨">
+                            <tableViewSection id="APY-wO-ldc" userLabel="Account">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="80" id="FDW-9r-JK3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="135.33333333333334" width="375" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FDW-9r-JK3" id="xn9-T1-hJA">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="HKL-aW-Ag5" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="10" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="Bcc-lF-YMj"/>
+                                                        <constraint firstAttribute="width" constant="60" id="CbW-KB-Pv1"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="30"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                            <real key="value" value="0.29999999999999999"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                            <real key="value" value="7.5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6NM-7o-KZx">
+                                                    <rect key="frame" x="90" y="15" width="0.0" height="0.0"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ady-Vw-3aH">
+                                                    <rect key="frame" x="90" y="20" width="70.666666666666686" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="HKL-aW-Ag5" firstAttribute="leading" secondItem="xn9-T1-hJA" secondAttribute="leading" constant="16" id="A4Y-By-amB"/>
+                                                <constraint firstItem="6NM-7o-KZx" firstAttribute="leading" secondItem="HKL-aW-Ag5" secondAttribute="trailing" constant="14" id="KHa-2j-gHY"/>
+                                                <constraint firstItem="ady-Vw-3aH" firstAttribute="top" secondItem="6NM-7o-KZx" secondAttribute="bottom" constant="5" id="cj6-UU-Ksh"/>
+                                                <constraint firstItem="HKL-aW-Ag5" firstAttribute="top" secondItem="xn9-T1-hJA" secondAttribute="top" constant="10" id="sK3-2O-w6t"/>
+                                                <constraint firstItem="ady-Vw-3aH" firstAttribute="leading" secondItem="6NM-7o-KZx" secondAttribute="leading" id="sv5-9v-EXK"/>
+                                                <constraint firstAttribute="bottom" secondItem="HKL-aW-Ag5" secondAttribute="bottom" constant="10" id="yzW-MD-SwG"/>
+                                                <constraint firstItem="6NM-7o-KZx" firstAttribute="top" secondItem="HKL-aW-Ag5" secondAttribute="top" constant="5" id="zXp-V7-0lU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="5Gn-ZY-q10" kind="show" id="yhs-SA-o5j"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="ioH-6n-97y" userLabel="Themes">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="6sh-0g-W3e" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="343.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="251.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6sh-0g-W3e" id="FAF-Jf-u9r">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Manage Themes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJL-6C-GCW">
-                                                    <rect key="frame" x="16" y="11" width="128" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="theme_icon" translatesAutoresizingMaskIntoConstraints="NO" id="XHe-Qg-vdM">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="OWP-wo-kN1"/>
+                                                        <constraint firstAttribute="height" constant="28" id="Zrs-xp-Fed"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Themes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJL-6C-GCW">
+                                                    <rect key="frame" x="52" y="12" width="128" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="wJL-6C-GCW" secondAttribute="bottom" constant="12" id="1Wt-51-v9n"/>
+                                                <constraint firstItem="wJL-6C-GCW" firstAttribute="top" secondItem="FAF-Jf-u9r" secondAttribute="top" constant="12" id="DSi-cm-MZF"/>
+                                                <constraint firstItem="XHe-Qg-vdM" firstAttribute="top" secondItem="FAF-Jf-u9r" secondAttribute="top" constant="8" id="Rqn-vH-bxy"/>
+                                                <constraint firstItem="wJL-6C-GCW" firstAttribute="leading" secondItem="XHe-Qg-vdM" secondAttribute="trailing" constant="8" id="e5d-vL-i6t"/>
+                                                <constraint firstAttribute="bottom" secondItem="XHe-Qg-vdM" secondAttribute="bottom" constant="8" id="tad-9h-nCQ"/>
+                                                <constraint firstItem="XHe-Qg-vdM" firstAttribute="leading" secondItem="FAF-Jf-u9r" secondAttribute="leading" constant="16" id="unV-KP-ro3"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -192,25 +192,91 @@
                                             <segue destination="iBo-FM-6eJ" kind="show" id="dAN-op-CEW"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="TgR-js-6i8" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="295.33333333333337" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TgR-js-6i8" id="sEM-MY-kln">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear_cache_icon" translatesAutoresizingMaskIntoConstraints="NO" id="gNZ-hi-auL">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="5Bd-k8-uPj"/>
+                                                        <constraint firstAttribute="height" constant="28" id="VHD-yr-CNA"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear cache" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nG-Q9-JYX">
+                                                    <rect key="frame" x="52" y="12" width="91" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00MiB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBI-IA-L1s">
+                                                    <rect key="frame" x="295.66666666666669" y="12" width="63.333333333333314" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="7nG-Q9-JYX" secondAttribute="bottom" constant="12" id="2Ye-v4-L6m"/>
+                                                <constraint firstAttribute="trailing" secondItem="BBI-IA-L1s" secondAttribute="trailing" constant="16" id="INQ-Q2-nCO"/>
+                                                <constraint firstItem="7nG-Q9-JYX" firstAttribute="top" secondItem="sEM-MY-kln" secondAttribute="top" constant="12" id="OA9-Ee-5WW"/>
+                                                <constraint firstAttribute="bottom" secondItem="BBI-IA-L1s" secondAttribute="bottom" constant="12" id="ONQ-a0-4T0"/>
+                                                <constraint firstAttribute="bottom" secondItem="gNZ-hi-auL" secondAttribute="bottom" constant="8" id="X3Z-kV-Tsc"/>
+                                                <constraint firstItem="7nG-Q9-JYX" firstAttribute="leading" secondItem="gNZ-hi-auL" secondAttribute="trailing" constant="8" id="dmI-WV-Gyo"/>
+                                                <constraint firstItem="BBI-IA-L1s" firstAttribute="top" secondItem="sEM-MY-kln" secondAttribute="top" constant="12" id="kCl-7K-Mw9"/>
+                                                <constraint firstItem="gNZ-hi-auL" firstAttribute="leading" secondItem="sEM-MY-kln" secondAttribute="leading" constant="16" id="sch-OG-J1F"/>
+                                                <constraint firstItem="gNZ-hi-auL" firstAttribute="top" secondItem="sEM-MY-kln" secondAttribute="top" constant="8" id="wxj-Zn-eaD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="In-App Purchases 🚀" footerTitle="Going pro unlocks lots of awesome features and helps us keep improving the app 👍" id="1pP-rS-ywW">
+                            <tableViewSection footerTitle="Going pro unlocks lots of awesome features and helps us keep improving the app 👍" id="1pP-rS-ywW" userLabel="IAP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bPC-Sl-2FB" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="450.66666666666669" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="375.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bPC-Sl-2FB" id="5HQ-7L-6HK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unlock features" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhb-dN-ftx">
-                                                    <rect key="frame" x="16" y="11" width="121" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlock_icon" translatesAutoresizingMaskIntoConstraints="NO" id="9gc-85-ICq">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="LLr-9x-Y0Q"/>
+                                                        <constraint firstAttribute="width" constant="28" id="t2n-NQ-uJt"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unlock features" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhb-dN-ftx">
+                                                    <rect key="frame" x="52" y="12" width="121" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9gc-85-ICq" firstAttribute="top" secondItem="5HQ-7L-6HK" secondAttribute="top" constant="8" id="2GU-1w-j8c"/>
+                                                <constraint firstItem="nhb-dN-ftx" firstAttribute="top" secondItem="5HQ-7L-6HK" secondAttribute="top" constant="12" id="8eh-2G-w24"/>
+                                                <constraint firstAttribute="bottom" secondItem="nhb-dN-ftx" secondAttribute="bottom" constant="12" id="EAC-KN-H9a"/>
+                                                <constraint firstItem="nhb-dN-ftx" firstAttribute="leading" secondItem="9gc-85-ICq" secondAttribute="trailing" constant="8" id="WrN-zH-aqz"/>
+                                                <constraint firstItem="9gc-85-ICq" firstAttribute="leading" secondItem="5HQ-7L-6HK" secondAttribute="leading" constant="16" id="iwy-at-qab"/>
+                                                <constraint firstAttribute="bottom" secondItem="9gc-85-ICq" secondAttribute="bottom" constant="8" id="w3G-ZY-C1c"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -226,20 +292,34 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dlz-jU-Nk2" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="494.66666666666674" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="419.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dlz-jU-Nk2" id="LAd-bv-wKx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Restore purchases" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSu-aG-gqx">
-                                                    <rect key="frame" x="16" y="11" width="143" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="a29-D7-3ci">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="1cK-um-LpK"/>
+                                                        <constraint firstAttribute="height" constant="28" id="TMZ-sp-aOp"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restore purchases" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSu-aG-gqx">
+                                                    <rect key="frame" x="52" y="11" width="143" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="a29-D7-3ci" firstAttribute="leading" secondItem="LAd-bv-wKx" secondAttribute="leading" constant="16" id="3lN-ef-Vqv"/>
+                                                <constraint firstAttribute="bottom" secondItem="QSu-aG-gqx" secondAttribute="bottom" constant="12" id="Hcw-wE-Hrg"/>
+                                                <constraint firstItem="QSu-aG-gqx" firstAttribute="top" secondItem="LAd-bv-wKx" secondAttribute="top" constant="11" id="REo-jc-BVH"/>
+                                                <constraint firstItem="QSu-aG-gqx" firstAttribute="leading" secondItem="a29-D7-3ci" secondAttribute="trailing" constant="8" id="c39-Kr-YhG"/>
+                                                <constraint firstAttribute="bottom" secondItem="a29-D7-3ci" secondAttribute="bottom" constant="8" id="cQf-Zd-zXE"/>
+                                                <constraint firstItem="a29-D7-3ci" firstAttribute="top" secondItem="LAd-bv-wKx" secondAttribute="top" constant="8" id="gCe-b8-r3H"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -256,23 +336,37 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Support Us 💪" id="eoo-dt-q2A">
+                            <tableViewSection id="eoo-dt-q2A" userLabel="Rate">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mBT-Zq-t0B" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="622.66666666666674" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="527.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mBT-Zq-t0B" id="V06-Yy-5Ni">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rate us on the AppStore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-mn-03c">
-                                                    <rect key="frame" x="16" y="11" width="187" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rate_icon" translatesAutoresizingMaskIntoConstraints="NO" id="YS6-gg-h2J">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="IRc-Ns-huc"/>
+                                                        <constraint firstAttribute="height" constant="28" id="W0K-ru-rkY"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate us on the AppStore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-mn-03c">
+                                                    <rect key="frame" x="52" y="12" width="187" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YS6-gg-h2J" firstAttribute="top" secondItem="V06-Yy-5Ni" secondAttribute="top" constant="8" id="3gS-9R-OXb"/>
+                                                <constraint firstAttribute="bottom" secondItem="YS6-gg-h2J" secondAttribute="bottom" constant="8" id="5WB-8P-1PD"/>
+                                                <constraint firstItem="u8O-mn-03c" firstAttribute="top" secondItem="V06-Yy-5Ni" secondAttribute="top" constant="12" id="GSm-gf-6Nu"/>
+                                                <constraint firstItem="u8O-mn-03c" firstAttribute="leading" secondItem="YS6-gg-h2J" secondAttribute="trailing" constant="8" id="UjY-n7-3iJ"/>
+                                                <constraint firstItem="YS6-gg-h2J" firstAttribute="leading" secondItem="V06-Yy-5Ni" secondAttribute="leading" constant="16" id="e6i-7R-l2a"/>
+                                                <constraint firstAttribute="bottom" secondItem="u8O-mn-03c" secondAttribute="bottom" constant="12" id="jUD-nG-jQ1"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -289,23 +383,37 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Social 🌐" id="Kzy-xG-Exg">
+                            <tableViewSection id="Kzy-xG-Exg" userLabel="Social">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="n6Z-NE-hhq" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="722.66666666666674" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="607.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n6Z-NE-hhq" id="sF4-aT-K3y">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Follow us on Twitter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cR-OR-Cvt">
-                                                    <rect key="frame" x="16" y="12" width="153" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter_icon" translatesAutoresizingMaskIntoConstraints="NO" id="i7v-0E-q08">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="JL7-if-ajI"/>
+                                                        <constraint firstAttribute="width" constant="28" id="woP-lI-p2J"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Follow us on Twitter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cR-OR-Cvt">
+                                                    <rect key="frame" x="52" y="12" width="153" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="i7v-0E-q08" firstAttribute="top" secondItem="sF4-aT-K3y" secondAttribute="top" constant="8" id="Exh-lP-2mH"/>
+                                                <constraint firstItem="4cR-OR-Cvt" firstAttribute="top" secondItem="sF4-aT-K3y" secondAttribute="top" constant="12" id="R4P-WR-1Xd"/>
+                                                <constraint firstAttribute="bottom" secondItem="4cR-OR-Cvt" secondAttribute="bottom" constant="12" id="Yjx-Wf-eBL"/>
+                                                <constraint firstAttribute="bottom" secondItem="i7v-0E-q08" secondAttribute="bottom" constant="8" id="mzi-QP-Xbo"/>
+                                                <constraint firstItem="4cR-OR-Cvt" firstAttribute="leading" secondItem="i7v-0E-q08" secondAttribute="trailing" constant="8" id="plF-TA-R4m"/>
+                                                <constraint firstItem="i7v-0E-q08" firstAttribute="leading" secondItem="sF4-aT-K3y" secondAttribute="leading" constant="16" id="ubV-v2-Zww"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -322,25 +430,42 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Legal ⚖️" id="kKg-Q4-zdV">
+                            <tableViewSection id="kKg-Q4-zdV" userLabel="Privacy">
                                 <string key="footerTitle">Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
 Kurozora 1.0.0 (1)</string>
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="QrV-gN-moh" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="830.00000000000011" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="QrV-gN-moh" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="687.33333333333337" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QrV-gN-moh" id="k6c-a6-MYG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="349" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HU5-4I-0VM">
-                                                    <rect key="frame" x="16" y="11" width="106" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="dzD-UN-m7O">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="Fng-CC-kC6"/>
+                                                        <constraint firstAttribute="width" constant="28" id="gQP-MO-BFl"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HU5-4I-0VM">
+                                                    <rect key="frame" x="52.000000000000007" y="12" width="105.66666666666669" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="CVH-g2-7uG"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dzD-UN-m7O" firstAttribute="leading" secondItem="k6c-a6-MYG" secondAttribute="leading" constant="16" id="5Ph-aL-Em3"/>
+                                                <constraint firstAttribute="bottom" secondItem="HU5-4I-0VM" secondAttribute="bottom" constant="12" id="BAg-62-NRp"/>
+                                                <constraint firstItem="HU5-4I-0VM" firstAttribute="top" secondItem="k6c-a6-MYG" secondAttribute="top" constant="12" id="G5l-c3-pf6"/>
+                                                <constraint firstAttribute="bottom" secondItem="dzD-UN-m7O" secondAttribute="bottom" constant="8" id="QXU-jR-mRn"/>
+                                                <constraint firstItem="HU5-4I-0VM" firstAttribute="leading" secondItem="dzD-UN-m7O" secondAttribute="trailing" constant="8" id="ati-xb-EIn"/>
+                                                <constraint firstItem="dzD-UN-m7O" firstAttribute="top" secondItem="k6c-a6-MYG" secondAttribute="top" constant="8" id="jgU-xt-ypw"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -374,8 +499,9 @@ Kurozora 1.0.0 (1)</string>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="linkWithKitsuLabel" destination="TAd-jA-C0H" id="IWX-mF-CcM"/>
-                        <outlet property="linkWithMyAnimeListLabel" destination="YTd-Br-TNS" id="53m-ih-TvT"/>
+                        <outlet property="cacheSizeLabel" destination="BBI-IA-L1s" id="Z8R-vi-6hQ"/>
+                        <outlet property="userAvatar" destination="HKL-aW-Ag5" id="UEi-Pl-5Y0"/>
+                        <outlet property="usernameLabel" destination="6NM-7o-KZx" id="qMW-iM-Qfx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2S-VX-ulJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -387,8 +513,8 @@ Kurozora 1.0.0 (1)</string>
             <objects>
                 <viewController storyboardIdentifier="ActiveSessions" title="Active Sessions" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aMv-CM-v45" customClass="ManageActiveSessionsController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gzz-Xw-2hR"/>
-                        <viewControllerLayoutGuide type="bottom" id="gy7-6P-be9"/>
+                        <viewControllerLayoutGuide type="top" id="XMw-2j-BSF"/>
+                        <viewControllerLayoutGuide type="bottom" id="L9f-EO-WXn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nXk-ua-qLx" userLabel="View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
@@ -615,8 +741,8 @@ Kurozora 1.0.0 (1)</string>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="17Q-Wq-T52" secondAttribute="trailing" id="9zn-3m-52m"/>
                             <constraint firstItem="17Q-Wq-T52" firstAttribute="leading" secondItem="nXk-ua-qLx" secondAttribute="leading" id="Elu-a6-X4o"/>
-                            <constraint firstItem="17Q-Wq-T52" firstAttribute="top" secondItem="gzz-Xw-2hR" secondAttribute="bottom" id="V1u-g9-2oR"/>
-                            <constraint firstItem="gy7-6P-be9" firstAttribute="top" secondItem="17Q-Wq-T52" secondAttribute="bottom" id="wxs-Eg-gvQ"/>
+                            <constraint firstItem="17Q-Wq-T52" firstAttribute="top" secondItem="XMw-2j-BSF" secondAttribute="bottom" id="V1u-g9-2oR"/>
+                            <constraint firstItem="L9f-EO-WXn" firstAttribute="top" secondItem="17Q-Wq-T52" secondAttribute="bottom" id="wxs-Eg-gvQ"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -628,15 +754,15 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dMw-Hi-JA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="-548"/>
+            <point key="canvasLocation" x="1710" y="-175"/>
         </scene>
         <!--Privacy Policy-->
         <scene sceneID="Gfa-CA-E5h">
             <objects>
                 <viewController storyboardIdentifier="Legal" title="Privacy Policy" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Oz-dy-aVA" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xN2-5I-hke"/>
-                        <viewControllerLayoutGuide type="bottom" id="1Tw-af-dWo"/>
+                        <viewControllerLayoutGuide type="top" id="8bP-Fy-huN"/>
+                        <viewControllerLayoutGuide type="bottom" id="r9k-HZ-Vcn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="48S-PY-FuF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
@@ -648,7 +774,7 @@ Kurozora 1.0.0 (1)</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Last updated at: 9 Sep, 2018 at 14:02" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afI-PN-SXp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afI-PN-SXp">
                                 <rect key="frame" x="10" y="618" width="355" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="LoC-UF-quL"/>
@@ -663,10 +789,10 @@ Kurozora 1.0.0 (1)</string>
                             <constraint firstAttribute="trailing" secondItem="mua-0K-XJT" secondAttribute="trailing" id="A1M-ES-m2Q"/>
                             <constraint firstItem="afI-PN-SXp" firstAttribute="top" secondItem="mua-0K-XJT" secondAttribute="bottom" constant="7.9999999999998863" id="Dcj-Yz-EN1"/>
                             <constraint firstAttribute="trailing" secondItem="afI-PN-SXp" secondAttribute="trailing" constant="10" id="FYQ-9s-NmX"/>
-                            <constraint firstItem="mua-0K-XJT" firstAttribute="top" secondItem="xN2-5I-hke" secondAttribute="bottom" id="jMk-YS-KMh"/>
+                            <constraint firstItem="mua-0K-XJT" firstAttribute="top" secondItem="8bP-Fy-huN" secondAttribute="bottom" id="jMk-YS-KMh"/>
                             <constraint firstItem="mua-0K-XJT" firstAttribute="leading" secondItem="48S-PY-FuF" secondAttribute="leading" id="mBS-lS-Cnk"/>
                             <constraint firstItem="afI-PN-SXp" firstAttribute="leading" secondItem="48S-PY-FuF" secondAttribute="leading" constant="10" id="thp-ij-A4Q"/>
-                            <constraint firstItem="1Tw-af-dWo" firstAttribute="top" secondItem="afI-PN-SXp" secondAttribute="bottom" id="yRF-yQ-nRQ"/>
+                            <constraint firstItem="r9k-HZ-Vcn" firstAttribute="top" secondItem="afI-PN-SXp" secondAttribute="bottom" id="yRF-yQ-nRQ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -676,7 +802,7 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XYf-wy-Cd7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="146"/>
+            <point key="canvasLocation" x="942" y="500"/>
         </scene>
         <!--Theme Store-->
         <scene sceneID="6FY-28-CmN">
@@ -700,7 +826,7 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ydo-oE-dgP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="863"/>
+            <point key="canvasLocation" x="92" y="863"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NaA-2J-13V">
@@ -728,9 +854,288 @@ Kurozora 1.0.0 (1)</string>
             </objects>
             <point key="canvasLocation" x="-799" y="145"/>
         </scene>
+        <!--KDefaults Manager-->
+        <scene sceneID="s71-2h-UfX">
+            <objects>
+                <tableViewController storyboardIdentifier="AdminPanel" title="KDefaults Manager" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zdX-uq-aKt" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lF6-3a-8TX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="b6s-ha-Zhl">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Modifying these values may break your app!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOY-0U-zCS">
+                                    <rect key="frame" x="16" y="8" width="343" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="gOY-0U-zCS" firstAttribute="leading" secondItem="b6s-ha-Zhl" secondAttribute="leading" constant="16" id="BtA-TR-dBL"/>
+                                <constraint firstAttribute="trailing" secondItem="gOY-0U-zCS" secondAttribute="trailing" constant="16" id="Icv-jA-cxG"/>
+                                <constraint firstItem="gOY-0U-zCS" firstAttribute="top" secondItem="b6s-ha-Zhl" secondAttribute="top" constant="8" id="bmC-eJ-1nk"/>
+                                <constraint firstAttribute="bottom" secondItem="gOY-0U-zCS" secondAttribute="bottom" constant="8" id="nND-eE-3cl"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="KDefaultsTableViewCell" rowHeight="50" id="LJ7-Op-yfO" customClass="KDefaultsTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="78" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LJ7-Op-yfO" id="dJd-BI-OJE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="session_secret" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stQ-Ke-nTe">
+                                            <rect key="frame" x="16" y="8" width="100" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="aDe-VM-Wkb"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WaY-LO-JCV" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="121" y="8" width="238" height="34"/>
+                                            <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                                    <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                    <real key="value" value="0.29999999999999999"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                    <real key="value" value="7.5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="valueTextFieldEditingDidEnd:" destination="LJ7-Op-yfO" eventType="editingDidEnd" id="eIW-HT-W5A"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="WaY-LO-JCV" secondAttribute="trailing" constant="16" id="8Zr-iQ-d5K"/>
+                                        <constraint firstItem="stQ-Ke-nTe" firstAttribute="top" secondItem="dJd-BI-OJE" secondAttribute="top" constant="8" id="E7r-1m-7k8"/>
+                                        <constraint firstItem="WaY-LO-JCV" firstAttribute="top" secondItem="dJd-BI-OJE" secondAttribute="top" constant="8" id="GtC-uY-Mu3"/>
+                                        <constraint firstAttribute="bottom" secondItem="stQ-Ke-nTe" secondAttribute="bottom" constant="8" id="W0a-wO-Ip2"/>
+                                        <constraint firstItem="WaY-LO-JCV" firstAttribute="leading" secondItem="stQ-Ke-nTe" secondAttribute="trailing" constant="5" id="dkd-rR-het"/>
+                                        <constraint firstItem="stQ-Ke-nTe" firstAttribute="leading" secondItem="dJd-BI-OJE" secondAttribute="leading" constant="16" id="hX9-ce-iA3"/>
+                                        <constraint firstAttribute="bottom" secondItem="WaY-LO-JCV" secondAttribute="bottom" constant="8" id="kOg-fR-xSC"/>
+                                        <constraint firstItem="WaY-LO-JCV" firstAttribute="centerY" secondItem="stQ-Ke-nTe" secondAttribute="centerY" id="wTm-j8-Poc"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="keyLabel" destination="stQ-Ke-nTe" id="6SU-w1-aZ5"/>
+                                    <outlet property="valueTextField" destination="WaY-LO-JCV" id="tbG-iv-oyG"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zdX-uq-aKt" id="NAh-fK-bIo"/>
+                            <outlet property="delegate" destination="zdX-uq-aKt" id="X7E-Lq-L4g"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AT8-mD-ZIU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="92" y="-573"/>
+        </scene>
+        <!--Account-->
+        <scene sceneID="eiw-p6-1vy">
+            <objects>
+                <tableViewController storyboardIdentifier="Account" title="Account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Gn-ZY-q10" customClass="AccountTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Sw9-gf-dyF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="xfe-0R-fwV">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Ik-yU9" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                    <rect key="frame" x="147.66666666666666" y="12" width="80" height="80"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="80" id="a36-8D-Gwv"/>
+                                        <constraint firstAttribute="width" constant="80" id="dMG-DT-JRx"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="40"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                            <real key="value" value="0.29999999999999999"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                            <real key="value" value="7.5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKN-Df-EjD">
+                                    <rect key="frame" x="16" y="100" width="343" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="32" id="Owh-Br-cM9"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIz-Ni-kDf">
+                                    <rect key="frame" x="16" y="132" width="343" height="0.0"/>
+                                    <attributedString key="attributedText"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="DIz-Ni-kDf" firstAttribute="leading" secondItem="KKN-Df-EjD" secondAttribute="leading" id="0vo-d7-LCY"/>
+                                <constraint firstItem="KKN-Df-EjD" firstAttribute="leading" secondItem="xfe-0R-fwV" secondAttribute="leading" constant="16" id="1Is-el-7kB"/>
+                                <constraint firstItem="KKN-Df-EjD" firstAttribute="top" secondItem="IX4-Ik-yU9" secondAttribute="bottom" constant="8" id="4tM-cw-2np"/>
+                                <constraint firstItem="IX4-Ik-yU9" firstAttribute="top" secondItem="xfe-0R-fwV" secondAttribute="top" constant="12" id="DBg-EV-Amm"/>
+                                <constraint firstItem="DIz-Ni-kDf" firstAttribute="trailing" secondItem="KKN-Df-EjD" secondAttribute="trailing" id="ENZ-4g-Ci9"/>
+                                <constraint firstItem="IX4-Ik-yU9" firstAttribute="centerX" secondItem="xfe-0R-fwV" secondAttribute="centerX" id="TRU-kR-0eX"/>
+                                <constraint firstAttribute="trailing" secondItem="KKN-Df-EjD" secondAttribute="trailing" constant="16" id="Ve6-ba-h8E"/>
+                                <constraint firstItem="KKN-Df-EjD" firstAttribute="centerX" secondItem="IX4-Ik-yU9" secondAttribute="centerX" id="X9V-0A-F2z"/>
+                                <constraint firstItem="DIz-Ni-kDf" firstAttribute="top" secondItem="KKN-Df-EjD" secondAttribute="bottom" id="yXq-bC-7R9"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection id="E7C-Jw-YMr">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="yRs-n2-nRh" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="170" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yRs-n2-nRh" id="Gxl-bO-2eM">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Xtz-jN-YFP">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="JpF-mb-7zE"/>
+                                                        <constraint firstAttribute="height" constant="28" id="Rbe-uU-mO8"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm2-Za-ikc">
+                                                    <rect key="frame" x="52" y="12" width="186" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Xtz-jN-YFP" secondAttribute="bottom" constant="8" id="ArT-7D-F2p"/>
+                                                <constraint firstItem="Xtz-jN-YFP" firstAttribute="top" secondItem="Gxl-bO-2eM" secondAttribute="top" constant="8" id="JPV-jH-rj7"/>
+                                                <constraint firstItem="Xtz-jN-YFP" firstAttribute="leading" secondItem="Gxl-bO-2eM" secondAttribute="leading" constant="16" id="S3Q-B1-FWT"/>
+                                                <constraint firstItem="cm2-Za-ikc" firstAttribute="top" secondItem="Gxl-bO-2eM" secondAttribute="top" constant="12" id="ewa-09-xLQ"/>
+                                                <constraint firstItem="cm2-Za-ikc" firstAttribute="leading" secondItem="Xtz-jN-YFP" secondAttribute="trailing" constant="8" id="iAt-7n-aZa"/>
+                                                <constraint firstAttribute="bottom" secondItem="cm2-Za-ikc" secondAttribute="bottom" constant="12" id="nAQ-Rj-LpT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="aMv-CM-v45" kind="show" id="sgd-Eh-hzI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="TsN-QK-gCt">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="B7m-U4-IxR" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="250" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="B7m-U4-IxR" id="t2U-np-Xyj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6x-ek-mPk">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="PFJ-hw-x1Y"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="0.30196078430000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="W6x-ek-mPk" firstAttribute="leading" secondItem="t2U-np-Xyj" secondAttribute="leading" constant="16" id="73k-c2-oER"/>
+                                                <constraint firstAttribute="bottom" secondItem="W6x-ek-mPk" secondAttribute="bottom" id="7rn-7K-UZG"/>
+                                                <constraint firstItem="W6x-ek-mPk" firstAttribute="top" secondItem="t2U-np-Xyj" secondAttribute="top" id="a8b-i5-UcV"/>
+                                                <constraint firstAttribute="trailing" secondItem="W6x-ek-mPk" secondAttribute="trailing" constant="16" id="fA1-7l-Qro"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="5Gn-ZY-q10" id="gWw-bK-XkT"/>
+                            <outlet property="delegate" destination="5Gn-ZY-q10" id="dFD-jZ-7pj"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="userAvatar" destination="IX4-Ik-yU9" id="l2k-ya-Z7k"/>
+                        <outlet property="userEmailLabel" destination="DIz-Ni-kDf" id="48H-tZ-OPu"/>
+                        <outlet property="usernameLabel" destination="KKN-Df-EjD" id="OPm-sL-xlG"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="POJ-ty-Tuf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="942" y="-175"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="bell" width="30" height="30"/>
+        <image name="DefaultAvatar" width="100" height="100"/>
+        <image name="clear_cache_icon" width="128" height="128"/>
+        <image name="kdefaults_icon" width="128" height="128"/>
+        <image name="privacy_icon" width="128" height="128"/>
+        <image name="rate_icon" width="128" height="128"/>
+        <image name="restore_icon" width="128" height="128"/>
+        <image name="session_icon" width="128" height="128"/>
+        <image name="theme_icon" width="128" height="128"/>
+        <image name="twitter_icon" width="128" height="128"/>
+        <image name="unlock_icon" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

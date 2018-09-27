@@ -11,18 +11,31 @@ import TRON
 import SwiftyJSON
 
 struct User: JSONDecodable {
+    enum userType: Int {
+        case normal = 0
+        case mod
+        case admin
+    }
+    
     let success: Bool?
     let message: String?
+    let role: Int?
     
     let id: Int?
     let session: String?
-    let sessionArray: [JSON]?
+//    let sessionArray: [JSON]?
     let username: String?
     let avatar: String?
     let banner: String?
     let bio: String?
     let badges: [String]?
+    let proBadge: Bool?
     let joinDate: String?
+    
+    let followerCount: Int?
+    let followingCount: Int?
+    let reputationCount: Int?
+    let postCount: Int?
     
     let rating: Double?
     
@@ -30,57 +43,81 @@ struct User: JSONDecodable {
     let activeEnd: String?
     let active: Bool?
     
-    static func username() -> String? {
-        if let username = GlobalVariables().KDefaults["username"] {
-            return username
-        } else {
-            return nil
-        }
-    }
-    
-    static func isLoggedIn() -> Bool {
-        return User.username() != nil
-    }
-    
-    static func currentId() -> Int? {
-        if let userId = GlobalVariables().KDefaults["user_id"] {
-            return Int(userId)
-        } else {
-            return nil
-        }
-    }
-    
-    static func currentSessionSecret() -> String? {
-        if let sessionSecret = GlobalVariables().KDefaults["session_secret"] {
-            return sessionSecret
-        } else {
-            return nil
-        }
-    }
-    
-    static func currentDevice() -> String? {
-        return UIDevice.modelName
-    }
-    
     init(json: JSON) {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
         
         id = json["user_id"].intValue
         session = json["session_secret"].stringValue
-        sessionArray = json["sessions"].arrayValue
-        username = json["username"].stringValue
-        avatar = json["avatar"].stringValue
-        banner = json["banner"].stringValue
-        bio = json["bio"].stringValue
-        badges = json["badges"].rawValue as? [String]
-        joinDate = json["join_date"].stringValue
+        role = json["role"].intValue
+
+//        sessionArray = json["sessions"].arrayValue
+        username = json["profile"]["username"].stringValue
+        avatar = json["profile"]["avatar_url"].stringValue
+        banner = json["profile"]["banner_url"].stringValue
+        bio = json["profile"]["biography"].stringValue
+        badges = json["profile"]["badges"].rawValue as? [String]
+        proBadge = json["profile"]["pro_badge"].boolValue
+        joinDate = json["profile"]["join_date"].stringValue
+        
+        followerCount = json["profile"]["follower_count"].intValue
+        followingCount = json["profile"]["following_count"].intValue
+        reputationCount = json["profile"]["reputation_count"].intValue
+        postCount = json["profile"]["post_count"].intValue
         
         rating = json["rating"].doubleValue
         
-        activeStart = json["active_start"].stringValue
-        activeEnd = json["active_end"].stringValue
-        active = json["active"].boolValue
+        activeStart = json["profile"]["active_start"].stringValue
+        activeEnd = json["profile"]["active_end"].stringValue
+        active = json["profile"]["active"].boolValue
+    }
+    
+    static func username() -> String? {
+        if let username = GlobalVariables().KDefaults["username"], username != "" {
+            return username
+        }
+        return nil
+    }
+    
+    static func isLoggedIn() -> Bool? {
+        return User.username() != nil
+    }
+    
+    static func isPro() -> Bool? {
+        return true
+    }
+    
+    static func isAdmin() -> Bool? {
+        if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
+            guard let userType = Int(userType) else { return false }
+            guard let type: userType = User.userType(rawValue: userType) else { return false }
+            
+            switch type {
+            case .admin:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
+    }
+    
+    static func currentId() -> Int? {
+        if let userId = GlobalVariables().KDefaults["user_id"], userId != "" {
+            return Int(userId)
+        }
+        return nil
+    }
+    
+    static func currentSessionSecret() -> String? {
+        if let sessionSecret = GlobalVariables().KDefaults["session_secret"], sessionSecret != "" {
+            return sessionSecret
+        }
+        return nil
+    }
+    
+    static func currentDevice() -> String? {
+        return UIDevice.modelName
     }
     
 //    func following() {

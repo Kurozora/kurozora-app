@@ -29,12 +29,11 @@ def common_pods
     pod 'SwiftTheme', '0.4.1'
     pod 'ReadMoreTextView'
     pod 'RevealingSplashView'
+    pod 'Kingfisher', '~> 4.0'
 #    pod 'CRRefresh', '1.0.0'
 end
 
 def project_pods
-    pod 'Fabric'
-    pod 'Crashlytics'
     pod 'IQKeyboardManagerSwift', '6.0.3'
     pod 'NGAParallaxMotion', '1.1.0'
     pod 'ImagePicker', '3.0.0'

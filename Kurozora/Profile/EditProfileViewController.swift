@@ -12,7 +12,7 @@ import UIKit
 import KDatabaseKit
 
 protocol EditProfileViewControllerProtocol: class {
-    func editProfileViewControllerDidEditedUser(user: User)
+    func editProfileViewControllerDidEditedUser(user: User?)
 }
 
 public class EditProfileViewController: UIViewController {

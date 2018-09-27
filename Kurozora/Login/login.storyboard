@@ -253,7 +253,7 @@ Kurozora</string>
                                         <real key="value" value="7.5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="12"/>
@@ -751,7 +751,7 @@ Kurozora</string>
                     <connections>
                         <outlet property="navigationBar" destination="0bk-7O-769" id="gvg-qk-7Ja"/>
                         <outlet property="resetButton" destination="t4u-TJ-OFg" id="Rcy-8d-z6p"/>
-                        <outlet property="usernameTextField" destination="BEp-na-6qS" id="ueQ-wQ-pfK"/>
+                        <outlet property="userEmailTextField" destination="BEp-na-6qS" id="lPd-9j-tOq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edG-lm-8X7" userLabel="First Responder" sceneMemberID="firstResponder"/>

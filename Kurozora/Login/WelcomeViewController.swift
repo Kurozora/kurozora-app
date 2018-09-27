@@ -25,6 +25,7 @@ class WelcomeViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Sets the status bar to visible when the view is about to disappear
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         statusBar.isHidden = false
