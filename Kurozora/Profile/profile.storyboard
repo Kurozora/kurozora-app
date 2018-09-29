@@ -58,8 +58,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="354"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="colorful" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV" userLabel="Banner" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <imageView clipsSubviews="YES" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="colorful" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV" userLabel="Banner" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="275"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="xoI-0c-uAv" appends="YES" id="CR1-HG-Ks0"/>
+                                            </connections>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vil-by-3j0" userLabel="More Settings Button">
                                             <rect key="frame" x="327" y="8" width="40" height="30"/>
@@ -90,7 +94,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJX-ls-ZaG" userLabel="Profile View" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="157.66666666666666" y="28" width="60" height="60"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald" userLabel="Profile" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald" userLabel="Profile" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
@@ -104,6 +108,9 @@
                                                             <color key="value" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="n16-TW-RUz" appends="YES" id="UUp-eP-s1j"/>
+                                                    </connections>
                                                 </imageView>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBP-c7-LwV" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -442,7 +449,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjD-di-G8v" userLabel="Reputation Badge" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="20"/>
-                                                    <color key="backgroundColor" red="0.01176470588" green="0.66274509800000003" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.84207815669999997" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
                                                     <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -625,6 +632,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pjl-IX-5hq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="xoI-0c-uAv" userLabel="BannerTap">
+                    <connections>
+                        <action selector="showBanner:" destination="fRy-jQ-iyE" id="gbw-ME-3mw"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="n16-TW-RUz" userLabel="AvatarTap">
+                    <connections>
+                        <action selector="showAvatar:" destination="fRy-jQ-iyE" id="lEF-XZ-FPG"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="928.79999999999995" y="-1112.0689655172414"/>
         </scene>

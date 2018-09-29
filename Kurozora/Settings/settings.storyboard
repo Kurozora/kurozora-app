@@ -19,60 +19,10 @@
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Admin 🛠🌚🌝" id="5iq-VI-mgw">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nyz-5a-Lp3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyz-5a-Lp3" id="oQD-zb-t8q">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kdefaults_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rQ-9R-U80">
-                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="28" id="aQm-bQ-FbW"/>
-                                                        <constraint firstAttribute="height" constant="28" id="mDP-zn-n3k"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KDefaults Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEB-c5-bue">
-                                                    <rect key="frame" x="52" y="12" width="146" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="8" id="424-qF-M27"/>
-                                                <constraint firstItem="IEB-c5-bue" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="12" id="GPV-3G-n3C"/>
-                                                <constraint firstAttribute="bottom" secondItem="IEB-c5-bue" secondAttribute="bottom" constant="12" id="MCy-6J-TYm"/>
-                                                <constraint firstItem="IEB-c5-bue" firstAttribute="leading" secondItem="4rQ-9R-U80" secondAttribute="trailing" constant="8" id="nyQ-BB-mhz"/>
-                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="leading" secondItem="oQD-zb-t8q" secondAttribute="leading" constant="16" id="oaT-RU-6sk"/>
-                                                <constraint firstAttribute="bottom" secondItem="4rQ-9R-U80" secondAttribute="bottom" constant="8" id="uav-4x-mD8"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <segue destination="zdX-uq-aKt" kind="show" id="nwp-Fh-w5D"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="APY-wO-ldc" userLabel="Account">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="80" id="FDW-9r-JK3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="135.33333333333334" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FDW-9r-JK3" id="xn9-T1-hJA">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="80"/>
@@ -144,10 +94,60 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="5iq-VI-mgw" userLabel="Admin">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nyz-5a-Lp3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="151" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyz-5a-Lp3" id="oQD-zb-t8q">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kdefaults_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rQ-9R-U80">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="aQm-bQ-FbW"/>
+                                                        <constraint firstAttribute="height" constant="28" id="mDP-zn-n3k"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KDefaults Manager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEB-c5-bue">
+                                                    <rect key="frame" x="52" y="12" width="146" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="8" id="424-qF-M27"/>
+                                                <constraint firstItem="IEB-c5-bue" firstAttribute="top" secondItem="oQD-zb-t8q" secondAttribute="top" constant="12" id="GPV-3G-n3C"/>
+                                                <constraint firstAttribute="bottom" secondItem="IEB-c5-bue" secondAttribute="bottom" constant="12" id="MCy-6J-TYm"/>
+                                                <constraint firstItem="IEB-c5-bue" firstAttribute="leading" secondItem="4rQ-9R-U80" secondAttribute="trailing" constant="8" id="nyQ-BB-mhz"/>
+                                                <constraint firstItem="4rQ-9R-U80" firstAttribute="leading" secondItem="oQD-zb-t8q" secondAttribute="leading" constant="16" id="oaT-RU-6sk"/>
+                                                <constraint firstAttribute="bottom" secondItem="4rQ-9R-U80" secondAttribute="bottom" constant="8" id="uav-4x-mD8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="zdX-uq-aKt" kind="show" id="nwp-Fh-w5D"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="ioH-6n-97y" userLabel="Themes">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="6sh-0g-W3e" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="251.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="231" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6sh-0g-W3e" id="FAF-Jf-u9r">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
@@ -193,7 +193,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="TgR-js-6i8" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="295.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="275" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TgR-js-6i8" id="sEM-MY-kln">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -249,7 +249,7 @@
                             <tableViewSection footerTitle="Going pro unlocks lots of awesome features and helps us keep improving the app 👍" id="1pP-rS-ywW" userLabel="IAP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bPC-Sl-2FB" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="375.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="355" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bPC-Sl-2FB" id="5HQ-7L-6HK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -292,7 +292,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="dlz-jU-Nk2" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="419.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="399" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dlz-jU-Nk2" id="LAd-bv-wKx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -339,7 +339,7 @@
                             <tableViewSection id="eoo-dt-q2A" userLabel="Rate">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mBT-Zq-t0B" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="527.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="507" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mBT-Zq-t0B" id="V06-Yy-5Ni">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -386,7 +386,7 @@
                             <tableViewSection id="Kzy-xG-Exg" userLabel="Social">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="n6Z-NE-hhq" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="607.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="587" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n6Z-NE-hhq" id="sF4-aT-K3y">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -428,6 +428,49 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="M85-TA-HFc" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="631" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M85-TA-HFc" id="U3a-yO-Lmc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="medium_icon" translatesAutoresizingMaskIntoConstraints="NO" id="TFf-nG-vP1">
+                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="Csk-fh-6V4"/>
+                                                        <constraint firstAttribute="height" constant="28" id="TqG-nf-NXj"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Follow our story on Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szt-bV-iv8">
+                                                    <rect key="frame" x="52.000000000000014" y="12" width="211.33333333333337" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="szt-bV-iv8" secondAttribute="bottom" constant="12" id="2h9-IU-XUt"/>
+                                                <constraint firstItem="TFf-nG-vP1" firstAttribute="leading" secondItem="U3a-yO-Lmc" secondAttribute="leading" constant="16" id="PRN-6P-XuT"/>
+                                                <constraint firstItem="TFf-nG-vP1" firstAttribute="top" secondItem="U3a-yO-Lmc" secondAttribute="top" constant="8" id="oc3-ZV-c1K"/>
+                                                <constraint firstItem="szt-bV-iv8" firstAttribute="top" secondItem="U3a-yO-Lmc" secondAttribute="top" constant="12" id="qlq-AJ-7WO"/>
+                                                <constraint firstAttribute="bottom" secondItem="TFf-nG-vP1" secondAttribute="bottom" constant="8" id="rRt-dQ-0kg"/>
+                                                <constraint firstItem="szt-bV-iv8" firstAttribute="leading" secondItem="TFf-nG-vP1" secondAttribute="trailing" constant="8" id="rek-DY-PNg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="kKg-Q4-zdV" userLabel="Privacy">
@@ -435,7 +478,7 @@
 Kurozora 1.0.0 (1)</string>
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="QrV-gN-moh" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="687.33333333333337" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="711" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QrV-gN-moh" id="k6c-a6-MYG">
                                             <rect key="frame" x="0.0" y="0.0" width="349" height="43.666666666666664"/>
@@ -1129,6 +1172,7 @@ Kurozora 1.0.0 (1)</string>
         <image name="DefaultAvatar" width="100" height="100"/>
         <image name="clear_cache_icon" width="128" height="128"/>
         <image name="kdefaults_icon" width="128" height="128"/>
+        <image name="medium_icon" width="128" height="128"/>
         <image name="privacy_icon" width="128" height="128"/>
         <image name="rate_icon" width="128" height="128"/>
         <image name="restore_icon" width="128" height="128"/>

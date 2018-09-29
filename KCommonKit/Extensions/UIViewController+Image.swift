@@ -6,32 +6,26 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import Lightbox
+import AXPhotoViewer
+import FLAnimatedImage
 
 extension UIViewController {
-    public func presentLightboxViewController(imageUrl: String?, text: String?, videoUrl: String?) {
-        let image = [LightboxImage(imageURL: URL(fileURLWithPath: imageUrl!), text: text!, videoURL: URL(fileURLWithPath: videoUrl!))]
-        let controller = LightboxController(images: image)
+    public func presentPhotoViewControllerWithURL(_ imageUrl: String?) {
+        guard let imageURL = URL(string: imageUrl ?? "") else {return}
         
-        // Set delegates.
-        controller.pageDelegate = self
-        controller.dismissalDelegate = self
+        let photo = [AXPhoto(
+            attributedTitle: nil,
+            attributedDescription: nil,
+            attributedCredit: nil,
+            url: imageURL)]
         
-        // Use dynamic background.
-        controller.dynamicBackground = true
-
-    }
-}
-
-extension UIViewController: LightboxControllerPageDelegate {
-    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
-        print(page)
-    }
-}
-
-extension UIViewController: LightboxControllerDismissalDelegate {
-    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
-        // ...
+        // Set datasource
+        let datasource = AXPhotosDataSource(photos: photo)
+        
+        // Create an instance of AXPhotosViewController
+        let photosViewController = AXPhotosViewController(dataSource: datasource)
+        
+        // Present the video
+        present(photosViewController, animated: true, completion: nil)
     }
 }

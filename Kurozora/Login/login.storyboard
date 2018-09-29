@@ -715,7 +715,7 @@ Kurozora</string>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="206" width="343" height="52"/>
-                                <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.94540983438491821" green="0.59565275907516479" blue="0.21553713083267212" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="0M8-Qa-8zM"/>
                                 </constraints>
@@ -726,6 +726,12 @@ Kurozora</string>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedBackgroundColor">
+                                        <color key="value" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="nonHighlightedBackgroundColor">
+                                        <color key="value" red="1" green="0.68235294120000001" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -751,7 +757,7 @@ Kurozora</string>
                     <connections>
                         <outlet property="navigationBar" destination="0bk-7O-769" id="gvg-qk-7Ja"/>
                         <outlet property="resetButton" destination="t4u-TJ-OFg" id="Rcy-8d-z6p"/>
-                        <outlet property="userEmailTextField" destination="BEp-na-6qS" id="lPd-9j-tOq"/>
+                        <outletCollection property="userEmailTextField" destination="BEp-na-6qS" collectionClass="NSMutableArray" id="UbR-LK-oln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edG-lm-8X7" userLabel="First Responder" sceneMemberID="firstResponder"/>

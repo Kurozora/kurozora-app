@@ -9,13 +9,11 @@
 import UIKit
 
 class ShowCharacterCell: UITableViewCell {
-    
 //    @IBOutlet weak var characterImageView: CachedImageView!
 //    @IBOutlet weak var characterName: UILabel!
 //    @IBOutlet weak var characterRole: UILabel!
     
     @IBOutlet weak var actorImageView: UIImageView!
-    @IBOutlet weak var actorName: UILabel!
-    @IBOutlet weak var actorJob: UILabel!
-    
+    @IBOutlet weak var actorName: CopyableUILabel!
+    @IBOutlet weak var actorJob: CopyableUILabel!
 }

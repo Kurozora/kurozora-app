@@ -26,15 +26,19 @@ class RegisterViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
         registerButton.isEnabled = false
+    }
+    
+    // MARK: - Status bar
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationBar.delegate = self
-        
+        self.setNeedsStatusBarAppearanceUpdate()
+
         usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -173,13 +177,13 @@ class RegisterViewController: UIViewController {
     
 }
 
-extension RegisterViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-    
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
-    }
-    
-}
+//extension RegisterViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
+//
+//    func position(for bar: UIBarPositioning) -> UIBarPosition {
+//        return .topAttached
+//    }
+//
+//}
 
 extension RegisterViewController: UITextFieldDelegate {
     

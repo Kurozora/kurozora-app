@@ -36,6 +36,7 @@
 		66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611234F208F70D200E6033A /* UIApplication+Navigation.swift */; };
 		6611235A2090907200E6033A /* Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661123592090907200E6033A /* Kurozora.swift */; };
 		6611F195213313AA009BF736 /* ShowTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F194213313AA009BF736 /* ShowTabBarController.swift */; };
+		6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */; };
 		6614DF412088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -339,6 +340,7 @@
 		661123592090907200E6033A /* Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kurozora.swift; sourceTree = "<group>"; };
 		6611F194213313AA009BF736 /* ShowTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTabBarController.swift; sourceTree = "<group>"; };
 		6613F02320F6423000071CAE /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
 		6614DF382088D1C600B0BC69 /* KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614DF402088D1C600B0BC69 /* KCommonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCommonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614DF492088D1C600B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -709,7 +711,7 @@
 				6611234D208F70CB00E6033A /* UIViewController+Navigation.swift */,
 				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
 				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
-				660B5B5C215137C5002D05F3 /* UITextView+Extensions.swift */,
+				6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -721,6 +723,24 @@
 				66E1B8682090AFC600D7AC1A /* KAtarashii.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		6614ABE1215EB21A00A3A0C9 /* ReadMoretextview */ = {
+			isa = PBXGroup;
+			children = (
+				660B5B5A21513773002D05F3 /* ReadMoreTextView.swift */,
+				660B5B5C215137C5002D05F3 /* UITextView+Extensions.swift */,
+			);
+			path = ReadMoretextview;
+			sourceTree = "<group>";
+		};
+		6614ABE2215EB23500A3A0C9 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				66160C3D215C271700D0D722 /* Reachability.swift */,
+				66160C3F215C2DEB00D0D722 /* reachability.storyboard */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 		6614DF392088D1C600B0BC69 /* KCommonKit */ = {
@@ -797,9 +817,8 @@
 		66160C3C215C26F300D0D722 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				660B5B5A21513773002D05F3 /* ReadMoreTextView.swift */,
-				66160C3D215C271700D0D722 /* Reachability.swift */,
-				66160C3F215C2DEB00D0D722 /* reachability.storyboard */,
+				6614ABE1215EB21A00A3A0C9 /* ReadMoretextview */,
+				6614ABE2215EB23500A3A0C9 /* Reachability */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -1749,22 +1768,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
-				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
-				"${BUILT_PRODUCTS_DIR}/ReadMoreTextView/ReadMoreTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
@@ -1778,22 +1796,21 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXPhotoViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXStateButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReadMoreTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
@@ -1879,6 +1896,7 @@
 				66CF6D5820A9732000F98375 /* EpisodeCell.swift in Sources */,
 				66E1B87220911F9600D7AC1A /* SearchViewController.swift in Sources */,
 				6674A0BF20A45E4700AAB527 /* SynopsisCell.swift in Sources */,
+				6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */,
 				660E9FC721455F3100F6813C /* Cast.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsViewController.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */,

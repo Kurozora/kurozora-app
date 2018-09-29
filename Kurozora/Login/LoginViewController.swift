@@ -23,11 +23,16 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    // MARK: - Status bar
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setNeedsStatusBarAppearanceUpdate()
  
         loginButton.isEnabled = false
         usernameTextField.becomeFirstResponder()
@@ -58,11 +63,7 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
         
         Service.shared.login(username, password, device, withSuccess: { (success) in
-//            self.window = UIWindow()
-//            self.window?.makeKeyAndVisible()
-
             let customTabBar = KurozoraTabBarController()
-//            self.window?.rootViewController = customTabBar
             customTabBar.modalTransitionStyle = .flipHorizontal
             self.present(customTabBar, animated: true, completion: nil)
         }) { (errorMsg) in
@@ -72,16 +73,13 @@ class LoginViewController: UIViewController {
 
 }
 
-extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
-    }
-
-}
+//extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
+//    func position(for bar: UIBarPositioning) -> UIBarPosition {
+//        return .topAttached
+//    }
+//}
 
 extension LoginViewController: UITextFieldDelegate {
-    
     @objc func editingChanged(_ textField: UITextField) {
         if textField.text?.count == 1 {
             if textField.text?.first == " " {
@@ -111,5 +109,4 @@ extension LoginViewController: UITextFieldDelegate {
         
         return true
     }
-
 }

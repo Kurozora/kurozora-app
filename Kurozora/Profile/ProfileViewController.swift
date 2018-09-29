@@ -12,6 +12,8 @@ import TTTAttributedLabel_moolban
 import UIImageColors
 import Kingfisher
 import SCLAlertView
+import AXPhotoViewer
+import FLAnimatedImage
 //import XCDYouTubeKit
 
 class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableViewDataSource  {
@@ -344,7 +346,18 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
 //        tableView.setContentOffset(offset, animated: false)
 //    }
 //
-//    // MARK: - IBAction
+    // MARK: - IBAction
+    @IBAction func showAvatar(_ sender: AnyObject) {
+        if let avatar = user?.avatar, avatar != ""  {
+            presentPhotoViewControllerWithURL(avatar)
+        }
+    }
+    
+    @IBAction func showBanner(_ sender: AnyObject) {
+        if let banner = user?.banner, banner != "" {
+            presentPhotoViewControllerWithURL(banner)
+        }
+    }
 //    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
 //        configureFetchController()
 //    }

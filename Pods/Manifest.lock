@@ -1,23 +1,24 @@
 PODS:
   - Alamofire (4.7.3)
+  - AXPhotoViewer (1.5.0):
+    - AXPhotoViewer/Core (= 1.5.0)
+  - AXPhotoViewer/Core (1.5.0):
+    - AXStateButton (>= 1.1.3)
+    - FLAnimatedImage (>= 1.0.0)
+    - FLAnimatedImage-tvOS (>= 1.0.16)
+  - AXStateButton (1.1.4)
   - Bolts-Swift (1.3.0)
-  - Cache (4.2.0)
   - Cosmos (16.0.0)
   - ESTabBarController-swift (2.6.2)
+  - FLAnimatedImage (1.0.12)
   - FSPagerView (0.7.2)
-  - Hue (3.0.1)
+  - GrowingTextView (0.5.6)
   - ImagePicker (3.0.0)
-  - Imaginary (3.0.3):
-    - Cache (~> 4.0)
   - IQKeyboardManagerSwift (6.0.3)
   - KeychainAccess (3.1.1)
   - Keys (1.0.1)
   - Kingfisher (4.10.0)
-  - Lightbox (2.1.2):
-    - Hue (~> 3.0)
-    - Imaginary (~> 3.0)
   - NGAParallaxMotion (1.1.0)
-  - ReadMoreTextView (3.0.0)
   - RevealingSplashView (0.5.0)
   - SCLAlertView (0.8)
   - SwifterSwift (4.3.0):
@@ -52,18 +53,18 @@ PODS:
   - XLPagerTabStrip (8.0.1)
 
 DEPENDENCIES:
+  - AXPhotoViewer
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - Cosmos (~> 16.0)
   - ESTabBarController-swift (= 2.6.2)
   - FSPagerView (from `https://github.com/WenchaoD/FSPagerView`, commit `6e0a2b7fc95d7ba262b324337e1479f81a829da6`)
+  - GrowingTextView (~> 0.5)
   - ImagePicker (= 3.0.0)
   - IQKeyboardManagerSwift (= 6.0.3)
   - KeychainAccess (= 3.1.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Kingfisher (~> 4.0)
-  - Lightbox (= 2.1.2)
   - NGAParallaxMotion (= 1.1.0)
-  - ReadMoreTextView
   - RevealingSplashView
   - SCLAlertView (= 0.8)
   - SwifterSwift (= 4.3.0)
@@ -77,18 +78,17 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Cache
+    - AXPhotoViewer
+    - AXStateButton
     - Cosmos
     - ESTabBarController-swift
-    - Hue
+    - FLAnimatedImage
+    - GrowingTextView
     - ImagePicker
-    - Imaginary
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
-    - Lightbox
     - NGAParallaxMotion
-    - ReadMoreTextView
     - RevealingSplashView
     - SCLAlertView
     - SwifterSwift
@@ -120,21 +120,20 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AXPhotoViewer: 76f564287c178019f29f4bd538267e6130cfbc0e
+  AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
-  Cache: f28f8dd64b632155aabf9b3906b036a659048251
   Cosmos: 7bcee0fa858a9355a214f2a181be5dffcee42c81
   ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
-  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  GrowingTextView: 8958f4fb7419de58dd622021b2d0696487e00e70
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
-  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
   IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
-  Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
-  ReadMoreTextView: d872de55c5850c702f8d8ce591fb70e5d00c873a
   RevealingSplashView: 0794eecad3a8983ac11a1fe474e9a9b51b926780
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
@@ -146,6 +145,6 @@ SPEC CHECKSUMS:
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 7e086f6c86469b1bd2e9b79b559c0c488a915765
+PODFILE CHECKSUM: 9435b919db5b4ba26d2273a14ef8ce4d0bf2140d
 
 COCOAPODS: 1.5.3

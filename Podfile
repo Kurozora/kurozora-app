@@ -18,7 +18,7 @@ use_frameworks!
 def common_pods
     pod 'TRON', '~> 4.0'
     pod 'TTTAttributedLabel-moolban', '2.0.0.2'
-    pod 'Lightbox', '2.1.2'
+#    pod 'Lightbox', '2.1.2'
     pod 'SwifterSwift', '4.3.0'
     pod 'KeychainAccess', '3.1.1'
     pod 'SCLAlertView', '0.8'
@@ -27,9 +27,10 @@ def common_pods
     pod 'FSPagerView', :git => 'https://github.com/WenchaoD/FSPagerView', commit: '6e0a2b7fc95d7ba262b324337e1479f81a829da6'
 #    pod 'SnowGlobe'
     pod 'SwiftTheme', '0.4.1'
-    pod 'ReadMoreTextView'
+    pod 'GrowingTextView', '~> 0.5'
     pod 'RevealingSplashView'
     pod 'Kingfisher', '~> 4.0'
+    pod 'AXPhotoViewer'
 #    pod 'CRRefresh', '1.0.0'
 end
 

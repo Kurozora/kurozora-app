@@ -21,11 +21,31 @@ enum AnimeSection: Int {
     static var allSections: [AnimeSection] = [.synopsis, .information, .cast]
 }
 
+extension ShowDetailViewController: StatusBarVisibilityProtocol {
+    func shouldHideStatusBar() -> Bool {
+        return hideStatusBar()
+    }
+    func updateCanHideStatusBar(canHide: Bool) {
+        canHideStatusBar = canHide
+    }
+}
+
 class ShowDetailViewController: UIViewController {
 
     let tron = TRON(baseURL: "https://kurozora.app/api/v1/")
 
-    let HeaderCellHeight: CGFloat = 39
+    let headerCellHeight: CGFloat = 39
+    var headerViewHeight: CGFloat = 0
+    let compactDetailHeight: CGFloat = 44
+    var statusBarHeight: CGFloat = 0
+    
+    var hasTopNotch: Bool {
+        if #available(iOS 11.0,  *) {
+            return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+        }
+        return false
+    }
+    var canHideStatusBar = true
     var loadingView: LoaderView!
     var window: UIWindow?
 
@@ -35,17 +55,19 @@ class ShowDetailViewController: UIViewController {
     var show: Show?
     var castDetails: [JSON]?
 
-    @IBOutlet weak var tableView: UITableView!
-
     // MARK: - IBoutlet
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var closeButtonAlt: UIButton!
     @IBOutlet weak var moreButton: UIButton!
 
     // Compact detail view
     @IBOutlet weak var showTitleLabel: UILabel!
     @IBOutlet weak var tagsLabel: UILabel!
-
+    @IBOutlet weak var separatorView: UIView!
+    
     // Action buttons
     @IBOutlet weak var listButton: UIButton!
     @IBOutlet weak var ratingButton: UIButton!
@@ -60,15 +82,36 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var membersCountLabel: UILabel!
-
-    @IBAction func favoriteBtnPressed(_ sender: Any) {
-        tableView.reloadData()
+    
+    // Constraints
+    @IBOutlet weak var compactDetailsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var compactDetailsHeightConstraint: NSLayoutConstraint!
+    
+    // Hide status bar
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView?.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
+        // Set header height for iPad
+        headerViewHeight = UIDevice.isPad() ? 400 : 274
+
+        if UIDevice.isPad() {
+            let header = tableView.tableHeaderView!
+            var frame = header.frame
+            frame.size.height = 500 - 44 - 30
+            tableView.tableHeaderView?.frame = frame
+            view.insertSubview(tableView, belowSubview: bannerImageView)
+        }
+        
+        // Decide status bar height
+        if hasTopNotch {
+            statusBarHeight = 44
+        } else {
+            statusBarHeight = 22
+        }
 
         // Prepare view for data
         loadingView = LoaderView(parentView: view)
@@ -100,12 +143,15 @@ class ShowDetailViewController: UIViewController {
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.statusBar.isHidden = true
+        canHideStatusBar = true
+        self.scrollViewDidScroll(tableView)
     }
 
     // MARK: - IBAction
-
+    @IBAction func favoriteBtnPressed(_ sender: Any) {
+        tableView.reloadData()
+    }
+    
     @IBAction func showRating(_ sender: Any) {
         let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
@@ -270,31 +316,32 @@ class ShowDetailViewController: UIViewController {
                 trailerButton.isHidden = true
             }
         }
-    }
-
-    // MARK: - IBActions
-    @IBAction func showBanner(sender: AnyObject) {
-        var bannerUrl: String?
         
-        if let banner = showDetails?.banner {
-            bannerUrl = banner
-        } else {
-            bannerUrl = showDetails?.bannerThumbnail
-        }
-        
-        presentLightboxViewController(imageUrl: bannerUrl, text: "", videoUrl: "")
+        // Stop loaderview
+        loadingView.stopAnimating()
     }
     
-    @IBAction func showPoster(sender: AnyObject) {
-        var posterUrl: String?
-        
-        if let poster = showDetails?.poster {
-            posterUrl = poster
-        } else {
-            posterUrl = showDetails?.posterThumbnail
+    // MARK: - Functions
+    func hideStatusBar() -> Bool {
+        let offset = headerViewHeight - self.scrollView().contentOffset.y - compactDetailHeight
+        return offset > statusBarHeight ? true : false
+    }
+    
+    func scrollView() -> UIScrollView {
+        return tableView
+    }
+    
+    // MARK: - IBActions
+    @IBAction func showBanner(_ sender: AnyObject) {
+        if let banner = showDetails?.banner, banner != "" {
+            presentPhotoViewControllerWithURL(banner)
         }
-
-        presentLightboxViewController(imageUrl: posterUrl, text: "", videoUrl: "")
+    }
+    
+    @IBAction func showPoster(_ sender: AnyObject) {
+        if let poster = showDetails?.poster, poster != "" {
+            presentPhotoViewControllerWithURL(poster)
+        }
     }
     
     @IBAction func dismissViewController(sender: AnyObject) {
@@ -303,7 +350,40 @@ class ShowDetailViewController: UIViewController {
     
     @IBAction func playTrailerPressed(sender: AnyObject) {
         if let trailerURL = showDetails?.youtubeId {
-            presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
+//            presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
+        }
+    }
+}
+
+extension ShowDetailViewController: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let newOffset = headerViewHeight - scrollView.contentOffset.y
+        let compactDetailsOffset = newOffset - compactDetailHeight
+        
+        if compactDetailsOffset > statusBarHeight {
+            if !UIApplication.shared.isStatusBarHidden {
+                if canHideStatusBar {
+                    UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.fade)
+                    separatorView.isHidden = true
+                    closeButtonAlt.isHidden = true
+                    compactDetailsHeightConstraint.constant = compactDetailHeight
+                }
+            }
+            compactDetailsTopConstraint.constant = compactDetailsOffset
+        } else {
+            if UIApplication.shared.isStatusBarHidden {
+                UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
+            }
+            separatorView.isHidden = false
+            closeButtonAlt.isHidden = false
+            let totalHeight = compactDetailHeight + statusBarHeight
+            if totalHeight - compactDetailsOffset <= totalHeight {
+                compactDetailsHeightConstraint.constant = totalHeight - compactDetailsOffset
+                compactDetailsTopConstraint.constant = compactDetailsOffset
+            } else {
+                compactDetailsHeightConstraint.constant = totalHeight
+                compactDetailsTopConstraint.constant = 0
+            }
         }
     }
 }
@@ -319,102 +399,114 @@ extension ShowDetailViewController: UITableViewDataSource {
         
         switch AnimeSection(rawValue: section)! {
         case .synopsis: numberOfRows = 1
-        case .information: numberOfRows = 6
+        case .information: numberOfRows = (User.isAdmin() == true) ? 7 : 6
         case .cast:
             if let actors = castDetails?.count {
                 numberOfRows = actors
             } else {
-                numberOfRows = 1
+                numberOfRows = 0
             }
         }
-        
+
         return numberOfRows
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var indexPath = indexPath
+        
         switch AnimeSection(rawValue: indexPath.section)! {
         case .synopsis:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! ShowSynopsisCell
             cell.synopsisTextView.attributedText = showDetails?.attributedSynopsis()
-            cell.synopsisTextView.isSelectable = true
             cell.layoutIfNeeded()
             return cell
         case .information:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! ShowDetailCell
+            
+            if let isAdmin = User.isAdmin(), isAdmin == false && indexPath.row == 0 {
+                indexPath.row = 1
+            }
 
             switch indexPath.row {
             case 0:
+                cell.titleLabel.text = "ID"
+                if let id = showDetails?.id, id > 0 {
+                    cell.detailLabel.text = String(id)
+                } else {
+                    cell.detailLabel.text = "Error getting id"
+                }
+            case 1:
                 cell.titleLabel.text = "Type"
                 if let type = showDetails?.type, type != "" {
                     cell.detailLabel.text = type
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 1:
+            case 2:
                 cell.titleLabel.text = "Episodes"
                 if let episode = showDetails?.episodes, episode > 0 {
                     cell.detailLabel.text = episode.description
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 2:
+            case 3:
                 cell.titleLabel.text = "Status"
                 if let status = showDetails?.status, status != "" {
                     cell.detailLabel.text = status.capitalized
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 3:
+            case 4:
                 cell.titleLabel.text = "Aired"
                 if let startDate = showDetails?.startDate, let endDate = showDetails?.endDate {
                     cell.detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
                 } else {
                     cell.detailLabel.text = "N/A - N/A"
                 }
-//            case 4:
+//            case 5:
 //                cell.titleLabel.text = "Producers"
 //                if let producer = showDetails?.producers, producer != "" {
 //                    cell.detailLabel.text = producer
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-//            case 5:
+//            case 6:
 //                cell.titleLabel.text = "Genres"
 //                if let genre = showDetails?.genre, genre != "" {
 //                    cell.detailLabel.text = genre
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-            case 6:
+            case 7:
                 cell.titleLabel.text = "Duration"
                 if let duration = showDetails?.runtime, duration > 0 {
                     cell.detailLabel.text = "\(duration) min"
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 7:
+            case 8:
                 cell.titleLabel.text = "Rating"
                 if let watchRating = showDetails?.watchRating, watchRating != "" {
                     cell.detailLabel.text = watchRating
                 } else {
                     cell.detailLabel.text = "-"
                 }
-//            case 8:
+//            case 9:
 //                cell.titleLabel.text = "English Titles"
 //                if let englishTitle = showDetails?.englishTitles, englishTitle != "" {
 //         er           cell.detailLabel.text = englishTitle
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-//            case 9:
+//            case 10:
 //                cell.titleLabel.text = "Japanese Titles"
 //                if let japaneseTitle = showDetails?.japaneseTitles, japaneseTitle != "" {
 //                    cell.detailLabel.text = japaneseTitle
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-//            case 10:
+//            case 11:
 //                cell.titleLabel.text = "Synonyms"
 //                if let synonyms = showDetails?.synonyms, synonyms != "" {
 //                    cell.detailLabel.text = synonyms
@@ -428,6 +520,7 @@ extension ShowDetailViewController: UITableViewDataSource {
             return cell
         case .cast:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
+            
             if let actorName = castDetails?[indexPath.row]["name"] {
                 cell.actorName.text = actorName.stringValue
             }
@@ -466,7 +559,13 @@ extension ShowDetailViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? HeaderCellHeight : 1
+        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? headerCellHeight : 1
+    }
+    
+    // Reload table to fix layout - NEEDS A BETTER FIX IF POSSIBLE
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        tableView.reloadData()
     }
 }
 
@@ -476,14 +575,7 @@ extension ShowDetailViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         switch section {
-        case .synopsis:
-//            let synopsisCell = tableView.cellForRow(at: indexPath) as! ShowSynopsisCell
-//            synopsisCell.synopsisTextView.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 8) ? 0 : 8
-
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            })
+        case .synopsis: break
         case .information: break
         case .cast: break
         }

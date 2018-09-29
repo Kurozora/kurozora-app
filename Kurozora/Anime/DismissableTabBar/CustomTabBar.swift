@@ -24,7 +24,6 @@ protocol StatusBarVisibilityProtocol {
 }
 
 public class CustomTabBarController: UITabBarController {
-
     var anime: Anime!
     public var animator: ZFModalTransitionAnimator!
 
@@ -42,7 +41,8 @@ public class CustomTabBarController: UITabBarController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setNeedsStatusBarAppearanceUpdate()
+        
         // Forum view controller
         let (forumNavController, _) = KAnimeKit.animeForumViewController()
         self.viewControllers?.append(forumNavController)
@@ -62,9 +62,17 @@ public class CustomTabBarController: UITabBarController {
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
+    }
+    
+    // MARK: - Status bar
+    override public var preferredStatusBarStyle : UIStatusBarStyle {
+        return .default
     }
 
+    public override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 

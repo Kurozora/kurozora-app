@@ -17,11 +17,17 @@ class ResetPasswordViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    // MARK: - Status bar
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setNeedsStatusBarAppearanceUpdate()
         // Do any additional setup after loading the view, typically from a nib.
         navigationBar.delegate = self
         
@@ -42,12 +48,22 @@ class ResetPasswordViewController: UIViewController {
     }
     
     @IBAction func resetPressed(sender: AnyObject) {
+        view.endEditing(true)
         userEmailTextField.trimSpaces()
         
         let userEmail = userEmailTextField.text!
         
         Service.shared.resetPassword(userEmail, withSuccess: { (reset) in
-            SCLAlertView().showSuccess("Success!", subTitle: "If an account exists with this email address, you should recieve an email with your reset link shortly.")
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            alertView.addButton("Done", action: {
+                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                self.show(vc, sender: self)
+            })
+            alertView.showSuccess("Success!", subTitle: "If an account exists with this email address, you should receive an email with your reset link shortly.")
         }) { (errorMessage) in
             SCLAlertView().showError("Error resetting password", subTitle: errorMessage)
         }
@@ -55,15 +71,12 @@ class ResetPasswordViewController: UIViewController {
 }
 
 extension ResetPasswordViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-    
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
-
 }
 
 extension ResetPasswordViewController: UITextFieldDelegate {
-    
     @objc func editingChanged(_ textField: UITextField) {
         if textField.text?.count == 1 {
             if textField.text?.first == " " {
@@ -90,5 +103,4 @@ extension ResetPasswordViewController: UITextFieldDelegate {
         
         return true
     }
-    
 }
