@@ -6,17 +6,16 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import UIKit
 import KCommonKit
 import KDatabaseKit
+import EmptyDataSet_Swift
 
 protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerHasUnreadNotifications(count: Int)
     func notificationsViewControllerClearedAllNotifications()
 }
 
-class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyDataSetDelegate, EmptyDataSetSource {
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -40,33 +39,46 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 //        return headerView
 //    }
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setup table view
+        tableView.rowHeight = 94
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Setup empty table view
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetView { view in
+            view.titleLabelString(NSAttributedString(string: "No notifications to show."))
+                .image(UIImage(named: "notification_icon"))
+                .shouldDisplay(true)
+                .shouldFadeIn(true)
+                .isTouchAllowed(true)
+                .isScrollAllowed(true)
+        }
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let notificationCell:NotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath as IndexPath) as! NotificationCell
-    
+
         notificationCell.notificationType.text = "MESSAGE"
         notificationCell.notificationDate.text = "18m ago"
-        notificationCell.notificationIcon.image = UIImage(named: "chat.png")
-        notificationCell.profileImage.image = UIImage(named: "user_male.png")
+        notificationCell.notificationIcon.image = UIImage(named: "message_icon")
+        notificationCell.profileImage.image = UIImage(named: "")
         notificationCell.username.text = "Usopp"
-        notificationCell.notificationTextLable.text = "This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!"
-        
-        NSLog("------------------DATA START-------------------")
-        NSLog("Response String: \(String(describing: indexPath.row))")
-        NSLog("------------------DATA END-------------------")
+        notificationCell.notificationTextLable.text = "This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!... doesn't apply to landscape and iPads :p"
         
         return notificationCell
     }

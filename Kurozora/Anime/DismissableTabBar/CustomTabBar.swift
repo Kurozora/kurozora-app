@@ -18,30 +18,15 @@ protocol RequiresAnimeProtocol {
     func initWithAnime(anime: Anime)
 }
 
-protocol StatusBarVisibilityProtocol {
-    func shouldHideStatusBar() -> Bool
-    func updateCanHideStatusBar(canHide: Bool)
-}
-
 public class CustomTabBarController: UITabBarController {
     var anime: Anime!
-    public var animator: ZFModalTransitionAnimator!
 
     public func initWithAnime(anime: Anime) {
         self.anime = anime
     }
 
-    func setCurrentViewController(controller: CustomAnimatorProtocol) {
-        animator.gesture.isEnabled = true
-        animator.setContentScrollView(controller.scrollView())
-    }
-    func disableDragDismiss() {
-        animator.gesture.isEnabled = false
-    }
-
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.setNeedsStatusBarAppearanceUpdate()
         
         // Forum view controller
         let (forumNavController, _) = KAnimeKit.animeForumViewController()
@@ -75,22 +60,6 @@ public class CustomTabBarController: UITabBarController {
     
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-
-        if isBeingDismissed {
-            selectedViewControllerCantHideStatusBar()
-
-            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.none)
-            UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
-        }
-    }
-
-    func selectedViewControllerCantHideStatusBar() {
-        let currentNavController = selectedViewController as! UINavigationController
-        if let controller = currentNavController.viewControllers.first as? StatusBarVisibilityProtocol {
-            controller.updateCanHideStatusBar(canHide: false)
-        }
-
     }
 }
 
@@ -104,15 +73,7 @@ class CustomTabBar: UITabBar {
 
 extension CustomTabBarController: UITabBarControllerDelegate {
     public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-
-        selectedViewControllerCantHideStatusBar()
-
         let navController = viewController as! UINavigationController
-        if let controller = navController.viewControllers.first as? StatusBarVisibilityProtocol {
-
-            let hide = controller.shouldHideStatusBar()
-            UIApplication.shared.setStatusBarHidden(hide, with: UIStatusBarAnimation.none)
-        }
 
         return true
     }

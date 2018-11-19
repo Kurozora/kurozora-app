@@ -9,14 +9,6 @@
 import KCommonKit
 import KDatabaseKit
 
-extension CharactersViewController: StatusBarVisibilityProtocol {
-    func shouldHideStatusBar() -> Bool {
-        return false
-    }
-    func updateCanHideStatusBar(canHide: Bool) {
-    }
-}
-
 enum CharacterSection: Int {
     case Character = 0
     case Cast

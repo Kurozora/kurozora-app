@@ -28,6 +28,11 @@ public class KCommonKit {
         let controller = defaultStoryboard().instantiateViewController(withIdentifier: "DropDownList") as! DropDownListViewController
         return controller
     }
+    
+    public static var shared = KCommonKit()
+    private init() {}
+    
+    public var showId:Int?
 }
 
 public struct GlobalVariables {
@@ -37,8 +42,6 @@ public struct GlobalVariables {
 
     public let baseUrlString = "https://kurozora.app/api/v1/"
     public let KDefaults = Keychain(service: "app.kurozora.anime")
-//    public var sessionsArray:[JSON] = []
-    
 }
 
 public enum FontAwesome: String {

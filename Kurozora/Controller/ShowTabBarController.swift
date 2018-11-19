@@ -10,22 +10,28 @@ import UIKit
 import ESTabBarController_swift
 
 class ShowTabBarController: ESTabBarController {
+    var showId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let storyboard = UIStoryboard(name: "details", bundle: nil)
+        
+        // Instantiate views
+        let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as! ShowDetailViewController
+        showDetail.showId = showId
+        
+        let seasons = storyboard.instantiateViewController(withIdentifier: "Season") as! SeasonsCollectionViewController
+        
+        // Setup animation, title and image
+        showDetail.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Details", image: UIImage(named: "details_icon"), selectedImage: UIImage(named: "details_icon"))
+        seasons.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Seasons", image: UIImage(named: "list"), selectedImage: UIImage(named: "list"))
 
-        let showDetailStoryboard = UIStoryboard(name: "details", bundle: nil)
-        let showDetail = showDetailStoryboard.instantiateViewController(withIdentifier: "ShowDetail") as! ShowDetailViewController
+        // Setup navigation and title
+        let n1 = KurozoraNavigationController.init(rootViewController: seasons)
         
-//        let castStoryboard = UIStoryboard(name: "details", bundle: nil)
-//        let cast = castStoryboard.instantiateViewController(withIdentifier: "Cast") as! EpisodesViewController
+        seasons.title = "Seasons"
         
-        let episodesStoryboard = UIStoryboard(name: "details", bundle: nil)
-        let episodes = episodesStoryboard.instantiateViewController(withIdentifier: "Episodes") as! EpisodesViewController
-
-        showDetail.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "DETAILS")
-//        cast.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "CAST")
-        episodes.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "EPISODES")
-        
-        viewControllers = [showDetail, episodes]
+        // Initialize views
+        viewControllers = [showDetail, n1]
     }
 }

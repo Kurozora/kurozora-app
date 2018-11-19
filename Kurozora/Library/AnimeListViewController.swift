@@ -8,14 +8,44 @@
 
 import KCommonKit
 import KDatabaseKit
-import XLPagerTabStrip
+import EmptyDataSet_Swift
 
 //protocol AnimeListControllerDelegate: class {
 //    func controllerRequestRefresh() -> BFTask
 //}
 
-class AnimeListViewController: UIViewController {
+class AnimeListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
+    @IBOutlet var collectionView: UICollectionView!
     
+    var sectionTitle: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Setup table view
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        // Setup empty table view
+        collectionView.emptyDataSetDelegate = self
+        collectionView.emptyDataSetSource = self
+        
+        guard let sectionTitle = sectionTitle else {return}
+        
+        collectionView.emptyDataSetView { (view) in
+            view.titleLabelString(NSAttributedString(string: sectionTitle))
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryAnimeCell
+        
+        return cell
+    }
 //    weak var delegate: AnimeListControllerDelegate?
 //
 //    var animator: ZFModalTransitionAnimator!

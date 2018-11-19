@@ -27,9 +27,13 @@ import UIKit
     fileprivate var isCaptionAnimatingIn = false
     fileprivate var isCaptionAnimatingOut = false
     
+    fileprivate var didOverwriteDefaultTitleFontAttributes = false
+    fileprivate var didOverwriteDefaultDescriptionFontAttributes = false
+    fileprivate var didOverwriteDefaultCreditFontAttributes = false
+    
     fileprivate var isFirstLayout: Bool = true
     
-    @objc open var defaultTitleAttributes: [NSAttributedStringKey: Any] {
+    @objc open var defaultTitleAttributes: [NSAttributedString.Key: Any] {
         get {
             var fontDescriptor: UIFontDescriptor
             if #available(iOS 10.0, tvOS 10.0, *) {
@@ -47,13 +51,13 @@ import UIKit
             }
             
             return [
-                NSAttributedStringKey.font: font,
-                NSAttributedStringKey.foregroundColor: UIColor.white
+                .font: font,
+                .foregroundColor: UIColor.white
             ]
         }
     }
     
-    @objc open var defaultDescriptionAttributes: [NSAttributedStringKey: Any] {
+    @objc open var defaultDescriptionAttributes: [NSAttributedString.Key: Any] {
         get {
             var fontDescriptor: UIFontDescriptor
             if #available(iOS 10.0, tvOS 10.0, *) {
@@ -71,13 +75,13 @@ import UIKit
             }
             
             return [
-                NSAttributedStringKey.font: font,
-                NSAttributedStringKey.foregroundColor: UIColor.lightGray
+                .font: font,
+                .foregroundColor: UIColor.lightGray
             ]
         }
     }
     
-    @objc open var defaultCreditAttributes: [NSAttributedStringKey: Any] {
+    @objc open var defaultCreditAttributes: [NSAttributedString.Key: Any] {
         get {
             var fontDescriptor: UIFontDescriptor
             if #available(iOS 10.0, tvOS 10.0, *) {
@@ -95,8 +99,8 @@ import UIKit
             }
             
             return [
-                NSAttributedStringKey.font: font,
-                NSAttributedStringKey.foregroundColor: UIColor.gray
+                .font: font,
+                .foregroundColor: UIColor.gray
             ]
         }
     }
@@ -133,7 +137,7 @@ import UIKit
         self.creditLabel.numberOfLines = 0
         self.addSubview(self.creditLabel)
         
-        NotificationCenter.default.addObserver(forName: .UIContentSizeCategoryDidChange, object: nil, queue: .main) { [weak self] (note) in
+        NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: .main) { [weak self] (note) in
             self?.setNeedsLayout()
         }
     }
@@ -149,51 +153,61 @@ import UIKit
     @objc open func applyCaptionInfo(attributedTitle: NSAttributedString?,
                                      attributedDescription: NSAttributedString?,
                                      attributedCredit: NSAttributedString?) {
+        var didOverwriteDefaultTitleFontAttributes = false
+        var didOverwriteDefaultDescriptionFontAttributes = false
+        var didOverwriteDefaultCreditFontAttributes = false
         
-        func makeAttributedStringWithDefaults(_ defaults: [NSAttributedStringKey: Any], for attributedString: NSAttributedString?) -> NSAttributedString? {
-            guard let defaultAttributedString = attributedString?.mutableCopy() as? NSMutableAttributedString else {
-                return attributedString
-            }
-            
-            var containsAttributes = false
-            defaultAttributedString.enumerateAttributes(in: NSMakeRange(0, defaultAttributedString.length), options: []) { (attributes, range, stop) in
-                guard attributes.count > 0 else {
-                    return
-                }
-                
-                containsAttributes = true
-                stop.pointee = true
-            }
-            
-            if containsAttributes {
-                return attributedString
-            }
-            
-            defaultAttributedString.addAttributes(defaults, range: NSMakeRange(0, defaultAttributedString.length))
-            return defaultAttributedString
+        var title = NSAttributedString()
+        if let attributedTitle = attributedTitle {
+            let result = makeAttributedStringWithDefaults(
+                self.defaultTitleAttributes,
+                for: attributedTitle
+            )
+            title = result.attributedString
+            didOverwriteDefaultTitleFontAttributes = result.removedDefaultKeys.contains(.font)
         }
         
-        let title = makeAttributedStringWithDefaults(self.defaultTitleAttributes, for: attributedTitle)
-        let description = makeAttributedStringWithDefaults(self.defaultDescriptionAttributes, for: attributedDescription)
-        let credit = makeAttributedStringWithDefaults(self.defaultCreditAttributes, for: attributedCredit)
+        var description = NSAttributedString()
+        if let attributedDescription = attributedDescription {
+            let result = makeAttributedStringWithDefaults(
+                self.defaultDescriptionAttributes,
+                for: attributedDescription
+            )
+            description = result.attributedString
+            didOverwriteDefaultDescriptionFontAttributes = result.removedDefaultKeys.contains(.font)
+        }
+        
+        var credit = NSAttributedString()
+        if let attributedCredit = attributedCredit {
+            let result = makeAttributedStringWithDefaults(
+                self.defaultCreditAttributes,
+                for: attributedCredit
+            )
+            credit = result.attributedString
+            didOverwriteDefaultCreditFontAttributes = result.removedDefaultKeys.contains(.font)
+        }
+        
+        self.didOverwriteDefaultTitleFontAttributes = didOverwriteDefaultTitleFontAttributes
+        self.didOverwriteDefaultDescriptionFontAttributes = didOverwriteDefaultDescriptionFontAttributes
+        self.didOverwriteDefaultCreditFontAttributes = didOverwriteDefaultCreditFontAttributes
         
         self.visibleSizingLabels = []
         self.visibleLabels = []
 
         self.titleSizingLabel.attributedText = title
-        if !(title?.string.isEmpty ?? true) {
+        if !title.string.isEmpty {
             self.visibleSizingLabels.append(self.titleSizingLabel)
             self.visibleLabels.append(self.titleLabel)
         }
         
         self.descriptionSizingLabel.attributedText = description
-        if !(description?.string.isEmpty ?? true) {
+        if !description.string.isEmpty {
             self.visibleSizingLabels.append(self.descriptionSizingLabel)
             self.visibleLabels.append(self.descriptionLabel)
         }
         
         self.creditSizingLabel.attributedText = credit
-        if !(credit?.string.isEmpty ?? true) {
+        if !credit.string.isEmpty {
             self.visibleSizingLabels.append(self.creditSizingLabel)
             self.visibleLabels.append(self.creditLabel)
         }
@@ -226,68 +240,68 @@ import UIKit
         }
         
         if self.animateCaptionInfoChanges && self.needsCaptionLayoutAnim {
-            // ensure that this block runs in its own animation context (container may animate)
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` = self else {
-                    return
-                }
-                
-                let animateOut: () -> Void = {
-                    self.titleLabel.alpha = 0
-                    self.descriptionLabel.alpha = 0
-                    self.creditLabel.alpha = 0
-                }
-                
-                let animateOutCompletion: (_ finished: Bool) -> Void = { (finished) in
-                    if !finished {
-                        return
-                    }
-                    
-                    applySizingAttributes()
-                    self.isCaptionAnimatingOut = false
-                }
-                
-                let animateIn: () -> Void = {
-                    self.titleLabel.alpha = 1
-                    self.descriptionLabel.alpha = 1
-                    self.creditLabel.alpha = 1
-                }
-                
-                let animateInCompletion: (_ finished: Bool) -> Void = { (finished) in
-                    if !finished {
-                        return
-                    }
-                    
-                    self.isCaptionAnimatingIn = false
-                }
-                
-                if self.isCaptionAnimatingOut {
-                    return
-                }
-                
+            if !self.isCaptionAnimatingOut {
                 self.isCaptionAnimatingOut = true
-                UIView.animate(withDuration: AXConstants.frameAnimDuration / 2,
-                               delay: 0,
-                               options: [.beginFromCurrentState, .curveEaseOut],
-                               animations: animateOut) { (finished) in
-                    
-                    if self.isCaptionAnimatingIn {
+                
+                // ensure that this block runs in its own animation context (container may animate)
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else {
                         return
                     }
                     
-                    animateOutCompletion(finished)
+                    let animateOut: () -> Void = {
+                        self.titleLabel.alpha = 0
+                        self.descriptionLabel.alpha = 0
+                        self.creditLabel.alpha = 0
+                    }
+                    
+                    let animateOutCompletion: (_ finished: Bool) -> Void = { (finished) in
+                        if !finished {
+                            return
+                        }
+                        
+                        applySizingAttributes()
+                        self.isCaptionAnimatingOut = false
+                    }
+                    
+                    let animateIn: () -> Void = {
+                        self.titleLabel.alpha = 1
+                        self.descriptionLabel.alpha = 1
+                        self.creditLabel.alpha = 1
+                    }
+                    
+                    let animateInCompletion: (_ finished: Bool) -> Void = { (finished) in
+                        if !finished {
+                            return
+                        }
+                        
+                        self.isCaptionAnimatingIn = false
+                    }
+                    
                     UIView.animate(withDuration: AXConstants.frameAnimDuration / 2,
                                    delay: 0,
-                                   options: [.beginFromCurrentState, .curveEaseIn],
-                                   animations: animateIn,
-                                   completion: animateInCompletion)
+                                   options: [.beginFromCurrentState, .curveEaseOut],
+                                   animations: animateOut) { (finished) in
+                                    if self.isCaptionAnimatingIn {
+                                        return
+                                    }
+                                    
+                                    animateOutCompletion(finished)
+                                    self.isCaptionAnimatingIn = true
+                                    UIView.animate(withDuration: AXConstants.frameAnimDuration / 2,
+                                                   delay: 0,
+                                                   options: [.beginFromCurrentState, .curveEaseIn],
+                                                   animations: animateIn,
+                                                   completion: animateInCompletion)
+                    }
                 }
+                
+                self.needsCaptionLayoutAnim = false
             }
-            
-            self.needsCaptionLayoutAnim = false
-            
         } else {
-            applySizingAttributes()
+            if !self.isCaptionAnimatingIn && !self.isCaptionAnimatingOut {
+                applySizingAttributes()
+            }
         }
         
         self.isFirstLayout = false
@@ -297,41 +311,28 @@ import UIKit
         return self.computeSize(for: size, applySizingLayout: false)
     }
     
-    @discardableResult fileprivate func computeSize(for constrainedSize: CGSize, applySizingLayout: Bool) -> CGSize {
-        func makeFontAdjustedAttributedString(for attributedString: NSAttributedString?, fontTextStyle: UIFontTextStyle) -> NSAttributedString? {
-            guard let fontAdjustedAttributedString = attributedString?.mutableCopy() as? NSMutableAttributedString else {
-                return attributedString
-            }
-            
-            fontAdjustedAttributedString.enumerateAttribute(NSAttributedStringKey.font,
-                                                            in: NSMakeRange(0, fontAdjustedAttributedString.length),
-                                                            options: [], using: { [weak self] (value, range, stop) in
-                guard let oldFont = value as? UIFont else {
-                    return
-                }
-                
-                var newFontDescriptor: UIFontDescriptor
-                if #available(iOS 10.0, tvOS 10.0, *) {
-                    newFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: fontTextStyle,
-                                                                                 compatibleWith: self?.traitCollection)
-                } else {
-                    newFontDescriptor = UIFont.preferredFont(forTextStyle: fontTextStyle).fontDescriptor
-                }
-                                                                
-                let newFont = oldFont.withSize(newFontDescriptor.pointSize)
-                fontAdjustedAttributedString.removeAttribute(NSAttributedStringKey.font, range: range)
-                fontAdjustedAttributedString.addAttribute(NSAttributedStringKey.font, value: newFont, range: range)
-            })
-            
-            return fontAdjustedAttributedString.copy() as? NSAttributedString
+    @discardableResult fileprivate func computeSize(for constrainedSize: CGSize,
+                                                    applySizingLayout: Bool) -> CGSize {
+        if !self.didOverwriteDefaultTitleFontAttributes {
+            self.titleSizingLabel.attributedText = makeFontAdjustedAttributedString(
+                for: self.titleSizingLabel.attributedText,
+                fontTextStyle: .body
+            )
         }
-
-        self.titleSizingLabel.attributedText = makeFontAdjustedAttributedString(for: self.titleSizingLabel.attributedText,
-                                                                                fontTextStyle: .body)
-        self.descriptionSizingLabel.attributedText = makeFontAdjustedAttributedString(for: self.descriptionSizingLabel.attributedText,
-                                                                                      fontTextStyle: .body)
-        self.creditSizingLabel.attributedText = makeFontAdjustedAttributedString(for: self.creditSizingLabel.attributedText, 
-                                                                                 fontTextStyle: .caption1)
+        
+        if !self.didOverwriteDefaultDescriptionFontAttributes {
+            self.descriptionSizingLabel.attributedText = makeFontAdjustedAttributedString(
+                for: self.descriptionSizingLabel.attributedText,
+                fontTextStyle: .body
+            )
+        }
+        
+        if !self.didOverwriteDefaultCreditFontAttributes {
+            self.creditSizingLabel.attributedText = makeFontAdjustedAttributedString(
+                for: self.creditSizingLabel.attributedText,
+                fontTextStyle: .caption1
+            )
+        }
         
         #if os(iOS)
         let TopPadding: CGFloat = 10
@@ -344,6 +345,8 @@ import UIKit
         let HorizontalPadding: CGFloat = 0
         let InterLabelSpacing: CGFloat = 2
         #endif
+        
+        let xOffset = HorizontalPadding
         var yOffset: CGFloat = 0
         
         for (index, label) in self.visibleSizingLabels.enumerated() {
@@ -358,9 +361,12 @@ import UIKit
                 yOffset += InterLabelSpacing
             }
             
-            let labelFrame = CGRect(origin: CGPoint(x: HorizontalPadding,
-                                                    y: yOffset),
-                                    size: labelSize)
+            let labelFrame = CGRect(
+                x: xOffset,
+                y: yOffset,
+                width: constrainedLabelSize.width,
+                height: labelSize.height
+            )
             
             yOffset += labelFrame.size.height
             if index == (self.visibleSizingLabels.count - 1) {
@@ -373,6 +379,56 @@ import UIKit
         }
         
         return CGSize(width: constrainedSize.width, height: yOffset)
+    }
+    
+    // MARK: - Helpers
+    private func makeAttributedStringWithDefaults(_ defaults: [NSAttributedString.Key: Any],
+                                                  for attributedString: NSAttributedString) -> (attributedString: NSAttributedString,
+        removedDefaultKeys: Set<NSAttributedString.Key>) {
+        guard let defaultAttributedString = attributedString.mutableCopy() as? NSMutableAttributedString else {
+            return (attributedString, [])
+        }
+        
+        var removedKeys = Set<NSAttributedString.Key>()
+        var defaultAttributes = defaults
+        defaultAttributedString.enumerateAttributes(in: NSMakeRange(0, defaultAttributedString.length), options: []) { (attributes, range, stop) in
+            for key in attributes.keys where defaultAttributes[key] != nil {
+                defaultAttributes.removeValue(forKey: key)
+                removedKeys.insert(key)
+            }
+        }
+        
+        defaultAttributedString.addAttributes(defaultAttributes, range: NSMakeRange(0, defaultAttributedString.length))
+        return (defaultAttributedString, removedKeys)
+    }
+    
+    private func makeFontAdjustedAttributedString(for attributedString: NSAttributedString?,
+                                                  fontTextStyle: UIFont.TextStyle) -> NSAttributedString? {
+        guard let fontAdjustedAttributedString = attributedString?.mutableCopy() as? NSMutableAttributedString else {
+            return attributedString
+        }
+        
+        fontAdjustedAttributedString.enumerateAttribute(NSAttributedString.Key.font,
+                                                        in: NSMakeRange(0, fontAdjustedAttributedString.length),
+                                                        options: [], using: { [weak self] (value, range, stop) in
+            guard let oldFont = value as? UIFont else {
+                return
+            }
+            
+            var newFontDescriptor: UIFontDescriptor
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                newFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: fontTextStyle,
+                                                                             compatibleWith: self?.traitCollection)
+            } else {
+                newFontDescriptor = UIFont.preferredFont(forTextStyle: fontTextStyle).fontDescriptor
+            }
+            
+            let newFont = oldFont.withSize(newFontDescriptor.pointSize)
+            fontAdjustedAttributedString.removeAttribute(.font, range: range)
+            fontAdjustedAttributedString.addAttribute(.font, value: newFont, range: range)
+        })
+        
+        return fontAdjustedAttributedString.copy() as? NSAttributedString
     }
 
 }

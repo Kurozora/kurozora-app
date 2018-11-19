@@ -19,7 +19,6 @@ extension UIView {
     }
     
     public func animateFadeOut() {
-        
         UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.alpha = 0.0
             self.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
@@ -27,7 +26,6 @@ extension UIView {
     }
     
     public func animateBounce(growth: CGFloat = 2) {
-        
         transform = .identity
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.transform = self.transform.scaledBy(x: growth, y: growth)

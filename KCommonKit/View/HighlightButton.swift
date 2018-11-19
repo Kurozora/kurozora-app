@@ -9,7 +9,6 @@
 import UIKit
 
 class HighlightButton: UIButton {
-    
     let rectShape = CAShapeLayer()
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +43,7 @@ class HighlightButton: UIButton {
         
         layer.insertSublayer(rectShape, at: 0)
         
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         let animationDuration = 0.25
         
         let sizingAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -53,14 +52,14 @@ class HighlightButton: UIButton {
         sizingAnimation.timingFunction = timingFunction
         sizingAnimation.duration = animationDuration
         sizingAnimation.isRemovedOnCompletion = false
-        sizingAnimation.fillMode = kCAFillModeForwards
+        sizingAnimation.fillMode = CAMediaTimingFillMode.forwards
         
         rectShape.add(sizingAnimation, forKey: nil)
     }
     
     @objc func buttonNormal(sender: UIButton) {
         
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         let animationDuration = 0.25
         
         let sizingAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -69,7 +68,7 @@ class HighlightButton: UIButton {
         sizingAnimation.timingFunction = timingFunction
         sizingAnimation.duration = animationDuration
         sizingAnimation.isRemovedOnCompletion = false
-        sizingAnimation.fillMode = kCAFillModeForwards
+        sizingAnimation.fillMode = CAMediaTimingFillMode.forwards
         
         rectShape.add(sizingAnimation, forKey: nil)
     }
@@ -82,7 +81,6 @@ extension UIImage {
         let rect = CGRect(x: 0, y: 0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        
         
         context!.setFillColor(color.cgColor)
         context!.fill(rect)

@@ -6,26 +6,39 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import UIKit
-import Cosmos
-import KDatabaseKit
 import KCommonKit
+import KDatabaseKit
 import SCLAlertView
+import Cosmos
+
+protocol ShowRatingDelegate {
+    func getRating(value: Double?)
+}
 
 class RateViewController: UIViewController {
-    
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var rateTextLabel: UILabel!
     
     var showDetails: ShowDetails?
-
+    var showRating: Double?
+    var delegate: ShowRatingDelegate?
+    
     var sessionSecret = GlobalVariables().KDefaults["session_secret"]
     var userId = User.currentId()
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     func updateShow(withId id: Int?, withRating rating: Double?) {
         Service.shared.rate(showId: id, score: rating, withSuccess: { (success) in
-            
-            if !success {
+            if success {
+                if let showRating = rating {
+                    self.delegate?.getRating(value: showRating)
+                }
+                
+                self.dismiss(animated: true, completion: nil)
+            } else {
                 SCLAlertView().showWarning("Error rating", subTitle: "There was an error while rating")
             }
         }) { (err) in
@@ -38,11 +51,12 @@ class RateViewController: UIViewController {
         super.viewDidLoad()
         
         cosmosView.didFinishTouchingCosmos = { rating in
-            let id = self.showDetails?.id ?? 1
-            self.updateShow(withId: id, withRating: rating)
+            if let id = self.showDetails?.id, id != 0 {
+                self.updateShow(withId: id, withRating: rating)
+            }
         }
         
-        if let rating = self.showDetails?.currentRating {
+        if let rating = showRating {
             self.cosmosView.rating = rating
         } else {
             self.cosmosView.rating = 0.0
@@ -57,11 +71,8 @@ class RateViewController: UIViewController {
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        statusBar.isHidden = true
 
-        UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: UIView.AnimationOptions.curveEaseOut, animations: { () -> Void in
             self.cosmosView.transform = .identity
         }) { (completed) -> Void in
             
@@ -69,7 +80,6 @@ class RateViewController: UIViewController {
     }
     
     // MARK: - IBActions
-
     @IBAction func dismissViewController(sender: AnyObject) {
         dismiss(animated: true, completion: nil)
     }

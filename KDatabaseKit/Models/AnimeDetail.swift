@@ -32,7 +32,7 @@ public class AnimeDetail {
                 options: [NSAttributedString.DocumentReadingOptionKey.documentType:NSAttributedString.DocumentType.html],
 //                options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType],
                 documentAttributes: nil) {
-                attributedString.addAttribute(NSAttributedStringKey.font, value: font, range: NSMakeRange(0, attributedString.length))
+                attributedString.addAttribute(NSAttributedString.Key.font, value: font, range: NSMakeRange(0, attributedString.length))
                 return attributedString
             }
         }

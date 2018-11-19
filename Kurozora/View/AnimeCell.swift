@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import UIKit
 //import ANParseKit
 
 class AnimeCell: UICollectionViewCell {
