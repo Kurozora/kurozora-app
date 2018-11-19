@@ -8,6 +8,9 @@
 
 import KCommonKit
 import KDatabaseKit
+import SwiftyJSON
+import SCLAlertView
+import Kingfisher
 import EmptyDataSet_Swift
 
 protocol NotificationsViewControllerDelegate: class {
@@ -16,30 +19,29 @@ protocol NotificationsViewControllerDelegate: class {
 }
 
 class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyDataSetDelegate, EmptyDataSetSource {
-
     @IBOutlet weak var tableView: UITableView!
+    
+    var notifications:[JSON]?
+    enum notifcationType:String {
+        case TYPE_UNKNOWN
+        case TYPE_NEW_SESSION
+        case TYPE_NEW_FOLLOWER
+    }
 
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "Other sessions"
-//    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView()
-//        headerView.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
-//
-//        let headerLabel = UILabel(frame: CGRect(x: 8, y: 0, width:
-//            tableView.bounds.size.width, height: tableView.bounds.size.height))
-//        headerLabel.font = UIFont(name: "System", size: 17)
-//        headerLabel.textColor = UIColor.white
-//        headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
-//        headerLabel.sizeToFit()
-//        headerView.addSubview(headerLabel)
-//
-//        return headerView
-//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Service.shared.getNotifications(withSuccess: { (notifications) in
+            if let notifications = notifications {
+                self.notifications = notifications
+//                self.updateCurrentSession(with: session)
+            }
+            
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+            }
+        }) { (errorMessage) in
+            SCLAlertView().showError("Error getting notifiactions", subTitle: errorMessage)
+        }
     }
     
     override func viewDidLoad() {
@@ -67,18 +69,58 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let notificationsCount = notifications?.count {
+            return notificationsCount
+        }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let notificationCell:NotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath as IndexPath) as! NotificationCell
-
-        notificationCell.notificationType.text = "MESSAGE"
-        notificationCell.notificationDate.text = "18m ago"
-        notificationCell.notificationIcon.image = UIImage(named: "message_icon")
-        notificationCell.profileImage.image = UIImage(named: "")
-        notificationCell.username.text = "Usopp"
-        notificationCell.notificationTextLable.text = "This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!... doesn't apply to landscape and iPads :p"
+        
+        if let notificationType = notifications?[indexPath.row]["type"].stringValue, notificationType != "" {
+            let type: notifcationType = notifcationType(rawValue: notificationType)!
+            
+            switch type {
+            case .TYPE_NEW_SESSION:
+                notificationCell.notificationType.text = "NEW SESSION"
+                notificationCell.notificationIcon.image = UIImage(named: "session_icon")
+                notificationCell.notificationTitleLabel.isHidden = true
+                notificationCell.notificationProfileImage.isHidden = true
+            case .TYPE_NEW_FOLLOWER:
+                notificationCell.notificationType.text = "NEW MESSAGE"
+                notificationCell.notificationIcon.image = UIImage(named: "message_icon")
+                if let title = notifications?[indexPath.row]["data"]["follower_name"].stringValue, title != "" {
+                    notificationCell.notificationTitleLabel.text = title
+                } else {
+                    notificationCell.notificationTitleLabel.text = ""
+                    
+                }
+                
+                if let avatar = notifications?[indexPath.row]["data"]["follower_avatar"].stringValue, avatar != "" {
+                    let avatarUrl = URL(string: avatar)
+                    let resource = ImageResource(downloadURL: avatarUrl!)
+                    notificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+                } else {
+                    notificationCell.notificationProfileImage.image = UIImage(named: "")
+                }
+            default:
+                break
+            }
+        }
+        
+        if let time = notifications?[indexPath.row]["time_string"].stringValue, time != "" {
+            notificationCell.notificationDate.text = time
+        } else {
+           notificationCell.notificationDate.text = ""
+        }
+        
+        if let description = notifications?[indexPath.row]["string"].stringValue, description != "" {
+            notificationCell.notificationTextLable.text = description
+        } else {
+            notificationCell.notificationTextLable.text = ""
+            
+        }
         
         return notificationCell
     }

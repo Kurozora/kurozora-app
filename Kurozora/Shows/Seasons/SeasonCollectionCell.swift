@@ -6,4 +6,12 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SeasonCollectionCell: UICollectionViewCell {
+    @IBOutlet weak var seasonPosterImageView: UIImageView!
+    @IBOutlet weak var seasonCountLabel: UILabel!
+    @IBOutlet weak var seasonTitleLabel: UILabel!
+    @IBOutlet weak var seasonStartDateLabel: UILabel!
+    @IBOutlet weak var seasonOverallRating: UILabel!
+}

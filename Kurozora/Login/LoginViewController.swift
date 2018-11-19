@@ -19,40 +19,30 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    // MARK: - Status bar
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNeedsStatusBarAppearanceUpdate()
  
         loginButton.isEnabled = false
-        usernameTextField.becomeFirstResponder()
+//        usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     // MARK: - IBActions
-    
     @IBAction func dismissPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-
         usernameTextField.trimSpaces()
 
         let username = usernameTextField.text!
@@ -70,14 +60,7 @@ class LoginViewController: UIViewController {
             SCLAlertView().showError("Error logging in", subTitle: errorMsg)
         }
     }
-
 }
-
-//extension LoginViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-//    func position(for bar: UIBarPositioning) -> UIBarPosition {
-//        return .topAttached
-//    }
-//}
 
 extension LoginViewController: UITextFieldDelegate {
     @objc func editingChanged(_ textField: UITextField) {

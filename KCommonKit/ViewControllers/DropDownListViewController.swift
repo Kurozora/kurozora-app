@@ -127,21 +127,21 @@ extension DropDownListViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = (imageDataSource.count != 0) ? "OptionCell2" : "OptionCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! BasicTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
         let title = dataSource[indexPath.section][indexPath.row]
-        cell.titleLabel.text = title
+//        cell.titleLabel.text = title
         if imageDataSource.count != 0 {
-            cell.titleimageView.image = UIImage(named: imageDataSource[indexPath.section][indexPath.row])
+//            cell.titleimageView.image = UIImage(named: imageDataSource[indexPath.section][indexPath.row])
         }
         
         // TODO: Refactor this
         if indexPath.section == 2 {
-            cell.titleLabel.textColor = UIColor.watching()
+//            cell.titleLabel.textColor = UIColor.watching()
         } else {
-            cell.titleLabel.textColor = UIColor.white
+//            cell.titleLabel.textColor = UIColor.white
         }
         
-        return cell
+        return cell!
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -149,13 +149,12 @@ extension DropDownListViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SectionCell") as! BasicTableCell
-        return cell.contentView
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SectionCell")
+        return cell!.contentView
     }
 }
 
 extension DropDownListViewController: UITableViewDelegate {
-    
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         let action = dataSource[indexPath.section][indexPath.row]

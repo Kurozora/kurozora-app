@@ -28,7 +28,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="HKL-aW-Ag5" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="HKL-aW-Ag5" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="10" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="Bcc-lF-YMj"/>
@@ -89,7 +89,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="5Gn-ZY-q10" kind="show" id="yhs-SA-o5j"/>
+                                            <segue destination="5Gn-ZY-q10" kind="show" id="yhs-SA-o5j">
+                                                <segue key="commit" inheritsFrom="parent" id="7aT-EJ-KsN"/>
+                                                <segue key="preview" inheritsFrom="commit" id="SAs-PA-3ue"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -139,7 +142,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="zdX-uq-aKt" kind="show" id="nwp-Fh-w5D"/>
+                                            <segue destination="zdX-uq-aKt" kind="show" id="nwp-Fh-w5D">
+                                                <segue key="commit" inheritsFrom="parent" id="z1L-VS-GqV"/>
+                                                <segue key="preview" inheritsFrom="commit" id="bsP-vz-5I4"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -189,7 +195,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="iBo-FM-6eJ" kind="show" id="dAN-op-CEW"/>
+                                            <segue destination="iBo-FM-6eJ" kind="show" id="dAN-op-CEW">
+                                                <segue key="commit" inheritsFrom="parent" id="VrR-zO-exE"/>
+                                                <segue key="preview" inheritsFrom="commit" id="isS-X9-98S"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="TgR-js-6i8" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
@@ -485,14 +494,14 @@ Kurozora 1.0.0 (1)</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="dzD-UN-m7O">
-                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <rect key="frame" x="16" y="8.3333333333333357" width="28" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="Fng-CC-kC6"/>
                                                         <constraint firstAttribute="width" constant="28" id="gQP-MO-BFl"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HU5-4I-0VM">
-                                                    <rect key="frame" x="52.000000000000007" y="12" width="105.66666666666669" height="20"/>
+                                                    <rect key="frame" x="52.000000000000007" y="12.333333333333336" width="105.66666666666669" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="CVH-g2-7uG"/>
                                                     </constraints>
@@ -523,7 +532,10 @@ Kurozora 1.0.0 (1)</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="8Oz-dy-aVA" kind="show" id="ho1-1W-8ur"/>
+                                            <segue destination="8Oz-dy-aVA" kind="show" id="ho1-1W-8ur">
+                                                <segue key="commit" inheritsFrom="parent" id="Orh-nt-cuF"/>
+                                                <segue key="preview" inheritsFrom="commit" id="vcB-Ce-utb"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -536,6 +548,7 @@ Kurozora 1.0.0 (1)</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="AQa-g2-FjO">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="eeK-54-v4Q">
+                            <inset key="largeContentSizeImageInsets" minX="16" minY="16" maxX="16" maxY="16"/>
                             <connections>
                                 <action selector="dismissPressedWithSender:" destination="nx2-xT-vTG" id="HOy-MO-jHc"/>
                             </connections>
@@ -797,7 +810,7 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dMw-Hi-JA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1710" y="-175"/>
+            <point key="canvasLocation" x="1711" y="-175"/>
         </scene>
         <!--Privacy Policy-->
         <scene sceneID="Gfa-CA-E5h">
@@ -907,12 +920,12 @@ Kurozora 1.0.0 (1)</string>
                         <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="b6s-ha-Zhl">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="b6s-ha-Zhl">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Modifying these values may break your app!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOY-0U-zCS">
-                                    <rect key="frame" x="16" y="8" width="343" height="34"/>
+                                    <rect key="frame" x="16" y="8" width="343" height="14.333333333333336"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -991,7 +1004,7 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AT8-mD-ZIU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="92" y="-573"/>
+            <point key="canvasLocation" x="92" y="-573.39901477832518"/>
         </scene>
         <!--Account-->
         <scene sceneID="eiw-p6-1vy">
@@ -1007,7 +1020,7 @@ Kurozora 1.0.0 (1)</string>
                             <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Ik-yU9" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Ik-yU9" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="147.66666666666666" y="12" width="80" height="80"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="80" id="a36-8D-Gwv"/>
@@ -1060,23 +1073,23 @@ Kurozora 1.0.0 (1)</string>
                             </constraints>
                         </view>
                         <sections>
-                            <tableViewSection id="E7C-Jw-YMr">
+                            <tableViewSection id="1a2-Di-Ti3">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="yRs-n2-nRh" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="thR-je-aqD" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="170" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yRs-n2-nRh" id="Gxl-bO-2eM">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="thR-je-aqD" id="ZPT-dZ-bMU">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Xtz-jN-YFP">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="YxG-Wl-bDs">
                                                     <rect key="frame" x="16" y="8" width="28" height="28"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="28" id="JpF-mb-7zE"/>
-                                                        <constraint firstAttribute="height" constant="28" id="Rbe-uU-mO8"/>
+                                                        <constraint firstAttribute="height" constant="28" id="LE7-OS-Y53"/>
+                                                        <constraint firstAttribute="width" constant="28" id="VNV-y8-Vwb"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm2-Za-ikc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Active Sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4q-Z3-Gfb">
                                                     <rect key="frame" x="52" y="12" width="186" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1084,12 +1097,12 @@ Kurozora 1.0.0 (1)</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Xtz-jN-YFP" secondAttribute="bottom" constant="8" id="ArT-7D-F2p"/>
-                                                <constraint firstItem="Xtz-jN-YFP" firstAttribute="top" secondItem="Gxl-bO-2eM" secondAttribute="top" constant="8" id="JPV-jH-rj7"/>
-                                                <constraint firstItem="Xtz-jN-YFP" firstAttribute="leading" secondItem="Gxl-bO-2eM" secondAttribute="leading" constant="16" id="S3Q-B1-FWT"/>
-                                                <constraint firstItem="cm2-Za-ikc" firstAttribute="top" secondItem="Gxl-bO-2eM" secondAttribute="top" constant="12" id="ewa-09-xLQ"/>
-                                                <constraint firstItem="cm2-Za-ikc" firstAttribute="leading" secondItem="Xtz-jN-YFP" secondAttribute="trailing" constant="8" id="iAt-7n-aZa"/>
-                                                <constraint firstAttribute="bottom" secondItem="cm2-Za-ikc" secondAttribute="bottom" constant="12" id="nAQ-Rj-LpT"/>
+                                                <constraint firstItem="D4q-Z3-Gfb" firstAttribute="leading" secondItem="YxG-Wl-bDs" secondAttribute="trailing" constant="8" id="1c8-T3-RPA"/>
+                                                <constraint firstAttribute="bottom" secondItem="YxG-Wl-bDs" secondAttribute="bottom" constant="8" id="9DP-nJ-hgI"/>
+                                                <constraint firstAttribute="bottom" secondItem="D4q-Z3-Gfb" secondAttribute="bottom" constant="12" id="Ezz-FV-OB1"/>
+                                                <constraint firstItem="YxG-Wl-bDs" firstAttribute="leading" secondItem="ZPT-dZ-bMU" secondAttribute="leading" constant="16" id="g5U-qU-StN"/>
+                                                <constraint firstItem="YxG-Wl-bDs" firstAttribute="top" secondItem="ZPT-dZ-bMU" secondAttribute="top" constant="8" id="hFU-ap-qfV"/>
+                                                <constraint firstItem="D4q-Z3-Gfb" firstAttribute="top" secondItem="ZPT-dZ-bMU" secondAttribute="top" constant="12" id="nQm-S6-OHP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1105,7 +1118,10 @@ Kurozora 1.0.0 (1)</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="aMv-CM-v45" kind="show" id="sgd-Eh-hzI"/>
+                                            <segue destination="aMv-CM-v45" kind="show" id="oOR-7O-ZQy">
+                                                <segue key="commit" inheritsFrom="parent" id="dow-hR-rWK"/>
+                                                <segue key="preview" inheritsFrom="commit" id="H0L-IC-DCD"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1169,8 +1185,8 @@ Kurozora 1.0.0 (1)</string>
         </scene>
     </scenes>
     <resources>
-        <image name="DefaultAvatar" width="100" height="100"/>
         <image name="clear_cache_icon" width="128" height="128"/>
+        <image name="default_avatar" width="100" height="100"/>
         <image name="kdefaults_icon" width="128" height="128"/>
         <image name="medium_icon" width="128" height="128"/>
         <image name="privacy_icon" width="128" height="128"/>
@@ -1181,5 +1197,12 @@ Kurozora 1.0.0 (1)</string>
         <image name="twitter_icon" width="128" height="128"/>
         <image name="unlock_icon" width="128" height="128"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="yhs-SA-o5j"/>
+        <segue reference="nwp-Fh-w5D"/>
+        <segue reference="dAN-op-CEW"/>
+        <segue reference="ho1-1W-8ur"/>
+        <segue reference="oOR-7O-ZQy"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

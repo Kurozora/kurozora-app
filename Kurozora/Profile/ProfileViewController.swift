@@ -16,7 +16,7 @@ import AXPhotoViewer
 import FLAnimatedImage
 //import XCDYouTubeKit
 
-class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableViewDataSource  {
+class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableViewDataSource {
 
     enum SelectedFeed: Int {
         case Feed = 0
@@ -71,10 +71,10 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileCell")
 
         if let id = user?.id, id != User.currentId() {
-            fetchUserDetailsWith(id: id)
+            fetchUserDetails(with: id)
         } else {
             if let id = User.currentId(), String(id) != "" {
-                fetchUserDetailsWith(id: id)
+                fetchUserDetails(with: id)
             }
         }
     }
@@ -122,7 +122,7 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
 
         aboutLabel.preferredMaxLayoutWidth = aboutLabel.frame.size.width
 
-        let height = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let height = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = header.frame
 
         frame.size.height = height
@@ -162,7 +162,7 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
 //        fetchUserDetails(username: username)
 //    }
 
-    func fetchUserDetailsWith(id: Int) {
+    func fetchUserDetails(with id: Int) {
 //        if let _ = self.user {
 //            configureFetchController()
 //        }
@@ -189,9 +189,9 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "DefaultAvatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         }else {
-            userAvatar.image = UIImage(named: "DefaultAvatar")
+            userAvatar.image = UIImage(named: "default_avatar")
         }
 
         // Banner
@@ -349,13 +349,17 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     // MARK: - IBAction
     @IBAction func showAvatar(_ sender: AnyObject) {
         if let avatar = user?.avatar, avatar != ""  {
-            presentPhotoViewControllerWithURL(avatar)
+            presentPhotoViewControllerWith(url: avatar)
+        } else {
+            presentPhotoViewControllerWith(string: "default_avatar")
         }
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
         if let banner = user?.banner, banner != "" {
-            presentPhotoViewControllerWithURL(banner)
+            presentPhotoViewControllerWith(url: banner)
+        } else {
+            presentPhotoViewControllerWith(string: "placeholder_banner")
         }
     }
 //    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
@@ -673,7 +677,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
         self.user = user
         
         if let id = user?.id, String(id) != "" {
-            self.fetchUserDetailsWith(id: id)
+            self.fetchUserDetails(with: id)
         }
     }
 

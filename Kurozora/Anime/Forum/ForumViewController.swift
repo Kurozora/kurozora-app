@@ -12,14 +12,6 @@ import KDatabaseKit
 //import iAd
 //import Parse
 
-extension ForumViewController: StatusBarVisibilityProtocol {
-    func shouldHideStatusBar() -> Bool {
-        return false
-    }
-    func updateCanHideStatusBar(canHide: Bool) {
-    }
-}
-
 public class ForumViewController: AnimeBaseViewController {
 //
 //    var dataSource: [Thread] = [] {

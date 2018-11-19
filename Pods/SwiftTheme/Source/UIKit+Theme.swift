@@ -32,6 +32,13 @@ import UIKit
     }
     #endif
 }
+@objc public extension UIBarItem
+{
+    func theme_setTitleTextAttributes(_ picker: ThemeDictionaryPicker?, forState state: UIControl.State) {
+        let statePicker = makeStatePicker(self, "setTitleTextAttributes:forState:", picker, state)
+        setThemePicker(self, "setTitleTextAttributes:forState:", statePicker)
+    }
+}
 @objc public extension UIBarButtonItem
 {
     var theme_tintColor: ThemeColorPicker? {
@@ -98,6 +105,14 @@ import UIKit
         get { return getThemePicker(self, "setSeparatorColor:") as? ThemeColorPicker }
         set { setThemePicker(self, "setSeparatorColor:", newValue) }
     }
+    var theme_sectionIndexColor: ThemeColorPicker? {
+        get { return getThemePicker(self, "setSectionIndexColor:") as? ThemeColorPicker }
+        set { setThemePicker(self, "setSectionIndexColor:", newValue) }
+    }
+    var theme_sectionIndexBackgroundColor: ThemeColorPicker? {
+        get { return getThemePicker(self, "setSectionIndexBackgroundColor:") as? ThemeColorPicker }
+        set { setThemePicker(self, "setSectionIndexBackgroundColor:", newValue) }
+    }
 }
 @objc public extension UITextField
 {
@@ -112,6 +127,10 @@ import UIKit
     var theme_textColor: ThemeColorPicker? {
         get { return getThemePicker(self, "setTextColor:") as? ThemeColorPicker }
         set { setThemePicker(self, "setTextColor:", newValue) }
+    }
+    var theme_placeholderAttributes: ThemeDictionaryPicker? {
+        get { return getThemePicker(self, "updatePlaceholderAttributes:") as? ThemeDictionaryPicker }
+        set { setThemePicker(self, "updatePlaceholderAttributes:", newValue) }
     }
 }
 @objc public extension UITextView
@@ -184,15 +203,15 @@ import UIKit
 }
 @objc public extension UIButton
 {
-    func theme_setImage(_ picker: ThemeImagePicker?, forState state: UIControlState) {
+    func theme_setImage(_ picker: ThemeImagePicker?, forState state: UIControl.State) {
         let statePicker = makeStatePicker(self, "setImage:forState:", picker, state)
         setThemePicker(self, "setImage:forState:", statePicker)
     }
-    func theme_setBackgroundImage(_ picker: ThemeImagePicker?, forState state: UIControlState) {
+    func theme_setBackgroundImage(_ picker: ThemeImagePicker?, forState state: UIControl.State) {
         let statePicker = makeStatePicker(self, "setBackgroundImage:forState:", picker, state)
         setThemePicker(self, "setBackgroundImage:forState:", statePicker)
     }
-    func theme_setTitleColor(_ picker: ThemeColorPicker?, forState state: UIControlState) {
+    func theme_setTitleColor(_ picker: ThemeColorPicker?, forState state: UIControl.State) {
         let statePicker = makeStatePicker(self, "setTitleColor:forState:", picker, state)
         setThemePicker(self, "setTitleColor:forState:", statePicker)
     }
@@ -218,6 +237,10 @@ import UIKit
     var theme_strokeColor: ThemeCGColorPicker? {
         get { return getThemePicker(self, "setStrokeColor:") as? ThemeCGColorPicker }
         set { setThemePicker(self, "setStrokeColor:", newValue) }
+    }
+    var theme_fillColor: ThemeCGColorPicker?{
+        get { return getThemePicker(self, "setFillColor:") as? ThemeCGColorPicker }
+        set { setThemePicker(self, "setFillColor:", newValue) }
     }
 }
 
@@ -266,6 +289,13 @@ import UIKit
         set { setThemePicker(self, "setBackgroundColor:", newValue) }
     }
 }
+@objc public extension UIRefreshControl
+{
+    var theme_titleAttributes: ThemeDictionaryPicker? {
+        get { return getThemePicker(self, "updateTitleAttributes:") as? ThemeDictionaryPicker }
+        set { setThemePicker(self, "updateTitleAttributes:", newValue) }
+    }
+}
 #endif
 
 private func getThemePicker(
@@ -288,7 +318,7 @@ private func makeStatePicker(
     _ object : NSObject,
     _ selector : String,
     _ picker : ThemePicker?,
-    _ state : UIControlState
+    _ state : UIControl.State
 ) -> ThemePicker? {
     
     var picker = picker

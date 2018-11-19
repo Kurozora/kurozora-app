@@ -6,13 +6,12 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import KCommonKit
-import Alamofire
 import SwiftyJSON
 import SCLAlertView
+import EmptyDataSet_Swift
 
-class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class ManageActiveSessionsController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate  {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!
@@ -37,8 +36,24 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
+        // Setup table view
         tableView.dataSource = self
+        tableView.delegate = self
+        
+        // Setup empty table view
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetView { view in
+            view.titleLabelString(NSAttributedString(string: "No sessions to show."))
+                .image(UIImage(named: "session_icon"))
+                .shouldDisplay(true)
+                .shouldFadeIn(true)
+                .isTouchAllowed(true)
+                .isScrollAllowed(true)
+        }
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
     }
     
     func updateCurrentSession(with session: Session?) {
@@ -69,7 +84,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDelegate, UIT
                         // Start delete process
                         self.tableView.beginUpdates()
                         self.sessionsArray?.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
+                        self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                         self.tableView.endUpdates()
                     }
                 }

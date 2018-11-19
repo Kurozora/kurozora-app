@@ -92,7 +92,8 @@ public extension UIView {
     @objc public func parentContainerViewController()->UIViewController? {
         
         var matchController = viewContainingController()
-        
+        var parentContainerViewController : UIViewController?
+
         if var navController = matchController?.navigationController {
             
             while let parentNav = navController.navigationController {
@@ -110,17 +111,17 @@ public extension UIView {
             }
 
             if navController == parentController {
-                return navController.topViewController
+                parentContainerViewController = navController.topViewController
             } else {
-                return parentController
+                parentContainerViewController = parentController
             }
         }
         else if let tabController = matchController?.tabBarController {
             
             if let navController = tabController.selectedViewController as? UINavigationController {
-                return navController.topViewController
+                parentContainerViewController = navController.topViewController
             } else {
-                return tabController.selectedViewController
+                parentContainerViewController = tabController.selectedViewController
             }
         } else {
             while let parentController = matchController?.parent,
@@ -131,8 +132,13 @@ public extension UIView {
                         matchController = parentController
             }
 
-            return matchController;
+            parentContainerViewController = matchController
         }
+        
+        let finalController = parentContainerViewController?.parentIQContainerViewController() ?? parentContainerViewController
+        
+        return finalController
+
     }
 
     ///-----------------------------------
@@ -251,7 +257,7 @@ public extension UIView {
         }
         
         if _IQcanBecomeFirstResponder == true {
-            _IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false && searchBar() == nil
+            _IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false && textFieldSearchBar() == nil
         }
 
         return _IQcanBecomeFirstResponder
@@ -264,7 +270,7 @@ public extension UIView {
     /**
      Returns searchBar if receiver object is UISearchBarTextField, otherwise return nil.
     */
-    internal func searchBar()-> UISearchBar? {
+    internal func textFieldSearchBar()-> UISearchBar? {
         
         var responder : UIResponder? = self.next
         
@@ -316,6 +322,12 @@ public extension UIView {
     
 }
 
+public extension UIViewController {
+
+    func parentIQContainerViewController() -> UIViewController? {
+        return self
+    }
+}
 
 extension NSObject {
     

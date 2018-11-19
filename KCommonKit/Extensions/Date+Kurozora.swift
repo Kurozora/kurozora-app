@@ -9,7 +9,6 @@
 import Foundation
 
 extension Date {
-    
     var mediumFormatter: DateFormatter {
         struct Static {
             static let instance : DateFormatter = {

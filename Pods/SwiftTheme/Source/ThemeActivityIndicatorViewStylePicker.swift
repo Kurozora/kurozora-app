@@ -14,15 +14,15 @@ import UIKit
         self.init(v: { ThemeActivityIndicatorViewStylePicker.getStyle(stringStyle: ThemeManager.string(for: keyPath) ?? "") })
     }
     
-    public convenience init(keyPath: String, map: @escaping (Any?) -> UIActivityIndicatorViewStyle?) {
+    public convenience init(keyPath: String, map: @escaping (Any?) -> UIActivityIndicatorView.Style?) {
         self.init(v: { map(ThemeManager.value(for: keyPath)) })
     }
     
-    public convenience init(styles: UIActivityIndicatorViewStyle...) {
+    public convenience init(styles: UIActivityIndicatorView.Style...) {
         self.init(v: { ThemeManager.element(for: styles) })
     }
     
-    public required convenience init(arrayLiteral elements: UIActivityIndicatorViewStyle...) {
+    public required convenience init(arrayLiteral elements: UIActivityIndicatorView.Style...) {
         self.init(v: { ThemeManager.element(for: elements) })
     }
     
@@ -38,7 +38,7 @@ import UIKit
         self.init(keyPath: value)
     }
     
-    class func getStyle(stringStyle: String) -> UIActivityIndicatorViewStyle {
+    class func getStyle(stringStyle: String) -> UIActivityIndicatorView.Style {
         #if os(tvOS)
         switch stringStyle.lowercased() {
         case "white"        : return .white
@@ -59,11 +59,11 @@ import UIKit
 
 public extension ThemeActivityIndicatorViewStylePicker {
     
-    class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIActivityIndicatorViewStyle?) -> ThemeActivityIndicatorViewStylePicker {
+    class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIActivityIndicatorView.Style?) -> ThemeActivityIndicatorViewStylePicker {
         return ThemeActivityIndicatorViewStylePicker(v: { map(ThemeManager.value(for: keyPath)) })
     }
     
-    class func pickerWithStyles(_ styles: [UIActivityIndicatorViewStyle]) -> ThemeActivityIndicatorViewStylePicker {
+    class func pickerWithStyles(_ styles: [UIActivityIndicatorView.Style]) -> ThemeActivityIndicatorViewStylePicker {
         return ThemeActivityIndicatorViewStylePicker(v: { ThemeManager.element(for: styles) })
     }
     

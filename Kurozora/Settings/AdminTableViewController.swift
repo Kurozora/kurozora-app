@@ -22,7 +22,7 @@ class AdminTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let KDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsTableViewCell
             guard let key = KDefaultsTableViewCell.keyLabel.text else {return}

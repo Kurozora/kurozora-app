@@ -1,6 +1,6 @@
 ![Banner](/Web/banner.png)
 
-[![Build Status](https://travis-ci.org/PiXeL16/RevealingSplashView.svg?branch=master)](https://travis-ci.org/PiXeL16/RevealingSplashView/) [![codecov.io](https://codecov.io/github/PiXeL16/RevealingSplashView/coverage.svg?branch=master)](https://codecov.io/github/PiXeL16/RevealingSplashView?branch=master) [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/RevealingSplashView.svg)](https://img.shields.io/cocoapods/v/RevealingSplashView.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift) [![Language](https://img.shields.io/badge/language-Swift%203.0-orange.svg)](https://swift.org) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PiXeL16/RevealingSplashView/master/LICENSE)
+[![Build Status](https://travis-ci.org/PiXeL16/RevealingSplashView.svg?branch=master)](https://travis-ci.org/PiXeL16/RevealingSplashView/) [![codecov.io](https://codecov.io/github/PiXeL16/RevealingSplashView/coverage.svg?branch=master)](https://codecov.io/github/PiXeL16/RevealingSplashView?branch=master) [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/RevealingSplashView.svg)](https://img.shields.io/cocoapods/v/RevealingSplashView.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift) [![Language](https://img.shields.io/badge/language-Swift%204.2-orange.svg)](https://swift.org) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PiXeL16/RevealingSplashView/master/LICENSE)
 
 # RevealingSplashView
 A Splash view that animates and reveals its content, inspired by the `Twitter` splash.
@@ -29,6 +29,10 @@ If you are using Swift 2.3, please use the `0.0.6` release.
 
 :metal: Usage
 ---
+
+### Video Tutorial
+`Rebeloper` created a nice [Video Tutorial](https://www.youtube.com/watch?v=jtCsh4R8UWo) where you can also learn how to use this control!. You can also follow the docs below
+
 Usage is pretty easy, just initialize your `RevealingSplashView` in your entry `ViewController` and in your `viewDidLoad()` function add it to your view. Then call `startAnimation()`:
 
 ```swift
@@ -134,6 +138,13 @@ Its the default animation that `Twitter` use for their app. If `animationType` i
 ### HeartBeat
 HeartBeat like animation, unlike the other animations, this `special` animation allows you to continue to animate until a function its called.
 This could be more entertaining to the user than having a quick launch and waiting on a spinning wheel if the app needs to fetch more data.
+
+To use the Heartbeat animation you should `startAnimation()` as normal and then proceed with your network or background job. When you are done, just call
+```swift
+.heartAttack = true
+```
+And the splashview should dismiss.
+
 
 ![HeartBeatAnimation](/Web/heartBeat.gif)
 

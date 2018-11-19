@@ -8,9 +8,11 @@
 
 import KCommonKit
 import KDatabaseKit
-import XLPagerTabStrip
+import Tabman
+import Pageboy
+import SCLAlertView
 
-enum AnimeList: String {
+enum SectionList: String {
     case Planning = "Planning"
     case Watching = "Watching"
     case Completed = "Completed"
@@ -30,8 +32,76 @@ enum LibraryLayout: String {
     }
 }
 
-class LibraryViewController: UIViewController {
-//
+class LibraryViewController: TabmanViewController, PageboyViewControllerDataSource {
+    let librarySections: [SectionList]? = [.Watching, .Planning, .Completed, .OnHold, .Dropped]
+    private var viewControllers = [UIViewController]()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        dataSource = self
+        
+        // configure the bar
+        self.bar.location = .top
+        
+        self.bar.appearance = TabmanBar.Appearance({ (appearance) in
+            // State
+            appearance.state.selectedColor = .white
+            appearance.state.color =  UIColor.white.withAlphaComponent(0.5)
+            
+            // Style
+            appearance.style.background = .blur(style: .light)
+            appearance.style.showEdgeFade = true
+            
+            // Indicator
+            appearance.indicator.bounces = true
+            appearance.indicator.useRoundedCorners = true
+            appearance.indicator.color = .orange
+            
+            // Layout
+            appearance.layout.itemDistribution = .fill
+            
+        })
+        
+        self.bar.behaviors = [.autoHide(.never)]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    private func initializeViewControllers(with count: Int) {
+        let storyboard = UIStoryboard(name: "library", bundle: nil)
+        var viewControllers = [UIViewController]()
+        var barItems = [Item]()
+        
+        for index in 0 ..< count {
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AnimeList") as! AnimeListViewController
+            guard let sectionTitle = librarySections?[index].rawValue else {return}
+            viewController.sectionTitle = sectionTitle
+            barItems.append(Item(title: sectionTitle))
+            
+            viewControllers.append(viewController)
+        }
+        
+        self.bar.items = barItems
+        self.viewControllers = viewControllers
+    }
+    
+    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+        guard let sectionsCount = librarySections?.count else {return 0}
+        initializeViewControllers(with: sectionsCount)
+        
+        return sectionsCount
+    }
+    
+    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
+        return self.viewControllers[index]
+    }
+    
+    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+        return nil
+    }
+    
 //    let SortTypeDefault = "Library.SortType."
 //    let LayoutTypeDefault = "Library.LayoutType."
 //

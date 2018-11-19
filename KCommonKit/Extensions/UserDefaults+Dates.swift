@@ -9,7 +9,6 @@
 import Foundation
 
 extension UserDefaults {
-    
     public class func shouldPerformAction(actionID: String, expirationDays: Double) -> Bool {
         if let lastAction = UserDefaults.standard.object(forKey: actionID) as? Date {
             let dayTimeInterval: Double = 24*60*60

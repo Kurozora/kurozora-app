@@ -14,16 +14,3 @@ class ShowCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
 }
-
-class LargeCell: UICollectionViewCell {
-    @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var shadowImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-}
-
-class HeaderCell: UICollectionViewCell {
-    @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var shadowImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var genreLabel: UILabel!
-}

@@ -10,10 +10,9 @@ import Foundation
 import KCommonKit
 import Alamofire
 import SwiftyJSON
+import SCLAlertView
 
 class RegisterViewController: UIViewController {
-    
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var emailTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
@@ -23,23 +22,17 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     
     var imagePicker = UIImagePickerController()
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        UIApplication.shared.statusBarStyle = .lightContent
+        
         registerButton.isEnabled = false
-    }
-    
-    // MARK: - Status bar
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNeedsStatusBarAppearanceUpdate()
 
-        usernameTextField.becomeFirstResponder()
+//        usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -47,7 +40,6 @@ class RegisterViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     //MARK: Actions
@@ -81,46 +73,46 @@ class RegisterViewController: UIViewController {
         
         Alamofire.upload(multipartFormData: { multipartFormData in
             if image != nil {
-                if let imageData = UIImageJPEGRepresentation(image!, 0.1) {
+                if let imageData = image?.jpegData(compressionQuality: 0.1) {
                     multipartFormData.append(imageData, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
                 }
             }
             
             for (key, value) in parameters {
                 multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
-            }}, to: endpoint, method: .post, headers: headers) { response in
-                switch response {
-                case .success(let upload, _,  _):
-                upload.responseJSON { response in
-                    switch response.result {
-                    case .success:
-                    if response.result.value != nil{
-                        let swiftyJsonVar = JSON(response.result.value!)
+            }
+        }, to: endpoint, method: .post, headers: headers) { response in
+            switch response {
+            case .success(let upload, _,  _):
+            upload.responseJSON { response in
+                switch response.result {
+                case .success:
+                if response.result.value != nil {
+                    let swiftyJsonVar = JSON(response.result.value!)
 
-                        let responseSuccess = swiftyJsonVar["success"]
-                        let responseMessage = swiftyJsonVar["error_message"]
+                    let responseSuccess = swiftyJsonVar["success"]
+                    let errorMessage = swiftyJsonVar["error_message"].stringValue
 
-                        if responseSuccess.boolValue {
-                            let alertController = UIAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation!", preferredStyle: UIAlertControllerStyle.alert)
-                            alertController.addAction(UIAlertAction(title: "Ok 😊", style: .default, handler: { action in
-                                
-                                self.dismiss(animated: true, completion: nil)
-                            }))
+                    if responseSuccess.boolValue {
+                        let alertController = UIAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation!", preferredStyle: UIAlertController.Style.alert)
+                        alertController.addAction(UIAlertAction(title: "Ok 😊", style: .default, handler: { action in
+                            
+                            self.dismiss(animated: true, completion: nil)
+                        }))
 
-                            self.present(alertController, animated: true, completion: nil)
-                        }else{
-                            self.presentBasicAlertWithTitle(title: responseMessage.stringValue)
-                        }
+                        self.present(alertController, animated: true, completion: nil)
+                    }else{
+                        SCLAlertView().showError("Error registering", subTitle: errorMessage)
                     }
-                    case .failure:
-                        self.presentBasicAlertWithTitle(title: "Errrrr", message: "There was an error while creating your account.  If this error persists, check out our Twitter account @KurozoraApp for more information!" )
-                    }
-                    NSLog("success:\(response)")
                 }
-                case .failure(let encodingError):
-                    NSLog("error:\(encodingError)")
+                case .failure:
+                    SCLAlertView().showError("Error registering", subTitle: "There was an error while creating your account. If this error persists, check out our Twitter account @KurozoraApp for more information!" )
                 }
             }
+            case .failure/*(let encodingError)*/: break
+//                    NSLog("error:\(encodingError)")
+            }
+        }
     }
 
 //    Image picker
@@ -152,8 +144,8 @@ class RegisterViewController: UIViewController {
     
     //MARK: - Open the camera
     func openCamera(){
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
+            imagePicker.sourceType = .camera
             imagePicker.allowsEditing = true
             imagePicker.delegate = self
             
@@ -168,25 +160,15 @@ class RegisterViewController: UIViewController {
     
     //MARK: - Choose image from camera roll
     func openPhotoLibrary(){
-        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
         self.present(imagePicker, animated: true, completion: nil)
     }
-    
 }
 
-//extension RegisterViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-//
-//    func position(for bar: UIBarPositioning) -> UIBarPosition {
-//        return .topAttached
-//    }
-//
-//}
-
 extension RegisterViewController: UITextFieldDelegate {
-    
     @objc func editingChanged(_ textField: UITextField) {
         if textField.text?.count == 1 {
             if textField.text?.first == " " {
@@ -194,14 +176,12 @@ extension RegisterViewController: UITextFieldDelegate {
                 return
             }
         }
-        guard
-            let username = usernameTextField.text, !username.isEmpty,
-            let email = emailTextField.text, !email.isEmpty,
-            let password = passwordTextField.text, !password.isEmpty
-            else {
+        
+        guard let username = usernameTextField.text, !username.isEmpty, let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else {
                 registerButton.isEnabled = false
                 return
         }
+        
         registerButton.isEnabled = true
     }
     
@@ -219,13 +199,12 @@ extension RegisterViewController: UITextFieldDelegate {
         
         return true
     }
-    
 }
 
 //MARK: - UIImagePickerControllerDelegate
 extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let editedImage = info[.editedImage] as? UIImage{
             self.profileImage.image = editedImage
         }
         
@@ -236,5 +215,4 @@ extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
 }

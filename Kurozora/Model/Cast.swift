@@ -12,11 +12,17 @@ import SwiftyJSON
 struct CastDetails: JSONDecodable {
     let success: Bool?
     let message: String?
+    let page: Int?
+    let actorsPerPage: Int?
+    let totalActors: Int?
     let actors: [JSON]?
 
     init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
+        page = json["page"].intValue
+        actorsPerPage = json["actors_per_page"].intValue
+        totalActors = json["total_actors"].intValue
         actors = json["actors"].arrayValue
         
 //        castImage = json["actors"]["image"].stringValue

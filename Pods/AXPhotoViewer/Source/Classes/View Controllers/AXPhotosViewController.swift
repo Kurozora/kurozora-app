@@ -61,7 +61,7 @@ import FLAnimatedImage_tvOS
     @objc open weak var delegate: AXPhotosViewControllerDelegate?
     
     /// The underlying `OverlayView` that is used for displaying photo captions, titles, and actions.
-    @objc open let overlayView = AXOverlayView()
+    @objc public let overlayView = AXOverlayView()
     
     /// The photos to display in the PhotosViewController.
     @objc open var dataSource = AXPhotosDataSource() {
@@ -342,7 +342,7 @@ import FLAnimatedImage_tvOS
         
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                        navigationOrientation: self.pagingConfig.navigationOrientation,
-                                                       options: [UIPageViewControllerOptionInterPageSpacingKey: self.pagingConfig.interPhotoSpacing])
+                                                       options: [.interPageSpacing: self.pagingConfig.interPhotoSpacing])
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = (self.dataSource.numberOfPhotos > 1) ? self : nil
         self.pageViewController.scrollView.addContentOffsetObserver(self)
@@ -405,9 +405,9 @@ import FLAnimatedImage_tvOS
         if self.pageViewController.view.superview == nil {
             self.pageViewController.view.addGestureRecognizer(self.singleTapGestureRecognizer)
             
-            self.addChildViewController(self.pageViewController)
+            self.addChild(self.pageViewController)
             self.view.addSubview(self.pageViewController.view)
-            self.pageViewController.didMove(toParentViewController: self)
+            self.pageViewController.didMove(toParent: self)
         }
         
         if self.overlayView.superview == nil {
@@ -458,8 +458,8 @@ import FLAnimatedImage_tvOS
         }
     }
     
-    open override func didMove(toParentViewController parent: UIViewController?) {
-        super.didMove(toParentViewController: parent)
+    open override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
         
         if parent is UINavigationController {
             assertionFailure("Do not embed `PhotosViewController` in a navigation stack.")
@@ -1046,6 +1046,7 @@ import FLAnimatedImage_tvOS
                                                     imageSize: imageSize) ?? .leastNormalMagnitude
     }
     
+    #if os(iOS)
     /// Called when the action button is tapped for a photo. If you override this and fail to call super, the corresponding
     /// delegate method **will not be called!**
     ///
@@ -1071,9 +1072,10 @@ import FLAnimatedImage_tvOS
     ///   - photo: The related `AXPhoto`.
     /// - Note: This is only called for the default action.
     @objc(actionCompletedWithActivityType:forPhoto:)
-    open func actionCompleted(activityType: UIActivityType, for photo: AXPhotoProtocol) {
+    open func actionCompleted(activityType: UIActivity.ActivityType, for photo: AXPhotoProtocol) {
         self.delegate?.photosViewController?(self, actionCompletedWith: activityType, for: photo)
     }
+    #endif
     
     // MARK: - AXNetworkIntegrationDelegate
     public func networkIntegration(_ networkIntegration: AXNetworkIntegrationProtocol, loadDidFinishWith photo: AXPhotoProtocol) {
@@ -1288,6 +1290,7 @@ fileprivate extension UIScrollView {
                                        minimumZoomScale: CGFloat,
                                        imageSize: CGSize) -> CGFloat
     
+    #if os(iOS)
     /// Called when the action button is tapped for a photo. If no implementation is provided, will fall back to default action.
     ///
     /// - Parameters:
@@ -1305,8 +1308,9 @@ fileprivate extension UIScrollView {
     /// - Note: This is only called for the default action.
     @objc(photosViewController:actionCompletedWithActivityType:forPhoto:)
     optional func photosViewController(_ photosViewController: AXPhotosViewController, 
-                                       actionCompletedWith activityType: UIActivityType, 
+                                       actionCompletedWith activityType: UIActivity.ActivityType, 
                                        for photo: AXPhotoProtocol)
+    #endif
     
     /// Called just before the `AXPhotosViewController` begins its dismissal
     ///

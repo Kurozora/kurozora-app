@@ -12,14 +12,12 @@ import SwiftyJSON
 import SCLAlertView
 
 struct Service {
-    
     let tron = TRON(baseURL: "https://kurozora.app/api/v1/")
-    
     static let shared = Service()
     
 //    MARK: - User
 
-//    Login user
+    // Login user
     func login(_ username:String, _ password:String, _ device:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/login")
 
@@ -64,7 +62,7 @@ struct Service {
         })
     }
     
-//    Reset password
+    // Reset password
     func resetPassword(_ email:String, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/reset_password")
         
@@ -94,7 +92,7 @@ struct Service {
         })
     }
     
-//    Logout user
+    // Logout user
     func logout(_ sessionSecret:String, _ userId:Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/logout")
         
@@ -126,7 +124,7 @@ struct Service {
         })
     }
     
-//    User details
+    // User details
     func getUserProfile(_ userId:Int?, withSuccess successHandler:@escaping (User?) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
         guard let id = userId else { return }
         
@@ -162,7 +160,7 @@ struct Service {
     
 //    MARK: - Sessions
     
-//    Validate session
+    // Validate session
     func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
         if User.currentSessionSecret() != nil && User.currentId() != nil {
             let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("session/validate")
@@ -198,7 +196,7 @@ struct Service {
         }
     }
     
-//    Get sessions
+    // Get sessions
     func getSessions(withSuccess successHandler:@escaping (Session?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
         let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/get_sessions")
         
@@ -228,7 +226,7 @@ struct Service {
         })
     }
     
-//    Delete session
+    // Delete session
     func deleteSession(_ id: Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/delete_session")
         
@@ -264,10 +262,9 @@ struct Service {
         })
     }
     
-    
 //    MARK: - Theme Store
     
-//    Get Themes
+    // Get Themes
     func getThemes(withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void){
 //        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/login")
 //
@@ -330,8 +327,190 @@ struct Service {
 //                }
 //        }
     }
+    
+//    MARK: - Settings
+    
+    // Legal
+    func getPrivacyPolicy(withSuccess successHandler:@escaping (Privacy?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        
+        let request: APIRequest<Privacy,JSONError> = tron.swiftyJSON.request("misc/get_privacy_policy")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.method = .get
+        
+        request.perform(withSuccess: { privacyPolicy in
+            if let success = privacyPolicy.success {
+                if success {
+                    successHandler(privacyPolicy)
+                } else {
+                    if let responseMessage = privacyPolicy.message {
+                        failureHandler(responseMessage)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received privacy policy error: \(error)")
+        })
+    }
+    
+//    MARK: - Show
+    
+    // Get explore
+    func getExplore(withSuccess successHandler: @escaping (Show) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        
+        let request: APIRequest<Show,JSONError> = tron.swiftyJSON.request("anime/explore")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.method = .get
+        
+        request.perform(withSuccess: { show in
+            if let success = show.success {
+                if success {
+                    if let category = show.categories, category != [] {
+                        successHandler(show)
+                    }
+                } else {
+                    if let responseMessage = show.message {
+                        failureHandler(responseMessage)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received explore error: \(error)")
+        })
+    }
+    
+    // Get show detail
+    func getDetailsFor(_ showId: Int?, completionHandler: @escaping (ShowDetails) -> Void) {
+        guard let id = showId else { return }
+        
+        let request : APIRequest<ShowDetails,JSONError> = tron.swiftyJSON.request("anime/\(id)/details")
+        
+        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .post
+        request.parameters = [
+            "session_secret": sessionSecret!,
+            "user_id": userId!
+        ]
+        
+        request.perform(withSuccess: { showDetails in
+            DispatchQueue.main.async {
+                completionHandler(showDetails)
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received rating error: \(error)")
+        })
+    }
+    
+    // Get cast
+    func getCastFor(_ id: Int?, withSuccess successHandler:@escaping (CastDetails, [JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        guard let id = id else { return }
+        
+        let request: APIRequest<CastDetails,JSONError> = tron.swiftyJSON.request("anime/\(id)/actors")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.method = .get
+        
+        request.perform(withSuccess: { cast in
+            if let success = cast.success {
+                if success {
+                    guard let castActors = cast.actors else {return}
+                    
+                    if let castActorsCount = cast.actors?.count, castActorsCount > 0 {
+                        successHandler(cast, castActors)
+                    } else {
+                        failureHandler("No actors were found!")
+                    }
+                } else {
+                    if let responseMessage = cast.message {
+                        failureHandler(responseMessage)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received cast error: \(error)")
+        })
+    }
+    
+    // Show season
+    func getSeasonFor(_ id: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        guard let id = id else { return }
 
-    // Rate anime
+        let request : APIRequest<Seasons,JSONError> = tron.swiftyJSON.request("anime/\(id)/seasons")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .get
+        
+        request.perform(withSuccess: { seasons in
+            if let success = seasons.success {
+                if success {
+                    if let seasons = seasons.seasons, seasons != [] {
+                        successHandler(seasons)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Error getting seasons", subTitle: "There was an error while getting show seaosns. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received get show seasons error: \(error)")
+        })
+    }
+    
+    // Show episodes
+    func getEpisodesFor(_ id: Int?, _ seasonId:Int?, withSuccess successHandler:@escaping (Episodes?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+        guard let id = id else { return }
+        guard let seasonId = seasonId else { return }
+        
+        let request : APIRequest<Episodes,JSONError> = tron.swiftyJSON.request("anime/\(id)/episodes")
+        
+        request.headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        request.authorizationRequirement = .required
+        request.method = .get
+        request.parameters = [
+            "season": seasonId
+        ]
+        
+        request.perform(withSuccess: { episodes in
+            if let success = episodes.success {
+                if success {
+                    if let episodesExist = episodes.episodes, episodesExist != [] {
+                        successHandler(episodes)
+                    }
+                }
+            }
+        }, failure: { error in
+            SCLAlertView().showError("Error getting seasons", subTitle: "There was an error while getting show seaosns. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            
+            print("Received get show seasons error: \(error)")
+        })
+    }
+    
+    // Rate show
     func rate(showId: Int?, score: Double?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         let rating = score
         guard let id = showId else { return }
@@ -369,72 +548,68 @@ struct Service {
         })
     }
     
-    // MARK: - Settings
+//    MARK: - Notifications
     
-    // Legal
-    func getPrivacyPolicy(withSuccess successHandler:@escaping (Privacy?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+    // Get notifications
+    func getNotifications(withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+        let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user/get_notifications")
         
-        let request: APIRequest<Privacy,JSONError> = tron.swiftyJSON.request("misc/get_privacy_policy")
+        let userId = User.currentId()!
+        let sessionSecret = User.currentSessionSecret()!
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
-        request.method = .get
+        request.authorizationRequirement = .required
+        request.method = .post
+        request.parameters = [
+            "user_id": userId,
+            "session_secret": sessionSecret
+        ]
         
-        request.perform(withSuccess: { privacyPolicy in
-            if let success = privacyPolicy.success {
+        request.perform(withSuccess: { notification in
+            if let success = notification.success {
                 if success {
-                    successHandler(privacyPolicy)
-                } else {
-                    if let responseMessage = privacyPolicy.message {
-                        failureHandler(responseMessage)
+                    if let notifications = notification.notifications, notifications != [] {
+                        successHandler(notifications)
                     }
                 }
             }
         }, failure: { error in
-            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            SCLAlertView().showError("Error getting notifications", subTitle: "There was an error while getting notifications. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
-            print("Received privacy policy error: \(error)")
+            print("Received get notifications error: \(error)")
         })
     }
     
-    // MARK: - Anime Details
+//    MARK: - Forums
     
-    // Cast
-    func getCastFor(_ id: Int?, withSuccess successHandler:@escaping ([JSON]) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
-        
-        guard let id = id else { return }
-        
-        let request: APIRequest<CastDetails,JSONError> = tron.swiftyJSON.request("anime/\(id)/actors")
+    // Get forum sections
+    func getForumSections(withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+        let request : APIRequest<ForumSections,JSONError> = tron.swiftyJSON.request("forum/get_sections")
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
         ]
+        request.authorizationRequirement = .required
         request.method = .get
         
-        request.perform(withSuccess: { cast in
-            if let success = cast.success {
+        request.perform(withSuccess: { sections in
+            if let success = sections.success {
                 if success {
-                    if let cast = cast.actors {
-                        successHandler(cast)
-                    } else {
-                        failureHandler("No actors were found!")
-                    }
-                } else {
-                    if let responseMessage = cast.message {
-                        failureHandler(responseMessage)
+                    if let sections = sections.sections, sections != [] {
+                        successHandler(sections)
                     }
                 }
             }
         }, failure: { error in
-            SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+            SCLAlertView().showError("Error getting sections", subTitle: "There was an error while getting forum sections. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
-            print("Received cast error: \(error)")
+            print("Received get forum sections error: \(error)")
         })
     }
     
-    
-    // Throw json error
+//    Throw json error
     class JSONError: JSONDecodable {
         required init(json: JSON) throws {
             print("JSON ERROR \(json)")

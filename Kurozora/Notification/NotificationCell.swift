@@ -9,15 +9,15 @@
 import UIKit
 
 class NotificationCell : UITableViewCell {
-    
-    @IBOutlet weak var notificationBody: UIView!
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var notificationTextLable: UILabel!
-    
+    // Header
     @IBOutlet weak var notificationHeader: UIView!
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!
     @IBOutlet weak var notificationIcon: UIImageView!
     
+    // Body
+    @IBOutlet weak var notificationBody: UIView!
+    @IBOutlet weak var notificationProfileImage: UIImageView!
+    @IBOutlet weak var notificationTitleLabel: UILabel!
+    @IBOutlet weak var notificationTextLable: UILabel!
 }

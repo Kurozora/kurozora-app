@@ -6,4 +6,9 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class LargeCell: UICollectionViewCell {
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+}

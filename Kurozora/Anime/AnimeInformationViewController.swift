@@ -22,15 +22,6 @@ import KDatabaseKit
 //
 //    static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.ExternalLinks]
 //}
-//
-//extension AnimeInformationViewController: StatusBarVisibilityProtocol {
-//    func shouldHideStatusBar() -> Bool {
-//        return hideStatusBar()
-//    }
-//    func updateCanHideStatusBar(canHide: Bool) {
-//        canHideStatusBar = canHide
-//    }
-//}
 
 //public class AnimeInformationViewController: AnimeBaseViewController {
 //
@@ -39,7 +30,6 @@ import KDatabaseKit
 //    let TopBarHeight: CGFloat = 44
 //    let StatusBarHeight: CGFloat = 22
 //
-//    var canHideStatusBar = true
 //    var subAnimator: ZFModalTransitionAnimator!
 //    var playerController: XCDYouTubeVideoPlayerViewController?
 //
@@ -100,7 +90,6 @@ import KDatabaseKit
 //
 //    public override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//        canHideStatusBar = true
 //        self.scrollViewDidScroll(tableView)
 //    }
 //
@@ -429,12 +418,6 @@ import KDatabaseKit
 //        self.present(alert, animated: true, completion: nil)
 //
 //    }
-//    // MARK: - Helper Functions
-//
-//    func hideStatusBar() -> Bool {
-//        let offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
-//        return offset > StatusBarHeight ? true : false
-//    }
 //
 //    // MARK: - Notifications
 //
@@ -452,19 +435,11 @@ import KDatabaseKit
 //        let topBarOffset = newOffset - TopBarHeight
 //
 //        if topBarOffset > StatusBarHeight {
-//            if !UIApplication.shared.isStatusBarHidden {
-//                if canHideStatusBar {
-//                    UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.none)
-//                    separatorView.isHidden = true
-//                    closeButton.isHidden = true
-//                    navigationBarHeightConstraint.constant = TopBarHeight
-//                }
-//            }
+//            separatorView.isHidden = true
+//            closeButton.isHidden = true
+//            navigationBarHeightConstraint.constant = TopBarHeight
 //            navigationBarTopConstraint.constant = topBarOffset
 //        } else {
-//            if UIApplication.shared.isStatusBarHidden {
-//                UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
-//            }
 //            separatorView.isHidden = false
 //            closeButton.isHidden = false
 //            let totalHeight = TopBarHeight + StatusBarHeight

@@ -7,28 +7,79 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Kingfisher
 
-class ShowCategoryCell: UITableViewCell {}
-class LargeCategoryCell: UITableViewCell {}
-
-extension ShowCategoryCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! PosterCell
-        return showCell
+class ShowCategoryCell: UITableViewCell {
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    let homeViewController = HomeViewController()
+    var shows: [JSON]? = nil {
+        didSet {
+            collectionView.reloadData()
+        }
     }
 }
 
-extension LargeCategoryCell: UICollectionViewDataSource {
+extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        if let showsCount = shows?.count, showsCount != 0 {
+            return showsCount
+        }
+        return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LargeCell", for: indexPath) as! LargeCell
+        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! ShowCell
+        
+        // Show poster
+        if let posterThumbnail = shows?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
+            let posterThumbnailUrl = URL(string: posterThumbnail)
+            let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+            showCell.posterImageView.kf.indicatorType = .activity
+            showCell.posterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+        } else {
+            showCell.posterImageView.image = UIImage(named: "placeholder_poster")
+        }
+        
+        // Show title
+        if let title = shows?[indexPath.row]["title"].stringValue, title != "" {
+            showCell.titleLabel.text = title
+        } else {
+            showCell.titleLabel.text = "Untitled"
+        }
+        
+        // Show genre
+        if let genre = shows?[indexPath.row]["genre"].stringValue, genre != "" {
+            showCell.genreLabel.text = genre
+        } else {
+            showCell.genreLabel.text = ""
+        }
+        
+        // Show score
+        if let score = shows?[indexPath.row]["score"].doubleValue, score != 0.00 {
+            showCell.scoreLabel.text = " \(score)"
+            // Change color based on score
+            if score > 2.5 {
+                showCell.scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 177/255.0, blue: 10/255.0, alpha: 1.0)
+            } else {
+                showCell.scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
+            }
+        } else {
+            showCell.scoreLabel.text = "New"
+            showCell.scoreLabel.backgroundColor = UIColor.init(red: 51/255.0, green: 204/255.0, blue: 0/255.0, alpha: 1.0)
+        }
+        
         return showCell
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+////        if let showId = shows?[indexPath.item]["id"].intValue {
+////            self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showId)
+////        }
+//        if let showId = shows?[indexPath.item]["id"].intValue {
+//            homeViewController.showDetailFor(showId)
+//
+//        }
+//    }
 }

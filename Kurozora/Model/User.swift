@@ -23,7 +23,6 @@ struct User: JSONDecodable {
     
     let id: Int?
     let session: String?
-//    let sessionArray: [JSON]?
     let username: String?
     let avatar: String?
     let banner: String?
@@ -43,7 +42,7 @@ struct User: JSONDecodable {
     let activeEnd: String?
     let active: Bool?
     
-    init(json: JSON) {
+    init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
         
@@ -51,7 +50,6 @@ struct User: JSONDecodable {
         session = json["session_secret"].stringValue
         role = json["role"].intValue
 
-//        sessionArray = json["sessions"].arrayValue
         username = json["profile"]["username"].stringValue
         avatar = json["profile"]["avatar_url"].stringValue
         banner = json["profile"]["banner_url"].stringValue

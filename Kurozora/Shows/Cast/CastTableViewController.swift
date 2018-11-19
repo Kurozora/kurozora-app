@@ -7,84 +7,70 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Kingfisher
+import BottomPopup
+import EmptyDataSet_Swift
 
-class CastTableViewController: UITableViewController {
+class CastTableViewController: BottomPopupViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetDelegate, EmptyDataSetSource {
+    @IBOutlet var collectionView: UICollectionView!
+    
+    var castDetails: [JSON]?
+    var totalCast: Int?
+    var page: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        collectionView.emptyDataSetSource = self
+        collectionView.emptyDataSetDelegate = self
+        collectionView.emptyDataSetView { view in
+            view.titleLabelString(NSAttributedString(string: "No actors found!"))
+        }
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    // MARK: - Collection view data source
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let castCount = castDetails?.count else {return 0}
+        
+        return castCount
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
+        
+        if let actorName = castDetails?[indexPath.row]["name"] {
+            castCell.actorName.text = actorName.stringValue
+        }
+        
+        if let actorRole = castDetails?[indexPath.row]["role"] {
+            castCell.actorJob.text = actorRole.stringValue
+        }
+        
+        if let castImage = castDetails?[indexPath.row]["image"].stringValue {
+            let castImage = URL(string: castImage)
+            let resource = ImageResource(downloadURL: castImage!)
+            castCell.actorImageView.kf.indicatorType = .activity
+            castCell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+        }
+        
+        return castCell
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    // Bottom popup delegate methods
+    override func getPopupHeight() -> CGFloat {
+        let height: CGFloat = UIScreen.main.bounds.size.height / 1.5
+        return height
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

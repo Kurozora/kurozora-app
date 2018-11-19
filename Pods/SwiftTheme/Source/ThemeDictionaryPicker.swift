@@ -30,7 +30,7 @@ import Foundation
         return ThemeDictionaryPicker(v: { map(ThemeManager.value(for: keyPath)) })
     }
     
-    class func pickerWithKeyPath(_ keyPath: String, mapAttributes: @escaping (Any?) -> [NSAttributedStringKey: AnyObject]?) -> ThemeDictionaryPicker {
+    class func pickerWithKeyPath(_ keyPath: String, mapAttributes: @escaping (Any?) -> [NSAttributedString.Key: AnyObject]?) -> ThemeDictionaryPicker {
         return ThemeDictionaryPicker(v: { mapAttributes(ThemeManager.value(for: keyPath)) })
     }
     
@@ -38,7 +38,7 @@ import Foundation
         return ThemeDictionaryPicker(v: { ThemeManager.element(for: dicts) })
     }
     
-    class func pickerWithAttributes(_ attributes: [[NSAttributedStringKey: AnyObject]]) -> ThemeDictionaryPicker {
+    class func pickerWithAttributes(_ attributes: [[NSAttributedString.Key: AnyObject]]) -> ThemeDictionaryPicker {
         return ThemeDictionaryPicker(v: { ThemeManager.element(for: attributes) })
     }
     

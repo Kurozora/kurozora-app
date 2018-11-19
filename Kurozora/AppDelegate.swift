@@ -15,29 +15,28 @@ let heartAttackNotification = Notification.Name("heartAttackNotification")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
     let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "kurozora_icon")!,iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: UIColor(red: 53/255, green: 58/255, blue: 80/255, alpha: 1))
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
         
         // Max disk cache size
         ImageCache.default.maxDiskCacheSize = 60 * 1024 * 1024
         
         // Reachability
-        do {
-            Network.reachability = try Reachability(hostname: "www.google.com")
-            do {
-                try Network.reachability?.start()
-            } catch let error as Network.Error {
-                NSLog("---Reachability error 1: \(error)")
-            } catch {
-                NSLog("---Reachability error 2: \(error)")
-            }
-        } catch {
-            NSLog("---Reachability error 3: \(error)")
-        }
+//        do {
+//            Network.reachability = try Reachability(hostname: "www.google.com")
+//            do {
+//                try Network.reachability?.start()
+//            } catch let error as Network.Error {
+//                NSLog("---Reachability error 1: \(error)")
+//            } catch {
+//                NSLog("---Reachability error 2: \(error)")
+//            }
+//        } catch {
+//            NSLog("---Reachability error 3: \(error)")
+//        }
         
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true

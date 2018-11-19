@@ -6,27 +6,27 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import KDatabaseKit
 import KCommonKit
+import KDatabaseKit
 //import Bolts
 
 protocol LibraryAnimeCellDelegate: class {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime)
     func cellPressedEpisodeThread(cell: LibraryAnimeCell, anime: Anime, episode: Episode)
 }
+
 class LibraryAnimeCell: AnimeCell {
 //
 //    weak var delegate: LibraryAnimeCellDelegate?
 //    var anime: Anime?
 //    weak var episode: Episode?
 //    var currentCancellationToken: Operation?
-//
-//    @IBOutlet weak var userProgressLabel: UILabel!
-//    @IBOutlet weak var watchedButton: UIButton?
-//    @IBOutlet weak var commentButton: UIButton?
-//    @IBOutlet weak var episodeImageView: UIImageView?
-//
+
+    @IBOutlet weak var userProgressLabel: UILabel!
+    @IBOutlet weak var watchedButton: UIButton?
+    @IBOutlet weak var commentButton: UIButton?
+    @IBOutlet weak var episodeImageView: UIImageView?
+
 //    @IBAction func watchedPressed(sender: AnyObject) {
 //
 //        if let anime = anime, let progress = anime.progress ?? anime.publicProgress {

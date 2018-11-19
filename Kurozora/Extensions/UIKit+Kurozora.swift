@@ -93,7 +93,7 @@ class DesignableTextField: UITextField {
             return self.placeHolderColor
         }
         set {
-            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedStringKey.foregroundColor: newValue!])
+            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[.foregroundColor: newValue!])
         }
     }
     
@@ -102,7 +102,7 @@ class DesignableTextField: UITextField {
             return self.placeHolderSize
         }
         set {
-            self.attributedPlaceholder = NSMutableAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedStringKey.font:UIFont(name: "", size: 0)!])
+            self.attributedPlaceholder = NSMutableAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes:[.font: UIFont(name: "", size: 0)!])
         }
     }
     
@@ -129,14 +129,14 @@ class DesignableTextField: UITextField {
     
     func updateView() {
         if let image = leftImage {
-            leftViewMode = UITextFieldViewMode.always
+            leftViewMode = .always
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             imageView.image = image
             // Note: In order for your image to use the tint color, you have to select the image in the Assets.xcassets and change the "Render As" property to "Template Image".
             imageView.tintColor = color
             leftView = imageView
         } else {
-            leftViewMode = UITextFieldViewMode.never
+            leftViewMode = .never
             leftView = nil
         }
     }
@@ -149,15 +149,15 @@ class DesignableTextField: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
     }
     
     @IBInspectable var paddingValue: CGFloat = 8

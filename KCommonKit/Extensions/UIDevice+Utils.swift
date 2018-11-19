@@ -11,9 +11,10 @@ import Foundation
 extension UIDevice {
     public class func isPad() -> Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
+        
     }
     
     public class func isLandscape() -> Bool {
-        return UIDeviceOrientationIsLandscape(UIDevice.current.orientation)
+        return UIDevice.current.orientation.isLandscape
     }
 }

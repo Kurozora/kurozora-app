@@ -9,7 +9,6 @@
 import UIKit
 
 public class LoaderView: UIView {
-    
     let rectShape = CAShapeLayer()
     let diameter = 20
     
@@ -44,8 +43,8 @@ public class LoaderView: UIView {
         parentView.addSubview(self)
         
         let viewsDictionary = ["view":self]
-        let constraintH = NSLayoutConstraint.constraints(withVisualFormat: "H:[view(\(diameter))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let constraintV = NSLayoutConstraint.constraints(withVisualFormat: "V:[view(\(diameter))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let constraintH = NSLayoutConstraint.constraints(withVisualFormat: "H:[view(\(diameter))]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let constraintV = NSLayoutConstraint.constraints(withVisualFormat: "V:[view(\(diameter))]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         parentView.addConstraints(constraintH)
         parentView.addConstraints(constraintV)
@@ -53,10 +52,10 @@ public class LoaderView: UIView {
         parentView.addConstraint(
             NSLayoutConstraint(
                 item: self,
-                attribute: NSLayoutAttribute.centerY,
-                relatedBy: NSLayoutRelation.equal,
+                attribute: NSLayoutConstraint.Attribute.centerY,
+                relatedBy: NSLayoutConstraint.Relation.equal,
                 toItem: parentView,
-                attribute: NSLayoutAttribute.centerY,
+                attribute: NSLayoutConstraint.Attribute.centerY,
                 multiplier: 1.0,
                 constant: 0.0)
         )
@@ -64,10 +63,10 @@ public class LoaderView: UIView {
         parentView.addConstraint(
             NSLayoutConstraint(
                 item: self,
-                attribute: NSLayoutAttribute.centerX,
-                relatedBy: NSLayoutRelation.equal,
+                attribute: NSLayoutConstraint.Attribute.centerX,
+                relatedBy: NSLayoutConstraint.Relation.equal,
                 toItem: parentView,
-                attribute: NSLayoutAttribute.centerX,
+                attribute: NSLayoutConstraint.Attribute.centerX,
                 multiplier: 1.0,
                 constant: 0.0)
         )
@@ -81,7 +80,7 @@ public class LoaderView: UIView {
         }
         
         animating = true
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         let animationDuration = 0.4
         
         let sizingAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -96,7 +95,7 @@ public class LoaderView: UIView {
         fadeOut.timingFunction = timingFunction
         fadeOut.duration = animationDuration - 0.1
         fadeOut.isRemovedOnCompletion = false
-        fadeOut.fillMode = kCAFillModeForwards
+        fadeOut.fillMode = CAMediaTimingFillMode.forwards
         fadeOut.beginTime = 0.1
         
         let group = CAAnimationGroup()

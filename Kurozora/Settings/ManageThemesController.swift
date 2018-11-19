@@ -45,7 +45,7 @@ class ManageThemesController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let themeCell: ThemeCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath as IndexPath) as! ThemeCell
+        let themeCell: ThemeCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! ThemeCell
         
         themeCell.themeTitle.text = themeArray[indexPath.row]["title"].stringValue
         themeCell.themeCount.text = "Count: \(themeArray[indexPath.row]["count"].intValue)"

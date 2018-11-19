@@ -1,43 +1,49 @@
 PODS:
   - Alamofire (4.7.3)
-  - AXPhotoViewer (1.5.0):
-    - AXPhotoViewer/Core (= 1.5.0)
-  - AXPhotoViewer/Core (1.5.0):
+  - AutoInsetter (1.3.0)
+  - AXPhotoViewer (1.6.1):
+    - AXPhotoViewer/Core (= 1.6.1)
+  - AXPhotoViewer/Core (1.6.1):
     - AXStateButton (>= 1.1.3)
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
   - Bolts-Swift (1.3.0)
-  - Cosmos (16.0.0)
-  - ESTabBarController-swift (2.6.2)
+  - BottomPopup (0.3.1)
+  - Cosmos (17.0.0)
+  - EmptyDataSet-Swift (4.2.0)
+  - ESTabBarController-swift (2.6.4)
   - FLAnimatedImage (1.0.12)
-  - FSPagerView (0.7.2)
-  - GrowingTextView (0.5.6)
-  - ImagePicker (3.0.0)
-  - IQKeyboardManagerSwift (6.0.3)
-  - KeychainAccess (3.1.1)
-  - Keys (1.0.1)
+  - GrowingTextView (0.6.1)
+  - IQKeyboardManagerSwift (6.2.0)
+  - KeychainAccess (3.1.2)
   - Kingfisher (4.10.0)
   - NGAParallaxMotion (1.1.0)
-  - RevealingSplashView (0.5.0)
-  - SCLAlertView (0.8)
-  - SwifterSwift (4.3.0):
-    - SwifterSwift/AppKit (= 4.3.0)
-    - SwifterSwift/CoreGraphics (= 4.3.0)
-    - SwifterSwift/CoreLocation (= 4.3.0)
-    - SwifterSwift/Foundation (= 4.3.0)
-    - SwifterSwift/MapKit (= 4.3.0)
-    - SwifterSwift/SwiftStdlib (= 4.3.0)
-    - SwifterSwift/UIKit (= 4.3.0)
-  - SwifterSwift/AppKit (4.3.0)
-  - SwifterSwift/CoreGraphics (4.3.0)
-  - SwifterSwift/CoreLocation (4.3.0)
-  - SwifterSwift/Foundation (4.3.0)
-  - SwifterSwift/MapKit (4.3.0)
-  - SwifterSwift/SwiftStdlib (4.3.0)
-  - SwifterSwift/UIKit (4.3.0)
-  - SwiftTheme (0.4.1)
-  - SwiftyJSON (4.1.0)
+  - Pageboy (2.6.1)
+  - RevealingSplashView (0.6.0)
+  - SCLAlertView (0.8.1)
+  - SwifterSwift (4.6.0):
+    - SwifterSwift/AppKit (= 4.6.0)
+    - SwifterSwift/CoreGraphics (= 4.6.0)
+    - SwifterSwift/CoreLocation (= 4.6.0)
+    - SwifterSwift/Foundation (= 4.6.0)
+    - SwifterSwift/MapKit (= 4.6.0)
+    - SwifterSwift/SpriteKit (= 4.6.0)
+    - SwifterSwift/SwiftStdlib (= 4.6.0)
+    - SwifterSwift/UIKit (= 4.6.0)
+  - SwifterSwift/AppKit (4.6.0)
+  - SwifterSwift/CoreGraphics (4.6.0)
+  - SwifterSwift/CoreLocation (4.6.0)
+  - SwifterSwift/Foundation (4.6.0)
+  - SwifterSwift/MapKit (4.6.0)
+  - SwifterSwift/SpriteKit (4.6.0)
+  - SwifterSwift/SwiftStdlib (4.6.0)
+  - SwifterSwift/UIKit (4.6.0)
+  - SwiftTheme (0.4.3)
+  - SwiftyJSON (4.2.0)
+  - Tabman (1.10.2):
+    - AutoInsetter (~> 1.3.0)
+    - Pageboy (~> 2.6.0)
   - TRON (4.2.1):
     - Alamofire (~> 4.5)
     - TRON/SwiftyJSON (= 4.2.1)
@@ -49,51 +55,54 @@ PODS:
     - TRON/Core
   - TTTAttributedLabel-moolban (2.0.0.2)
   - UIImageColors (2.0.0)
-  - WhatsNew (0.4.3)
-  - XLPagerTabStrip (8.0.1)
+  - WhatsNew (0.4.4)
+  - XLPagerTabStrip (8.1.0)
 
 DEPENDENCIES:
   - AXPhotoViewer
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
-  - Cosmos (~> 16.0)
-  - ESTabBarController-swift (= 2.6.2)
-  - FSPagerView (from `https://github.com/WenchaoD/FSPagerView`, commit `6e0a2b7fc95d7ba262b324337e1479f81a829da6`)
+  - BottomPopup
+  - Cosmos (~> 17.0)
+  - EmptyDataSet-Swift (~> 4.2)
+  - ESTabBarController-swift (~> 2.6)
   - GrowingTextView (~> 0.5)
-  - ImagePicker (= 3.0.0)
-  - IQKeyboardManagerSwift (= 6.0.3)
-  - KeychainAccess (= 3.1.1)
-  - Keys (from `Pods/CocoaPodsKeys`)
+  - IQKeyboardManagerSwift (~> 6)
+  - KeychainAccess (~> 3.1)
   - Kingfisher (~> 4.0)
-  - NGAParallaxMotion (= 1.1.0)
+  - NGAParallaxMotion (~> 1.1)
   - RevealingSplashView
-  - SCLAlertView (= 0.8)
-  - SwifterSwift (= 4.3.0)
-  - SwiftTheme (= 0.4.1)
+  - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
+  - SwifterSwift (~> 4.3)
+  - SwiftTheme (~> 0.4)
+  - Tabman (~> 1.10)
   - TRON (~> 4.0)
   - TTTAttributedLabel-moolban (= 2.0.0.2)
   - UIImageColors (= 2.0.0)
-  - WhatsNew (= 0.4.3)
-  - XLPagerTabStrip (= 8.0.1)
+  - WhatsNew
+  - XLPagerTabStrip
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AutoInsetter
     - AXPhotoViewer
     - AXStateButton
+    - BottomPopup
     - Cosmos
+    - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
     - GrowingTextView
-    - ImagePicker
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
     - NGAParallaxMotion
+    - Pageboy
     - RevealingSplashView
-    - SCLAlertView
     - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
+    - Tabman
     - TRON
     - TTTAttributedLabel-moolban
     - UIImageColors
@@ -104,47 +113,47 @@ EXTERNAL SOURCES:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
-  FSPagerView:
-    :commit: 6e0a2b7fc95d7ba262b324337e1479f81a829da6
-    :git: https://github.com/WenchaoD/FSPagerView
-  Keys:
-    :path: Pods/CocoaPodsKeys
+  SCLAlertView:
+    :branch: master
+    :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 CHECKOUT OPTIONS:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
-  FSPagerView:
-    :commit: 6e0a2b7fc95d7ba262b324337e1479f81a829da6
-    :git: https://github.com/WenchaoD/FSPagerView
+  SCLAlertView:
+    :commit: d371170ca2e276462ff229e675a2d2020ad2bb72
+    :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AXPhotoViewer: 76f564287c178019f29f4bd538267e6130cfbc0e
+  AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
-  Cosmos: 7bcee0fa858a9355a214f2a181be5dffcee42c81
-  ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
+  BottomPopup: 1031c8937466ca350d68e293f1d8e463e758e150
+  Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
+  EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
+  ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
-  GrowingTextView: 8958f4fb7419de58dd622021b2d0696487e00e70
-  ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
-  IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
-  KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
-  Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
+  GrowingTextView: 335aefa45df7df06b01edede1363414d6ee5d6bc
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
-  RevealingSplashView: 0794eecad3a8983ac11a1fe474e9a9b51b926780
-  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
-  SwifterSwift: f3fce2b9fc5b9d8fda6eec33825e5243c60aebba
-  SwiftTheme: 36d71c4eed4b2c401c782cf036e4586c749a8173
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
+  RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
+  SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
+  SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
+  SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
   TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
-  WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
-  XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
+  WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
+  XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 9435b919db5b4ba26d2273a14ef8ce4d0bf2140d
+PODFILE CHECKSUM: c43959ddbf7589f8ceb2c5978f2a5a30f0eb776b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.1

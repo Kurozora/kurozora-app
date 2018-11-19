@@ -10,43 +10,26 @@ import KCommonKit
 import SCLAlertView
 
 class ResetPasswordViewController: UIViewController {
-
     @IBOutlet weak var userEmailTextField: CustomTextField!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var navigationBar: UINavigationBar!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        UIApplication.shared.statusBarStyle = .lightContent
-    }
-    
-    // MARK: - Status bar
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNeedsStatusBarAppearanceUpdate()
-        // Do any additional setup after loading the view, typically from a nib.
-        navigationBar.delegate = self
         
         resetButton.isEnabled = false
-        userEmailTextField.becomeFirstResponder()
+//        userEmailTextField.becomeFirstResponder()
         userEmailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
-    //MARK: Actions
-    
-    @IBAction func dismissPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
+    //MARK: Actions    
     @IBAction func resetPressed(sender: AnyObject) {
         view.endEditing(true)
         userEmailTextField.trimSpaces()
@@ -67,12 +50,6 @@ class ResetPasswordViewController: UIViewController {
         }) { (errorMessage) in
             SCLAlertView().showError("Error resetting password", subTitle: errorMessage)
         }
-    }
-}
-
-extension ResetPasswordViewController: UINavigationBarDelegate, UIBarPositioningDelegate {
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .topAttached
     }
 }
 
