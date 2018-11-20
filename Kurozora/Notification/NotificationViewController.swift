@@ -19,7 +19,7 @@ protocol NotificationsViewControllerDelegate: class {
 }
 
 class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyDataSetDelegate, EmptyDataSetSource {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
     
     var notifications:[JSON]?
     enum notifcationType:String {
@@ -76,7 +76,24 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let userNotificationCell:UserNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "UserNotificationCell", for: indexPath as IndexPath) as! UserNotificationCell
         let notificationCell:NotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath as IndexPath) as! NotificationCell
+        
+        if let time = notifications?[indexPath.row]["time_string"].stringValue, time != "" {
+            userNotificationCell.notificationDate.text = time
+            notificationCell.notificationDate.text = time
+        } else {
+            userNotificationCell.notificationDate.text = ""
+            notificationCell.notificationDate.text = ""
+        }
+        
+        if let description = notifications?[indexPath.row]["string"].stringValue, description != "" {
+            userNotificationCell.notificationTextLable.text = description
+            notificationCell.notificationTextLable.text = description
+        } else {
+            userNotificationCell.notificationTextLable.text = ""
+            notificationCell.notificationTextLable.text = ""
+        }
         
         if let notificationType = notifications?[indexPath.row]["type"].stringValue, notificationType != "" {
             let type: notifcationType = notifcationType(rawValue: notificationType)!
@@ -85,44 +102,31 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             case .TYPE_NEW_SESSION:
                 notificationCell.notificationType.text = "NEW SESSION"
                 notificationCell.notificationIcon.image = UIImage(named: "session_icon")
-                notificationCell.notificationTitleLabel.isHidden = true
-                notificationCell.notificationProfileImage.isHidden = true
+                
+                return notificationCell
             case .TYPE_NEW_FOLLOWER:
-                notificationCell.notificationType.text = "NEW MESSAGE"
-                notificationCell.notificationIcon.image = UIImage(named: "message_icon")
+                userNotificationCell.notificationType.text = "NEW MESSAGE"
+                userNotificationCell.notificationIcon.image = UIImage(named: "message_icon")
                 if let title = notifications?[indexPath.row]["data"]["follower_name"].stringValue, title != "" {
-                    notificationCell.notificationTitleLabel.text = title
+                    userNotificationCell.notificationTitleLabel.text = title
                 } else {
-                    notificationCell.notificationTitleLabel.text = ""
+                    userNotificationCell.notificationTitleLabel.text = ""
                     
                 }
                 
                 if let avatar = notifications?[indexPath.row]["data"]["follower_avatar"].stringValue, avatar != "" {
                     let avatarUrl = URL(string: avatar)
                     let resource = ImageResource(downloadURL: avatarUrl!)
-                    notificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+                    userNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
                 } else {
-                    notificationCell.notificationProfileImage.image = UIImage(named: "")
+                    userNotificationCell.notificationProfileImage.image = UIImage(named: "")
                 }
             default:
                 break
             }
         }
         
-        if let time = notifications?[indexPath.row]["time_string"].stringValue, time != "" {
-            notificationCell.notificationDate.text = time
-        } else {
-           notificationCell.notificationDate.text = ""
-        }
-        
-        if let description = notifications?[indexPath.row]["string"].stringValue, description != "" {
-            notificationCell.notificationTextLable.text = description
-        } else {
-            notificationCell.notificationTextLable.text = ""
-            
-        }
-        
-        return notificationCell
+        return userNotificationCell
     }
     
 //    var fetchController = FetchController()

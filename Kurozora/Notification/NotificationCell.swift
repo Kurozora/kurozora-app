@@ -8,16 +8,24 @@
 
 import UIKit
 
-class NotificationCell : UITableViewCell {
+class UserNotificationCell: UITableViewCell {
     // Header
-    @IBOutlet weak var notificationHeader: UIView!
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!
     @IBOutlet weak var notificationIcon: UIImageView!
     
     // Body
-    @IBOutlet weak var notificationBody: UIView!
     @IBOutlet weak var notificationProfileImage: UIImageView!
     @IBOutlet weak var notificationTitleLabel: UILabel!
+    @IBOutlet weak var notificationTextLable: UILabel!
+}
+
+class NotificationCell: UITableViewCell {
+    // Header
+    @IBOutlet weak var notificationDate: UILabel!
+    @IBOutlet weak var notificationType: UILabel!
+    @IBOutlet weak var notificationIcon: UIImageView!
+    
+    // Body
     @IBOutlet weak var notificationTextLable: UILabel!
 }

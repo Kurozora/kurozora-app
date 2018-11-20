@@ -23,8 +23,8 @@ class KurozoraTabBarController: ESTabBarController {
         let forumsStoryboard = UIStoryboard(name: "forums", bundle: nil)
         let forums = forumsStoryboard.instantiateViewController(withIdentifier: "Forums") as! ForumsViewController
         
-        let notificationStoryboard = UIStoryboard(name: "profile", bundle: nil)
-        let notifications = notificationStoryboard.instantiateViewController(withIdentifier: "Notifications") as! NotificationsViewController
+        let notificationStoryboard = UIStoryboard(name: "notification", bundle: nil)
+        let notifications = notificationStoryboard.instantiateViewController(withIdentifier: "Notification") as! NotificationsViewController
         
         let profileStoryboard = UIStoryboard(name: "profile", bundle: nil)
         let profile = profileStoryboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController

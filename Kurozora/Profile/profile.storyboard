@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -1017,177 +1017,6 @@
             </objects>
             <point key="canvasLocation" x="929" y="55"/>
         </scene>
-        <!--Notifications-->
-        <scene sceneID="ZtV-32-IfG">
-            <objects>
-                <viewController storyboardIdentifier="Notifications" title="Notifications" useStoryboardIdentifierAsRestorationIdentifier="YES" id="teS-6r-nNR" customClass="NotificationsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jJn-Tz-d9F"/>
-                        <viewControllerLayoutGuide type="bottom" id="sKF-uR-TBK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VNg-La-myw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="2zI-LQ-mws">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="638"/>
-                                <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="sectionIndexBackgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="94" id="QFs-8Q-271" customClass="NotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="94"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QFs-8Q-271" id="mEx-Dx-lTy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lf-nf-fPZ" userLabel="Notification Bubble" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="4" y="36" width="366" height="58"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xuS-Ay-cxT" userLabel="Profile Image" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="7" width="44" height="44"/>
-                                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="44" id="S9T-v3-xlW"/>
-                                                                <constraint firstAttribute="height" constant="44" id="hfn-52-x4e"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="22"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clG-Rh-4fX" userLabel="Username Lable">
-                                                            <rect key="frame" x="60" y="2.9999999999999991" width="47" height="15.666666666666664"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJq-1d-THC">
-                                                            <rect key="frame" x="60" y="18.666666666666664" width="298" height="31.333333333333336"/>
-                                                            <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstItem="clG-Rh-4fX" firstAttribute="leading" secondItem="xuS-Ay-cxT" secondAttribute="trailing" constant="8" id="1IF-u3-mNU"/>
-                                                        <constraint firstItem="HJq-1d-THC" firstAttribute="leading" secondItem="clG-Rh-4fX" secondAttribute="leading" id="A9w-SM-x4i"/>
-                                                        <constraint firstAttribute="bottom" secondItem="HJq-1d-THC" secondAttribute="bottom" constant="8" id="Egc-lc-IfW"/>
-                                                        <constraint firstAttribute="bottom" secondItem="xuS-Ay-cxT" secondAttribute="bottom" constant="7" id="Hw0-9s-RM1"/>
-                                                        <constraint firstItem="clG-Rh-4fX" firstAttribute="top" secondItem="1lf-nf-fPZ" secondAttribute="top" constant="3" id="QHV-Bd-cKa"/>
-                                                        <constraint firstAttribute="height" constant="58" id="SWu-94-cX2"/>
-                                                        <constraint firstAttribute="trailing" secondItem="HJq-1d-THC" secondAttribute="trailing" constant="8" id="Szy-xh-RR8"/>
-                                                        <constraint firstItem="xuS-Ay-cxT" firstAttribute="top" secondItem="1lf-nf-fPZ" secondAttribute="top" constant="7" id="bKl-8v-fEe"/>
-                                                        <constraint firstItem="xuS-Ay-cxT" firstAttribute="leading" secondItem="1lf-nf-fPZ" secondAttribute="leading" constant="8" id="mk1-Io-Bwi"/>
-                                                        <constraint firstItem="xuS-Ay-cxT" firstAttribute="centerY" secondItem="1lf-nf-fPZ" secondAttribute="centerY" id="ouJ-4N-Teo"/>
-                                                        <constraint firstItem="HJq-1d-THC" firstAttribute="top" secondItem="clG-Rh-4fX" secondAttribute="bottom" id="pCF-NG-nWT"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehY-VU-0g7" userLabel="Notification Header">
-                                                    <rect key="frame" x="5" y="4" width="365" height="40"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcG-He-Z9y" userLabel="Notification Time">
-                                                            <rect key="frame" x="254" y="12" width="103" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MESSAGE" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxy-IW-7R5" userLabel="Notification Title">
-                                                            <rect key="frame" x="53" y="12.333333333333332" width="60" height="15.666666666666668"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                                            <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ojM-PK-3wa" userLabel="Notification Image" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="13" y="3" width="34" height="34"/>
-                                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="34" id="3H4-Dm-mlf"/>
-                                                                <constraint firstAttribute="width" constant="34" id="I56-ap-eHa"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="8.5"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="lcG-He-Z9y" secondAttribute="trailing" constant="8" id="8Tz-e9-IPs"/>
-                                                        <constraint firstItem="lcG-He-Z9y" firstAttribute="top" secondItem="ehY-VU-0g7" secondAttribute="top" constant="12" id="K41-cI-FJ7"/>
-                                                        <constraint firstAttribute="bottom" secondItem="ojM-PK-3wa" secondAttribute="bottom" constant="3" id="Khg-KT-tbh"/>
-                                                        <constraint firstItem="ojM-PK-3wa" firstAttribute="leading" secondItem="ehY-VU-0g7" secondAttribute="leading" constant="13" id="Off-Pe-ZPS"/>
-                                                        <constraint firstAttribute="height" constant="40" id="VFP-ru-ZMd"/>
-                                                        <constraint firstItem="ojM-PK-3wa" firstAttribute="top" secondItem="ehY-VU-0g7" secondAttribute="top" constant="3" id="XeV-2c-A9M"/>
-                                                        <constraint firstItem="lcG-He-Z9y" firstAttribute="centerY" secondItem="qxy-IW-7R5" secondAttribute="centerY" id="Yur-jU-1gJ"/>
-                                                        <constraint firstItem="qxy-IW-7R5" firstAttribute="centerY" secondItem="ojM-PK-3wa" secondAttribute="centerY" id="jrr-eE-sLU"/>
-                                                        <constraint firstAttribute="bottom" secondItem="lcG-He-Z9y" secondAttribute="bottom" constant="12" id="sVE-sr-evz"/>
-                                                        <constraint firstItem="qxy-IW-7R5" firstAttribute="leading" secondItem="ojM-PK-3wa" secondAttribute="trailing" constant="6" id="xy5-M6-qe8"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="ehY-VU-0g7" secondAttribute="trailing" constant="5" id="DuZ-5C-2h9"/>
-                                                <constraint firstItem="ehY-VU-0g7" firstAttribute="top" secondItem="mEx-Dx-lTy" secondAttribute="top" constant="4" id="FFr-kW-gJV"/>
-                                                <constraint firstAttribute="trailing" secondItem="1lf-nf-fPZ" secondAttribute="trailing" constant="5" id="NSx-Qa-RV3"/>
-                                                <constraint firstAttribute="bottom" secondItem="1lf-nf-fPZ" secondAttribute="bottom" id="k6z-gG-4AY"/>
-                                                <constraint firstItem="1lf-nf-fPZ" firstAttribute="leading" secondItem="mEx-Dx-lTy" secondAttribute="leading" constant="4" id="udy-1t-rkz"/>
-                                                <constraint firstItem="ehY-VU-0g7" firstAttribute="leading" secondItem="mEx-Dx-lTy" secondAttribute="leading" constant="5" id="uss-2C-bYX"/>
-                                                <constraint firstItem="ehY-VU-0g7" firstAttribute="centerX" secondItem="mEx-Dx-lTy" secondAttribute="centerX" id="zEs-IE-3cD"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="notificationBody" destination="1lf-nf-fPZ" id="3w1-6i-UOk"/>
-                                            <outlet property="notificationDate" destination="lcG-He-Z9y" id="tib-dT-nyh"/>
-                                            <outlet property="notificationHeader" destination="ehY-VU-0g7" id="4fI-OW-5Tx"/>
-                                            <outlet property="notificationIcon" destination="ojM-PK-3wa" id="4BF-5f-oHm"/>
-                                            <outlet property="notificationProfileImage" destination="xuS-Ay-cxT" id="uzc-I3-PCg"/>
-                                            <outlet property="notificationTextLable" destination="HJq-1d-THC" id="lUH-g4-4Ie"/>
-                                            <outlet property="notificationTitleLabel" destination="clG-Rh-4fX" id="Y8I-ys-wW6"/>
-                                            <outlet property="notificationType" destination="qxy-IW-7R5" id="sHm-Ug-TTd"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="2zI-LQ-mws" secondAttribute="trailing" id="Qve-oK-l4n"/>
-                            <constraint firstItem="2zI-LQ-mws" firstAttribute="leading" secondItem="VNg-La-myw" secondAttribute="leading" id="hrO-Ft-T05"/>
-                            <constraint firstItem="2zI-LQ-mws" firstAttribute="top" secondItem="jJn-Tz-d9F" secondAttribute="bottom" id="l7m-MM-hmt"/>
-                            <constraint firstItem="sKF-uR-TBK" firstAttribute="top" secondItem="2zI-LQ-mws" secondAttribute="bottom" id="z1m-in-Fci"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Notifications" id="qAR-rD-xS6">
-                        <barButtonItem key="rightBarButtonItem" image="search" id="WlI-hP-JxM" userLabel="Serach"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="tableView" destination="2zI-LQ-mws" id="dGE-zR-rxt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SRb-ag-XYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2682" y="55"/>
-        </scene>
         <!--Profile Navigation-->
         <scene sceneID="o26-8I-W3L">
             <objects>
@@ -1213,31 +1042,11 @@
             </objects>
             <point key="canvasLocation" x="222" y="-1112"/>
         </scene>
-        <!--Kurozora Navigation Controller-->
-        <scene sceneID="Pc6-WG-rmV">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cG2-8I-VWp" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="ciN-rm-ArA">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="teS-6r-nNR" kind="relationship" relationship="rootViewController" id="0Ql-yq-LcS"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vus-9b-rBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1869.5999999999999" y="54.679802955665025"/>
-        </scene>
     </scenes>
     <resources>
         <image name="colorful" width="1130" height="706"/>
         <image name="create_new" width="30" height="30"/>
         <image name="default_avatar" width="100" height="100"/>
-        <image name="message_icon" width="128" height="128"/>
         <image name="more_dark" width="66.666664123535156" height="66.666664123535156"/>
         <image name="search" width="30" height="30"/>
         <image name="settings" width="75" height="75"/>

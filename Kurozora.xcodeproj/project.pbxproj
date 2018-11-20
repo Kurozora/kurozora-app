@@ -106,6 +106,7 @@
 		669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */; };
 		669C8D5A2107B9450014EB7A /* KurozoraNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669C8D592107B9450014EB7A /* KurozoraNavigationController.swift */; };
 		66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A48FDD21A3098100F34085 /* TopicCells.swift */; };
+		66A48FE021A411A900F34085 /* notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* notification.storyboard */; };
 		66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552D320A2D24F00E515DB /* ForumsViewController.swift */; };
 		66A552D620A2D40100E515DB /* forums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A552D520A2D40100E515DB /* forums.storyboard */; };
 		66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */; };
@@ -405,6 +406,7 @@
 		669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTabBarItemContentView.swift; sourceTree = "<group>"; };
 		669C8D592107B9450014EB7A /* KurozoraNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraNavigationController.swift; sourceTree = "<group>"; };
 		66A48FDD21A3098100F34085 /* TopicCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCells.swift; sourceTree = "<group>"; };
+		66A48FDF21A411A900F34085 /* notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = notification.storyboard; sourceTree = "<group>"; };
 		66A552D320A2D24F00E515DB /* ForumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
 		66A552D520A2D40100E515DB /* forums.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forums.storyboard; sourceTree = "<group>"; };
 		66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeInformationViewController.swift; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				6601F1AB2118488D0074C1DD /* NotificationCell.swift */,
 				66CF6D6E20A9921000F98375 /* NotificationViewController.swift */,
 				66CF6D6420A9877900F98375 /* NotificationController.swift */,
+				66A48FDF21A411A900F34085 /* notification.storyboard */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -1604,6 +1607,7 @@
 				66D6236E20A09F6B00304914 /* season.storyboard in Resources */,
 				668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */,
 				66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */,
+				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
 				66707835208B842E00471FBC /* settings.storyboard in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
