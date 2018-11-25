@@ -85,7 +85,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CheckIn" id="CEy-UH-Dpd" userLabel="CheckIn" customClass="LibraryAnimeCell" customModule="Kurozora" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CheckIn" id="CEy-UH-Dpd" userLabel="CheckIn" customClass="LibraryCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="17.666666666666668" y="0.0" width="340" height="175"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -173,6 +173,8 @@
                                         <connections>
                                             <outlet property="commentButton" destination="DRT-bT-orL" id="jbK-0f-5aC"/>
                                             <outlet property="episodeImageView" destination="EnN-iB-1Zo" id="nEr-BR-VIg"/>
+                                            <outlet property="posterView" destination="O2t-su-g6E" id="4N5-1F-5oO"/>
+                                            <outlet property="titleLabel" destination="RxX-Zd-and" id="T7P-4X-D4O"/>
                                             <outlet property="userProgressLabel" destination="Gzk-Zl-2qZ" id="m0m-bU-h5E"/>
                                             <outlet property="watchedButton" destination="fAN-6j-uaH" id="cxj-NT-6eG"/>
                                         </connections>

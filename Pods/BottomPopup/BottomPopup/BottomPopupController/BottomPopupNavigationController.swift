@@ -11,10 +11,11 @@ import UIKit
 open class BottomPopupNavigationController: UINavigationController, BottomPopupAttributesDelegate {
     
     private var transitionHandler: BottomPopupTransitionHandler?
+    open weak var popupDelegate: BottomPopupDelegate?
     
     // MARK: Initializations
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         initialize()
@@ -29,13 +30,33 @@ open class BottomPopupNavigationController: UINavigationController, BottomPopupA
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        transitionHandler?.notifyViewLoaded()
+        transitionHandler?.notifyViewLoaded(withPopupDelegate: popupDelegate)
+        popupDelegate?.bottomPopupViewLoaded()
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         curveTopCorners()
+        popupDelegate?.bottomPopupWillAppear()
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        popupDelegate?.bottomPopupDidAppear()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        popupDelegate?.bottomPopupWillDismiss()
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        popupDelegate?.bottomPopupDidDismiss()
     }
     
     //MARK: Private Methods

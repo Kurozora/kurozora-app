@@ -15,7 +15,6 @@ import SCLAlertView
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 
 class SettingsViewController: UITableViewController {
-    
     //    let FacebookPageDeepLink = "fb://profile/713541968752502"
     //    let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
     let TwitterPageDeepLink = "twitter://user?id=991929359052177409"
@@ -67,9 +66,8 @@ class SettingsViewController: UITableViewController {
     }
     
     // MARK: - IBAction
-    
-    @IBAction func dismissPressed(sender: AnyObject) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func dismissPressed(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - TableView functions

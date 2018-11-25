@@ -57,10 +57,10 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         // Show score
-        if let score = shows?[indexPath.row]["score"].doubleValue, score != 0.00 {
+        if let score = shows?[indexPath.row]["average_rating"].doubleValue, score != 0 {
             showCell.scoreLabel.text = " \(score)"
             // Change color based on score
-            if score > 2.5 {
+            if score >= 2.5 {
                 showCell.scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 177/255.0, blue: 10/255.0, alpha: 1.0)
             } else {
                 showCell.scoreLabel.backgroundColor = UIColor.init(red: 255/255.0, green: 77/255.0, blue: 67/255.0, alpha: 1.0)
@@ -72,14 +72,4 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         
         return showCell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-////        if let showId = shows?[indexPath.item]["id"].intValue {
-////            self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showId)
-////        }
-//        if let showId = shows?[indexPath.item]["id"].intValue {
-//            homeViewController.showDetailFor(showId)
-//
-//        }
-//    }
 }

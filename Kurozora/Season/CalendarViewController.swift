@@ -10,10 +10,9 @@ import UIKit
 import KDatabaseKit
 import Alamofire
 import KCommonKit
-import XLPagerTabStrip
 //import Bolts
 
-class CalendarViewController: ButtonBarPagerTabStripViewController {
+class CalendarViewController: UIViewController {
 //    
 //    var weekdayStrings: [String] = []
 //    

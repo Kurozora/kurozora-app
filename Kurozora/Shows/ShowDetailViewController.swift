@@ -72,10 +72,6 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var membersCountLabel: UILabel!
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     func getRating(value: Double?) {
         if let rating = value {
             self.cosmosView.rating = rating
@@ -122,8 +118,8 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
                 DispatchQueue.main.async() {
                     self.tableView.reloadData()
                 }
-            }) { (errorMsg) in
-                SCLAlertView().showError("Can't get cast details", subTitle: "There was an error while retrieving cast details. Please check your internet connection and refresh this page.")
+            }) { (errorMessage) in
+                SCLAlertView().showError("Can't get cast details", subTitle: errorMessage)
             }
         }
         
@@ -158,7 +154,32 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    // Update view with details
+	@IBAction func chooseStatusButton(_ sender: AnyObject) {
+		let selectedList = "watching" //update this for selected value
+		let action = UIAlertController.actionSheetWithItems(items: [("Watching","watching"),("Completed","completed"),("Dropped","dropped")], currentSelection: selectedList, action: { (value)  in
+			guard let showId = self.showId else {return}
+
+			Service.shared.addLibraryFor(status: value.lowercased(), showId: showId, withSuccess: { (success) in
+				if !success {
+					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
+				}
+			}, andFailure: { (errorMessage) in
+				SCLAlertView().showError("Can't add to library", subTitle: errorMessage)
+			})
+		})
+		action.addAction(UIAlertAction.init(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
+
+	// Update view with details
     func updateDetailWithShow(_ show: ShowDetails?) {
         if showDetails != nil {
 //            if let progress = show?.progress {
@@ -179,7 +200,7 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
             // Configure rating button
             if let rating = showDetails?.currentRating {
                 showRating = rating
-                self.cosmosView.rating = showRating ?? 0
+                self.cosmosView.rating = rating
             } else {
                 self.cosmosView.rating = 0.0
             }
@@ -335,9 +356,9 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
     }
 
     @IBAction func playTrailerPressed(sender: AnyObject) {
-        if let trailerURL = showDetails?.youtubeId {
-//            presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
-        }
+//        if let trailerURL = showDetails?.youtubeId {
+////            presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
+//        }
     }
     
     @IBAction func showCastDrawer(_ sender: Any) {
@@ -387,7 +408,7 @@ extension ShowDetailViewController: UITableViewDataSource {
         case .synopsis: numberOfRows = 1
         case .information: numberOfRows = (User.isAdmin() == true) ? 8 : 7
         case .cast:
-            if let actorsCount = castDetails?.count, actorsCount < 5 {
+            if let actorsCount = castDetails?.count, actorsCount <= 5 {
                 numberOfRows = actorsCount
             } else if let actorsCount = castDetails?.count, actorsCount > 5 {
                 numberOfRows = 6

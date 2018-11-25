@@ -33,7 +33,7 @@ def project_pods
     pod 'IQKeyboardManagerSwift', '~> 6'
     pod 'NGAParallaxMotion', '~> 1.1'
 #    pod 'Shimmer', '1.0.2'
-    pod 'XLPagerTabStrip', '~> 8.1'
+#    pod 'XLPagerTabStrip', '~> 8.1'
     pod 'WhatsNew'
     pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
 end

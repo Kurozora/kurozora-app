@@ -8,21 +8,22 @@
 
 import KCommonKit
 import KDatabaseKit
-//import Bolts
 
-protocol LibraryAnimeCellDelegate: class {
-    func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime)
-    func cellPressedEpisodeThread(cell: LibraryAnimeCell, anime: Anime, episode: Episode)
+protocol LibraryCellDelegate: class {
+    func cellPressedWatched(cell: LibraryCell, anime: Anime)
+    func cellPressedEpisodeThread(cell: LibraryCell, anime: Anime, episode: Episode)
 }
 
-class LibraryAnimeCell: AnimeCell {
+class LibraryCell: UICollectionViewCell {
 //
 //    weak var delegate: LibraryAnimeCellDelegate?
 //    var anime: Anime?
 //    weak var episode: Episode?
 //    var currentCancellationToken: Operation?
 
-    @IBOutlet weak var userProgressLabel: UILabel!
+	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var posterView: UIImageView!
+	@IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton?
     @IBOutlet weak var commentButton: UIButton?
     @IBOutlet weak var episodeImageView: UIImageView?

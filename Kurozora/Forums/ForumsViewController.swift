@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-//import XLPagerTabStrip
 import SwiftyJSON
 import Tabman
 import Pageboy

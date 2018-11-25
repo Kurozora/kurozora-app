@@ -9,7 +9,6 @@
 import KDatabaseKit
 import Alamofire
 import KCommonKit
-import XLPagerTabStrip
 
 class DayViewController: UIViewController {
 //

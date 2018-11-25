@@ -10,7 +10,6 @@ import KCommonKit
 //import ANParseKit
 
 class AnimeCell: UICollectionViewCell {
-    
     static let id = "AnimeCell"
 
     @IBOutlet weak var titleLabel: UILabel!

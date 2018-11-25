@@ -683,7 +683,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 
     @IBAction func settingsBtnPressed(_ sender: Any) {
         let storyboard:UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsController") as! UINavigationController
-        self.show(vc, sender: self)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingsSplitView") as! UISplitViewController
+        self.present(vc, animated: true, completion: nil)
     }
 }

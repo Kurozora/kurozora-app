@@ -9,6 +9,8 @@
 import KCommonKit
 import KDatabaseKit
 import EmptyDataSet_Swift
+import SCLAlertView
+import SwiftyJSON
 
 //protocol AnimeListControllerDelegate: class {
 //    func controllerRequestRefresh() -> BFTask
@@ -16,11 +18,23 @@ import EmptyDataSet_Swift
 
 class AnimeListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var collectionView: UICollectionView!
-    
+
+	var library: [JSON]?
     var sectionTitle: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		guard let sectionTitle = sectionTitle?.lowercased() else {return}
+
+		Service.shared.getLibraryFor(status: sectionTitle, withSuccess: { (library) in
+			DispatchQueue.main.async {
+				self.library = library
+				self.collectionView.reloadData()
+			}
+		}) { (errorMessage) in
+			SCLAlertView().showError("Can't get library", subTitle: errorMessage)
+		}
         
         // Setup table view
         collectionView.delegate = self
@@ -30,21 +44,27 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
         collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetSource = self
         
-        guard let sectionTitle = sectionTitle else {return}
-        
         collectionView.emptyDataSetView { (view) in
-            view.titleLabelString(NSAttributedString(string: sectionTitle))
+            view.titleLabelString(NSAttributedString(string: "Your \(sectionTitle) list is empty!"))
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if let libraryCount = library?.count, libraryCount != 0 {
+			return libraryCount
+		}
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryAnimeCell
-        
-        return cell
+        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryCell
+
+		showCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
+		showCell.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
+		showCell.titleLabel.text = "Anime"
+		showCell.userProgressLabel.text = "TV ·  10/24    5"
+
+        return showCell
     }
 //    weak var delegate: AnimeListControllerDelegate?
 //

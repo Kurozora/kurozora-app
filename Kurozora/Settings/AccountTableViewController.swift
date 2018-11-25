@@ -33,7 +33,6 @@ class AccountTableViewController: UITableViewController {
         userEmailLabel.textColor = .white
         userEmailLabel.textAlignment = .center
         userEmailLabel.font = UIFont(name: "System", size: 13)
-        
     }
     
     override func viewDidLoad() {
@@ -51,10 +50,7 @@ class AccountTableViewController: UITableViewController {
             alertView.addButton("Yes, sign me out 😞", action: {
                 if let isLoggedIn = User.isLoggedIn() {
                     if isLoggedIn {
-                        let sessionId = User.currentSessionSecret()
-                        let userId = User.currentId()
-                        
-                        Service.shared.logout(sessionId!, userId!, withSuccess: { (success) in
+                        Service.shared.logout(withSuccess: { (success) in
                             let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                             let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
                             

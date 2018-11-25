@@ -69,7 +69,7 @@ extension ActionListViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OptionCell")
-        let title = dataSource[indexPath.row]
+//        let title = dataSource[indexPath.row]
 //        cell.titleLabel.text = title
         return cell!
     }

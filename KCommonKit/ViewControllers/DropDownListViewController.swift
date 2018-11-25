@@ -128,7 +128,7 @@ extension DropDownListViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = (imageDataSource.count != 0) ? "OptionCell2" : "OptionCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
-        let title = dataSource[indexPath.section][indexPath.row]
+//        let title = dataSource[indexPath.section][indexPath.row]
 //        cell.titleLabel.text = title
         if imageDataSource.count != 0 {
 //            cell.titleimageView.image = UIImage(named: imageDataSource[indexPath.section][indexPath.row])
