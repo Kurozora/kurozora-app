@@ -16,25 +16,16 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!
 
-    var sessionsArray: [JSON]?
+	var sessionsArray: [JSON]?
     
     override func viewWillAppear(_ animated: Bool) {
-        Service.shared.getSessions( withSuccess: { (sessions) in
-            if let session = sessions {
-                self.sessionsArray = session.otherSessions
-                self.updateCurrentSession(with: session)
-            }
-
-            DispatchQueue.main.async() {
-                self.tableView.reloadData()
-            }
-        }) { (errorMsg) in
-            SCLAlertView().showError("Sessions", subTitle: errorMsg)
-        }
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		fetchSessions()
         
         // Setup table view
         tableView.dataSource = self
@@ -51,10 +42,22 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
                 .isTouchAllowed(true)
                 .isScrollAllowed(true)
         }
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        }
     }
+
+	private func fetchSessions() {
+		Service.shared.getSessions( withSuccess: { (sessions) in
+			if let session = sessions {
+				self.sessionsArray = session.otherSessions
+				self.updateCurrentSession(with: session)
+			}
+
+			DispatchQueue.main.async() {
+				self.tableView.reloadData()
+			}
+		}) { (errorMsg) in
+			SCLAlertView().showError("Sessions", subTitle: errorMsg)
+		}
+	}
     
     func updateCurrentSession(with session: Session?) {
         if let sessionIp = session?.ip {

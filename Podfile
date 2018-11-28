@@ -16,7 +16,6 @@ def common_pods
     pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
     pod 'UIImageColors', '2.0.0'
     pod 'ESTabBarController-swift', '~> 2.6'
-#    pod 'FSPagerView', :git => 'https://github.com/WenchaoD/FSPagerView', commit: '6e0a2b7fc95d7ba262b324337e1479f81a829da6'
 #    pod 'SnowGlobe'
     pod 'SwiftTheme', '~> 0.4'
     pod 'GrowingTextView', '~> 0.5'
@@ -26,14 +25,13 @@ def common_pods
     pod 'EmptyDataSet-Swift', '~> 4.2'
     pod 'BottomPopup'
     pod 'Tabman', '~> 1.10'
-#    pod 'CRRefresh', '1.0.0'
+	pod 'NVActivityIndicatorView'
 end
 
 def project_pods
     pod 'IQKeyboardManagerSwift', '~> 6'
     pod 'NGAParallaxMotion', '~> 1.1'
 #    pod 'Shimmer', '1.0.2'
-#    pod 'XLPagerTabStrip', '~> 8.1'
     pod 'WhatsNew'
     pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
 end

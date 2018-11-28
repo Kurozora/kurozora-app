@@ -13,6 +13,7 @@ import Kingfisher
 import SCLAlertView
 import BottomPopup
 import Cosmos
+import NVActivityIndicatorView
 
 enum AnimeSection: Int {
     case synopsis
@@ -22,7 +23,7 @@ enum AnimeSection: Int {
     static var allSections: [AnimeSection] = [.synopsis, .information, .cast]
 }
 
-class ShowDetailViewController: UIViewController, ShowRatingDelegate {
+class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, ShowRatingDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -34,7 +35,6 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
 
     // View vars
     var headerView: UIView!
-    var loadingView: LoaderView!
     var window: UIWindow?
     
     var showDetails: ShowDetails?
@@ -72,16 +72,15 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var membersCountLabel: UILabel!
-    
-    func getRating(value: Double?) {
-        if let rating = value {
-            self.cosmosView.rating = rating
-            self.cosmosView.update()
-        }
-    }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.scrollViewDidScroll(tableView)
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: .orange, minimumDisplayTime: 3)
         
         headerView = tableView.tableHeaderView
         tableView.tableHeaderView = nil
@@ -97,44 +96,37 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
             tableView.tableHeaderView?.frame = frame
             view.insertSubview(tableView, belowSubview: bannerImageView)
         }
-        
-        // Prepare view for data
-        loadingView = LoaderView(parentView: view)
-        loadingView.startAnimating()
 
         // Fetch details
         if let id = showId {
             KCommonKit.shared.showId = id
             
             Service.shared.getDetailsFor(id) { (showDetails) in
-                self.showDetails = showDetails
-				self.libraryStatus = showDetails.libraryStatus
-				self.updateDetailWithShow(self.showDetails)
-                self.tableView.reloadData()
+				DispatchQueue.main.async() {
+					self.showDetails = showDetails
+					self.libraryStatus = showDetails.libraryStatus
+					self.updateDetailWithShow(self.showDetails)
+                	self.tableView.reloadData()
+				}
             }
             
             Service.shared.getCastFor(id, withSuccess: { (cast, castActors) in
-                self.cast = cast
-                self.castDetails = cast.actors
-                
                 DispatchQueue.main.async() {
+					self.cast = cast
+					self.castDetails = cast.actors
                     self.tableView.reloadData()
+					self.stopAnimating()
                 }
             }) { (errorMessage) in
                 SCLAlertView().showError("Can't get cast details", subTitle: errorMessage)
+				self.stopAnimating()
             }
         }
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 140
+//        tableView.estimatedRowHeight = 140
         tableView.rowHeight = UITableView.automaticDimension
-    }
-    
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.scrollViewDidScroll(tableView)
     }
 
     // MARK: - IBAction
@@ -266,6 +258,7 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
                 statusLabel.backgroundColor = .onHold()
                 statusLabel.text = "TBA".capitalized
             }
+
 //            if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
 //                switch status {
 //                case .currentlyAiring:
@@ -332,9 +325,6 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
                 trailerButton.isHidden = true
             }
         }
-        
-        // Stop loaderview
-        loadingView.stopAnimating()
     }
     
     // MARK: - Functions
@@ -352,6 +342,13 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
         
         headerView.frame = headerRect
     }
+
+	func getRating(value: Double?) {
+		if let rating = value {
+			self.cosmosView.rating = rating
+			self.cosmosView.update()
+		}
+	}
     
     // MARK: - IBActions
     @IBAction func showBanner(_ sender: AnyObject) {

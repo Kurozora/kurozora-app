@@ -118,6 +118,11 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
                 viewController.sectionTitle = sectionTitle
                 barItems.append(Item(title: sectionTitle))
             }
+
+			if let sectionId = sections?[index]["id"].intValue, sectionId != 0 {
+				viewController.sectionId = sectionId
+			}
+
             viewControllers.append(viewController)
         }
         

@@ -691,8 +691,12 @@ struct Service {
                     if let notifications = notification.notifications, notifications != [] {
                         successHandler(notifications)
                     }
-                }
-            }
+				} else {
+					if let responseMessage = notification.message {
+						failureHandler(responseMessage)
+					}
+				}
+			}
         }, failure: { error in
             SCLAlertView().showError("Error getting notifications", subTitle: "There was an error while getting notifications. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
@@ -718,14 +722,56 @@ struct Service {
                     if let sections = sections.sections, sections != [] {
                         successHandler(sections)
                     }
-                }
-            }
+				}  else {
+					if let responseMessage = sections.message {
+						failureHandler(responseMessage)
+					}
+				}
+			}
         }, failure: { error in
             SCLAlertView().showError("Error getting sections", subTitle: "There was an error while getting forum sections. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
             print("Received get forum sections error: \(error)")
         })
     }
+
+	// Get forum posts
+	func getForumPosts(forSection sectionId: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+		guard let sectionId = sectionId else { return }
+		guard let order = order else { return }
+		guard let page = page else { return }
+
+		let request : APIRequest<ForumPosts,JSONError> = tron.swiftyJSON.request("forum/get_posts")
+
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded"
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"section_id": sectionId,
+			"order": order,
+			"page": page,
+		]
+
+		request.perform(withSuccess: { posts in
+			if let success = posts.success {
+				if success {
+					if let posts = posts.posts, posts != [] {
+						successHandler(posts)
+					}
+				} else {
+					if let responseMessage = posts.message {
+						failureHandler(responseMessage)
+					}
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Error getting posts", subTitle: "There was an error while getting forum sections. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+
+			print("Received get forum posts error: \(error)")
+		})
+	}
     
 //    Throw json error
     class JSONError: JSONDecodable {

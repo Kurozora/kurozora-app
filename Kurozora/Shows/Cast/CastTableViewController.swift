@@ -21,14 +21,20 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+		// Setup collection view
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+
+		// Setup empty collection view
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetView { view in
             view.titleLabelString(NSAttributedString(string: "No actors found!"))
+				.shouldDisplay(true)
+				.shouldFadeIn(true)
+				.isTouchAllowed(true)
+				.isScrollAllowed(true)
         }
     }
     

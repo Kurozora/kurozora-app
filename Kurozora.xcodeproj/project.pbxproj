@@ -63,6 +63,7 @@
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
 		66647B6B2084995E00CF624F /* KurozoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B6A2084995E00CF624F /* KurozoraTests.swift */; };
 		66647B762084995E00CF624F /* KurozoraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B752084995E00CF624F /* KurozoraUITests.swift */; };
+		6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumPosts.swift */; };
 		666C82582162898400C93A70 /* CastTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C82572162898400C93A70 /* CastTableViewController.swift */; };
 		666C825A2168031B00C93A70 /* home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666C82592168031B00C93A70 /* home.storyboard */; };
 		666C825C2168063100C93A70 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C825B2168063000C93A70 /* HomeViewController.swift */; };
@@ -368,6 +369,7 @@
 		66647B712084995E00CF624F /* KurozoraUITests. */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurozoraUITests.; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B752084995E00CF624F /* KurozoraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraUITests.swift; sourceTree = "<group>"; };
 		66647B772084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6669386F21AF39A000BA9620 /* ForumPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumPosts.swift; sourceTree = "<group>"; };
 		666C82572162898400C93A70 /* CastTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewController.swift; sourceTree = "<group>"; };
 		666C82592168031B00C93A70 /* home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = home.storyboard; sourceTree = "<group>"; };
 		666C825B2168063000C93A70 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 		660923E921355EC30082F02E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6669386F21AF39A000BA9620 /* ForumPosts.swift */,
 				660E9FC621455F3100F6813C /* Cast.swift */,
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
 				6619EE6F216F86C500655B99 /* ForumSections.swift */,
@@ -1746,6 +1749,7 @@
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NGAParallaxMotion/NGAParallaxMotion.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
@@ -1775,6 +1779,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NGAParallaxMotion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
@@ -1923,6 +1928,7 @@
 				6674A0C920A45EB700AAB527 /* TopicCell.swift in Sources */,
 				66058DC2212E97FD0084B79E /* ShowTopicCell.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
+				6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
 				6625F95320B5F283004DB533 /* UIKit+Kurozora.swift in Sources */,

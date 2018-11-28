@@ -33,11 +33,9 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
                 .shouldDisplay(true)
                 .shouldFadeIn(true)
                 .isTouchAllowed(true)
-                .isScrollAllowed(true)
+                .isScrollAllowed(false)
         }
-        if #available(iOS 11.0, *) {
-            collectionView?.contentInsetAdjustmentBehavior = .never
-        }
+		
         showId = KCommonKit.shared.showId
         fetchSeasons()
     }

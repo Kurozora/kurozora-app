@@ -26,18 +26,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var cacheSizeLabel: UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //        facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
-        
-        ImageCache.default.calculateDiskCacheSize { size in
-            // Convert from bytes to mebibytes (2^20)
-            let sizeInMiB = Double(size/1048576)
-            self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
-        }
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -55,6 +44,17 @@ class SettingsViewController: UITableViewController {
         // Calculate cache size
         caculateCache()
     }
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		//        facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
+
+		ImageCache.default.calculateDiskCacheSize { size in
+			// Convert from bytes to mebibytes (2^20)
+			let sizeInMiB = Double(size/1048576)
+			self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
+		}
+	}
     
     // MARK: - Functions
     func caculateCache() {
@@ -122,29 +122,6 @@ class SettingsViewController: UITableViewController {
             
             alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
             //        case (0,2):
-            //            // Select initial tab
-            //            let alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.alert)
-            //            alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            //                UserDefaults.standard.setValue("Season", forKey: DefaultLoadingScreen)
-            //                UserDefaults.standard.synchronize()
-            //            }))
-            //            alert.addAction(UIAlertAction(title: "Library", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            //                UserDefaults.standard.setValue("Library", forKey: DefaultLoadingScreen)
-            //                UserDefaults.standard.synchronize()
-            //            }))
-            //            alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            //                UserDefaults.standard.setValue("Profile", forKey: DefaultLoadingScreen)
-            //                UserDefaults.standard.synchronize()
-            //            }))
-            //            alert.addAction(UIAlertAction(title: "Forum", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            //                UserDefaults.standard.setValue("Forum", forKey: DefaultLoadingScreen)
-            //                UserDefaults.standard.synchronize()
-            //            }))
-            //            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
-            //            }))
-            //
-            //            self.present(alert, animated: true, completion: nil)
-            
             //        case (3,0):
             //            // Unlock features
             //            let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController

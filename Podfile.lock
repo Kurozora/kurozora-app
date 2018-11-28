@@ -19,6 +19,9 @@ PODS:
   - KeychainAccess (3.1.2)
   - Kingfisher (4.10.1)
   - NGAParallaxMotion (1.1.0)
+  - NVActivityIndicatorView (4.4.0):
+    - NVActivityIndicatorView/Presenter (= 4.4.0)
+  - NVActivityIndicatorView/Presenter (4.4.0)
   - Pageboy (2.6.1)
   - RevealingSplashView (0.6.0)
   - SCLAlertView (0.8.1)
@@ -69,6 +72,7 @@ DEPENDENCIES:
   - KeychainAccess (~> 3.1)
   - Kingfisher (~> 4.0)
   - NGAParallaxMotion (~> 1.1)
+  - NVActivityIndicatorView
   - RevealingSplashView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SwifterSwift (~> 4.3)
@@ -95,6 +99,7 @@ SPEC REPOS:
     - KeychainAccess
     - Kingfisher
     - NGAParallaxMotion
+    - NVActivityIndicatorView
     - Pageboy
     - RevealingSplashView
     - SwifterSwift
@@ -138,6 +143,7 @@ SPEC CHECKSUMS:
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
+  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
@@ -150,6 +156,6 @@ SPEC CHECKSUMS:
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 0211dca794eb643bd2d2f0fedf9089f37419d7c9
+PODFILE CHECKSUM: e41838f72c421c53cbf777c5fcc372d4d62fc561
 
 COCOAPODS: 1.6.0.beta.1

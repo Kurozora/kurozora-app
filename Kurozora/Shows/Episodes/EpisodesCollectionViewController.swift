@@ -35,7 +35,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
                 .shouldDisplay(true)
                 .shouldFadeIn(true)
                 .isTouchAllowed(true)
-                .isScrollAllowed(true)
+                .isScrollAllowed(false)
         }
         if #available(iOS 11.0, *) {
             collectionView?.contentInsetAdjustmentBehavior = .never

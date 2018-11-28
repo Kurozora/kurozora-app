@@ -20,36 +20,72 @@ import Kingfisher
 class AnimeListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var collectionView: UICollectionView!
 
+	private let refreshControl = UIRefreshControl()
+
 	var library: [JSON]?
     var sectionTitle: String?
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		guard let sectionTitle = sectionTitle?.lowercased() else {return}
 
+		// Add Refresh Control to Collection View
+		if #available(iOS 10.0, *) {
+			collectionView.refreshControl = refreshControl
+		} else {
+			collectionView.addSubview(refreshControl)
+		}
+
+		refreshControl.tintColor = UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
+
+		fetchLibrary()
+
+        // Setup collection view
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        // Setup empty collection view
+        collectionView.emptyDataSetDelegate = self
+        collectionView.emptyDataSetSource = self
+        
+        collectionView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: "Your \(sectionTitle) list is empty!"))
+				.shouldDisplay(true)
+				.shouldFadeIn(true)
+				.isTouchAllowed(true)
+				.isScrollAllowed(false)
+        }
+    }
+
+	@objc private func refreshLibraryData(_ sender: Any) {
+		// Fetch library data
+		guard let sectionTitle = sectionTitle?.lowercased() else {return}
+		refreshControl.attributedTitle = 			NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		fetchLibrary()
+	}
+
+	private func fetchLibrary() {
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
 
 		Service.shared.getLibraryFor(status: sectionTitle, withSuccess: { (library) in
 			DispatchQueue.main.async {
 				self.library = library
 				self.collectionView.reloadData()
+				self.refreshControl.endRefreshing()
+				self.refreshControl.attributedTitle = 			NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
 			}
 		}) { (errorMessage) in
+			self.refreshControl.endRefreshing()
 			SCLAlertView().showError("Can't get library", subTitle: errorMessage)
 		}
-        
-        // Setup table view
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        // Setup empty table view
-        collectionView.emptyDataSetDelegate = self
-        collectionView.emptyDataSetSource = self
-        
-        collectionView.emptyDataSetView { (view) in
-            view.titleLabelString(NSAttributedString(string: "Your \(sectionTitle) list is empty!"))
-        }
-    }
-    
+	}
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if let libraryCount = library?.count, libraryCount != 0 {
 			return libraryCount
@@ -75,7 +111,7 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 			libraryCell.posterView.image = UIImage(named: "placeholder_poster")
 		}
 
-		if let bannerImage = library?[indexPath.row]["banner_thumbnail"].stringValue, bannerImage != "" {
+		if let bannerImage = library?[indexPath.row]["background_thumbnail"].stringValue, bannerImage != "" {
 			let bannerImage = URL(string: bannerImage)
 			let resource = ImageResource(downloadURL: bannerImage!)
 			libraryCell.episodeImageView?.kf.indicatorType = .activity
