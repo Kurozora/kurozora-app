@@ -11,6 +11,7 @@ import KDatabaseKit
 import EmptyDataSet_Swift
 import SCLAlertView
 import SwiftyJSON
+import Kingfisher
 
 //protocol AnimeListControllerDelegate: class {
 //    func controllerRequestRefresh() -> BFTask
@@ -57,15 +58,50 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryCell
+        let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryCell
 
-		showCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
-		showCell.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
-		showCell.titleLabel.text = "Anime"
-		showCell.userProgressLabel.text = "TV ·  10/24    5"
+		if let title = library?[indexPath.row]["title"].stringValue, title != "" {
+			libraryCell.titleLabel.text = title
+		} else {
+			libraryCell.titleLabel.text = "Unknown"
+		}
 
-        return showCell
+		if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
+			let posterThumb = URL(string: posterThumb)
+			let resource = ImageResource(downloadURL: posterThumb!)
+			libraryCell.posterView.kf.indicatorType = .activity
+			libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			libraryCell.posterView.image = UIImage(named: "placeholder_poster")
+		}
+
+		if let bannerImage = library?[indexPath.row]["banner_thumbnail"].stringValue, bannerImage != "" {
+			let bannerImage = URL(string: bannerImage)
+			let resource = ImageResource(downloadURL: bannerImage!)
+			libraryCell.episodeImageView?.kf.indicatorType = .activity
+			libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			libraryCell.episodeImageView?.image = UIImage(named: "placeholder_banner")
+		}
+
+		if let episodeCount = library?[indexPath.row]["episode_count"].intValue, let averageRating = library?[indexPath.row]["average_rating"].doubleValue {
+			libraryCell.userProgressLabel.text = "TV ·  \(episodeCount) ·  \(averageRating)"
+		} else {
+			libraryCell.userProgressLabel.text = "TV ·  0 ·  5"
+		}
+
+        return libraryCell
     }
+
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let showId = library?[indexPath.row]["id"].intValue else {return}
+
+		let storyboard = UIStoryboard(name: "details", bundle: nil)
+		let controller = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
+		controller?.showId = showId
+
+		self.present(controller!, animated: true, completion: nil)
+	}
 //    weak var delegate: AnimeListControllerDelegate?
 //
 //    var animator: ZFModalTransitionAnimator!

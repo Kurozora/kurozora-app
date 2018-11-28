@@ -14,7 +14,7 @@ extension UIAlertController {
 		for (var title, value) in items {
 			if let selection = currentSelection, value == selection {
 				// Note that checkmark and space have a neutral text flow direction so this is correct for RTL
-				title = "✔︎ " + title
+				title = title + " ✔︎"
 			}
 			controller.addAction(
 				UIAlertAction(title: title, style: .default) {_ in

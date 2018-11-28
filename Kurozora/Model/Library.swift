@@ -17,6 +17,6 @@ class Library: JSONDecodable {
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
 		message = json["error_message"].stringValue
-		library = json["library"].arrayValue
+		library = json["anime"].arrayValue
 	}
 }

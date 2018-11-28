@@ -100,7 +100,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //    }
 
     // MARK: - Functions
-    func showDetailFor(_ showId: Int) {
+	func showDetailFor(_ showId: Int) {
         let storyboard = UIStoryboard(name: "details", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
         controller?.showId = showId

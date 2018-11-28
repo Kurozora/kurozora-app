@@ -23,12 +23,16 @@
 			<string>Kurozora</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>kz</string>
+				<string>kurozora</string>
 				<string>kurozoraapp</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3826</string>
+	<string>3881</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>medium</string>
@@ -43,6 +47,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your phone’s camera.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library.</string>
 	<key>UIAppFonts</key>

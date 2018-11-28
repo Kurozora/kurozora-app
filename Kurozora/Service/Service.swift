@@ -591,7 +591,7 @@ struct Service {
 	}
 
 	// Add to library
-	func addLibraryFor(status: String?, showId: Int?,withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+	func addToLibraryWith(status: String?, showId: Int?,withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
 		guard let status = status else { return }
 		guard let showId = showId else { return }
 
@@ -626,6 +626,43 @@ struct Service {
 			SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
 
 			print("Received add library error: \(error)")
+		})
+	}
+
+	// Remove from library
+	func removeFromLibraryWith(showId: Int?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+		guard let showId = showId else { return }
+
+		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("user/remove_library")
+
+		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded"
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"session_secret": sessionSecret!,
+			"user_id": userId!,
+			"anime_id": showId
+		]
+
+		request.perform(withSuccess: { library in
+			if let success = library.success {
+				if success {
+					successHandler(success)
+				} else {
+					if let responseMessage = library.message {
+						failureHandler(responseMessage)
+					}
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+
+			print("Received remove library error: \(error)")
 		})
 	}
 

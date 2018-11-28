@@ -12,8 +12,8 @@ import SwiftyJSON
 
 struct ShowDetails: JSONDecodable {
     // General
-    let anime: String?
     let id: Int?
+	let imdbId: String?
     let title: String?
     let genre: String?
     let poster: String?
@@ -52,13 +52,13 @@ struct ShowDetails: JSONDecodable {
     let youtubeId: String?
     
     // User
-    let user: String?
     var currentRating: Double?
+	var libraryStatus: String?
     
     init(json: JSON) throws {
         // Anime
-        anime = json["anime"].stringValue
         id = json["anime"]["id"].intValue
+		imdbId = json["anime"]["imdb_id"].stringValue
         title = json["anime"]["title"].stringValue
         genre = json["anime"]["genre"].stringValue
         poster = json["anime"]["poster"].stringValue
@@ -97,8 +97,8 @@ struct ShowDetails: JSONDecodable {
         youtubeId = json["anime"]["youtube_id"].stringValue
         
         // User
-        user = json["user"].stringValue
         currentRating = json["user"]["current_rating"].doubleValue
+		libraryStatus = json["user"]["library_status"].stringValue
     }
     
     public func informationString() -> String {

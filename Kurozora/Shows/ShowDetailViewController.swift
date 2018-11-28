@@ -39,6 +39,7 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
     
     var showDetails: ShowDetails?
     var showId: Int?
+	var libraryStatus: String?
     var showRating: Double?
     var castDetails: [JSON]?
     var cast: CastDetails?
@@ -107,7 +108,8 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
             
             Service.shared.getDetailsFor(id) { (showDetails) in
                 self.showDetails = showDetails
-                self.updateDetailWithShow(self.showDetails)
+				self.libraryStatus = showDetails.libraryStatus
+				self.updateDetailWithShow(self.showDetails)
                 self.tableView.reloadData()
             }
             
@@ -150,24 +152,61 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
         self.present(vc!, animated: true, completion: nil)
     }
 
-    @IBAction func closeButton(_ sender: Any) {
+    @IBAction func closeButton(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
 
+	@IBAction func moreButton(_ sender: UIButton) {
+		var shareText: String!
+		var image: UIImage!
+
+		if let title = showDetails?.title {
+			shareText = "You should watch \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "You should watch this anime via @KurozoraApp"
+		}
+
+		if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
+			let posterThumb = URL(string: posterThumb)
+			let data = try? Data(contentsOf: posterThumb!)
+			image = UIImage(data: data!)
+		} else {
+			image = UIImage(named: "placeholder_poster")
+		}
+
+		let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
+		present(vc, animated: true, completion: nil)
+	}
+
 	@IBAction func chooseStatusButton(_ sender: AnyObject) {
-		let selectedList = "watching" //update this for selected value
-		let action = UIAlertController.actionSheetWithItems(items: [("Watching","watching"),("Completed","completed"),("Dropped","dropped")], currentSelection: selectedList, action: { (value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (value)  in
 			guard let showId = self.showId else {return}
 
-			Service.shared.addLibraryFor(status: value.lowercased(), showId: showId, withSuccess: { (success) in
+			Service.shared.addToLibraryWith(status: value.lowercased(), showId: showId, withSuccess: { (success) in
 				if !success {
 					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
+				} else {
+					self.libraryStatus = value
+					self.listButton.setTitle("\(value.capitalized) ", for: .normal)
 				}
 			}, andFailure: { (errorMessage) in
 				SCLAlertView().showError("Can't add to library", subTitle: errorMessage)
 			})
 		})
-		action.addAction(UIAlertAction.init(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+
+		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+			Service.shared.removeFromLibraryWith(showId: self.showId, withSuccess: { (success) in
+				if !success {
+					SCLAlertView().showError("Error removing from library", subTitle: "There was an error while removing this anime from your library. Please try again!")
+				} else {
+					self.libraryStatus = ""
+					self.listButton.setTitle("Add to list ", for: .normal)
+				}
+			}, andFailure: { (errorMessage) in
+				SCLAlertView().showError("Can't remove from library", subTitle: errorMessage)
+			})
+		}))
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
@@ -182,11 +221,12 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
 	// Update view with details
     func updateDetailWithShow(_ show: ShowDetails?) {
         if showDetails != nil {
-//            if let progress = show?.progress {
-//                updateListButtonTitle(progress.list)
-//            } else {
-//                updateListButtonTitle(string: "Add to list ")
-//           }
+			// Configure library status
+            if let libraryStatus = showDetails?.libraryStatus, libraryStatus != "" {
+				listButton.setTitle("\(libraryStatus.capitalized) ", for: .normal)
+            } else {
+                listButton.setTitle("Add to list ", for: .normal)
+           	}
 
             // Configure title label
             if let title = showDetails?.title {
@@ -313,12 +353,6 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
         headerView.frame = headerRect
     }
     
-    func addBottomSheetView() {
-        let storyboard:UIStoryboard? = UIStoryboard(name: "details", bundle: nil)
-         guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "Actors") as? CastTableViewController else { return }
-         present(popupVC, animated: true, completion: nil)
-    }
-    
     // MARK: - IBActions
     @IBAction func showBanner(_ sender: AnyObject) {
         if let banner = showDetails?.banner, banner != "" {
@@ -361,8 +395,11 @@ class ShowDetailViewController: UIViewController, ShowRatingDelegate {
 //        }
     }
     
-    @IBAction func showCastDrawer(_ sender: Any) {
-        addBottomSheetView()
+    @IBAction func showCastDrawer(_ sender: AnyObject) {
+		let storyboard:UIStoryboard? = UIStoryboard(name: "details", bundle: nil)
+		guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "Actors") as? CastTableViewController else { return }
+		popupVC.castDetails = castDetails
+		present(popupVC, animated: true, completion: nil)
     }
 }
 
@@ -406,7 +443,7 @@ extension ShowDetailViewController: UITableViewDataSource {
         
         switch AnimeSection(rawValue: section)! {
         case .synopsis: numberOfRows = 1
-        case .information: numberOfRows = (User.isAdmin() == true) ? 8 : 7
+        case .information: numberOfRows = (User.isAdmin() == true) ? 9 : 8
         case .cast:
             if let actorsCount = castDetails?.count, actorsCount <= 5 {
                 numberOfRows = actorsCount
@@ -433,46 +470,53 @@ extension ShowDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! ShowDetailCell
             
             if let isAdmin = User.isAdmin(), isAdmin == false && indexPath.row == 0 {
-                indexPath.row = 1
+                indexPath.row = 2
             }
 
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "ID"
-                if let id = showDetails?.id, id > 0 {
-                    cell.detailLabel.text = String(id)
+                if let showId = showDetails?.id, showId > 0 {
+                    cell.detailLabel.text = String(showId)
                 } else {
-                    cell.detailLabel.text = "Error getting id"
+                    cell.detailLabel.text = "No show id found"
                 }
-            case 1:
+			case 1:
+				cell.titleLabel.text = "IMDB ID"
+				if let imdbId = showDetails?.imdbId, imdbId != "" {
+					cell.detailLabel.text = imdbId
+				} else {
+					cell.detailLabel.text = "No IMDB ID found"
+				}
+            case 2:
                 cell.titleLabel.text = "Type"
                 if let type = showDetails?.type, type != "" {
                     cell.detailLabel.text = type
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 2:
+            case 3:
                 cell.titleLabel.text = "Seasons"
                 if let seasons = showDetails?.seasons, seasons > 0 {
                     cell.detailLabel.text = seasons.description
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 3:
+            case 4:
                 cell.titleLabel.text = "Episodes"
                 if let episode = showDetails?.episodes, episode > 0 {
                     cell.detailLabel.text = episode.description
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 4:
+            case 5:
                 cell.titleLabel.text = "Aired"
                 if let startDate = showDetails?.startDate, let endDate = showDetails?.endDate {
                     cell.detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
                 } else {
                     cell.detailLabel.text = "N/A - N/A"
                 }
-            case 5:
+            case 6:
                 cell.titleLabel.text = "Network"
                 if let network = showDetails?.network, network != "" {
                     cell.detailLabel.text = network
@@ -486,14 +530,14 @@ extension ShowDetailViewController: UITableViewDataSource {
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-            case 6:
+            case 7:
                 cell.titleLabel.text = "Duration"
                 if let duration = showDetails?.runtime, duration > 0 {
                     cell.detailLabel.text = "\(duration) min"
                 } else {
                     cell.detailLabel.text = "-"
                 }
-            case 7:
+            case 8:
                 cell.titleLabel.text = "Rating"
                 if let watchRating = showDetails?.watchRating, watchRating != "" {
                     cell.detailLabel.text = watchRating
