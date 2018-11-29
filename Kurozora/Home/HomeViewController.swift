@@ -129,7 +129,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let categoryTitle = categories?[section]["title"].stringValue else {return "Untitled"}
-        if let categoryShowCount = categories?[section]["shows"].count, categoryShowCount != 0 {
+
+		if let categoryShowCount = categories?[section]["shows"].count, categoryShowCount != 0 {
             return categoryTitle
         }
         return ""

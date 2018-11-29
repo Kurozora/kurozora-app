@@ -107,6 +107,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 					self.libraryStatus = showDetails.libraryStatus
 					self.updateDetailWithShow(self.showDetails)
                 	self.tableView.reloadData()
+					self.stopAnimating()
 				}
             }
             
@@ -115,7 +116,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 					self.cast = cast
 					self.castDetails = cast.actors
                     self.tableView.reloadData()
-					self.stopAnimating()
                 }
             }) { (errorMessage) in
                 SCLAlertView().showError("Can't get cast details", subTitle: errorMessage)
@@ -438,7 +438,7 @@ extension ShowDetailViewController: UITableViewDataSource {
         var numberOfRows = 0
         
         switch AnimeSection(rawValue: section)! {
-        case .synopsis: numberOfRows = 1
+        case .synopsis: numberOfRows = (showDetails?.synopsis != "") ? 1 : 0
         case .information: numberOfRows = (User.isAdmin() == true) ? 9 : 8
         case .cast:
             if let actorsCount = castDetails?.count, actorsCount <= 5 {
@@ -587,13 +587,15 @@ extension ShowDetailViewController: UITableViewDataSource {
                 castCell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             }
 
+			// Add gesture to cast image view
 			if castCell.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
 				// if the image currently has no gestureRecognizer
 				let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCast(_:)))
 				castCell.actorImageView.addGestureRecognizer(tapGesture)
 				castCell.actorImageView.isUserInteractionEnabled = true
 			}
-            
+
+			// Show more button when casts exceed 5 rows
             if indexPath.row == 5 {
                 let moreCell = tableView.dequeueReusableCell(withIdentifier: "SeeMoreCell")!
                 return moreCell
@@ -610,11 +612,12 @@ extension ShowDetailViewController: UITableViewDataSource {
 
         switch AnimeSection(rawValue: section)! {
         case .synopsis:
-            title = "Synopsis"
+			title = (showDetails?.synopsis != "") ? "Synopsis" : ""
         case .information:
             title = "Information"
         case .cast:
-            title = "Actors"
+			guard let castDetailsCount = castDetails?.count else {return cell.contentView}
+			title = (castDetailsCount != 0) ? "Actors" : ""
         }
 
         cell.titleLabel.text = title

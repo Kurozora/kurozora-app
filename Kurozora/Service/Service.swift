@@ -415,7 +415,7 @@ struct Service {
         }, failure: { error in
             SCLAlertView().showError("Connection error", subTitle: "There was an error while connecting to the servers. If this error persists, check out our Twitter account @KurozoraApp for more information!")
             
-            print("Received rating error: \(error)")
+            print("Received get details error: \(error)")
         })
     }
     
@@ -437,8 +437,6 @@ struct Service {
                     
                     if let castActorsCount = cast.actors?.count, castActorsCount > 0 {
                         successHandler(cast, castActors)
-                    } else {
-                        failureHandler("No actors were found!")
                     }
                 } else {
                     if let responseMessage = cast.message {
