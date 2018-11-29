@@ -64,6 +64,7 @@
 		66647B6B2084995E00CF624F /* KurozoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B6A2084995E00CF624F /* KurozoraTests.swift */; };
 		66647B762084995E00CF624F /* KurozoraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B752084995E00CF624F /* KurozoraUITests.swift */; };
 		6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumPosts.swift */; };
+		6669387221AFF87900BA9620 /* TimelinePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* TimelinePostCell.swift */; };
 		666C82582162898400C93A70 /* CastTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C82572162898400C93A70 /* CastTableViewController.swift */; };
 		666C825A2168031B00C93A70 /* home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666C82592168031B00C93A70 /* home.storyboard */; };
 		666C825C2168063100C93A70 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C825B2168063000C93A70 /* HomeViewController.swift */; };
@@ -370,6 +371,7 @@
 		66647B752084995E00CF624F /* KurozoraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraUITests.swift; sourceTree = "<group>"; };
 		66647B772084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6669386F21AF39A000BA9620 /* ForumPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumPosts.swift; sourceTree = "<group>"; };
+		6669387121AFF87900BA9620 /* TimelinePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostCell.swift; sourceTree = "<group>"; };
 		666C82572162898400C93A70 /* CastTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewController.swift; sourceTree = "<group>"; };
 		666C82592168031B00C93A70 /* home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = home.storyboard; sourceTree = "<group>"; };
 		666C825B2168063000C93A70 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -1226,6 +1228,7 @@
 		66CF6D6320A9875600F98375 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6669387121AFF87900BA9620 /* TimelinePostCell.swift */,
 				66CF6D6620A987D100F98375 /* ProfileViewController.swift */,
 				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
 				66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */,
@@ -1890,6 +1893,7 @@
 				66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */,
+				6669387221AFF87900BA9620 /* TimelinePostCell.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
 				66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */,
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,

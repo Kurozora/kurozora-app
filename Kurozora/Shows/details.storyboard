@@ -841,7 +841,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="nd5-cs-csi" userLabel="CastTap">
                     <connections>
-                        <action selector="cellTapped:" destination="vfx-ya-sYW" id="53q-ph-MUz"/>
+                        <action selector="showCast:" destination="vfx-ya-sYW" id="6CK-vA-C7Z"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="B5O-fV-Ocn" userLabel="RatingTap">

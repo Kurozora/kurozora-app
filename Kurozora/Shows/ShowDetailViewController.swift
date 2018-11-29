@@ -125,7 +125,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
         
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.estimatedRowHeight = 140
         tableView.rowHeight = UITableView.automaticDimension
     }
 
@@ -359,7 +358,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
         }
     }
     
-    @IBAction func cellTapped(_ tap: UITapGestureRecognizer) {
+    @IBAction func showCast(_ tap: UITapGestureRecognizer) {
         let cell = tap.view as? ShowCharacterCell
         let pointInCell: CGPoint = tap.location(in: cell?.contentView)
         let view: UIView? = cell?.contentView.hitTest(pointInCell, with: nil)
@@ -569,21 +568,31 @@ extension ShowDetailViewController: UITableViewDataSource {
             return cell
         case .cast:
             let castCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
-            
+
+			// Cast name
             if let actorName = castDetails?[indexPath.row]["name"] {
                 castCell.actorName.text = actorName.stringValue
             }
-            
+
+			// Cast role
             if let actorRole = castDetails?[indexPath.row]["role"] {
                 castCell.actorJob.text = actorRole.stringValue
             }
 
+			// Cast image view
             if let castImage = castDetails?[indexPath.row]["image"].stringValue {
                 let castImage = URL(string: castImage)
                 let resource = ImageResource(downloadURL: castImage!)
                 castCell.actorImageView.kf.indicatorType = .activity
                 castCell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
             }
+
+			if castCell.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
+				// if the image currently has no gestureRecognizer
+				let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCast(_:)))
+				castCell.actorImageView.addGestureRecognizer(tapGesture)
+				castCell.actorImageView.isUserInteractionEnabled = true
+			}
             
             if indexPath.row == 5 {
                 let moreCell = tableView.dequeueReusableCell(withIdentifier: "SeeMoreCell")!

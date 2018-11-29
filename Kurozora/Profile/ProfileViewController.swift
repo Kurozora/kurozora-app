@@ -8,15 +8,16 @@
 
 import KCommonKit
 import KDatabaseKit
-import TTTAttributedLabel_moolban
+import SwiftyJSON
 import UIImageColors
 import Kingfisher
 import SCLAlertView
 import AXPhotoViewer
 import FLAnimatedImage
+import EmptyDataSet_Swift
 //import XCDYouTubeKit
 
-class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: ThreadViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
 
     enum SelectedFeed: Int {
         case Feed = 0
@@ -25,8 +26,10 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
         case Profile
     }
 
-    var refreshControl = UIRefreshControl()
+	private let refreshControl = UIRefreshControl()
+
     var user: User?
+	var posts: [JSON]?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backgroundView: UIView!
@@ -35,7 +38,7 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userBanner: UIImageView!
-    @IBOutlet weak var aboutLabel: TTTAttributedLabel!
+    @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var aboutButton: UIButton!
     @IBOutlet weak var activeAgo: UILabel!
 
@@ -54,53 +57,132 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var segmentedControlView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    
-    //    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		//        if let profile = userProfile, profile.details.dataAvailable {
+		//            updateFollowingButtons()
+		//        }
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Refresh control add in tableview.
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
-        self.tableView.addSubview(refreshControl)
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileCell")
+		if let id = user?.id, id != User.currentId() {
+			fetchUserDetails(with: id)
+		} else {
+			if let id = User.currentId(), String(id) != "" {
+				fetchUserDetails(with: id)
+			}
+		}
 
-        if let id = user?.id, id != User.currentId() {
-            fetchUserDetails(with: id)
-        } else {
-            if let id = User.currentId(), String(id) != "" {
-                fetchUserDetails(with: id)
-            }
-        }
+		// Add Refresh Control to Collection View
+		if #available(iOS 10.0, *) {
+			tableView.refreshControl = refreshControl
+		} else {
+			tableView.addSubview(refreshControl)
+		}
+
+		refreshControl.tintColor = UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+
+		fetchPosts()
+
+		//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileCell")
+
+		// Setup table view
+		tableView.delegate = self
+		tableView.dataSource = self
+
+		// Setup empty table view
+		tableView.emptyDataSetDelegate = self
+		tableView.emptyDataSetSource = self
+
+		tableView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: "There are no posts on your timeline!"))
+				.shouldDisplay(true)
+				.shouldFadeIn(true)
+				.isTouchAllowed(true)
+				.isScrollAllowed(false)
+		}
+
+		tableView.rowHeight = UITableView.automaticDimension
     }
-    
-    @objc func refresh(_ sender: Any) {
-        // Call webservice here after reload tableview.
+    @objc private func refreshPostsData(_ sender: Any) {
+		// Fetch posts data
+		refreshControl.attributedTitle = 			NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		fetchPosts()
+	}
+
+    private func fetchPosts() {
         self.tableView.reloadData()
-        self.refreshControl.endRefreshing()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-//        if let profile = userProfile, profile.details.dataAvailable {
-//            updateFollowingButtons()
-//        }
+		self.refreshControl.endRefreshing()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2;
+		if let postCount = posts?.count, postCount != 0 {
+			return postCount
+		}
+		return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let profileCell:UITableViewCell = (tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as UITableViewCell?)!
-        
-        return profileCell
+		let timelinePostCell:TimelinePostCell = tableView.dequeueReusableCell(withIdentifier: "TimelinePostCell") as! TimelinePostCell
+
+		// Profile Image
+		if let profileImage = posts?[indexPath.row]["profile_image"].stringValue, profileImage != "" {
+			let profileImage = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImage!)
+			timelinePostCell.profileImageView.kf.indicatorType = .activity
+			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		}else {
+			timelinePostCell.profileImageView.image = UIImage(named: "default_avatar")
+		}
+
+		// Username
+		if let username = posts?[indexPath.row]["username"].stringValue, username != "" {
+			timelinePostCell.userNameLabel.text = username
+		} else {
+			timelinePostCell.userNameLabel.text = "Unknown"
+		}
+
+		// Other Username
+		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
+			timelinePostCell.otherUserNameLabel.text = otherUsername
+
+			timelinePostCell.userSeparatorLabel.isHidden = false
+			timelinePostCell.otherUserNameLabel.isHidden = false
+		} else {
+			timelinePostCell.otherUserNameLabel.isHidden = true
+			timelinePostCell.userSeparatorLabel.isHidden = true
+		}
+
+		// Post
+		if let postText = posts?[indexPath.row]["post"].stringValue, postText != "" {
+			timelinePostCell.postTextView.text = postText
+		} else {
+			timelinePostCell.postTextView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
+		}
+
+		// Likes
+		if let likes = posts?[indexPath.row]["likes"].intValue, likes != 0 {
+			timelinePostCell.likeLabel.text = "\(likes) Likes"
+		} else {
+			timelinePostCell.likeLabel.text = "0 Likes"
+		}
+
+		// Comments
+		if let comments = posts?[indexPath.row]["comments"].intValue, comments != 0 {
+			timelinePostCell.commentLabel.text = "\(comments) Comments"
+		} else {
+			timelinePostCell.commentLabel.text = "0 Comments"
+		}
+
+        return timelinePostCell
     }
 
 //    deinit {
@@ -113,7 +195,6 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
         }
         
         if user?.id != User.currentId() {
-            tableHeaderViewBottomSpaceConstraint.constant = 8
             segmentedControl.isHidden = true
         }
 
@@ -131,7 +212,7 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     }
 
     // MARK: - Fetching
-    func timeAgo(_ time: String) -> String {
+    private func timeAgo(_ time: String) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "US_en")
         formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
@@ -162,27 +243,30 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
 //        fetchUserDetails(username: username)
 //    }
 
-    func fetchUserDetails(with id: Int) {
+	private func fetchUserDetails(with id: Int) {
 //        if let _ = self.user {
 //            configureFetchController()
 //        }
         
         Service.shared.getUserProfile(id, withSuccess: { (user) in
             guard let user = user else { return }
-            
-            self.user = user
-            self.updateViewWithUser(user)
+
+			DispatchQueue.main.async {
+            	self.user = user
+            	self.updateViewWithUser(user)
+			}
         }) { (errorMessage) in
             SCLAlertView().showError("Error getting information", subTitle: errorMessage)
         }
     }
 
-    func updateViewWithUser(_ user: User?) {
-        
+    private func updateViewWithUser(_ user: User?) {
         // Username
         if let username = user?.username, username != "" {
             usernameLabel.text = username
-        }
+		} else {
+			usernameLabel.text = "Unknown"
+		}
         
         // Avatar
         if let avatar = user?.avatar, avatar != "" {
@@ -662,12 +746,7 @@ class ProfileViewController: ThreadViewController, UITableViewDelegate, UITableV
     // MARK: - Overrides
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let topSpace = tableView.tableHeaderView!.bounds.size.height - 44 - scrollView.contentOffset.y
-        if topSpace < 64 {
-            segmentedControlTopSpaceConstraint.constant = 64
-        } else {
-            segmentedControlTopSpaceConstraint.constant = topSpace
-        }
+
     }
 }
 //
