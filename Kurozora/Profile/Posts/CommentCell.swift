@@ -6,8 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import TTTAttributedLabel_moolban
+import UIKit
 
 public class CommentCell: PostCell {
     
@@ -22,12 +21,12 @@ public class CommentCell: PostCell {
         super.registerNibFor(tableView: tableView)
         
         do {
-            let listNib = UINib(nibName: "CommentTextCell", bundle: KCommonKit.bundle())
+            let listNib = UINib(nibName: "CommentTextCell", bundle: nil)
             tableView.register(listNib, forCellReuseIdentifier: "CommentTextCell")
         }
         
         do {
-            let listNib = UINib(nibName: "CommentImageCell", bundle: KCommonKit.bundle())
+            let listNib = UINib(nibName: "CommentImageCell", bundle: nil)
             tableView.register(listNib, forCellReuseIdentifier: "CommentImageCell")
         }
     }

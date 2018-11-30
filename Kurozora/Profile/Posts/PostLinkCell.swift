@@ -6,8 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import TTTAttributedLabel_moolban
+import UIKit
 
 public protocol LinkCellDelegate: PostCellDelegate {
     func postCellSelectedLink(linkCell: LinkCell)
@@ -27,7 +26,7 @@ public class LinkCell: PostCell {
         
         super.registerNibFor(tableView: tableView)
         
-        let listNib = UINib(nibName: "LinkCell", bundle: KCommonKit.bundle())
+        let listNib = UINib(nibName: "LinkCell", bundle: nil)
         tableView.register(listNib, forCellReuseIdentifier: "LinkCell")
     }
     

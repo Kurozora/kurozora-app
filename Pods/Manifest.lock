@@ -24,6 +24,7 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.4.0)
   - Pageboy (2.6.1)
   - RevealingSplashView (0.6.0)
+  - RichEditorView (5.0.0)
   - SCLAlertView (0.8.1)
   - SwifterSwift (4.6.0):
     - SwifterSwift/AppKit (= 4.6.0)
@@ -56,7 +57,6 @@ PODS:
     - Alamofire (~> 4.5)
     - SwiftyJSON (~> 4.0)
     - TRON/Core
-  - TTTAttributedLabel-moolban (2.0.0.2)
   - UIImageColors (2.0.0)
   - WhatsNew (0.4.4)
 
@@ -74,12 +74,12 @@ DEPENDENCIES:
   - NGAParallaxMotion (~> 1.1)
   - NVActivityIndicatorView
   - RevealingSplashView
+  - RichEditorView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SwifterSwift (~> 4.3)
   - SwiftTheme (~> 0.4)
   - Tabman (~> 1.10)
   - TRON (~> 4.0)
-  - TTTAttributedLabel-moolban (= 2.0.0.2)
   - UIImageColors (= 2.0.0)
   - WhatsNew
 
@@ -102,12 +102,12 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - Pageboy
     - RevealingSplashView
+    - RichEditorView
     - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
     - Tabman
     - TRON
-    - TTTAttributedLabel-moolban
     - UIImageColors
     - WhatsNew
 
@@ -146,16 +146,16 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
+  RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
-  TTTAttributedLabel-moolban: 9fe88ecce48da3a9c1c5192d3e4fbea6a257e96d
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: e41838f72c421c53cbf777c5fcc372d4d62fc561
+PODFILE CHECKSUM: 2aae82764221252d0e39ffccb64ebf74c97a3384
 
 COCOAPODS: 1.6.0.beta.1

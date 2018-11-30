@@ -9,7 +9,6 @@
 import Foundation
 //import Parse
 //import Bolts
-import TTTAttributedLabel_moolban
 
 public class NewThreadViewController: CommentViewController {
     
@@ -17,7 +16,7 @@ public class NewThreadViewController: CommentViewController {
 //    let EditingContentCacheKey = "NewThread.TextContent"
 //
 //    @IBOutlet weak var threadTitle: UITextField!
-//    @IBOutlet weak var tagLabel: TTTAttributedLabel!
+//    @IBOutlet weak var tagLabel: UILabel!
 //
 //    var tags: [PFObject] = [] {
 //        didSet {
@@ -207,15 +206,6 @@ public class NewThreadViewController: CommentViewController {
 //extension NewThreadViewController: TagsViewControllerDelegate {
 //    func tagsViewControllerSelected(tags: [PFObject]) {
 //        self.tags = tags
-//    }
-//}
-//
-//extension NewThreadViewController: TTTAttributedLabelDelegate {
-//
-//    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-//        if let host = url.host, host == "tag", let index = url.pathComponents?[1], let idx = Int(index) {
-//            tags.removeAtIndex(idx)
-//        }
 //    }
 //}
 //

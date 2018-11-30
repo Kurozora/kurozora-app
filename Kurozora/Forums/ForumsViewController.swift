@@ -389,18 +389,6 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 //    }
 //}
 //
-//extension ForumsViewController: TTTAttributedLabelDelegate {
-//
-//    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-//
-//        if let host = url.host, host == "tag",
-//            let index = url.pathComponents[1],
-//            let idx = Int(index) {
-//            print(idx)
-//        }
-//    }
-//}
-//
 //extension ForumsViewController: CommentViewControllerDelegate {
 //    func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
 //        prepareForList(selectedList: selectedList)

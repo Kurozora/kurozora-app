@@ -8,7 +8,6 @@
 
 import Foundation
 //import Parse
-import TTTAttributedLabel_moolban
 import KCommonKit
 import KDatabaseKit
 
@@ -16,8 +15,8 @@ public class CustomThreadViewController: ThreadViewController {
 //
 //    @IBOutlet weak var imageContent: UIImageView!
 //    @IBOutlet weak var threadTitle: UILabel!
-//    @IBOutlet weak var threadContent: TTTAttributedLabel!
-//    @IBOutlet weak var tagsLabel: TTTAttributedLabel!
+//    @IBOutlet weak var threadContent: UILabel!
+//    @IBOutlet weak var tagsLabel: UILabel!
 //    @IBOutlet weak var avatar: UIImageView!
 //    @IBOutlet weak var username: UILabel!
 //    @IBOutlet weak var postedDate: UILabel!
@@ -54,7 +53,6 @@ public class CustomThreadViewController: ThreadViewController {
 //        
 //        threadContent.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
 //        threadContent.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
-//        threadContent.delegate = self as! TTTAttributedLabelDelegate;
 //        
 //        if let _ = episode {
 //            updateUIWithEpisodeThread(thread: thread)
@@ -253,20 +251,6 @@ public class CustomThreadViewController: ThreadViewController {
 //        repliesQuery.includeKey("postedBy")
 //        
 //        return [query, repliesQuery]
-//    }
-//    
-//    // MARK: - TTTAttributedLabelDelegate
-//    
-//    public override func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-//        super.attributedLabel(label, didSelectLinkWith: url)
-//        
-//        if let host = url.host, host == "tag",
-//            let index = url.pathComponents?[1],
-//            let idx = Int(index) {
-//            if let thread = thread, let anime = thread.tags[idx] as? Anime {
-//                self.animator = presentAnimeModal(anime)
-//            }
-//        }
 //    }
 //    
 //    // MARK: - CommentViewControllerDelegate

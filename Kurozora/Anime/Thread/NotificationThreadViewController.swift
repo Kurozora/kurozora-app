@@ -8,7 +8,6 @@
 
 import Foundation
 //import Parse
-import TTTAttributedLabel_moolban
 import KCommonKit
 import KDatabaseKit
 

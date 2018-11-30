@@ -9,7 +9,6 @@ use_frameworks!
 
 def common_pods
     pod 'TRON', '~> 4.0'
-    pod 'TTTAttributedLabel-moolban', '2.0.0.2'
 #    pod 'Lightbox', '2.1.2'
     pod 'SwifterSwift', '~> 4.3'
     pod 'KeychainAccess', '~> 3.1'
@@ -55,6 +54,10 @@ end
 
 target 'KCommonKit' do
     common_pods
+end
+
+target 'KRichTextEditor' do
+	pod 'RichEditorView'
 end
 
 # Workaround for Cocoapods issue #7606

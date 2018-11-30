@@ -6,12 +6,12 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class WriteACommentCell: UITableViewCell {
     public class func registerNibFor(tableView: UITableView) {
         
-        let listNib = UINib(nibName: "WriteACommentCell", bundle: KCommonKit.bundle())
+        let listNib = UINib(nibName: "WriteACommentCell", bundle: nil)
         tableView.register(listNib, forCellReuseIdentifier: "WriteACommentCell")
     }
 }

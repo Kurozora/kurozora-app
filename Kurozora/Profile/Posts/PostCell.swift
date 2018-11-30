@@ -6,8 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import TTTAttributedLabel_moolban
+import UIKit
 
 public protocol PostCellDelegate: class {
     func postCellSelectedImage(postCell: PostCell)
@@ -28,7 +27,7 @@ public class PostCell: UITableViewCell {
     
     @IBOutlet weak public var imageContent: UIImageView?
     @IBOutlet weak public var imageHeightConstraint: NSLayoutConstraint?
-    @IBOutlet weak public var textContent: TTTAttributedLabel!
+    @IBOutlet weak public var textContent: UILabel!
     
     @IBOutlet weak public var replyButton: UIButton!
     @IBOutlet weak public var heartButton: UIButton!
@@ -48,9 +47,9 @@ public class PostCell: UITableViewCell {
     
     public class func registerNibFor(tableView: UITableView) {
         
-        let listNib = UINib(nibName: "PostTextCell", bundle: KCommonKit.bundle())
+        let listNib = UINib(nibName: "PostTextCell", bundle: nil)
         tableView.register(listNib, forCellReuseIdentifier: "PostTextCell")
-        let listNib2 = UINib(nibName: "PostImageCell", bundle: KCommonKit.bundle())
+        let listNib2 = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.register(listNib2, forCellReuseIdentifier: "PostImageCell")
         
     }

@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import TTTAttributedLabel_moolban
 //import XCDYouTubeKit
 //import Parse
 import KDatabaseKit
@@ -416,7 +415,7 @@ public class ThreadViewController: UIViewController {
 //        }
 //    }
 //
-//    func updateAttributedTextProperties(textContent: TTTAttributedLabel) {
+//    func updateAttributedTextProperties(textContent: UILabel) {
 //        textContent.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
 //        textContent.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
 //        textContent.delegate = self;
@@ -608,29 +607,6 @@ public class ThreadViewController: UIViewController {
 //extension ThreadViewController: FetchControllerDelegate {
 //    public func didFetchFor(skip: Int) {
 //        refreshControl.endRefreshing()
-//    }
-//}
-//
-//extension ThreadViewController: TTTAttributedLabelDelegate {
-//
-//    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-//
-//        if let host = url.host, host == "profile",
-//            let username = url.pathComponents[1] {
-//            let isNotCurrentUser = username != User.currentUser()!.kurozoraUsername
-//            if let profileController = self as? ProfileViewController {
-//                if profileController.userProfile?.kurozoraUsername != username && isNotCurrentUser {
-//                    openProfileNow(username: username)
-//                }
-//            } else if isNotCurrentUser {
-//                openProfileNow(username: username)
-//            }
-//
-//        } else if url.scheme != "kurozoraapp" {
-//            let (navController, webController) = KDatabaseKit.webViewController()
-//            webController.initWithInitialUrl(url)
-//            presentViewController(navController, animated: true, completion: nil)
-//        }
 //    }
 //}
 //

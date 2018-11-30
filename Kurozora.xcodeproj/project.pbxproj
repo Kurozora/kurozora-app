@@ -35,10 +35,8 @@
 		6611235A2090907200E6033A /* Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661123592090907200E6033A /* Kurozora.swift */; };
 		6611F195213313AA009BF736 /* ShowTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F194213313AA009BF736 /* ShowTabBarController.swift */; };
 		6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */; };
-		6614DF412088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6614DF582088D3DA00B0BC69 /* KCommonKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF572088D3DA00B0BC69 /* KCommonKitTests.swift */; };
 		6614DF652089380E00B0BC69 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF642089380D00B0BC69 /* CustomTextField.swift */; };
 		6614DF6A2089391600B0BC69 /* KCommonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* KCommonKit.swift */; };
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
@@ -61,10 +59,24 @@
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
-		66647B6B2084995E00CF624F /* KurozoraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B6A2084995E00CF624F /* KurozoraTests.swift */; };
-		66647B762084995E00CF624F /* KurozoraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B752084995E00CF624F /* KurozoraUITests.swift */; };
 		6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumPosts.swift */; };
-		6669387221AFF87900BA9620 /* TimelinePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* TimelinePostCell.swift */; };
+		666938A321B19CAA00BA9620 /* KRichTextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 666938A121B19CAA00BA9620 /* KRichTextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		666938A621B19CAA00BA9620 /* KRichTextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; };
+		666938A721B19CAA00BA9620 /* KRichTextEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		666938AD21B19E3800BA9620 /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
+		666938AF21B1D4D200BA9620 /* TimelinePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* TimelinePostCell.swift */; };
+		666938B021B1D4D800BA9620 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF9209B304A0007A4DE /* PostCell.swift */; };
+		666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AFD209B59600007A4DE /* CommentCell.swift */; };
+		666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1B01209BAB350007A4DE /* WriteACommentCell.swift */; };
+		666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1B05209BAE1B0007A4DE /* ShowMoreCell.swift */; };
+		666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02B5209CAACD00BDAF41 /* PostLinkCell.swift */; };
+		666938B521B1D4F400BA9620 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1AFA209B304A0007A4DE /* PostCell.xib */; };
+		666938B621B1D4F900BA9620 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B09209BB1400007A4DE /* PostImageCell.xib */; };
+		666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1AFE209B59600007A4DE /* CommentCell.xib */; };
+		666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02B3209C997F00BDAF41 /* CommentImageCell.xib */; };
+		666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B02209BAB350007A4DE /* WriteACommentCell.xib */; };
+		666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */; };
+		666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */; };
 		666C82582162898400C93A70 /* CastTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C82572162898400C93A70 /* CastTableViewController.swift */; };
 		666C825A2168031B00C93A70 /* home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666C82592168031B00C93A70 /* home.storyboard */; };
 		666C825C2168063100C93A70 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C825B2168063000C93A70 /* HomeViewController.swift */; };
@@ -126,9 +138,6 @@
 		66B69BD4213734D3007154BD /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0420AD9C5800792B1B /* Anime.swift */; };
 		66B69BD6214544DB007154BD /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* PrivacyPolicy.swift */; };
 		66B69BD821454618007154BD /* Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD721454618007154BD /* Privacy.swift */; };
-		66BF02B4209C997F00BDAF41 /* CommentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02B3209C997F00BDAF41 /* CommentImageCell.xib */; };
-		66BF02B7209CAACD00BDAF41 /* PostLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02B5209CAACD00BDAF41 /* PostLinkCell.swift */; };
-		66BF02B8209CAACD00BDAF41 /* PostLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */; };
 		66BF02BB209F80F800BDAF41 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02BA209F80F800BDAF41 /* CustomLabel.swift */; };
 		66BF02C1209F846A00BDAF41 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C0209F846A00BDAF41 /* LoaderView.swift */; };
 		66BF02C3209F97EC00BDAF41 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C2209F97EC00BDAF41 /* HighlightButton.swift */; };
@@ -137,8 +146,6 @@
 		66BF02D0209F9FA200BDAF41 /* Action.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02CF209F9FA200BDAF41 /* Action.storyboard */; };
 		66BF02D3209FBA1700BDAF41 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02D2209FB95000BDAF41 /* Resources.xcassets */; };
 		66BF02D4209FBA1A00BDAF41 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02D2209FB95000BDAF41 /* Resources.xcassets */; };
-		66BF02E520A02A3100BDAF41 /* KDatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */; };
-		66BF02EC20A02A3100BDAF41 /* KDatabaseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02EB20A02A3100BDAF41 /* KDatabaseKitTests.swift */; };
 		66BF02F120A02A3100BDAF41 /* KDatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */; };
 		66BF02F220A02A3100BDAF41 /* KDatabaseKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		66C2C51B21022AE10020E21F /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
@@ -153,21 +160,11 @@
 		66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */; };
 		66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF3209B2C710007A4DE /* AnimeController.swift */; };
 		66CE1AF7209B2E7D0007A4DE /* AnimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */; };
-		66CE1AFB209B304A0007A4DE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF9209B304A0007A4DE /* PostCell.swift */; };
-		66CE1AFC209B304A0007A4DE /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1AFA209B304A0007A4DE /* PostCell.xib */; };
-		66CE1AFF209B59600007A4DE /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AFD209B59600007A4DE /* CommentCell.swift */; };
-		66CE1B00209B59600007A4DE /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1AFE209B59600007A4DE /* CommentCell.xib */; };
-		66CE1B03209BAB350007A4DE /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1B01209BAB350007A4DE /* WriteACommentCell.swift */; };
-		66CE1B04209BAB350007A4DE /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B02209BAB350007A4DE /* WriteACommentCell.xib */; };
-		66CE1B07209BAE1B0007A4DE /* ShowMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1B05209BAE1B0007A4DE /* ShowMoreCell.swift */; };
-		66CE1B08209BAE1B0007A4DE /* ShowMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */; };
-		66CE1B0A209BB1400007A4DE /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CE1B09209BB1400007A4DE /* PostImageCell.xib */; };
 		66CEFCE820AD6B6000792B1B /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCE720AD6B6000792B1B /* InAppController.swift */; };
 		66CEFCEA20AD6CC600792B1B /* KDatabaseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCE920AD6CC600792B1B /* KDatabaseKit.swift */; };
 		66CEFCED20AD6DB000792B1B /* SeasonalChartWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCEC20AD6DB000792B1B /* SeasonalChartWorker.swift */; };
 		66CEFCEF20AD7A3B00792B1B /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCEE20AD7A3B00792B1B /* AnimeService.swift */; };
 		66CEFCF420AD7CC300792B1B /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */; };
-		66CEFCF820AD7DF400792B1B /* TTTAttributedLabel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCF720AD7DF400792B1B /* TTTAttributedLabel+Tags.swift */; };
 		66CEFCFC20AD7EC000792B1B /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCFB20AD7EC000792B1B /* String+Utils.swift */; };
 		66CEFD0120AD9BA500792B1B /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0020AD9BA500792B1B /* UserDetails.swift */; };
 		66CEFD0320AD9BF100792B1B /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0220AD9BF100792B1B /* SeasonalChart.swift */; };
@@ -229,23 +226,10 @@
 		66FE5D01215B739D00E2844A /* KDefaultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsTableViewCell.swift */; };
 		66FE5D03215B9F9100E2844A /* SubmitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D02215B9F9100E2844A /* SubmitTableViewCell.swift */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
+		79E69A39F4C9D4914CCDA939 /* Pods_KRichTextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6614DF422088D1C600B0BC69 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6614DF372088D1C600B0BC69;
-			remoteInfo = KCommonKit;
-		};
-		6614DF442088D1C600B0BC69 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66647B4F2084995500CF624F;
-			remoteInfo = Kurozora;
-		};
 		6614DF4B2088D1C600B0BC69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
@@ -253,33 +237,12 @@
 			remoteGlobalIDString = 6614DF372088D1C600B0BC69;
 			remoteInfo = KCommonKit;
 		};
-		66647B672084995E00CF624F /* PBXContainerItemProxy */ = {
+		666938A421B19CAA00BA9620 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 66647B482084995500CF624F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 66647B4F2084995500CF624F;
-			remoteInfo = Aozora;
-		};
-		66647B722084995E00CF624F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66647B4F2084995500CF624F;
-			remoteInfo = Aozora;
-		};
-		66BF02E620A02A3100BDAF41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66BF02DB20A02A2D00BDAF41;
-			remoteInfo = KDatabaseKit;
-		};
-		66BF02E820A02A3100BDAF41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66647B4F2084995500CF624F;
-			remoteInfo = Kurozora;
+			remoteGlobalIDString = 6669389E21B19CAA00BA9620;
+			remoteInfo = KRichTextEditor;
 		};
 		66BF02EF20A02A3100BDAF41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -297,6 +260,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				666938A721B19CAA00BA9620 /* KRichTextEditor.framework in Embed Frameworks */,
 				6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */,
 				66BF02F220A02A3100BDAF41 /* KDatabaseKit.framework in Embed Frameworks */,
 			);
@@ -308,6 +272,7 @@
 /* Begin PBXFileReference section */
 		211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.release.xcconfig"; sourceTree = "<group>"; };
 		268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
+		2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KRichTextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6601F1AB2118488D0074C1DD /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		66058DB5212E95AB0084B79E /* details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = details.storyboard; sourceTree = "<group>"; };
 		66058DB7212E97360084B79E /* ShowSynopsisCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSynopsisCell.swift; sourceTree = "<group>"; };
@@ -337,9 +302,6 @@
 		6613F02320F6423000071CAE /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
 		6614DF382088D1C600B0BC69 /* KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6614DF402088D1C600B0BC69 /* KCommonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KCommonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6614DF492088D1C600B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6614DF572088D3DA00B0BC69 /* KCommonKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCommonKitTests.swift; sourceTree = "<group>"; };
 		6614DF642089380D00B0BC69 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6614DF682089384100B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6614DF692089391600B0BC69 /* KCommonKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCommonKit.swift; sourceTree = "<group>"; };
@@ -364,14 +326,12 @@
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66647B5C2084995E00CF624F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66647B612084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66647B662084995E00CF624F /* KurozoraTests. */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurozoraTests.; sourceTree = BUILT_PRODUCTS_DIR; };
-		66647B6A2084995E00CF624F /* KurozoraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraTests.swift; sourceTree = "<group>"; };
-		66647B6C2084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66647B712084995E00CF624F /* KurozoraUITests. */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurozoraUITests.; sourceTree = BUILT_PRODUCTS_DIR; };
-		66647B752084995E00CF624F /* KurozoraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraUITests.swift; sourceTree = "<group>"; };
-		66647B772084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6669386F21AF39A000BA9620 /* ForumPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumPosts.swift; sourceTree = "<group>"; };
 		6669387121AFF87900BA9620 /* TimelinePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostCell.swift; sourceTree = "<group>"; };
+		6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KRichTextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		666938A121B19CAA00BA9620 /* KRichTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KRichTextEditor.h; sourceTree = "<group>"; };
+		666938A221B19CAA00BA9620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		666938AC21B19E3800BA9620 /* editor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = editor.storyboard; sourceTree = "<group>"; };
 		666C82572162898400C93A70 /* CastTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewController.swift; sourceTree = "<group>"; };
 		666C82592168031B00C93A70 /* home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = home.storyboard; sourceTree = "<group>"; };
 		666C825B2168063000C93A70 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -442,9 +402,6 @@
 		66BF02D2209FB95000BDAF41 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KDatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66BF02DF20A02A3000BDAF41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66BF02E420A02A3100BDAF41 /* KDatabaseKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KDatabaseKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		66BF02EB20A02A3100BDAF41 /* KDatabaseKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDatabaseKitTests.swift; sourceTree = "<group>"; };
-		66BF02ED20A02A3100BDAF41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraTabBarController.swift; sourceTree = "<group>"; };
 		66C863F6216A749B0054EE16 /* LargeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCell.swift; sourceTree = "<group>"; };
 		66C863F8216A74C00054EE16 /* LargeCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCategoryCell.swift; sourceTree = "<group>"; };
@@ -470,7 +427,6 @@
 		66CEFCEC20AD6DB000792B1B /* SeasonalChartWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalChartWorker.swift; sourceTree = "<group>"; };
 		66CEFCEE20AD7A3B00792B1B /* AnimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 		66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
-		66CEFCF720AD7DF400792B1B /* TTTAttributedLabel+Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TTTAttributedLabel+Tags.swift"; sourceTree = "<group>"; };
 		66CEFCFB20AD7EC000792B1B /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		66CEFCFE20AD8C1D00792B1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66CEFD0020AD9BA500792B1B /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
@@ -538,6 +494,8 @@
 		681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.release.xcconfig"; sourceTree = "<group>"; };
 		83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.debug.xcconfig"; sourceTree = "<group>"; };
 		950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.debug.xcconfig"; sourceTree = "<group>"; };
+		B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KRichTextEditor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KRichTextEditor/Pods-KRichTextEditor.debug.xcconfig"; sourceTree = "<group>"; };
+		D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KRichTextEditor.release.xcconfig"; path = "Pods/Target Support Files/Pods-KRichTextEditor/Pods-KRichTextEditor.release.xcconfig"; sourceTree = "<group>"; };
 		DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KDatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -552,14 +510,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6614DF3D2088D1C600B0BC69 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6614DF412088D1C600B0BC69 /* KCommonKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		66647B4D2084995500CF624F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -567,20 +517,15 @@
 				6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */,
 				66BF02F120A02A3100BDAF41 /* KDatabaseKit.framework in Frameworks */,
 				73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */,
+				666938A621B19CAA00BA9620 /* KRichTextEditor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66647B632084995E00CF624F /* Frameworks */ = {
+		6669389C21B19CAA00BA9620 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66647B6E2084995E00CF624F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				79E69A39F4C9D4914CCDA939 /* Pods_KRichTextEditor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,14 +534,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				233E29E40A1E0D87423E79EA /* Pods_KDatabaseKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66BF02E120A02A3100BDAF41 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66BF02E520A02A3100BDAF41 /* KDatabaseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +548,7 @@
 				E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */,
 				EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */,
 				DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */,
+				2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -748,7 +686,6 @@
 				66488B8B212F7FF2001E8C82 /* KCommonKit.h */,
 				6614DF692089391600B0BC69 /* KCommonKit.swift */,
 				661123582090904F00E6033A /* API */,
-				66CE1AF8209B300D0007A4DE /* Posts */,
 				66CE1AF5209B2E6E0007A4DE /* AppGroup */,
 				66CE1AF2209B2C3D0007A4DE /* Controller */,
 				6614DF6D2089397500B0BC69 /* Extensions */,
@@ -757,15 +694,6 @@
 				6614DF672089384100B0BC69 /* Supporting Files */,
 			);
 			path = KCommonKit;
-			sourceTree = "<group>";
-		};
-		6614DF462088D1C600B0BC69 /* KCommonKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				6614DF572088D3DA00B0BC69 /* KCommonKitTests.swift */,
-				6614DF492088D1C600B0BC69 /* Info.plist */,
-			);
-			path = KCommonKitTests;
 			sourceTree = "<group>";
 		};
 		6614DF662089381F00B0BC69 /* View */ = {
@@ -828,12 +756,9 @@
 			isa = PBXGroup;
 			children = (
 				66647B522084995500CF624F /* Kurozora */,
-				66647B692084995E00CF624F /* KurozoraTests */,
-				66647B742084995E00CF624F /* KurozoraUITests */,
 				6614DF392088D1C600B0BC69 /* KCommonKit */,
-				6614DF462088D1C600B0BC69 /* KCommonKitTests */,
 				66BF02DD20A02A3000BDAF41 /* KDatabaseKit */,
-				66BF02EA20A02A3100BDAF41 /* KDatabaseKitTests */,
+				666938A021B19CAA00BA9620 /* KRichTextEditor */,
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
@@ -844,12 +769,9 @@
 			isa = PBXGroup;
 			children = (
 				66647B502084995500CF624F /* Kurozora.app */,
-				66647B662084995E00CF624F /* KurozoraTests. */,
-				66647B712084995E00CF624F /* KurozoraUITests. */,
 				6614DF382088D1C600B0BC69 /* KCommonKit.framework */,
-				6614DF402088D1C600B0BC69 /* KCommonKitTests.xctest */,
 				66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */,
-				66BF02E420A02A3100BDAF41 /* KDatabaseKitTests.xctest */,
+				6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -885,22 +807,22 @@
 			path = Kurozora;
 			sourceTree = "<group>";
 		};
-		66647B692084995E00CF624F /* KurozoraTests */ = {
+		666938A021B19CAA00BA9620 /* KRichTextEditor */ = {
 			isa = PBXGroup;
 			children = (
-				66647B6A2084995E00CF624F /* KurozoraTests.swift */,
-				66647B6C2084995E00CF624F /* Info.plist */,
+				666938A121B19CAA00BA9620 /* KRichTextEditor.h */,
+				666938AC21B19E3800BA9620 /* editor.storyboard */,
+				666938AB21B19D1B00BA9620 /* Supporting Files */,
 			);
-			path = KurozoraTests;
+			path = KRichTextEditor;
 			sourceTree = "<group>";
 		};
-		66647B742084995E00CF624F /* KurozoraUITests */ = {
+		666938AB21B19D1B00BA9620 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				66647B752084995E00CF624F /* KurozoraUITests.swift */,
-				66647B772084995E00CF624F /* Info.plist */,
+				666938A221B19CAA00BA9620 /* Info.plist */,
 			);
-			path = KurozoraUITests;
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		666C82562162895700C93A70 /* Cast */ = {
@@ -1082,15 +1004,6 @@
 			path = KDatabaseKit;
 			sourceTree = "<group>";
 		};
-		66BF02EA20A02A3100BDAF41 /* KDatabaseKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				66BF02EB20A02A3100BDAF41 /* KDatabaseKitTests.swift */,
-				66BF02ED20A02A3100BDAF41 /* Info.plist */,
-			);
-			path = KDatabaseKitTests;
-			sourceTree = "<group>";
-		};
 		66BF02F920A02D4800BDAF41 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,6 +1040,7 @@
 		66CE1AF8209B300D0007A4DE /* Posts */ = {
 			isa = PBXGroup;
 			children = (
+				6669387121AFF87900BA9620 /* TimelinePostCell.swift */,
 				66CE1AF9209B304A0007A4DE /* PostCell.swift */,
 				66CE1AFA209B304A0007A4DE /* PostCell.xib */,
 				66CE1B09209BB1400007A4DE /* PostImageCell.xib */,
@@ -1156,7 +1070,6 @@
 			isa = PBXGroup;
 			children = (
 				66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */,
-				66CEFCF720AD7DF400792B1B /* TTTAttributedLabel+Tags.swift */,
 				66CEFCFB20AD7EC000792B1B /* String+Utils.swift */,
 			);
 			path = Extensions;
@@ -1228,7 +1141,7 @@
 		66CF6D6320A9875600F98375 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				6669387121AFF87900BA9620 /* TimelinePostCell.swift */,
+				66CE1AF8209B300D0007A4DE /* Posts */,
 				66CF6D6620A987D100F98375 /* ProfileViewController.swift */,
 				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
 				66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */,
@@ -1328,6 +1241,8 @@
 				681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */,
 				83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */,
 				211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */,
+				B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */,
+				D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1340,6 +1255,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				66488B8C212F7FF2001E8C82 /* KCommonKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6669389A21B19CAA00BA9620 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				666938A321B19CAA00BA9620 /* KRichTextEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1373,25 +1296,6 @@
 			productReference = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		6614DF3F2088D1C600B0BC69 /* KCommonKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6614DF522088D1C600B0BC69 /* Build configuration list for PBXNativeTarget "KCommonKitTests" */;
-			buildPhases = (
-				6614DF3C2088D1C600B0BC69 /* Sources */,
-				6614DF3D2088D1C600B0BC69 /* Frameworks */,
-				6614DF3E2088D1C600B0BC69 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6614DF432088D1C600B0BC69 /* PBXTargetDependency */,
-				6614DF452088D1C600B0BC69 /* PBXTargetDependency */,
-			);
-			name = KCommonKitTests;
-			productName = KCommonKitTests;
-			productReference = 6614DF402088D1C600B0BC69 /* KCommonKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		66647B4F2084995500CF624F /* Kurozora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66647B7A2084995E00CF624F /* Build configuration list for PBXNativeTarget "Kurozora" */;
@@ -1409,47 +1313,31 @@
 			dependencies = (
 				6614DF4C2088D1C600B0BC69 /* PBXTargetDependency */,
 				66BF02F020A02A3100BDAF41 /* PBXTargetDependency */,
+				666938A521B19CAA00BA9620 /* PBXTargetDependency */,
 			);
 			name = Kurozora;
 			productName = Aozora;
 			productReference = 66647B502084995500CF624F /* Kurozora.app */;
 			productType = "com.apple.product-type.application";
 		};
-		66647B652084995E00CF624F /* KurozoraTests */ = {
+		6669389E21B19CAA00BA9620 /* KRichTextEditor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 66647B7D2084995E00CF624F /* Build configuration list for PBXNativeTarget "KurozoraTests" */;
+			buildConfigurationList = 666938A821B19CAA00BA9620 /* Build configuration list for PBXNativeTarget "KRichTextEditor" */;
 			buildPhases = (
-				66647B622084995E00CF624F /* Sources */,
-				66647B632084995E00CF624F /* Frameworks */,
-				66647B642084995E00CF624F /* Resources */,
+				F844CD23E03BE8BB7BBB3F42 /* [CP] Check Pods Manifest.lock */,
+				6669389A21B19CAA00BA9620 /* Headers */,
+				6669389B21B19CAA00BA9620 /* Sources */,
+				6669389C21B19CAA00BA9620 /* Frameworks */,
+				6669389D21B19CAA00BA9620 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				66647B682084995E00CF624F /* PBXTargetDependency */,
 			);
-			name = KurozoraTests;
-			productName = AozoraTests;
-			productReference = 66647B662084995E00CF624F /* KurozoraTests. */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		66647B702084995E00CF624F /* KurozoraUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66647B802084995E00CF624F /* Build configuration list for PBXNativeTarget "KurozoraUITests" */;
-			buildPhases = (
-				66647B6D2084995E00CF624F /* Sources */,
-				66647B6E2084995E00CF624F /* Frameworks */,
-				66647B6F2084995E00CF624F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				66647B732084995E00CF624F /* PBXTargetDependency */,
-			);
-			name = KurozoraUITests;
-			productName = AozoraUITests;
-			productReference = 66647B712084995E00CF624F /* KurozoraUITests. */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			name = KRichTextEditor;
+			productName = KRichTextEditor;
+			productReference = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		66BF02DB20A02A2D00BDAF41 /* KDatabaseKit */ = {
 			isa = PBXNativeTarget;
@@ -1470,25 +1358,6 @@
 			productReference = 66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		66BF02E320A02A3100BDAF41 /* KDatabaseKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66BF02F620A02A3100BDAF41 /* Build configuration list for PBXNativeTarget "KDatabaseKitTests" */;
-			buildPhases = (
-				66BF02E020A02A3100BDAF41 /* Sources */,
-				66BF02E120A02A3100BDAF41 /* Frameworks */,
-				66BF02E220A02A3100BDAF41 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				66BF02E720A02A3100BDAF41 /* PBXTargetDependency */,
-				66BF02E920A02A3100BDAF41 /* PBXTargetDependency */,
-			);
-			name = KDatabaseKitTests;
-			productName = KDatabaseKitTests;
-			productReference = 66BF02E420A02A3100BDAF41 /* KDatabaseKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1505,13 +1374,6 @@
 						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
-					6614DF3F2088D1C600B0BC69 = {
-						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 2RRQ3G5DSX;
-						LastSwiftMigration = 0930;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 66647B4F2084995500CF624F;
-					};
 					66647B4F2084995500CF624F = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = 2RRQ3G5DSX;
@@ -1522,27 +1384,16 @@
 							};
 						};
 					};
-					66647B652084995E00CF624F = {
-						CreatedOnToolsVersion = 9.3;
+					6669389E21B19CAA00BA9620 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 2RRQ3G5DSX;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 66647B4F2084995500CF624F;
-					};
-					66647B702084995E00CF624F = {
-						CreatedOnToolsVersion = 9.3;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 66647B4F2084995500CF624F;
 					};
 					66BF02DB20A02A2D00BDAF41 = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = 2RRQ3G5DSX;
 						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
-					};
-					66BF02E320A02A3100BDAF41 = {
-						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 2RRQ3G5DSX;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 66647B4F2084995500CF624F;
 					};
 				};
 			};
@@ -1560,12 +1411,9 @@
 			projectRoot = "";
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
-				66647B652084995E00CF624F /* KurozoraTests */,
-				66647B702084995E00CF624F /* KurozoraUITests */,
 				6614DF372088D1C600B0BC69 /* KCommonKit */,
-				6614DF3F2088D1C600B0BC69 /* KCommonKitTests */,
 				66BF02DB20A02A2D00BDAF41 /* KDatabaseKit */,
-				66BF02E320A02A3100BDAF41 /* KDatabaseKitTests */,
+				6669389E21B19CAA00BA9620 /* KRichTextEditor */,
 			);
 		};
 /* End PBXProject section */
@@ -1575,22 +1423,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66CE1B04209BAB350007A4DE /* WriteACommentCell.xib in Resources */,
-				66BF02B4209C997F00BDAF41 /* CommentImageCell.xib in Resources */,
-				66CE1B08209BAE1B0007A4DE /* ShowMoreCell.xib in Resources */,
-				66CE1B0A209BB1400007A4DE /* PostImageCell.xib in Resources */,
-				66CE1AFC209B304A0007A4DE /* PostCell.xib in Resources */,
-				66CE1B00209B59600007A4DE /* CommentCell.xib in Resources */,
 				66BF02D4209FBA1A00BDAF41 /* Resources.xcassets in Resources */,
 				66BF02D0209F9FA200BDAF41 /* Action.storyboard in Resources */,
-				66BF02B8209CAACD00BDAF41 /* PostLinkCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6614DF3E2088D1C600B0BC69 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1602,12 +1436,17 @@
 				6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */,
 				66D6237F20A1CC1D00304914 /* library.storyboard in Resources */,
 				660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */,
+				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
+				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
 				668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */,
 				66A552D620A2D40100E515DB /* forums.storyboard in Resources */,
 				66CF6D7120A9934F00F98375 /* profile.storyboard in Resources */,
+				666938B521B1D4F400BA9620 /* PostCell.xib in Resources */,
+				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* reachability.storyboard in Resources */,
 				660B5B6421525873002D05F3 /* SessionCell.xib in Resources */,
 				66BF02D3209FBA1700BDAF41 /* Resources.xcassets in Resources */,
+				666938B621B1D4F900BA9620 /* PostImageCell.xib in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				6609B058213532750007EE34 /* rate.storyboard in Resources */,
 				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
@@ -1615,12 +1454,14 @@
 				661F9F812087282500CF4153 /* login.storyboard in Resources */,
 				666C825A2168031B00C93A70 /* home.storyboard in Resources */,
 				66A8AF23209991310011A342 /* AnimeCell.xib in Resources */,
+				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
 				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
 				66D6236E20A09F6B00304914 /* season.storyboard in Resources */,
 				668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */,
 				66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
+				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				66707835208B842E00471FBC /* settings.storyboard in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				668F639420986A34003B1C1D /* FontAwesome.ttf in Resources */,
@@ -1630,17 +1471,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66647B642084995E00CF624F /* Resources */ = {
+		6669389D21B19CAA00BA9620 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66647B6F2084995E00CF624F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				666938AD21B19E3800BA9620 /* editor.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1649,13 +1484,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66CEFD2920ADC8E200792B1B /* inAppBrowser.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66BF02E220A02A3100BDAF41 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,10 +1588,10 @@
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TRON/TRON.framework",
-				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel-moolban/TTTAttributedLabel_moolban.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
+				"${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1790,14 +1618,36 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel_moolban.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichEditorView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F844CD23E03BE8BB7BBB3F42 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KRichTextEditor-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1809,12 +1659,10 @@
 			files = (
 				66BF02BB209F80F800BDAF41 /* CustomLabel.swift in Sources */,
 				66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */,
-				66CE1AFF209B59600007A4DE /* CommentCell.swift in Sources */,
 				66A8AF252099A4950011A342 /* UIDevice+Utils.swift in Sources */,
 				66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */,
 				66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */,
 				6611235A2090907200E6033A /* Kurozora.swift in Sources */,
-				66CE1B07209BAE1B0007A4DE /* ShowMoreCell.swift in Sources */,
 				6614DF652089380E00B0BC69 /* CustomTextField.swift in Sources */,
 				66BF02C3209F97EC00BDAF41 /* HighlightButton.swift in Sources */,
 				66E1B8692090AFC600D7AC1A /* KAtarashii.swift in Sources */,
@@ -1823,23 +1671,12 @@
 				66BF02C1209F846A00BDAF41 /* LoaderView.swift in Sources */,
 				66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */,
 				66BF02CC209F9BA900BDAF41 /* ActionListViewController.swift in Sources */,
-				66CE1AFB209B304A0007A4DE /* PostCell.swift in Sources */,
-				66CE1B03209BAB350007A4DE /* WriteACommentCell.swift in Sources */,
 				6614DF6A2089391600B0BC69 /* KCommonKit.swift in Sources */,
 				66A8AF272099A4C30011A342 /* String+Date.swift in Sources */,
 				66BF02CE209F9CEB00BDAF41 /* DropDownListViewController.swift in Sources */,
 				66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */,
 				66CE1AF7209B2E7D0007A4DE /* AnimeData.swift in Sources */,
 				66A8AF392099FC870011A342 /* UIViewController+Kurozora.swift in Sources */,
-				66BF02B7209CAACD00BDAF41 /* PostLinkCell.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6614DF3C2088D1C600B0BC69 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6614DF582088D3DA00B0BC69 /* KCommonKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,6 +1685,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */,
+				666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */,
 				66112349208F6ACE00E6033A /* WorkflowController.swift in Sources */,
 				666C825C2168063100C93A70 /* HomeViewController.swift in Sources */,
 				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
@@ -1868,6 +1706,7 @@
 				66058DBC212E97AD0084B79E /* ShowLinkCell.swift in Sources */,
 				66D6237220A18E4200304914 /* CalendarViewController.swift in Sources */,
 				66D6237020A189D200304914 /* ChartViewController.swift in Sources */,
+				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsTableViewCell.swift in Sources */,
 				66EF26C6215F960A00FB2B19 /* Array+Kurozora.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* NotificationCell.swift in Sources */,
@@ -1893,7 +1732,8 @@
 				66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */,
-				6669387221AFF87900BA9620 /* TimelinePostCell.swift in Sources */,
+				666938B021B1D4D800BA9620 /* PostCell.swift in Sources */,
+				666938AF21B1D4D200BA9620 /* TimelinePostCell.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
 				66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */,
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,
@@ -1934,6 +1774,7 @@
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
+				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
 				6625F95320B5F283004DB533 /* UIKit+Kurozora.swift in Sources */,
 				66112345208F6AA600E6033A /* KAnimeKit.swift in Sources */,
@@ -1941,6 +1782,7 @@
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				66160C3E215C271700D0D722 /* Reachability.swift in Sources */,
 				660B5B5F21523612002D05F3 /* Session.swift in Sources */,
+				666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */,
 				6674A0D620A58AA300AAB527 /* NotificationThreadViewController.swift in Sources */,
 				661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */,
 				66C863FB216A75470054EE16 /* HeaderCategoryCell.swift in Sources */,
@@ -1956,19 +1798,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66647B622084995E00CF624F /* Sources */ = {
+		6669389B21B19CAA00BA9620 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66647B6B2084995E00CF624F /* KurozoraTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66647B6D2084995E00CF624F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66647B762084995E00CF624F /* KurozoraUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2002,7 +1835,6 @@
 				66CEFD1D20ADAC0F00792B1B /* TimelinePost.swift in Sources */,
 				66CEFD2720ADBD9300792B1B /* InAppBrowserViewController.swift in Sources */,
 				66CEFD1320ADA89300792B1B /* Episode.swift in Sources */,
-				66CEFCF820AD7DF400792B1B /* TTTAttributedLabel+Tags.swift in Sources */,
 				66B69BD4213734D3007154BD /* Anime.swift in Sources */,
 				66C2C51B21022AE10020E21F /* WorkflowController.swift in Sources */,
 				66CEFD3520ADF38400792B1B /* NewThreadViewController.swift in Sources */,
@@ -2016,51 +1848,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66BF02E020A02A3100BDAF41 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66BF02EC20A02A3100BDAF41 /* KDatabaseKitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6614DF432088D1C600B0BC69 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6614DF372088D1C600B0BC69 /* KCommonKit */;
-			targetProxy = 6614DF422088D1C600B0BC69 /* PBXContainerItemProxy */;
-		};
-		6614DF452088D1C600B0BC69 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66647B4F2084995500CF624F /* Kurozora */;
-			targetProxy = 6614DF442088D1C600B0BC69 /* PBXContainerItemProxy */;
-		};
 		6614DF4C2088D1C600B0BC69 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6614DF372088D1C600B0BC69 /* KCommonKit */;
 			targetProxy = 6614DF4B2088D1C600B0BC69 /* PBXContainerItemProxy */;
 		};
-		66647B682084995E00CF624F /* PBXTargetDependency */ = {
+		666938A521B19CAA00BA9620 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 66647B4F2084995500CF624F /* Kurozora */;
-			targetProxy = 66647B672084995E00CF624F /* PBXContainerItemProxy */;
-		};
-		66647B732084995E00CF624F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66647B4F2084995500CF624F /* Kurozora */;
-			targetProxy = 66647B722084995E00CF624F /* PBXContainerItemProxy */;
-		};
-		66BF02E720A02A3100BDAF41 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66BF02DB20A02A2D00BDAF41 /* KDatabaseKit */;
-			targetProxy = 66BF02E620A02A3100BDAF41 /* PBXContainerItemProxy */;
-		};
-		66BF02E920A02A3100BDAF41 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66647B4F2084995500CF624F /* Kurozora */;
-			targetProxy = 66BF02E820A02A3100BDAF41 /* PBXContainerItemProxy */;
+			target = 6669389E21B19CAA00BA9620 /* KRichTextEditor */;
+			targetProxy = 666938A421B19CAA00BA9620 /* PBXContainerItemProxy */;
 		};
 		66BF02F020A02A3100BDAF41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2195,59 +1994,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		6614DF532088D1C600B0BC69 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/Developer/Library/Frameworks",
-				);
-				INFOPLIST_FILE = KCommonKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KCommonKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SWIFT_OBJC_BRIDGING_HEADER = "KCommonKitTests/KCommonKitTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		6614DF542088D1C600B0BC69 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/Developer/Library/Frameworks",
-				);
-				INFOPLIST_FILE = KCommonKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KCommonKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SWIFT_OBJC_BRIDGING_HEADER = "KCommonKitTests/KCommonKitTests-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -2451,69 +2197,60 @@
 			};
 			name = Release;
 		};
-		66647B7E2084995E00CF624F /* Debug */ = {
+		666938A921B19CAA00BA9620 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AozoraTests/Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "KRichTextEditor/Supporting Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.AozoraTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KRichTextEditor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
-		66647B7F2084995E00CF624F /* Release */ = {
+		666938AA21B19CAA00BA9620 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AozoraTests/Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "KRichTextEditor/Supporting Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.AozoraTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KRichTextEditor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-			};
-			name = Release;
-		};
-		66647B812084995E00CF624F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AozoraUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.AozoraUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Aozora;
-			};
-			name = Debug;
-		};
-		66647B822084995E00CF624F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AozoraUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.AozoraUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Aozora;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -2596,42 +2333,6 @@
 			};
 			name = Release;
 		};
-		66BF02F720A02A3100BDAF41 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				INFOPLIST_FILE = KDatabaseKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KDatabaseKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		66BF02F820A02A3100BDAF41 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				INFOPLIST_FILE = KDatabaseKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kusa.KDatabaseKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2640,15 +2341,6 @@
 			buildConfigurations = (
 				6614DF502088D1C600B0BC69 /* Debug */,
 				6614DF512088D1C600B0BC69 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6614DF522088D1C600B0BC69 /* Build configuration list for PBXNativeTarget "KCommonKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6614DF532088D1C600B0BC69 /* Debug */,
-				6614DF542088D1C600B0BC69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2671,20 +2363,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		66647B7D2084995E00CF624F /* Build configuration list for PBXNativeTarget "KurozoraTests" */ = {
+		666938A821B19CAA00BA9620 /* Build configuration list for PBXNativeTarget "KRichTextEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				66647B7E2084995E00CF624F /* Debug */,
-				66647B7F2084995E00CF624F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		66647B802084995E00CF624F /* Build configuration list for PBXNativeTarget "KurozoraUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66647B812084995E00CF624F /* Debug */,
-				66647B822084995E00CF624F /* Release */,
+				666938A921B19CAA00BA9620 /* Debug */,
+				666938AA21B19CAA00BA9620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2694,15 +2377,6 @@
 			buildConfigurations = (
 				66BF02F420A02A3100BDAF41 /* Debug */,
 				66BF02F520A02A3100BDAF41 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		66BF02F620A02A3100BDAF41 /* Build configuration list for PBXNativeTarget "KDatabaseKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66BF02F720A02A3100BDAF41 /* Debug */,
-				66BF02F820A02A3100BDAF41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
