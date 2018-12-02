@@ -10,16 +10,18 @@ import UIKit
 import IQKeyboardManagerSwift
 import RevealingSplashView
 import Kingfisher
+import SCLAlertView
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+	var window: UIWindow?
     let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "kurozora_icon")!,iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: UIColor(red: 53/255, green: 58/255, blue: 80/255, alpha: 1))
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
+		WorkflowController.pusherInit()
         
         // Max disk cache size
         ImageCache.default.maxDiskCacheSize = 60 * 1024 * 1024
@@ -61,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window?.addSubview(revealingSplashView)
-        revealingSplashView.playHeartBeatAnimation()
+		revealingSplashView.playHeartBeatAnimation()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
 
@@ -100,6 +102,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 }
 

@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class WelcomeViewController: UIViewController {
+	var logoutReason: String? = ""
+	var isKiller: Bool?
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -16,6 +20,15 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if let logoutReason = logoutReason, logoutReason != "", let isKiller = isKiller, !isKiller {
+			SCLAlertView().showInfo("You have been logged out", subTitle: logoutReason)
+			self.logoutReason = ""
+		}
+	}
     
     override var prefersStatusBarHidden: Bool {
         return true

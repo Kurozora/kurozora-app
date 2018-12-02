@@ -20,11 +20,11 @@ public struct DatabaseKit {
 }
 
 public class KDatabaseKit {
-//
-//    public class func bundle() -> Bundle {
-//        return Bundle(for: self)
-//    }
-//
+
+    public class func bundle() -> Bundle {
+        return Bundle(for: self)
+    }
+
 //    public class func commentStoryboard() -> UIStoryboard {
 //        return UIStoryboard(name: "Comment", bundle: bundle())
 //    }

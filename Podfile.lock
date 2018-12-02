@@ -11,6 +11,7 @@ PODS:
   - Bolts-Swift (1.3.0)
   - BottomPopup (0.4.1)
   - Cosmos (17.0.0)
+  - CryptoSwift (0.9.0)
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.6.4)
   - FLAnimatedImage (1.0.12)
@@ -18,14 +19,26 @@ PODS:
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
   - Kingfisher (4.10.1)
+  - MarqueeLabel/Swift (3.2.0)
   - NGAParallaxMotion (1.1.0)
+  - NotificationBannerSwift (1.8.0):
+    - MarqueeLabel/Swift (~> 3.2.0)
+    - SnapKit (~> 4.0.1)
   - NVActivityIndicatorView (4.4.0):
     - NVActivityIndicatorView/Presenter (= 4.4.0)
   - NVActivityIndicatorView/Presenter (4.4.0)
   - Pageboy (2.6.1)
+  - PusherSwift (6.1.0):
+    - CryptoSwift (~> 0.9.0)
+    - ReachabilitySwift (~> 4.1.0)
+    - Starscream (~> 3.0.5)
+    - TaskQueue (~> 1.1.1)
+  - ReachabilitySwift (4.1.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
   - SCLAlertView (0.8.1)
+  - SnapKit (4.0.1)
+  - Starscream (3.0.6)
   - SwifterSwift (4.6.0):
     - SwifterSwift/AppKit (= 4.6.0)
     - SwifterSwift/CoreGraphics (= 4.6.0)
@@ -48,6 +61,7 @@ PODS:
   - Tabman (1.10.2):
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
+  - TaskQueue (1.1.1)
   - TRON (4.2.1):
     - Alamofire (~> 4.5)
     - TRON/SwiftyJSON (= 4.2.1)
@@ -72,8 +86,10 @@ DEPENDENCIES:
   - KeychainAccess (~> 3.1)
   - Kingfisher (~> 4.0)
   - NGAParallaxMotion (~> 1.1)
+  - NotificationBannerSwift
   - NVActivityIndicatorView
-  - RevealingSplashView
+  - PusherSwift
+  - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichEditorView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SwifterSwift (~> 4.3)
@@ -91,6 +107,7 @@ SPEC REPOS:
     - AXStateButton
     - BottomPopup
     - Cosmos
+    - CryptoSwift
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
@@ -98,15 +115,21 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
+    - MarqueeLabel
     - NGAParallaxMotion
+    - NotificationBannerSwift
     - NVActivityIndicatorView
     - Pageboy
-    - RevealingSplashView
+    - PusherSwift
+    - ReachabilitySwift
     - RichEditorView
+    - SnapKit
+    - Starscream
     - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
     - Tabman
+    - TaskQueue
     - TRON
     - UIImageColors
     - WhatsNew
@@ -115,6 +138,9 @@ EXTERNAL SOURCES:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
+  RevealingSplashView:
+    :commit: master
+    :git: https://github.com/PiXeL16/RevealingSplashView.git
   SCLAlertView:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
@@ -123,6 +149,9 @@ CHECKOUT OPTIONS:
   Bolts-Swift:
     :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
     :git: https://github.com/BoltsFramework/Bolts-Swift
+  RevealingSplashView:
+    :commit: master
+    :git: https://github.com/PiXeL16/RevealingSplashView.git
   SCLAlertView:
     :commit: 86ea7613c99cd4896765fabfa773b39b40bc8590
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
@@ -135,6 +164,7 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   BottomPopup: 052f0ea8bb1110d633e66529cbb07b8599eb227d
   Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
+  CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -142,20 +172,27 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
+  NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
+  PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
+  TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 2aae82764221252d0e39ffccb64ebf74c97a3384
+PODFILE CHECKSUM: 132b1d6229c76979fa93a92351087f9394b7a229
 
 COCOAPODS: 1.6.0.beta.1

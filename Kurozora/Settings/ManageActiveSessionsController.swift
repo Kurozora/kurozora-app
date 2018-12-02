@@ -11,7 +11,7 @@ import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
 
-class ManageActiveSessionsController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate  {
+class ManageActiveSessionsController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var currentIPAddress: UILabel!
     @IBOutlet weak var currentDeviceType: UILabel!

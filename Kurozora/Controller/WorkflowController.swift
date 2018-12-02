@@ -6,12 +6,68 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import KCommonKit
-import KDatabaseKit
+import PusherSwift
+import NotificationBannerSwift
+import SCLAlertView
+
+let optionsWithEndpoint = PusherClientOptions(
+	authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
+	host: .cluster("eu")
+)
+let pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
+//var window: UIWindow?
 
 public class WorkflowController {
+
+	/// Initialise Pusher and connect to subsequent channels
+	class func pusherInit() {
+		if let currentId = User.currentId(), currentId != 0 {
+			pusher.connect()
+
+			let myChannel = pusher.subscribe("private-user.\(currentId)")
+
+			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
+				if let data = data as? [String : AnyObject], data.count != 0 {
+					if let userId = data["user_id"] as? Int, let ip = data["ip"] as? String, let sessionId = data["session_id"] as? Int  {
+						let banner = NotificationBanner(title: "New login for userID: \(userId)", subtitle: "ip: \(ip), sessionID: \(sessionId) ", style: .success)
+						banner.show()
+					}
+				} else {
+					NSLog("------- Pusher error")
+				}
+			})
+
+			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
+				if let data = data as? [String : AnyObject], data.count != 0 {
+					if let userId = data["user_id"] as? Int, let reason = data["reason"] as? String, let sessionId = data["session_id"] as? Int, let killerId = data["killer_id"] as? Int {
+						if userId == User.currentId(), sessionId == User.currentSessionId() {
+							let isKiller = userId == killerId
+
+							pusher.unsubscribeAll()
+							pusher.disconnect()
+							logoutUser()
+
+							let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+							let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+							vc.logoutReason = reason
+							vc.isKiller = isKiller
+
+							applicationWindow().rootViewController?.present(vc, animated: true, completion: nil)
+						}
+					}
+				} else {
+					NSLog("------- Pusher error")
+				}
+			})
+		}
+	}
+
+	/// Logout the current user by emptying KDefaults
+	class func logoutUser() {
+		try? GlobalVariables().KDefaults.removeAll()
+	}
 
 //    class func presentRootTabBar(animated: Bool) {
     
@@ -83,26 +139,9 @@ public class WorkflowController {
 //            })
 //        }
 //    }
-//
-//    class func applicationWindow() -> UIWindow {
-//        return UIApplication.shared.delegate!.window!!
-//    }
-    
-    class func logoutUser() {
-        // Send request to server
 
-
-        // Logout MAL
-//        User.logoutMyAnimeList()
-
-        // Remove defaults
-//        UserDefaults.standard.removeObject(forKey: LibraryController.LastSyncDateDefaultsKey)
-//        UserDefaults.standard.removeObject(forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
-//        UserDefaults.standard.synchronize()
-        try? GlobalVariables().KDefaults.remove("username")
-        try? GlobalVariables().KDefaults.remove("session_secret")
-        // Logout user
-//        return User.logOutInBackground()
-
+	/// Return a shared instance of UIApplication window
+    class func applicationWindow() -> UIWindow {
+        return UIApplication.shared.delegate!.window!!
     }
 }

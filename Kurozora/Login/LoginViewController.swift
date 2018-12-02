@@ -11,6 +11,7 @@ import KCommonKit
 import Alamofire
 import SwiftyJSON
 import SCLAlertView
+import PusherSwift
 
 class LoginViewController: UIViewController {
     var window: UIWindow?
@@ -53,6 +54,8 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
         
         Service.shared.login(username, password, device, withSuccess: { (success) in
+			WorkflowController.pusherInit()
+			
             let customTabBar = KurozoraTabBarController()
             customTabBar.modalTransitionStyle = .flipHorizontal
             self.present(customTabBar, animated: true, completion: nil)

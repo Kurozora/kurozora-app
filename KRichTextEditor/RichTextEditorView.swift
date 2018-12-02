@@ -8,8 +8,9 @@
 
 import UIKit
 import RichEditorView
+import SCLAlertView
 
-class RichTextEditorView: UIViewController {
+class RichTextEditorView: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	@IBOutlet weak var richEditorView: RichEditorView!
 
 	lazy var toolbar: RichEditorToolbar = {
@@ -17,6 +18,8 @@ class RichTextEditorView: UIViewController {
 		toolbar.options = RichEditorDefaultOption.all
 		return toolbar
 	}()
+
+	var imagePicker = UIImagePickerController()
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -33,13 +36,12 @@ class RichTextEditorView: UIViewController {
 		toolbar.editor = richEditorView
 	}
 
-	// MARK: = IBActions
+	// MARK: - IBActions
 	@IBAction func cancelButton(_ sender: Any) {
 		dismiss(animated: true, completion: nil)
 	}
-}
 
-extension KRichTextEditor: RichEditorToolbarDelegate {
+	// MARK: - RichTextEditorToolbarDelegate
 	fileprivate func randomColor() -> UIColor {
 		let colors: [UIColor] = [
 			.red,
@@ -65,13 +67,49 @@ extension KRichTextEditor: RichEditorToolbarDelegate {
 	}
 
 	func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
-		toolbar.editor?.insertImage("https://img.memecdn.com/if-anyone-can-it-amp-039-s-elon-musk_o_7214081.jpg", alt: "Elon-chan")
+		imagePicker.sourceType = .photoLibrary
+		imagePicker.allowsEditing = true
+		imagePicker.delegate = self
+
+		self.present(imagePicker, animated: true, completion: nil)
 	}
 
 	func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
 		// Can only add links to selected text, so make sure there is a range selection first
+
 		if toolbar.editor?.hasRangeSelection == true {
-			toolbar.editor?.insertLink("https://twitter.com/elonmusk/", title: "Elon Musk Twitter")
+			let alertView = SCLAlertView()
+			let linkTextField = alertView.addTextField("https://")
+
+			alertView.addButton("Link") {
+				if let linkText = linkTextField.text, linkText != "" {
+					toolbar.editor?.insertLink(linkText, title: "")
+				}
+			}
+
+			alertView.showInfo("Add a link", closeButtonTitle: "Cancel")
+		} else {
+			SCLAlertView().showWarning("Please select a text first!")
 		}
+	}
+
+	// MARK: - UIImagePickerControllerDelegate Methods
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		//obtaining saving path
+//		let fileManager = FileManager.default
+//		let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+//		let imagePath = documentsPath?.appendingPathComponent("image.jpg")
+
+		// extract image from the picker and save it
+		if let pickedImage = info[UIImagePickerController.InfoKey.referenceURL] as? URL {
+			NSLog("\(pickedImage)")
+			toolbar.editor?.insertImage(pickedImage.absoluteString, alt: "")
+		}
+
+		picker.dismiss(animated: true, completion: nil)
+	}
+
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		picker.dismiss(animated: true, completion: nil)
 	}
 }

@@ -7,6 +7,7 @@
 //
 
 import KCommonKit
+import KRichTextEditor
 import SwiftyJSON
 import Tabman
 import Pageboy
@@ -138,7 +139,12 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
         return nil
     }
     
-//    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+	@IBAction func createThreadButton(_ sender: Any) {
+		let editorStoryboard = KRichTextEditor.editorStoryboard()
+		let vc = editorStoryboard.instantiateInitialViewController()
+		present(vc!, animated: true, completion: nil)
+	}
+	//    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
 //        let child_1 = ChildViewController()
 //
 //        guard isReload else {

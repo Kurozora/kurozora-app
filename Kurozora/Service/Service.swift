@@ -41,9 +41,13 @@ struct Service {
                         try? GlobalVariables().KDefaults.set(String(userId), key: "user_id")
                     }
                     
-                    if let sessionSecret = user.session {
+                    if let sessionSecret = user.sessionSecret {
                         try? GlobalVariables().KDefaults.set(sessionSecret, key: "session_secret")
                     }
+
+					if let sessionId = user.sessionId {
+						try? GlobalVariables().KDefaults.set(String(sessionId), key: "session_id")
+					}
                     
                     if let role = user.role {
                         try? GlobalVariables().KDefaults.set(String(role), key: "user_role")
@@ -94,10 +98,10 @@ struct Service {
     
     // Logout user
     func logout(withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
-        let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/logout")
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
 
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/logout")
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -129,10 +133,10 @@ struct Service {
     
     // User details
     func getUserProfile(_ userId:Int?, withSuccess successHandler:@escaping (User?) -> Void, andFailure failureHandler:@escaping (String) -> Void)  {
-        guard let id = userId else { return }
-        
+		guard let id = userId else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("user/\(id)/profile")
-        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -166,10 +170,10 @@ struct Service {
     // Validate session
     func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
         if User.currentSessionSecret() != nil && User.currentId() != nil {
-            let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("session/validate")
+			guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
+			guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
 
-			let userId = try? GlobalVariables().KDefaults.getString("user_id")!
-			let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+			let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("session/validate")
 
             request.headers = [
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -201,10 +205,10 @@ struct Service {
     
     // Get sessions
     func getSessions(withSuccess successHandler:@escaping (Session?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
-        let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/get_sessions")
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
 
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/get_sessions")
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -231,11 +235,12 @@ struct Service {
     
     // Delete session
     func deleteSession(_ id: Int, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
+		let delSessionId = id
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
+
         let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("user/delete_session")
-        
-        let delSessionId = id
-        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -392,11 +397,11 @@ struct Service {
     // Get show detail
     func getDetailsFor(_ showId: Int?, completionHandler: @escaping (ShowDetails) -> Void) {
         guard let id = showId else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
         
         let request : APIRequest<ShowDetails,JSONError> = tron.swiftyJSON.request("anime/\(id)/details")
-        
-        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
+
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -513,11 +518,10 @@ struct Service {
     func rate(showId: Int?, score: Double?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
         let rating = score
         guard let id = showId else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
         
         let request: APIRequest<User,JSONError> = tron.swiftyJSON.request("anime/\(id)/rate")
-        
-        let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-        let userId = try? GlobalVariables().KDefaults.getString("user_id")!
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"
@@ -552,11 +556,10 @@ struct Service {
 	// Get library
 	func getLibraryFor(status: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
 		guard let status = status else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("user/get_library")
-
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -592,11 +595,10 @@ struct Service {
 	func addToLibraryWith(status: String?, showId: Int?,withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
 		guard let status = status else { return }
 		guard let showId = showId else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("user/add_library")
-
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -630,11 +632,10 @@ struct Service {
 	// Remove from library
 	func removeFromLibraryWith(showId: Int?, withSuccess successHandler:@escaping (Bool) -> Void, andFailure failureHandler:@escaping (String) -> Void) {
 		guard let showId = showId else { return }
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else { return }
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("user/remove_library")
-
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -668,10 +669,10 @@ struct Service {
     
     // Get notifications
     func getNotifications(withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
-        let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user/get_notifications")
+		guard let userId = try? GlobalVariables().KDefaults.getString("user_id") else {return}
+		guard let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret") else {return}
 
-		let userId = try? GlobalVariables().KDefaults.getString("user_id")!
-		let sessionSecret = try? GlobalVariables().KDefaults.getString("session_secret")!
+        let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user/get_notifications")
         
         request.headers = [
             "Content-Type": "application/x-www-form-urlencoded"

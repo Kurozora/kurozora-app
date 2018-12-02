@@ -22,7 +22,8 @@ struct User: JSONDecodable {
     let role: Int?
     
     let id: Int?
-    let session: String?
+    let sessionSecret: String?
+	let sessionId: Int?
     let username: String?
     let avatar: String?
     let banner: String?
@@ -47,7 +48,8 @@ struct User: JSONDecodable {
         message = json["error_message"].stringValue
         
         id = json["user_id"].intValue
-        session = json["session_secret"].stringValue
+        sessionSecret = json["session_secret"].stringValue
+		sessionId = json["session_id"].intValue
         role = json["role"].intValue
 
         username = json["profile"]["username"].stringValue
@@ -69,22 +71,55 @@ struct User: JSONDecodable {
         activeEnd = json["profile"]["active_end"].stringValue
         active = json["profile"]["active"].boolValue
     }
-    
-    static func username() -> String? {
-        if let username = GlobalVariables().KDefaults["username"], username != "" {
-            return username
-        }
-        return nil
-    }
-    
+
+	/// Returns the username saved in KDefaults
+	static func username() -> String? {
+		if let username = GlobalVariables().KDefaults["username"], username != "" {
+			return username
+		}
+		return nil
+	}
+
+	/// Returns the current User ID saved in KDefaults
+	static func currentId() -> Int? {
+		if let userId = GlobalVariables().KDefaults["user_id"], userId != "" {
+			return Int(userId)
+		}
+		return nil
+	}
+
+	/// Returns the current Session Secret saved in KDefaults
+	static func currentSessionSecret() -> String? {
+		if let sessionSecret = GlobalVariables().KDefaults["session_secret"], sessionSecret != "" {
+			return sessionSecret
+		}
+		return nil
+	}
+
+	/// Returns the current Session ID saved in KDefaults
+	static func currentSessionId() -> Int? {
+		if let sessionId = GlobalVariables().KDefaults["session_id"], sessionId != "" {
+			return Int(sessionId)
+		}
+		return nil
+	}
+
+	/// Returns the current device name
+	static func currentDevice() -> String? {
+		return UIDevice.modelName
+	}
+
+	/// Returns true if current user is logged in
     static func isLoggedIn() -> Bool? {
         return User.username() != nil
     }
-    
+
+	/// Returns true is the current user is PRO
     static func isPro() -> Bool? {
         return true
     }
-    
+
+	/// Returns true if the current user is an admin
     static func isAdmin() -> Bool? {
         if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
             guard let userType = Int(userType) else { return false }
@@ -98,24 +133,6 @@ struct User: JSONDecodable {
             }
         }
         return false
-    }
-    
-    static func currentId() -> Int? {
-        if let userId = GlobalVariables().KDefaults["user_id"], userId != "" {
-            return Int(userId)
-        }
-        return nil
-    }
-    
-    static func currentSessionSecret() -> String? {
-        if let sessionSecret = GlobalVariables().KDefaults["session_secret"], sessionSecret != "" {
-            return sessionSecret
-        }
-        return nil
-    }
-    
-    static func currentDevice() -> String? {
-        return UIDevice.modelName
     }
     
 //    func following() {

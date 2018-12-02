@@ -30,22 +30,23 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Service.shared.getNotifications(withSuccess: { (notifications) in
-            if let notifications = notifications {
-                self.notifications = notifications
-//                self.updateCurrentSession(with: session)
-            }
-            
-            DispatchQueue.main.async() {
-                self.tableView.reloadData()
-            }
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting notifiactions", subTitle: errorMessage)
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+		Service.shared.getNotifications(withSuccess: { (notifications) in
+			if let notifications = notifications {
+				self.notifications = notifications
+				//                self.updateCurrentSession(with: session)
+			}
+
+			DispatchQueue.main.async() {
+				self.tableView.reloadData()
+			}
+		}) { (errorMessage) in
+			SCLAlertView().showError("Error getting notifiactions", subTitle: errorMessage)
+		}
         
         // Setup table view
         tableView.rowHeight = 94

@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hhy-HY-4Mq">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Rich Text Editor View-->
         <scene sceneID="LgR-HU-k6r">
             <objects>
-                <viewController id="Hhy-HY-4Mq" sceneMemberID="viewController">
+                <viewController id="Hhy-HY-4Mq" customClass="RichTextEditorView" customModule="KRichTextEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4En-jk-kIz"/>
+                        <viewControllerLayoutGuide type="bottom" id="WDF-aN-cLz"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="N1I-XK-qUo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="grS-dt-wy7"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6La-NS-Ber">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9C4-R8-tfR">
+                                        <rect key="frame" x="16" y="7" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="TGe-pr-7dS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8c-pT-QLu">
+                                        <rect key="frame" x="321" y="7" width="38" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="M3d-og-9st"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="9C4-R8-tfR" firstAttribute="centerY" secondItem="6La-NS-Ber" secondAttribute="centerY" id="9vz-FP-JlJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="n8c-pT-QLu" secondAttribute="trailing" constant="16" id="NQ3-kz-WTT"/>
+                                    <constraint firstItem="n8c-pT-QLu" firstAttribute="centerY" secondItem="6La-NS-Ber" secondAttribute="centerY" id="Obo-zN-dwC"/>
+                                    <constraint firstAttribute="height" constant="44" id="daj-Rd-HIl"/>
+                                    <constraint firstItem="9C4-R8-tfR" firstAttribute="leading" secondItem="6La-NS-Ber" secondAttribute="leading" constant="16" id="nHi-9A-R7B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4y6-Eq-tbU" customClass="RichEditorView" customModule="RichEditorView">
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="4y6-Eq-tbU" firstAttribute="top" secondItem="6La-NS-Ber" secondAttribute="bottom" id="3Y7-Vc-sgq"/>
+                            <constraint firstItem="6La-NS-Ber" firstAttribute="leading" secondItem="N1I-XK-qUo" secondAttribute="leading" id="GVK-ls-ET5"/>
+                            <constraint firstItem="WDF-aN-cLz" firstAttribute="top" secondItem="4y6-Eq-tbU" secondAttribute="bottom" id="MKc-ro-XNG"/>
+                            <constraint firstItem="4y6-Eq-tbU" firstAttribute="leading" secondItem="N1I-XK-qUo" secondAttribute="leading" id="a29-yl-40N"/>
+                            <constraint firstItem="6La-NS-Ber" firstAttribute="top" secondItem="4En-jk-kIz" secondAttribute="bottom" id="ejV-bD-LFa"/>
+                            <constraint firstAttribute="trailing" secondItem="4y6-Eq-tbU" secondAttribute="trailing" id="gzY-Lv-jj8"/>
+                            <constraint firstAttribute="trailing" secondItem="6La-NS-Ber" secondAttribute="trailing" id="wrN-Re-Y4n"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="richEditorView" destination="4y6-Eq-tbU" id="4gy-jR-OO4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k0-4G-HKi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-180" y="160"/>
+            <point key="canvasLocation" x="-180" y="158.12807881773401"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -45,9 +45,7 @@ public class FetchController {
     var datasourceUsesSections = false
 //    var pinnedData: [PFObject] = []
     
-    public init() {
-        
-    }
+    public init() {}
     
     public func configureWith() {
 //        (delegate: FetchControllerDelegate,
