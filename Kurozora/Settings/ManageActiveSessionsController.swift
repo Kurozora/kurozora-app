@@ -37,7 +37,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         // Setup empty table view
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
-        tableView.emptyDataSetView { view in
+        tableView.emptyDataSetView { (view) in
             view.titleLabelString(NSAttributedString(string: "No sessions to show."))
                 .image(UIImage(named: "session_icon"))
                 .shouldDisplay(true)

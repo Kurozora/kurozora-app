@@ -8,13 +8,14 @@
 
 import KCommonKit
 import KDatabaseKit
-import SwiftyJSON
-import UIImageColors
+import AMPopTip
+import AXPhotoViewer
+import EmptyDataSet_Swift
+import FLAnimatedImage
 import Kingfisher
 import SCLAlertView
-import AXPhotoViewer
-import FLAnimatedImage
-import EmptyDataSet_Swift
+import SwiftyJSON
+import UIImageColors
 //import XCDYouTubeKit
 
 class ProfileViewController: ThreadViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
@@ -30,6 +31,7 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
 
     var user: User?
 	var posts: [JSON]?
+	var badgeDescription: String?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backgroundView: UIView!
@@ -49,7 +51,7 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
 
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
-    @IBOutlet weak var tagBadge: UILabel!
+    @IBOutlet weak var tagBadge: UIButton!
     @IBOutlet weak var reputationBadge: DesignableLabel!
     
     @IBOutlet weak var moreSettingsButton: UIButton!
@@ -396,22 +398,24 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
             }
         }
 
-        if let isAdmin = User.isAdmin() {
-            if isAdmin {
-                self.tagBadge.text = "Anime CEO"
-                self.tagBadge.textColor = UIColor.green
-                self.tagBadge.backgroundColor = UIColor.black
-            }
-        } else {
-            if let badges = user?.badges, badges != [] {
-                for badge in badges {
-                    self.tagBadge.text = badge
-                    break
-                }
-            } else {
-                self.tagBadge.text = "Kokosei"
-            }
-        }
+//        if let isAdmin = User.isAdmin() {
+//            if isAdmin {
+//                self.tagBadge.text = "Anime CEO"
+//                self.tagBadge.textColor = UIColor.green
+//                self.tagBadge.backgroundColor = UIColor.black
+//            }
+//        } else {}
+		if let badges = user?.badges, badges != [] {
+			for badge in badges {
+				self.tagBadge.setTitle(badge["text"].stringValue, for: .normal)
+				self.tagBadge.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
+				self.tagBadge.backgroundColor = UIColor(hexString: badge["backgroundColor"].stringValue)
+				badgeDescription = badge["description"].stringValue
+				break
+			}
+		} else {
+			self.tagBadge.setTitle("Kokosei", for: .normal)
+		}
     }
 
 //    func updateFollowingButtons() {
@@ -446,6 +450,23 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
             presentPhotoViewControllerWith(string: "placeholder_banner")
         }
     }
+
+	@IBAction func showBadeDescription(_ sender: UIButton) {
+		if let description = badgeDescription, description != "" {
+			let popTip = PopTip()
+			popTip.actionAnimation = .bounce(8)
+			popTip.show(text: description, direction: .up, maxWidth: 200, in: tagBadge, from: tagBadge.frame)
+		}
+	}
+
+	//	MARK: - Prepare for segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if (segue.identifier == "BadgeSegue") {
+			let vc = segue.destination as! BadgesTableViewController
+			vc.badges = user?.badges
+		}
+	}
+
 //    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
 //        configureFetchController()
 //    }
@@ -742,15 +763,15 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
 //        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:nil))
 //        self.present(alert, animated: true, completion: nil)
 //    }
-//
+
     // MARK: - Overrides
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
     }
 }
-//
-//// MARK: - EditProfileViewControllerProtocol
+
+// MARK: - EditProfileViewControllerProtocol
 extension ProfileViewController: EditProfileViewControllerProtocol {
     func editProfileViewControllerDidEditedUser(user: User?) {
         self.user = user

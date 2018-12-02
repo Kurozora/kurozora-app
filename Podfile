@@ -33,10 +33,11 @@ end
 
 def kurozora_pods
     # pod 'Hero'
+	pod 'AMPopTip'
 	pod 'Cosmos', '~> 17.0'
 	pod 'IQKeyboardManagerSwift', '~> 6'
 	pod 'NGAParallaxMotion', '~> 1.1'
-	pod 'NotificationBannerSwift'
+	pod 'NotificationBannerSwift', '1.8.0'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'WhatsNew'

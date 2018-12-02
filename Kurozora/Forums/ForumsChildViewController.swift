@@ -92,8 +92,8 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let postCell = tableView.dequeueReusableCell(withIdentifier: "TopicCell") as! TopicCell
 
-		if let sectionTitle = sectionTitle, sectionTitle != "" {
-			postCell.titleLabel.text = "\(sectionTitle) post \(indexPath.row)"
+		if let postTitle = forumPosts?[indexPath.row]["title"].stringValue, postTitle != "" {
+			postCell.titleLabel.text = postTitle
 		}
 
 		postCell.typeLabel.text = ""

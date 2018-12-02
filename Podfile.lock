@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.8.0)
+  - AMPopTip (3.5.0)
   - AutoInsetter (1.3.0)
   - AXPhotoViewer (1.6.1):
     - AXPhotoViewer/Core (= 1.6.1)
@@ -75,6 +76,7 @@ PODS:
   - WhatsNew (0.4.4)
 
 DEPENDENCIES:
+  - AMPopTip
   - AXPhotoViewer
   - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - BottomPopup
@@ -86,7 +88,7 @@ DEPENDENCIES:
   - KeychainAccess (~> 3.1)
   - Kingfisher (~> 4.0)
   - NGAParallaxMotion (~> 1.1)
-  - NotificationBannerSwift
+  - NotificationBannerSwift (= 1.8.0)
   - NVActivityIndicatorView
   - PusherSwift
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
@@ -102,6 +104,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AMPopTip
     - AutoInsetter
     - AXPhotoViewer
     - AXStateButton
@@ -158,6 +161,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AMPopTip: 871ae0570b68fe396e714922b3f7d8ed6a36bb71
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
@@ -193,6 +197,6 @@ SPEC CHECKSUMS:
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 132b1d6229c76979fa93a92351087f9394b7a229
+PODFILE CHECKSUM: 17861f804274c4b40ec3adde4b64106d32601bd3
 
 COCOAPODS: 1.6.0.beta.1

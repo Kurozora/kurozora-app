@@ -28,7 +28,7 @@ struct User: JSONDecodable {
     let avatar: String?
     let banner: String?
     let bio: String?
-    let badges: [String]?
+    let badges: [JSON]?
     let proBadge: Bool?
     let joinDate: String?
     
@@ -56,7 +56,7 @@ struct User: JSONDecodable {
         avatar = json["profile"]["avatar_url"].stringValue
         banner = json["profile"]["banner_url"].stringValue
         bio = json["profile"]["biography"].stringValue
-        badges = json["profile"]["badges"].rawValue as? [String]
+        badges = json["profile"]["badges"].arrayValue
         proBadge = json["profile"]["pro_badge"].boolValue
         joinDate = json["profile"]["join_date"].stringValue
         

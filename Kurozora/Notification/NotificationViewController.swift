@@ -56,7 +56,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         // Setup empty table view
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
-        tableView.emptyDataSetView { view in
+        tableView.emptyDataSetView { (view) in
             view.titleLabelString(NSAttributedString(string: "No notifications to show."))
                 .image(UIImage(named: "notification_icon"))
                 .shouldDisplay(true)
