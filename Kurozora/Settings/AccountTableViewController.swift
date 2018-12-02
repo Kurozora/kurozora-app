@@ -58,7 +58,12 @@ class AccountTableViewController: UITableViewController {
                         }) { (errorMsg) in
                             SCLAlertView().showError("Error logging out", subTitle: errorMsg)
                         }
-                    }
+					} else {
+						let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+						let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+
+						self.present(vc, animated: true, completion: nil)
+					}
                 }
             })
             

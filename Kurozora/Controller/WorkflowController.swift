@@ -17,7 +17,7 @@ let optionsWithEndpoint = PusherClientOptions(
 	host: .cluster("eu")
 )
 let pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
-//var window: UIWindow?
+var window: UIWindow?
 
 public class WorkflowController {
 
@@ -31,8 +31,10 @@ public class WorkflowController {
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
 					if let userId = data["user_id"] as? Int, let ip = data["ip"] as? String, let sessionId = data["session_id"] as? Int  {
-						let banner = NotificationBanner(title: "New login for userID: \(userId)", subtitle: "ip: \(ip), sessionID: \(sessionId) ", style: .success)
-						banner.show()
+						if sessionId != User.currentSessionId() {
+							let banner = NotificationBanner(title: "New login for userID: \(userId)", subtitle: "ip: \(ip), sessionID: \(sessionId) ", style: .success)
+							banner.show()
+						}
 					}
 				} else {
 					NSLog("------- Pusher error")
@@ -41,9 +43,12 @@ public class WorkflowController {
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
-					if let userId = data["user_id"] as? Int, let reason = data["reason"] as? String, let sessionId = data["session_id"] as? Int, let killerId = data["killer_id"] as? Int {
-						if userId == User.currentId(), sessionId == User.currentSessionId() {
-							let isKiller = userId == killerId
+					if let sessionId = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let reason = data["reason"] as? String {
+						let isKiller = User.currentSessionId() == sessionKillerId
+
+						if sessionId == User.currentSessionId(), !isKiller {
+							window = UIWindow()
+							window?.makeKeyAndVisible()
 
 							pusher.unsubscribeAll()
 							pusher.disconnect()
@@ -54,7 +59,10 @@ public class WorkflowController {
 							vc.logoutReason = reason
 							vc.isKiller = isKiller
 
-							applicationWindow().rootViewController?.present(vc, animated: true, completion: nil)
+							window?.rootViewController = vc
+						} else if isKiller {
+							pusher.unsubscribeAll()
+							pusher.disconnect()
 						}
 					}
 				} else {
