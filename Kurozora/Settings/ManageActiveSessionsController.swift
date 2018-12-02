@@ -10,6 +10,7 @@ import KCommonKit
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
+import SwifterSwift
 
 class ManageActiveSessionsController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var tableView: UITableView!
@@ -24,6 +25,8 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
 
 		fetchSessions()
         
@@ -56,6 +59,37 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
 			}
 		}) { (errorMsg) in
 			SCLAlertView().showError("Sessions", subTitle: errorMsg)
+		}
+	}
+
+	@objc func removeSessionFromTable(_ notification: NSNotification) {
+		if let sessionId = notification.userInfo?["session_id"] as? Int {
+			self.tableView.beginUpdates()
+			let indexOfSession = sessionsArray?.firstIndex(where: { (json) -> Bool in
+				return json["id"].intValue == sessionId
+			})
+
+			if let indexOfSession = indexOfSession, indexOfSession != 0 {
+				self.sessionsArray?.remove(at: indexOfSession)
+				self.tableView.deleteRows(at: [[0,indexOfSession]], with: UITableView.RowAnimation.left)
+			}
+			self.tableView.endUpdates()
+		}
+	}
+
+	@objc func addSessionToTable(_ notification: NSNotification) {
+		if let sessionId = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
+			guard let sessionsCount = sessionsArray?.count else { return }
+			let newSession: JSON = ["id": sessionId,
+									"device": device,
+									"ip": ip,
+									"last_validated": lastValidated
+			]
+
+			self.tableView.beginUpdates()
+			self.sessionsArray?.append(newSession)
+			self.tableView.insertRows(at: [[0,sessionsCount]], with: UITableView.RowAnimation.right)
+			self.tableView.endUpdates()
 		}
 	}
     

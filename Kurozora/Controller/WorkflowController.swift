@@ -30,10 +30,12 @@ public class WorkflowController {
 
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
-					if let userId = data["user_id"] as? Int, let ip = data["ip"] as? String, let sessionId = data["session_id"] as? Int  {
+					if let sessionId = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
 						if sessionId != User.currentSessionId() {
-							let banner = NotificationBanner(title: "New login for userID: \(userId)", subtitle: "ip: \(ip), sessionID: \(sessionId) ", style: .success)
+							let banner = NotificationBanner(title: "New login detected from \(device)", style: .success)
 							banner.show()
+
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionId, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
 					}
 				} else {
@@ -60,9 +62,11 @@ public class WorkflowController {
 							vc.isKiller = isKiller
 
 							window?.rootViewController = vc
-						} else if isKiller {
+						} else if sessionId == User.currentSessionId(), isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
+						} else {
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id" : sessionId])
 						}
 					}
 				} else {
