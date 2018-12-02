@@ -17,6 +17,7 @@
  */
 
 import UIKit
+import AudioToolbox
 
 public enum BannerHaptic {
     case light
@@ -43,11 +44,16 @@ open class BannerHapticGenerator: NSObject {
      */
     open class func generate(_ haptic: BannerHaptic) {
         if #available(iOS 10.0, *) {
-            if let style = haptic.impactStyle {
-                let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
-                feedbackGenerator.prepare()
-                feedbackGenerator.impactOccurred()
-            }
+			if UIDevice.current.hasTapticEngine {
+				let peek = SystemSoundID(1519)
+				AudioServicesPlaySystemSound(peek)
+			} else {
+				if let style = haptic.impactStyle {
+					let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
+					feedbackGenerator.prepare()
+					feedbackGenerator.impactOccurred()
+				}
+			}
         }
     }
 }

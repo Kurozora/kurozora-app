@@ -317,6 +317,7 @@
 		6630E319941C9E7AB0227437B2C8AEAC /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B202DC6A6B3069E3048A5DD174FAC /* WhatsNew.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		664C72917ACEB199DA528846F47ED625 /* NVActivityIndicatorView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4113680E69F89E544BD09C5541D7B25D /* NVActivityIndicatorView-dummy.m */; };
 		66777B3D392D4AF8CBAE17A9C5D13C2F /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EDB30F6216C3EA9B05C775E4B2B9A /* Timeline.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		667F9AD221B451C8003F6629 /* UIDevice+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD021B4514B003F6629 /* UIDevice+Banner.swift */; };
 		66CA39D640BE333854254A759913BD17 /* Pods-KDatabaseKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E236FC8C2CCA61B3B3FA05DF4ACAD7 /* Pods-KDatabaseKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		688286FCBFFA21676FCBC84273E7C507 /* UIRefreshControlExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7702C3C68C7D9BB408EF0A232E68461 /* UIRefreshControlExtensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		698B0A56583D1EB759AA5EE09C52939A /* AXPageableViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F5344DF43C78F5EAE01AD5A80C9C0D /* AXPageableViewControllerProtocol.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -1773,6 +1774,7 @@
 		65F1D4E4747BD9A9A936B8DF353B3DBF /* TabmanBar+Layout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TabmanBar+Layout.swift"; path = "Sources/Tabman/TabmanBar/TabmanBar+Layout.swift"; sourceTree = "<group>"; };
 		65F2CD477E25B84F2E551ACFC6B07BDF /* NoPadding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoPadding.swift; path = Sources/CryptoSwift/NoPadding.swift; sourceTree = "<group>"; };
 		6668DB7266F1F25D8A67E949C3A6DE3F /* Authorizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Authorizer.swift; path = Sources/Authorizer.swift; sourceTree = "<group>"; };
+		667F9AD021B4514B003F6629 /* UIDevice+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIDevice+Banner.swift"; path = "NotificationBanner/Classes/UIDevice+Banner.swift"; sourceTree = "<group>"; };
 		66974FB99C8089A2A576B7CE7F52EA05 /* NVActivityIndicatorAnimationBallGridPulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallGridPulse.swift; path = Source/NVActivityIndicatorView/Animations/NVActivityIndicatorAnimationBallGridPulse.swift; sourceTree = "<group>"; };
 		67ACC7B6D3843F83B951133DDE795436 /* IQUIView+Hierarchy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUIView+Hierarchy.swift"; path = "IQKeyboardManagerSwift/Categories/IQUIView+Hierarchy.swift"; sourceTree = "<group>"; };
 		68141E9362E80C236B1D0695D4598478 /* URLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLExtensions.swift; path = Sources/Extensions/Foundation/URLExtensions.swift; sourceTree = "<group>"; };
@@ -3448,6 +3450,7 @@
 				F7A094B5AAE056EEA8F6501254311058 /* NotificationBannerUtilities.swift */,
 				0607891EE35A9B20347D5A6EA37FC3B6 /* StatusBarNotificationBanner.swift */,
 				8B139CB0D842F65DE44BAE16200BEC86 /* String+heightForConstrainedWidth.swift */,
+				667F9AD021B4514B003F6629 /* UIDevice+Banner.swift */,
 				980F133CB4D673364DFE16FFE32BA421 /* Support Files */,
 			);
 			path = NotificationBannerSwift;
@@ -6169,6 +6172,7 @@
 				E253018EFBCF1C961814F082A29B9A48 /* BannerColors.swift in Sources */,
 				28E553227F1051D0366DCEE80A031308 /* BannerHapticGenerator.swift in Sources */,
 				E5BDC2F684CE3D1F1E054B86691942E9 /* BannerPositionFrame.swift in Sources */,
+				667F9AD221B451C8003F6629 /* UIDevice+Banner.swift in Sources */,
 				D523B0069B840682DFE1202423E20CFA /* BannerStyle.swift in Sources */,
 				F4B1D0B3E55A0A7042F8283346981E52 /* BaseNotificationBanner.swift in Sources */,
 				38F2758B76DEAA71A759922B3BAA509B /* GrowingNotificationBanner.swift in Sources */,

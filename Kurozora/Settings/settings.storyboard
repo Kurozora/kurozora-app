@@ -829,7 +829,7 @@ Kurozora 1.0.0 (1)</string>
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="OtherSessionsCell" rowHeight="83" id="QpS-b4-Y1E" customClass="SessionsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="OtherSessionsCell" rowHeight="83" id="QpS-b4-Y1E" customClass="SessionsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="120" width="818.5" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QpS-b4-Y1E" id="Q2a-FR-My1">
@@ -837,7 +837,7 @@ Kurozora 1.0.0 (1)</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1h-ZX-qmN" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="6" width="802.5" height="70"/>
+                                                    <rect key="frame" x="8" y="6" width="427" height="70"/>
                                                     <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -882,7 +882,7 @@ Kurozora 1.0.0 (1)</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHE-si-vCr" userLabel="Remove  Button" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="778.5" y="29" width="24" height="24"/>
+                                                    <rect key="frame" x="403" y="29" width="24" height="24"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="Tcf-9Q-SH1"/>
@@ -961,7 +961,7 @@ Kurozora 1.0.0 (1)</string>
                                             <outlet property="removeSessionButton" destination="YHE-si-vCr" id="ZIm-o9-vtk"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="NoSessionsCell" rowHeight="83" id="LUz-ZA-wP0" customClass="NoSessionsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="NoSessionsCell" rowHeight="83" id="LUz-ZA-wP0" customClass="NoSessionsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="203" width="818.5" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LUz-ZA-wP0" id="0FI-3a-fQa">
@@ -969,7 +969,7 @@ Kurozora 1.0.0 (1)</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No other sessions found!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6x-4B-RD1">
-                                                    <rect key="frame" x="310" y="31.5" width="199" height="20.5"/>
+                                                    <rect key="frame" x="122" y="31.5" width="199" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1276,7 +1276,7 @@ Kurozora 1.0.0 (1)</string>
         <image name="unlock_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gXD-Me-I3f"/>
+        <segue reference="0Im-wF-5jX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
