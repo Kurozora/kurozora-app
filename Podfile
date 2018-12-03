@@ -28,12 +28,10 @@ end
 def project_pods
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 #    pod 'Shimmer', '1.0.2'
-    pod 'Bolts-Swift', :git => 'https://github.com/BoltsFramework/Bolts-Swift', :commit => 'e9baa72d04521c3b25ef4fa6fef12b340953ee02'
 end
 
 def kurozora_pods
     # pod 'Hero'
-	pod 'AMPopTip'
 	pod 'Cosmos', '~> 17.0'
 	pod 'IQKeyboardManagerSwift', '~> 6'
 	pod 'NGAParallaxMotion', '~> 1.1'
@@ -60,7 +58,6 @@ target 'KCommonKit' do
 end
 
 target 'KRichTextEditor' do
-#	pod 'Notepad'
 	project_pods
 	pod 'RichEditorView'
 end

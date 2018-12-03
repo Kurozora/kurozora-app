@@ -148,12 +148,10 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AMPopTip/AMPopTip.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
@@ -186,12 +184,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AMPopTip/AMPopTip.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"

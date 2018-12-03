@@ -80,7 +80,7 @@
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="TopicCell" id="P3D-9d-SI7" customClass="TopicCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ThreadCell" id="P3D-9d-SI7" customClass="ThreadCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P3D-9d-SI7" id="yAt-e1-KIE">
@@ -94,7 +94,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Should anime forums be deleted? LMAO lol skittles" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYG-hj-alj">
-                                                    <rect key="frame" x="28.666666666666657" y="8" width="331.33333333333337" height="20"/>
+                                                    <rect key="frame" x="30.666666666666657" y="8" width="329.33333333333337" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="Dif-pK-lBR"/>
                                                     </constraints>
@@ -102,7 +102,7 @@
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#KurozoraBiash" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfC-qs-DWe">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfC-qs-DWe">
                                                     <rect key="frame" x="15" y="28" width="345" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="fnF-X6-6UI"/>
@@ -127,7 +127,7 @@
                                                 <constraint firstItem="yfC-qs-DWe" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="leading" id="U10-Lb-nu3"/>
                                                 <constraint firstItem="Vj0-oJ-Ifj" firstAttribute="leading" secondItem="yfC-qs-DWe" secondAttribute="leading" id="V80-cv-AP3"/>
                                                 <constraint firstItem="Vj0-oJ-Ifj" firstAttribute="trailing" secondItem="yfC-qs-DWe" secondAttribute="trailing" id="Xlv-6E-8h1"/>
-                                                <constraint firstItem="qYG-hj-alj" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="trailing" id="dBo-IU-mI4"/>
+                                                <constraint firstItem="qYG-hj-alj" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="trailing" constant="2" id="dBo-IU-mI4"/>
                                                 <constraint firstItem="DS1-pO-nKZ" firstAttribute="centerY" secondItem="qYG-hj-alj" secondAttribute="centerY" id="dTv-uk-yzX"/>
                                                 <constraint firstAttribute="bottom" secondItem="Vj0-oJ-Ifj" secondAttribute="bottom" id="fuf-Zm-rH0"/>
                                                 <constraint firstItem="Vj0-oJ-Ifj" firstAttribute="top" secondItem="yfC-qs-DWe" secondAttribute="bottom" id="gAN-CD-2N2"/>
@@ -141,9 +141,9 @@
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="informationLabel" destination="Vj0-oJ-Ifj" id="P4f-ib-ziP"/>
-                                            <outlet property="tagsLabel" destination="yfC-qs-DWe" id="zHp-LZ-kL8"/>
                                             <outlet property="titleLabel" destination="qYG-hj-alj" id="tD7-3Q-F8a"/>
                                             <outlet property="typeLabel" destination="DS1-pO-nKZ" id="T4F-j7-vBW"/>
+                                            <outlet property="usernameLabel" destination="yfC-qs-DWe" id="KIx-Y6-enc"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

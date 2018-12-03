@@ -18,7 +18,7 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 
     var sectionTitle: String?
 	var sectionId: Int?
-	var forumPosts: [JSON]?
+	var forumThreads: [JSON]?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -36,10 +36,10 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 		}
 
 		refreshControl.tintColor = UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
-		refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
-		fetchPosts()
+		fetchThreads()
         
         // Setup table view
         tableView.delegate = self
@@ -58,49 +58,57 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
 
-	@objc private func refreshPostsData(_ sender: Any) {
+	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = 			NSAttributedString(string: "Reloading \(sectionTitle) posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
-		fetchPosts()
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		fetchThreads()
 	}
 
-	private func fetchPosts() {
+	private func fetchThreads() {
 		guard let sectionTitle = sectionTitle else {return}
 		guard let sectionId = sectionId else {return}
 
-		Service.shared.getForumPosts(forSection: sectionId, order: "top", page: 0, withSuccess: { (posts) in
+		Service.shared.getForumThreads(forSection: sectionId, order: "top", page: 0, withSuccess: { (threads) in
 			DispatchQueue.main.async {
-				self.forumPosts = posts
+				self.forumThreads = threads
 				self.tableView.reloadData()
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = 			NSAttributedString(string: "Pull to refresh \(sectionTitle) posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
 			}
 		}) { (errorMessage) in
 			self.refreshControl.endRefreshing()
-			SCLAlertView().showError("Error getting posts", subTitle: errorMessage)
+			SCLAlertView().showError("Error getting threads", subTitle: errorMessage)
 		}
 	}
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let postsCount = forumPosts?.count, postsCount != 0 {
-			return postsCount
+		if let threadsCount = forumThreads?.count, threadsCount != 0 {
+			return threadsCount
 		}
 
         return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let postCell = tableView.dequeueReusableCell(withIdentifier: "TopicCell") as! TopicCell
+		let threadCell:ThreadCell = tableView.dequeueReusableCell(withIdentifier: "ThreadCell") as! ThreadCell
 
-		if let postTitle = forumPosts?[indexPath.row]["title"].stringValue, postTitle != "" {
-			postCell.titleLabel.text = postTitle
+		if let threadTitle = forumThreads?[indexPath.row]["title"].stringValue, threadTitle != "" {
+			threadCell.titleLabel.text = threadTitle
+		} else {
+			threadCell.titleLabel.text = "Unknown"
 		}
 
-		postCell.typeLabel.text = ""
-		postCell.tagsLabel.text = "#KurozoraBiash"
-		postCell.informationLabel.text = " 3 Comments · 10 hrs"
+		if let threadCreator = forumThreads?[indexPath.row]["poster_username"].stringValue, threadCreator != "" {
+			threadCell.usernameLabel.text = threadCreator
+		} else {
+			threadCell.usernameLabel.text = "Unknown"
+		}
 
-        return postCell
+		if let threadPostCount = forumThreads?[indexPath.row]["reply_count"].intValue, let creationDate = forumThreads?[indexPath.row]["creation_date"].stringValue, creationDate != "" {
+			threadCell.informationLabel.text = " \(threadPostCount) \((threadPostCount > 1 ? "Comments" : "Comment")) · \(Date.timeAgo(creationDate))"
+		}
+
+        return threadCell
     }
     
 }

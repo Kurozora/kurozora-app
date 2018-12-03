@@ -8,7 +8,6 @@
 
 import KCommonKit
 import KDatabaseKit
-import AMPopTip
 import AXPhotoViewer
 import EmptyDataSet_Swift
 import FLAnimatedImage
@@ -31,7 +30,6 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
 
     var user: User?
 	var posts: [JSON]?
-	var badgeDescription: String?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backgroundView: UIView!
@@ -214,31 +212,7 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
     }
 
     // MARK: - Fetching
-    private func timeAgo(_ time: String) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "US_en")
-        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        guard let date = formatter.date(from: time) else { return "" }
-        
-        let timeInterval = Int(-date.timeIntervalSince(Date()))
-        
-        if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
-            return "\(yearsAgo) " + (yearsAgo == 1 ? "year" : "years")
-        } else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
-            return "\(monthsAgo) " + (monthsAgo == 1 ? "month" : "months")
-        } else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
-            return "\(weeksAgo) " + (weeksAgo == 1 ? "week" : "weeks")
-        } else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
-            return "\(daysAgo) " + (daysAgo == 1 ? "day" : "days")
-        } else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
-            return "\(hoursAgo) " + (hoursAgo == 1 ? "hr" : "hrs")
-        } else if let minutesAgo = timeInterval / 60 as Int?, minutesAgo > 0 {
-            return "\(minutesAgo) " + (minutesAgo == 1 ? "min" : "mins")
-        } else {
-            return "Just now"
-        }
-    }
-
+	
 //    override public func fetchPosts() {
 //        super.fetchPosts()
 //        let username = self.username ?? user!.kurozoraUsername
@@ -310,7 +284,7 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
         
         // User activity
         if let activeEnd = user?.activeEnd, activeEnd != "" {
-            let timeAgo = self.timeAgo(activeEnd)
+            let timeAgo = Date.timeAgo(activeEnd)
             let activeEndFormatted = timeAgo == "Just now" ? "Active now" : "\(timeAgo) ago"
             
             if let activeAgo = user?.active, String(activeAgo) != "" {
@@ -410,7 +384,6 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
 				self.tagBadge.setTitle(badge["text"].stringValue, for: .normal)
 				self.tagBadge.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
 				self.tagBadge.backgroundColor = UIColor(hexString: badge["backgroundColor"].stringValue)
-				badgeDescription = badge["description"].stringValue
 				break
 			}
 		} else {
@@ -450,14 +423,6 @@ class ProfileViewController: ThreadViewController, UITableViewDataSource, UITabl
             presentPhotoViewControllerWith(string: "placeholder_banner")
         }
     }
-
-	@IBAction func showBadeDescription(_ sender: UIButton) {
-		if let description = badgeDescription, description != "" {
-			let popTip = PopTip()
-			popTip.actionAnimation = .bounce(8)
-			popTip.show(text: description, direction: .up, maxWidth: 200, in: tagBadge, from: tagBadge.frame)
-		}
-	}
 
 	//	MARK: - Prepare for segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

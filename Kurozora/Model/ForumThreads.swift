@@ -1,5 +1,5 @@
 //
-//  ForumPosts.swift
+//  ForumThreads.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/11/2018.
@@ -9,17 +9,17 @@
 import TRON
 import SwiftyJSON
 
-struct ForumPosts: JSONDecodable {
+class ForumThreads: JSONDecodable {
 	let success: Bool?
 	let message: String?
 	let page: Int?
-	let posts: [JSON]?
+	let threads: [JSON]?
 
-	init(json: JSON) throws {
+	required init(json: JSON) throws {
 		success = json["success"].boolValue
 		message = json["error_message"].stringValue
 		page = json["page"].intValue
-		posts = json["posts"].arrayValue
+		threads = json["threads"].arrayValue
 	}
 }
 

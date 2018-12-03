@@ -57,7 +57,7 @@
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
-		6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumPosts.swift */; };
+		6669387021AF39A000BA9620 /* ForumThreads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumThreads.swift */; };
 		666938A321B19CAA00BA9620 /* KRichTextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 666938A121B19CAA00BA9620 /* KRichTextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		666938A621B19CAA00BA9620 /* KRichTextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; };
 		666938A721B19CAA00BA9620 /* KRichTextEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -91,7 +91,7 @@
 		6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C220A45E6D00AAB527 /* LinkCell.swift */; };
 		6674A0C520A45E7B00AAB527 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C420A45E7B00AAB527 /* TitleCell.swift */; };
 		6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C620A45EA000AAB527 /* CharacterCell.swift */; };
-		6674A0C920A45EB700AAB527 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C820A45EB700AAB527 /* TopicCell.swift */; };
+		6674A0C920A45EB700AAB527 /* ThreadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0C820A45EB700AAB527 /* ThreadCell.swift */; };
 		6674A0CC20A45F0C00AAB527 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0CB20A45F0C00AAB527 /* CustomTabBar.swift */; };
 		6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0CD20A571EA00AAB527 /* AnimeBaseViewController.swift */; };
 		6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D020A576D100AAB527 /* CustomThreadViewController.swift */; };
@@ -106,6 +106,7 @@
 		667F9AD421B47E6D003F6629 /* LeftBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* LeftBadgeCell.swift */; };
 		667F9AD721B47EF0003F6629 /* RightBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD621B47EF0003F6629 /* RightBadgeCell.swift */; };
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
+		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
 		66825BE621B296D200A2F602 /* KRichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE121B295D200A2F602 /* KRichTextEditor.swift */; };
 		66825BE821B29E5900A2F602 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
 		66825BEA21B29F3800A2F602 /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* RichTextEditorView.swift */; };
@@ -331,7 +332,7 @@
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66647B5C2084995E00CF624F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66647B612084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6669386F21AF39A000BA9620 /* ForumPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumPosts.swift; sourceTree = "<group>"; };
+		6669386F21AF39A000BA9620 /* ForumThreads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreads.swift; sourceTree = "<group>"; };
 		6669387121AFF87900BA9620 /* TimelinePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostCell.swift; sourceTree = "<group>"; };
 		6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KRichTextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		666938A121B19CAA00BA9620 /* KRichTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KRichTextEditor.h; sourceTree = "<group>"; };
@@ -353,7 +354,7 @@
 		6674A0C220A45E6D00AAB527 /* LinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		6674A0C420A45E7B00AAB527 /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		6674A0C620A45EA000AAB527 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
-		6674A0C820A45EB700AAB527 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		6674A0C820A45EB700AAB527 /* ThreadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadCell.swift; sourceTree = "<group>"; };
 		6674A0CB20A45F0C00AAB527 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		6674A0CD20A571EA00AAB527 /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		6674A0D020A576D100AAB527 /* CustomThreadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomThreadViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +366,7 @@
 		667F9AD321B47E6D003F6629 /* LeftBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftBadgeCell.swift; sourceTree = "<group>"; };
 		667F9AD621B47EF0003F6629 /* RightBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBadgeCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
+		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		66825BE121B295D200A2F602 /* KRichTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditor.swift; sourceTree = "<group>"; };
 		66825BE721B29E5900A2F602 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* RichTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
@@ -611,7 +613,7 @@
 		660923E921355EC30082F02E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6669386F21AF39A000BA9620 /* ForumPosts.swift */,
+				6669386F21AF39A000BA9620 /* ForumThreads.swift */,
 				660E9FC621455F3100F6813C /* Cast.swift */,
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
 				6619EE6F216F86C500655B99 /* ForumSections.swift */,
@@ -670,6 +672,7 @@
 				6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */,
 				66EF26C5215F960A00FB2B19 /* Array+Kurozora.swift */,
 				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
+				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -964,7 +967,7 @@
 				66A552D520A2D40100E515DB /* forums.storyboard */,
 				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
 				6619EE73216F969B00655B99 /* ForumsChildViewController.swift */,
-				6674A0C820A45EB700AAB527 /* TopicCell.swift */,
+				6674A0C820A45EB700AAB527 /* ThreadCell.swift */,
 			);
 			path = Forums;
 			sourceTree = "<group>";
@@ -1593,12 +1596,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AMPopTip/AMPopTip.framework",
 				"${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts-Swift/BoltsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -1632,12 +1633,10 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AMPopTip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXPhotoViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXStateButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BoltsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BottomPopup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
@@ -1742,6 +1741,7 @@
 				661F9F822087282500CF4153 /* LoginViewController.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
 				66E1B87220911F9600D7AC1A /* SearchViewController.swift in Sources */,
 				6674A0BF20A45E4700AAB527 /* SynopsisCell.swift in Sources */,
@@ -1818,10 +1818,10 @@
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				6619EE7A216FF31D00655B99 /* Episodes.swift in Sources */,
 				66D6237420A1A8B000304914 /* DayViewController.swift in Sources */,
-				6674A0C920A45EB700AAB527 /* TopicCell.swift in Sources */,
+				6674A0C920A45EB700AAB527 /* ThreadCell.swift in Sources */,
 				66058DC2212E97FD0084B79E /* ShowTopicCell.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
-				6669387021AF39A000BA9620 /* ForumPosts.swift in Sources */,
+				6669387021AF39A000BA9620 /* ForumThreads.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,

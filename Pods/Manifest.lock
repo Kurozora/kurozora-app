@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.8.0)
-  - AMPopTip (3.5.0)
   - AutoInsetter (1.3.0)
   - AXPhotoViewer (1.6.1):
     - AXPhotoViewer/Core (= 1.6.1)
@@ -9,7 +8,6 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - Bolts-Swift (1.3.0)
   - BottomPopup (0.4.1)
   - Cosmos (17.0.0)
   - CryptoSwift (0.9.0)
@@ -76,9 +74,7 @@ PODS:
   - WhatsNew (0.4.4)
 
 DEPENDENCIES:
-  - AMPopTip
   - AXPhotoViewer
-  - Bolts-Swift (from `https://github.com/BoltsFramework/Bolts-Swift`, commit `e9baa72d04521c3b25ef4fa6fef12b340953ee02`)
   - BottomPopup
   - Cosmos (~> 17.0)
   - EmptyDataSet-Swift (~> 4.2)
@@ -104,7 +100,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - AMPopTip
     - AutoInsetter
     - AXPhotoViewer
     - AXStateButton
@@ -138,9 +133,6 @@ SPEC REPOS:
     - WhatsNew
 
 EXTERNAL SOURCES:
-  Bolts-Swift:
-    :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
-    :git: https://github.com/BoltsFramework/Bolts-Swift
   RevealingSplashView:
     :commit: master
     :git: https://github.com/PiXeL16/RevealingSplashView.git
@@ -149,9 +141,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 CHECKOUT OPTIONS:
-  Bolts-Swift:
-    :commit: e9baa72d04521c3b25ef4fa6fef12b340953ee02
-    :git: https://github.com/BoltsFramework/Bolts-Swift
   RevealingSplashView:
     :commit: master
     :git: https://github.com/PiXeL16/RevealingSplashView.git
@@ -161,11 +150,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AMPopTip: 871ae0570b68fe396e714922b3f7d8ed6a36bb71
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   BottomPopup: 052f0ea8bb1110d633e66529cbb07b8599eb227d
   Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
@@ -197,6 +184,6 @@ SPEC CHECKSUMS:
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 17861f804274c4b40ec3adde4b64106d32601bd3
+PODFILE CHECKSUM: 1d164bd71892bfb9db4d39af159c341032b491a6
 
 COCOAPODS: 1.6.0.beta.1

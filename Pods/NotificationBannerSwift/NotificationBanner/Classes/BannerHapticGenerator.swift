@@ -45,8 +45,7 @@ open class BannerHapticGenerator: NSObject {
     open class func generate(_ haptic: BannerHaptic) {
         if #available(iOS 10.0, *) {
 			if UIDevice.hasTapticEngine {
-				let pop = SystemSoundID(1520)
-				AudioServicesPlaySystemSound(pop)
+				AudioServicesPlaySystemSound(4095)
 			} else {
 				if let style = haptic.impactStyle {
 					let feedbackGenerator = UIImpactFeedbackGenerator(style: style)

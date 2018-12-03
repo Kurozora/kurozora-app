@@ -32,7 +32,7 @@ public class WorkflowController {
 					if let sessionId = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
 						if sessionId != User.currentSessionId() {
 							let banner = NotificationBanner(title: "New login detected from \(device)", subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
-							banner.haptic = .medium
+							banner.haptic = .heavy
 							banner.show()
 							banner.onTap = {
 								let storyBoard = UIStoryboard(name: "settings", bundle: nil)

@@ -734,13 +734,13 @@ struct Service {
         })
     }
 
-	// Get forum posts
-	func getForumPosts(forSection sectionId: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
+	// Get forum threads
+	func getForumThreads(forSection sectionId: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void, andFailure failureHandler:@escaping (String) -> Void){
 		guard let sectionId = sectionId else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
 
-		let request : APIRequest<ForumPosts,JSONError> = tron.swiftyJSON.request("forum/get_posts")
+		let request : APIRequest<ForumThreads,JSONError> = tron.swiftyJSON.request("forum/get_threads")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded"
@@ -753,22 +753,22 @@ struct Service {
 			"page": page,
 		]
 
-		request.perform(withSuccess: { posts in
-			if let success = posts.success {
+		request.perform(withSuccess: { threads in
+			if let success = threads.success {
 				if success {
-					if let posts = posts.posts, posts != [] {
-						successHandler(posts)
+					if let threads = threads.threads, threads != [] {
+						successHandler(threads)
 					}
 				} else {
-					if let responseMessage = posts.message {
+					if let responseMessage = threads.message {
 						failureHandler(responseMessage)
 					}
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Error getting posts", subTitle: "There was an error while getting forum sections. If this error persists, check out our Twitter account @KurozoraApp for more information!")
+			SCLAlertView().showError("Error getting threads", subTitle: "There was an error while getting forum threads. If this error persists, check out our Twitter account @KurozoraApp for more information!")
 
-			print("Received get forum posts error: \(error)")
+			print("Received get forum threads error: \(error)")
 		})
 	}
     

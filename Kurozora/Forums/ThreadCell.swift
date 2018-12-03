@@ -1,5 +1,5 @@
 //
-//  TopicCell.swift
+//  ThreadCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/05/2018.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class TopicCell: UITableViewCell {
+public class ThreadCell: UITableViewCell {
     @IBOutlet public weak var titleLabel: UILabel!
     @IBOutlet public weak var informationLabel: UILabel!
     @IBOutlet public weak var typeLabel: UILabel!
-    @IBOutlet public weak var tagsLabel: UILabel!
+    @IBOutlet public weak var usernameLabel: UILabel!
 }
