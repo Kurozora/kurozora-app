@@ -11,7 +11,7 @@ import Foundation
 import KCommonKit
 import KDatabaseKit
 
-public class NotificationThreadViewController: ThreadViewController {
+class NotificationThreadViewController: ThreadViewController {
 //
 //    @IBOutlet weak var viewMoreButton: UIButton!
 //    var timelinePost: TimelinePostable?

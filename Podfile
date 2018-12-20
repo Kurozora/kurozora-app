@@ -32,12 +32,15 @@ end
 
 def kurozora_pods
     # pod 'Hero'
+	pod 'ColorSlider'
 	pod 'Cosmos', '~> 17.0'
 	pod 'IQKeyboardManagerSwift', '~> 6'
 	pod 'NGAParallaxMotion', '~> 1.1'
 	pod 'NotificationBannerSwift', '1.8.0'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
+	pod 'RichEditorView'
+	pod 'RichTextView'
 	pod 'WhatsNew'
     # pod 'Siren' for app update notifications
 end
@@ -55,11 +58,6 @@ end
 
 target 'KCommonKit' do
     common_pods
-end
-
-target 'KRichTextEditor' do
-	project_pods
-	pod 'RichEditorView'
 end
 
 # Workaround for Cocoapods issue #7606

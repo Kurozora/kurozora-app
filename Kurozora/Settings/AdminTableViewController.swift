@@ -8,8 +8,9 @@
 
 import UIKit
 import KCommonKit
+import EmptyDataSet_Swift
 
-class AdminTableViewController: UITableViewController {
+class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     let kDefaultItems = GlobalVariables().KDefaults.allItems()
     let kDefaultKeys = GlobalVariables().KDefaults.allKeys()
     var kDefaultCount = GlobalVariables().KDefaults.allItems().count
@@ -19,12 +20,25 @@ class AdminTableViewController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+
+		self.tableView.emptyDataSetDelegate = self
+		self.tableView.emptyDataSetSource = self
+
+		tableView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: "No badges found!"))
+				.shouldDisplay(true)
+				.shouldFadeIn(true)
+				.isTouchAllowed(true)
+				.isScrollAllowed(false)
+		}
+
+		tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let KDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsTableViewCell
+            let KDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
             guard let key = KDefaultsTableViewCell.keyLabel.text else {return}
             
             self.tableView.beginUpdates()
@@ -44,7 +58,7 @@ class AdminTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let kDefaultsCell:KDefaultsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsTableViewCell", for: indexPath) as! KDefaultsTableViewCell
+        let kDefaultsCell:KDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
         
         if let key = kDefaultItems[indexPath.row]["key"] as? String, key != "" {
             kDefaultsCell.keyLabel.text = key

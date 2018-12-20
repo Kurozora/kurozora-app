@@ -1,5 +1,5 @@
 //
-//  KDefaultsTableViewCell.swift
+//  KDefaultsCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 26/09/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import KCommonKit
 
-class KDefaultsTableViewCell: UITableViewCell {
+class KDefaultsCell: UITableViewCell {
     @IBOutlet weak var keyLabel: UILabel!
     @IBOutlet weak var valueTextField: UITextField!
 

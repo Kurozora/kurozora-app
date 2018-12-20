@@ -15,7 +15,7 @@ class ShowTabBarController: ESTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let storyboard = UIStoryboard(name: "details", bundle: nil)
-        
+
         // Instantiate views
         let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as! ShowDetailViewController
         showDetail.showId = showId

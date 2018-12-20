@@ -22,4 +22,3 @@ class ForumThreads: JSONDecodable {
 		threads = json["threads"].arrayValue
 	}
 }
-

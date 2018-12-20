@@ -11,6 +11,6 @@ import KCommonKit
 
 class ShowTitleCell: UITableViewCell {
     
-    @IBOutlet weak var titleLabel: CustomLabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
 }

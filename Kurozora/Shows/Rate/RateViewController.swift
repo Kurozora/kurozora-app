@@ -21,20 +21,17 @@ class RateViewController: UIViewController {
     
     var showDetails: ShowDetails?
     var showRating: Double?
-    var delegate: ShowRatingDelegate?
-    
-    var sessionSecret = GlobalVariables().KDefaults["session_secret"]
-    var userId = User.currentId()
+    var showRatingdelegate: ShowRatingDelegate?
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
 
     func updateShow(withId id: Int?, withRating rating: Double?) {
-        Service.shared.rate(showId: id, score: rating, withSuccess: { (success) in
+        Service.shared.rate(showID: id, score: rating, withSuccess: { (success) in
             if success {
                 if let showRating = rating {
-                    self.delegate?.getRating(value: showRating)
+                    self.showRatingdelegate?.getRating(value: showRating)
                 }
                 
                 self.dismiss(animated: true, completion: nil)

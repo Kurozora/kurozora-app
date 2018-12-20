@@ -23,9 +23,11 @@ html {
 body {
     min-height: 100%;
     overflow: auto;
+	background-color: #2A2E43;
+	margin: 8px;
 }
 
-body, h1, p {
+h1, p {
     margin: 0;
 }
 
@@ -56,6 +58,6 @@ div {
     overflow: auto;
     display: block;
     font-family: 'HelveticaNeue';
-    color:#666666;
+    color:#ffffff;
     font-size: 12pt;
 }

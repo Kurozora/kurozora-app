@@ -9,8 +9,9 @@
 import KCommonKit
 import TRON
 import SwiftyJSON
+import Kingfisher
 
-struct User: JSONDecodable {
+class User: JSONDecodable {
     enum userType: Int {
         case normal = 0
         case mod
@@ -19,11 +20,11 @@ struct User: JSONDecodable {
     
     let success: Bool?
     let message: String?
+	let authToken: String?
     let role: Int?
     
     let id: Int?
-    let sessionSecret: String?
-	let sessionId: Int?
+	let sessionID: Int?
     let username: String?
     let avatar: String?
     let banner: String?
@@ -43,13 +44,13 @@ struct User: JSONDecodable {
     let activeEnd: String?
     let active: Bool?
     
-    init(json: JSON) throws {
+    required init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
+		authToken = json["kuro_auth_token"].stringValue
         
         id = json["user_id"].intValue
-        sessionSecret = json["session_secret"].stringValue
-		sessionId = json["session_id"].intValue
+		sessionID = json["session_id"].intValue
         role = json["role"].intValue
 
         username = json["profile"]["username"].stringValue
@@ -81,25 +82,41 @@ struct User: JSONDecodable {
 	}
 
 	/// Returns the current User ID saved in KDefaults
-	static func currentId() -> Int? {
-		if let userId = GlobalVariables().KDefaults["user_id"], userId != "" {
-			return Int(userId)
+	static func currentID() -> Int? {
+		if let userID = GlobalVariables().KDefaults["user_id"], userID != "" {
+			return Int(userID)
 		}
 		return nil
 	}
 
-	/// Returns the current Session Secret saved in KDefaults
-	static func currentSessionSecret() -> String? {
-		if let sessionSecret = GlobalVariables().KDefaults["session_secret"], sessionSecret != "" {
-			return sessionSecret
+	/// Returns the Auth Token saved in KDefaults
+	static func authToken() -> String {
+		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
+			return authToken
 		}
-		return nil
+		return ""
+	}
+
+	/// Returns the current user avatar from cache if available, otherwise returns default avatar
+	static func currentUserAvatar() -> UIImage? {
+		var image: UIImage?
+		let cache = ImageCache.default
+
+		cache.retrieveImage(forKey: "currentUserAvatar", options: []) { (result, cacheType) in
+			if cacheType == .none {
+				image = UIImage(named: "default_avatar")
+			} else {
+				image = result
+			}
+		}
+
+		return image
 	}
 
 	/// Returns the current Session ID saved in KDefaults
-	static func currentSessionId() -> Int? {
-		if let sessionId = GlobalVariables().KDefaults["session_id"], sessionId != "" {
-			return Int(sessionId)
+	static func currentSessionID() -> Int? {
+		if let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" {
+			return Int(sessionID)
 		}
 		return nil
 	}

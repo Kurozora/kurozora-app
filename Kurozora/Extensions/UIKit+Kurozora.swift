@@ -8,67 +8,66 @@
 
 import UIKit
 
-@IBDesignable
-class DesignableView: UIView {
+@IBDesignable class DesignableButton: UIButton {
 }
 
-@IBDesignable
-class DesignableButton: UIButton {
+@IBDesignable class DesignableLabel: UILabel {
 }
 
-@IBDesignable
-class DesignableLabel: UILabel {
+@IBDesignable class DesignableTextView: UITextView {
 }
 
-@IBDesignable
-class DesignableImageView: UIImageView {
-    @IBInspectable var topLeftRadius : CGFloat = 0{
-        didSet{
+@IBDesignable class DesignableTableView: UITableViewCell {
+}
+
+@IBDesignable class DesignableView: UIView {
+}
+
+@IBDesignable class DesignableImageView: UIImageView {
+    @IBInspectable var topLeftRadius : CGFloat = 0 {
+        didSet {
             self.applyMask()
         }
     }
-    
-    @IBInspectable var topRightRadius : CGFloat = 0{
-        didSet{
+
+    @IBInspectable var topRightRadius : CGFloat = 0 {
+        didSet {
             self.applyMask()
         }
     }
-    @IBInspectable var bottomRightRadius : CGFloat = 0{
-        didSet{
+    @IBInspectable var bottomRightRadius : CGFloat = 0 {
+        didSet {
             self.applyMask()
         }
     }
-    
-    @IBInspectable var bottomLeftRadius : CGFloat = 0{
-        didSet{
+
+    @IBInspectable var bottomLeftRadius : CGFloat = 0 {
+        didSet {
             self.applyMask()
         }
     }
-    
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.applyMask()
     }
-    
+
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     /*override func draw(_ rect: CGRect) {
      super.draw(rect)
-     
+
      }*/
-    
-    func applyMask()
-    {
+
+    func applyMask() {
         let shapeLayer = CAShapeLayer(layer: self.layer)
         shapeLayer.path = self.pathForCornersRounded(rect:self.bounds).cgPath
         shapeLayer.frame = self.bounds
         shapeLayer.masksToBounds = true
         self.layer.mask = shapeLayer
     }
-    
-    func pathForCornersRounded(rect:CGRect) ->UIBezierPath
-    {
+
+    func pathForCornersRounded(rect:CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0 + topLeftRadius, y: 0))
         path.addLine(to: CGPoint(x: rect.size.width - topRightRadius , y: 0))
@@ -80,53 +79,43 @@ class DesignableImageView: UIImageView {
         path.addLine(to: CGPoint(x: 0 , y: topLeftRadius))
         path.addQuadCurve(to: CGPoint(x: 0 + topLeftRadius , y: 0), controlPoint: CGPoint(x: 0, y: 0))
         path.close()
-        
+
         return path
     }
 }
 
-@IBDesignable
-class DesignableTextField: UITextField {
-    //    Placeholder
-    @IBInspectable var placeHolderColor: UIColor? {
-        get {
-            return self.placeHolderColor
-        }
-        set {
-            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[.foregroundColor: newValue!])
-        }
+@IBDesignable class DesignableTextField: UITextField {
+//extension UITextField {
+    //	Placeholder color
+    @IBInspectable var placeholderColor: UIColor? {
+		didSet {
+			if (placeholderColor != nil) {
+				self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[.foregroundColor: placeholderColor!])
+			}
+		}
     }
-    
-    @IBInspectable var placeHolderSize: UIFont? {
-        get {
-            return self.placeHolderSize
-        }
-        set {
-            self.attributedPlaceholder = NSMutableAttributedString(string: self.placeholder != nil ? self.placeholder! : "", attributes:[.font: UIFont(name: "", size: 0)!])
-        }
-    }
-    
-//    TextField image
+
+	//	TextField image
     override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         var textRect = super.leftViewRect(forBounds: bounds)
         textRect.origin.x += leftPadding
         return textRect
     }
-    
+
     @IBInspectable var leftImage: UIImage? {
         didSet {
             updateView()
         }
     }
-    
+
     @IBInspectable var leftPadding: CGFloat = 5
-    
+
     @IBInspectable var color: UIColor = UIColor.lightGray {
         didSet {
             updateView()
         }
     }
-    
+
     func updateView() {
         if let image = leftImage {
             leftViewMode = .always
@@ -140,40 +129,32 @@ class DesignableTextField: UITextField {
             leftView = nil
         }
     }
-    
-//    TextField padding
+
+	//	TextField padding
     var padding: UIEdgeInsets {
         get {
             return UIEdgeInsets(top: 0, left: paddingValue, bottom: 0, right: paddingValue)
         }
     }
-    
+
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
-    
+
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
-    
+
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
-    
+
     @IBInspectable var paddingValue: CGFloat = 8
-
 }
-
-@IBDesignable
-class DesignableTableView: UITableViewCell {
-}
-
 
 extension UIView {
-    
-//    Corner
-    @IBInspectable
-    var borderColor: UIColor? {
+	//	Border
+    @IBInspectable var borderColor: UIColor? {
         get {
             if let color = layer.borderColor {
                 return UIColor(cgColor: color)
@@ -189,8 +170,7 @@ extension UIView {
         }
     }
 
-    @IBInspectable
-    var borderWidth: CGFloat {
+    @IBInspectable var borderWidth: CGFloat {
         get {
             return layer.borderWidth
         }
@@ -198,9 +178,9 @@ extension UIView {
             layer.borderWidth = newValue
         }
     }
-    
-    @IBInspectable
-    var cornerRadius: CGFloat {
+
+	//	Corner
+    @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
         }
@@ -208,10 +188,9 @@ extension UIView {
             layer.cornerRadius = newValue
         }
     }
-    
-//    Shadow
-    @IBInspectable
-    var shadowColor: UIColor? {
+
+	//	Shadow
+    @IBInspectable var shadowBackgroundColor: UIColor? {
         get {
             if let color = layer.shadowColor {
                 return UIColor(cgColor: color)
@@ -227,8 +206,7 @@ extension UIView {
         }
     }
 
-    @IBInspectable
-    var shadowOffset: CGSize {
+    @IBInspectable var shadowBackgroundOffset: CGSize {
         get {
             return layer.shadowOffset
         }
@@ -236,25 +214,4 @@ extension UIView {
             layer.shadowOffset = newValue
         }
     }
-    
-    @IBInspectable
-    var shadowOpacity: Float {
-        get {
-            return layer.shadowOpacity
-        }
-        set {
-            layer.shadowOpacity = newValue
-        }
-    }
-    
-    @IBInspectable
-    var shadowRadius: CGFloat {
-        get {
-            return layer.shadowRadius
-        }
-        set {
-            layer.shadowRadius = newValue
-        }
-    }
-    
 }

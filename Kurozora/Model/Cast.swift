@@ -9,7 +9,7 @@
 import TRON
 import SwiftyJSON
 
-struct CastDetails: JSONDecodable {
+class CastDetails: JSONDecodable {
     let success: Bool?
     let message: String?
     let page: Int?
@@ -17,7 +17,7 @@ struct CastDetails: JSONDecodable {
     let totalActors: Int?
     let actors: [JSON]?
 
-    init(json: JSON) throws {
+    required init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
         page = json["page"].intValue

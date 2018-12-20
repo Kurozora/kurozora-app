@@ -9,7 +9,7 @@
 import TRON
 import SwiftyJSON
 
-struct Session: JSONDecodable {
+class Session: JSONDecodable {
     let success: Bool?
     let message: String?
     let otherSessions: [JSON]?
@@ -20,7 +20,7 @@ struct Session: JSONDecodable {
     let ip: String?
     let lastValidated: String?
     
-    init(json: JSON) throws {
+    required init(json: JSON) throws {
         success = json["success"].boolValue
         message = json["error_message"].stringValue
         otherSessions = json["other_sessions"].arrayValue

@@ -18,9 +18,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var tableHeaderView: UIView!
 
+	// Header collection variables
+	var timer: Timer?
+	var onceOnly = false
+	let sectionInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+	var itemSize = CGSize(width: 0, height: 0)
+
     var categories: [JSON]?
     var banners: [JSON]?
     var showId:Int?
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +38,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let searchController = UISearchController(searchResultsController: nil)
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
-        } else {
-            // Fallback on earlier versions
         }
         
         // Validate session
@@ -57,9 +65,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         // Setup collection view
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
+		collectionView.dataSource = self
+		collectionView.delegate = self
+		collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+
+		let width = collectionView.bounds.size.width - 20
+		let height = width * (9/16)
+		itemSize = CGSize(width: width, height: height - 20)
+//		print("itemSize: \(itemSize)")
+
         // Setup table view
         tableView.delegate = self
         tableView.dataSource = self
@@ -70,11 +84,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
@@ -102,10 +112,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Functions
 	func showDetailFor(_ showId: Int) {
         let storyboard = UIStoryboard(name: "details", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
-        controller?.showId = showId
+        let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
+        showTabBarController?.showId = showId
 
-        self.present(controller!, animated: true, completion: nil)
+        self.present(showTabBarController!, animated: true, completion: nil)
     }
 
     // MARK: - Table view
@@ -117,7 +127,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 39 : 1
+        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 38 : 1
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view:UIView, forSection: Int) {
@@ -128,7 +138,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let categoryTitle = categories?[section]["title"].stringValue else {return "Untitled"}
+        guard let categoryTitle = categories?[section]["title"].stringValue else { return "" }
 
 		if let categoryShowCount = categories?[section]["shows"].count, categoryShowCount != 0 {
             return categoryTitle
@@ -157,9 +167,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return showCell
         }
     }
-    
+
+	// MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "ShowDetailsSegue") {
+        if segue.identifier == "ShowDetailsSegue" {
             // Show detail for header cell
             if let sender = sender as? Int {
                 let vc = segue.destination as! ShowTabBarController

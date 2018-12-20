@@ -96,19 +96,42 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="137"/>
                                                     <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="O2t-su-g6E" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Juo-Ve-DYK" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="4" y="87" width="60" height="84"/>
-                                                    <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="O2t-su-g6E" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="84"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </imageView>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="60" id="0Of-ET-ab6"/>
-                                                        <constraint firstAttribute="height" constant="84" id="T3r-p7-PPy"/>
+                                                        <constraint firstAttribute="width" constant="60" id="3n3-8a-waC"/>
+                                                        <constraint firstItem="O2t-su-g6E" firstAttribute="top" secondItem="Juo-Ve-DYK" secondAttribute="top" id="6tg-cR-ZSB"/>
+                                                        <constraint firstAttribute="bottom" secondItem="O2t-su-g6E" secondAttribute="bottom" id="9sz-WZ-RYa"/>
+                                                        <constraint firstAttribute="height" constant="84" id="GeZ-E5-DZY"/>
+                                                        <constraint firstItem="O2t-su-g6E" firstAttribute="leading" secondItem="Juo-Ve-DYK" secondAttribute="leading" id="c5Z-46-2L2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="O2t-su-g6E" secondAttribute="trailing" id="whu-MX-2C3"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                            <real key="value" value="0.40000000000000002"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                            <real key="value" value="7"/>
+                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="8"/>
+                                                            <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                </imageView>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Kajimeru Isekai Seikatu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RxX-Zd-and">
                                                     <rect key="frame" x="72" y="138.33333333333334" width="220" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -159,19 +182,19 @@
                                         <color key="backgroundColor" red="0.18823529411764706" green="0.19607843137254902" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="EnN-iB-1Zo" secondAttribute="bottom" constant="38" id="12P-tf-g9T"/>
-                                            <constraint firstItem="RxX-Zd-and" firstAttribute="leading" secondItem="O2t-su-g6E" secondAttribute="trailing" constant="8" id="1V9-Na-uxO"/>
                                             <constraint firstItem="EnN-iB-1Zo" firstAttribute="leading" secondItem="CEy-UH-Dpd" secondAttribute="leading" id="4M4-VG-nNs"/>
                                             <constraint firstItem="DRT-bT-orL" firstAttribute="leading" secondItem="RxX-Zd-and" secondAttribute="trailing" constant="8" id="Bb3-Vo-nyo"/>
+                                            <constraint firstItem="RxX-Zd-and" firstAttribute="leading" secondItem="Juo-Ve-DYK" secondAttribute="trailing" constant="8" id="L67-Mj-X91"/>
                                             <constraint firstAttribute="trailing" secondItem="EnN-iB-1Zo" secondAttribute="trailing" id="QHb-CO-ieE"/>
                                             <constraint firstItem="EnN-iB-1Zo" firstAttribute="top" secondItem="CEy-UH-Dpd" secondAttribute="top" id="QeO-Ur-DNt"/>
                                             <constraint firstAttribute="trailing" secondItem="fAN-6j-uaH" secondAttribute="trailing" constant="8" id="Sqv-xC-J7u"/>
+                                            <constraint firstItem="Juo-Ve-DYK" firstAttribute="leading" secondItem="CEy-UH-Dpd" secondAttribute="leading" constant="4" id="UZl-iT-cMv"/>
                                             <constraint firstItem="Gzk-Zl-2qZ" firstAttribute="top" secondItem="RxX-Zd-and" secondAttribute="bottom" constant="1.5" id="Utj-ht-KZo"/>
                                             <constraint firstAttribute="bottom" secondItem="fAN-6j-uaH" secondAttribute="bottom" constant="3" id="VQz-nK-VId"/>
-                                            <constraint firstAttribute="bottom" secondItem="O2t-su-g6E" secondAttribute="bottom" constant="4" id="aud-KA-Jfm"/>
                                             <constraint firstItem="RxX-Zd-and" firstAttribute="leading" secondItem="Gzk-Zl-2qZ" secondAttribute="leading" id="dyR-Fd-JX7"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="Gzk-Zl-2qZ" secondAttribute="bottom" constant="-4" id="fgc-4q-SCG"/>
-                                            <constraint firstItem="O2t-su-g6E" firstAttribute="leading" secondItem="CEy-UH-Dpd" secondAttribute="leading" constant="4" id="nPR-8g-1UU"/>
                                             <constraint firstItem="fAN-6j-uaH" firstAttribute="centerY" secondItem="DRT-bT-orL" secondAttribute="centerY" id="pA7-Gn-mgf"/>
+                                            <constraint firstAttribute="bottom" secondItem="Juo-Ve-DYK" secondAttribute="bottom" constant="4" id="rUI-j5-zdT"/>
                                             <constraint firstItem="RxX-Zd-and" firstAttribute="trailing" secondItem="Gzk-Zl-2qZ" secondAttribute="trailing" id="xWH-15-0j5"/>
                                             <constraint firstItem="fAN-6j-uaH" firstAttribute="leading" secondItem="DRT-bT-orL" secondAttribute="trailing" constant="3" id="yf9-Vb-y8V"/>
                                         </constraints>

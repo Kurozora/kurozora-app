@@ -35,12 +35,12 @@ public class KAnimeKit {
         return (controller,controller.viewControllers.last! as! ForumViewController)
     }
     
-    public class func customThreadViewController() -> CustomThreadViewController {
+	class func customThreadViewController() -> CustomThreadViewController {
         let controller = KAnimeKit.threadStoryboard().instantiateViewController(withIdentifier: "CustomThread") as! CustomThreadViewController
         return controller
     }
     
-    public class func notificationThreadViewController() -> (UINavigationController, NotificationThreadViewController) {
+	class func notificationThreadViewController() -> (UINavigationController, NotificationThreadViewController) {
         let controller = KAnimeKit.threadStoryboard().instantiateViewController(withIdentifier: "NotificationThreadNav") as! UINavigationController
         return (controller, controller.viewControllers.last! as! NotificationThreadViewController)
     }

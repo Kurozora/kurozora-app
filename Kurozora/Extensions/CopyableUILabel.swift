@@ -14,7 +14,6 @@ class CopyableUILabel: UILabel {
     }
     
     // MARK: - Init
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -36,7 +35,6 @@ class CopyableUILabel: UILabel {
     }
     
     // MARK: - Actions
-    
     @objc internal func handleLongPressed(_ gesture: UILongPressGestureRecognizer) {
         guard let gestureView = gesture.view, let superView = gestureView.superview else {
             return

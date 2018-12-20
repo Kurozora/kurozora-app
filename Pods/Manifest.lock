@@ -9,12 +9,15 @@ PODS:
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
   - BottomPopup (0.4.1)
+  - ColorSlider (4.3)
   - Cosmos (17.0.0)
   - CryptoSwift (0.9.0)
+  - Down (0.6.2)
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.6.4)
   - FLAnimatedImage (1.0.12)
   - GrowingTextView (0.6.1)
+  - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
   - Kingfisher (4.10.1)
@@ -35,6 +38,10 @@ PODS:
   - ReachabilitySwift (4.1.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
+  - RichTextView (1.0.4):
+    - Down
+    - iosMath
+    - SnapKit
   - SCLAlertView (0.8.1)
   - SnapKit (4.0.1)
   - Starscream (3.0.6)
@@ -76,6 +83,7 @@ PODS:
 DEPENDENCIES:
   - AXPhotoViewer
   - BottomPopup
+  - ColorSlider
   - Cosmos (~> 17.0)
   - EmptyDataSet-Swift (~> 4.2)
   - ESTabBarController-swift (~> 2.6)
@@ -89,6 +97,7 @@ DEPENDENCIES:
   - PusherSwift
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichEditorView
+  - RichTextView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SwifterSwift (~> 4.3)
   - SwiftTheme (~> 0.4)
@@ -104,12 +113,15 @@ SPEC REPOS:
     - AXPhotoViewer
     - AXStateButton
     - BottomPopup
+    - ColorSlider
     - Cosmos
     - CryptoSwift
+    - Down
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
     - GrowingTextView
+    - iosMath
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
@@ -121,6 +133,7 @@ SPEC REPOS:
     - PusherSwift
     - ReachabilitySwift
     - RichEditorView
+    - RichTextView
     - SnapKit
     - Starscream
     - SwifterSwift
@@ -154,12 +167,15 @@ SPEC CHECKSUMS:
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   BottomPopup: 052f0ea8bb1110d633e66529cbb07b8599eb227d
+  ColorSlider: 83fb6f174a13d7235ef100d8d5fee1f71adf2182
   Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
+  Down: 8c59a03cb229ef28dfa774b2132da860f3dee0ac
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   GrowingTextView: 335aefa45df7df06b01edede1363414d6ee5d6bc
+  iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
@@ -172,6 +188,7 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
+  RichTextView: 821a34ad66ce37836e1bcd8bfde3e0729799a002
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
@@ -184,6 +201,6 @@ SPEC CHECKSUMS:
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 1d164bd71892bfb9db4d39af159c341032b491a6
+PODFILE CHECKSUM: bfd573ba6f8f833b37e736f50bf9844bc4a06f6b
 
 COCOAPODS: 1.6.0.beta.1

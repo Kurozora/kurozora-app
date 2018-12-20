@@ -19,13 +19,13 @@ public class KCommonKit {
     }
     
     public class func actionListViewController() -> ActionListViewController {
-        let controller = defaultStoryboard().instantiateViewController(withIdentifier: "ActionList") as! ActionListViewController
-        return controller
+        let actionListController = defaultStoryboard().instantiateViewController(withIdentifier: "ActionList") as! ActionListViewController
+        return actionListController
     }
 
     public class func dropDownListViewController() -> DropDownListViewController {
-        let controller = defaultStoryboard().instantiateViewController(withIdentifier: "DropDownList") as! DropDownListViewController
-        return controller
+        let dropDownListController = defaultStoryboard().instantiateViewController(withIdentifier: "DropDownList") as! DropDownListViewController
+        return dropDownListController
     }
     
     public static var shared = KCommonKit()

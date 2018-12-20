@@ -99,8 +99,8 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
     }
     
     
-    // MARK: - IBAction
-    @IBAction func dismissPressed(_ sender: Any) {
+    // MARK: - IBActions
+    @IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -153,7 +153,7 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "EpisodeSegue") {
+        if segue.identifier == "EpisodeSegue" {
             let vc = segue.destination as! EpisodesCollectionViewController
             vc.seasonId = sender as? Int
         }

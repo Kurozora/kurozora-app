@@ -11,7 +11,7 @@ import Foundation
 import KCommonKit
 import KDatabaseKit
 
-public class CustomThreadViewController: ThreadViewController {
+class CustomThreadViewController: ThreadViewController {
 //
 //    @IBOutlet weak var imageContent: UIImageView!
 //    @IBOutlet weak var threadTitle: UILabel!

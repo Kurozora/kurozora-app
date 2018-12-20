@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import KRichTextEditor
 import SwiftyJSON
 import Tabman
 import Pageboy
@@ -16,9 +15,11 @@ import SCLAlertView
 class ForumsViewController: TabmanViewController, PageboyViewControllerDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var createThreadButton: UIButton!
+	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
 	var sections:[JSON]?
 	var sectionsCount:Int?
+	var threadSorting: String?
 
     private var viewControllers = [UIViewController]()
     
@@ -104,10 +105,38 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
     }
-    
+
+	// MARK: - IBActions
+	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
+		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top"),("Recent","recent")], currentSelection: threadSorting, action: { (value)  in
+			let currentSection = self.currentViewController as? ForumsChildViewController
+			currentSection?.threadOrder = value
+			self.sortingBarButtonItem.title = value.capitalized
+			currentSection?.fetchThreads()
+		})
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
+
 	@IBAction func createThreadButton(_ sender: Any) {
-		let editorStoryboard = KRichTextEditor.editorStoryboard()
-		let vc = editorStoryboard.instantiateInitialViewController()
-		present(vc!, animated: true, completion: nil)
+		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
+		vc?.sectionId = currentIndex! + 1
+
+		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+		if #available(iOS 11.0, *) {
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		}
+
+		present(kurozoraNavigationController, animated: true, completion: nil)
 	}
 }

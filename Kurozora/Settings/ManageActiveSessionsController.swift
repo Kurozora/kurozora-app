@@ -38,13 +38,15 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetView { (view) in
-            view.titleLabelString(NSAttributedString(string: "No sessions to show."))
+            view.titleLabelString(NSAttributedString(string: "No other sessions found!"))
                 .image(UIImage(named: "session_icon"))
                 .shouldDisplay(true)
                 .shouldFadeIn(true)
                 .isTouchAllowed(true)
                 .isScrollAllowed(true)
         }
+
+		tableView.rowHeight = UITableView.automaticDimension
     }
 
 	private func fetchSessions() {
@@ -63,10 +65,10 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
 	}
 
 	@objc func removeSessionFromTable(_ notification: NSNotification) {
-		if let sessionId = notification.userInfo?["session_id"] as? Int {
+		if let sessionID = notification.userInfo?["session_id"] as? Int {
 			self.tableView.beginUpdates()
 			let indexOfSession = sessionsArray?.firstIndex(where: { (json) -> Bool in
-				return json["id"].intValue == sessionId
+				return json["id"].intValue == sessionID
 			})
 
 			if let indexOfSession = indexOfSession, indexOfSession != 0 {
@@ -78,9 +80,9 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
 	}
 
 	@objc func addSessionToTable(_ notification: NSNotification) {
-		if let sessionId = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
+		if let sessionID = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
 			guard let sessionsCount = sessionsArray?.count else { return }
-			let newSession: JSON = ["id": sessionId,
+			let newSession: JSON = ["id": sessionID,
 									"device": device,
 									"ip": ip,
 									"last_validated": lastValidated
@@ -138,7 +140,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         return "Other sessions"
     }
 
-    // Cell header
+    // Section header
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
@@ -154,6 +156,11 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         return headerView
     }
 
+	// Section header hight
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 18
+	}
+
     // Number of rows in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sessionsCount = sessionsArray?.count else {return 0}
@@ -161,7 +168,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         return sessionsCount
     }
 
-    // Initialize cells
+    // Session cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sessionsCount = sessionsArray?.count
         

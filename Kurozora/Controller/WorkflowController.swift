@@ -22,15 +22,15 @@ public class WorkflowController {
 
 	/// Initialise Pusher and connect to subsequent channels
 	class func pusherInit() {
-		if let currentId = User.currentId(), currentId != 0 {
+		if let currentID = User.currentID(), currentID != 0 {
 			pusher.connect()
 
-			let myChannel = pusher.subscribe("private-user.\(currentId)")
+			let myChannel = pusher.subscribe("private-user.\(currentID)")
 
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
-					if let sessionId = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
-						if sessionId != User.currentSessionId() {
+					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
+						if sessionID != User.currentSessionID() {
 							let banner = NotificationBanner(title: "New login detected from \(device)", subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
 							banner.haptic = .heavy
 							banner.show()
@@ -38,16 +38,16 @@ public class WorkflowController {
 								let storyBoard = UIStoryboard(name: "settings", bundle: nil)
 
 								let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
-								let controller = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
+								let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
 								let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
 
-								controller?.setViewControllers([vc!], animated: true)
-								splitView?.showDetailViewController(controller!, sender: nil)
+								kurozoraNavigationController?.setViewControllers([vc!], animated: true)
+								splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
 
 								UIApplication.topViewController()?.present(splitView!, animated: true)
 							}
 
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionId, "ip": ip, "device": device, "last_validated": lastValidated])
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
 					}
 				} else {
@@ -57,10 +57,10 @@ public class WorkflowController {
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
-					if let sessionId = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let reason = data["reason"] as? String {
-						let isKiller = User.currentSessionId() == sessionKillerId
+					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let reason = data["reason"] as? String {
+						let isKiller = User.currentSessionID() == sessionKillerId
 
-						if sessionId == User.currentSessionId(), !isKiller {
+						if sessionID == User.currentSessionID(), !isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
 							logoutUser()
@@ -71,11 +71,11 @@ public class WorkflowController {
 							vc.isKiller = isKiller
 
 							UIApplication.topViewController()?.present(vc, animated: true)
-						} else if sessionId == User.currentSessionId(), isKiller {
+						} else if sessionID == User.currentSessionID(), isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
 						} else {
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id" : sessionId])
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id" : sessionID])
 						}
 					}
 				} else {

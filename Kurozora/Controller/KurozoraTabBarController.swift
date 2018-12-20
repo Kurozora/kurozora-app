@@ -11,6 +11,9 @@ import ESTabBarController_swift
 
 class KurozoraTabBarController: ESTabBarController {
     override func viewDidLoad() {
+
+		tabBar.itemPositioning = .centered
+
         super.viewDidLoad()
         
         // Instantiate views

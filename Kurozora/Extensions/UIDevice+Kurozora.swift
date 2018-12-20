@@ -9,6 +9,7 @@
 import UIKit
 
 public extension UIDevice {
+	/// Get current device model name in a readable form
 	static let modelName: String = {
 		var systemInfo = utsname()
 		uname(&systemInfo)

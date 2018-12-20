@@ -26,7 +26,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         loadingView = LoaderView(parentView: view)
-        
+
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
         collectionView?.emptyDataSetView { view in
@@ -61,7 +61,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
     }
     
     func updateLayoutWithSize(viewSize: CGSize) {
-        let height: CGFloat = 195
+        let height: CGFloat = 240
         
         guard let collectionView = collectionView,
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {

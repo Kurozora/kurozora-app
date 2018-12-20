@@ -2,18 +2,197 @@
 //  ThreadViewController.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 11/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Created by Khoren Katklian on 04/12/2018.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
-//import XCDYouTubeKit
-//import Parse
-import KDatabaseKit
+import UIKit
+import SwiftyJSON
+import SCLAlertView
+import RichTextView
 
-// Class intended to be subclassed
-public class ThreadViewController: UIViewController {
-//
+class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+	// Table view
+	@IBOutlet var tableView: UITableView!
+	@IBOutlet weak var informationLabel: UILabel!
+	@IBOutlet weak var posterUsernameLabel: UIButton!
+	@IBOutlet weak var threadTitleLabel: UILabel!
+	@IBOutlet weak var richTextView: RichTextView!
+	@IBOutlet weak var upVoteButton: UIButton!
+	@IBOutlet weak var downVoteButton: UIButton!
+
+	// Reply view
+	@IBOutlet weak var commentFieldView: UITextView!
+
+	var forumThread: JSON?
+	var thread: ForumThread?
+	var replyId: Int?
+	var threadInformation: String?
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		if let replyCount = forumThread?["reply_count"].intValue, let creationDate = forumThread?["creation_date"].stringValue {
+			informationLabel.text = "Discussion ·  \(replyCount)\((replyCount < 1000) ? "" : "K") ·  \(Date.timeAgo(creationDate)) · by "
+		}
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		if let threadId = forumThread?["id"].intValue, threadId != 0 {
+			Service.shared.getForumThread(forThread: threadId, withSuccess: { (thread) in
+				DispatchQueue.main.async {
+					self.thread = thread
+					self.updateDetailsWithThread(self.thread)
+					self.tableView.reloadData()
+				}
+			}) { (errorMessage) in
+				SCLAlertView().showError("Error getting this thread", subTitle: errorMessage)
+			}
+		}
+
+		// Register comment cells
+		tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentTextCell")
+
+		// Setup table view
+		tableView.dataSource = self
+		tableView.delegate = self
+
+		tableView.estimatedRowHeight = 200
+		tableView.rowHeight = UITableView.automaticDimension
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		guard let headerView = tableView.tableHeaderView else { return }
+
+		headerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+		let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+
+		if headerView.frame.size.height != size.height {
+			headerView.frame.size.height = size.height
+
+			tableView.tableHeaderView = headerView
+			tableView.layoutIfNeeded()
+		}
+	}
+
+	// MARK: - Table view data source
+	func numberOfSections(in tableView: UITableView) -> Int {
+		if let threadRepliesCount = forumThread?.count, threadRepliesCount != 0 {
+			return threadRepliesCount
+		}
+		return 0
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 1
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell:CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
+
+		// Configure the cell...
+
+		return cell
+	}
+
+	// MARK: - Functions
+	func updateDetailsWithThread (_ thread: ForumThread?) {
+		// Set thread title
+		if let threadTitle = forumThread?["title"].stringValue {
+			self.title = threadTitle
+			self.threadTitleLabel.text = threadTitle
+		}
+
+		// Set poster username
+		if let posterUsername = forumThread?["poster_username"].stringValue, posterUsername != "" {
+			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
+		}
+
+		// Set thread content
+		if let threadContent = thread?.content {
+			self.richTextView.update(input: threadContent, textColor: .white, completion: nil)
+		}
+	}
+
+	// Vote for current thread
+	func voteFor(_ threadId: Int?, vote: Int?) {
+		Service.shared.voteFor(thread: threadId, vote: vote, withSuccess: { (success) in
+			if success {
+				DispatchQueue.main.async {
+					if vote == 1 {
+						self.upVoteButton.setTitleColor(UIColor(red: 86/255, green: 255/255, blue: 67/255, alpha: 1), for: .normal)
+						self.downVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
+					} else if vote == 0 {
+						self.downVoteButton.setTitleColor(UIColor(red: 255/255, green: 77/255, blue: 67/255, alpha: 1), for: .normal)
+						self.upVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
+					}
+				}
+			}
+		})
+	}
+
+	// Reply with a comment
+	func reply(with comment: String?, for thread: Int?) {
+		Service.shared.postReply(withComment: comment, forThread: thread, withSuccess: { (reply) in
+			DispatchQueue.main.async {
+				self.replyId = reply
+			}
+		}) { (errorMessage) in
+			SCLAlertView().showError("Error posting your comment :(", subTitle: errorMessage)
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func showUserProfileButton(_ sender: UIButton) {
+		if let posterId = forumThread?["poster_user_id"].intValue, posterId != 0 {
+			let storyboard = UIStoryboard(name: "profile", bundle: nil)
+			let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			vc?.otherUserID = posterId
+
+			let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+
+			self.present(kurozoraNavigationController, animated: true, completion: nil)
+		}
+	}
+
+	@IBAction func upVoteButton(_ sender: UIButton) {
+		guard let threadId = forumThread?["id"].intValue else { return }
+		voteFor(threadId, vote: 1)
+	}
+
+	@IBAction func downVoteButton(_ sender: UIButton) {
+		guard let threadId = forumThread?["id"].intValue else { return }
+		voteFor(threadId, vote: 0)
+	}
+
+	@IBAction func replyButton(_ sender: UIButton) {
+		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "CommentEditor") as? KCommentEditorView
+		vc?.data = forumThread
+
+		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+		if #available(iOS 11.0, *) {
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		}
+
+		self.present(kurozoraNavigationController, animated: true, completion: nil)
+	}
+
+	@IBAction func shareThreadButton(_ sender: UIButton) {
+		SCLAlertView().showInfo("This is a test button. No touch only look.")
+	}
+
+	@IBAction func sendReplyButton(_ sender: UIButton) {
+		guard let threadId = forumThread?["id"].intValue else { return }
+		let comment = commentFieldView.text
+
+		reply(with: comment, for: threadId)
+	}
+
+
 //    public let FetchLimit = 12
 //
 //    @IBOutlet public weak var tableView: UITableView!

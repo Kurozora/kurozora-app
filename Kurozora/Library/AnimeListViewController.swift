@@ -73,7 +73,7 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 	private func fetchLibrary() {
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
 
-		Service.shared.getLibraryFor(status: sectionTitle, withSuccess: { (library) in
+		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (library) in
 			DispatchQueue.main.async {
 				self.library = library
 				self.collectionView.reloadData()
@@ -133,10 +133,10 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 		guard let showId = library?[indexPath.row]["id"].intValue else {return}
 
 		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		let controller = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
-		controller?.showId = showId
+		let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
+		showTabBarController?.showId = showId
 
-		self.present(controller!, animated: true, completion: nil)
+		self.present(showTabBarController!, animated: true, completion: nil)
 	}
 //    weak var delegate: AnimeListControllerDelegate?
 //

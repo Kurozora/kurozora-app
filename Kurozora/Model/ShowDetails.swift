@@ -10,7 +10,7 @@ import UIKit
 import TRON
 import SwiftyJSON
 
-struct ShowDetails: JSONDecodable {
+class ShowDetails: JSONDecodable {
     // General
     let id: Int?
 	let imdbId: String?
@@ -55,7 +55,7 @@ struct ShowDetails: JSONDecodable {
     var currentRating: Double?
 	var libraryStatus: String?
     
-    init(json: JSON) throws {
+    required init(json: JSON) throws {
         // Anime
         id = json["anime"]["id"].intValue
 		imdbId = json["anime"]["imdb_id"].stringValue
@@ -102,7 +102,7 @@ struct ShowDetails: JSONDecodable {
     }
     
     public func informationString() -> String {
-        let episodes = (self.episodes != 0) ? self.episodes : 0
+		let episodes = (self.episodes != 0) ? self.episodes : 0
         let runtime = (self.runtime != 0) ? self.runtime : 0
         let year = (self.year != 0) ? self.year : 0000
         return "\(type ?? "Unknown") · \(watchRating ?? "N/A") · \(episodes ?? 0) eps · \(runtime ?? 0) min · \(year ?? 0000)"

@@ -22,7 +22,6 @@
 		660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660B42A82125A07C0051EF66 /* ThemeCell.xib */; };
 		660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42AA2125AF830051EF66 /* ThemeCell.swift */; };
 		660B5B5F21523612002D05F3 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B5E21523612002D05F3 /* Session.swift */; };
-		660B5B6421525873002D05F3 /* SessionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660B5B6321525873002D05F3 /* SessionCell.xib */; };
 		660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B652152F47A002D05F3 /* NoSessionsCell.swift */; };
 		660E9FC721455F3100F6813C /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E9FC621455F3100F6813C /* Cast.swift */; };
 		6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6611233C208E285600E6033A /* inapppurchase.storyboard */; };
@@ -58,10 +57,6 @@
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
 		6669387021AF39A000BA9620 /* ForumThreads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumThreads.swift */; };
-		666938A321B19CAA00BA9620 /* KRichTextEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 666938A121B19CAA00BA9620 /* KRichTextEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		666938A621B19CAA00BA9620 /* KRichTextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; };
-		666938A721B19CAA00BA9620 /* KRichTextEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		666938AD21B19E3800BA9620 /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
 		666938AF21B1D4D200BA9620 /* TimelinePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669387121AFF87900BA9620 /* TimelinePostCell.swift */; };
 		666938B021B1D4D800BA9620 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF9209B304A0007A4DE /* PostCell.swift */; };
 		666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AFD209B59600007A4DE /* CommentCell.swift */; };
@@ -107,9 +102,7 @@
 		667F9AD721B47EF0003F6629 /* RightBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD621B47EF0003F6629 /* RightBadgeCell.swift */; };
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
-		66825BE621B296D200A2F602 /* KRichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE121B295D200A2F602 /* KRichTextEditor.swift */; };
-		66825BE821B29E5900A2F602 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
-		66825BEA21B29F3800A2F602 /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* RichTextEditorView.swift */; };
+		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
 		66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */; };
 		66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
 		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
@@ -142,10 +135,17 @@
 		66A8AF352099E7A80011A342 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF342099E7A70011A342 /* UIViewController+Image.swift */; };
 		66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */; };
 		66A8AF392099FC870011A342 /* UIViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */; };
+		66B216A621BF16AE006E167D /* ForumThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A521BF16AE006E167D /* ForumThread.swift */; };
+		66B216A821C033B9006E167D /* UIView+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Image.swift */; };
+		66B216AA21C16817006E167D /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* RichTextEditorView.swift */; };
+		66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
+		66B216AC21C1681F006E167D /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
+		66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216AD21C16B15006E167D /* ThreadPost.swift */; };
 		66B69BD4213734D3007154BD /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0420AD9C5800792B1B /* Anime.swift */; };
 		66B69BD6214544DB007154BD /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* PrivacyPolicy.swift */; };
 		66B69BD821454618007154BD /* Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD721454618007154BD /* Privacy.swift */; };
-		66BF02BB209F80F800BDAF41 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02BA209F80F800BDAF41 /* CustomLabel.swift */; };
+		66BDEC7421C3F0A100D5487B /* KCommentEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BDEC7321C3F0A100D5487B /* KCommentEditorView.swift */; };
+		66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA33421BDD01E00BEA42E /* VoteThread.swift */; };
 		66BF02C1209F846A00BDAF41 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C0209F846A00BDAF41 /* LoaderView.swift */; };
 		66BF02C3209F97EC00BDAF41 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C2209F97EC00BDAF41 /* HighlightButton.swift */; };
 		66BF02CC209F9BA900BDAF41 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02CB209F9BA900BDAF41 /* ActionListViewController.swift */; };
@@ -200,7 +200,6 @@
 		66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5A20A9775C00F98375 /* ForumViewController.swift */; };
 		66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5D20A9782B00F98375 /* RateViewController.swift */; };
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
-		66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6420A9877900F98375 /* NotificationController.swift */; };
 		66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileViewController.swift */; };
 		66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserListViewController.swift */; };
 		66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */; };
@@ -225,14 +224,14 @@
 		66E1B86E20911F7500D7AC1A /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B86D20911F7500D7AC1A /* BrowseViewController.swift */; };
 		66E1B87020911F8B00D7AC1A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B86F20911F8B00D7AC1A /* FilterViewController.swift */; };
 		66E1B87220911F9600D7AC1A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B87120911F9600D7AC1A /* SearchViewController.swift */; };
-		66EF26C6215F960A00FB2B19 /* Array+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* Array+Kurozora.swift */; };
+		66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF148E21B728B60080FF14 /* ThreadReply.swift */; };
+		66EF26C6215F960A00FB2B19 /* UIImage+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Base64.swift */; };
 		66F2DF0E20AEE618001CD3CF /* ImageScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F2DF0D20AEE618001CD3CF /* ImageScrapper.swift */; };
 		66F2DF1020AEE9BA001CD3CF /* LinkScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F2DF0F20AEE9BA001CD3CF /* LinkScrapper.swift */; };
 		66FE5CFF215B665200E2844A /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* AdminTableViewController.swift */; };
-		66FE5D01215B739D00E2844A /* KDefaultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsTableViewCell.swift */; };
+		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
 		66FE5D03215B9F9100E2844A /* SubmitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D02215B9F9100E2844A /* SubmitTableViewCell.swift */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
-		79E69A39F4C9D4914CCDA939 /* Pods_KRichTextEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,13 +241,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6614DF372088D1C600B0BC69;
 			remoteInfo = KCommonKit;
-		};
-		666938A421B19CAA00BA9620 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6669389E21B19CAA00BA9620;
-			remoteInfo = KRichTextEditor;
 		};
 		66BF02EF20A02A3100BDAF41 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -266,7 +258,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				666938A721B19CAA00BA9620 /* KRichTextEditor.framework in Embed Frameworks */,
 				6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */,
 				66BF02F220A02A3100BDAF41 /* KDatabaseKit.framework in Embed Frameworks */,
 			);
@@ -292,7 +283,6 @@
 		660B42A82125A07C0051EF66 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
 		660B42AA2125AF830051EF66 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		660B5B5E21523612002D05F3 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		660B5B6321525873002D05F3 /* SessionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionCell.xib; sourceTree = "<group>"; };
 		660B5B652152F47A002D05F3 /* NoSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSessionsCell.swift; sourceTree = "<group>"; };
 		660E9FC621455F3100F6813C /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kurozora.entitlements; sourceTree = "<group>"; };
@@ -334,9 +324,6 @@
 		66647B612084995E00CF624F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6669386F21AF39A000BA9620 /* ForumThreads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThreads.swift; sourceTree = "<group>"; };
 		6669387121AFF87900BA9620 /* TimelinePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelinePostCell.swift; sourceTree = "<group>"; };
-		6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KRichTextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		666938A121B19CAA00BA9620 /* KRichTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KRichTextEditor.h; sourceTree = "<group>"; };
-		666938A221B19CAA00BA9620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		666938AC21B19E3800BA9620 /* editor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = editor.storyboard; sourceTree = "<group>"; };
 		666C82572162898400C93A70 /* CastTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewController.swift; sourceTree = "<group>"; };
 		666C82592168031B00C93A70 /* home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = home.storyboard; sourceTree = "<group>"; };
@@ -367,7 +354,7 @@
 		667F9AD621B47EF0003F6629 /* RightBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightBadgeCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
-		66825BE121B295D200A2F602 /* KRichTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditor.swift; sourceTree = "<group>"; };
+		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		66825BE721B29E5900A2F602 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* RichTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
 		66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestBuilder.swift; sourceTree = "<group>"; };
@@ -401,13 +388,17 @@
 		66A8AF342099E7A70011A342 /* UIViewController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Image.swift"; sourceTree = "<group>"; };
 		66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Kurozora.swift"; sourceTree = "<group>"; };
+		66B216A521BF16AE006E167D /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
+		66B216A721C033B9006E167D /* UIView+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Image.swift"; sourceTree = "<group>"; };
+		66B216AD21C16B15006E167D /* ThreadPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPost.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* PrivacyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy.swift; sourceTree = "<group>"; };
 		66B69BD721454618007154BD /* Privacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Privacy.swift; path = Kurozora/Model/Privacy.swift; sourceTree = SOURCE_ROOT; };
 		66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
+		66BDEC7321C3F0A100D5487B /* KCommentEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorView.swift; sourceTree = "<group>"; };
+		66BEA33421BDD01E00BEA42E /* VoteThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteThread.swift; sourceTree = "<group>"; };
 		66BF02B3209C997F00BDAF41 /* CommentImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentImageCell.xib; sourceTree = "<group>"; };
 		66BF02B5209CAACD00BDAF41 /* PostLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkCell.swift; sourceTree = "<group>"; };
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
-		66BF02BA209F80F800BDAF41 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		66BF02C0209F846A00BDAF41 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		66BF02C2209F97EC00BDAF41 /* HighlightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		66BF02CB209F9BA900BDAF41 /* ActionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
@@ -472,7 +463,6 @@
 		66CF6D5A20A9775C00F98375 /* ForumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
 		66CF6D5D20A9782B00F98375 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
-		66CF6D6420A9877900F98375 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		66CF6D6820A98CAA00F98375 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
@@ -498,18 +488,17 @@
 		66E1B86D20911F7500D7AC1A /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		66E1B86F20911F8B00D7AC1A /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		66E1B87120911F9600D7AC1A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		66EF26C5215F960A00FB2B19 /* Array+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Kurozora.swift"; sourceTree = "<group>"; };
+		66EF148E21B728B60080FF14 /* ThreadReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReply.swift; sourceTree = "<group>"; };
+		66EF26C5215F960A00FB2B19 /* UIImage+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Base64.swift"; sourceTree = "<group>"; };
 		66F2DF0D20AEE618001CD3CF /* ImageScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrapper.swift; sourceTree = "<group>"; };
 		66F2DF0F20AEE9BA001CD3CF /* LinkScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkScrapper.swift; sourceTree = "<group>"; };
 		66FA64E6209C78140007BAA3 /* UIKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Kurozora.swift"; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
-		66FE5D00215B739D00E2844A /* KDefaultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsTableViewCell.swift; sourceTree = "<group>"; };
+		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		66FE5D02215B9F9100E2844A /* SubmitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitTableViewCell.swift; sourceTree = "<group>"; };
 		681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.release.xcconfig"; sourceTree = "<group>"; };
 		83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.debug.xcconfig"; sourceTree = "<group>"; };
 		950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.debug.xcconfig"; sourceTree = "<group>"; };
-		B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KRichTextEditor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KRichTextEditor/Pods-KRichTextEditor.debug.xcconfig"; sourceTree = "<group>"; };
-		D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KRichTextEditor.release.xcconfig"; path = "Pods/Target Support Files/Pods-KRichTextEditor/Pods-KRichTextEditor.release.xcconfig"; sourceTree = "<group>"; };
 		DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KDatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -531,15 +520,6 @@
 				6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */,
 				66BF02F120A02A3100BDAF41 /* KDatabaseKit.framework in Frameworks */,
 				73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */,
-				666938A621B19CAA00BA9620 /* KRichTextEditor.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6669389C21B19CAA00BA9620 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				79E69A39F4C9D4914CCDA939 /* Pods_KRichTextEditor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,10 +550,9 @@
 		6601F1AA2118486A0074C1DD /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				66A48FDF21A411A900F34085 /* notification.storyboard */,
 				6601F1AB2118488D0074C1DD /* NotificationCell.swift */,
 				66CF6D6E20A9921000F98375 /* NotificationViewController.swift */,
-				66CF6D6420A9877900F98375 /* NotificationController.swift */,
-				66A48FDF21A411A900F34085 /* notification.storyboard */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -613,18 +592,22 @@
 		660923E921355EC30082F02E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6669386F21AF39A000BA9620 /* ForumThreads.swift */,
 				660E9FC621455F3100F6813C /* Cast.swift */,
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
 				6619EE6F216F86C500655B99 /* ForumSections.swift */,
+				66B216A521BF16AE006E167D /* ForumThread.swift */,
+				6669386F21AF39A000BA9620 /* ForumThreads.swift */,
 				66D4734F21AB332000A894B7 /* Library.swift */,
 				66B69BD721454618007154BD /* Privacy.swift */,
 				6619EE77216FDD3E00655B99 /* Seasons.swift */,
 				660B5B5E21523612002D05F3 /* Session.swift */,
 				66938FD5211CD3A800ADA5D6 /* Shows.swift */,
 				66C863FE216CE7240054EE16 /* ShowDetails.swift */,
+				66EF148E21B728B60080FF14 /* ThreadReply.swift */,
+				66B216AD21C16B15006E167D /* ThreadPost.swift */,
 				66CEFCFE20AD8C1D00792B1B /* User.swift */,
 				66C863FC216CDBB70054EE16 /* UserNotification.swift */,
+				66BEA33421BDD01E00BEA42E /* VoteThread.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -632,9 +615,11 @@
 		660B5B622152545B002D05F3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
+				660B42A82125A07C0051EF66 /* ThemeCell.xib */,
 				66E08368211324D300B39A75 /* SessionsCell.swift */,
 				660B5B652152F47A002D05F3 /* NoSessionsCell.swift */,
-				66FE5D00215B739D00E2844A /* KDefaultsTableViewCell.swift */,
+				66FE5D00215B739D00E2844A /* KDefaultsCell.swift */,
 				66FE5D02215B9F9100E2844A /* SubmitTableViewCell.swift */,
 			);
 			path = Cell;
@@ -670,9 +655,10 @@
 				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
 				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
 				6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */,
-				66EF26C5215F960A00FB2B19 /* Array+Kurozora.swift */,
+				66EF26C5215F960A00FB2B19 /* UIImage+Base64.swift */,
 				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
 				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
+				66B216A721C033B9006E167D /* UIView+Image.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -715,7 +701,6 @@
 			isa = PBXGroup;
 			children = (
 				6614DF642089380D00B0BC69 /* CustomTextField.swift */,
-				66BF02BA209F80F800BDAF41 /* CustomLabel.swift */,
 				66BF02C0209F846A00BDAF41 /* LoaderView.swift */,
 				66BF02C2209F97EC00BDAF41 /* HighlightButton.swift */,
 			);
@@ -750,12 +735,13 @@
 		66160C3C215C26F300D0D722 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				66B216A921C166B5006E167D /* KRichTextEditor */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
 		};
-		661F9F872087383500CF4153 /* Login */ = {
+		661F9F872087383500CF4153 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
 				661F9F7D2087282400CF4153 /* login.storyboard */,
@@ -764,7 +750,7 @@
 				661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */,
 				661F9F802087282500CF4153 /* WelcomeViewController.swift */,
 			);
-			path = Login;
+			path = Onboard;
 			sourceTree = "<group>";
 		};
 		66647B472084995500CF624F = {
@@ -773,7 +759,6 @@
 				66647B522084995500CF624F /* Kurozora */,
 				6614DF392088D1C600B0BC69 /* KCommonKit */,
 				66BF02DD20A02A3000BDAF41 /* KDatabaseKit */,
-				666938A021B19CAA00BA9620 /* KRichTextEditor */,
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
@@ -786,7 +771,6 @@
 				66647B502084995500CF624F /* Kurozora.app */,
 				6614DF382088D1C600B0BC69 /* KCommonKit.framework */,
 				66BF02DC20A02A2E00BDAF41 /* KDatabaseKit.framework */,
-				6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -799,7 +783,7 @@
 				66112343208F6A8E00E6033A /* Controller */,
 				6611234C208F70B500E6033A /* Extensions */,
 				66160C3C215C26F300D0D722 /* Libraries */,
-				661F9F872087383500CF4153 /* Login */,
+				661F9F872087383500CF4153 /* Onboard */,
 				66E748BA20987E1A0039A105 /* Home */,
 				66058DB2212E915D0084B79E /* Shows */,
 				66D6237520A1BB4000304914 /* Library */,
@@ -815,32 +799,10 @@
 				66D6236A20A09DB900304914 /* Season */,
 				66E1B86A20911F2600D7AC1A /* Browse */,
 				66112342208E28C800E6033A /* In-App Purchases */,
-				6674A0D220A5848100AAB527 /* Thread */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66707833208B836500471FBC /* Supporting Files */,
 			);
 			path = Kurozora;
-			sourceTree = "<group>";
-		};
-		666938A021B19CAA00BA9620 /* KRichTextEditor */ = {
-			isa = PBXGroup;
-			children = (
-				666938A121B19CAA00BA9620 /* KRichTextEditor.h */,
-				66825BE121B295D200A2F602 /* KRichTextEditor.swift */,
-				666938AC21B19E3800BA9620 /* editor.storyboard */,
-				66825BE921B29F3800A2F602 /* RichTextEditorView.swift */,
-				66825BE721B29E5900A2F602 /* KeyboardManager.swift */,
-				666938AB21B19D1B00BA9620 /* Supporting Files */,
-			);
-			path = KRichTextEditor;
-			sourceTree = "<group>";
-		};
-		666938AB21B19D1B00BA9620 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				666938A221B19CAA00BA9620 /* Info.plist */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		666C82562162895700C93A70 /* Cast */ = {
@@ -864,17 +826,15 @@
 		66707836208B844800471FBC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				660B5B622152545B002D05F3 /* Cell */,
 				66707834208B842E00471FBC /* settings.storyboard */,
-				66B69BD5214544DB007154BD /* PrivacyPolicy.swift */,
-				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
-				660B42A82125A07C0051EF66 /* ThemeCell.xib */,
-				660B42A621259E300051EF66 /* ManageThemesController.swift */,
+				667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */,
 				66707837208B846C00471FBC /* SettingsViewController.swift */,
-				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
-				660B5B6321525873002D05F3 /* SessionCell.xib */,
-				66FE5CFE215B665200E2844A /* AdminTableViewController.swift */,
+				660B5B622152545B002D05F3 /* Cell */,
 				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
+				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
+				66FE5CFE215B665200E2844A /* AdminTableViewController.swift */,
+				660B42A621259E300051EF66 /* ManageThemesController.swift */,
+				66B69BD5214544DB007154BD /* PrivacyPolicy.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -964,6 +924,7 @@
 		66A552D220A2D1F300E515DB /* Forums */ = {
 			isa = PBXGroup;
 			children = (
+				6674A0D220A5848100AAB527 /* Thread */,
 				66A552D520A2D40100E515DB /* forums.storyboard */,
 				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
 				6619EE73216F969B00655B99 /* ForumsChildViewController.swift */,
@@ -993,6 +954,17 @@
 				66A8AF20209991310011A342 /* AnimeCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		66B216A921C166B5006E167D /* KRichTextEditor */ = {
+			isa = PBXGroup;
+			children = (
+				66BDEC7321C3F0A100D5487B /* KCommentEditorView.swift */,
+				666938AC21B19E3800BA9620 /* editor.storyboard */,
+				66825BE921B29F3800A2F602 /* RichTextEditorView.swift */,
+				66825BE721B29E5900A2F602 /* KeyboardManager.swift */,
+			);
+			path = KRichTextEditor;
 			sourceTree = "<group>";
 		};
 		66B69BD22136F9AE007154BD /* Service */ = {
@@ -1271,8 +1243,6 @@
 				681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */,
 				83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */,
 				211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */,
-				B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */,
-				D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1285,14 +1255,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66488B8C212F7FF2001E8C82 /* KCommonKit.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6669389A21B19CAA00BA9620 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				666938A321B19CAA00BA9620 /* KRichTextEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1343,31 +1305,11 @@
 			dependencies = (
 				6614DF4C2088D1C600B0BC69 /* PBXTargetDependency */,
 				66BF02F020A02A3100BDAF41 /* PBXTargetDependency */,
-				666938A521B19CAA00BA9620 /* PBXTargetDependency */,
 			);
 			name = Kurozora;
 			productName = Aozora;
 			productReference = 66647B502084995500CF624F /* Kurozora.app */;
 			productType = "com.apple.product-type.application";
-		};
-		6669389E21B19CAA00BA9620 /* KRichTextEditor */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 666938A821B19CAA00BA9620 /* Build configuration list for PBXNativeTarget "KRichTextEditor" */;
-			buildPhases = (
-				F844CD23E03BE8BB7BBB3F42 /* [CP] Check Pods Manifest.lock */,
-				6669389A21B19CAA00BA9620 /* Headers */,
-				6669389B21B19CAA00BA9620 /* Sources */,
-				6669389C21B19CAA00BA9620 /* Frameworks */,
-				6669389D21B19CAA00BA9620 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KRichTextEditor;
-			productName = KRichTextEditor;
-			productReference = 6669389F21B19CAA00BA9620 /* KRichTextEditor.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 		66BF02DB20A02A2D00BDAF41 /* KDatabaseKit */ = {
 			isa = PBXNativeTarget;
@@ -1414,12 +1356,6 @@
 							};
 						};
 					};
-					6669389E21B19CAA00BA9620 = {
-						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = 2RRQ3G5DSX;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Automatic;
-					};
 					66BF02DB20A02A2D00BDAF41 = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = 2RRQ3G5DSX;
@@ -1444,7 +1380,6 @@
 				66647B4F2084995500CF624F /* Kurozora */,
 				6614DF372088D1C600B0BC69 /* KCommonKit */,
 				66BF02DB20A02A2D00BDAF41 /* KDatabaseKit */,
-				6669389E21B19CAA00BA9620 /* KRichTextEditor */,
 			);
 		};
 /* End PBXProject section */
@@ -1464,6 +1399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */,
+				66B216AC21C1681F006E167D /* editor.storyboard in Resources */,
 				6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */,
 				66D6237F20A1CC1D00304914 /* library.storyboard in Resources */,
 				660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */,
@@ -1475,7 +1411,6 @@
 				666938B521B1D4F400BA9620 /* PostCell.xib in Resources */,
 				666938BA21B1D51400BA9620 /* ShowMoreCell.xib in Resources */,
 				66160C40215C2DEB00D0D722 /* reachability.storyboard in Resources */,
-				660B5B6421525873002D05F3 /* SessionCell.xib in Resources */,
 				66BF02D3209FBA1700BDAF41 /* Resources.xcassets in Resources */,
 				666938B621B1D4F900BA9620 /* PostImageCell.xib in Resources */,
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
@@ -1499,14 +1434,6 @@
 				66058DB6212E95AB0084B79E /* details.storyboard in Resources */,
 				668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */,
 				668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6669389D21B19CAA00BA9620 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				666938AD21B19E3800BA9620 /* editor.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,8 +1528,10 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework",
+				"${BUILT_PRODUCTS_DIR}/ColorSlider/ColorSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
@@ -1618,6 +1547,8 @@
 				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
+				"${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework",
+				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
@@ -1629,7 +1560,7 @@
 				"${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
-				"${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework",
+				"${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1638,8 +1569,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BottomPopup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ColorSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
@@ -1655,6 +1588,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichEditorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
@@ -1666,33 +1601,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichEditorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iosMath.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F844CD23E03BE8BB7BBB3F42 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KRichTextEditor-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1702,7 +1615,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66BF02BB209F80F800BDAF41 /* CustomLabel.swift in Sources */,
 				66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */,
 				66A8AF252099A4950011A342 /* UIDevice+Utils.swift in Sources */,
 				66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */,
@@ -1741,6 +1653,7 @@
 				661F9F822087282500CF4153 /* LoginViewController.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
 				66E1B87220911F9600D7AC1A /* SearchViewController.swift in Sources */,
@@ -1750,15 +1663,15 @@
 				66707838208B846C00471FBC /* SettingsViewController.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,
+				66B216A821C033B9006E167D /* UIView+Image.swift in Sources */,
 				66058DBC212E97AD0084B79E /* ShowLinkCell.swift in Sources */,
 				66D6237220A18E4200304914 /* CalendarViewController.swift in Sources */,
 				66D6237020A189D200304914 /* ChartViewController.swift in Sources */,
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
-				66FE5D01215B739D00E2844A /* KDefaultsTableViewCell.swift in Sources */,
-				66EF26C6215F960A00FB2B19 /* Array+Kurozora.swift in Sources */,
+				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
+				66EF26C6215F960A00FB2B19 /* UIImage+Base64.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* NotificationCell.swift in Sources */,
 				66058DB8212E97360084B79E /* ShowSynopsisCell.swift in Sources */,
-				66CF6D6520A9877900F98375 /* NotificationController.swift in Sources */,
 				66058DBE212E97CA0084B79E /* ShowTitleCell.swift in Sources */,
 				66938FE22121625300ADA5D6 /* HeaderCell.swift in Sources */,
 				6611F195213313AA009BF736 /* ShowTabBarController.swift in Sources */,
@@ -1792,6 +1705,7 @@
 				66B69BD6214544DB007154BD /* PrivacyPolicy.swift in Sources */,
 				66C863FD216CDBB70054EE16 /* UserNotification.swift in Sources */,
 				6619EE70216F86C500655B99 /* ForumSections.swift in Sources */,
+				66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */,
 				666C82582162898400C93A70 /* CastTableViewController.swift in Sources */,
 				661F9F842087282500CF4153 /* WelcomeViewController.swift in Sources */,
 				6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */,
@@ -1807,12 +1721,14 @@
 				6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */,
+				66B216AA21C16817006E167D /* RichTextEditorView.swift in Sources */,
 				66D4735021AB332000A894B7 /* Library.swift in Sources */,
 				66D6237920A1BEAC00304914 /* AnimeListViewController.swift in Sources */,
 				66938FD6211CD3A800ADA5D6 /* Shows.swift in Sources */,
 				66E1B86E20911F7500D7AC1A /* BrowseViewController.swift in Sources */,
 				66C863F9216A74C00054EE16 /* LargeCategoryCell.swift in Sources */,
 				667F9AD421B47E6D003F6629 /* LeftBadgeCell.swift in Sources */,
+				66B216A621BF16AE006E167D /* ForumThread.swift in Sources */,
 				66E1B87020911F8B00D7AC1A /* FilterViewController.swift in Sources */,
 				66C863F7216A749B0054EE16 /* LargeCell.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
@@ -1827,6 +1743,7 @@
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
 				6625F95320B5F283004DB533 /* UIKit+Kurozora.swift in Sources */,
 				66112345208F6AA600E6033A /* KAnimeKit.swift in Sources */,
+				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */,
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				667F9AD721B47EF0003F6629 /* RightBadgeCell.swift in Sources */,
@@ -1835,7 +1752,10 @@
 				666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */,
 				6674A0D620A58AA300AAB527 /* NotificationThreadViewController.swift in Sources */,
 				661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */,
+				66BDEC7421C3F0A100D5487B /* KCommentEditorView.swift in Sources */,
 				66C863FB216A75470054EE16 /* HeaderCategoryCell.swift in Sources */,
+				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
+				66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */,
 				6611234E208F70CB00E6033A /* UIViewController+Navigation.swift in Sources */,
 				66C86404216DFB850054EE16 /* SeasonCollectionCell.swift in Sources */,
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
@@ -1845,16 +1765,6 @@
 				660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */,
 				6674A0B720A38E4700AAB527 /* CharactersViewController.swift in Sources */,
 				66754BC42101020800268355 /* Service.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6669389B21B19CAA00BA9620 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66825BE821B29E5900A2F602 /* KeyboardManager.swift in Sources */,
-				66825BEA21B29F3800A2F602 /* RichTextEditorView.swift in Sources */,
-				66825BE621B296D200A2F602 /* KRichTextEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1906,11 +1816,6 @@
 			isa = PBXTargetDependency;
 			target = 6614DF372088D1C600B0BC69 /* KCommonKit */;
 			targetProxy = 6614DF4B2088D1C600B0BC69 /* PBXContainerItemProxy */;
-		};
-		666938A521B19CAA00BA9620 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6669389E21B19CAA00BA9620 /* KRichTextEditor */;
-			targetProxy = 666938A421B19CAA00BA9620 /* PBXContainerItemProxy */;
 		};
 		66BF02F020A02A3100BDAF41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2203,7 +2108,7 @@
 				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.anime;
@@ -2235,7 +2140,7 @@
 				);
 				INFOPLIST_FILE = "Kurozora/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.anime;
@@ -2245,80 +2150,6 @@
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		666938A921B19CAA00BA9620 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B553164F80CBFBD952F7EDBC /* Pods-KRichTextEditor.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/RichEditorView\"",
-				);
-				INFOPLIST_FILE = "KRichTextEditor/Supporting Files/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KRichTextEditor;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		666938AA21B19CAA00BA9620 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D683BBD8CF9B25499DBCCF67 /* Pods-KRichTextEditor.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/RichEditorView\"",
-				);
-				INFOPLIST_FILE = "KRichTextEditor/Supporting Files/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KRichTextEditor;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -2427,15 +2258,6 @@
 			buildConfigurations = (
 				66647B7B2084995E00CF624F /* Debug */,
 				66647B7C2084995E00CF624F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		666938A821B19CAA00BA9620 /* Build configuration list for PBXNativeTarget "KRichTextEditor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				666938A921B19CAA00BA9620 /* Debug */,
-				666938AA21B19CAA00BA9620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

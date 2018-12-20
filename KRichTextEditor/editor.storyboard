@@ -28,7 +28,7 @@
                                         <rect key="frame" x="16" y="7" width="48" height="30"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
-                                            <action selector="cancelButton:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="TGe-pr-7dS"/>
+                                            <action selector="cancelButtonPressed:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="rYJ-Gq-Xp9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8c-pT-QLu">
@@ -38,7 +38,7 @@
                                             <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="cancelButton:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="M3d-og-9st"/>
+                                            <action selector="postButtonPressed:" destination="Hhy-HY-4Mq" eventType="touchUpInside" id="YLS-Y9-81S"/>
                                         </connections>
                                     </button>
                                 </subviews>

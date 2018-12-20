@@ -128,87 +128,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
         tableView.rowHeight = UITableView.automaticDimension
     }
 
-    // MARK: - IBAction
-    @IBAction func favoriteBtnPressed(_ sender: Any) {
-        tableView.reloadData()
-    }
-    
-    @IBAction func showRating(_ sender: Any) {
-        let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
-        vc?.showDetails = showDetails
-        vc?.delegate = self
-        vc?.modalTransitionStyle = .crossDissolve
-        vc?.modalPresentationStyle = .overCurrentContext
-        self.present(vc!, animated: true, completion: nil)
-    }
-
-    @IBAction func closeButton(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
-
-	@IBAction func moreButton(_ sender: UIButton) {
-		var shareText: String!
-		var image: UIImage!
-
-		if let title = showDetails?.title {
-			shareText = "You should watch \"\(title)\" via @KurozoraApp"
-		} else {
-			shareText = "You should watch this anime via @KurozoraApp"
-		}
-
-		if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
-			let posterThumb = URL(string: posterThumb)
-			let data = try? Data(contentsOf: posterThumb!)
-			image = UIImage(data: data!)
-		} else {
-			image = UIImage(named: "placeholder_poster")
-		}
-
-		let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
-		present(vc, animated: true, completion: nil)
-	}
-
-	@IBAction func chooseStatusButton(_ sender: AnyObject) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (value)  in
-			guard let showId = self.showId else {return}
-
-			Service.shared.addToLibraryWith(status: value.lowercased(), showId: showId, withSuccess: { (success) in
-				if !success {
-					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
-				} else {
-					self.libraryStatus = value
-					self.listButton.setTitle("\(value.capitalized) ", for: .normal)
-				}
-			}, andFailure: { (errorMessage) in
-				SCLAlertView().showError("Can't add to library", subTitle: errorMessage)
-			})
-		})
-
-		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-			Service.shared.removeFromLibraryWith(showId: self.showId, withSuccess: { (success) in
-				if !success {
-					SCLAlertView().showError("Error removing from library", subTitle: "There was an error while removing this anime from your library. Please try again!")
-				} else {
-					self.libraryStatus = ""
-					self.listButton.setTitle("Add to list ", for: .normal)
-				}
-			}, andFailure: { (errorMessage) in
-				SCLAlertView().showError("Can't remove from library", subTitle: errorMessage)
-			})
-		}))
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
-		}
-
-		self.present(action, animated: true, completion: nil)
-	}
-
 	// Update view with details
     func updateDetailWithShow(_ show: ShowDetails?) {
         if showDetails != nil {
@@ -350,6 +269,92 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	}
     
     // MARK: - IBActions
+	@IBAction func favoriteBtnPressed(_ sender: Any) {
+		tableView.reloadData()
+	}
+
+	@IBAction func showRating(_ sender: Any) {
+		let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
+		vc?.showDetails = showDetails
+		vc?.showRatingdelegate = self
+		vc?.modalTransitionStyle = .crossDissolve
+		vc?.modalPresentationStyle = .overCurrentContext
+		self.present(vc!, animated: true, completion: nil)
+	}
+
+	@IBAction func closeButton(_ sender: UIButton) {
+		dismiss(animated: true, completion: nil)
+	}
+
+	@IBAction func moreButton(_ sender: UIButton) {
+		var shareText: String!
+		var image: UIImage!
+
+		if let title = showDetails?.title {
+			shareText = "You should watch \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "You should watch this anime via @KurozoraApp"
+		}
+
+		if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
+			let posterThumb = URL(string: posterThumb)
+			let data = try? Data(contentsOf: posterThumb!)
+			image = UIImage(data: data!)
+		} else {
+			image = UIImage(named: "placeholder_poster")
+		}
+
+		let activityVC = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
+
+		if let popoverController = activityVC.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+		present(activityVC, animated: true, completion: nil)
+	}
+
+	@IBAction func chooseStatusButton(_ sender: AnyObject) {
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (value)  in
+			guard let showId = self.showId else {return}
+
+			Service.shared.addToLibrary(withStatus: value.lowercased(), showId: showId, withSuccess: { (success) in
+				if !success {
+					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
+				} else {
+					self.libraryStatus = value
+					self.listButton.setTitle("\(value.capitalized) ", for: .normal)
+				}
+			}, andFailure: { (errorMessage) in
+				SCLAlertView().showError("Can't add to library", subTitle: errorMessage)
+			})
+		})
+
+		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+			Service.shared.removeFromLibrary(withID: self.showId, withSuccess: { (success) in
+				if !success {
+					SCLAlertView().showError("Error removing from library", subTitle: "There was an error while removing this anime from your library. Please try again!")
+				} else {
+					self.libraryStatus = ""
+					self.listButton.setTitle("Add to list ", for: .normal)
+				}
+			}, andFailure: { (errorMessage) in
+				SCLAlertView().showError("Can't remove from library", subTitle: errorMessage)
+			})
+		}))
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
+
     @IBAction func showBanner(_ sender: AnyObject) {
         if let banner = showDetails?.banner, banner != "" {
             presentPhotoViewControllerWith(url: banner)

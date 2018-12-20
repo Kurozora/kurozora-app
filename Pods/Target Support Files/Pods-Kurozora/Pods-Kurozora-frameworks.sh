@@ -153,8 +153,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ColorSlider/ColorSlider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Down/Down.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework"
@@ -170,6 +172,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
@@ -181,7 +185,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AXPhotoViewer/AXPhotoViewer.framework"
@@ -189,8 +193,10 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ColorSlider/ColorSlider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Down/Down.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework"
@@ -206,6 +212,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework"
@@ -217,7 +225,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

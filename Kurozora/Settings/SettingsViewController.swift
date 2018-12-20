@@ -65,7 +65,7 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    // MARK: - IBAction
+    // MARK: - IBActions
     @IBAction func dismissPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -93,12 +93,12 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //        let segueIdentifier: String
+        // let segueIdentifier: String
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         
-        //        guard let settingsCell = tableView.cellForRow(at: indexPath as IndexPath) else {
-        //            return
-        //        }
+        // guard let settingsCell = tableView.cellForRow(at: indexPath as IndexPath) else {
+        //  	return
+        //  }
         
         switch (indexPath.section, indexPath.row) {
             //        case (0,0): break

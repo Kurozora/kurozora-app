@@ -9,13 +9,13 @@
 import TRON
 import SwiftyJSON
 
-struct Privacy: JSONDecodable {
+class Privacy: JSONDecodable {
     let success: Bool?
     let text: String?
     let lastUpdate: String?
     let message: String?
     
-    init(json: JSON) throws {
+    required init(json: JSON) throws {
         success = json["success"].boolValue
         text = json["privacy_policy"]["text"].stringValue
         lastUpdate = json["privacy_policy"]["last_update"].stringValue

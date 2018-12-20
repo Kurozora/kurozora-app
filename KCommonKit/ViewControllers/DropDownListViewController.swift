@@ -40,12 +40,12 @@ public class DropDownListViewController: UIViewController {
         
         let frameRelativeToViewController = sender.convert(sender.bounds, to: viewController.view)
         
-        let controller = KCommonKit.dropDownListViewController()
-        controller.delegate = delegate
-        controller.setDataSource(trigger: sender, viewController: viewController, dataSource: dataSource, yPosition: frameRelativeToViewController.maxY, imageDataSource: imageDataSource)
-        controller.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        controller.modalPresentationStyle = .overCurrentContext
-        viewController.present(controller, animated: false, completion: nil)
+        let dropDownListController = KCommonKit.dropDownListViewController()
+        dropDownListController.delegate = delegate
+        dropDownListController.setDataSource(trigger: sender, viewController: viewController, dataSource: dataSource, yPosition: frameRelativeToViewController.maxY, imageDataSource: imageDataSource)
+        dropDownListController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        dropDownListController.modalPresentationStyle = .overCurrentContext
+        viewController.present(dropDownListController, animated: false, completion: nil)
         
     }
     
