@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="z99-fr-eSh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="z99-fr-eSh">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -39,7 +39,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="651" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -74,6 +74,15 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="FAW-mw-c86" kind="presentation" id="08N-QR-gB4">
@@ -103,6 +112,15 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="oGH-lg-KeC" kind="presentation" id="lez-Kx-Iwb">
@@ -111,7 +129,7 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="88.000000000000014" y="124" width="199.33333333333337" height="84.333333333333314"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -126,8 +144,19 @@ Kurozora</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="218.33333333333334" width="343" height="40.666666666666657"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The largest mobile app for ">
@@ -184,13 +213,35 @@ Kurozora</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黒空" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黒空" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="88.000000000000014" y="103.66666666666667" width="199.33333333333337" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -239,8 +290,8 @@ Kurozora</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="The cool username you claimed 🙌" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Vj-t3-jHE" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="162" width="343" height="52"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="The cool username you claimed 🙌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Vj-t3-jHE" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="158" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529411763" green="0.30980392156862746" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="dns-j5-wfS"/>
@@ -253,24 +304,27 @@ Kurozora</string>
                                         <color key="value" red="0.58431372549019611" green="0.61568627450980395" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
                                         <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="z1G-pN-YZx" id="yls-Ew-iEm"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your super secret password 👀" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xXb-po-gdH" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="232" width="343" height="52"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your super secret password 👀" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xXb-po-gdH" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="228" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529411763" green="0.30980392156862746" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="lWy-N8-nIL"/>
@@ -283,16 +337,19 @@ Kurozora</string>
                                         <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
                                         <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -300,7 +357,7 @@ Kurozora</string>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk">
-                                <rect key="frame" x="16" y="292" width="343" height="40"/>
+                                <rect key="frame" x="16" y="288" width="343" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="wlq-rw-AcS"/>
                                 </constraints>
@@ -314,7 +371,7 @@ Kurozora</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-2e-Lgl" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="350" width="343" height="52"/>
+                                <rect key="frame" x="16" y="346" width="343" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="C8t-5L-AhG"/>
@@ -327,6 +384,15 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="loginPressedWithSender:" destination="z1G-pN-YZx" eventType="touchUpInside" id="kBn-dH-ax7"/>
@@ -337,18 +403,18 @@ Kurozora</string>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xXb-po-gdH" firstAttribute="top" secondItem="9Vj-t3-jHE" secondAttribute="bottom" constant="18" id="36s-fF-xdb"/>
-                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leading" constant="16" id="5JF-SK-Xgk"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="top" secondItem="KkB-fQ-5lk" secondAttribute="bottom" constant="18" id="5jH-jX-6QK"/>
-                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="22" id="FCa-2v-CA9"/>
-                            <constraint firstItem="xXb-po-gdH" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leading" constant="16" id="Kf5-AX-teb"/>
-                            <constraint firstItem="uHc-2e-Lgl" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leading" constant="16" id="adJ-rO-Spl"/>
-                            <constraint firstAttribute="trailing" secondItem="uHc-2e-Lgl" secondAttribute="trailing" constant="16" id="e3b-FS-o6R"/>
-                            <constraint firstAttribute="trailing" secondItem="9Vj-t3-jHE" secondAttribute="trailing" constant="16" id="fis-b6-7dx"/>
-                            <constraint firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" constant="16" id="fsF-Ok-tU4"/>
+                            <constraint firstItem="uHc-2e-Lgl" firstAttribute="leading" secondItem="KkB-fQ-5lk" secondAttribute="leading" id="AAu-CF-VJV"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="leading" secondItem="xXb-po-gdH" secondAttribute="leading" id="C2e-A6-idX"/>
+                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="18" id="FCa-2v-CA9"/>
+                            <constraint firstItem="uHc-2e-Lgl" firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" id="Flm-1e-1Pk"/>
+                            <constraint firstItem="xXb-po-gdH" firstAttribute="trailing" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="PCz-bi-xCf"/>
+                            <constraint firstItem="xXb-po-gdH" firstAttribute="leading" secondItem="9Vj-t3-jHE" secondAttribute="leading" id="eqP-Me-zNm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="fis-b6-7dx"/>
                             <constraint firstAttribute="centerX" secondItem="9Vj-t3-jHE" secondAttribute="centerX" id="hvn-cj-s60"/>
-                            <constraint firstAttribute="trailing" secondItem="xXb-po-gdH" secondAttribute="trailing" constant="16" id="pwv-RR-WcI"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="trailing" secondItem="xXb-po-gdH" secondAttribute="trailing" id="jPX-xf-1Bv"/>
                             <constraint firstItem="KkB-fQ-5lk" firstAttribute="top" secondItem="xXb-po-gdH" secondAttribute="bottom" constant="8" id="tiF-0n-HCW"/>
-                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leading" constant="16" id="xxL-eD-b3D"/>
+                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leadingMargin" id="xxL-eD-b3D"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Log in" id="6Um-CX-X07">
@@ -390,8 +456,72 @@ Kurozora</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Username: pick a cool one 🐵" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F4k-8e-thL" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="267" width="343" height="52"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-qw-04R" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="147.66666666666666" y="156" width="80" height="80"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="40"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.99989169840000003" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <state key="normal" title="Select"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.40000000000000002"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                                <size key="value" width="0.0" height="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="btnChooseImageOnClick:" destination="VSj-jZ-zJW" eventType="touchUpInside" id="cCA-mU-ePf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="1Y3-d1-RaH" secondAttribute="bottom" id="2ge-M2-ub5"/>
+                                    <constraint firstItem="1Y3-d1-RaH" firstAttribute="leading" secondItem="4fv-qw-04R" secondAttribute="leading" id="55W-NO-fM9"/>
+                                    <constraint firstAttribute="width" constant="80" id="Bup-de-dgr"/>
+                                    <constraint firstAttribute="height" constant="80" id="Bzr-R1-17Y"/>
+                                    <constraint firstItem="Uq8-RS-mVd" firstAttribute="height" secondItem="1Y3-d1-RaH" secondAttribute="height" id="DCf-ik-PIu"/>
+                                    <constraint firstItem="1Y3-d1-RaH" firstAttribute="top" secondItem="4fv-qw-04R" secondAttribute="top" id="Hwq-4L-RjZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="1Y3-d1-RaH" secondAttribute="trailing" id="Oxr-T3-zLG"/>
+                                    <constraint firstItem="Uq8-RS-mVd" firstAttribute="width" secondItem="1Y3-d1-RaH" secondAttribute="width" id="bZm-Ut-Xrn"/>
+                                    <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerX" secondItem="1Y3-d1-RaH" secondAttribute="centerX" id="eeo-fH-jvY"/>
+                                    <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerY" secondItem="1Y3-d1-RaH" secondAttribute="centerY" id="jcR-6d-nL6"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Username: pick a cool one 🐵" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F4k-8e-thL" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="254" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="0uR-xx-che"/>
@@ -403,25 +533,25 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
                                         <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="VSj-jZ-zJW" id="dOV-d6-9Vv"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email: we all forget our passwords 🙈" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mxT-kb-wjP" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="337" width="343" height="52"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email: we all forget our passwords 🙈" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mxT-kb-wjP" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="324" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="rsA-6n-g73"/>
@@ -434,24 +564,24 @@ Kurozora</string>
                                         <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="VSj-jZ-zJW" id="FS1-Aq-u7P"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password: make it super secret 🙊" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WhX-QR-jOO" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="407" width="343" height="52"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password: make it super secret 🙊" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WhX-QR-jOO" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="394" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="PIf-ua-Oi3"/>
@@ -464,24 +594,24 @@ Kurozora</string>
                                         <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="VSj-jZ-zJW" id="SMo-ZR-GZE"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwY-OW-6rP" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="489" width="343" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwY-OW-6rP" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="16" y="476" width="343" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="mQI-iM-tjz"/>
@@ -497,96 +627,39 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="registerPressedWithSender:" destination="VSj-jZ-zJW" eventType="touchUpInside" id="r91-82-n6H"/>
-                                </connections>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="147.66666666666666" y="162" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="HIx-5m-woI"/>
-                                    <constraint firstAttribute="width" constant="80" id="Rso-n2-e5U"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.99989169840000003" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="0.0" height="-3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="147.66666666666666" y="162" width="80" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Select"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.99989169840000003" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="0.0" height="-3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="btnChooseImageOnClick:" destination="VSj-jZ-zJW" eventType="touchUpInside" id="cCA-mU-ePf"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="xwY-OW-6rP" firstAttribute="trailing" secondItem="WhX-QR-jOO" secondAttribute="trailing" id="1Qk-PC-Qbh"/>
                             <constraint firstItem="xwY-OW-6rP" firstAttribute="top" secondItem="WhX-QR-jOO" secondAttribute="bottom" constant="30" id="3qG-iF-Opw"/>
-                            <constraint firstItem="WhX-QR-jOO" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leading" constant="16" id="7dT-vK-VGf"/>
-                            <constraint firstItem="F4k-8e-thL" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leading" constant="16" id="DWQ-pH-Kdg"/>
-                            <constraint firstItem="1Y3-d1-RaH" firstAttribute="trailing" secondItem="Uq8-RS-mVd" secondAttribute="trailing" id="ELq-PZ-52s"/>
-                            <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerX" secondItem="F4k-8e-thL" secondAttribute="centerX" id="Ish-gP-lkt"/>
-                            <constraint firstItem="Uq8-RS-mVd" firstAttribute="top" secondItem="1Y3-d1-RaH" secondAttribute="top" id="NTC-dY-ZMH"/>
-                            <constraint firstAttribute="trailing" secondItem="xwY-OW-6rP" secondAttribute="trailing" constant="16" id="OLU-KY-gXI"/>
+                            <constraint firstItem="F4k-8e-thL" firstAttribute="top" secondItem="4fv-qw-04R" secondAttribute="bottom" constant="18" id="5lc-K3-eo3"/>
+                            <constraint firstItem="mxT-kb-wjP" firstAttribute="leading" secondItem="F4k-8e-thL" secondAttribute="leading" id="7pb-ck-nY8"/>
+                            <constraint firstItem="F4k-8e-thL" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leadingMargin" id="DWQ-pH-Kdg"/>
+                            <constraint firstItem="mxT-kb-wjP" firstAttribute="trailing" secondItem="F4k-8e-thL" secondAttribute="trailing" id="MvZ-Z1-oxD"/>
+                            <constraint firstItem="4fv-qw-04R" firstAttribute="centerX" secondItem="xiI-oE-uwh" secondAttribute="centerX" id="Opf-zf-BmS"/>
                             <constraint firstAttribute="centerX" secondItem="mxT-kb-wjP" secondAttribute="centerX" id="TS1-AP-jF3"/>
-                            <constraint firstItem="xwY-OW-6rP" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leading" constant="16" id="Vbq-xh-Y1e"/>
-                            <constraint firstItem="1Y3-d1-RaH" firstAttribute="top" secondItem="MME-1S-QyH" secondAttribute="bottom" constant="22" id="dph-85-M3K"/>
-                            <constraint firstItem="mxT-kb-wjP" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leading" constant="16" id="dxp-t0-dBW"/>
-                            <constraint firstItem="Uq8-RS-mVd" firstAttribute="leading" secondItem="1Y3-d1-RaH" secondAttribute="leading" id="fNf-Uf-fJT"/>
-                            <constraint firstAttribute="trailing" secondItem="WhX-QR-jOO" secondAttribute="trailing" constant="16" id="jCC-BG-XWE"/>
-                            <constraint firstAttribute="trailing" secondItem="mxT-kb-wjP" secondAttribute="trailing" constant="16" id="koB-ie-zrb"/>
-                            <constraint firstAttribute="trailing" secondItem="F4k-8e-thL" secondAttribute="trailing" constant="16" id="mzl-Q0-n4s"/>
-                            <constraint firstItem="F4k-8e-thL" firstAttribute="top" secondItem="Uq8-RS-mVd" secondAttribute="bottom" constant="25" id="n2Y-np-QbV"/>
+                            <constraint firstItem="4fv-qw-04R" firstAttribute="top" secondItem="MME-1S-QyH" secondAttribute="bottom" constant="16" id="eCd-6Q-H8t"/>
+                            <constraint firstItem="WhX-QR-jOO" firstAttribute="trailing" secondItem="mxT-kb-wjP" secondAttribute="trailing" id="lZg-sG-Hcf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="F4k-8e-thL" secondAttribute="trailing" id="mzl-Q0-n4s"/>
                             <constraint firstItem="mxT-kb-wjP" firstAttribute="top" secondItem="F4k-8e-thL" secondAttribute="bottom" constant="18" id="oBw-pm-SUa"/>
-                            <constraint firstItem="Uq8-RS-mVd" firstAttribute="bottom" secondItem="1Y3-d1-RaH" secondAttribute="bottom" id="qiN-uO-fqe"/>
+                            <constraint firstItem="WhX-QR-jOO" firstAttribute="leading" secondItem="mxT-kb-wjP" secondAttribute="leading" id="vKo-dd-Cxo"/>
                             <constraint firstItem="WhX-QR-jOO" firstAttribute="top" secondItem="mxT-kb-wjP" secondAttribute="bottom" constant="18" id="yXW-n7-H7b"/>
+                            <constraint firstItem="xwY-OW-6rP" firstAttribute="leading" secondItem="WhX-QR-jOO" secondAttribute="leading" id="z7y-MC-ceH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register" id="0VO-jm-vjU">
@@ -621,7 +694,7 @@ Kurozora</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="162" width="343" height="52"/>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -638,28 +711,25 @@ Kurozora</string>
                                         <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7.5"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingValue">
-                                        <real key="value" value="8"/>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="H2e-ia-XEL" id="edu-ur-CP8"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="244" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.94540983438491821" green="0.59565275907516479" blue="0.21553713083267212" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="0M8-Qa-8zM"/>
                                 </constraints>
@@ -671,6 +741,15 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="resetPressedWithSender:" destination="H2e-ia-XEL" eventType="touchUpInside" id="F8C-uD-CMR"/>
@@ -680,13 +759,13 @@ Kurozora</string>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BEp-na-6qS" firstAttribute="leading" secondItem="yzU-Lb-xOA" secondAttribute="leading" constant="16" id="6Vx-OW-WhL"/>
-                            <constraint firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" constant="16" id="Grg-Z7-SpK"/>
                             <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="BEp-na-6qS" secondAttribute="bottom" constant="30" id="HNR-33-DqN"/>
-                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="leading" secondItem="yzU-Lb-xOA" secondAttribute="leading" constant="16" id="Mrc-48-dFX"/>
                             <constraint firstAttribute="centerX" secondItem="BEp-na-6qS" secondAttribute="centerX" id="Pl2-SM-Bsd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BEp-na-6qS" secondAttribute="trailing" id="QT2-Js-k1o"/>
+                            <constraint firstItem="BEp-na-6qS" firstAttribute="leading" secondItem="yzU-Lb-xOA" secondAttribute="leadingMargin" id="gZf-CL-sOW"/>
                             <constraint firstItem="BEp-na-6qS" firstAttribute="top" secondItem="w3P-GZ-aU7" secondAttribute="bottom" constant="22" id="hgn-BT-xB1"/>
-                            <constraint firstAttribute="trailing" secondItem="t4u-TJ-OFg" secondAttribute="trailing" constant="16" id="r4a-hl-evx"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" id="tXH-do-oD7"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="leading" secondItem="BEp-na-6qS" secondAttribute="leading" id="vqv-1s-3zg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS">
