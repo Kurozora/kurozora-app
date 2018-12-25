@@ -263,7 +263,6 @@ struct Service {
 				if success {
 					if let category = show.categories, category != [] {
 						successHandler(show)
-						NSLog("--------- Explore success")
 					}
 				}
 			}
@@ -705,10 +704,10 @@ struct Service {
             request.perform(withSuccess: { user in
                 if let success = user.success {
 					successHandler(success)
-					NSLog("--------- Validation success")
                 }
             }, failure: { error in
 				if let responseMessage = error.errorModel?.message {
+					WorkflowController.logoutUser()
 					SCLAlertView().showError("Can't validate session 😔", subTitle: responseMessage)
 					NotificationCenter.default.post(name: heartAttackNotification, object: nil)
 				}
@@ -717,7 +716,6 @@ struct Service {
             })
         } else {
             successHandler(false)
-			NSLog("--------- Validation not success")
         }
     }
     

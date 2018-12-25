@@ -88,5 +88,9 @@ public class WorkflowController {
 	/// Logout the current user by emptying KDefaults
 	class func logoutUser() {
 		try? GlobalVariables().KDefaults.removeAll()
+
+		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+		UIApplication.topViewController()?.present(vc, animated: true)
 	}
 }

@@ -34,10 +34,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let searchController = UISearchController(searchResultsController: nil)
+
         if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
+			let searchController = UISearchController(searchResultsController: nil)
+			let searchControllerBar = searchController.searchBar
+
+			if let textfield = searchControllerBar.value(forKey: "searchField") as? UITextField {
+				textfield.textColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+			}
+
+			if let navigationbar = self.navigationController?.navigationBar {
+				navigationbar.barTintColor = UIColor.blue
+			}
+
+			navigationItem.searchController = searchController
         }
         
         // Validate session
@@ -49,7 +59,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             NotificationCenter.default.post(name: heartAttackNotification, object: nil)
         })
-        
+
         Service.shared.getExplore(withSuccess: { (show) in
             if let categories = show.categories, categories != [] {
                 self.categories = categories

@@ -12,7 +12,7 @@
         <!--Search View Controller-->
         <scene sceneID="7j2-DN-THS">
             <objects>
-                <viewController id="YPG-hU-KDm" customClass="SearchViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YPG-hU-KDm" customClass="SearchViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tCa-ZZ-JOa"/>
                         <viewControllerLayoutGuide type="bottom" id="G54-0o-Ugt"/>
@@ -46,37 +46,70 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserCell" id="May-R3-bcc">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QSn-dn-Cro" userLabel="Title Image">
-                                                    <rect key="frame" x="0.0" y="0.33333333333333215" width="50" height="50"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pU2-aJ-gC5" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QSn-dn-Cro" userLabel="Title Image">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                            <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="25"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </imageView>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="RGx-tK-jpL"/>
-                                                        <constraint firstAttribute="width" constant="50" id="l67-QY-5nA"/>
+                                                        <constraint firstAttribute="width" constant="50" id="1NO-tv-VNf"/>
+                                                        <constraint firstAttribute="trailing" secondItem="QSn-dn-Cro" secondAttribute="trailing" id="Fyq-Go-UXT"/>
+                                                        <constraint firstAttribute="bottom" secondItem="QSn-dn-Cro" secondAttribute="bottom" id="Gk9-02-M8c"/>
+                                                        <constraint firstItem="QSn-dn-Cro" firstAttribute="top" secondItem="pU2-aJ-gC5" secondAttribute="top" id="J2Q-jI-fMv"/>
+                                                        <constraint firstAttribute="height" constant="50" id="LS2-O4-60S"/>
+                                                        <constraint firstItem="QSn-dn-Cro" firstAttribute="leading" secondItem="pU2-aJ-gC5" secondAttribute="leading" id="oXh-P6-EdV"/>
                                                     </constraints>
-                                                </imageView>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                            <real key="value" value="0.40000000000000002"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                            <real key="value" value="7"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGz-kj-4h9" userLabel="Title Label">
-                                                    <rect key="frame" x="58" y="14.666666666666664" width="45" height="21"/>
+                                                    <rect key="frame" x="66" y="23" width="44.666666666666657" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="QSn-dn-Cro" firstAttribute="centerY" secondItem="WGz-kj-4h9" secondAttribute="centerY" id="3Ps-MI-VbC"/>
-                                            <constraint firstItem="WGz-kj-4h9" firstAttribute="leading" secondItem="QSn-dn-Cro" secondAttribute="trailing" constant="8" id="Uzd-Kn-1Ix"/>
-                                            <constraint firstItem="QSn-dn-Cro" firstAttribute="leading" secondItem="May-R3-bcc" secondAttribute="leading" id="m94-gK-xTJ"/>
-                                            <constraint firstItem="QSn-dn-Cro" firstAttribute="centerY" secondItem="May-R3-bcc" secondAttribute="centerY" constant="0.25" id="xuD-hq-g9a"/>
+                                            <constraint firstItem="WGz-kj-4h9" firstAttribute="leading" secondItem="pU2-aJ-gC5" secondAttribute="trailing" constant="8" id="Nji-KG-08J"/>
+                                            <constraint firstItem="pU2-aJ-gC5" firstAttribute="leading" secondItem="May-R3-bcc" secondAttribute="leadingMargin" id="Reo-jS-hfj"/>
+                                            <constraint firstItem="WGz-kj-4h9" firstAttribute="centerY" secondItem="pU2-aJ-gC5" secondAttribute="centerY" id="U85-X0-dY7"/>
+                                            <constraint firstAttribute="bottom" secondItem="pU2-aJ-gC5" secondAttribute="bottom" constant="8" id="VDh-16-aJl"/>
+                                            <constraint firstItem="pU2-aJ-gC5" firstAttribute="top" secondItem="May-R3-bcc" secondAttribute="top" constant="8" id="YeR-Oa-p7z"/>
                                         </constraints>
-                                        <size key="customSize" width="375" height="50"/>
+                                        <size key="customSize" width="375" height="66"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThreadCell" id="dpJ-dG-RCd">
-                                        <rect key="frame" x="0.66666666666666663" y="60" width="374" height="52"/>
+                                        <rect key="frame" x="0.66666666666666663" y="76" width="374" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
@@ -118,7 +151,7 @@
                                         <size key="customSize" width="374" height="52"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowCell" id="GsM-v7-tkH">
-                                        <rect key="frame" x="0.66666666666666663" y="122" width="374" height="120"/>
+                                        <rect key="frame" x="0.66666666666666663" y="138" width="374" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="120"/>
