@@ -6,19 +6,19 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import KDatabaseKit
-import KCommonKit
-import UIKit
+//import KDatabaseKit
+//import KCommonKit
+//import UIKit
 //import Bolts
 
-enum SearchScope: Int {
-    case AllAnime = 0
-    case MyLibrary
-    case Users
-    case Forum
-}
+//enum SearchScope: Int {
+//    case AllAnime = 0
+//    case MyLibrary
+//    case Users
+//    case Forum
+//}
 
-class SearchViewController: UIViewController {
+//class SearchViewController: UIViewController {
 //
 //    @IBOutlet weak var searchBar: UISearchBar!
 //    @IBOutlet weak var collectionView: UICollectionView!
@@ -320,4 +320,4 @@ class SearchViewController: UIViewController {
 //    var transitionScrollView: UIScrollView? {
 //        return collectionView
 //    }
-}
+//}

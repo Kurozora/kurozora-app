@@ -30,9 +30,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
             let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
             headerCell.backgroundImageView.kf.indicatorType = .activity
-            headerCell.backgroundImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            headerCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         } else {
-            headerCell.backgroundImageView.image = UIImage(named: "placeholder_banner")
+            headerCell.backgroundImageView.image = #imageLiteral(resourceName: "placeholder_banner")
         }
         
         if let title = banners?[indexPathRow]["title"].stringValue {
@@ -47,8 +47,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let bannerId = banners?[indexPath.item]["id"].intValue {
-            self.performSegue(withIdentifier: "ShowDetailsSegue", sender: bannerId)
+        if let bannerID = banners?[indexPath.item]["id"].intValue {
+            self.performSegue(withIdentifier: "ShowDetailsSegue", sender: bannerID)
         }
     }
 

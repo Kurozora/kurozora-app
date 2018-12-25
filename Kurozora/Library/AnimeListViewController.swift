@@ -59,7 +59,7 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
-				.isScrollAllowed(false)
+				.isScrollAllowed(true)
         }
     }
 

@@ -380,6 +380,32 @@ struct Service {
 		})
 	}
 
+	/// Search for a show
+	func search(for show: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+		guard let show = show else { return }
+
+		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("anime/search")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.parameters = [
+			"query": show
+		]
+		request.perform(withSuccess: { search in
+			if let success = search.success {
+				if success {
+					successHandler(search.results)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
+			}
+
+			print("Received search error: \(error)")
+		})
+	}
+
 // MARK: - Anime Seasons
 // All show seasons related endpoints
 	/// Get episode details for a show season

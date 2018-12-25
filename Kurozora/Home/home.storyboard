@@ -12,7 +12,7 @@
         <!--Home View Controller-->
         <scene sceneID="WMb-ui-rbu">
             <objects>
-                <viewController storyboardIdentifier="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gr8-aP-Yzk" customClass="HomeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Home" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gr8-aP-Yzk" customClass="HomeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H7b-8m-kdj"/>
                         <viewControllerLayoutGuide type="bottom" id="5IZ-dA-mND"/>
@@ -412,7 +412,6 @@
                         <outlet property="collectionView" destination="On6-y0-nSX" id="sdt-EC-qS0"/>
                         <outlet property="tableHeaderView" destination="Vx9-uX-Znj" id="Jlb-DJ-QnP"/>
                         <outlet property="tableView" destination="SDT-yn-mch" id="oER-Qz-PFn"/>
-                        <segue destination="8H2-pT-d2L" kind="presentation" identifier="ShowDetailsSegue" id="cGN-sh-Yec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJ1-Wx-lP4" userLabel="First Responder" sceneMemberID="firstResponder"/>

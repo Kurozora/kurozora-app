@@ -18,6 +18,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var tableHeaderView: UIView!
 
+	// Search bar controller
+	var searchViewController: SearchViewController?
+	let placeholderArray = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Palying Game", "Vampires"]
+
 	// Header collection variables
 	var timer: Timer?
 	var onceOnly = false
@@ -34,17 +38,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
+		searchViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchViewController
 
         if #available(iOS 11.0, *) {
-			let searchController = UISearchController(searchResultsController: nil)
+			let searchController = UISearchController(searchResultsController: searchViewController)
+			searchController.delegate = self
+			searchController.searchResultsUpdater = searchViewController
+
 			let searchControllerBar = searchController.searchBar
+			searchControllerBar.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			searchControllerBar.placeholder = "I'm searching for..."
+			startTimer(for: searchControllerBar)
+			searchControllerBar.delegate = searchViewController
 
 			if let textfield = searchControllerBar.value(forKey: "searchField") as? UITextField {
 				textfield.textColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-			}
-
-			if let navigationbar = self.navigationController?.navigationBar {
-				navigationbar.barTintColor = UIColor.blue
 			}
 
 			navigationItem.searchController = searchController
@@ -96,25 +105,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidAppear(animated)
         tableView.reloadData()
     }
-    
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        coordinator.animate(alongsideTransition: nil) { _ in
-//            self.tableView.beginUpdates()
-//            if UIDevice.isLandscape() {
-//                if UIDevice.isPad() {
-//                    self.tableView.tableHeaderView?.frame = CGRect(origin: .zero, size: CGSize(width: self.view.frame.width, height: self.view.frame.height / 2.5))
-//                }
-//            } else {
-//                if UIDevice.isPad() {
-//                    self.tableView.tableHeaderView?.frame = CGRect(origin: .zero, size: CGSize(width: self.view.frame.width, height: 264))
-//                } else {
-//                    self.tableView.tableHeaderView?.frame = CGRect(origin: .zero, size: CGSize(width: self.view.frame.width, height: 144))
-//                }
-//            }
-//            self.tableView.endUpdates()
-//        }
-//    }
 
     // MARK: - Functions
 	func showDetailFor(_ showID: Int) {
@@ -124,6 +114,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.present(showTabBarController!, animated: true, completion: nil)
     }
+
+	@objc func updateSearchPlaceholder(_ timer: Timer) {
+		if let searchControllerBar = timer.userInfo as? UISearchBar {
+			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
+				searchControllerBar.placeholder = self.placeholderArray.randomElement()
+			}, completion: nil)
+		}
+	}
+
+	func startTimer(for searchControllerBar: UISearchBar) {
+		if timer == nil {
+			timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateSearchPlaceholder), userInfo: searchControllerBar, repeats: true)
+		}
+	}
+
+	func stopTimer() {
+		if timer != nil {
+			timer?.invalidate()
+			timer = nil
+		}
+	}
 
     // MARK: - Table view
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -215,4 +226,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+}
+
+extension HomeViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.stopTimer()
+			})
+		}
+	}
+
+	func willDismissSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.startTimer(for: searchController.searchBar)
+			})
+		}
+	}
 }

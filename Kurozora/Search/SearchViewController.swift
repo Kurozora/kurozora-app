@@ -6,82 +6,70 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import KDatabaseKit
 import KCommonKit
-import UIKit
-//import Bolts
+import SwiftyJSON
+import Kingfisher
 
 enum SearchScope: Int {
-    case AllAnime = 0
-    case MyLibrary
-    case Users
-    case Forum
+    case anime = 0
+    case myLibrary
+	case forum
+    case users
 }
 
-class SearchViewController: UIViewController {
-//
-//    @IBOutlet weak var searchBar: UISearchBar!
-//    @IBOutlet weak var collectionView: UICollectionView!
-//
+class SearchViewController: UIViewController, UISearchResultsUpdating {
+	@IBOutlet weak var collectionView: UICollectionView!
+
+	var results: [JSON]?
 //    var loadingView: LoaderView!
-//    var animator: ZFModalTransitionAnimator!
-//    var dataSource: [PFObject] = [] {
-//        didSet {
-//            collectionView.reloadData()
-//        }
-//    }
-//
-//    var emptyDataSource: [[AnyObject]] = [[],[],[],[]]
-//
-//    var currentOperation = Operation()
-//    var initialSearchScope: SearchScope!
-//
+//    var initialSearchScope: SearchScope?
+
 //    func initWithSearchScope(searchScope: SearchScope) {
 //        initialSearchScope = searchScope
 //    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        AnimeCell.registerNibFor(collectionView: collectionView)
-//
-//        guard let collectionView = collectionView,
-//            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-//                return
-//        }
-//        layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
-//
-//        loadingView = LoaderView(parentView: view)
-//
-//        searchBar.placeholder = "Enter your search"
-//        searchBar.becomeFirstResponder()
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(updateETACells), name: NSNotification.Name(rawValue: LibraryUpdatedNotification), object: nil)
-//
-//        var allBrowseTypes = BrowseType.allItems()
-//        allBrowseTypes.append(BrowseType.Filtering.rawValue)
-//        emptyDataSource[0] = allBrowseTypes as [AnyObject]
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        view.endEditing(true)
-//    }
-//
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: true)
-//    }
-//
-//    @objc func updateETACells() {
-//        let indexPaths = collectionView.indexPathsForVisibleItems
-//        collectionView.reloadItems(at: indexPaths)
-//    }
-//
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.tabBarController?.tabBar.backgroundColor = .red
+	}
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+		collectionView.delegate = self
+		collectionView.dataSource = self
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+
+	// MARK: - Functions
+	fileprivate func search(for text: String) {
+		Service.shared.search(for: text) { (results) in
+			DispatchQueue.main.async {
+				self.results = results
+				self.collectionView.reloadData()
+			}
+		}
+	}
+
+	// MARK: - UISearchResultsUpdating
+	func updateSearchResults(for searchController: UISearchController) {
+	}
+
+	// MARK: - Prepare for segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "ShowDetailsSegue" {
+			// Show detail for show cell
+			if let sender = sender as? Int {
+				let vc = segue.destination as! ShowTabBarController
+				vc.showID = sender
+			}
+		}
+	}
+
 //    func fetchDataWithQuery(text: String, searchScope: SearchScope) {
 //
 //        if searchScope == .MyLibrary {
@@ -172,152 +160,68 @@ class SearchViewController: UIViewController {
 //
 //        currentOperation = newOperation
 //    }
-//
-//    func dispatch_after_delay(delay: TimeInterval, queue: dispatch_queue_t, block: dispatch_block_t) {
-//        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-//        dispatch_after(time, queue, block)
-//    }
-//}
-//
-//extension SearchViewController: UICollectionViewDataSource {
-//
-//    func objectAtIndex(indexPath: IndexPath) -> AnyObject {
-//        return dataSource.count > 0 ? dataSource[indexPath.row] : emptyDataSource[searchBar.selectedScopeButtonIndex][indexPath.row]
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dataSource.count > 0 ? dataSource.count : emptyDataSource[searchBar.selectedScopeButtonIndex].count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//        let object = objectAtIndex(indexPath: indexPath)
-//
-//        if let anime = object as? Anime {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnimeCell.id, for: indexPath) as! AnimeCell
-//            cell.configureWithAnime(anime)
-//            return cell
-//
-//        } else if let profile = object as? User {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! BasicCollectionCell
-//
-//            if let avatarFile = profile.avatarThumb {
-//                cell.titleimageView.setImageWithPFFile(avatarFile)
-//            }
-//            cell.titleLabel.text = profile.kurozoraUsername
-//            cell.layoutIfNeeded()
-//            return cell
-//
-//        } else if let thread = object as? Thread {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreadCell", for: indexPath) as! BasicCollectionCell
-//            cell.titleLabel.text = thread.title
-//            cell.layoutIfNeeded()
-//            return cell
-//        } else if let string = object as? String {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreadCell", for: indexPath) as! BasicCollectionCell
-//            cell.titleLabel.text = string
-//            cell.layoutIfNeeded()
-//            return cell
-//        }
-//
-//        return UICollectionViewCell()
-//    }
-//}
-//
-//extension SearchViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        let object = objectAtIndex(indexPath: indexPath)
-//
-//        if let anime = object as? Anime {
-//            self.animator = presentAnimeModal(anime: anime)
-//        } else if let user = object as? User {
-//            let profileController = KAnimeKit.profileViewController()
-//            profileController.initWithUser(user: user)
-//            navigationController?.pushViewController(profileController, animated: true)
-//        } else if let thread = object as? Thread {
-//            let threadController = KAnimeKit.customThreadViewController()
-//
-//            if let episode = thread.episode, let anime = thread.anime {
-//                threadController.initWithEpisode(episode, anime: anime)
-//            } else {
-//                threadController.initWithThread(thread)
-//            }
-//
-//            if InAppController.hasAnyPro() == nil {
-//                threadController.interstitialPresentationPolicy = .Automatic
-//            }
-//            navigationController?.pushViewController(threadController, animated: true)
-//        } else if let string = object as? String {
-//            guard let browse = UIStoryboard(name: "Browse", bundle: nil).instantiateViewController(withIdentifier: "Browse") as? BrowseViewController,
-//                let browseType = BrowseType(rawValue: string) else {
-//                    return
-//            }
-//            browse.currentBrowseType = browseType
-//            navigationController?.pushViewController(browse, animated: true)
-//        }
-//    }
-//}
-//
-//extension SearchViewController: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let object = objectAtIndex(indexPath: indexPath)
-//
-//        if let _ = object as? Anime {
-//            return CGSize(width: view.bounds.size.width, height: 132)
-//        } else if let _ = object as? User {
-//            return CGSize(width: view.bounds.size.width, height: 44)
-//        } else if let _ = object as? Thread {
-//            return CGSize(width: view.bounds.size.width, height: 44)
-//        } else if let _ = object as? String {
-//            return CGSize(width: view.bounds.size.width, height: 44)
-//        }
-//
-//        return CGSize.zero
-//    }
-//}
-//
-//extension SearchViewController: UISearchBarDelegate {
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        startNewFetch()
-//        view.endEditing(true)
-//        searchBar.enableCancelButton()
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        startNewFetch()
-//    }
-//
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-//        startNewFetch()
-//        collectionView.reloadData()
-//    }
-//
-//    func startNewFetch() {
-//
-//        guard let query = searchBar.text,
-//            let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex), query.count > 0 else {
-//                return
-//        }
-//
-//        fetchDataWithQuery(text: query, searchScope: searchScope)
-//    }
-//}
-//
-//extension SearchViewController: UINavigationBarDelegate {
-//    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-//        return UIBarPosition.topAttached
-//    }
-//}
-//
-//extension SearchViewController: ModalTransitionScrollable {
-//    var transitionScrollView: UIScrollView? {
-//        return collectionView
-//    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+	// MARK: - UISearchBarDelegate
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let text = searchBar.text else { return }
+		search(for: text)
+	}
+}
+
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if let resultsCount = results?.count, resultsCount != 0 {
+        	return resultsCount
+		}
+		return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let searchShowCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! SearchShowCell
+
+		if let posterThumbnail = results?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
+			let posterThumbnailUrl = URL(string: posterThumbnail)
+			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+			searchShowCell.posterImageView.kf.indicatorType = .activity
+			searchShowCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			searchShowCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+		}
+
+		if let title = results?[indexPath.row]["title"].stringValue, title != "" {
+			searchShowCell.titleLabel.text = title
+		} else {
+			searchShowCell.titleLabel.text = ""
+		}
+
+		if let airDate = results?[indexPath.row]["air_date"].stringValue, airDate != "" {
+			searchShowCell.airDateLabel.text = airDate
+		} else {
+			searchShowCell.airDateLabel.text = "Dec, 25 2018"
+		}
+
+		if let averageRating = results?[indexPath.row]["average_rating"].intValue, averageRating != 0 {
+			searchShowCell.scoreLabel.text = "\(averageRating)"
+		} else {
+			searchShowCell.scoreLabel.text = "0"
+		}
+
+		if let status = results?[indexPath.row]["status"].stringValue, status != "" {
+			searchShowCell.statusLabel.text = status
+		} else {
+			searchShowCell.statusLabel.text = "Currently Airing"
+		}
+
+		return searchShowCell
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let showID = results?[indexPath.item]["id"].intValue {
+			self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
+		}
+    }
 }
