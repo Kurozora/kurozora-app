@@ -13,12 +13,10 @@ class Privacy: JSONDecodable {
     let success: Bool?
     let text: String?
     let lastUpdate: String?
-    let message: String?
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
         text = json["privacy_policy"]["text"].stringValue
         lastUpdate = json["privacy_policy"]["last_update"].stringValue
-        message = json["error_message"].stringValue
     }
 }

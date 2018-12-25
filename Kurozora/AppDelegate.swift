@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import RevealingSplashView
 import Kingfisher
 import SCLAlertView
+import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 
@@ -21,8 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
+//		WorkflowController.logoutUser()
 		WorkflowController.pusherInit()
-        
+
         // Max disk cache size
         ImageCache.default.maxDiskCacheSize = 60 * 1024 * 1024
         
@@ -45,9 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-        
-//        WorkflowController.logoutUser()
-        
+
         // Main view controller
         window = UIWindow()
         window?.makeKeyAndVisible()

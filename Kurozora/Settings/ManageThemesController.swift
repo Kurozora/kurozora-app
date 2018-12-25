@@ -26,9 +26,7 @@ class ManageThemesController: UIViewController, UICollectionViewDelegate, UIColl
             DispatchQueue.main.async() {
                 self.collectionView.reloadData()
             }
-        }) { (errorMsg) in
-            SCLAlertView().showError("Themes", subTitle: errorMsg)
-        }
+        })
     }
     
     override func viewDidLoad() {

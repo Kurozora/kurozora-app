@@ -7,20 +7,21 @@
 //
 
 import KCommonKit
+import Kingfisher
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
-import Kingfisher
 
 class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-    var canFadeImages = true
     var laidOutSubviews = false
     
     var loadingView:LoaderView!
-    var seasonId:Int?
-    var showId:Int?
+
+    var seasonID:Int?
+    var showID:Int?
     var episodes:[JSON]?
     var episodesCount:Int?
+	var watched: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +36,10 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
                 .shouldDisplay(true)
                 .shouldFadeIn(true)
                 .isTouchAllowed(true)
-                .isScrollAllowed(false)
+                .isScrollAllowed(true)
         }
-        if #available(iOS 11.0, *) {
-            collectionView?.contentInsetAdjustmentBehavior = .never
-        }
-        showId = KCommonKit.shared.showId
+
+		showID = KCommonKit.shared.showID
         fetchEpisodes()
     }
     
@@ -93,21 +92,18 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
     
     func fetchEpisodes() {
         loadingView.startAnimating()
-        Service.shared.getEpisodesFor(showId, seasonId, withSuccess: { (episodes) in
+		Service.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
             if let episodes = episodes {
                 self.episodesCount = episodes.episodeCount
                 self.episodes = episodes.episodes
             }
             self.collectionView?.reloadData()
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting episodes", subTitle: errorMessage)
-        }
+        })
         collectionView?.animateFadeIn()
         loadingView.stopAnimating()
     }
     
-    //    // MARK: - IBActions
-    //
+//	 MARK: - IBActions
     //    @IBAction func goToPressed(sender: UIBarButtonItem) {
     //
     //        let dataSource = [["First Episode", "Next Episode", "Last Episode"]]
@@ -140,65 +136,51 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
         } else {
             episodeCell.episodeTitleLabel.text = "Untitled"
         }
-        
+
         if let episodeFirstAired = episodes?[indexPath.row]["first_aired"].stringValue, episodeFirstAired != "" {
             episodeCell.episodeFirstAiredLabel.text = episodeFirstAired
         } else {
             episodeCell.episodeFirstAiredLabel.text = ""
         }
-        
+
+		if let episodeWatched = episodes?[indexPath.row]["user_details"]["watched"].boolValue {
+			if episodeWatched {
+				episodeCell.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			} else {
+				episodeCell.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+			}
+		}
+
+		episodeCell.delegate = self
+
         return episodeCell
     }
 }
 
-//extension EpisodesViewController: UICollectionViewDelegate {
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let episode = dataSource[indexPath.row]
-//        let threadController = KAnimeKit.customThreadViewController()
-//        threadController.initWithEpisode(episode, anime: anime)
-//        if InAppController.hasAnyPro() == nil {
-//            threadController.interstitialPresentationPolicy = .Automatic
-//        }
-//
-//        if let tabBar = tabBarController as? CustomTabBarController {
-//            tabBar.disableDragDismiss()
-//        }
-//
-//        navigationController?.pushViewController(threadController, animated: true)
-//    }
-//}
-//
-//extension EpisodesViewController: EpisodeCellDelegate {
-//    func episodeCellWatchedPressed(cell: EpisodeCell) {
-//        if let indexPath = collectionView.indexPath(for: cell),
-//            let progress = anime.progress {
-//
-//            let nextEpisode = indexPath.row + 1
-//            if progress.watchedEpisodes == nextEpisode {
-//                progress.watchedEpisodes = nextEpisode - 1
-//            } else {
-//                progress.watchedEpisodes = nextEpisode
-//            }
-//
-//            progress.updatedEpisodes(anime.episodes)
-//
-//            if progress.myAnimeListList() == .Completed {
-//                RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
-//            }
-//
-//            progress.saveInBackground()
-//            LibrarySyncController.updateAnime(progress)
-//
-//            NotificationCenter.default.postNotificationName(LibraryUpdatedNotification, object: nil)
-//
-//            canFadeImages = false
-//            let indexPaths = collectionView.indexPathsForVisibleItems()
-//            collectionView.reloadItemsAtIndexPaths(indexPaths)
-//            canFadeImages = true
-//        }
-//
-//    }
+extension EpisodesCollectionViewController: EpisodeCellDelegate {
+    func episodeCellWatchedPressed(cell: EpisodeCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
+			guard let watched = episodes?[indexPath.row]["user_details"]["watched"].boolValue else { return }
+			guard let episodeID = episodes?[indexPath.row]["id"].intValue else { return }
+
+			if watched {
+				self.watched = 0
+			} else {
+                self.watched = 1
+			}
+
+			Service.shared.mark(asWatched: self.watched, forEpisode: episodeID) { (success) in
+				if success {
+					if self.watched == 1 {
+						cell.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+					} else {
+						cell.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+					}
+				}
+			}
+        }
+    }
+
 //    func episodeCellMorePressed(cell: EpisodeCell) {
 //        let indexPath = collectionView.indexPath(for: cell)!
 //        let episode = dataSource[indexPath.row]
@@ -220,7 +202,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 //        self.present(activityVC, animated: true, completion: nil)
 //
 //    }
-//}
+}
 //
 //extension EpisodesViewController: DropDownListDelegate {
 //    func selectedAction(sender trigger: UIView, action: String, indexPath: IndexPath) {

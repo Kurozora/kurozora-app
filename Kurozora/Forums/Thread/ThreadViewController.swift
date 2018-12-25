@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import SCLAlertView
 import RichTextView
+import Kingfisher
 
 class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	// Table view
@@ -21,13 +22,16 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
 
-	// Reply view
-	@IBOutlet weak var commentFieldView: UITextView!
-
 	var forumThread: JSON?
 	var thread: ForumThread?
-	var replyId: Int?
+	var replyID: Int?
 	var threadInformation: String?
+
+	// Variables for replies request
+	var replies: [JSON]?
+	var totalPages: Int?
+	var pageNumber = 0
+	var order = "top"
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -40,16 +44,18 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let threadId = forumThread?["id"].intValue, threadId != 0 {
-			Service.shared.getForumThread(forThread: threadId, withSuccess: { (thread) in
+		if let threadID = forumThread?["id"].intValue, threadID != 0 {
+			Service.shared.getDetails(forThread: threadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
 					self.thread = thread
+					self.totalPages = thread?.pages
 					self.updateDetailsWithThread(self.thread)
 					self.tableView.reloadData()
 				}
-			}) { (errorMessage) in
-				SCLAlertView().showError("Error getting this thread", subTitle: errorMessage)
-			}
+			})
+
+			getThreadReplies(for: threadID)
+			pageNumber += 1
 		}
 
 		// Register comment cells
@@ -80,8 +86,8 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	// MARK: - Table view data source
 	func numberOfSections(in tableView: UITableView) -> Int {
-		if let threadRepliesCount = forumThread?.count, threadRepliesCount != 0 {
-			return threadRepliesCount
+		if let repliesCount = replies?.count, repliesCount != 0 {
+			return repliesCount
 		}
 		return 0
 	}
@@ -90,12 +96,47 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		return 1
 	}
 
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let repliesCount = replies?.count, indexPath.section == repliesCount - 1 { // last cell
+			if let totalPages = totalPages, totalPages > pageNumber { // more items to fetch
+				// increment `fromIndex` by 20 before server call
+				pageNumber += 1
+				if let threadID = forumThread?["id"].intValue {
+					getThreadReplies(for: threadID)
+				}
+			}
+		}
+	}
+
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell:CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
+		let commentCell: CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
 
-		// Configure the cell...
+		if let avatar = replies?[indexPath.section]["user"]["avatar"].stringValue, avatar != "" {
+			let avatar = URL(string: avatar)
+			let resource = ImageResource(downloadURL: avatar!)
+			commentCell.avatar.kf.indicatorType = .activity
+			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
+		}
 
-		return cell
+		if let username = replies?[indexPath.section]["user"]["username"].stringValue, username != "" {
+			commentCell.username?.text = username
+		}
+
+		if let dateTime = replies?[indexPath.section]["posted_at"].stringValue, dateTime != "" {
+			commentCell.dateTime.text = "· \(Date.timeAgo(dateTime))"
+		}
+
+		if let comment = replies?[indexPath.section]["content"].stringValue, comment != "" {
+			commentCell.textContent.text = comment
+		}
+
+		if let score = replies?[indexPath.section]["score"].intValue {
+			commentCell.heartButton.setTitle(" \(score)", for: .normal)
+		}
+
+		return commentCell
 	}
 
 	// MARK: - Functions
@@ -117,9 +158,21 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 	}
 
+	// Get thread replies
+	func getThreadReplies(for threadID: Int) {
+		Service.shared.getReplies(forThread: threadID, order: order, page: pageNumber) { (replies) in
+			if let repliesCount = replies?.count, repliesCount != 0 {
+				DispatchQueue.main.async {
+					self.replies = replies
+					self.tableView.reloadData()
+				}
+			}
+		}
+	}
+
 	// Vote for current thread
-	func voteFor(_ threadId: Int?, vote: Int?) {
-		Service.shared.voteFor(thread: threadId, vote: vote, withSuccess: { (success) in
+	func voteFor(_ threadID: Int?, vote: Int?) {
+		Service.shared.vote(forThread: threadID, vote: vote, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					if vote == 1 {
@@ -132,17 +185,6 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 				}
 			}
 		})
-	}
-
-	// Reply with a comment
-	func reply(with comment: String?, for thread: Int?) {
-		Service.shared.postReply(withComment: comment, forThread: thread, withSuccess: { (reply) in
-			DispatchQueue.main.async {
-				self.replyId = reply
-			}
-		}) { (errorMessage) in
-			SCLAlertView().showError("Error posting your comment :(", subTitle: errorMessage)
-		}
 	}
 
 	// MARK: - IBActions
@@ -171,7 +213,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBAction func replyButton(_ sender: UIButton) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "CommentEditor") as? KCommentEditorView
-		vc?.data = forumThread
+		vc?.forumThread = forumThread
 
 		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
 		if #available(iOS 11.0, *) {
@@ -183,13 +225,6 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	@IBAction func shareThreadButton(_ sender: UIButton) {
 		SCLAlertView().showInfo("This is a test button. No touch only look.")
-	}
-
-	@IBAction func sendReplyButton(_ sender: UIButton) {
-		guard let threadId = forumThread?["id"].intValue else { return }
-		let comment = commentFieldView.text
-
-		reply(with: comment, for: threadId)
 	}
 
 

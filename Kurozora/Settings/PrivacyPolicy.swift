@@ -27,8 +27,6 @@ class LegalViewController : UIViewController {
             } else {
                 self.lastUpdatedLabel.text = ""
             }
-        }) { (errorMsg) in
-            SCLAlertView().showError("Error retrieving page", subTitle: errorMsg)
-        }
+        })
     }
 }

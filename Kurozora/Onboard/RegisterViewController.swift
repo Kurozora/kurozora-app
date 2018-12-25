@@ -94,23 +94,24 @@ class RegisterViewController: UIViewController {
                     let errorMessage = swiftyJsonVar["error_message"].stringValue
 
                     if responseSuccess.boolValue {
-                        let alertController = UIAlertController(title: "Hooray!", message: "Account created successfully! Please check your email for confirmation!", preferredStyle: UIAlertController.Style.alert)
-                        alertController.addAction(UIAlertAction(title: "Ok 😊", style: .default, handler: { action in
-                            
-                            self.dismiss(animated: true, completion: nil)
-                        }))
-
-                        self.present(alertController, animated: true, completion: nil)
+                        let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+						alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
+						alertController.addButton("Done", action: {
+							self.dismiss(animated: true, completion: nil)
+						})
                     }else{
+						self.view.endEditing(true)
                         SCLAlertView().showError("Error registering", subTitle: errorMessage)
                     }
                 }
                 case .failure:
+					self.view.endEditing(true)
                     SCLAlertView().showError("Error registering", subTitle: "There was an error while creating your account. If this error persists, check out our Twitter account @KurozoraApp for more information!" )
                 }
             }
-            case .failure/*(let encodingError)*/: break
-//                    NSLog("error:\(encodingError)")
+            case .failure:
+				self.view.endEditing(true)
+				 SCLAlertView().showError("Error registering", subTitle: "There was an error while creating your account. If this error persists, check out our Twitter account @KurozoraApp for more information!" )
             }
         }
     }

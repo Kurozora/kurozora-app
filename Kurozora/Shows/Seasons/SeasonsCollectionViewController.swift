@@ -7,18 +7,18 @@
 //
 
 import KCommonKit
+import Kingfisher
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
-import Kingfisher
 
 class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     var canFadeImages = true
     var laidOutSubviews = false
     
     var loadingView:LoaderView!
-    var showId:Int?
-    var seasonId:Int?
+    var showID:Int?
+    var seasonID:Int?
     var seasons:[JSON]?
 
     override func viewDidLoad() {
@@ -35,8 +35,12 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
                 .isTouchAllowed(true)
                 .isScrollAllowed(false)
         }
-		
-        showId = KCommonKit.shared.showId
+
+//		if #available(iOS 11.0, *) {
+//			collectionView?.contentInsetAdjustmentBehavior = .never
+//		}
+
+		showID = KCommonKit.shared.showID
         fetchSeasons()
     }
 
@@ -86,14 +90,13 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
     
     func fetchSeasons() {
         loadingView.startAnimating()
-        Service.shared.getSeasonFor(showId, withSuccess: { (seasons) in
+        Service.shared.getSeasonFor(showID, withSuccess: { (seasons) in
             if let seasons = seasons {
                 self.seasons = seasons
             }
             self.collectionView?.reloadData()
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting seasons", subTitle: errorMessage)
-        }
+        })
+		
         collectionView?.animateFadeIn()
         loadingView.stopAnimating()
     }
@@ -155,74 +158,7 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EpisodeSegue" {
             let vc = segue.destination as! EpisodesCollectionViewController
-            vc.seasonId = sender as? Int
+            vc.seasonID = sender as? Int
         }
     }
 }
-
-    //extension EpisodesViewController: EpisodeCellDelegate {
-    //    func episodeCellWatchedPressed(cell: EpisodeCell) {
-    //        if let indexPath = collectionView.indexPath(for: cell),
-    //            let progress = anime.progress {
-    //
-    //            let nextEpisode = indexPath.row + 1
-    //            if progress.watchedEpisodes == nextEpisode {
-    //                progress.watchedEpisodes = nextEpisode - 1
-    //            } else {
-    //                progress.watchedEpisodes = nextEpisode
-    //            }
-    //
-    //            progress.updatedEpisodes(anime.episodes)
-    //
-    //            if progress.myAnimeListList() == .Completed {
-    //                RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
-    //            }
-    //
-    //            progress.saveInBackground()
-    //            LibrarySyncController.updateAnime(progress)
-    //
-    //            NotificationCenter.default.postNotificationName(LibraryUpdatedNotification, object: nil)
-    //
-    //            canFadeImages = false
-    //            let indexPaths = collectionView.indexPathsForVisibleItems()
-    //            collectionView.reloadItemsAtIndexPaths(indexPaths)
-    //            canFadeImages = true
-    //        }
-    //
-    //    }
-    //
-    //        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-    //        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print];
-    //        self.present(activityVC, animated: true, completion: nil)
-    //
-    //    }
-    //}
-    //
-    //extension EpisodesViewController: DropDownListDelegate {
-    //    func selectedAction(sender trigger: UIView, action: String, indexPath: IndexPath) {
-    //        if dataSource.isEmpty {
-    //            return
-    //        }
-    //
-    //        switch indexPath.row {
-    //        case 0:
-    //            // Go to top
-    //            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
-    //        case 1:
-    //            // Go to next episode
-    //            if let nextEpisode = anime.nextEpisode, nextEpisode > 0 {
-    //                self.collectionView.scrollToItem(at: IndexPath(row: nextEpisode - 1, section: 0), at: UICollectionViewScrollPosition.centeredVertically, animated: true)
-    //            }
-    //        case 2:
-    //            // Go to bottom
-    //            self.collectionView.scrollToItem(at: IndexPath(row: dataSource.count - 1, section: 0), at: UICollectionViewScrollPosition.bottom, animated: true)
-    //        default:
-    //            break
-    //        }
-    //    }
-    //
-    //    func dropDownDidDismissed(selectedAction: Bool) {
-    //
-    //    }
-    //}
-//}

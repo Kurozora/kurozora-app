@@ -17,9 +17,13 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 	private let refreshControl = UIRefreshControl()
 
     var sectionTitle: String?
-	var sectionId: Int?
+	var sectionID: Int?
 	var forumThreads: [JSON]?
 	var threadOrder: String?
+
+	// Pagination
+	var totalPages: Int?
+	var pageNumber: Int?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -55,7 +59,7 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
-				.isScrollAllowed(false)
+				.isScrollAllowed(true)
         }
 
 		tableView.rowHeight = UITableView.automaticDimension
@@ -71,58 +75,57 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 	// MARK: - Functions
 	func fetchThreads() {
 		guard let sectionTitle = sectionTitle else { return }
-		guard let sectionId = sectionId else { return }
+		guard let sectionID = sectionID else { return }
 		if let _ = threadOrder { } else { threadOrder = "top" }
 
-		Service.shared.getForumThreads(forSection: sectionId, order: threadOrder, page: 0, withSuccess: { (threads) in
+		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: 0, withSuccess: { (threads) in
 			DispatchQueue.main.async {
 				self.forumThreads = threads
 				self.tableView.reloadData()
 				self.refreshControl.endRefreshing()
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
 			}
-		}) { (errorMessage) in
-			self.refreshControl.endRefreshing()
-			SCLAlertView().showError("Error getting threads", subTitle: errorMessage)
-		}
+		})
+
+		self.refreshControl.endRefreshing()
 	}
 
 	// Vote function
-	func voteFor(_ threadId: Int?, vote: Int?, threadCell: ForumCell?) {
-		Service.shared.voteFor(thread: threadId, vote: vote, withSuccess: { (success) in
+	func voteFor(_ threadId: Int?, vote: Int?, forumCell: ForumCell?) {
+		Service.shared.vote(forThread: threadId, vote: vote, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					if vote == 1 {
-						threadCell?.upVoteButton.setTitleColor(UIColor(red: 86/255, green: 255/255, blue: 67/255, alpha: 1), for: .normal)
-						threadCell?.downVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
+						forumCell?.upVoteButton.setTitleColor(UIColor(red: 86/255, green: 255/255, blue: 67/255, alpha: 1), for: .normal)
+						forumCell?.downVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
 					} else if vote == 0 {
-						threadCell?.downVoteButton.setTitleColor(UIColor(red: 255/255, green: 77/255, blue: 67/255, alpha: 1), for: .normal)
-						threadCell?.upVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
+						forumCell?.downVoteButton.setTitleColor(UIColor(red: 255/255, green: 77/255, blue: 67/255, alpha: 1), for: .normal)
+						forumCell?.upVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
 					}
 				}
 			}
 		})
 	}
 
-	func actionList(withShare threadCell: ForumCell?, _ thread: JSON?) {
+	func actionList(forCell forumCell: ForumCell?, _ forumThread: JSON?) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Upvote, downvote and reply actions
-		if let threadId = thread?["id"].intValue, threadId != 0 {
+		if let threadID = forumThread?["id"].intValue, threadID != 0 {
 			action.addAction(UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
-				self.voteFor(threadId, vote: 1, threadCell: threadCell)
+				self.voteFor(threadID, vote: 1, forumCell: forumCell)
 			}))
 			action.addAction(UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
-				self.voteFor(threadId, vote: 0, threadCell: threadCell)
+				self.voteFor(threadID, vote: 0, forumCell: forumCell)
 			}))
 			action.addAction(UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
 			}))
 		}
 
 		// Username action
-		if let username = thread?["poster_username"].stringValue, username != "" {
+		if let username = forumThread?["poster_username"].stringValue, username != "" {
 			action.addAction(UIAlertAction.init(title: username, style: .default, handler: { (_) in
-				if let posterId = thread?["poster_user_id"].intValue, posterId != 0 {
+				if let posterId = forumThread?["poster_user_id"].intValue, posterId != 0 {
 					let storyboard = UIStoryboard(name: "profile", bundle: nil)
 					let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
 					vc?.otherUserID = posterId
@@ -135,8 +138,8 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 
 		// Sahre thread action
 		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			if let threadCell = threadCell {
-				let activityVC = UIActivityViewController(activityItems: [threadCell], applicationActivities: [])
+			if let forumCell = forumCell {
+				let activityVC = UIActivityViewController(activityItems: [forumCell], applicationActivities: [])
 
 				if let popoverController = activityVC.popoverPresentationController {
 					popoverController.sourceView = self.view
@@ -176,7 +179,7 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			if (self.tableView.cellForRow(at: indexPath) as? ForumCell) != nil {
 				let threadCell = longPress.view as? ForumCell
 				let thread = forumThreads?[indexPath.row]
-				actionList(withShare: threadCell, thread)
+				actionList(forCell: threadCell, thread)
 			}
 		}
 	}
@@ -217,6 +220,8 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			threadCell.isUserInteractionEnabled = true
 		}
 
+		threadCell.forumCellDelegate = self
+
         return threadCell
     }
 
@@ -231,6 +236,29 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			let vc = segue.destination as! ThreadViewController
 			vc.hidesBottomBarWhenPushed = true
 			vc.forumThread = sender as! JSON?
+		}
+	}
+}
+
+extension ForumsChildViewController: ForumCellDelegate {
+	func moreButtonPressed(cell: ForumCell) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			guard let thread = forumThreads?[indexPath.row] else { return }
+			actionList(forCell: cell, thread)
+		}
+	}
+
+	func upVoteButtonPressed(cell: ForumCell) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			guard let threadID = forumThreads?[indexPath.row]["id"].intValue else { return }
+			self.voteFor(threadID, vote: 1, forumCell: cell)
+		}
+	}
+
+	func downVoteButtonPressed(cell: ForumCell) {
+		if let indexPath = tableView.indexPath(for: cell) {
+			guard let threadID = forumThreads?[indexPath.row]["id"].intValue else { return }
+			self.voteFor(threadID, vote: 0, forumCell: cell)
 		}
 	}
 }

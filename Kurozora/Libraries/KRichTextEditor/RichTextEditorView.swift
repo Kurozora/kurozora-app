@@ -26,7 +26,7 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 		return toolbar
 	}()
 	var imagePicker = UIImagePickerController()
-	var sectionId: Int?
+	var sectionID: Int?
 	var textElement: String?
 	var colorSlider: ColorSlider!
 
@@ -77,13 +77,11 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 	@IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
 		guard let title = titleTextField.text?.trimmed else { return }
 		guard let content = richEditorView?.contentHTML else { return }
-		guard let sectionId = sectionId else { return }
+		guard let sectionID = sectionID else { return }
 
-		Service.shared.postThread(withTitle: title, content: content, forSection: sectionId, withSuccess: { (success) in
+		Service.shared.postThread(withTitle: title, content: content, forSection: sectionID, withSuccess: { (success) in
 			self.dismiss(animated: true, completion: nil)
-		}) { (errorMessage) in
-			SCLAlertView().showError("Error submitting your thread", subTitle: errorMessage)
-		}
+		})
 	}
 
 	// Observe ColorSlider .valueChanged events.

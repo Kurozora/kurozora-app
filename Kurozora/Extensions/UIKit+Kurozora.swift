@@ -9,6 +9,15 @@
 import UIKit
 
 @IBDesignable class DesignableButton: UIButton {
+	/// Background color of disabled state for button
+	@IBInspectable override var isEnabled: Bool {
+		didSet {
+			if backgroundColor == #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) || backgroundColor == #colorLiteral(red: 0.8203779459, green: 0.4731308222, blue: 0.02722997218, alpha: 1) {
+				backgroundColor = isEnabled ? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) : #colorLiteral(red: 0.8203779459, green: 0.4731308222, blue: 0.02722997218, alpha: 1)
+				setTitleColor(#colorLiteral(red: 0.8, green: 0.8, blue: 0.8, alpha: 1), for: .disabled)
+			}
+		}
+	}
 }
 
 @IBDesignable class DesignableLabel: UILabel {

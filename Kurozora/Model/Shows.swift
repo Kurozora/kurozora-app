@@ -13,12 +13,10 @@ class Show: JSONDecodable {
     let success: Bool?
     let banners: [JSON]?
     let categories: [JSON]?
-    let message: String?
 
     required init(json: JSON) throws {
         success = json["success"].boolValue
         banners = json["banners"].arrayValue
         categories = json["categories"].arrayValue
-        message = json["message"].stringValue
     }
 }

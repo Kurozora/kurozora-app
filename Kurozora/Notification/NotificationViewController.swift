@@ -44,9 +44,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 			DispatchQueue.main.async() {
 				self.tableView.reloadData()
 			}
-		}) { (errorMessage) in
-			SCLAlertView().showError("Error getting notifiactions", subTitle: errorMessage)
-		}
+		})
         
         // Setup table view
         tableView.rowHeight = 100

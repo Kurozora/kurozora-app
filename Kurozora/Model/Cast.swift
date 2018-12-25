@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class CastDetails: JSONDecodable {
     let success: Bool?
-    let message: String?
     let page: Int?
     let actorsPerPage: Int?
     let totalActors: Int?
@@ -19,7 +18,6 @@ class CastDetails: JSONDecodable {
 
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        message = json["error_message"].stringValue
         page = json["page"].intValue
         actorsPerPage = json["actors_per_page"].intValue
         totalActors = json["total_actors"].intValue

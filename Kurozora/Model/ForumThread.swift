@@ -11,16 +11,14 @@ import SwiftyJSON
 
 class ForumThread: JSONDecodable {
 	let success: Bool?
-	let message: String?
-
 	let threadId: Int?
 	let content: String?
+	let pages: Int?
 
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
-		message = json["error_message"].stringValue
-
 		threadId = json["thread"]["id"].intValue
 		content = json["thread"]["content"].stringValue
+		pages = json["thread"]["reply_pages"].intValue
 	}
 }

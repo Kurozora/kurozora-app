@@ -20,7 +20,7 @@ public class PostCell: UITableViewCell {
     
     @IBOutlet weak public var avatar: UIImageView!
     @IBOutlet weak public var username: UILabel?
-    @IBOutlet weak public var date: UILabel!
+    @IBOutlet weak public var dateTime: UILabel!
     
     @IBOutlet weak public var toIcon: UILabel?
     @IBOutlet weak public var toUsername: UILabel?

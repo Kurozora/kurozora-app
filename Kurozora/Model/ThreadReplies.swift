@@ -1,21 +1,20 @@
 //
-//  ThreadPost.swift
+//  ThreadReplies.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 12/12/2018.
+//  Created by Khoren Katklian on 23/12/2018.
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import TRON
 import SwiftyJSON
 
-class ThreadPost: JSONDecodable {
+class ThreadReplies: JSONDecodable {
 	let success: Bool?
-	let threadId: Int?
+	let replies: [JSON]?
 
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
-		threadId = json["thread_id"].intValue
+		replies = json["replies"].arrayValue
 	}
 }
-

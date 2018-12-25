@@ -51,7 +51,7 @@ public class WorkflowController {
 						}
 					}
 				} else {
-					NSLog("------- Pusher error")
+					NSLog("------- Pusher error -------")
 				}
 			})
 
@@ -79,7 +79,7 @@ public class WorkflowController {
 						}
 					}
 				} else {
-					NSLog("------- Pusher error")
+					NSLog("------- Pusher error -------")
 				}
 			})
 		}

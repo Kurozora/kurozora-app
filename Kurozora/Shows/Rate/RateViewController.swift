@@ -11,7 +11,7 @@ import KDatabaseKit
 import SCLAlertView
 import Cosmos
 
-protocol ShowRatingDelegate {
+protocol ShowRatingDelegate: class {
     func getRating(value: Double?)
 }
 
@@ -38,10 +38,7 @@ class RateViewController: UIViewController {
             } else {
                 SCLAlertView().showWarning("Error rating", subTitle: "There was an error while rating")
             }
-        }) { (err) in
-            SCLAlertView().showWarning("Error rating", subTitle: "There was an error while rating: \(err)")
-            NSLog("------- Rating error: \(err)")
-        }
+        })
     }
 
     override public func viewDidLoad() {

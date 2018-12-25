@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class Session: JSONDecodable {
     let success: Bool?
-    let message: String?
     let otherSessions: [JSON]?
     
     // Current session
@@ -22,7 +21,6 @@ class Session: JSONDecodable {
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        message = json["error_message"].stringValue
         otherSessions = json["other_sessions"].arrayValue
         
         // Current session

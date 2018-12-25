@@ -113,7 +113,7 @@
                                 <action selector="cancelButtonPressed:" destination="Hhy-HY-4Mq" id="SqU-z8-YM2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="8Au-53-wQI">
+                        <barButtonItem key="rightBarButtonItem" title="Post" style="done" id="8Au-53-wQI">
                             <connections>
                                 <action selector="postButtonPressed:" destination="Hhy-HY-4Mq" id="K66-PC-ekY"/>
                             </connections>
@@ -316,6 +316,11 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="rUg-mc-qcP">
                             <connections>
                                 <action selector="dismissButtonPressed:" destination="mMj-Q5-bpV" id="rx2-At-siL"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Reply" style="done" id="kvM-Me-dVl">
+                            <connections>
+                                <action selector="replyButtonPressed:" destination="mMj-Q5-bpV" id="OI1-sx-X8V"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

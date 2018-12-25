@@ -9,15 +9,13 @@
 import UIKit
 
 public class CommentCell: PostCell {
-    
     public enum CommentType {
-        case Text
-        case Image
-        case Video
+        case text
+        case image
+        case video
     }
     
     public override class func registerNibFor(tableView: UITableView) {
-        
         super.registerNibFor(tableView: tableView)
         
         do {

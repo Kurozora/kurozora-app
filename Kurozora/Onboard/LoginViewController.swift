@@ -29,7 +29,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
  
         loginButton.isEnabled = false
-//        usernameTextField.becomeFirstResponder()
         usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
@@ -54,14 +53,14 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = false
         
         Service.shared.login(username, password, device, withSuccess: { (success) in
-			WorkflowController.pusherInit()
-			
-            let customTabBar = KurozoraTabBarController()
-            customTabBar.modalTransitionStyle = .flipHorizontal
-            self.present(customTabBar, animated: true, completion: nil)
-        }) { (errorMsg) in
-            SCLAlertView().showError("Error logging in", subTitle: errorMsg)
-        }
+			if success {
+				WorkflowController.pusherInit()
+
+				let customTabBar = KurozoraTabBarController()
+				customTabBar.modalTransitionStyle = .flipHorizontal
+				self.present(customTabBar, animated: true, completion: nil)
+			}
+        })
     }
 }
 

@@ -135,9 +135,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 			let profileImage = URL(string: profileImage)
 			let resource = ImageResource(downloadURL: profileImage!)
 			timelinePostCell.profileImageView.kf.indicatorType = .activity
-			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 		}else {
-			timelinePostCell.profileImageView.image = UIImage(named: "default_avatar")
+			timelinePostCell.profileImageView.image = #imageLiteral(resourceName: "default_avatar")
 		}
 
 		// Username
@@ -227,9 +227,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             	self.user = user
             	self.updateViewWithUser(user)
 			}
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting information", subTitle: errorMessage)
-        }
+        })
     }
 
     private func updateViewWithUser(_ user: User?) {
@@ -245,12 +243,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 
 			let cache = ImageCache.default
 			cache.store(userAvatar.image!, forKey: "currentUserAvatar")
         } else {
-            userAvatar.image = UIImage(named: "default_avatar")
+            userAvatar.image = #imageLiteral(resourceName: "default_avatar")
         }
 
         // Setup banner

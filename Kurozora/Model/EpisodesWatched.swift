@@ -1,21 +1,20 @@
 //
-//  ThreadPost.swift
+//  EpisodesWatched.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 12/12/2018.
+//  Created by Khoren Katklian on 24/12/2018.
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import TRON
 import SwiftyJSON
 
-class ThreadPost: JSONDecodable {
+class EpisodesWatched: JSONDecodable {
 	let success: Bool?
-	let threadId: Int?
+	let watched: Bool?
 
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
-		threadId = json["thread_id"].intValue
+		watched = json["watched"].boolValue
 	}
 }
-

@@ -59,9 +59,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
 			DispatchQueue.main.async() {
 				self.tableView.reloadData()
 			}
-		}) { (errorMsg) in
-			SCLAlertView().showError("Sessions", subTitle: errorMsg)
-		}
+		})
 	}
 
 	@objc func removeSessionFromTable(_ notification: NSNotification) {
@@ -127,9 +125,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
                         self.tableView.endUpdates()
                     }
                 }
-            }) { (errorMsg) in
-                SCLAlertView().showError("Error removing session", subTitle: errorMsg)
-            }
+            })
         })
 
         alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")

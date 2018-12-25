@@ -57,13 +57,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let banners = show.banners, banners != [] {
                 self.banners = banners
             }
-            
+
             self.tableView.reloadData()
             self.collectionView.reloadData()
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting explore", subTitle: "Could not connect to server.")
-        }
-        
+        })
+
         // Setup collection view
 		collectionView.dataSource = self
 		collectionView.delegate = self
@@ -72,7 +70,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 		let width = collectionView.bounds.size.width - 20
 		let height = width * (9/16)
 		itemSize = CGSize(width: width, height: height - 20)
-//		print("itemSize: \(itemSize)")
 
         // Setup table view
         tableView.delegate = self
@@ -110,10 +107,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //    }
 
     // MARK: - Functions
-	func showDetailFor(_ showId: Int) {
+	func showDetailFor(_ showID: Int) {
         let storyboard = UIStoryboard(name: "details", bundle: nil)
         let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
-        showTabBarController?.showId = showId
+        showTabBarController?.showID = showID
 
         self.present(showTabBarController!, animated: true, completion: nil)
     }
@@ -174,7 +171,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // Show detail for header cell
             if let sender = sender as? Int {
                 let vc = segue.destination as! ShowTabBarController
-                vc.showId = sender
+                vc.showID = sender
             }
             
             // Show detail for show cell
@@ -184,7 +181,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let tableViewCell: ShowCategoryCell = view.superview as? ShowCategoryCell {
                             if let destination = segue.destination as? ShowTabBarController {
                                 if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showId = tableViewCell.shows?[indexPathRow]["id"].intValue
+                                    destination.showID = tableViewCell.shows?[indexPathRow]["id"].intValue
                                 }
                             }
                         }
@@ -199,7 +196,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let tableViewCell: LargeCategoryCell = view.superview as? LargeCategoryCell {
                             if let destination = segue.destination as? ShowTabBarController {
                                 if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showId = tableViewCell.shows?[indexPathRow]["id"].intValue
+                                    destination.showID = tableViewCell.shows?[indexPathRow]["id"].intValue
                                 }
                             }
                         }

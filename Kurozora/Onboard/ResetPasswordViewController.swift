@@ -42,14 +42,10 @@ class ResetPasswordViewController: UIViewController {
             )
             let alertView = SCLAlertView(appearance: appearance)
             alertView.addButton("Done", action: {
-                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                self.show(vc, sender: self)
+				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             })
             alertView.showSuccess("Success!", subTitle: "If an account exists with this email address, you should receive an email with your reset link shortly.")
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error resetting password", subTitle: errorMessage)
-        }
+        })
     }
 }
 

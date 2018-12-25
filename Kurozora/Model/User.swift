@@ -19,12 +19,12 @@ class User: JSONDecodable {
     }
     
     let success: Bool?
-    let message: String?
 	let authToken: String?
-    let role: Int?
     
     let id: Int?
 	let sessionID: Int?
+	let role: Int?
+	
     let username: String?
     let avatar: String?
     let banner: String?
@@ -46,7 +46,6 @@ class User: JSONDecodable {
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        message = json["error_message"].stringValue
 		authToken = json["kuro_auth_token"].stringValue
         
         id = json["user_id"].intValue
@@ -94,7 +93,7 @@ class User: JSONDecodable {
 		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
 			return authToken
 		}
-		return ""
+		return "authToken"
 	}
 
 	/// Returns the current user avatar from cache if available, otherwise returns default avatar
@@ -104,7 +103,7 @@ class User: JSONDecodable {
 
 		cache.retrieveImage(forKey: "currentUserAvatar", options: []) { (result, cacheType) in
 			if cacheType == .none {
-				image = UIImage(named: "default_avatar")
+				image = #imageLiteral(resourceName: "default_avatar")
 			} else {
 				image = result
 			}

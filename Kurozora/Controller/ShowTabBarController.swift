@@ -10,7 +10,7 @@ import UIKit
 import ESTabBarController_swift
 
 class ShowTabBarController: ESTabBarController {
-    var showId: Int?
+    var showID: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class ShowTabBarController: ESTabBarController {
 
         // Instantiate views
         let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as! ShowDetailViewController
-        showDetail.showId = showId
+        showDetail.showID = showID
         
         let seasons = storyboard.instantiateViewController(withIdentifier: "Season") as! SeasonsCollectionViewController
         

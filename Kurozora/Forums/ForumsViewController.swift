@@ -32,9 +32,7 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
                 self.sectionsCount = sections?.count
                 self.reloadPages()
             }
-        }) { (errorMessage) in
-            SCLAlertView().showError("Error getting sections", subTitle: errorMessage)
-        }
+        })
         
         dataSource = self
         
@@ -87,8 +85,8 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
                 barItems.append(Item(title: sectionTitle))
             }
 
-			if let sectionId = sections?[index]["id"].intValue, sectionId != 0 {
-				viewController.sectionId = sectionId
+			if let sectionID = sections?[index]["id"].intValue, sectionID != 0 {
+				viewController.sectionID = sectionID
 			}
 
             viewControllers.append(viewController)
@@ -130,7 +128,7 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 	@IBAction func createThreadButton(_ sender: Any) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
-		vc?.sectionId = currentIndex! + 1
+		vc?.sectionID = currentIndex! + 1
 
 		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
 		if #available(iOS 11.0, *) {

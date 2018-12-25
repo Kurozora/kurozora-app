@@ -11,12 +11,10 @@ import SwiftyJSON
 
 class UserNotification: JSONDecodable {
     let success: Bool?
-    let message: String?
     let notifications: [JSON]?
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        message = json["error_message"].stringValue
         notifications = json["notifications"].arrayValue
     }
 }

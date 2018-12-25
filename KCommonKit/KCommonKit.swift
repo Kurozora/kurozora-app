@@ -30,8 +30,8 @@ public class KCommonKit {
     
     public static var shared = KCommonKit()
     private init() {}
-    
-    public var showId:Int?
+
+    public var showID: Int?
 }
 
 public struct GlobalVariables {

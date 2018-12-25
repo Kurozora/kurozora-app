@@ -300,9 +300,6 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372549019611" green="0.61568627450980395" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
@@ -317,6 +314,9 @@ Kurozora</string>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -333,9 +333,6 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
@@ -350,6 +347,9 @@ Kurozora</string>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -372,7 +372,7 @@ Kurozora</string>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-2e-Lgl" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="16" y="346" width="343" height="52"/>
-                                <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="C8t-5L-AhG"/>
                                 </constraints>
@@ -423,11 +423,6 @@ Kurozora</string>
                                 <action selector="dismissPressed:" destination="z1G-pN-YZx" id="Wr3-TK-4OD"/>
                             </connections>
                         </barButtonItem>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="barPosition">
-                                <integer key="value" value="3"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="KkB-fQ-5lk" id="qIQ-wX-m2C"/>
@@ -530,20 +525,23 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -560,20 +558,23 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -590,20 +591,23 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="join" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -704,23 +708,23 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
                                         <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -768,13 +772,7 @@ Kurozora</string>
                             <constraint firstItem="t4u-TJ-OFg" firstAttribute="leading" secondItem="BEp-na-6qS" secondAttribute="leading" id="vqv-1s-3zg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="barPosition">
-                                <integer key="value" value="3"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS"/>
                     <connections>
                         <outlet property="resetButton" destination="t4u-TJ-OFg" id="Rcy-8d-z6p"/>
                         <outlet property="userEmailTextField" destination="BEp-na-6qS" id="TfI-JH-xKC"/>

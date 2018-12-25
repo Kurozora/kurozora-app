@@ -11,12 +11,10 @@ import SwiftyJSON
 
 class Library: JSONDecodable {
 	let success: Bool?
-	let message: String?
 	let library: [JSON]?
 
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
-		message = json["error_message"].stringValue
 		library = json["anime"].arrayValue
 	}
 }

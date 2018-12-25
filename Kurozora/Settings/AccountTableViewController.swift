@@ -25,7 +25,7 @@ class AccountTableViewController: UITableViewController {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         }
         
         usernameLabel.text = GlobalVariables().KDefaults["username"]
@@ -55,9 +55,7 @@ class AccountTableViewController: UITableViewController {
                             let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
                             
                             self.present(vc, animated: true, completion: nil)
-                        }) { (errorMsg) in
-                            SCLAlertView().showError("Error logging out", subTitle: errorMsg)
-                        }
+                        })
 					} else {
 						let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
 						let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController

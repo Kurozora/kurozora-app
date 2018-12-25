@@ -38,7 +38,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
     var window: UIWindow?
     
     var showDetails: ShowDetails?
-    var showId: Int?
+    var showID: Int?
 	var libraryStatus: String?
     var showRating: Double?
     var castDetails: [JSON]?
@@ -98,29 +98,27 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
         }
 
         // Fetch details
-        if let id = showId {
-            KCommonKit.shared.showId = id
+        if let showID = showID {
+            KCommonKit.shared.showID = showID
             
-            Service.shared.getDetailsFor(id) { (showDetails) in
+			Service.shared.getDetails(forShow: showID) { (showDetails) in
 				DispatchQueue.main.async() {
 					self.showDetails = showDetails
 					self.libraryStatus = showDetails.libraryStatus
 					self.updateDetailWithShow(self.showDetails)
                 	self.tableView.reloadData()
-					self.stopAnimating()
 				}
             }
             
-            Service.shared.getCastFor(id, withSuccess: { (cast, castActors) in
+            Service.shared.getCastFor(showID, withSuccess: { (cast, castActors) in
                 DispatchQueue.main.async() {
 					self.cast = cast
 					self.castDetails = cast.actors
                     self.tableView.reloadData()
                 }
-            }) { (errorMessage) in
-                SCLAlertView().showError("Can't get cast details", subTitle: errorMessage)
-				self.stopAnimating()
-            }
+            })
+
+			self.stopAnimating()
         }
         
         tableView.delegate = self
@@ -317,30 +315,26 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	@IBAction func chooseStatusButton(_ sender: AnyObject) {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (value)  in
-			guard let showId = self.showId else {return}
+			guard let showID = self.showID else {return}
 
-			Service.shared.addToLibrary(withStatus: value.lowercased(), showId: showId, withSuccess: { (success) in
+			Service.shared.addToLibrary(withStatus: value.lowercased(), showID: showID, withSuccess: { (success) in
 				if !success {
 					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
 				} else {
 					self.libraryStatus = value
 					self.listButton.setTitle("\(value.capitalized) ", for: .normal)
 				}
-			}, andFailure: { (errorMessage) in
-				SCLAlertView().showError("Can't add to library", subTitle: errorMessage)
 			})
 		})
 
 		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-			Service.shared.removeFromLibrary(withID: self.showId, withSuccess: { (success) in
+			Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
 				if !success {
 					SCLAlertView().showError("Error removing from library", subTitle: "There was an error while removing this anime from your library. Please try again!")
 				} else {
 					self.libraryStatus = ""
 					self.listButton.setTitle("Add to list ", for: .normal)
 				}
-			}, andFailure: { (errorMessage) in
-				SCLAlertView().showError("Can't remove from library", subTitle: errorMessage)
 			})
 		}))
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))

@@ -11,12 +11,10 @@ import SwiftyJSON
 
 class ThreadReply: JSONDecodable {
 	let success: Bool?
-	let message: String?
 	let replyId: Int?
 
 	required init(json: JSON) throws {
 		success = json["success"].boolValue
-		message = json["error_message"].stringValue
 		replyId = json["reply_id"].intValue
 	}
 }

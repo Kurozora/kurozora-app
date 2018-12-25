@@ -11,14 +11,12 @@ import SwiftyJSON
 
 class Episodes: JSONDecodable {
     let success: Bool?
-    let message: String?
     let episodeCount: Int?
     let episodes: [JSON]?
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        message = json["error_message"].stringValue
-        episodeCount = json["episode_count"].intValue
+        episodeCount = json["season"]["episode_count"].intValue
         episodes = json["episodes"].arrayValue
     }
 }

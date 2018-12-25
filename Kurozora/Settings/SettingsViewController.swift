@@ -36,7 +36,7 @@ class SettingsViewController: UITableViewController {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         }
         
         usernameLabel.text = GlobalVariables().KDefaults["username"]

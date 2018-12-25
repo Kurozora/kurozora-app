@@ -21,7 +21,8 @@ class KCommentEditorView: UIViewController {
 	@IBOutlet weak var commentTextView: UITextView!
 
 	let charLimit = 240
-	var data: JSON?
+
+	var forumThread: JSON?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -33,11 +34,11 @@ class KCommentEditorView: UIViewController {
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 0
 		IQKeyboardManager.shared.shouldResignOnTouchOutside = false
 
-		if let replyToText = data?["title"].stringValue {
+		if let replyToText = forumThread?["title"].stringValue {
 			replyToTextLabel.text = replyToText
 		}
 
-		if let replyToUsername = data?["poster_username"].stringValue {
+		if let replyToUsername = forumThread?["poster_username"].stringValue {
 			replyToUsernameLabel.text = replyToUsername
 		}
 
@@ -64,6 +65,18 @@ class KCommentEditorView: UIViewController {
 
 		self.dismiss(animated: true, completion: nil)
 	}
+
+	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
+		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
+			guard let comment = commentTextView.text, comment != "" else { return }
+			guard let threadID = forumThread?["id"].intValue else { return }
+			Service.shared.postReply(withComment: comment, forThread: threadID) { (success) in
+				if success {
+					self.dismiss(animated: true, completion: nil)
+				}
+			}
+		}
+	}
 }
 
 extension KCommentEditorView: UITextViewDelegate {
@@ -80,17 +93,20 @@ extension KCommentEditorView: UITextViewDelegate {
 			commentTextView.text = "Reply..."
 			commentTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.64)
 			commentTextView.selectedTextRange = commentTextView.textRange(from: commentTextView.beginningOfDocument, to: commentTextView.beginningOfDocument)
+			characterCountLabel.text = "\(charLimit)"
 		} else if commentTextView.textColor == #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.64) && !text.isEmpty { // Else if the text view's placeholder is showing and the length of the replacement string is greater than 0, set the text color to white then set its text to the replacement string
 			commentTextView.textColor = .white
-			commentTextView.text = text
-		} else { // For every other case, the text should change with the usual behavior...
-			return true
-		}
+			commentTextView.text = ""
 
-		if commentTextView.text.count + (text.count - range.length) <= charLimit { // If character count passed then change text to red
-			characterCountLabel.textColor = #colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1)
-		} else { // Else reset color to 56% white
-			characterCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.56)
+			return true
+		} else { // For every other case, the text should change with the usual behavior...
+			if commentTextView.text.count + (text.count - range.length) >= charLimit { // If character count passed then change text to red
+				characterCountLabel.textColor = #colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1)
+			} else if commentTextView.text.count + (text.count - range.length) <= charLimit { // Else reset color to 56% white
+				characterCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.56)
+			}
+			
+			return true
 		}
 
 		// ...otherwise return false since the updates have already been made

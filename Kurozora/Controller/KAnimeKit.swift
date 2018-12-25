@@ -8,10 +8,8 @@
 
 import KCommonKit
 import KDatabaseKit
-import UIKit
 
 public class KAnimeKit {
-    
     public class func defaultStoryboard() -> UIStoryboard {
         return UIStoryboard(name: "Anime", bundle: nil)
     }
