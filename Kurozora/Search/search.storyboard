@@ -12,7 +12,7 @@
         <!--Search View Controller-->
         <scene sceneID="9rd-ml-Glz">
             <objects>
-                <viewController storyboardIdentifier="Search" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pPe-Wd-N8n" customClass="SearchViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pPe-Wd-N8n" customClass="SearchViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vVp-kK-N2E"/>
                         <viewControllerLayoutGuide type="bottom" id="BIK-YO-dDu"/>
@@ -43,7 +43,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d3S-5Y-KNV">
-                                <rect key="frame" x="0.0" y="44" width="375" height="746"/>
+                                <rect key="frame" x="0.0" y="52" width="375" height="738"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yh8-CK-yE4">
                                     <size key="itemSize" width="375" height="120"/>
@@ -299,11 +299,10 @@
                             <constraint firstItem="3PQ-7n-sNR" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="eEM-Lp-hTg"/>
                             <constraint firstItem="3PQ-7n-sNR" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="qKz-Wo-gax"/>
                             <constraint firstItem="d3S-5Y-KNV" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="vXu-L7-ft0"/>
-                            <constraint firstItem="d3S-5Y-KNV" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="zvS-hg-7fe"/>
+                            <constraint firstItem="d3S-5Y-KNV" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" constant="8" id="zvS-hg-7fe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="s4h-cU-zfL"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="d3S-5Y-KNV" id="IMD-Em-gl2"/>
                         <segue destination="kWy-vp-aKx" kind="presentation" identifier="ShowDetailsSegue" id="MvW-u5-6Az"/>

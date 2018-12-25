@@ -21,6 +21,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 	@IBOutlet weak var collectionView: UICollectionView!
 
 	var results: [JSON]?
+	var timer: Timer?
 //    var loadingView: LoaderView!
 //    var initialSearchScope: SearchScope?
 
@@ -30,7 +31,6 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.tabBarController?.tabBar.backgroundColor = .red
 	}
 
     override func viewDidLoad() {
@@ -47,11 +47,19 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 
 	// MARK: - Functions
 	fileprivate func search(for text: String) {
-		Service.shared.search(for: text) { (results) in
-			DispatchQueue.main.async {
-				self.results = results
-				self.collectionView.reloadData()
+		if text != "" {
+			Service.shared.search(for: text) { (results) in
+				DispatchQueue.main.async {
+					self.results = results
+					self.collectionView.reloadData()
+				}
 			}
+		}
+	}
+
+	@objc func search(_ timer: Timer) {
+		if let text = timer.userInfo as? String, text != "" {
+			search(for: text)
 		}
 	}
 
@@ -167,6 +175,21 @@ extension SearchViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text else { return }
 		search(for: text)
+	}
+
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			timer?.invalidate()
+			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: searchText, repeats: false)
+		} else {
+			results = []
+			collectionView.reloadData()
+		}
+	}
+
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		results = []
+		collectionView.reloadData()
 	}
 }
 
