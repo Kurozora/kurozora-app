@@ -43,7 +43,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d3S-5Y-KNV">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="746"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yh8-CK-yE4">
                                     <size key="itemSize" width="375" height="120"/>
@@ -293,7 +293,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="d3S-5Y-KNV" secondAttribute="trailing" id="7f3-YI-EDR"/>
-                            <constraint firstItem="BIK-YO-dDu" firstAttribute="top" secondItem="d3S-5Y-KNV" secondAttribute="bottom" id="Qnq-ef-ef6"/>
+                            <constraint firstAttribute="bottom" secondItem="d3S-5Y-KNV" secondAttribute="bottom" constant="22" id="Qnq-ef-ef6"/>
                             <constraint firstAttribute="bottom" secondItem="3PQ-7n-sNR" secondAttribute="bottom" id="SXn-nd-F3D"/>
                             <constraint firstAttribute="trailing" secondItem="3PQ-7n-sNR" secondAttribute="trailing" id="VfZ-2F-rh1"/>
                             <constraint firstItem="3PQ-7n-sNR" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="eEM-Lp-hTg"/>
