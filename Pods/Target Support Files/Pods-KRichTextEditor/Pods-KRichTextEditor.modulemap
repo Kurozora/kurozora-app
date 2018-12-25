@@ -1,6 +1,0 @@
-framework module Pods_KRichTextEditor {
-  umbrella header "Pods-KRichTextEditor-umbrella.h"
-
-  export *
-  module * { export * }
-}
