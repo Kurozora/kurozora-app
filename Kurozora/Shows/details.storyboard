@@ -339,7 +339,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="DiE-0V-qDj">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="DiE-0V-qDj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="xzv-Wg-d1q">
@@ -814,14 +814,37 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
+                                        <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="redraw" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Zl-te-PjF" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="120" y="8" width="135" height="30"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="6" maxX="10" maxY="6"/>
+                                            <state key="normal" title="Drag To Dissmis"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                                    <size key="value" width="0.0" height="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                    <real key="value" value="0.40000000000000002"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                    <real key="value" value="7"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="v0a-oF-Mhw" firstAttribute="leading" secondItem="xzv-Wg-d1q" secondAttribute="leading" id="5LU-S4-IXK"/>
                                         <constraint firstItem="mqj-Hw-JwI" firstAttribute="trailing" secondItem="v0a-oF-Mhw" secondAttribute="trailing" id="79o-b2-iQr"/>
+                                        <constraint firstItem="1Zl-te-PjF" firstAttribute="top" secondItem="xzv-Wg-d1q" secondAttribute="top" constant="8" id="BNC-k5-P8u"/>
                                         <constraint firstAttribute="bottom" secondItem="6Xf-6s-V2C" secondAttribute="bottom" id="Ghw-LM-Zdd"/>
                                         <constraint firstAttribute="trailing" secondItem="v0a-oF-Mhw" secondAttribute="trailing" id="Gvr-9R-RLe"/>
                                         <constraint firstItem="64J-9a-XaZ" firstAttribute="leading" secondItem="v0a-oF-Mhw" secondAttribute="leading" id="Lmd-0F-NoY"/>
+                                        <constraint firstItem="1Zl-te-PjF" firstAttribute="centerX" secondItem="xzv-Wg-d1q" secondAttribute="centerX" id="ZqN-a7-TaI"/>
                                         <constraint firstItem="mqj-Hw-JwI" firstAttribute="top" secondItem="v0a-oF-Mhw" secondAttribute="top" id="b9e-2s-57S"/>
                                         <constraint firstAttribute="trailing" secondItem="6Xf-6s-V2C" secondAttribute="trailing" id="cDT-TV-TAM"/>
                                         <constraint firstItem="6Xf-6s-V2C" firstAttribute="leading" secondItem="xzv-Wg-d1q" secondAttribute="leading" id="h9e-rk-clo"/>
@@ -1177,6 +1200,7 @@
                         <outlet property="compactShowTitleLabel" destination="dW1-II-0Ll" id="PNX-NZ-XDp"/>
                         <outlet property="compactTagsLabel" destination="yHr-oO-0Th" id="lvF-ca-SII"/>
                         <outlet property="cosmosView" destination="evI-qZ-oGZ" id="pq3-np-eeo"/>
+                        <outlet property="dismissButton" destination="1Zl-te-PjF" id="ZWs-uE-yhV"/>
                         <outlet property="favoriteButton" destination="V3e-32-9rJ" id="tft-ky-MoM"/>
                         <outlet property="listButton" destination="Nwz-Ab-FoP" id="b80-8a-zgs"/>
                         <outlet property="membersCountLabel" destination="sTB-oM-6BG" id="Vz3-Le-hgr"/>

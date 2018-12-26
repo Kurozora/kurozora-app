@@ -251,6 +251,32 @@ struct Service {
 		})
 	}
 
+	/// Search for a user
+	func search(forUser user: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+		guard let user = user else { return }
+
+		let request: APIRequest<UserSearch,JSONError> = tron.swiftyJSON.request("users/search")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.parameters = [
+			"query": user
+		]
+		request.perform(withSuccess: { search in
+			if let success = search.success {
+				if success {
+					successHandler(search.results)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
+			}
+
+			print("Received user search error: \(error)")
+		})
+	}
+
 // MARK: - Show
 // All show related endpoints
 	/// Get explore page content
@@ -381,10 +407,10 @@ struct Service {
 	}
 
 	/// Search for a show
-	func search(for show: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func search(forShow show: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
 		guard let show = show else { return }
 
-		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("anime/search")
+		let request: APIRequest<ShowSearch,JSONError> = tron.swiftyJSON.request("anime/search")
 		request.headers = headers
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -402,7 +428,7 @@ struct Service {
 				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
 			}
 
-			print("Received search error: \(error)")
+			print("Received show search error: \(error)")
 		})
 	}
 

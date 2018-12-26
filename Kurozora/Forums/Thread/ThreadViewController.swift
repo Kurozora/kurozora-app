@@ -191,10 +191,10 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
 		if let posterId = forumThread?["poster_user_id"].intValue, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-			vc?.otherUserID = posterId
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			profileViewController?.otherUserID = posterId
 
-			let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+			let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController!)
 
 			self.present(kurozoraNavigationController, animated: true, completion: nil)
 		}

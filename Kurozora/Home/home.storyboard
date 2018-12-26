@@ -31,7 +31,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <collectionView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="On6-y0-nSX">
+                                        <collectionView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="On6-y0-nSX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <collectionViewLayout key="collectionViewLayout" id="3cA-Er-hOB" customClass="BannerCollectionLayout" customModule="Kurozora" customModuleProvider="target"/>
@@ -431,7 +431,7 @@
         <image name="shadow" width="6.6666665077209473" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hod-xW-dat"/>
+        <segue reference="cuk-No-I9L"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

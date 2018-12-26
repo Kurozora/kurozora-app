@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let maxScaleOffset: CGFloat = 170
+private let maxScaleOffset: CGFloat = 85
 private let minScale: CGFloat = 0.9
 private let minAlpha: CGFloat = 0.3
 
@@ -126,7 +126,7 @@ extension BannerCollectionLayout {
 								 height: maxScaleOffset)
 		let visibleCenterX = visibleRect.midX
 		let distanceFromCenter = visibleCenterX - attribute.center.x
-		let distance = min(abs(distanceFromCenter), maxScaleOffset)
+		let distance = min(abs(distanceFromCenter), maxScaleOffset / 2) // Distance between items
 		let scale = distance * (minScale - 1) / maxScaleOffset + 1
 		attribute.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)
 		attribute.alpha = distance * (minAlpha - 1) / maxScaleOffset + 1
@@ -136,7 +136,9 @@ extension BannerCollectionLayout {
 		guard let collectionView = collectionView else {
 			return
 		}
-		collectionView.contentInset  = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-		collectionView.contentOffset = CGPoint(x: -8, y: 0)
+
+		let inset = collectionView.bounds.size.width / 2 - itemSize.width / 2
+		collectionView.contentInset  = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+		collectionView.contentOffset = CGPoint(x: -inset, y: 0)
 	}
 }

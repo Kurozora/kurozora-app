@@ -1,5 +1,5 @@
 //
-//  SearchCell.swift
+//  SearchShowCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 25/12/2018.

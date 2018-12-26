@@ -49,6 +49,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
+	@IBOutlet weak var dismissButton: UIButton!
 
     // Compact detail view
     @IBOutlet weak var compactDetailsView: UIView!
@@ -81,7 +82,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
     override func viewDidLoad() {
         super.viewDidLoad()
 		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: .orange, minimumDisplayTime: 3)
-        
+
         headerView = tableView.tableHeaderView
         tableView.tableHeaderView = nil
         tableView.addSubview(headerView)
@@ -405,7 +406,6 @@ extension ShowDetailViewController: UIScrollViewDelegate {
         let bannerHeight = bannerImageView.bounds.height
         let newOffset = bannerHeight - scrollView.contentOffset.y
         let compactDetailsOffset = newOffset - compactDetailsHeight
-        
 
         if compactDetailsOffset > bannerHeight {
             UIView.animate(withDuration: 0.75) {
@@ -427,6 +427,7 @@ extension ShowDetailViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ShowDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return showDetails != nil ? AnimeSection.allSections.count : 0
@@ -637,6 +638,7 @@ extension ShowDetailViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ShowDetailViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = AnimeSection(rawValue: indexPath.section)!

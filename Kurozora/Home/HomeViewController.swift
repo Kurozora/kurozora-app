@@ -19,13 +19,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableHeaderView: UIView!
 
 	// Search bar controller
-	var searchViewController: SearchViewController?
+	var searchResultsViewController: SearchResultsViewController?
 	let placeholderArray = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Palying Game", "Vampires"]
+	var placeholderTimer: Timer?
 
 	// Header collection variables
-	var timer: Timer?
+	var headerTimer: Timer?
 	var onceOnly = false
-	let sectionInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
 	var itemSize = CGSize(width: 0, height: 0)
 
     var categories: [JSON]?
@@ -39,18 +39,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		searchViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchViewController
+		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsViewController
 
         if #available(iOS 11.0, *) {
-			let searchController = UISearchController(searchResultsController: searchViewController)
+			let searchController = SearchController(searchResultsController: searchResultsViewController)
 			searchController.delegate = self
-			searchController.searchResultsUpdater = searchViewController
+			searchController.searchResultsUpdater = searchResultsViewController
 
 			let searchControllerBar = searchController.searchBar
-			searchControllerBar.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			searchControllerBar.placeholder = "I'm searching for..."
-			startTimer(for: searchControllerBar)
-			searchControllerBar.delegate = searchViewController
+			startPlaceholderTimer(for: searchControllerBar)
+			searchControllerBar.delegate = searchResultsViewController
 
 			if let textfield = searchControllerBar.value(forKey: "searchField") as? UITextField {
 				textfield.textColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
@@ -85,6 +83,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+		startHeaderCollectionTimer()
 
 		let width = collectionView.bounds.size.width - 20
 		let height = width * (9/16)
@@ -123,16 +122,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 		}
 	}
 
-	func startTimer(for searchControllerBar: UISearchBar) {
-		if timer == nil {
-			timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateSearchPlaceholder), userInfo: searchControllerBar, repeats: true)
+	func startPlaceholderTimer(for searchControllerBar: UISearchBar) {
+		if placeholderTimer == nil {
+			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateSearchPlaceholder), userInfo: searchControllerBar, repeats: true)
 		}
 	}
 
-	func stopTimer() {
-		if timer != nil {
-			timer?.invalidate()
-			timer = nil
+	func stopPlacholderTimer() {
+		if placeholderTimer != nil {
+			placeholderTimer?.invalidate()
+			placeholderTimer = nil
 		}
 	}
 
@@ -234,7 +233,7 @@ extension HomeViewController: UISearchControllerDelegate {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
 				self.tabBarController?.tabBar.frame = tabBarFrame
-				self.stopTimer()
+				self.stopPlacholderTimer()
 			})
 		}
 	}
@@ -244,7 +243,7 @@ extension HomeViewController: UISearchControllerDelegate {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
 				self.tabBarController?.tabBar.frame = tabBarFrame
-				self.startTimer(for: searchController.searchBar)
+				self.startPlaceholderTimer(for: searchController.searchBar)
 			})
 		}
 	}

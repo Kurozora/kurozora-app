@@ -127,9 +127,9 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			action.addAction(UIAlertAction.init(title: username, style: .default, handler: { (_) in
 				if let posterId = forumThread?["poster_user_id"].intValue, posterId != 0 {
 					let storyboard = UIStoryboard(name: "profile", bundle: nil)
-					let vc = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-					vc?.otherUserID = posterId
-					let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+					let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+					profileViewController?.otherUserID = posterId
+					let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController!)
 
 					self.present(kurozoraNavigationController, animated: true, completion: nil)
 				}
