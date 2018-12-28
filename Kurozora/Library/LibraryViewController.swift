@@ -7,33 +7,20 @@
 //
 
 import KCommonKit
-import KDatabaseKit
 import Tabman
 import Pageboy
 import SCLAlertView
 
 enum SectionList: String {
-    case Planning = "Planning"
-    case Watching = "Watching"
-    case Completed = "Completed"
-    case OnHold = "On-Hold"
-    case Dropped = "Dropped"
-}
-
-enum LibraryLayout: String {
-    case CheckIn = "Check-In"
-    case Compact = "Compact"
-    
-    static func allRawValues() -> [String] {
-        return [
-            LibraryLayout.CheckIn.rawValue,
-            LibraryLayout.Compact.rawValue
-        ]
-    }
+    case planning = "Planning"
+    case watching = "Watching"
+    case completed = "Completed"
+    case onHold = "On-Hold"
+    case dropped = "Dropped"
 }
 
 class LibraryViewController: TabmanViewController, PageboyViewControllerDataSource {
-    let librarySections: [SectionList]? = [.Watching, .Planning, .Completed, .OnHold, .Dropped]
+    let librarySections: [SectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
     private var viewControllers = [UIViewController]()
 
     override func viewDidLoad() {
@@ -101,7 +88,25 @@ class LibraryViewController: TabmanViewController, PageboyViewControllerDataSour
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
     }
-    
+
+	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
+		guard let title = sender.title else { return }
+		let currentSection = self.currentViewController as? AnimeListViewController
+		var libraryLayout = "Detailed"
+
+		if title == "Detailed" {
+			libraryLayout = "Compact"
+			sender.title = "Compact"
+			sender.image = #imageLiteral(resourceName: "compact_view_icon")
+		} else if title == "Compact" {
+			sender.title = "Detailed"
+			sender.image = #imageLiteral(resourceName: "detailed_view_icon")
+		}
+
+		currentSection?.libraryLayout = libraryLayout
+		currentSection?.collectionView.reloadData()
+	}
+
 //    let SortTypeDefault = "Library.SortType."
 //    let LayoutTypeDefault = "Library.LayoutType."
 //

@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import KDatabaseKit
 
 public class KAnimeKit {
     public class func defaultStoryboard() -> UIStoryboard {

@@ -6,9 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-//import KDatabaseKit
 //import KCommonKit
-//import UIKit
 //import Bolts
 
 //enum SearchScope: Int {

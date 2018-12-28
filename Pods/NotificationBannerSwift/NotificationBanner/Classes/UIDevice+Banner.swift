@@ -92,4 +92,10 @@ public extension UIDevice {
 
 		return platform == "iPhone 5" || platform == "iPhone 5c" ||	platform == "iPhone 5s" || platform == "iPhone 6" || platform == "iPhone 6 Plus"
 	}()
+
+	static let hasTopNotch: Bool = {
+		let platform = UIDevice.modelName
+
+		return platform == "iPhone X" || platform == "iPhone XS" ||	platform == "iPhone XS Max" || platform == "iPhone XR"
+	}()
 }

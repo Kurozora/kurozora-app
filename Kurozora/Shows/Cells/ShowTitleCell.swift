@@ -7,10 +7,7 @@
 //
 
 import UIKit
-import KCommonKit
 
 class ShowTitleCell: UITableViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
-    
 }

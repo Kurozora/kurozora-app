@@ -6,8 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import KDatabaseKit
-import Alamofire
 import KCommonKit
 
 class ChartViewController: UIViewController {

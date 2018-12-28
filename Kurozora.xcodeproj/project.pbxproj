@@ -110,6 +110,7 @@
 		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
 		66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */; };
 		66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
+		668BD59121D455F5008C52D5 /* SearchSuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BD59021D455F5008C52D5 /* SearchSuggestionCell.swift */; };
 		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
 		668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638620986849003B1C1D /* Aller_Rg.ttf */; };
 		668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63872098684B003B1C1D /* Aller_Bd.ttf */; };
@@ -175,8 +176,6 @@
 		66CEFCEA20AD6CC600792B1B /* KDatabaseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCE920AD6CC600792B1B /* KDatabaseKit.swift */; };
 		66CEFCED20AD6DB000792B1B /* SeasonalChartWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCEC20AD6DB000792B1B /* SeasonalChartWorker.swift */; };
 		66CEFCEF20AD7A3B00792B1B /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCEE20AD7A3B00792B1B /* AnimeService.swift */; };
-		66CEFCF420AD7CC300792B1B /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */; };
-		66CEFCFC20AD7EC000792B1B /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCFB20AD7EC000792B1B /* String+Utils.swift */; };
 		66CEFD0120AD9BA500792B1B /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0020AD9BA500792B1B /* UserDetails.swift */; };
 		66CEFD0320AD9BF100792B1B /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0220AD9BF100792B1B /* SeasonalChart.swift */; };
 		66CEFD0720AD9E8F00792B1B /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFD0620AD9E8F00792B1B /* AnimeProgress.swift */; };
@@ -374,6 +373,7 @@
 		66825BE721B29E5900A2F602 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* RichTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
 		66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestBuilder.swift; sourceTree = "<group>"; };
+		668BD59021D455F5008C52D5 /* SearchSuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionCell.swift; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
 		668F63872098684B003B1C1D /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
@@ -447,8 +447,6 @@
 		66CEFCE920AD6CC600792B1B /* KDatabaseKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDatabaseKit.swift; sourceTree = "<group>"; };
 		66CEFCEC20AD6DB000792B1B /* SeasonalChartWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalChartWorker.swift; sourceTree = "<group>"; };
 		66CEFCEE20AD7A3B00792B1B /* AnimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
-		66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
-		66CEFCFB20AD7EC000792B1B /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		66CEFCFE20AD8C1D00792B1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66CEFD0020AD9BA500792B1B /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		66CEFD0220AD9BF100792B1B /* SeasonalChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalChart.swift; sourceTree = "<group>"; };
@@ -1025,7 +1023,6 @@
 				66CEFCE920AD6CC600792B1B /* KDatabaseKit.swift */,
 				66CEFCE720AD6B6000792B1B /* InAppController.swift */,
 				66CEFD2520ADBD7C00792B1B /* Browser */,
-				66CEFCF020AD7ADE00792B1B /* Extensions */,
 				66CEFCFD20AD8C1300792B1B /* Models */,
 				66CEFD1E20ADAC8C00792B1B /* Controllers */,
 				66F2DF0C20AEE5DF001CD3CF /* Scrappers */,
@@ -1096,15 +1093,6 @@
 				66CEFCEE20AD7A3B00792B1B /* AnimeService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		66CEFCF020AD7ADE00792B1B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				66CEFCF320AD7CC300792B1B /* TFHppleElement+Convenience.swift */,
-				66CEFCFB20AD7EC000792B1B /* String+Utils.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		66CEFCFD20AD8C1300792B1B /* Models */ = {
@@ -1253,6 +1241,7 @@
 		66DEB4AE21D28B6A0093725F /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				668BD59021D455F5008C52D5 /* SearchSuggestionCell.swift */,
 				66DEB4B321D41CE90093725F /* SearchUserCell.swift */,
 				66DEB4AC21D28B550093725F /* SearchShowCell.swift */,
 			);
@@ -1591,7 +1580,6 @@
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -1632,7 +1620,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -1750,6 +1737,7 @@
 				6674A0D420A5849D00AAB527 /* ThreadViewController.swift in Sources */,
 				66E08369211324D400B39A75 /* SessionsCell.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */,
+				668BD59121D455F5008C52D5 /* SearchSuggestionCell.swift in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */,
 				666938B021B1D4D800BA9620 /* PostCell.swift in Sources */,
@@ -1839,7 +1827,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66CEFD1B20ADABA600792B1B /* Post.swift in Sources */,
-				66CEFCFC20AD7EC000792B1B /* String+Utils.swift in Sources */,
 				66CEFD2420ADB4C600792B1B /* FetchController.swift in Sources */,
 				66CEFD0720AD9E8F00792B1B /* AnimeProgress.swift in Sources */,
 				66CEFD0D20ADA71A00792B1B /* AnimeRelation.swift in Sources */,
@@ -1859,7 +1846,6 @@
 				66CEFD0F20ADA7FD00792B1B /* AnimeCharacter.swift in Sources */,
 				66CEFD3D20AE008100792B1B /* InAppBrowserSelectorViewController.swift in Sources */,
 				66F2DF0E20AEE618001CD3CF /* ImageScrapper.swift in Sources */,
-				66CEFCF420AD7CC300792B1B /* TFHppleElement+Convenience.swift in Sources */,
 				66CEFD1120ADA83200792B1B /* AnimeCast.swift in Sources */,
 				66CEFD1D20ADAC0F00792B1B /* TimelinePost.swift in Sources */,
 				66CEFD2720ADBD9300792B1B /* InAppBrowserViewController.swift in Sources */,

@@ -6,8 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import KDatabaseKit
 import KCommonKit
 import UserNotifications
 //import Bolts

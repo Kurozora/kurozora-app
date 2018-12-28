@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KDatabaseKit
 
 //extension AnimeBaseViewController: RequiresAnimeProtocol {
 //    func initWithAnime(anime: Anime) {

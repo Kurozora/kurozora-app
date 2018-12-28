@@ -1,33 +1,29 @@
 source 'https://github.com/CocoaPods/Specs.git'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '10.0'
-
 inhibit_all_warnings!
 
 # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
 use_frameworks!
 
+# MARK: - Defs
 def common_pods
-    pod 'TRON', '~> 4.0'
-#    pod 'Lightbox', '2.1.2'
-    pod 'SwifterSwift', '~> 4.3'
-    pod 'KeychainAccess', '~> 3.1'
-    pod 'UIImageColors', '2.0.0'
-    pod 'ESTabBarController-swift', '~> 2.6'
-#    pod 'SnowGlobe'
-    pod 'SwiftTheme', '~> 0.4'
-    pod 'GrowingTextView', '~> 0.5'
-    pod 'Kingfisher', '~> 4.0'
+	pod 'BottomPopup'
     pod 'AXPhotoViewer'
     pod 'EmptyDataSet-Swift', '~> 4.2'
-    pod 'BottomPopup'
-    pod 'Tabman', '~> 1.10'
+	pod 'ESTabBarController-swift', '~> 2.6'
+	pod 'KeychainAccess', '~> 3.1'
+	pod 'Kingfisher', '~> 4.0'
+	#    pod 'Lightbox', '2.1.2'
 	pod 'NVActivityIndicatorView'
-end
-
-def project_pods
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
-#    pod 'Shimmer', '1.0.2'
+	#    pod 'Shimmer', '1.0.2'
+	#    pod 'SnowGlobe'
+	pod 'SwiftTheme', '~> 0.4'
+	pod 'SwifterSwift', '~> 4.3'
+	pod 'Tabman', '~> 1.10'
+	pod 'TRON', '~> 4.0'
+	pod 'UIImageColors', '2.0.0'
 end
 
 def kurozora_pods
@@ -41,23 +37,22 @@ def kurozora_pods
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'RichEditorView'
 	pod 'RichTextView'
+	# pod 'Siren' for app update notifications
 	pod 'WhatsNew'
-    # pod 'Siren' for app update notifications
 end
 
+# MARK: - Targets
 target 'Kurozora' do
     kurozora_pods
     common_pods
-    project_pods
-end
-
-target 'KDatabaseKit' do
-    common_pods
-    project_pods
 end
 
 target 'KCommonKit' do
-    common_pods
+	common_pods
+end
+
+target 'KDatabaseKit' do
+#    common_pods
 end
 
 # Workaround for Cocoapods issue #7606

@@ -159,6 +159,8 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
+		action.view.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
 			popoverController.sourceView = self.view

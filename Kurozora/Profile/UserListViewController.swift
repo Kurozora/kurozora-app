@@ -10,7 +10,6 @@ import Alamofire
 //import Bolts
 //import Parse
 import KCommonKit
-import KDatabaseKit
 
 class UserListViewController: UIViewController {
 

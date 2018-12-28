@@ -6,9 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import UIKit
-import KDatabaseKit
-import Alamofire
 import KCommonKit
 //import Bolts
 

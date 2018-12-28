@@ -31,7 +31,7 @@
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="-50" maxY="0.0"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="ZAW-6P-i9u">
-                                    <rect key="frame" x="0.0" y="620" width="375" height="47"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSf-rF-HbZ" userLabel="View More Button">
@@ -196,7 +196,7 @@
                                                 <constraint firstAttribute="width" constant="30" id="k8I-Nd-zGD"/>
                                                 <constraint firstAttribute="height" constant="25" id="pFa-Km-GNe"/>
                                             </constraints>
-                                            <state key="normal" image="more_dark"/>
+                                            <state key="normal" image="more_button_no_circle"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -254,7 +254,7 @@
     </scenes>
     <resources>
         <image name="create_new" width="30" height="30"/>
-        <image name="more_dark" width="67" height="67"/>
+        <image name="more_button_no_circle" width="28" height="7"/>
         <image name="play_white" width="30" height="30"/>
     </resources>
     <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>

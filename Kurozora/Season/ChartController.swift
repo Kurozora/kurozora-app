@@ -6,8 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
-import KDatabaseKit
+import UIKit
 
 class ChartController {
 //    class func fetchSeasonalChartAnime(seasonalChart: SeasonalChart) -> BFTask {

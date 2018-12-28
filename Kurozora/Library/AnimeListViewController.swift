@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import KDatabaseKit
 import EmptyDataSet_Swift
 import SCLAlertView
 import SwiftyJSON
@@ -17,13 +16,14 @@ import Kingfisher
 //    func controllerRequestRefresh() -> BFTask
 //}
 
-class AnimeListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
+class AnimeListViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var collectionView: UICollectionView!
 
 	private let refreshControl = UIRefreshControl()
 
 	var library: [JSON]?
     var sectionTitle: String?
+	var libraryLayout = "Detailed"
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -47,7 +47,7 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 		fetchLibrary()
 
         // Setup collection view
-        collectionView.delegate = self
+		collectionView.delegate = self
         collectionView.dataSource = self
         
         // Setup empty collection view
@@ -82,50 +82,73 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 			}
 		})
 	}
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - UICollectionViewDataSource
+extension AnimeListViewController: UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if let libraryCount = library?.count, libraryCount != 0 {
 			return libraryCount
 		}
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CheckIn", for: indexPath) as! LibraryCell
+		return 0
+	}
 
-		if let title = library?[indexPath.row]["title"].stringValue, title != "" {
-			libraryCell.titleLabel.text = title
-		} else {
-			libraryCell.titleLabel.text = "Unknown"
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		if libraryLayout == "Detailed" {
+			let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailedCell", for: indexPath) as! LibraryCell
+
+			if let title = library?[indexPath.row]["title"].stringValue, title != "" {
+				libraryCell.titleLabel.text = title
+			} else {
+				libraryCell.titleLabel.text = "Unknown"
+			}
+
+			if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
+				let posterThumb = URL(string: posterThumb)
+				let resource = ImageResource(downloadURL: posterThumb!)
+				libraryCell.posterView.kf.indicatorType = .activity
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			} else {
+				libraryCell.posterView.image = UIImage(named: "placeholder_poster")
+			}
+
+			if let bannerImage = library?[indexPath.row]["background_thumbnail"].stringValue, bannerImage != "" {
+				let bannerImage = URL(string: bannerImage)
+				let resource = ImageResource(downloadURL: bannerImage!)
+				libraryCell.episodeImageView?.kf.indicatorType = .activity
+				libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			} else {
+				libraryCell.episodeImageView?.image = UIImage(named: "placeholder_banner")
+			}
+
+			if let episodeCount = library?[indexPath.row]["episode_count"].intValue, let averageRating = library?[indexPath.row]["average_rating"].doubleValue {
+				libraryCell.userProgressLabel.text = "TV ·  \(episodeCount) ·  \(averageRating)"
+			} else {
+				libraryCell.userProgressLabel.text = "TV ·  0 ·  5"
+			}
+
+			return libraryCell
+		} else if libraryLayout == "Compact" {
+			let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompactCell", for: indexPath) as! LibraryCell
+
+			if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
+				let posterThumb = URL(string: posterThumb)
+				let resource = ImageResource(downloadURL: posterThumb!)
+				libraryCell.posterView.kf.indicatorType = .activity
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			} else {
+				libraryCell.posterView.image = UIImage(named: "placeholder_poster")
+			}
+
+			return libraryCell
 		}
 
-		if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
-			let posterThumb = URL(string: posterThumb)
-			let resource = ImageResource(downloadURL: posterThumb!)
-			libraryCell.posterView.kf.indicatorType = .activity
-			libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-		} else {
-			libraryCell.posterView.image = UIImage(named: "placeholder_poster")
-		}
+		return UICollectionViewCell()
+	}
+}
 
-		if let bannerImage = library?[indexPath.row]["background_thumbnail"].stringValue, bannerImage != "" {
-			let bannerImage = URL(string: bannerImage)
-			let resource = ImageResource(downloadURL: bannerImage!)
-			libraryCell.episodeImageView?.kf.indicatorType = .activity
-			libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-		} else {
-			libraryCell.episodeImageView?.image = UIImage(named: "placeholder_banner")
-		}
-
-		if let episodeCount = library?[indexPath.row]["episode_count"].intValue, let averageRating = library?[indexPath.row]["average_rating"].doubleValue {
-			libraryCell.userProgressLabel.text = "TV ·  \(episodeCount) ·  \(averageRating)"
-		} else {
-			libraryCell.userProgressLabel.text = "TV ·  0 ·  5"
-		}
-
-        return libraryCell
-    }
-
+// MARK: - UICollectionViewDelegate
+extension AnimeListViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let showID = library?[indexPath.row]["id"].intValue else {return}
 
@@ -135,6 +158,20 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 
 		self.present(showTabBarController!, animated: true, completion: nil)
 	}
+}
+
+extension AnimeListViewController: UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		if libraryLayout == "Detailed" {
+			let collectionViewWidth = collectionView.frame.size.width - 32
+			return CGSize(width: collectionViewWidth, height: 200)
+		} else if libraryLayout == "Compact" {
+			return CGSize(width: 80, height: 118)
+		}
+
+		return CGSize.zero
+	}
+}
 //    weak var delegate: AnimeListControllerDelegate?
 //
 //    var animator: ZFModalTransitionAnimator!
@@ -406,4 +443,3 @@ class AnimeListViewController: UIViewController, UICollectionViewDataSource, UIC
 //    func colorForPagerTabStripViewController(pagerTabStripViewController: PagerTabStripViewController!) -> UIColor! {
 //        return UIColor.white
 //    }
-}

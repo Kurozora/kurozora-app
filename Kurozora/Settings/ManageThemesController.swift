@@ -6,10 +6,7 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import UIKit
 import KCommonKit
-import KDatabaseKit
-import Alamofire
 import SwiftyJSON
 import SCLAlertView
 

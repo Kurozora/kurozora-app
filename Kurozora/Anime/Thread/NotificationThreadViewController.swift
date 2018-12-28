@@ -6,10 +6,8 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import Foundation
 //import Parse
 import KCommonKit
-import KDatabaseKit
 
 class NotificationThreadViewController: ThreadViewController {
 //

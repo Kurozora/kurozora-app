@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Max disk cache size
         ImageCache.default.maxDiskCacheSize = 60 * 1024 * 1024
+
+		// Global app tint color
+		self.window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
         
         // Reachability
 //        do {

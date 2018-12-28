@@ -28,7 +28,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCZ-KF-7Xm" userLabel="Create Thread Button" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="319" y="719" width="44" height="44"/>
+                                <rect key="frame" x="315" y="719" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="POO-Eg-1Tl"/>
@@ -50,7 +50,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="zCZ-KF-7Xm" secondAttribute="trailing" constant="12" id="7P2-CL-wDm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zCZ-KF-7Xm" secondAttribute="trailing" id="7P2-CL-wDm"/>
                             <constraint firstItem="Jvv-IQ-Yid" firstAttribute="top" secondItem="zCZ-KF-7Xm" secondAttribute="bottom" constant="15" id="9IQ-s8-f8M"/>
                         </constraints>
                     </view>
@@ -379,7 +379,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wqQ-qb-EOI">
-                        <barButtonItem key="rightBarButtonItem" title="More" image="more_dark" id="34p-Uk-w0n"/>
+                        <barButtonItem key="rightBarButtonItem" title="More" image="more_button_no_circle" id="34p-Uk-w0n"/>
                     </navigationItem>
                     <connections>
                         <outlet property="downVoteButton" destination="lG8-Y3-PnZ" id="CZr-gJ-t0k"/>
@@ -450,7 +450,7 @@
     </scenes>
     <resources>
         <image name="create_new" width="30" height="30"/>
-        <image name="more_dark" width="66.666664123535156" height="66.666664123535156"/>
+        <image name="more_button_no_circle" width="28" height="7"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

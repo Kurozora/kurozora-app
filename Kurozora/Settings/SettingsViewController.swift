@@ -8,7 +8,6 @@
 
 import UIKit
 import KCommonKit
-import KDatabaseKit
 import Kingfisher
 import SCLAlertView
 

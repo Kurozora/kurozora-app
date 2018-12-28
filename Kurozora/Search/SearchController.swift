@@ -14,6 +14,7 @@ class SearchController: UISearchController, UISearchBarDelegate {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.searchBar.placeholder = "I'm searching for..."
+		self.searchResultsController?.view.isHidden = false
 	}
 
 	override func viewDidLoad() {

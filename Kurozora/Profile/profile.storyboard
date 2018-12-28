@@ -72,7 +72,7 @@
                                                 <constraint firstAttribute="width" constant="30" id="cwT-Wm-t43"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <state key="normal" image="more_dark"/>
+                                            <state key="normal" image="more_button_no_circle"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                     <real key="value" value="0.40000000000000002"/>
@@ -680,7 +680,7 @@
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <state key="normal" image="more_dark">
+                                                                    <state key="normal" image="more_button_no_circle">
                                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                     <userDefinedRuntimeAttributes>
@@ -829,7 +829,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWI-Ge-Fk4" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="319" y="719" width="44" height="44"/>
+                                <rect key="frame" x="315" y="719" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5ay-3N-h7c"/>
@@ -860,7 +860,7 @@
                             <constraint firstItem="ZMs-Re-xw6" firstAttribute="top" secondItem="pWI-Ge-Fk4" secondAttribute="bottom" constant="15" id="JZP-Et-5SL"/>
                             <constraint firstItem="ZMs-Re-xw6" firstAttribute="top" secondItem="zQ7-PH-IwT" secondAttribute="bottom" constant="-34" id="K4C-b6-rE4"/>
                             <constraint firstItem="zQ7-PH-IwT" firstAttribute="leading" secondItem="eMa-gr-h7W" secondAttribute="leading" id="U2v-KO-8d2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pWI-Ge-Fk4" secondAttribute="trailing" constant="-4" id="kfs-8m-tgB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pWI-Ge-Fk4" secondAttribute="trailing" id="kfs-8m-tgB"/>
                             <constraint firstAttribute="trailing" secondItem="zQ7-PH-IwT" secondAttribute="trailing" id="mMi-ix-JOb"/>
                             <constraint firstItem="zQ7-PH-IwT" firstAttribute="top" secondItem="dhk-Th-2L9" secondAttribute="bottom" constant="-64" id="rOr-3D-xpr"/>
                         </constraints>
@@ -1559,7 +1559,7 @@
         <image name="colorful" width="1130" height="706"/>
         <image name="create_new" width="30" height="30"/>
         <image name="default_avatar" width="100" height="100"/>
-        <image name="more_dark" width="66.666664123535156" height="66.666664123535156"/>
+        <image name="more_button_no_circle" width="28" height="7"/>
         <image name="search" width="30" height="30"/>
         <image name="settings" width="75" height="75"/>
     </resources>

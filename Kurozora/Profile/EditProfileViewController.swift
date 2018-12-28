@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 //import Bolts
-import KDatabaseKit
 
 protocol EditProfileViewControllerProtocol: class {
     func editProfileViewControllerDidEditedUser(user: User?)

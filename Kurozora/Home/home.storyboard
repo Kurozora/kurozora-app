@@ -146,7 +146,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="186" id="OiG-iz-7NU"/>
                                                     </constraints>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="sho-pu-viE">
+                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="0.0" id="sho-pu-viE">
                                                         <size key="itemSize" width="85" height="186"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -285,7 +285,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="150" id="72N-b4-c5R"/>
                                                     </constraints>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="lOU-nm-IqW">
+                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="0.0" id="lOU-nm-IqW">
                                                         <size key="itemSize" width="258" height="136"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>

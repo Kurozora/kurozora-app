@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import GrowingTextView
 
 class ShowSynopsisCell: UITableViewCell {
-    @IBOutlet weak var synopsisTextView: GrowingTextView!
+    @IBOutlet weak var synopsisTextView: UITextField!
 }

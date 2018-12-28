@@ -19,10 +19,63 @@ enum SearchScope: Int {
 
 class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var suggestionsCollectionView: UICollectionView!
+	@IBOutlet weak var suggestionsCollctionViewHeight: NSLayoutConstraint!
+	@IBOutlet weak var suggestionsHeaderView: UIView!
 
 	var results: [JSON]?
 	var timer: Timer?
 	var currentScope: Int!
+	var suggestions: [JSON] = [
+		[
+			"id": 118,
+			"title": "ONE ~Kagayaku Kisetsu e~",
+			"average_rating": 0,
+			"poster_thumbnail": ""
+		],
+		[
+			"id": 202,
+			"title": "Naruto",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/78857-9.jpg"
+		],
+		[
+			"id": 147,
+			"title": "Outlaw Star",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/75911-5.jpg"
+		],
+		[
+			"id": 235,
+			"title": "Kodocha",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79544-2.jpg"
+		],
+		[
+			"id": 3915,
+			"title": "Re: Zero kara Hajimeru Isekai Seikatsu",
+			"average_rating": 0,
+			"poster_thumbnail": ""
+		],
+		[
+			"id": 56,
+			"title": "Vampire Hunter D",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79042-3.jpg"
+		],
+		[
+			"id": 22,
+			"title": ".hack",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79099-3.jpg"
+		],
+		[
+			"id": 28,
+			"title": "Hellsing",
+			"average_rating": 0,
+			"poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/71278-6.jpg"
+		]
+	]
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -31,40 +84,53 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		collectionView.isHidden = true
 		collectionView.delegate = self
 		collectionView.dataSource = self
+
+		// Suggestions collection view
+		suggestionsCollctionViewHeight.constant = suggestionsCollctionViewHeight.constant / 2
+		suggestionsCollectionView.delegate = self
+		suggestionsCollectionView.dataSource = self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+		suggestionsCollectionView.isHidden = false
+		suggestionsHeaderView.isHidden = false
+		collectionView.isHidden = true
         view.endEditing(true)
     }
 
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
-		var cellHeight: CGFloat = 0
-
-		switch searchScope {
-		case .anime:
-			let searchShowCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: IndexPath(item: 0, section: 0)) as! SearchShowCell
-			cellHeight = searchShowCell.bounds.size.height
-		case .myLibrary: break
-		case .forum: break
-		case .user:
-			let searchUserCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: IndexPath(item: 0, section: 0)) as! SearchUserCell
-			cellHeight = searchUserCell.bounds.size.height
-		}
-
-		collectionView.contentSize.height = cellHeight
+		guard let text = searchBar.text else { return }
 
 		results = []
 		collectionView.reloadData()
+
+		if text != "" {
+			switch searchScope {
+			case .anime:
+				search(forText: text, searchScope: selectedScope)
+			case .myLibrary: break
+			case .forum: break
+			case .user:
+				search(forText: text, searchScope: selectedScope)
+			}
+		}
 	}
 
 	// MARK: - Functions
-	fileprivate func search(for text: String, searchScope: Int) {
+	fileprivate func search(forText text: String, searchScope: Int) {
+		// Prepare view for search
+		suggestionsCollectionView.isHidden = true
+		suggestionsHeaderView.isHidden = true
+		collectionView.isHidden = false
 		currentScope = searchScope
+
 		guard let searchScope = SearchScope(rawValue: searchScope) else { return }
+
 		switch searchScope {
 		case .anime:
 			if text != "" {
@@ -92,12 +158,33 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
 		if let text = userInfo?["searchText"] as? String, let scope = userInfo?["searchScope"] as? Int {
-			search(for: text, searchScope: scope)
+			search(forText: text, searchScope: scope)
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func showMoreButtonPressed(_ sender: UIButton) {
+		if sender.title(for: .normal) == "Show More" {
+			sender.setTitle("Show Less", for: .normal)
+			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant * 2
+			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+				self.view.layoutIfNeeded()
+			}, completion: nil)
+		} else {
+			sender.setTitle("Show More", for: .normal)
+			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant / 2
+			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+				self.view.layoutIfNeeded()
+			}, completion: nil)
 		}
 	}
 
 	// MARK: - UISearchResultsUpdating
 	func updateSearchResults(for searchController: UISearchController) {
+		suggestionsCollectionView.isHidden = false
+		suggestionsHeaderView.isHidden = false
+		collectionView.isHidden = true
+		searchController.searchResultsController?.view.isHidden = false
 	}
 
 	// MARK: - Prepare for segue
@@ -109,6 +196,7 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 				showTabBarController?.showID = sender
 			}
 		} else if segue.identifier == "ProfileSegue" {
+			// Show user profile for user cell
 			if let sender = sender as? Int {
 				let kurozoraNavigationController = segue.destination as? KurozoraNavigationController
 				let profileViewController = kurozoraNavigationController?.topViewController as? ProfileViewController
@@ -124,7 +212,7 @@ extension SearchResultsViewController: UISearchBarDelegate {
 		guard let text = searchBar.text else { return }
 		let scope = searchBar.selectedScopeButtonIndex
 
-		search(for: text, searchScope: scope)
+		search(forText: text, searchScope: scope)
 	}
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -146,117 +234,167 @@ extension SearchResultsViewController: UISearchBarDelegate {
 }
 
 extension SearchResultsViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if let resultsCount = results?.count, resultsCount != 0 {
-        	return resultsCount
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		if collectionView == suggestionsCollectionView {
+			return 10
 		}
+
 		return 0
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		if collectionView == suggestionsCollectionView {
+			return 10
+		}
+
+		return 0
+	}
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if collectionView == self.collectionView {
+			if let resultsCount = results?.count, resultsCount != 0 {
+				return resultsCount
+			}
+			return 0
+		}
+
+		// Search suggestion cell
+		return suggestions.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		if collectionView == self.collectionView {
+			guard let searchScope = SearchScope(rawValue: currentScope) else { return UICollectionViewCell() }
 
-		guard let searchScope = SearchScope(rawValue: currentScope) else { return UICollectionViewCell() }
+			switch searchScope {
+			case .anime:
+				let searchShowCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! SearchShowCell
 
-		switch searchScope {
-		case .anime:
-			let searchShowCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! SearchShowCell
+				if let posterThumbnail = results?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
+					let posterThumbnailUrl = URL(string: posterThumbnail)
+					let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+					searchShowCell.posterImageView.kf.indicatorType = .activity
+					searchShowCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				} else {
+					searchShowCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+				}
 
-			if let posterThumbnail = results?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
-				let posterThumbnailUrl = URL(string: posterThumbnail)
-				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-				searchShowCell.posterImageView.kf.indicatorType = .activity
-				searchShowCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-			} else {
-				searchShowCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+				if let title = results?[indexPath.row]["title"].stringValue, title != "" {
+					searchShowCell.titleLabel.text = title
+				} else {
+					searchShowCell.titleLabel.text = ""
+				}
+
+				if let airDate = results?[indexPath.row]["air_date"].stringValue, airDate != "" {
+					searchShowCell.airDateLabel.text = airDate
+				} else {
+					searchShowCell.airDateLabel.text = "Dec, 25 2018"
+				}
+
+				if let averageRating = results?[indexPath.row]["average_rating"].intValue, averageRating != 0 {
+					searchShowCell.scoreLabel.text = "\(averageRating)"
+				} else {
+					searchShowCell.scoreLabel.text = "0"
+				}
+
+				if let status = results?[indexPath.row]["status"].stringValue, status != "" {
+					searchShowCell.statusLabel.text = status
+				} else {
+					searchShowCell.statusLabel.text = "Currently Airing"
+				}
+
+				return searchShowCell
+			case .myLibrary: break
+			case .forum: break
+			case .user:
+				let searchUserCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! SearchUserCell
+
+				if let avatar = results?[indexPath.row]["avatar"].stringValue, avatar != "" {
+					let avatarUrl = URL(string: avatar)
+					let resource = ImageResource(downloadURL: avatarUrl!)
+					searchUserCell.avatarImageView.kf.indicatorType = .activity
+					searchUserCell.avatarImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				} else {
+					searchUserCell.avatarImageView.image = #imageLiteral(resourceName: "default_avatar")
+				}
+
+				if let username = results?[indexPath.row]["username"].stringValue, username != "" {
+					searchUserCell.usernameLabel.text = username
+				} else {
+					searchUserCell.usernameLabel.text = ""
+				}
+
+				if let reputation = results?[indexPath.row]["reputation_count"].intValue, reputation != 0 {
+					searchUserCell.reputationLabel.text = "\(reputation)"
+				} else {
+					searchUserCell.reputationLabel.text = "0"
+				}
+
+				return searchUserCell
 			}
-
-			if let title = results?[indexPath.row]["title"].stringValue, title != "" {
-				searchShowCell.titleLabel.text = title
-			} else {
-				searchShowCell.titleLabel.text = ""
-			}
-
-			if let airDate = results?[indexPath.row]["air_date"].stringValue, airDate != "" {
-				searchShowCell.airDateLabel.text = airDate
-			} else {
-				searchShowCell.airDateLabel.text = "Dec, 25 2018"
-			}
-
-			if let averageRating = results?[indexPath.row]["average_rating"].intValue, averageRating != 0 {
-				searchShowCell.scoreLabel.text = "\(averageRating)"
-			} else {
-				searchShowCell.scoreLabel.text = "0"
-			}
-
-			if let status = results?[indexPath.row]["status"].stringValue, status != "" {
-				searchShowCell.statusLabel.text = status
-			} else {
-				searchShowCell.statusLabel.text = "Currently Airing"
-			}
-
-			return searchShowCell
-		case .myLibrary: break
-		case .forum: break
-		case .user:
-			let searchUserCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! SearchUserCell
-
-			if let avatar = results?[indexPath.row]["avatar"].stringValue, avatar != "" {
-				let avatarUrl = URL(string: avatar)
-				let resource = ImageResource(downloadURL: avatarUrl!)
-				searchUserCell.avatarImageView.kf.indicatorType = .activity
-				searchUserCell.avatarImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-			} else {
-				searchUserCell.avatarImageView.image = #imageLiteral(resourceName: "default_avatar")
-			}
-
-			if let username = results?[indexPath.row]["username"].stringValue, username != "" {
-				searchUserCell.usernameLabel.text = username
-			} else {
-				searchUserCell.usernameLabel.text = ""
-			}
-
-			if let reputation = results?[indexPath.row]["reputation_count"].intValue, reputation != 0 {
-				searchUserCell.reputationLabel.text = "\(reputation)"
-			} else {
-				searchUserCell.reputationLabel.text = "0"
-			}
-
-			return searchUserCell
+			return UICollectionViewCell()
 		}
-		return UICollectionViewCell()
+
+		// Search suggestion cell
+		let searchSuggestionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchSuggestionCell", for: indexPath) as! SearchSuggestionCell
+		searchSuggestionCell.titleLabel.text = suggestions[indexPath.row]["title"].stringValue
+
+		let posterThumbnail = suggestions[indexPath.row]["poster_thumbnail"].stringValue
+		if posterThumbnail != "" {
+			let posterThumbnailUrl = URL(string: posterThumbnail)
+			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+			searchSuggestionCell.posterImageView.kf.indicatorType = .activity
+			searchSuggestionCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			searchSuggestionCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+		}
+
+		return searchSuggestionCell
     }
 }
 
 extension SearchResultsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let searchScope = SearchScope(rawValue: currentScope) else { return }
-		switch searchScope {
-		case .anime:
-			if let showID = results?[indexPath.item]["id"].intValue {
-				self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
+		if collectionView == self.collectionView {
+			guard let searchScope = SearchScope(rawValue: currentScope) else { return }
+			switch searchScope {
+			case .anime:
+				if let showID = results?[indexPath.item]["id"].intValue {
+					self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
+				}
+			case .myLibrary: break
+			case .forum: break
+			case .user:
+				if let userID = results?[indexPath.item]["id"].intValue {
+					self.performSegue(withIdentifier: "ProfileSegue", sender: userID)
+				}
 			}
-		case .myLibrary: break
-		case .forum: break
-		case .user:
-			if let userID = results?[indexPath.item]["id"].intValue {
-				self.performSegue(withIdentifier: "ProfileSegue", sender: userID)
-			}
+		} else {
+			// Search suggestion cell
+			let showID = suggestions[indexPath.item]["id"].intValue
+			self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
 		}
     }
 }
 
 extension SearchResultsViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		guard let searchScope = SearchScope(rawValue: currentScope) else { return CGSize.zero }
-		let cellWidth = collectionView.bounds.size.width
-		switch searchScope {
-		case .anime:
-			return CGSize(width: cellWidth, height: 136)
-		case .myLibrary: break
-		case .forum: break
-		case .user:
-			return CGSize(width: cellWidth, height: 82)
+		if collectionView == self.collectionView {
+			guard let searchScope = SearchScope(rawValue: currentScope) else { return CGSize.zero }
+			let cellWidth = collectionView.bounds.size.width
+
+			switch searchScope {
+			case .anime:
+				return CGSize(width: cellWidth, height: 136)
+			case .myLibrary: break
+			case .forum: break
+			case .user:
+				return CGSize(width: cellWidth, height: 82)
+			}
 		}
-		return CGSize.zero
+
+		// Search suggestion cell
+		let suggestionsCollectionViewSize = CGSize(width: 68, height: 130)
+		return suggestionsCollectionViewSize
 	}
 }

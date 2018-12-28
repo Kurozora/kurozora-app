@@ -11,7 +11,6 @@ import UIKit
 //import RSKImageCropper
 //import Bolts
 //import Parse
-import KDatabaseKit
 
 public protocol UserProfileManagerDelegate: class {
     func selectedAvatar(avatar: UIImage)
