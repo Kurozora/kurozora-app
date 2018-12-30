@@ -165,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
 				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 2
+					tabBarController.selectedIndex = 1
 				}
 			}
 		}
