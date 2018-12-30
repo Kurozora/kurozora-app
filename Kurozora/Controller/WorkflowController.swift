@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import UIKit
 import KCommonKit
 import PusherSwift
 import NotificationBannerSwift
@@ -35,16 +34,19 @@ public class WorkflowController {
 							banner.haptic = .heavy
 							banner.show()
 							banner.onTap = {
-								let storyBoard = UIStoryboard(name: "settings", bundle: nil)
+								if UIApplication.topViewController() as? ManageActiveSessionsController != nil {
+								} else {
+									let storyBoard = UIStoryboard(name: "settings", bundle: nil)
 
-								let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
-								let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
-								let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
+									let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
+									let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
+									let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
 
-								kurozoraNavigationController?.setViewControllers([vc!], animated: true)
-								splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
+									kurozoraNavigationController?.setViewControllers([vc!], animated: true)
+									splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
 
-								UIApplication.topViewController()?.present(splitView!, animated: true)
+									UIApplication.topViewController()?.present(splitView!, animated: true)
+								}
 							}
 
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])

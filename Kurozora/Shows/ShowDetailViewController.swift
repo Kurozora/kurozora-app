@@ -228,18 +228,18 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 				let posterThumb = URL(string: posterThumb)
 				let resource = ImageResource(downloadURL: posterThumb!)
 				posterImageView.kf.indicatorType = .activity
-				posterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 			} else {
-				posterImageView.image = UIImage(named: "placeholder_poster")
+				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
 			if let bannerImage = showDetails?.banner, bannerImage != "" {
 				let bannerImage = URL(string: bannerImage)
 				let resource = ImageResource(downloadURL: bannerImage!)
 				bannerImageView.kf.indicatorType = .activity
-				bannerImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 			} else {
-				bannerImageView.image = UIImage(named: "placeholder_banner")
+				bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
 			if let youtubeID = showDetails?.youtubeId, youtubeID.count > 0 {
@@ -290,24 +290,15 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		var shareText: String!
-		var image: UIImage!
 		guard let showID = showID else { return }
 
 		if let title = showDetails?.title {
-			shareText = "You should watch \"\(title)\" via @KurozoraApp \n kurozora://anime/\(showID)"
+			shareText = "https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"
 		} else {
-			shareText = "You should watch this anime via @KurozoraApp \n kurozora://anime/\(showID)"
+			shareText = "https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"
 		}
 
-		if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
-			let posterThumb = URL(string: posterThumb)
-			let data = try? Data(contentsOf: posterThumb!)
-			image = UIImage(data: data!)
-		} else {
-			image = UIImage(named: "placeholder_poster")
-		}
-
-		let activityVC = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
+		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
 			popoverController.sourceView = self.view

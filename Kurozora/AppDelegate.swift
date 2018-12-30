@@ -12,19 +12,38 @@ import RevealingSplashView
 import Kingfisher
 import SCLAlertView
 import TRON
-import ESTabBarController_swift
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
+let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var authenticated = false
-
-    let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "kurozora_icon")!,iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: UIColor(red: 53/255, green: 58/255, blue: 80/255, alpha: 1))
+	var isUnreachable = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
+		// Initialize UIWindow
+		window = UIWindow()
+		window?.makeKeyAndVisible()
+
+		// If the network is unreachable show the offline page
+		KNetworkManager.isUnreachable { _ in
+			self.isUnreachable = true
+		}
+
+		if isUnreachable {
+			Kurozora.showOfflinePage(for: window)
+			return true
+		}
+
+		// Monitor network availability
+		KNetworkManager.shared.reachability.whenUnreachable = { _ in
+			Kurozora.showOfflinePage(for: nil)
+		}
+
+		// Initialize Pusher
 		WorkflowController.pusherInit()
 
         // Max disk cache size
@@ -33,30 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Global app tint color
 		self.window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
         
-        // Reachability
-//        do {
-//            Network.reachability = try Reachability(hostname: "www.google.com")
-//            do {
-//                try Network.reachability?.start()
-//            } catch let error as Network.Error {
-//                NSLog("---Reachability error 1: \(error)")
-//            } catch {
-//                NSLog("---Reachability error 2: \(error)")
-//            }
-//        } catch {
-//            NSLog("---Reachability error 3: \(error)")
-//        }
-        
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
-        // Main view controller
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-
+		// User login status
         if User.username() != nil {
 			authenticated = true
             let customTabBar = KurozoraTabBarController()
@@ -91,16 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        Service.shared.validateSession(withSuccess: { (success) in
-            if !success {
-				self.authenticated = false
-                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-                self.window?.rootViewController = vc
-			} else {
-				self.authenticated = true
-			}
-        })
+		KNetworkManager.isReachable { _ in
+			self.authenticated = Kurozora.validateSession(window: self.window)
+		}
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -113,64 +108,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 		if authenticated {
-			let urlScheme = url.host?.removingPercentEncoding
-
-			if urlScheme == "anime" {
-				let showID = url.lastPathComponent
-				if showID != "" {
-					let storyboard = UIStoryboard(name: "details", bundle: nil)
-					if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
-						showTabBarController.showID = Int(showID)
-
-						UIApplication.topViewController()?.present(showTabBarController, animated: true)
-					}
-				}
-			}
-
-			if urlScheme == "profile" || urlScheme == "feed" || urlScheme == "timeline" {
-				let userID = url.lastPathComponent
-				if userID != "" {
-					let storyboard = UIStoryboard(name: "profile", bundle: nil)
-					if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController {
-						profileViewController.otherUserID = Int(userID)
-
-						let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController)
-
-						UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
-					}
-				} else {
-					if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-						tabBarController.selectedIndex = 4
-					}
-				}
-			}
-
-			if urlScheme == "explore" || urlScheme == "home" {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 0
-				}
-			}
-
-			if urlScheme == "notification" || urlScheme == "notifications" {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 3
-				}
-			}
-
-			if urlScheme == "forum" || urlScheme == "forums" {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 2
-				}
-			}
-
-			if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 1
-				}
-			}
+			Kurozora.schemeHandler(app, open: url, options: options)
 		}
 
 		return true
 	}
 }
-

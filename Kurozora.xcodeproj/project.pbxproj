@@ -18,6 +18,9 @@
 		66058DC0212E97E90084B79E /* ShowCharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DBF212E97E90084B79E /* ShowCharacterCell.swift */; };
 		66058DC2212E97FD0084B79E /* ShowTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DC1212E97FD0084B79E /* ShowTopicCell.swift */; };
 		6609B058213532750007EE34 /* rate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6609B057213532750007EE34 /* rate.storyboard */; };
+		6609FAD721D8D237008DF5E4 /* Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FAD621D8D237008DF5E4 /* Kurozora.swift */; };
+		6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */; };
+		6609FADB21D91369008DF5E4 /* KurozoraReachabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */; };
 		660A642621CE90080032FDCF /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642521CE90080032FDCF /* JSONError.swift */; };
 		660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642721D01CEA0032FDCF /* ThreadReplies.swift */; };
 		660A642A21D102EA0032FDCF /* BannerCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642921D102EA0032FDCF /* BannerCollectionLayout.swift */; };
@@ -43,7 +46,7 @@
 		6614DF652089380E00B0BC69 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF642089380D00B0BC69 /* CustomTextField.swift */; };
 		6614DF6A2089391600B0BC69 /* KCommonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* KCommonKit.swift */; };
 		66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3A215C04B900D0D722 /* AccountTableViewController.swift */; };
-		66160C3E215C271700D0D722 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3D215C271700D0D722 /* Reachability.swift */; };
+		66160C3E215C271700D0D722 /* KurozoraReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66160C3D215C271700D0D722 /* KurozoraReachability.swift */; };
 		66160C40215C2DEB00D0D722 /* reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* reachability.storyboard */; };
 		6619EE70216F86C500655B99 /* ForumSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE6F216F86C500655B99 /* ForumSections.swift */; };
 		6619EE74216F969B00655B99 /* ForumsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsChildViewController.swift */; };
@@ -289,6 +292,9 @@
 		66058DBF212E97E90084B79E /* ShowCharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCharacterCell.swift; sourceTree = "<group>"; };
 		66058DC1212E97FD0084B79E /* ShowTopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTopicCell.swift; sourceTree = "<group>"; };
 		6609B057213532750007EE34 /* rate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = rate.storyboard; sourceTree = "<group>"; };
+		6609FAD621D8D237008DF5E4 /* Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kurozora.swift; sourceTree = "<group>"; };
+		6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNetworkManager.swift; sourceTree = "<group>"; };
+		6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraReachabilityViewController.swift; sourceTree = "<group>"; };
 		660A642521CE90080032FDCF /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		660A642721D01CEA0032FDCF /* ThreadReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplies.swift; sourceTree = "<group>"; };
 		660A642921D102EA0032FDCF /* BannerCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionLayout.swift; sourceTree = "<group>"; };
@@ -317,7 +323,7 @@
 		6614DF682089384100B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6614DF692089391600B0BC69 /* KCommonKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KCommonKit.swift; sourceTree = "<group>"; };
 		66160C3A215C04B900D0D722 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
-		66160C3D215C271700D0D722 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		66160C3D215C271700D0D722 /* KurozoraReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraReachability.swift; sourceTree = "<group>"; };
 		66160C3F215C2DEB00D0D722 /* reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = reachability.storyboard; sourceTree = "<group>"; };
 		6619EE6F216F86C500655B99 /* ForumSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumSections.swift; sourceTree = "<group>"; };
 		6619EE73216F969B00655B99 /* ForumsChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsChildViewController.swift; sourceTree = "<group>"; };
@@ -670,6 +676,7 @@
 				66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */,
 				6611F194213313AA009BF736 /* ShowTabBarController.swift */,
 				669C8D592107B9450014EB7A /* KurozoraNavigationController.swift */,
+				6609FAD621D8D237008DF5E4 /* Kurozora.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -703,8 +710,10 @@
 		6614ABE2215EB23500A3A0C9 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
-				66160C3D215C271700D0D722 /* Reachability.swift */,
 				66160C3F215C2DEB00D0D722 /* reachability.storyboard */,
+				6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */,
+				66160C3D215C271700D0D722 /* KurozoraReachability.swift */,
+				6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */,
 			);
 			path = Reachability;
 			sourceTree = "<group>";
@@ -1692,6 +1701,8 @@
 				66DEB4AD21D28B550093725F /* SearchShowCell.swift in Sources */,
 				66754BC621011D1000268355 /* User.swift in Sources */,
 				66FE5D03215B9F9100E2844A /* SubmitTableViewCell.swift in Sources */,
+				6609FADB21D91369008DF5E4 /* KurozoraReachabilityViewController.swift in Sources */,
+				6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */,
 				666C82602168080800C93A70 /* ShowCell.swift in Sources */,
 				6674A0C520A45E7B00AAB527 /* TitleCell.swift in Sources */,
 				661F9F822087282500CF4153 /* LoginViewController.swift in Sources */,
@@ -1714,6 +1725,7 @@
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				66EF26C6215F960A00FB2B19 /* UIImage+Base64.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* NotificationCell.swift in Sources */,
+				6609FAD721D8D237008DF5E4 /* Kurozora.swift in Sources */,
 				66058DB8212E97360084B79E /* ShowSynopsisCell.swift in Sources */,
 				66058DBE212E97CA0084B79E /* ShowTitleCell.swift in Sources */,
 				66938FE22121625300ADA5D6 /* HeaderCell.swift in Sources */,
@@ -1797,7 +1809,7 @@
 				66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */,
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				667F9AD721B47EF0003F6629 /* RightBadgeCell.swift in Sources */,
-				66160C3E215C271700D0D722 /* Reachability.swift in Sources */,
+				66160C3E215C271700D0D722 /* KurozoraReachability.swift in Sources */,
 				660B5B5F21523612002D05F3 /* Session.swift in Sources */,
 				666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */,
 				6674A0D620A58AA300AAB527 /* NotificationThreadViewController.swift in Sources */,

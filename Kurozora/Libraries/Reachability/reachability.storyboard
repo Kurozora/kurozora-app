@@ -1,92 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y7k-DG-Epc">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y7k-DG-Epc">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Reachability-->
         <scene sceneID="1VR-py-RkL">
             <objects>
-                <viewController storyboardIdentifier="Reachability" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y7k-DG-Epc" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Reachability" title="Reachability" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y7k-DG-Epc" customClass="KurozoraReachabilityViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YCK-dy-Mi4"/>
                         <viewControllerLayoutGuide type="bottom" id="jjR-z2-haq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="33p-NI-IU3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eI6-St-dsI">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V5R-Ir-9M0">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yKL-qq-VMf">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mwJ-fM-dPN">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjz-bL-0qN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xA1-r9-bJV">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lQp-KQ-zEE">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Cg3-Ym-pTF">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connot connect to a network" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVv-u1-3Ms">
-                                                        <rect key="frame" x="50" y="313" width="286" height="21"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must connect to a Wi-Fi network to use Kurozora" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-th-a9Z">
-                                                        <rect key="frame" x="32" y="350" width="322" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_signal_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ND4-6U-Mvi">
-                                                        <rect key="frame" x="129" y="169" width="128" height="128"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="128" id="EOh-oE-Em9"/>
-                                                            <constraint firstAttribute="width" constant="128" id="STY-EF-AeK"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="NVv-u1-3Ms" firstAttribute="centerY" secondItem="lQp-KQ-zEE" secondAttribute="centerY" id="52c-ku-qOG"/>
-                                                    <constraint firstAttribute="trailing" secondItem="NVv-u1-3Ms" secondAttribute="trailing" constant="50" id="7ia-y5-vU6"/>
-                                                    <constraint firstItem="LjC-th-a9Z" firstAttribute="centerX" secondItem="NVv-u1-3Ms" secondAttribute="centerX" id="BDa-Mz-xAG"/>
-                                                    <constraint firstAttribute="trailing" secondItem="LjC-th-a9Z" secondAttribute="trailing" constant="32" id="Ppd-rV-2fq"/>
-                                                    <constraint firstItem="ND4-6U-Mvi" firstAttribute="top" secondItem="lQp-KQ-zEE" secondAttribute="top" constant="169" id="UFq-iJ-kMb"/>
-                                                    <constraint firstItem="ND4-6U-Mvi" firstAttribute="centerX" secondItem="lQp-KQ-zEE" secondAttribute="centerX" id="fIj-Ww-wFT"/>
-                                                    <constraint firstItem="LjC-th-a9Z" firstAttribute="top" secondItem="NVv-u1-3Ms" secondAttribute="bottom" constant="16" id="j1U-u9-32d"/>
-                                                    <constraint firstItem="LjC-th-a9Z" firstAttribute="leading" secondItem="lQp-KQ-zEE" secondAttribute="leading" constant="32" id="kPz-PN-0Ys"/>
-                                                    <constraint firstItem="NVv-u1-3Ms" firstAttribute="leading" secondItem="lQp-KQ-zEE" secondAttribute="leading" constant="50" id="p8Q-Jf-4UJ"/>
-                                                    <constraint firstItem="NVv-u1-3Ms" firstAttribute="top" secondItem="ND4-6U-Mvi" secondAttribute="bottom" constant="16" id="pvq-3g-lhP"/>
-                                                </constraints>
                                             </view>
                                             <vibrancyEffect>
                                                 <blurEffect style="dark"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kon-XY-Vpb" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="143" y="301.5" width="128" height="128"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_signal_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ND4-6U-Mvi">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ND4-6U-Mvi" secondAttribute="trailing" id="FYN-T0-GQP"/>
+                                    <constraint firstItem="ND4-6U-Mvi" firstAttribute="centerX" secondItem="kon-XY-Vpb" secondAttribute="centerX" id="p7F-ob-XxX"/>
+                                    <constraint firstAttribute="bottom" secondItem="ND4-6U-Mvi" secondAttribute="bottom" id="pxS-dY-IOb"/>
+                                    <constraint firstItem="ND4-6U-Mvi" firstAttribute="leading" secondItem="kon-XY-Vpb" secondAttribute="leading" id="sCp-2g-hip"/>
+                                    <constraint firstItem="ND4-6U-Mvi" firstAttribute="top" secondItem="kon-XY-Vpb" secondAttribute="top" id="vmo-FB-pYw"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cannot connect to a network 😣" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVv-u1-3Ms">
+                                <rect key="frame" x="20" y="437.5" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must connect to a Wi-Fi network or have a Cellular data plan to use Kurozora" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-th-a9Z">
+                                <rect key="frame" x="20" y="462.5" width="374" height="31.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shM-IJ-2nj">
+                                <rect key="frame" x="161.5" y="524" width="91" height="33"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Reconnect!"/>
+                                <connections>
+                                    <action selector="reconnectButtonPressed:" destination="Y7k-DG-Epc" eventType="touchUpInside" id="L2o-of-sbc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="jjR-z2-haq" firstAttribute="top" secondItem="eI6-St-dsI" secondAttribute="bottom" id="Mb1-xd-jvI"/>
-                            <constraint firstAttribute="trailing" secondItem="eI6-St-dsI" secondAttribute="trailing" id="mQJ-FH-Op4"/>
-                            <constraint firstItem="eI6-St-dsI" firstAttribute="leading" secondItem="33p-NI-IU3" secondAttribute="leading" id="uHj-vw-N8J"/>
-                            <constraint firstItem="eI6-St-dsI" firstAttribute="top" secondItem="YCK-dy-Mi4" secondAttribute="bottom" id="z0b-CQ-ink"/>
+                            <constraint firstItem="shM-IJ-2nj" firstAttribute="top" secondItem="LjC-th-a9Z" secondAttribute="bottom" constant="30" id="0du-HY-fng"/>
+                            <constraint firstItem="NVv-u1-3Ms" firstAttribute="leading" secondItem="33p-NI-IU3" secondAttribute="leadingMargin" id="7Zs-AO-UmB"/>
+                            <constraint firstItem="LjC-th-a9Z" firstAttribute="centerX" secondItem="NVv-u1-3Ms" secondAttribute="centerX" id="CTx-9A-XQ0"/>
+                            <constraint firstItem="NVv-u1-3Ms" firstAttribute="centerY" secondItem="33p-NI-IU3" secondAttribute="centerY" id="Fdh-zs-eB9"/>
+                            <constraint firstItem="LjC-th-a9Z" firstAttribute="trailing" secondItem="NVv-u1-3Ms" secondAttribute="trailing" id="R4V-es-NGR"/>
+                            <constraint firstItem="yKL-qq-VMf" firstAttribute="top" secondItem="33p-NI-IU3" secondAttribute="top" id="R9b-zV-ajC"/>
+                            <constraint firstItem="LjC-th-a9Z" firstAttribute="top" secondItem="NVv-u1-3Ms" secondAttribute="bottom" constant="4" id="RJm-Pe-EkD"/>
+                            <constraint firstAttribute="bottom" secondItem="yKL-qq-VMf" secondAttribute="bottom" id="RSB-WA-prB"/>
+                            <constraint firstItem="shM-IJ-2nj" firstAttribute="centerX" secondItem="LjC-th-a9Z" secondAttribute="centerX" id="cJS-ds-hDF"/>
+                            <constraint firstItem="LjC-th-a9Z" firstAttribute="leading" secondItem="NVv-u1-3Ms" secondAttribute="leading" id="dSk-9a-OaP"/>
+                            <constraint firstItem="NVv-u1-3Ms" firstAttribute="top" secondItem="kon-XY-Vpb" secondAttribute="bottom" constant="8" id="irR-hO-mND"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NVv-u1-3Ms" secondAttribute="trailing" id="maq-YB-T9m"/>
+                            <constraint firstAttribute="trailing" secondItem="yKL-qq-VMf" secondAttribute="trailing" id="nxM-8h-5gR"/>
+                            <constraint firstItem="yKL-qq-VMf" firstAttribute="leading" secondItem="33p-NI-IU3" secondAttribute="leading" id="qWi-gh-e64"/>
+                            <constraint firstItem="kon-XY-Vpb" firstAttribute="centerX" secondItem="33p-NI-IU3" secondAttribute="centerX" id="u6d-I9-VEi"/>
+                            <constraint firstItem="NVv-u1-3Ms" firstAttribute="centerX" secondItem="kon-XY-Vpb" secondAttribute="centerX" id="v4e-ZF-qeX"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Qh-gp-Clt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-10.4" y="27.436281859070466"/>
+            <point key="canvasLocation" x="429" y="23"/>
         </scene>
     </scenes>
     <resources>

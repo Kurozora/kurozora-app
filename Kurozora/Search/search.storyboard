@@ -21,20 +21,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jhR-vt-XMa">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
-                            </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3PQ-7n-sNR">
-                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5YS-KI-57Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="65e-aK-rD5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="R0h-dD-peF">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <vibrancyEffect>
@@ -600,12 +597,8 @@
                         <constraints>
                             <constraint firstItem="hSD-1e-xq7" firstAttribute="top" secondItem="5bm-fu-36U" secondAttribute="bottom" id="5sT-uP-sWG"/>
                             <constraint firstAttribute="trailing" secondItem="d3S-5Y-KNV" secondAttribute="trailing" id="7f3-YI-EDR"/>
-                            <constraint firstItem="jhR-vt-XMa" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="Bcq-Jy-tMI"/>
-                            <constraint firstItem="BIK-YO-dDu" firstAttribute="top" secondItem="jhR-vt-XMa" secondAttribute="bottom" id="C2b-YB-TLT"/>
                             <constraint firstAttribute="trailing" secondItem="5bm-fu-36U" secondAttribute="trailing" id="JCV-L1-5Sc"/>
-                            <constraint firstAttribute="trailing" secondItem="jhR-vt-XMa" secondAttribute="trailing" id="L8K-fh-lcI"/>
                             <constraint firstItem="5bm-fu-36U" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="NaL-Z7-8Du"/>
-                            <constraint firstItem="jhR-vt-XMa" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="OoL-x9-s0X"/>
                             <constraint firstAttribute="bottom" secondItem="d3S-5Y-KNV" secondAttribute="bottom" constant="22" id="Qnq-ef-ef6"/>
                             <constraint firstAttribute="bottom" secondItem="3PQ-7n-sNR" secondAttribute="bottom" id="SXn-nd-F3D"/>
                             <constraint firstAttribute="trailing" secondItem="3PQ-7n-sNR" secondAttribute="trailing" id="VfZ-2F-rh1"/>
@@ -613,7 +606,7 @@
                             <constraint firstAttribute="trailing" secondItem="hSD-1e-xq7" secondAttribute="trailing" id="Y5a-ca-CZm"/>
                             <constraint firstItem="hSD-1e-xq7" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="cAq-qT-Y9M"/>
                             <constraint firstItem="3PQ-7n-sNR" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="eEM-Lp-hTg"/>
-                            <constraint firstItem="3PQ-7n-sNR" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="qKz-Wo-gax"/>
+                            <constraint firstItem="3PQ-7n-sNR" firstAttribute="top" secondItem="roJ-Ow-ZtZ" secondAttribute="top" id="qKz-Wo-gax"/>
                             <constraint firstItem="d3S-5Y-KNV" firstAttribute="leading" secondItem="roJ-Ow-ZtZ" secondAttribute="leading" id="vXu-L7-ft0"/>
                             <constraint firstItem="d3S-5Y-KNV" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="zvS-hg-7fe"/>
                         </constraints>
