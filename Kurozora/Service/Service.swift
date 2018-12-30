@@ -80,11 +80,52 @@ struct Service {
         })
     }
 
-	/// Get a list of sessions for the current user
-	func getSessions(withSuccess successHandler:@escaping (Session?) -> Void){
+	/// Update a user's information
+	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (Bool) -> Void)  {
+		guard let bio = bio else { return }
+		guard let profileImage = profileImage else { return }
 		guard let userID = User.currentID() else { return }
 
-		let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
+		let request : UploadAPIRequest<User,JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
+			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
+				formData.append(profileImage, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
+			}
+		}
+
+		request.headers = [
+			"Content-Type": "multipart/form-data",
+			"kuro-auth": User.authToken()
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"biography": bio
+		]
+
+		request.performMultipart(withSuccess: { (update) in
+			if let success = update.success {
+				if success {
+					successHandler(success)
+					if let message = update.message {
+						SCLAlertView().showSuccess("Settings updated ☺️", subTitle: message)
+					}
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				UIView().endEditing(true)
+				SCLAlertView().showError("Can't update information 😔", subTitle: responseMessage)
+			}
+
+			print("Received update information error: \(error)")
+		})
+	}
+
+	/// Get a list of sessions for the current user
+	func getSessions(withSuccess successHandler:@escaping (UserSessions?) -> Void){
+		guard let userID = User.currentID() else { return }
+
+		let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken()
@@ -107,7 +148,7 @@ struct Service {
 	}
 
 	/// Get a list of items for the current user's library
-	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping ([LibraryElement]?) -> Void) {
 		guard let status = status else { return }
 		guard let userID = User.currentID() else { return }
 
@@ -124,9 +165,7 @@ struct Service {
 		request.perform(withSuccess: { library in
 			if let success = library.success {
 				if success {
-					if let library = library.library, library != [] {
-						successHandler(library)
-					}
+					successHandler(library.library)
 				}
 			}
 		}, failure: { error in
@@ -224,7 +263,7 @@ struct Service {
     }
 
 	/// Get a list of notifications for the current user
-	func getNotifications(withSuccess successHandler:@escaping ([JSON]?) -> Void){
+	func getNotifications(withSuccess successHandler:@escaping ([UserNotificationsElement]?) -> Void){
 		guard let userID = User.currentID() else { return }
 
 		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
@@ -234,12 +273,10 @@ struct Service {
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
-		request.perform(withSuccess: { notification in
-			if let success = notification.success {
+		request.perform(withSuccess: { userNotifications in
+			if let success = userNotifications.success {
 				if success {
-					if let notifications = notification.notifications, notifications != [] {
-						successHandler(notifications)
-					}
+					successHandler(userNotifications.notifications)
 				}
 			}
 		}, failure: { error in
@@ -252,10 +289,10 @@ struct Service {
 	}
 
 	/// Search for a user
-	func search(forUser user: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func search(forUser user: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
 		guard let user = user else { return }
 
-		let request: APIRequest<UserSearch,JSONError> = tron.swiftyJSON.request("users/search")
+		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("users/search")
 		request.headers = headers
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -280,16 +317,14 @@ struct Service {
 // MARK: - Show
 // All show related endpoints
 	/// Get explore page content
-	func getExplore(withSuccess successHandler: @escaping (Show) -> Void) {
-		let request: APIRequest<Show,JSONError> = tron.swiftyJSON.request("anime")
+	func getExplore(withSuccess successHandler: @escaping (Explore?) -> Void) {
+		let request: APIRequest<Explore,JSONError> = tron.swiftyJSON.request("anime")
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { show in
-			if let success = show.success {
+		request.perform(withSuccess: { explore in
+			if let success = explore.success {
 				if success {
-					if let category = show.categories, category != [] {
-						successHandler(show)
-					}
+					successHandler(explore)
 				}
 			}
 		}, failure: { error in
@@ -326,20 +361,16 @@ struct Service {
 	}
 
 	/// Get cast details for a show
-	func getCastFor(_ showID: Int?, withSuccess successHandler:@escaping (CastDetails, [JSON]) -> Void) {
+	func getCastFor(_ showID: Int?, withSuccess successHandler:@escaping ([ActorsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
-		let request: APIRequest<CastDetails,JSONError> = tron.swiftyJSON.request("anime/\(showID)/actors")
+		let request: APIRequest<Actors,JSONError> = tron.swiftyJSON.request("anime/\(showID)/actors")
 		request.headers = headers
 		request.method = .get
-		request.perform(withSuccess: { cast in
-			if let success = cast.success {
+		request.perform(withSuccess: { actors in
+			if let success = actors.success {
 				if success {
-					guard let castActors = cast.actors else {return}
-
-					if let castActorsCount = cast.actors?.count, castActorsCount > 0 {
-						successHandler(cast, castActors)
-					}
+					successHandler(actors.actors)
 				}
 			}
 		}, failure: { error in
@@ -352,7 +383,7 @@ struct Service {
 	}
 
 	/// Get season details for a show
-	func getSeasonFor(_ showID: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func getSeasonFor(_ showID: Int?, withSuccess successHandler:@escaping ([SeasonsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
 		let request : APIRequest<Seasons,JSONError> = tron.swiftyJSON.request("anime/\(showID)/seasons")
@@ -362,9 +393,7 @@ struct Service {
 		request.perform(withSuccess: { seasons in
 			if let success = seasons.success {
 				if success {
-					if let seasons = seasons.seasons, seasons != [] {
-						successHandler(seasons)
-					}
+					successHandler(seasons.seasons)
 				}
 			}
 		}, failure: { error in
@@ -407,10 +436,10 @@ struct Service {
 	}
 
 	/// Search for a show
-	func search(forShow show: String?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func search(forShow show: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
 		guard let show = show else { return }
 
-		let request: APIRequest<ShowSearch,JSONError> = tron.swiftyJSON.request("anime/search")
+		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("anime/search")
 		request.headers = headers
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -448,9 +477,7 @@ struct Service {
 		request.perform(withSuccess: { episodes in
 			if let success = episodes.success {
 				if success {
-					if let episodesExist = episodes.episodes, episodesExist != [] {
-						successHandler(episodes)
-					}
+					successHandler(episodes)
 				}
 			}
 		}, failure: { error in
@@ -495,7 +522,7 @@ struct Service {
 // MARK: - Forums
 // All forum related endpoints
 	/// Get a list of forum sections
-	func getForumSections(withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func getForumSections(withSuccess successHandler:@escaping ([ForumSectionsElement]?) -> Void) {
 		let request : APIRequest<ForumSections,JSONError> = tron.swiftyJSON.request("forum-sections")
 		request.headers = headers
 		request.authorizationRequirement = .required
@@ -503,9 +530,7 @@ struct Service {
 		request.perform(withSuccess: { sections in
 			if let success = sections.success {
 				if success {
-					if let sections = sections.sections, sections != [] {
-						successHandler(sections)
-					}
+					successHandler(sections.sections)
 				}
 			}
 		}, failure: { error in
@@ -518,7 +543,7 @@ struct Service {
 	}
 
 	/// Get a list of forum threads for a section
-	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping (ForumThreads?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
@@ -534,9 +559,7 @@ struct Service {
 		request.perform(withSuccess: { threads in
 			if let success = threads.success {
 				if success {
-					if let threads = threads.threads, threads != [] {
 						successHandler(threads)
-					}
 				}
 			}
 		}, failure: { error in
@@ -636,7 +659,7 @@ struct Service {
 	}
 
 	/// Get the replies of a forum thread
-	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([JSON]?) -> Void) {
+	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([ThreadRepliesElement]?) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
@@ -775,7 +798,7 @@ struct Service {
     func deleteSession(_ id: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let sessionID = id else { return }
 
-        let request : APIRequest<Session,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
+        let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
@@ -831,14 +854,14 @@ struct Service {
 // MARK: - Misc
 // All misc related enpoints
 	/// Get the latest privacy policy
-	func getPrivacyPolicy(withSuccess successHandler:@escaping (Privacy?) -> Void) {
-		let request: APIRequest<Privacy,JSONError> = tron.swiftyJSON.request("privacy-policy")
+	func getPrivacyPolicy(withSuccess successHandler:@escaping (PrivacyPolicyElement?) -> Void) {
+		let request: APIRequest<PrivacyPolicy,JSONError> = tron.swiftyJSON.request("privacy-policy")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { privacyPolicy in
 			if let success = privacyPolicy.success {
 				if success {
-					successHandler(privacyPolicy)
+					successHandler(privacyPolicy.privacyPolicy)
 				}
 			}
 		}, failure: { error in

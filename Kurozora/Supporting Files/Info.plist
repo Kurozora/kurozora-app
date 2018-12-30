@@ -20,23 +20,27 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>Kurozora</string>
+			<string>app.kurozora.anime</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kz</string>
+				<string>kuro</string>
+				<string>kuroapp</string>
 				<string>kurozora</string>
 				<string>kurozoraapp</string>
+				<string>kz</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>5615</string>
+	<string>5814</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>medium</string>
 		<string>twitter</string>
+		<string>fb</string>
+		<string>whatsapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

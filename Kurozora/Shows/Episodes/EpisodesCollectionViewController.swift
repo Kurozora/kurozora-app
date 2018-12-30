@@ -11,22 +11,20 @@ import Kingfisher
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
+import NVActivityIndicatorView
 
-class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class EpisodesCollectionViewController: UICollectionViewController, NVActivityIndicatorViewable, EmptyDataSetSource, EmptyDataSetDelegate {
     var laidOutSubviews = false
-    
-    var loadingView:LoaderView!
 
-    var seasonID:Int?
-    var showID:Int?
-    var episodes:[JSON]?
-    var episodesCount:Int?
+    var seasonID: Int?
+    var showID: Int?
+    var episodes: [EpisodesElement]?
+    var episodesSeason: EpisodesSeason?
 	var watched: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = false
-        loadingView = LoaderView(parentView: view)
+		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
@@ -91,16 +89,15 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
     }
     
     func fetchEpisodes() {
-        loadingView.startAnimating()
 		Service.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
             if let episodes = episodes {
-                self.episodesCount = episodes.episodeCount
+                self.episodesSeason = episodes.season
                 self.episodes = episodes.episodes
             }
             self.collectionView?.reloadData()
         })
         collectionView?.animateFadeIn()
-        loadingView.stopAnimating()
+		self.stopAnimating()
     }
     
 //	 MARK: - IBActions
@@ -113,37 +110,39 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
     //    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let episodesCount = episodesCount, episodesCount != 0 {
-            return episodesCount
-        }
-        return 0
+		guard let episodesCount = episodesSeason?.episodeCount else { return 0 }
+		return episodesCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let episodeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "EpisodeCell", for: indexPath) as! EpisodeCell
         
-        if let episodeScreenshot = episodes?[indexPath.row]["screenshot"].stringValue, episodeScreenshot != "" {
-            let screenshotUrl = URL(string: episodeScreenshot)
-                let resource = ImageResource(downloadURL: screenshotUrl!)
+        if let episodeScreenshot = episodes?[indexPath.row].screenshot, episodeScreenshot != "" {
+            let episodeScreenshotUrl = URL(string: episodeScreenshot)
+                let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
             
-            episodeCell.episodeImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_episode"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            episodeCell.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         } else {
-            episodeCell.episodeImageView.image = UIImage(named: "placeholder_episode")
+			episodeCell.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode")
         }
         
-        if let episodeTitle = episodes?[indexPath.row]["name"].stringValue, let episodeNumber = episodes?[indexPath.row]["number"].intValue, episodeTitle != "" {
-            episodeCell.episodeTitleLabel.text = "Episode \(episodeNumber): \(episodeTitle)"
-        } else {
-            episodeCell.episodeTitleLabel.text = "Untitled"
-        }
+        if let episodeTitle = episodes?[indexPath.row].name, let episodeNumber = episodes?[indexPath.row].number {
+			if episodeTitle != "" {
+            	episodeCell.episodeTitleLabel.text = "Episode \(episodeNumber): \(episodeTitle)"
+			} else {
+				episodeCell.episodeTitleLabel.text = "Episode \(episodeNumber)"
+			}
+		} else if let episodeTitle = episodes?[indexPath.row].name {
+			episodeCell.episodeTitleLabel.text = episodeTitle
+		} else if let episodeNumber = episodes?[indexPath.row].number {
+			episodeCell.episodeTitleLabel.text = "Episode \(episodeNumber)"
+		}
 
-        if let episodeFirstAired = episodes?[indexPath.row]["first_aired"].stringValue, episodeFirstAired != "" {
+        if let episodeFirstAired = episodes?[indexPath.row].firstAired {
             episodeCell.episodeFirstAiredLabel.text = episodeFirstAired
-        } else {
-            episodeCell.episodeFirstAiredLabel.text = ""
         }
 
-		if let episodeWatched = episodes?[indexPath.row]["user_details"]["watched"].boolValue {
+		if let episodeWatched = episodes?[indexPath.row].userDetails?.watched {
 			if episodeWatched {
 				episodeCell.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
 			} else {
@@ -160,8 +159,8 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 extension EpisodesCollectionViewController: EpisodeCellDelegate {
     func episodeCellWatchedPressed(cell: EpisodeCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
-			guard let watched = episodes?[indexPath.row]["user_details"]["watched"].boolValue else { return }
-			guard let episodeID = episodes?[indexPath.row]["id"].intValue else { return }
+			guard let watched = episodes?[indexPath.row].userDetails?.watched else { return }
+			guard let episodeID = episodes?[indexPath.row].id else { return }
 
 			if watched {
 				self.watched = 0

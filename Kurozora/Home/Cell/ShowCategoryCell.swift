@@ -14,7 +14,7 @@ class ShowCategoryCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let homeViewController = HomeViewController()
-    var shows: [JSON]? = nil {
+    var shows: [ExploreBanner]? = nil {
         didSet {
             collectionView.reloadData()
         }
@@ -33,7 +33,7 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         let showCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! ShowCell
         
         // Show poster
-        if let posterThumbnail = shows?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
+        if let posterThumbnail = shows?[indexPath.row].posterThumbnail, posterThumbnail != "" {
             let posterThumbnailUrl = URL(string: posterThumbnail)
             let resource = ImageResource(downloadURL: posterThumbnailUrl!)
             showCell.posterImageView.kf.indicatorType = .activity
@@ -43,21 +43,17 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         // Show title
-        if let title = shows?[indexPath.row]["title"].stringValue, title != "" {
+        if let title = shows?[indexPath.row].title {
             showCell.titleLabel.text = title
-        } else {
-            showCell.titleLabel.text = "Untitled"
         }
         
         // Show genre
-        if let genre = shows?[indexPath.row]["genre"].stringValue, genre != "" {
+        if let genre = shows?[indexPath.row].genre {
             showCell.genreLabel.text = genre
-        } else {
-            showCell.genreLabel.text = ""
         }
         
         // Show score
-        if let score = shows?[indexPath.row]["average_rating"].doubleValue, score != 0 {
+        if let score = shows?[indexPath.row].averageRating, score != 0 {
             showCell.scoreLabel.text = " \(score)"
             // Change color based on score
             if score >= 2.5 {

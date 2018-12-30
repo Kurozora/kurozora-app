@@ -23,7 +23,7 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 	@IBOutlet weak var suggestionsCollctionViewHeight: NSLayoutConstraint!
 	@IBOutlet weak var suggestionsHeaderView: UIView!
 
-	var results: [JSON]?
+	var results: [SearchElement]?
 	var timer: Timer?
 	var currentScope: Int!
 	var suggestions: [JSON] = [
@@ -270,7 +270,7 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 			case .anime:
 				let searchShowCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCell", for: indexPath) as! SearchShowCell
 
-				if let posterThumbnail = results?[indexPath.row]["poster_thumbnail"].stringValue, posterThumbnail != "" {
+				if let posterThumbnail = results?[indexPath.row].posterThumbnail, posterThumbnail != "" {
 					let posterThumbnailUrl = URL(string: posterThumbnail)
 					let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 					searchShowCell.posterImageView.kf.indicatorType = .activity
@@ -279,25 +279,21 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 					searchShowCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 				}
 
-				if let title = results?[indexPath.row]["title"].stringValue, title != "" {
+				if let title = results?[indexPath.row].title {
 					searchShowCell.titleLabel.text = title
-				} else {
-					searchShowCell.titleLabel.text = ""
 				}
 
-				if let airDate = results?[indexPath.row]["air_date"].stringValue, airDate != "" {
+				if let airDate = results?[indexPath.row].airDate, airDate != "" {
 					searchShowCell.airDateLabel.text = airDate
 				} else {
 					searchShowCell.airDateLabel.text = "Dec, 25 2018"
 				}
 
-				if let averageRating = results?[indexPath.row]["average_rating"].intValue, averageRating != 0 {
+				if let averageRating = results?[indexPath.row].averageRating {
 					searchShowCell.scoreLabel.text = "\(averageRating)"
-				} else {
-					searchShowCell.scoreLabel.text = "0"
 				}
 
-				if let status = results?[indexPath.row]["status"].stringValue, status != "" {
+				if let status = results?[indexPath.row].status, status != "" {
 					searchShowCell.statusLabel.text = status
 				} else {
 					searchShowCell.statusLabel.text = "Currently Airing"
@@ -305,11 +301,34 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 
 				return searchShowCell
 			case .myLibrary: break
-			case .forum: break
+			case .forum:
+				let searchThreadCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreadCell", for: indexPath) as! SearchThreadCell
+
+				if let title = results?[indexPath.row].title {
+					searchThreadCell.titleLabel.text = title
+				}
+
+				if let contentTeaser = results?[indexPath.row].contentTeaser {
+					searchThreadCell.contentTeaserLabel.text = contentTeaser
+				}
+
+				if let locked = results?[indexPath.row].locked {
+					if locked {
+						searchThreadCell.loackedImageView.image = #imageLiteral(resourceName: "lock_icon")
+					} else {
+						searchThreadCell.loackedImageView.isHidden = true
+						searchThreadCell.loackedImageView.alpha = 0
+						searchThreadCell.loackedImageView.width = 0
+						searchThreadCell.lockedImageViewHorizontalToTitleLabel.constant = 0
+//						searchThreadCell.layoutSubviews()
+					}
+				}
+
+				return searchThreadCell
 			case .user:
 				let searchUserCell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! SearchUserCell
 
-				if let avatar = results?[indexPath.row]["avatar"].stringValue, avatar != "" {
+				if let avatar = results?[indexPath.row].avatar, avatar != "" {
 					let avatarUrl = URL(string: avatar)
 					let resource = ImageResource(downloadURL: avatarUrl!)
 					searchUserCell.avatarImageView.kf.indicatorType = .activity
@@ -318,13 +337,13 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 					searchUserCell.avatarImageView.image = #imageLiteral(resourceName: "default_avatar")
 				}
 
-				if let username = results?[indexPath.row]["username"].stringValue, username != "" {
+				if let username = results?[indexPath.row].username, username != "" {
 					searchUserCell.usernameLabel.text = username
 				} else {
 					searchUserCell.usernameLabel.text = ""
 				}
 
-				if let reputation = results?[indexPath.row]["reputation_count"].intValue, reputation != 0 {
+				if let reputation = results?[indexPath.row].reputationCount, reputation != 0 {
 					searchUserCell.reputationLabel.text = "\(reputation)"
 				} else {
 					searchUserCell.reputationLabel.text = "0"
@@ -359,13 +378,16 @@ extension SearchResultsViewController: UICollectionViewDelegate {
 			guard let searchScope = SearchScope(rawValue: currentScope) else { return }
 			switch searchScope {
 			case .anime:
-				if let showID = results?[indexPath.item]["id"].intValue {
+				if let showID = results?[indexPath.item].id {
 					self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
 				}
 			case .myLibrary: break
-			case .forum: break
+			case .forum:
+				if let threadID = results?[indexPath.item].id {
+					self.performSegue(withIdentifier: "ThreadSegue", sender: threadID)
+				}
 			case .user:
-				if let userID = results?[indexPath.item]["id"].intValue {
+				if let userID = results?[indexPath.item].id {
 					self.performSegue(withIdentifier: "ProfileSegue", sender: userID)
 				}
 			}
@@ -387,7 +409,8 @@ extension SearchResultsViewController: UICollectionViewDelegateFlowLayout {
 			case .anime:
 				return CGSize(width: cellWidth, height: 136)
 			case .myLibrary: break
-			case .forum: break
+			case .forum:
+				return CGSize(width: cellWidth, height: 82)
 			case .user:
 				return CGSize(width: cellWidth, height: 82)
 			}

@@ -52,7 +52,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		guard let bannersCount = banners?.count else { return headerCell }
 		let indexPathRow = indexPath.row % bannersCount
         
-        if let background = banners?[indexPathRow]["background"].stringValue, background != "" {
+        if let background = banners?[indexPathRow].background, background != "" {
             let backgroundUrl = URL(string: background)
             let resource = ImageResource(downloadURL: backgroundUrl!)
             headerCell.backgroundImageView.kf.indicatorType = .activity
@@ -61,11 +61,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             headerCell.backgroundImageView.image = #imageLiteral(resourceName: "placeholder_banner")
         }
         
-        if let title = banners?[indexPathRow]["title"].stringValue, let ID = banners?[indexPathRow]["id"].intValue {
-			headerCell.titleLabel.text = "\(ID): " + title
+        if let title = banners?[indexPathRow].title, let id = banners?[indexPathRow].id {
+			headerCell.titleLabel.text = "\(id): " + title
         }
         
-        if let genre = banners?[indexPathRow]["genre"].stringValue {
+        if let genre = banners?[indexPathRow].genre {
             headerCell.genreLabel.text = genre
         }
         
@@ -73,7 +73,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let bannerID = banners?[indexPath.item]["id"].intValue {
+        if let bannerID = banners?[indexPath.item].id {
             self.performSegue(withIdentifier: "ShowDetailsSegue", sender: bannerID)
         }
     }

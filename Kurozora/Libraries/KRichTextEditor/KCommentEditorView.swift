@@ -22,7 +22,7 @@ class KCommentEditorView: UIViewController {
 
 	let charLimit = 240
 
-	var forumThread: JSON?
+	var forumThread: ForumThreadsElement?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -34,11 +34,11 @@ class KCommentEditorView: UIViewController {
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 0
 		IQKeyboardManager.shared.shouldResignOnTouchOutside = false
 
-		if let replyToText = forumThread?["title"].stringValue {
+		if let replyToText = forumThread?.title {
 			replyToTextLabel.text = replyToText
 		}
 
-		if let replyToUsername = forumThread?["poster_username"].stringValue {
+		if let replyToUsername = forumThread?.posterUsername {
 			replyToUsernameLabel.text = replyToUsername
 		}
 
@@ -69,7 +69,7 @@ class KCommentEditorView: UIViewController {
 	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
 			guard let comment = commentTextView.text, comment != "" else { return }
-			guard let threadID = forumThread?["id"].intValue else { return }
+			guard let threadID = forumThread?.id else { return }
 			Service.shared.postReply(withComment: comment, forThread: threadID) { (success) in
 				if success {
 					self.dismiss(animated: true, completion: nil)

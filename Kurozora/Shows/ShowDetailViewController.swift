@@ -46,8 +46,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	var showID: Int?
 	var libraryStatus: String?
 	var showRating: Double?
-	var castDetails: [JSON]?
-	var cast: CastDetails?
+	var actors: [ActorsElement]?
 
 	// MARK: - IBoutlet
 	@IBOutlet weak var tableView: UITableView!
@@ -89,7 +88,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: .orange, minimumDisplayTime: 3)
+		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
 		if UIDevice.hasTapticEngine {
 			dismissButtonCenterToMoreButton.constant = 22
@@ -123,10 +122,9 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 				}
 			}
 
-			Service.shared.getCastFor(showID, withSuccess: { (cast, castActors) in
+			Service.shared.getCastFor(showID, withSuccess: { (actors) in
 				DispatchQueue.main.async() {
-					self.cast = cast
-					self.castDetails = cast.actors
+					self.actors = actors
 					self.tableView.reloadData()
 				}
 			})
@@ -293,11 +291,12 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		var shareText: String!
 		var image: UIImage!
+		guard let showID = showID else { return }
 
 		if let title = showDetails?.title {
-			shareText = "You should watch \"\(title)\" via @KurozoraApp"
+			shareText = "You should watch \"\(title)\" via @KurozoraApp \n kurozora://anime/\(showID)"
 		} else {
-			shareText = "You should watch this anime via @KurozoraApp"
+			shareText = "You should watch this anime via @KurozoraApp \n kurozora://anime/\(showID)"
 		}
 
 		if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
@@ -357,7 +356,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	@IBAction func showCastDrawer(_ sender: AnyObject) {
 		let storyboard:UIStoryboard? = UIStoryboard(name: "details", bundle: nil)
 		guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "Actors") as? CastTableViewController else { return }
-		popupVC.castDetails = castDetails
+		popupVC.actors = actors
 		present(popupVC, animated: true, completion: nil)
 	}
 
@@ -397,7 +396,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		if let indexPath = self.tableView.indexPathForRow(at: pointInTable) {
 			if (self.tableView.cellForRow(at: indexPath) as? ShowCharacterCell) != nil {
 				if view == cell?.actorImageView {
-					if let imageUrl = castDetails?[indexPath.row]["image"].stringValue, imageUrl != "" {
+					if let imageUrl = actors?[indexPath.row].image, imageUrl != "" {
 						presentPhotoViewControllerWith(url: imageUrl)
 					} else {
 						presentPhotoViewControllerWith(string: "placeholder_person")
@@ -505,9 +504,9 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .synopsis: numberOfRows = (showDetails?.synopsis != "") ? 1 : 0
 		case .information: numberOfRows = (User.isAdmin() == true) ? 9 : 8
 		case .cast:
-			if let actorsCount = castDetails?.count, actorsCount <= 5 {
+			if let actorsCount = actors?.count, actorsCount <= 5 {
 				numberOfRows = actorsCount
-			} else if let actorsCount = castDetails?.count, actorsCount > 5 {
+			} else if let actorsCount = actors?.count, actorsCount > 5 {
 				numberOfRows = 6
 			} else {
 				numberOfRows = 0
@@ -633,25 +632,27 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .cast:
 			let castCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
 
-			// Cast name
-			if let actorName = castDetails?[indexPath.row]["name"] {
-				castCell.actorName.text = actorName.stringValue
+			// Actor name
+			if let actorName = actors?[indexPath.row].name {
+				castCell.actorName.text = actorName
 			}
 
-			// Cast role
-			if let actorRole = castDetails?[indexPath.row]["role"] {
-				castCell.actorJob.text = actorRole.stringValue
+			// Actor role
+			if let actorRole = actors?[indexPath.row].role {
+				castCell.actorJob.text = actorRole
 			}
 
-			// Cast image view
-			if let castImage = castDetails?[indexPath.row]["image"].stringValue {
-				let castImage = URL(string: castImage)
-				let resource = ImageResource(downloadURL: castImage!)
+			// Actor image view
+			if let actorImage = actors?[indexPath.row].image, actorImage != "" {
+				let actorImageUrl = URL(string: actorImage)
+				let resource = ImageResource(downloadURL: actorImageUrl!)
 				castCell.actorImageView.kf.indicatorType = .activity
-				castCell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			} else {
+				castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
 			}
 
-			// Add gesture to cast image view
+			// Add gesture to actors image view
 			if castCell.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
 				// if the image currently has no gestureRecognizer
 				let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCast(_:)))
@@ -680,8 +681,8 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .information:
 			title = "Information"
 		case .cast:
-			guard let castDetailsCount = castDetails?.count else { return showTitleCell.contentView }
-			title = (castDetailsCount != 0) ? "Actors" : ""
+			guard let castCount = actors?.count else { return showTitleCell.contentView }
+			title = (castCount != 0) ? "Actors" : ""
 		}
 
 		showTitleCell.titleLabel.text = title

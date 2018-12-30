@@ -15,9 +15,7 @@ import EmptyDataSet_Swift
 class CastTableViewController: BottomPopupViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetDelegate, EmptyDataSetSource {
     @IBOutlet var collectionView: UICollectionView!
     
-    var castDetails: [JSON]?
-    var totalCast: Int?
-    var page: Int?
+    var actors: [ActorsElement]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,28 +46,30 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
     
     // MARK: - Collection view data source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let castCount = castDetails?.count else {return 0}
+        guard let actorsCount = actors?.count else {return 0}
         
-        return castCount
+        return actorsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
         
-        if let actorName = castDetails?[indexPath.row]["name"] {
-            castCell.actorName.text = actorName.stringValue
+        if let actorName = actors?[indexPath.row].name {
+            castCell.actorName.text = actorName
         }
         
-        if let actorRole = castDetails?[indexPath.row]["role"] {
-            castCell.actorJob.text = actorRole.stringValue
+        if let actorRole = actors?[indexPath.row].role {
+            castCell.actorJob.text = actorRole
         }
         
-        if let castImage = castDetails?[indexPath.row]["image"].stringValue {
-            let castImage = URL(string: castImage)
-            let resource = ImageResource(downloadURL: castImage!)
+        if let actorImage = actors?[indexPath.row].image, actorImage != ""  {
+            let actorImageUrl = URL(string: actorImage)
+            let resource = ImageResource(downloadURL: actorImageUrl!)
             castCell.actorImageView.kf.indicatorType = .activity
-            castCell.actorImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-        }
+            castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+		} else {
+			castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
+		}
         
         return castCell
     }

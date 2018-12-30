@@ -9,24 +9,37 @@
 import TRON
 import SwiftyJSON
 
-class Session: JSONDecodable {
+class UserSessions: JSONDecodable {
     let success: Bool?
-    let otherSessions: [JSON]?
-    
-    // Current session
-    let id: Int?
-    let device: String?
-    let ip: String?
-    let lastValidated: String?
+	let currentSessions: UserSessionsElement?
+    let otherSessions: [UserSessionsElement]?
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
-        otherSessions = json["other_sessions"].arrayValue
-        
-        // Current session
-        id = json["current_session"]["id"].intValue
-        device = json["current_session"]["device"].stringValue
-        ip = json["current_session"]["ip"].stringValue
-        lastValidated = json["current_session"]["last_validated"].stringValue
+		self.currentSessions = try? UserSessionsElement(json: json["current_session"])
+		var otherSessions = [UserSessionsElement]()
+
+        let otherSessionsArray = json["other_sessions"].arrayValue
+		for otherSessionsItem in otherSessionsArray {
+			if let userSessionsElement = try? UserSessionsElement(json: otherSessionsItem) {
+				otherSessions.append(userSessionsElement)
+			}
+		}
+
+		self.otherSessions = otherSessions
     }
+}
+
+class UserSessionsElement: JSONDecodable {
+	let id: Int?
+	let device: String?
+	let ip: String?
+	let lastValidated: String?
+
+	required init(json: JSON) throws {
+		self.id = json["id"].intValue
+		self.device = json["device"].stringValue
+		self.ip = json["ip"].stringValue
+		self.lastValidated = json["last_validated"].stringValue
+	}
 }

@@ -27,8 +27,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 	var onceOnly = false
 	var itemSize = CGSize(width: 0, height: 0)
 
-    var categories: [JSON]?
-    var banners: [JSON]?
+    var categories: [ExploreCategory]?
+    var banners: [ExploreBanner]?
     var showId:Int?
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,16 +66,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             NotificationCenter.default.post(name: heartAttackNotification, object: nil)
         })
 
-        Service.shared.getExplore(withSuccess: { (show) in
-            if let categories = show.categories, categories != [] {
-                self.categories = categories
-            }
-            if let banners = show.banners, banners != [] {
-                self.banners = banners
-            }
+        Service.shared.getExplore(withSuccess: { (explore) in
+			DispatchQueue.main.async {
+				self.categories = explore?.categories
+				self.banners = explore?.banners
 
-            self.tableView.reloadData()
-            self.collectionView.reloadData()
+				self.tableView.reloadData()
+				self.collectionView.reloadData()
+			}
         })
 
         // Setup collection view
@@ -154,30 +152,30 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let categoryTitle = categories?[section]["title"].stringValue else { return "" }
+        guard let categoryTitle = categories?[section].title else { return "" }
 
-		if let categoryShowCount = categories?[section]["shows"].count, categoryShowCount != 0 {
+		if let categoryShowCount = categories?[section].shows?.count, categoryShowCount != 0 {
             return categoryTitle
         }
         return ""
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (categories?[section]["shows"].count != 0) ? 1 : 0
+        return (categories?[section].shows?.count != 0) ? 1 : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let categoryType = categories?[indexPath.section]["type"].stringValue, categoryType == "large" {
+        if let categoryType = categories?[indexPath.section].type, categoryType == "large" {
             let largeCell = tableView.dequeueReusableCell(withIdentifier: "LargeCategoryCell") as! LargeCategoryCell
             
-            if let shows = categories?[indexPath.section]["shows"].arrayValue, shows != [] {
+            if let shows = categories?[indexPath.section].shows {
                 largeCell.shows = shows
             }
             
             return largeCell
         } else {
             let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
-            if let shows = categories?[indexPath.section]["shows"].arrayValue, shows != [] {
+            if let shows = categories?[indexPath.section].shows {
                 showCell.shows = shows
             }
             return showCell
@@ -200,7 +198,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let tableViewCell: ShowCategoryCell = view.superview as? ShowCategoryCell {
                             if let destination = segue.destination as? ShowTabBarController {
                                 if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showID = tableViewCell.shows?[indexPathRow]["id"].intValue
+                                    destination.showID = tableViewCell.shows?[indexPathRow].id
                                 }
                             }
                         }
@@ -215,7 +213,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let tableViewCell: LargeCategoryCell = view.superview as? LargeCategoryCell {
                             if let destination = segue.destination as? ShowTabBarController {
                                 if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showID = tableViewCell.shows?[indexPathRow]["id"].intValue
+                                    destination.showID = tableViewCell.shows?[indexPathRow].id
                                 }
                             }
                         }

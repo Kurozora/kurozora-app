@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserNotificationCell: UITableViewCell {
+class MessageNotificationCell: UITableViewCell {
     // Header
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!
@@ -20,7 +20,7 @@ class UserNotificationCell: UITableViewCell {
     @IBOutlet weak var notificationTextLable: UILabel!
 }
 
-class NotificationCell: UITableViewCell {
+class SessionNotificationCell: UITableViewCell {
     // Header
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!
@@ -28,4 +28,8 @@ class NotificationCell: UITableViewCell {
     
     // Body
     @IBOutlet weak var notificationTextLable: UILabel!
+}
+
+class TitleNotificationCell: UITableViewCell {
+	@IBOutlet weak var notificationTitleLable: UILabel!
 }

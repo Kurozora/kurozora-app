@@ -19,19 +19,61 @@ extension Date {
 		let timeInterval = Int(-date.timeIntervalSince(Date()))
 
 		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
-			return "\(yearsAgo)" + (yearsAgo == 1 ? "year" : "years")
+			return "\(yearsAgo)Y ago"
+//				+ (yearsAgo == 1 ? "year" : "years")
 		} else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
-			return "\(monthsAgo)" + (monthsAgo == 1 ? "month" : "months")
+			return "\(monthsAgo)M ago"
+//				+ (monthsAgo == 1 ? "month" : "months")
 		} else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
-			return "\(weeksAgo)" + (weeksAgo == 1 ? "week" : "weeks")
+			return "\(weeksAgo)w ago"
+//				+ (weeksAgo == 1 ? "week" : "weeks")
 		} else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
-			return "\(daysAgo)" + (daysAgo == 1 ? "day" : "days")
+//			return weekDay + ": " + time
+			return "\(daysAgo)d ago"
+//				+ (daysAgo == 1 ? "day" : "days")
 		} else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
-			return "\(hoursAgo)" + (hoursAgo == 1 ? "hr" : "hrs")
+			return "\(hoursAgo)h ago"
+//				+ (hoursAgo == 1 ? "h ago" : "hrs")
 		} else if let minutesAgo = timeInterval / 60 as Int?, minutesAgo > 0 {
-			return "\(minutesAgo)" + (minutesAgo == 1 ? "min" : "mins")
+			return "\(minutesAgo)m ago"
+//				+ (minutesAgo == 1 ? "min" : "mins")
 		} else {
 			return "Just now"
 		}
+	}
+
+	static func groupTime(by date: String) -> String {
+		let formatter = DateFormatter()
+		formatter.locale = Locale(identifier: "US_en")
+		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+		guard let date = formatter.date(from: date) else { return "" }
+		let timeInterval = Int(-date.timeIntervalSince(Date()))
+
+		// Name of week day
+		formatter.dateFormat = "EEEE"
+		let weekDay = formatter.string(from: date)
+
+		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
+			return (yearsAgo == 1 ? "Last Year" : "\(yearsAgo) Years Ago") // If exactly 1 year, then Last Year, otherwise # Years Ago
+		} else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
+			return (monthsAgo == 1 ? "Last Month" : "\(monthsAgo) Months ago") // If exactly 1 month, then Last Month, otherwise # Months Ago
+		} else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
+			return (weeksAgo == 1 ? "Last Week" : "\(weeksAgo) Weeks Ago") // If 1 week exactly, then Last Week, otherwise # Weeks Ago
+		} else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
+			return (daysAgo == 1 ? "Yesterday" : weekDay) // If 1 day exactly, then Yesterday, otherwise Day Of Week
+		} else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
+			return "Earlier Today" // If 1 hour or more, then Earlier Today
+		} else {
+			return "Recent" // If less than 1 hour, then Recent
+		}
+	}
+
+	static func stringToDateTime(string: String?) -> Date {
+		guard let string = string else { return Date() }
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "en_US")
+		dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		return dateFormatter.date(from: string)!
 	}
 }

@@ -14,7 +14,7 @@ class EpisodesWatched: JSONDecodable {
 	let watched: Bool?
 
 	required init(json: JSON) throws {
-		success = json["success"].boolValue
-		watched = json["watched"].boolValue
+		self.success = json["success"].boolValue
+		self.watched = json["watched"].boolValue
 	}
 }

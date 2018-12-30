@@ -1,5 +1,5 @@
 //
-//  Cast.swift
+//  Actors.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/09/2018.
@@ -9,22 +9,35 @@
 import TRON
 import SwiftyJSON
 
-class CastDetails: JSONDecodable {
+class Actors: JSONDecodable {
     let success: Bool?
-    let page: Int?
-    let actorsPerPage: Int?
     let totalActors: Int?
-    let actors: [JSON]?
+    let actors: [ActorsElement]?
 
     required init(json: JSON) throws {
-        success = json["success"].boolValue
-        page = json["page"].intValue
-        actorsPerPage = json["actors_per_page"].intValue
-        totalActors = json["total_actors"].intValue
-        actors = json["actors"].arrayValue
-        
-//        castImage = json["actors"]["image"].stringValue
-//        castName = json["actors"]["name"].stringValue
-//        castRole = json["actors"]["role"].stringValue
+        self.success = json["success"].boolValue
+        self.totalActors = json["total_actors"].intValue
+        var actors = [ActorsElement]()
+
+		let actorsArray = json["actors"].arrayValue
+		for actorItem in actorsArray {
+			if let actorElement = try? ActorsElement(json: actorItem) {
+				actors.append(actorElement)
+			}
+		}
+
+		self.actors = actors
     }
+}
+
+class ActorsElement: JSONDecodable {
+	let name: String?
+	let role: String?
+	let image: String?
+
+	required init(json: JSON) throws {
+		self.name = json["name"].stringValue
+		self.role = json["role"].stringValue
+		self.image = json["image"].stringValue
+	}
 }

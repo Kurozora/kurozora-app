@@ -11,19 +11,19 @@ import Kingfisher
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
+import NVActivityIndicatorView
 
-class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class SeasonsCollectionViewController: UICollectionViewController, NVActivityIndicatorViewable, EmptyDataSetSource, EmptyDataSetDelegate {
     var canFadeImages = true
     var laidOutSubviews = false
-    
-    var loadingView:LoaderView!
+
     var showID:Int?
     var seasonID:Int?
-    var seasons:[JSON]?
+    var seasons:[SeasonsElement]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingView = LoaderView(parentView: view)
+        startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
         
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
@@ -89,16 +89,15 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
     }
     
     func fetchSeasons() {
-        loadingView.startAnimating()
         Service.shared.getSeasonFor(showID, withSuccess: { (seasons) in
             if let seasons = seasons {
-                self.seasons = seasons
+				self.seasons = seasons
             }
             self.collectionView?.reloadData()
         })
 		
         collectionView?.animateFadeIn()
-        loadingView.stopAnimating()
+        self.stopAnimating()
     }
     
     
@@ -123,17 +122,17 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
         let resource = ImageResource(downloadURL: posterUrl!)
         seasonCell.seasonPosterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         
-        if let seasonNumber = seasons?[indexPath.row]["number"].intValue {
+        if let seasonNumber = seasons?[indexPath.row].number, seasonNumber != 0 {
             seasonCell.seasonCountLabel.text = "Season \(seasonNumber)"
         } else {
-            seasonCell.seasonCountLabel.text = "Season 0"
+            seasonCell.seasonCountLabel.text = "Season ?"
         }
         
-        if let seasonTitle = seasons?[indexPath.row]["title"].stringValue, seasonTitle != "" {
+        if let seasonTitle = seasons?[indexPath.row].title, seasonTitle != "" {
             seasonCell.seasonTitleLabel.text = seasonTitle
-        } else {
-            seasonCell.seasonTitleLabel.text = "Unknown"
-        }
+		} else {
+			seasonCell.seasonTitleLabel.text = "Unknown"
+		}
 
         seasonCell.seasonStartDateLabel.text = "12-10-2000"
         seasonCell.seasonOverallRating.text = "5.00"
@@ -150,8 +149,8 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
      }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let seasonId = seasons?[indexPath.item]["number"].intValue {
-            performSegue(withIdentifier: "EpisodeSegue", sender: seasonId)
+        if let seasonID = seasons?[indexPath.item].id {
+            performSegue(withIdentifier: "EpisodeSegue", sender: seasonID)
         }
     }
     

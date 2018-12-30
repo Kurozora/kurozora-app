@@ -15,7 +15,7 @@ class JSONError: JSONDecodable {
 	let message: String?
 
 	required init(json: JSON) throws {
-		success = json["success"].boolValue
-		message = json["error_message"].stringValue
+		self.success = json["success"].boolValue
+		self.message = json["error_message"].stringValue
 	}
 }

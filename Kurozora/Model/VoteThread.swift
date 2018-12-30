@@ -13,7 +13,7 @@ class VoteThread: JSONDecodable {
 	let success: Bool?
 
 	required init(json: JSON) throws {
-		success = json["success"].boolValue
+		self.success = json["success"].boolValue
 	}
 }
 

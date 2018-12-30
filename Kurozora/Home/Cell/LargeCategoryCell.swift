@@ -14,7 +14,7 @@ class LargeCategoryCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var homeViewController = HomeViewController()
-    var shows: [JSON]? = nil {
+    var shows: [ExploreBanner]? = nil {
         didSet {
             collectionView.reloadData()
         }
@@ -32,26 +32,24 @@ extension LargeCategoryCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let largeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LargeCell", for: indexPath) as! LargeCell
         
-        if let backgroundThumbnail = shows?[indexPath.row]["background_thumbnail"].stringValue, backgroundThumbnail != "" {
+        if let backgroundThumbnail = shows?[indexPath.row].backgroundThumbnail, backgroundThumbnail != "" {
             let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
             let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
             largeCell.backgroundImageView.kf.indicatorType = .activity
-            largeCell.backgroundImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			largeCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
         } else {
-            largeCell.backgroundImageView.image = UIImage(named: "placeholder_banner")
+            largeCell.backgroundImageView.image = #imageLiteral(resourceName: "placeholder_banner")
         }
         
-        if let title = shows?[indexPath.row]["title"].stringValue, title != "" {
+        if let title = shows?[indexPath.row].title {
             largeCell.titleLabel.text = title
-        } else {
-            largeCell.titleLabel.text = "Untitled"
         }
         
         return largeCell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let showId = shows?[indexPath.item]["id"].intValue {
+        if let showId = shows?[indexPath.item].id {
             homeViewController.showDetailFor(showId)
         }
     }

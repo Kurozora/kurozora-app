@@ -395,9 +395,9 @@
 //                case .OnHold:
 //                    textToShare += "I'm watching"
 //                }
-//                textToShare += " \(self.anime.title!) via #AozoraApp"
+//                textToShare += " \(self.anime.title!) via #KurozoraApp"
 //            } else {
-//                textToShare = "Check out \(self.anime.title!) via #AozoraApp"
+//                textToShare = "Check out \(self.anime.title!) via #KurozoraApp"
 //            }
 //
 //

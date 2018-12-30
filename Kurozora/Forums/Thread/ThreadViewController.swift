@@ -13,7 +13,6 @@ import RichTextView
 import Kingfisher
 
 class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	// Table view
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet weak var informationLabel: UILabel!
 	@IBOutlet weak var posterUsernameLabel: UIButton!
@@ -22,21 +21,21 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
 
-	var forumThread: JSON?
+	var forumThread: ForumThreadsElement?
 	var thread: ForumThread?
 	var replyID: Int?
 	var threadInformation: String?
 
-	// Variables for replies request
-	var replies: [JSON]?
-	var totalPages: Int?
+	// Reply request vars
+	var replies: [ThreadRepliesElement]?
+	var replyPages: Int?
 	var pageNumber = 0
 	var order = "top"
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		if let replyCount = forumThread?["reply_count"].intValue, let creationDate = forumThread?["creation_date"].stringValue {
+		if let replyCount = forumThread?.replyCount, let creationDate = forumThread?.creationDate {
 			informationLabel.text = "Discussion ·  \(replyCount)\((replyCount < 1000) ? "" : "K") ·  \(Date.timeAgo(creationDate)) · by "
 		}
 	}
@@ -44,11 +43,11 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let threadID = forumThread?["id"].intValue, threadID != 0 {
+		if let threadID = forumThread?.id, threadID != 0 {
 			Service.shared.getDetails(forThread: threadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
 					self.thread = thread
-					self.totalPages = thread?.pages
+					self.replyPages = thread?.thread?.replyPages
 					self.updateDetailsWithThread(self.thread)
 					self.tableView.reloadData()
 				}
@@ -98,10 +97,10 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if let repliesCount = replies?.count, indexPath.section == repliesCount - 1 { // last cell
-			if let totalPages = totalPages, totalPages > pageNumber { // more items to fetch
+			if let replyPages = replyPages, replyPages > pageNumber { // more items to fetch
 				// increment `fromIndex` by 20 before server call
 				pageNumber += 1
-				if let threadID = forumThread?["id"].intValue {
+				if let threadID = forumThread?.id {
 					getThreadReplies(for: threadID)
 				}
 			}
@@ -111,28 +110,30 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let commentCell: CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
 
-		if let avatar = replies?[indexPath.section]["user"]["avatar"].stringValue, avatar != "" {
-			let avatar = URL(string: avatar)
-			let resource = ImageResource(downloadURL: avatar!)
-			commentCell.avatar.kf.indicatorType = .activity
-			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-		} else {
+//		if let avatar = replies?[indexPath.section]["user"]["avatar"].stringValue, avatar != "" {
+//			let avatar = URL(string: avatar)
+//			let resource = ImageResource(downloadURL: avatar!)
+//			commentCell.avatar.kf.indicatorType = .activity
+//			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+//		} else {
 			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
-		}
+//		}
 
-		if let username = replies?[indexPath.section]["user"]["username"].stringValue, username != "" {
-			commentCell.username?.text = username
-		}
+//		if let username = replies?[indexPath.section]["user"]["username"].stringValue, username != "" {
+			commentCell.username?.text = "username"
+//		}
 
-		if let dateTime = replies?[indexPath.section]["posted_at"].stringValue, dateTime != "" {
+		if let dateTime = replies?[indexPath.section].postedAt, dateTime != "" {
 			commentCell.dateTime.text = "· \(Date.timeAgo(dateTime))"
+		} else {
+			commentCell.dateTime.text = ""
 		}
 
-		if let comment = replies?[indexPath.section]["content"].stringValue, comment != "" {
-			commentCell.textContent.text = comment
+		if let content = replies?[indexPath.section].content {
+			commentCell.textContent.text = content
 		}
 
-		if let score = replies?[indexPath.section]["score"].intValue {
+		if let score = replies?[indexPath.section].score {
 			commentCell.heartButton.setTitle(" \(score)", for: .normal)
 		}
 
@@ -142,18 +143,18 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	// MARK: - Functions
 	func updateDetailsWithThread (_ thread: ForumThread?) {
 		// Set thread title
-		if let threadTitle = forumThread?["title"].stringValue {
+		if let threadTitle = forumThread?.title {
 			self.title = threadTitle
 			self.threadTitleLabel.text = threadTitle
 		}
 
 		// Set poster username
-		if let posterUsername = forumThread?["poster_username"].stringValue, posterUsername != "" {
+		if let posterUsername = forumThread?.posterUsername {
 			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
 		}
 
 		// Set thread content
-		if let threadContent = thread?.content {
+		if let threadContent = thread?.thread?.content {
 			self.richTextView.update(input: threadContent, textColor: .white, completion: nil)
 		}
 	}
@@ -189,7 +190,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
-		if let posterId = forumThread?["poster_user_id"].intValue, posterId != 0 {
+		if let posterId = forumThread?.posterUserID, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
 			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
 			profileViewController?.otherUserID = posterId
@@ -201,12 +202,12 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	}
 
 	@IBAction func upVoteButton(_ sender: UIButton) {
-		guard let threadId = forumThread?["id"].intValue else { return }
+		guard let threadId = forumThread?.id else { return }
 		voteFor(threadId, vote: 1)
 	}
 
 	@IBAction func downVoteButton(_ sender: UIButton) {
-		guard let threadId = forumThread?["id"].intValue else { return }
+		guard let threadId = forumThread?.id else { return }
 		voteFor(threadId, vote: 0)
 	}
 

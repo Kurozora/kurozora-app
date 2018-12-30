@@ -17,8 +17,8 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
-	var sections:[JSON]?
-	var sectionsCount:Int?
+	var sections: [ForumSectionsElement]?
+	var sectionsCount: Int?
 	var threadSorting: String?
 
     private var viewControllers = [UIViewController]()
@@ -80,12 +80,12 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
         
         for index in 0 ..< count {
             let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsChild") as! ForumsChildViewController
-            if let sectionTitle = sections?[index]["name"].stringValue, sectionTitle != "" {
+            if let sectionTitle = sections?[index].name {
                 viewController.sectionTitle = sectionTitle
                 barItems.append(Item(title: sectionTitle))
             }
 
-			if let sectionID = sections?[index]["id"].intValue, sectionID != 0 {
+			if let sectionID = sections?[index].id, sectionID != 0 {
 				viewController.sectionID = sectionID
 			}
 

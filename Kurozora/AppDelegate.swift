@@ -12,17 +12,19 @@ import RevealingSplashView
 import Kingfisher
 import SCLAlertView
 import TRON
+import ESTabBarController_swift
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
+	var authenticated = false
+
     let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "kurozora_icon")!,iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: UIColor(red: 53/255, green: 58/255, blue: 80/255, alpha: 1))
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
-//		WorkflowController.logoutUser()
 		WorkflowController.pusherInit()
 
         // Max disk cache size
@@ -56,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
 
         if User.username() != nil {
+			authenticated = true
             let customTabBar = KurozoraTabBarController()
             self.window?.rootViewController = customTabBar
         } else {
@@ -69,7 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		revealingSplashView.playHeartBeatAnimation()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
-
         return true
     }
     
@@ -91,10 +93,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         Service.shared.validateSession(withSuccess: { (success) in
             if !success {
+				self.authenticated = false
                 let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
                 self.window?.rootViewController = vc
-            }
+			} else {
+				self.authenticated = true
+			}
         })
     }
 
@@ -105,5 +110,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		if authenticated {
+			let urlScheme = url.host?.removingPercentEncoding
+
+			if urlScheme == "anime" {
+				let showID = url.lastPathComponent
+				if showID != "" {
+					let storyboard = UIStoryboard(name: "details", bundle: nil)
+					if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
+						showTabBarController.showID = Int(showID)
+
+						UIApplication.topViewController()?.present(showTabBarController, animated: true)
+					}
+				}
+			}
+
+			if urlScheme == "profile" || urlScheme == "feed" || urlScheme == "timeline" {
+				let userID = url.lastPathComponent
+				if userID != "" {
+					let storyboard = UIStoryboard(name: "profile", bundle: nil)
+					if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController {
+						profileViewController.otherUserID = Int(userID)
+
+						let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController)
+
+						UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
+					}
+				} else {
+					if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+						tabBarController.selectedIndex = 4
+					}
+				}
+			}
+
+			if urlScheme == "explore" || urlScheme == "home" {
+				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+					tabBarController.selectedIndex = 0
+				}
+			}
+
+			if urlScheme == "notification" || urlScheme == "notifications" {
+				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+					tabBarController.selectedIndex = 3
+				}
+			}
+
+			if urlScheme == "forum" || urlScheme == "forums" {
+				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+					tabBarController.selectedIndex = 2
+				}
+			}
+
+			if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
+				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+					tabBarController.selectedIndex = 2
+				}
+			}
+		}
+
+		return true
+	}
 }
 

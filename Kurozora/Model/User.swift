@@ -19,6 +19,7 @@ class User: JSONDecodable {
     }
     
     let success: Bool?
+	let message: String?
 	let authToken: String?
     
     let id: Int?
@@ -46,6 +47,7 @@ class User: JSONDecodable {
     
     required init(json: JSON) throws {
         success = json["success"].boolValue
+		message = json["message"].stringValue
 		authToken = json["kuro_auth_token"].stringValue
         
         id = json["user_id"].intValue

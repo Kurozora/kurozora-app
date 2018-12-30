@@ -1,5 +1,5 @@
 //
-//  PrivacyPolicy.swift
+//  LegalViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/09/2018.
@@ -17,15 +17,13 @@ class LegalViewController : UIViewController {
         super.viewWillAppear(animated)
         
         Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
-            if let privacyPolicyText = privacyPolicy?.text, privacyPolicyText != "" {
+            if let privacyPolicyText = privacyPolicy?.text {
                 self.privacyPolicyTextView.textColor = .white
                 self.privacyPolicyTextView.text = privacyPolicyText
             }
             
-            if let lastUpdatedAt = privacyPolicy?.lastUpdate, lastUpdatedAt != "" {
+            if let lastUpdatedAt = privacyPolicy?.lastUpdate {
                 self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
-            } else {
-                self.lastUpdatedLabel.text = ""
             }
         })
     }

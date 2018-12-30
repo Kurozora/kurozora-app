@@ -21,7 +21,7 @@ class AnimeListViewController: UIViewController, EmptyDataSetSource, EmptyDataSe
 
 	private let refreshControl = UIRefreshControl()
 
-	var library: [JSON]?
+	var library: [LibraryElement]?
     var sectionTitle: String?
 	var libraryLayout = "Detailed"
 
@@ -97,47 +97,45 @@ extension AnimeListViewController: UICollectionViewDataSource {
 		if libraryLayout == "Detailed" {
 			let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailedCell", for: indexPath) as! LibraryCell
 
-			if let title = library?[indexPath.row]["title"].stringValue, title != "" {
+			if let title = library?[indexPath.row].title {
 				libraryCell.titleLabel.text = title
-			} else {
-				libraryCell.titleLabel.text = "Unknown"
 			}
 
-			if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
-				let posterThumb = URL(string: posterThumb)
-				let resource = ImageResource(downloadURL: posterThumb!)
+			if let posterThumbnail = library?[indexPath.row].posterThumbnail, posterThumbnail != "" {
+				let posterThumbnailUrl = URL(string: posterThumbnail)
+				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				libraryCell.posterView.kf.indicatorType = .activity
-				libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 			} else {
-				libraryCell.posterView.image = UIImage(named: "placeholder_poster")
+				libraryCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
-			if let bannerImage = library?[indexPath.row]["background_thumbnail"].stringValue, bannerImage != "" {
-				let bannerImage = URL(string: bannerImage)
-				let resource = ImageResource(downloadURL: bannerImage!)
+			if let backgroundThumbnail = library?[indexPath.row].backgroundThumbnail, backgroundThumbnail != "" {
+				let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
+				let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
 				libraryCell.episodeImageView?.kf.indicatorType = .activity
-				libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 			} else {
-				libraryCell.episodeImageView?.image = UIImage(named: "placeholder_banner")
+				libraryCell.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
-			if let episodeCount = library?[indexPath.row]["episode_count"].intValue, let averageRating = library?[indexPath.row]["average_rating"].doubleValue {
+			if let episodeCount = library?[indexPath.row].episodeCount, let averageRating = library?[indexPath.row].averageRating {
 				libraryCell.userProgressLabel.text = "TV ·  \(episodeCount) ·  \(averageRating)"
 			} else {
-				libraryCell.userProgressLabel.text = "TV ·  0 ·  5"
+				libraryCell.userProgressLabel.text = "TV ·  0 ·  0"
 			}
 
 			return libraryCell
 		} else if libraryLayout == "Compact" {
 			let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CompactCell", for: indexPath) as! LibraryCell
 
-			if let posterThumb = library?[indexPath.row]["poster_thumbnail"].stringValue, posterThumb != "" {
-				let posterThumb = URL(string: posterThumb)
-				let resource = ImageResource(downloadURL: posterThumb!)
+			if let posterThumbnail = library?[indexPath.row].posterThumbnail, posterThumbnail != "" {
+				let posterThumbnailUrl = URL(string: posterThumbnail)
+				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				libraryCell.posterView.kf.indicatorType = .activity
-				libraryCell.posterView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
 			} else {
-				libraryCell.posterView.image = UIImage(named: "placeholder_poster")
+				libraryCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
 			return libraryCell
@@ -150,7 +148,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension AnimeListViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let showID = library?[indexPath.row]["id"].intValue else {return}
+		guard let showID = library?[indexPath.row].id else {return}
 
 		let storyboard = UIStoryboard(name: "details", bundle: nil)
 		let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController

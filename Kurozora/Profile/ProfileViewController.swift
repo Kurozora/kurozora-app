@@ -31,6 +31,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	var otherUserID: Int?
 	var posts: [JSON]?
 
+	var imagePicker = UIImagePickerController()
+	var oldLeftBarItems: [UIBarButtonItem]?
+	var oldRightBarItems: [UIBarButtonItem]?
+	var bioTextCache: String?
+	var profileImageCache: UIImage?
+
     @IBOutlet var tableView: UITableView!
     @IBOutlet var backgroundView: UIView!
 
@@ -39,26 +45,26 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userBanner: UIImageView!
-    @IBOutlet weak var aboutLabel: UILabel!
-    @IBOutlet weak var aboutButton: UIButton!
+    @IBOutlet weak var bioTextView: UITextView!
+	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var activeAgo: UILabel!
 
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
 
+	@IBOutlet weak var userButtonsStackView: UIStackView!
+	@IBOutlet weak var segmentedControl: UISegmentedControl!
+
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
     @IBOutlet weak var tagBadge: UIButton!
     @IBOutlet weak var reputationBadge: DesignableLabel!
     
-    @IBOutlet weak var moreSettingsButton: UIButton!
+	@IBOutlet weak var selectBannerImageButton: UIButton!
+	@IBOutlet weak var selectProfileImageButton: UIButton!
+	@IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var postButton: UIButton!
-    
-    @IBOutlet weak var segmentedControlView: UIView!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-
-    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -70,6 +76,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
+			if otherUserID != User.currentID() {
+				editProfileButton.isHidden = true
+			}
 		} else if let currentID = User.currentID(), String(currentID) != "" {
 			fetchUserDetails(with: currentID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
@@ -189,25 +198,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func sizeHeaderToFit() {
-        guard let header = tableView.tableHeaderView else {
-            return
-        }
-        
-        if user?.id != User.currentID() {
-            segmentedControl.isHidden = true
-        }
-
-        header.setNeedsLayout()
-        header.layoutIfNeeded()
-
-        aboutLabel.preferredMaxLayoutWidth = aboutLabel.frame.size.width
-
-        let height = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var frame = header.frame
-
-        frame.size.height = height
-        header.frame = frame
-        tableView.tableHeaderView = header
+		guard let header = tableView.tableHeaderView else {
+			return
+		}
+		let height = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+		header.frame.size.height = height
+		tableView.tableHeaderView = header
     }
 
     // MARK: - Functions
@@ -255,39 +251,43 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
-            userBanner.kf.setImage(with: resource, placeholder: UIImage(named: "colorful"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			userBanner.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"), progressBlock: nil, completionHandler: nil)
             
-            if let userBanner = userBanner.image {
-                let colors = userBanner.getColors()
-                
-                backgroundView.backgroundColor = colors.background
-                segmentedControl.tintColor = colors.detail
-                aboutLabel.textColor = colors.secondary
-                postButton.backgroundColor = colors.primary
-            }
+//			if let userBanner = userBanner.image {
+//                let colors = userBanner.getColors()
+//
+//                backgroundView.backgroundColor = colors.background
+//                segmentedControl.tintColor = colors.detail
+//                bioTextView.textColor = colors.secondary
+//                postButton.backgroundColor = colors.primary
+//            }
         } else {
-            userBanner.image = UIImage(named: "colorful")
+            userBanner.image = #imageLiteral(resourceName: "default_banner")
         }
         
         // Setup user bio
         if let bio = user?.bio, bio != "" {
-            self.aboutLabel.text = bio
-        } else {
-            self.aboutLabel.text = ""
-            self.aboutLabel.isHidden = true
-            self.aboutButton.isHidden = true
-        }
+            self.bioTextView.text = bio
+
+			if (self.bioTextView.frame.height < 67) {
+				self.bioTextView.sizeThatFits(CGSize(width: self.bioTextView.frame.width, height: self.bioTextView.frame.height))
+			} else {
+				self.bioTextView.sizeThatFits(CGSize(width: self.bioTextView.frame.width, height: 67))
+			}
+		} else {
+			self.bioTextViewHeight.constant = 0
+		}
         
         // Setup user activity
         if let activeEnd = user?.activeEnd, activeEnd != "" {
             let timeAgo = Date.timeAgo(activeEnd)
-            let activeEndFormatted = timeAgo == "Just now" ? "Active now" : "\(timeAgo) ago"
+            let activeEndFormatted = timeAgo == "Just now" ? "Active Now" : timeAgo
             
             if let activeAgo = user?.active, String(activeAgo) != "" {
-                self.activeAgo.text = activeAgo ? "Active now" : activeEndFormatted
+                self.activeAgo.text = activeAgo ? "Active Now" : activeEndFormatted
             }
         } else {
-            self.activeAgo.text = ""
+            self.activeAgo.text = "Active Now"
         }
         
         // Setup post count
@@ -330,7 +330,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             followButton.isHidden = true
         } else {
             followButton.isHidden = false
-            moreSettingsButton.isHidden = true
+            editProfileButton.isHidden = true
         }
 
         // Setup pro badge
@@ -355,8 +355,139 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		}
     }
 
+	@objc func cancelProfileEdit(_ sender: Any) {
+		if let sender = sender as? Bool, !sender {
+			// If user cacncels, pute everything back
+			self.bioTextView.text = self.bioTextCache
+			self.userAvatar.image = self.profileImageCache
+		}
+
+		UIView.animate(withDuration: 1) {
+			// Setup edit view
+			// Hide edit view
+			self.selectProfileImageButton.alpha = 0
+			self.selectBannerImageButton.alpha = 0
+
+			// Unhide previously hidden items
+			self.editProfileButton.alpha = 1
+			self.tagBadge.alpha = 1
+			self.postsBadge.alpha = 1
+			self.reputationBadge.alpha = 1
+			self.activeAgo.alpha = 1
+			self.userButtonsStackView.alpha = 1
+			self.segmentedControl.alpha = 1
+			self.postButton.alpha = 1
+
+			// Show relevant actions
+			self.profileNavigationItem.setLeftBarButton(nil, animated: true)
+			self.profileNavigationItem.setRightBarButton(nil, animated: true)
+
+			self.profileNavigationItem.setLeftBarButtonItems(self.oldLeftBarItems, animated: true)
+			self.profileNavigationItem.setRightBarButtonItems(self.oldRightBarItems, animated: true)
+
+			// Disable bio editing
+			self.bioTextView.isScrollEnabled = false
+			self.bioTextView.isEditable = false
+
+			// Reverse bio text view constraint change
+			if self.bioTextView.text == "" {
+				self.bioTextViewHeight.constant = 0
+			} else {
+				self.bioTextViewHeight.constant = 67
+				self.tableView.tableHeaderView?.frame.size.height = 352
+			}
+
+			// Header view size to fit
+//			self.sizeHeaderToFit()
+
+			// Unhide table view cells
+			// TODO: - Find a better way to hide/unhide ALL cells and not visible ones only
+			for tableCell in self.tableView.visibleCells {
+				tableCell.contentView.alpha = 1
+			}
+		}
+	}
+
+	@objc func applyProfileEdit(_ sender: Any) {
+		guard let bioText = bioTextView.text else { return }
+		guard let profileImage = userAvatar.image else { return }
+		var shouldUpdate = true
+
+		if self.bioTextCache == bioText && self.profileImageCache == profileImage {
+			shouldUpdate = false
+			self.cancelProfileEdit(shouldUpdate)
+		} else if self.bioTextCache == bioText || self.profileImageCache == profileImage {
+			shouldUpdate = true
+		}
+
+		// If user applies changes clear the cache
+		self.bioTextCache = nil
+		self.profileImageCache = nil
+
+		if shouldUpdate {
+			Service.shared.updateInformation(withBio: bioText, profileImage: profileImage) { (update) in
+				if update {
+					self.cancelProfileEdit(update)
+				}
+			}
+		}
+	}
+
     // MARK: - IBActions
-    @IBAction func showAvatar(_ sender: AnyObject) {
+	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
+		// Cache current profile data
+		self.bioTextCache = self.bioTextView.text
+		self.profileImageCache = self.userAvatar.image
+
+		UIView.animate(withDuration: 0.5) {
+			// Setup edit view
+			// Hide distractions
+			self.editProfileButton.alpha = 0
+			self.tagBadge.alpha = 0
+			self.postsBadge.alpha = 0
+			self.reputationBadge.alpha = 0
+			self.activeAgo.alpha = 0
+			self.userButtonsStackView.alpha = 0
+			self.segmentedControl.alpha = 0
+			self.postButton.alpha = 0
+
+			// Hide table view cells
+			for tableCell in self.tableView.visibleCells {
+				tableCell.contentView.alpha = 0
+			}
+
+			// Add relevant actions
+			// Save old actions
+			self.oldLeftBarItems = self.profileNavigationItem.leftBarButtonItems
+			self.oldRightBarItems = self.profileNavigationItem.rightBarButtonItems
+
+			// Remove old actions
+			self.profileNavigationItem.setLeftBarButton(nil, animated: true)
+			self.profileNavigationItem.setRightBarButton(nil, animated: true)
+
+			// Set new actions
+			let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelProfileEdit(_:)))
+			let rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
+			self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+			self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
+
+			// Enable other relevant actions
+			self.selectProfileImageButton.alpha = 1
+			self.selectBannerImageButton.alpha = 1
+
+			// Enable bio editing
+			self.bioTextView.isScrollEnabled = true
+			self.bioTextView.isEditable = true
+
+			// Change bio text view height
+			self.bioTextViewHeight.constant = 300
+
+			// Header view size to fit
+			self.sizeHeaderToFit()
+		}
+	}
+
+	@IBAction func showAvatar(_ sender: AnyObject) {
         if let avatar = user?.avatar, avatar != ""  {
             presentPhotoViewControllerWith(url: avatar)
         } else {
@@ -368,7 +499,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if let banner = user?.banner, banner != "" {
             presentPhotoViewControllerWith(url: banner)
         } else {
-            presentPhotoViewControllerWith(string: "placeholder_banner")
+            presentPhotoViewControllerWith(string: "default_banner")
         }
     }
 
@@ -382,13 +513,80 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		self.present(vc, animated: true, completion: nil)
 	}
 
-	//	MARK: - Prepare for segue
+	// MARK: - Prepare for segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "BadgeSegue" {
 			let vc = segue.destination as! BadgesTableViewController
 			vc.badges = user?.badges
 		}
 	}
+}
+
+// MARK: - UIImagePickerControllerDelegate
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		if let editedImage = info[.editedImage] as? UIImage{
+			self.userAvatar.image = editedImage
+		}
+
+		//Dismiss the UIImagePicker after selection
+		picker.dismiss(animated: true, completion: nil)
+	}
+
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		picker.dismiss(animated: true, completion: nil)
+	}
+
+	// Image picker
+	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
+		let alert = UIAlertController(title: "Profile Picture 🖼", message: "Choose an awesome picture 😉", preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+			self.openCamera()
+		}))
+
+		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+			self.openPhotoLibrary()
+		}))
+
+		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		// If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
+		if UIDevice.isPad() {
+			alert.popoverPresentationController?.sourceView = sender
+			alert.popoverPresentationController?.sourceRect = sender.bounds
+			alert.popoverPresentationController?.permittedArrowDirections = .up
+		}
+
+		alert.view.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+
+		self.present(alert, animated: true, completion: nil)
+	}
+
+	// Open the camera
+	func openCamera(){
+		if(UIImagePickerController .isSourceTypeAvailable(.camera)){
+			imagePicker.sourceType = .camera
+			imagePicker.allowsEditing = true
+			imagePicker.delegate = self
+
+			self.present(imagePicker, animated: true, completion: nil)
+		}
+		else{
+			let alert  = UIAlertController(title: "⚠️ Warning ⚠️", message: "You don't seem to have a camera 😢", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+			self.present(alert, animated: true, completion: nil)
+		}
+	}
+
+	// Choose image from camera roll
+	func openPhotoLibrary(){
+		imagePicker.sourceType = .photoLibrary
+		imagePicker.allowsEditing = true
+		imagePicker.delegate = self
+
+		self.present(imagePicker, animated: true, completion: nil)
+	}
+}
 
 //    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
 //        configureFetchController()
@@ -591,24 +789,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 //            navigationController?.pushViewController(viewController, animated: true)
 //        }
 //    }
-//
-//    @IBAction func showFollowingUsers(sender: AnyObject) {
-//        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
-//        let query = userProfile!.following().query()
-//        query.orderByAscending("aozoraUsername")
-//        userListController.initWithQuery(query, title: "Following", user: userProfile!)
-//        presentSmallViewController(viewController: userListController, sender: sender)
-//    }
-//
-//    @IBAction func showFollowers(sender: AnyObject) {
-//        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
-//        let query = User.query()!
-//        query.whereKey("following", equalTo: userProfile!)
-//        query.orderByAscending("aozoraUsername")
-//        userListController.initWithQuery(query, title: "Followers", user: userProfile!)
-//        presentSmallViewController(viewController: userListController, sender: sender)
-//    }
-//
+//	
 //    @IBAction func showMoreSettings(sender: AnyObject) {
 //
 //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
@@ -663,22 +844,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 //
 //            alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
 //                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
-//                let query = User.query()!
-//                query.whereKeyExists("aozoraUsername")
-//                query.whereKey("active", equalTo: true)
-//                query.limit = 100
-//                userListController.initWithQuery(query, title: "Online Users")
 //
 //                self.presentSmallViewController(viewController: userListController, sender: sender)
 //            }))
 //
 //            alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
 //                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
-//                let query = User.query()!
-//                query.orderByDescending("joinDate")
-//                query.whereKeyExists("aozoraUsername")
-//                query.limit = 100
-//                userListController.initWithQuery(query, title: "New Users")
+//	
 //                self.presentSmallViewController(viewController: userListController, sender: sender)
 //            }))
 //        }
@@ -686,21 +858,3 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 //        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:nil))
 //        self.present(alert, animated: true, completion: nil)
 //    }
-
-    // MARK: - Overrides
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
-    }
-}
-
-// MARK: - EditProfileViewControllerProtocol
-extension ProfileViewController: EditProfileViewControllerProtocol {
-    func editProfileViewControllerDidEditedUser(user: User?) {
-        self.user = user
-        
-        if let id = user?.id, String(id) != "" {
-            self.fetchUserDetails(with: id)
-        }
-    }
-}
