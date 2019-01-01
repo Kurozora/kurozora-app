@@ -30,22 +30,54 @@ public class WorkflowController {
 				if let data = data as? [String : AnyObject], data.count != 0 {
 					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
 						if sessionID != User.currentSessionID() {
-							let banner = NotificationBanner(title: "New login detected from \(device)", subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
-							banner.haptic = .heavy
-							banner.show()
-							banner.onTap = {
-								if UIApplication.topViewController() as? ManageActiveSessionsController != nil {
-								} else {
-									let storyBoard = UIStoryboard(name: "settings", bundle: nil)
+							// If notifications enabled
+							if UserDefaults.standard.bool(forKey:"notificationsAllowed") {
+								let alertType = UserDefaults.standard.integer(forKey: "alertType")
 
-									let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
-									let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
-									let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
+								if alertType == 0 || alertType == 1 {
+									var banner = NotificationBanner(title: "New login detected from \(device)", subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
 
-									kurozoraNavigationController?.setViewControllers([vc!], animated: true)
-									splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
+									if alertType == 0 {
+										banner = NotificationBanner(title: "New login detected from \(device)", subtitle: "(Tap to manage your sessions!)", style: .info)
+									}
 
-									UIApplication.topViewController()?.present(splitView!, animated: true)
+									// Notification haptic feedback and vibration
+									if UserDefaults.standard.bool(forKey: "notificationsVibration") {
+										banner.haptic = .heavy
+									}
+									// Notification persistency
+									if UserDefaults.standard.integer(forKey: "notificationsPersistent") == 0 {
+										banner.autoDismiss = true
+									} else {
+										banner.autoDismiss = false
+										banner.onSwipeUp = {
+											banner.dismiss()
+										}
+									}
+
+									banner.show()
+									banner.onTap = {
+										self.showSessions()
+									}
+								} else if alertType == 2 {
+									let statusBanner = StatusBarNotificationBanner(title: "New login detected from \(device)", style: .info)
+									// Notification haptic feedback and vibration
+									if UserDefaults.standard.bool(forKey: "notificationsVibration") {
+										statusBanner.haptic = .heavy
+									}
+									// Notification persistency
+									if UserDefaults.standard.integer(forKey: "notificationsPersistent") == 0 {
+										statusBanner.autoDismiss = true
+									} else {
+										statusBanner.autoDismiss = false
+										statusBanner.onSwipeUp = {
+											statusBanner.dismiss()
+										}
+									}
+									statusBanner.show()
+									statusBanner.onTap = {
+										self.showSessions()
+									}
 								}
 							}
 
@@ -94,5 +126,21 @@ public class WorkflowController {
 		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
 		UIApplication.topViewController()?.present(vc, animated: true)
+	}
+
+	class func showSessions() {
+		if UIApplication.topViewController() as? ManageActiveSessionsController != nil {
+		} else {
+			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
+
+			let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
+			let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
+			let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
+
+			kurozoraNavigationController?.setViewControllers([vc!], animated: true)
+			splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
+
+			UIApplication.topViewController()?.present(splitView!, animated: true)
+		}
 	}
 }
