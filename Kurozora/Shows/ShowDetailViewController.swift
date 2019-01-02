@@ -228,7 +228,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 				let posterThumb = URL(string: posterThumb)
 				let resource = ImageResource(downloadURL: posterThumb!)
 				posterImageView.kf.indicatorType = .activity
-				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 			} else {
 				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
@@ -237,7 +237,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 				let bannerImage = URL(string: bannerImage)
 				let resource = ImageResource(downloadURL: bannerImage!)
 				bannerImageView.kf.indicatorType = .activity
-				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
 			} else {
 				bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
@@ -638,7 +638,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 				let actorImageUrl = URL(string: actorImage)
 				let resource = ImageResource(downloadURL: actorImageUrl!)
 				castCell.actorImageView.kf.indicatorType = .activity
-				castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
 			} else {
 				castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
 			}

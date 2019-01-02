@@ -19,15 +19,15 @@ PODS:
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
-  - Kingfisher (4.10.1)
+  - Kingfisher (5.0.1)
   - MarqueeLabel/Swift (3.2.0)
   - NGAParallaxMotion (1.1.0)
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
     - SnapKit (~> 4.0.1)
-  - NVActivityIndicatorView (4.4.0):
-    - NVActivityIndicatorView/Presenter (= 4.4.0)
-  - NVActivityIndicatorView/Presenter (4.4.0)
+  - NVActivityIndicatorView (4.5.1):
+    - NVActivityIndicatorView/Presenter (= 4.5.1)
+  - NVActivityIndicatorView/Presenter (4.5.1)
   - Pageboy (2.6.1)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
@@ -37,7 +37,7 @@ PODS:
   - ReachabilitySwift (4.1.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
-  - RichTextView (1.0.4):
+  - RichTextView (1.0.6):
     - Down
     - iosMath
     - SnapKit
@@ -88,7 +88,7 @@ DEPENDENCIES:
   - ESTabBarController-swift (~> 2.6)
   - IQKeyboardManagerSwift (~> 6)
   - KeychainAccess (~> 3.1)
-  - Kingfisher (~> 4.0)
+  - Kingfisher
   - NGAParallaxMotion (~> 1.1)
   - NotificationBannerSwift (= 1.8.0)
   - NVActivityIndicatorView
@@ -174,17 +174,17 @@ SPEC CHECKSUMS:
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  Kingfisher: 4f771421b9208185217550528a06fd48756cb7c2
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
-  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
+  NVActivityIndicatorView: ec34a7b88c51fab270004a1a1f32116e711010cd
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
-  RichTextView: 821a34ad66ce37836e1bcd8bfde3e0729799a002
+  RichTextView: 5656d08622754c759dc9fc3a3332359974079436
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
@@ -197,6 +197,6 @@ SPEC CHECKSUMS:
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 85e2aa9f3f7da5814edaa759c796f6bac98e0681
+PODFILE CHECKSUM: d922105d5fb793fe32912722a2dc748e714adea7
 
 COCOAPODS: 1.6.0.beta.1

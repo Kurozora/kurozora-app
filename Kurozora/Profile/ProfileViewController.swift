@@ -141,9 +141,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		// Profile Image
 		if let profileImage = posts?[indexPath.row]["profile_image"].stringValue, profileImage != "" {
 			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!)
+			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
 			timelinePostCell.profileImageView.kf.indicatorType = .activity
-			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 		}else {
 			timelinePostCell.profileImageView.image = #imageLiteral(resourceName: "default_avatar")
 		}
@@ -238,7 +238,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 
 			let cache = ImageCache.default
 			cache.store(userAvatar.image!, forKey: "currentUserAvatar")
@@ -251,7 +251,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
-			userBanner.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"), progressBlock: nil, completionHandler: nil)
+			userBanner.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
             
 //			if let userBanner = userBanner.image {
 //                let colors = userBanner.getColors()

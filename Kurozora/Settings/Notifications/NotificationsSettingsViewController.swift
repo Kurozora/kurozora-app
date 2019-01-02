@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NotificationsSettingsViewController: UITableViewController {
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -47,8 +48,8 @@ class NotificationsSettingsViewController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		let groupingType = GroupingType(rawValue: UserDefaults.standard.integer(forKey: "notificationsGrouping"))!
-		let bannerStyle = BannerStyle(rawValue: UserDefaults.standard.integer(forKey: "notificationsPersistent"))!
+		let groupingType = GroupingType(rawValue: UserSettings.notificationsGrouping())!
+		let bannerStyle = BannerStyle(rawValue: UserSettings.notificationsPersistent())!
 
 		var groupingValue = "Automatic"
 		var bannerStyleValue = "Temporary"
@@ -73,10 +74,10 @@ class NotificationsSettingsViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		allowNotificationsSwitch.isOn = UserDefaults.standard.bool(forKey: "notificationsAllowed")
-		soundsSwitch.isOn = UserDefaults.standard.bool(forKey: "notificationsSound")
-		vibrationsSwitch.isOn = UserDefaults.standard.bool(forKey: "notificationsVibration")
-		badgeSwitch.isOn = UserDefaults.standard.bool(forKey: "notificationsBadge")
+		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed()
+		soundsSwitch.isOn = UserSettings.notificationsSound()
+		vibrationsSwitch.isOn = UserSettings.notificationsVibration()
+		badgeSwitch.isOn = UserSettings.notificationsBadge()
 
 
 		tableView.delegate = self
@@ -98,7 +99,7 @@ class NotificationsSettingsViewController: UITableViewController {
 
 		switch switchType {
 		case .allowNotifications:
-			UserDefaults.standard.set(isOn, forKey: "notificationsAllowed")
+			UserSettings.set(isOn, forKey: .notificationsAllowed)
 			if isOn {
 				numberOfSections = 4
 			} else {
@@ -106,11 +107,11 @@ class NotificationsSettingsViewController: UITableViewController {
 			}
 			tableView.reloadData()
 		case .sounds:
-				UserDefaults.standard.set(isOn, forKey: "notificationsSound")
+			UserSettings.set(isOn, forKey: .notificationsSound)
 		case .vibrations:
-				UserDefaults.standard.set(isOn, forKey: "notificationsVibration")
+			UserSettings.set(isOn, forKey: .notificationsVibration)
 		case .badge:
-				UserDefaults.standard.set(isOn, forKey: "notificationsBadge")
+			UserSettings.set(isOn, forKey: .notificationsBadge)
 		}
 	}
 
@@ -136,17 +137,29 @@ extension NotificationsSettingsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotificationCell", for: indexPath) as! SettingsNotificationCell
 		let alertsType = Alerts(rawValue: indexPath.row)!
-		let selected = UserDefaults.standard.integer(forKey: "alertType")
+		let selected = UserSettings.alertType()
 
 		switch alertsType {
 		case .basic:
-			notificationCell.previewImageView.image = #imageLiteral(resourceName: "session_icon")
+			if let resourcePath = Bundle.main.path(forResource: "notification_basic", ofType: ".gif") {
+				let url = URL(fileURLWithPath: resourcePath)
+				let provider = LocalFileImageDataProvider(fileURL: url)
+				notificationCell.previewImageView.kf.setImage(with: provider)
+			}
 			notificationCell.titleLabel.text = "Basic"
 		case .icon:
-			notificationCell.previewImageView.image = #imageLiteral(resourceName: "restore_icon")
+			if let resourcePath = Bundle.main.path(forResource: "notification_icon", ofType: ".gif") {
+				let url = URL(fileURLWithPath: resourcePath)
+				let provider = LocalFileImageDataProvider(fileURL: url)
+				notificationCell.previewImageView.kf.setImage(with: provider)
+			}
 			notificationCell.titleLabel.text = "Icon"
 		case .status:
-			notificationCell.previewImageView.image = #imageLiteral(resourceName: "notifications_icon")
+			if let resourcePath = Bundle.main.path(forResource: "notification_statusbar", ofType: ".gif") {
+				let url = URL(fileURLWithPath: resourcePath)
+				let provider = LocalFileImageDataProvider(fileURL: url)
+				notificationCell.previewImageView.kf.setImage(with: provider)
+			}
 			notificationCell.titleLabel.text = "Status Bar"
 		}
 
@@ -158,7 +171,7 @@ extension NotificationsSettingsViewController: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		UserDefaults.standard.set(indexPath.row, forKey: "alertType")
+		UserSettings.set(indexPath.row, forKey: .alertType)
 		collectionView.reloadData()
 	}
 }

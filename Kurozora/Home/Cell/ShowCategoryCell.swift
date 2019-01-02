@@ -35,9 +35,9 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         // Show poster
         if let posterThumbnail = shows?[indexPath.row].posterThumbnail, posterThumbnail != "" {
             let posterThumbnailUrl = URL(string: posterThumbnail)
-            let resource = ImageResource(downloadURL: posterThumbnailUrl!)
+			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
             showCell.posterImageView.kf.indicatorType = .activity
-            showCell.posterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            showCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
         } else {
             showCell.posterImageView.image = UIImage(named: "placeholder_poster")
         }

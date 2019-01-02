@@ -274,7 +274,7 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 					let posterThumbnailUrl = URL(string: posterThumbnail)
 					let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 					searchShowCell.posterImageView.kf.indicatorType = .activity
-					searchShowCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+					searchShowCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 				} else {
 					searchShowCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 				}
@@ -332,7 +332,7 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 					let avatarUrl = URL(string: avatar)
 					let resource = ImageResource(downloadURL: avatarUrl!)
 					searchUserCell.avatarImageView.kf.indicatorType = .activity
-					searchUserCell.avatarImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+					searchUserCell.avatarImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 				} else {
 					searchUserCell.avatarImageView.image = #imageLiteral(resourceName: "default_avatar")
 				}
@@ -363,7 +363,7 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			searchSuggestionCell.posterImageView.kf.indicatorType = .activity
-			searchSuggestionCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			searchSuggestionCell.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 		} else {
 			searchSuggestionCell.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 		}

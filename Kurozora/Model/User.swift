@@ -103,11 +103,18 @@ class User: JSONDecodable {
 		var image: UIImage?
 		let cache = ImageCache.default
 
-		cache.retrieveImage(forKey: "currentUserAvatar", options: []) { (result, cacheType) in
-			if cacheType == .none {
-				image = #imageLiteral(resourceName: "default_avatar")
-			} else {
-				image = result
+		cache.retrieveImage(forKey: "currentUserAvatar", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
+			switch result {
+			case .success(let value):
+				// If the `cacheType is `.none`, `image` will be `nil`.
+				if value.cacheType == .none {
+					image = #imageLiteral(resourceName: "default_avatar")
+				} else {
+					image = value.image
+				}
+
+			case .failure(let error):
+				print(error)
 			}
 		}
 

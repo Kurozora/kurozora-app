@@ -13,7 +13,7 @@ def common_pods
     pod 'EmptyDataSet-Swift', '~> 4.2'
 	pod 'ESTabBarController-swift', '~> 2.6'
 	pod 'KeychainAccess', '~> 3.1'
-	pod 'Kingfisher', '~> 4.0'
+	pod 'Kingfisher'
 	#    pod 'Lightbox', '2.1.2'
 	pod 'NVActivityIndicatorView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'

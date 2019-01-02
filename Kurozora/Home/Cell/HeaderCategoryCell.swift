@@ -56,7 +56,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let backgroundUrl = URL(string: background)
             let resource = ImageResource(downloadURL: backgroundUrl!)
             headerCell.backgroundImageView.kf.indicatorType = .activity
-            headerCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            headerCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
         } else {
             headerCell.backgroundImageView.image = #imageLiteral(resourceName: "placeholder_banner")
         }

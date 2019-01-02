@@ -962,11 +962,11 @@ Kurozora 1.0.0 (1)</string>
                         <sections>
                             <tableViewSection id="dqH-TN-aza">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="50" id="tSV-Y6-VF3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="170" width="414" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="tSV-Y6-VF3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="170" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tSV-Y6-VF3" id="cob-nN-CK7">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Br2-RL-ifK" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
@@ -1035,7 +1035,7 @@ Kurozora 1.0.0 (1)</string>
                             <tableViewSection id="K6S-N0-rbD">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationWidth="10" id="2Y3-G3-aBq" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="256" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="250" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Y3-G3-aBq" id="Ob4-dA-Lj6">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1544,7 +1544,7 @@ Kurozora 1.0.0 (1)</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I4y-AL-YJj">
-                                                    <rect key="frame" x="20" y="10" width="374" height="180"/>
+                                                    <rect key="frame" x="20" y="10" width="374" height="179.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1gT-go-sdC">
                                                         <size key="itemSize" width="110" height="180"/>
@@ -1561,9 +1561,10 @@ Kurozora 1.0.0 (1)</string>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tzh-eZ-eEJ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                                                        <rect key="frame" x="26.5" y="0.0" width="57" height="110"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="110" id="97f-lu-grA"/>
+                                                                            <constraint firstAttribute="width" constant="57" id="vbl-yW-MOH"/>
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Basic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmT-B5-CY5">
@@ -1601,15 +1602,14 @@ Kurozora 1.0.0 (1)</string>
                                                                 </subviews>
                                                             </view>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="tzh-eZ-eEJ" secondAttribute="trailing" id="2HK-Hs-Rjj"/>
-                                                                <constraint firstItem="tzh-eZ-eEJ" firstAttribute="leading" secondItem="SG2-Ln-EPt" secondAttribute="leading" id="ESq-vT-Fcc"/>
                                                                 <constraint firstAttribute="bottom" secondItem="KSq-oW-Q52" secondAttribute="bottom" constant="8" id="Mkv-55-bSz"/>
-                                                                <constraint firstItem="lmT-B5-CY5" firstAttribute="leading" secondItem="tzh-eZ-eEJ" secondAttribute="leading" id="Shf-AS-kGR"/>
+                                                                <constraint firstItem="lmT-B5-CY5" firstAttribute="leading" secondItem="SG2-Ln-EPt" secondAttribute="leading" id="Shf-AS-kGR"/>
                                                                 <constraint firstItem="lmT-B5-CY5" firstAttribute="top" secondItem="tzh-eZ-eEJ" secondAttribute="bottom" constant="4" id="TU0-bt-Yga"/>
+                                                                <constraint firstItem="tzh-eZ-eEJ" firstAttribute="centerX" secondItem="SG2-Ln-EPt" secondAttribute="centerX" id="UUT-y7-7cc"/>
                                                                 <constraint firstItem="KSq-oW-Q52" firstAttribute="centerX" secondItem="SG2-Ln-EPt" secondAttribute="centerXWithinMargins" id="Yq6-vU-MJl"/>
                                                                 <constraint firstItem="tzh-eZ-eEJ" firstAttribute="top" secondItem="SG2-Ln-EPt" secondAttribute="top" id="ckJ-xd-Vdx"/>
                                                                 <constraint firstItem="KSq-oW-Q52" firstAttribute="top" secondItem="lmT-B5-CY5" secondAttribute="bottom" constant="12" id="efq-QT-SbO"/>
-                                                                <constraint firstItem="lmT-B5-CY5" firstAttribute="trailing" secondItem="tzh-eZ-eEJ" secondAttribute="trailing" id="sAo-vI-a4j"/>
+                                                                <constraint firstAttribute="trailing" secondItem="lmT-B5-CY5" secondAttribute="trailing" id="sAo-vI-a4j"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="previewImageView" destination="tzh-eZ-eEJ" id="bVy-JR-bzR"/>

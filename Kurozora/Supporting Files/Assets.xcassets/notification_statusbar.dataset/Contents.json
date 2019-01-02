@@ -1,0 +1,13 @@
+{
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "data" : [
+    {
+      "idiom" : "universal",
+      "filename" : "notification_statusbar.gif",
+      "universal-type-identifier" : "com.compuserve.gif"
+    }
+  ]
+}

@@ -105,7 +105,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				libraryCell.posterView.kf.indicatorType = .activity
-				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 			} else {
 				libraryCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
@@ -114,7 +114,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
 				let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
 				let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
 				libraryCell.episodeImageView?.kf.indicatorType = .activity
-				libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
 			} else {
 				libraryCell.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
@@ -133,7 +133,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				libraryCell.posterView.kf.indicatorType = .activity
-				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+				libraryCell.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 			} else {
 				libraryCell.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}

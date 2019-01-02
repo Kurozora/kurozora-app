@@ -28,16 +28,8 @@ class SettingsViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let imageUrl = GlobalVariables().KDefaults["user_avatar"]
-        
-        if let avatar = imageUrl, avatar != "" {
-            let avatar = URL(string: avatar)
-            let resource = ImageResource(downloadURL: avatar!)
-            userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-        }
-        
+		
+		userAvatar.image = User.currentUserAvatar()
         usernameLabel.text = GlobalVariables().KDefaults["username"]
         
         // Calculate cache size
@@ -47,21 +39,21 @@ class SettingsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		//        facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
-
-		ImageCache.default.calculateDiskCacheSize { size in
-			// Convert from bytes to mebibytes (2^20)
-			let sizeInMiB = Double(size/1048576)
-			self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
-		}
+		caculateCache()
 	}
     
     // MARK: - Functions
     func caculateCache() {
-        ImageCache.default.calculateDiskCacheSize { size in
-            // Convert from bytes to mebibytes (2^20)
-            let sizeInMiB = Double(size/1048576)
-            self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
-        }
+		ImageCache.default.calculateDiskStorageSize { (result) in
+			switch result {
+			case .success(let size):
+				// Convert from bytes to mebibytes (2^20)
+				let sizeInMiB = Double(size) / 1024 / 1024
+				self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
+			case .failure(let error):
+				print("Cache size calculation error: \(error)")
+			}
+		}
     }
     
     // MARK: - IBActions

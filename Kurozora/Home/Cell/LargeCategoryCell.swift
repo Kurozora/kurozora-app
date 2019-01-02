@@ -36,7 +36,7 @@ extension LargeCategoryCell: UICollectionViewDataSource {
             let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
             let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
             largeCell.backgroundImageView.kf.indicatorType = .activity
-			largeCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+			largeCell.backgroundImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
         } else {
             largeCell.backgroundImageView.image = #imageLiteral(resourceName: "placeholder_banner")
         }

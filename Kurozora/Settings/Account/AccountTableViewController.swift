@@ -18,16 +18,8 @@ class AccountTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let imageUrl = GlobalVariables().KDefaults["user_avatar"]
-        
-        if let avatar = imageUrl, avatar != "" {
-            let avatar = URL(string: avatar)
-            let resource = ImageResource(downloadURL: avatar!)
-            userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
-        }
-        
+
+		userAvatar.image = User.currentUserAvatar()
         usernameLabel.text = GlobalVariables().KDefaults["username"]
         userEmailLabel.text = "some@email.com"
         userEmailLabel.textColor = .white
@@ -44,7 +36,7 @@ class AccountTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         
         switch (indexPath.section, indexPath.row) {
-        //        case (0,0): break
+//		case (0,0): break
         case (1,0):
             let alertView = SCLAlertView()
             alertView.addButton("Yes, sign me out 😞", action: {
@@ -66,9 +58,7 @@ class AccountTableViewController: UITableViewController {
             })
             
             alertView.showNotice("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
-        default:
-            break
-//            SCLAlertView().showInfo(String(indexPath.section), subTitle: String(indexPath.row))
+        default: break
         }
     }
 }

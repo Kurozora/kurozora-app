@@ -121,7 +121,7 @@ class EpisodesCollectionViewController: UICollectionViewController, NVActivityIn
             let episodeScreenshotUrl = URL(string: episodeScreenshot)
                 let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
             
-            episodeCell.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            episodeCell.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))])
         } else {
 			episodeCell.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode")
         }

@@ -66,7 +66,7 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
             let actorImageUrl = URL(string: actorImage)
             let resource = ImageResource(downloadURL: actorImageUrl!)
             castCell.actorImageView.kf.indicatorType = .activity
-            castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+            castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
 		} else {
 			castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
 		}

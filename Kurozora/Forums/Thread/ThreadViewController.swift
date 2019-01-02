@@ -114,7 +114,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //			let avatar = URL(string: avatar)
 //			let resource = ImageResource(downloadURL: avatar!)
 //			commentCell.avatar.kf.indicatorType = .activity
-//			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+//			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 //		} else {
 			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
 //		}

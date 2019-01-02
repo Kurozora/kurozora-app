@@ -39,6 +39,7 @@ public struct GlobalVariables {
 
     public let baseUrlString = "https://kurozora.app/api/v1/"
     public let KDefaults = Keychain(service: "app.kurozora.anime")
+	public let KUserDefaults = UserDefaults(suiteName: "group.settings.app.kurozora.anime")
 }
 
 public enum FontAwesome: String {

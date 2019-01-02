@@ -215,7 +215,7 @@ extension NotificationsViewController: UITableViewDataSource {
 					if let avatar = notifications.data?.avatar, avatar != "" {
 						let avatarUrl = URL(string: avatar)
 						let resource = ImageResource(downloadURL: avatarUrl!)
-						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
 					} else {
 						messageNotificationCell.notificationProfileImage.image = #imageLiteral(resourceName: "default_avatar")
 					}
@@ -260,7 +260,7 @@ extension NotificationsViewController: UITableViewDataSource {
 					if let avatar = notifications?.data?.avatar, avatar != "" {
 						let avatarUrl = URL(string: avatar)
 						let resource = ImageResource(downloadURL: avatarUrl!)
-						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
 					} else {
 						messageNotificationCell.notificationProfileImage.image = #imageLiteral(resourceName: "default_avatar")
 					}
@@ -337,7 +337,7 @@ extension NotificationsViewController: UITableViewDataSource {
 //			if let avatar = notifications?[indexPath.row]["data"]["follower_avatar"].stringValue, avatar != "" {
 //				let avatarUrl = URL(string: avatar)
 //				let resource = ImageResource(downloadURL: avatarUrl!)
-//				userNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+//				userNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
 //			} else {
 //				userNotificationCell.notificationProfileImage.image = UIImage(named: "")
 //			}

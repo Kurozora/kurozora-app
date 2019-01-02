@@ -120,7 +120,7 @@ class SeasonsCollectionViewController: UICollectionViewController, NVActivityInd
         
         let posterUrl = URL(string: "https://something.com/somthing")
         let resource = ImageResource(downloadURL: posterUrl!)
-        seasonCell.seasonPosterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))], progressBlock: nil, completionHandler: nil)
+        seasonCell.seasonPosterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))])
         
         if let seasonNumber = seasons?[indexPath.row].number, seasonNumber != 0 {
             seasonCell.seasonCountLabel.text = "Season \(seasonNumber)"

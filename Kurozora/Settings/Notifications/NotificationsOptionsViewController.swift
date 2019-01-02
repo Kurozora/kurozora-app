@@ -55,7 +55,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 		switch segueType {
 		case .notificationsGrouping:
 			let grouping = NotificationGrouping(rawValue: indexPath.item)!
-			let selected = UserDefaults.standard.integer(forKey: "notificationsGrouping")
+			let selected = UserSettings.notificationsGrouping()
 
 			switch grouping {
 			case .automatic:
@@ -71,7 +71,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 			}
 		case .bannerStyle:
 			let bannerStyle = BannerStyle(rawValue: indexPath.item)!
-			let selected = UserDefaults.standard.integer(forKey: "notificationsPersistent")
+			let selected = UserSettings.notificationsPersistent()
 
 			switch bannerStyle {
 			case .temporary:
@@ -93,9 +93,9 @@ class NotificationsOptionsViewController: UICollectionViewController {
 
 		switch segueType {
 		case .notificationsGrouping:
-			UserDefaults.standard.set(indexPath.item, forKey: "notificationsGrouping")
+			UserSettings.set(indexPath.item, forKey: .notificationsGrouping)
 		case .bannerStyle:
-			UserDefaults.standard.set(indexPath.item, forKey: "notificationsPersistent")
+			UserSettings.set(indexPath.item, forKey: .notificationsPersistent)
 		}
 
 		collectionView.reloadData()
