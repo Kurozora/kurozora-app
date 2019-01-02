@@ -314,6 +314,36 @@ struct Service {
 		})
 	}
 
+// MARK: - Notifications
+// All notifications related endpoints
+	/// Delete a notification
+	func deleteNotification(for notificationID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+		guard let notificationID = notificationID else { return }
+
+		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
+
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken()
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+
+		request.perform(withSuccess: { notification in
+			if let success = notification.success {
+				if success {
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't delete notification 😔", subTitle: responseMessage)
+			}
+
+			print("Received delete notification error: \(error)")
+		})
+	}
+
 // MARK: - Show
 // All show related endpoints
 	/// Get explore page content

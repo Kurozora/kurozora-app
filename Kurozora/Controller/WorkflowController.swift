@@ -28,31 +28,17 @@ public class WorkflowController {
 			let myChannel = pusher.subscribe("private-user.\(currentID)")
 
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
-				if let data = data as? JSON {
-					if let session = try? UserSessionsElement(json: data) {
-						if let sessionID = session.id, let device = session.device, let ip = session.ip, let lastValidated = session.lastValidated  {
-							if sessionID != User.currentSessionID() {
-								notificationsHandler(device: device)
+				if let data = data as? [String : AnyObject] {
+					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
+						if sessionID != User.currentSessionID() {
+							notificationsHandler(sessionID, device, ip, lastValidated)
 
-								NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
-							}
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
+					} else {
+						NSLog("------- Pusher error -------")
 					}
-				} else {
-					NSLog("------- Pusher error -------")
 				}
-
-//				if let data = data as? [String : AnyObject], data.count != 0 {
-//					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
-//						if sessionID != User.currentSessionID() {
-//							notificationsHandler()
-//
-//							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
-//						}
-//					}
-//				} else {
-//					NSLog("------- Pusher error -------")
-//				}
 			})
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
@@ -110,7 +96,7 @@ public class WorkflowController {
 		}
 	}
 
-	class func notificationsHandler(device: String) {
+		class func notificationsHandler(_ sessionID: Int, _ device: String, _ ip: String, _ lastValidated: String) {
 		// If notifications enabled
 		if UserSettings.notificationsAllowed() {
 

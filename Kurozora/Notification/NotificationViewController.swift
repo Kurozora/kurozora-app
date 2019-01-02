@@ -21,6 +21,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
     @IBOutlet var tableView: UITableView!
 
 	var grouping: GroupingType!
+	var oldGrouping: Int?
 
 	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
 	var typedNotifications = [GroupedNotifications]() // Grouping type: By Type
@@ -66,16 +67,20 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-		let notificationsGrouping = UserDefaults.standard.integer(forKey: "notificationsGrouping")
-		grouping = GroupingType(rawValue: notificationsGrouping)
-		fetchNotifications(withGrouping: grouping)
+		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping() {
+			let notificationsGrouping = UserSettings.notificationsGrouping()
+			grouping = GroupingType(rawValue: notificationsGrouping)
+			fetchNotifications(withGrouping: grouping)
+		}
     }
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		oldGrouping = UserSettings.notificationsGrouping()
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		// Fetch the notifications
-//		fetchNotifications()
-
         // Setup table view
         tableView.delegate = self
         tableView.dataSource = self
@@ -116,6 +121,36 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
 // MARK: - UITableViewDelegate
 extension NotificationsViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		switch grouping {
+		case .automatic?:
+			if editingStyle == .delete {
+				let notificationID = groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
+				Service.shared.deleteNotification(for: notificationID, withSuccess: { (success) in
+					if success {
+						tableView.beginUpdates()
+						self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
+						tableView.deleteRows(at: [indexPath], with: .automatic)
+						tableView.endUpdates()
+					}
+				})
+			}
+		case .byType?: break
+		case .off?:
+			if editingStyle == .delete {
+				let notificationID = userNotificationsElement?[indexPath.row].id
+				Service.shared.deleteNotification(for: notificationID, withSuccess: { (success) in
+					if success {
+						tableView.beginUpdates()
+						self.userNotificationsElement?.remove(at: indexPath.row)
+						tableView.deleteRows(at: [indexPath], with: .automatic)
+						tableView.endUpdates()
+					}
+				})
+			}
+		case .none: break
+		}
+	}
 }
 
 // MARK: - UITableViewDataSource
