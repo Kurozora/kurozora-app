@@ -14,6 +14,8 @@ import SCLAlertView
 import BottomPopup
 import Cosmos
 import NVActivityIndicatorView
+import Intents
+import IntentsUI
 
 enum AnimeSection: Int {
 	case synopsis
@@ -86,6 +88,21 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		self.scrollViewDidScroll(tableView)
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		// Donate suggestion to Siri
+		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+		if let title = showDetails?.title, let showID = showID {
+			let title = "Open \(title)"
+			userActivity?.title = title
+			userActivity?.userInfo = ["showID": showID]
+			if #available(iOS 12.0, *) {
+				userActivity?.suggestedInvocationPhrase = title
+				userActivity?.isEligibleForPrediction = true
+			}
+			userActivity?.isEligibleForSearch = true
+		}
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
@@ -133,6 +150,10 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
+
+//		if #available(iOS 12.0, *) {
+//			presentAddAnimeToSiriViewController()
+//		}
 	}
 
 	// Update view with details
@@ -706,33 +727,4 @@ extension ShowDetailViewController: UITableViewDelegate {
 		case .cast: break
 		}
 	}
-}
-
-
-
-
-
-extension UIScrollView {
-
-	var isAtTop: Bool {
-		return contentOffset.y <= verticalOffsetForTop
-	}
-
-	var isAtBottom: Bool {
-		return contentOffset.y >= verticalOffsetForBottom
-	}
-
-	var verticalOffsetForTop: CGFloat {
-		let topInset = contentInset.top
-		return -topInset
-	}
-
-	var verticalOffsetForBottom: CGFloat {
-		let scrollViewHeight = bounds.height
-		let scrollContentSizeHeight = contentSize.height
-		let bottomInset = contentInset.bottom
-		let scrollViewBottomOffset = scrollContentSizeHeight + bottomInset - scrollViewHeight
-		return scrollViewBottomOffset
-	}
-
 }

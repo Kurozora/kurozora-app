@@ -7,12 +7,12 @@
 //
 
 import KCommonKit
-import KDatabaseKit
+//import KDatabaseKit
 
-protocol LibraryCellDelegate: class {
-    func cellPressedWatched(cell: LibraryCell, anime: Anime)
-    func cellPressedEpisodeThread(cell: LibraryCell, anime: Anime, episode: Episode)
-}
+//protocol LibraryCellDelegate: class {
+//    func cellPressedWatched(cell: LibraryCell, anime: Anime)
+//    func cellPressedEpisodeThread(cell: LibraryCell, anime: Anime, episode: Episode)
+//}
 
 class LibraryCell: UICollectionViewCell {
 //

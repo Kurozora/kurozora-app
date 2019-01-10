@@ -113,4 +113,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		return true
 	}
+
+	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
+			let showID = parameters["showID"]
+			let storyboard = UIStoryboard(name: "details", bundle: nil)
+			if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
+				showTabBarController.showID = showID
+
+				UIApplication.topViewController()?.present(showTabBarController, animated: true)
+			}
+			return true
+		}
+
+		return false
+	}
 }

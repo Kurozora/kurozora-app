@@ -17,10 +17,10 @@ public class KAnimeKit {
         return UIStoryboard(name: "Thread", bundle: nil)
     }
     
-    public class func rootTabBarController() -> CustomTabBarController {
-        let tabBarController = defaultStoryboard().instantiateInitialViewController() as! CustomTabBarController
-        return tabBarController
-    }
+//    public class func rootTabBarController() -> CustomTabBarController {
+//        let tabBarController = defaultStoryboard().instantiateInitialViewController() as! CustomTabBarController
+//        return tabBarController
+//    }
     
     class func profileViewController() -> ProfileViewController {
         let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController

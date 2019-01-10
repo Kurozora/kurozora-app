@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>6332</string>
+	<string>6351</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -55,6 +55,12 @@
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library.</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>AddAnimeIntent</string>
+		<string>OpenAnimeIntent</string>
+		<string>SearchAnimeIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>

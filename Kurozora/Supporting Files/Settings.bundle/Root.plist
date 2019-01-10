@@ -22,6 +22,16 @@
 			<key>DefaultValue</key>
 			<string>1.0.0</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Copyright</string>
+			<key>Key</key>
+			<string>copyright_preference</string>
+			<key>DefaultValue</key>
+			<string>Kurozora B.V.</string>
+		</dict>
 	</array>
 </dict>
 </plist>

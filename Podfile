@@ -52,10 +52,6 @@ target 'KCommonKit' do
 	common_pods
 end
 
-target 'KDatabaseKit' do
-#    common_pods
-end
-
 # Workaround for Cocoapods issue #7606
 post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
