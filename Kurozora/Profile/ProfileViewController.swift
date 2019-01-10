@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var activeAgo: UILabel!
 
-    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var followButtonView: UIView!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
 
@@ -76,9 +76,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
-			if otherUserID != User.currentID() {
-				editProfileButton.isHidden = true
-			}
+//			if otherUserID != User.currentID() {
+//				editProfileButton.isHidden = true
+//			}
 		} else if let currentID = User.currentID(), String(currentID) != "" {
 			fetchUserDetails(with: currentID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
@@ -326,10 +326,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup follow button
-        if let userID = user?.id, userID != User.currentID() {
-            followButton.isHidden = true
+        if otherUserID == User.currentID() || otherUserID == nil {
+            followButtonView.isHidden = true
+			editProfileButton.isHidden = false
         } else {
-            followButton.isHidden = false
+            followButtonView.isHidden = false
             editProfileButton.isHidden = true
         }
 
@@ -434,6 +435,27 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	}
 
     // MARK: - IBActions
+	@IBAction func followButtonPressed(_ sender: UIButton) {
+		var follow = 1
+
+		let title = sender.title(for: .normal)
+		if title == " Following" {
+			follow = 0
+		} else {
+			follow = 1
+		}
+
+		Service.shared.follow(follow, user: otherUserID) { (success) in
+			if success {
+				if title == " Following" {
+					sender.setTitle(" Follow", for: .normal)
+				} else {
+					sender.setTitle(" Following", for: .normal)
+				}
+			}
+		}
+	}
+
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
 		self.bioTextCache = self.bioTextView.text
@@ -592,25 +614,6 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 //        configureFetchController()
 //    }
 //
-//    @IBAction func followOrUnfollow(sender: AnyObject) {
-//
-//        if let thisProfileUser = userProfile,
-//            let followingUser = thisProfileUser.followingThisUser,
-//            let currentUser = User.currentUser(), !thisProfileUser.isTheCurrentUser() {
-//
-//            currentUser.followUser(thisProfileUser, follow: !followingUser)
-//
-//            if !followingUser {
-//                // Follow
-//                self.followButton.setTitle("  Following", for: .normal)
-//                updateFollowingButtons()
-//            } else {
-//                // Unfollow
-//                self.followButton.setTitle("  Follow", for: .normal)
-//                updateFollowingButtons()
-//            }
-//        }
-//    }
 //
 //    @IBAction func searchPressed(sender: AnyObject) {
 //        if let tabBar = tabBarController {

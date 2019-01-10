@@ -314,6 +314,37 @@ struct Service {
 		})
 	}
 
+	/// Follow or unfollow a user
+	func follow(_ follow: Int?, user userID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+		guard let follow = follow else { return }
+		guard let userID = userID else { return }
+
+		let request : APIRequest<UserFollow,JSONError> = tron.swiftyJSON.request("users/\(userID)/follow")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken()
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"follow": follow
+		]
+		request.perform(withSuccess: { follow in
+			if let success = follow.success {
+				if success {
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't follow user 😔", subTitle: responseMessage)
+			}
+
+			print("Received follow user error: \(error)")
+		})
+	}
+
+
 // MARK: - Notifications
 // All notifications related endpoints
 	/// Delete a notification

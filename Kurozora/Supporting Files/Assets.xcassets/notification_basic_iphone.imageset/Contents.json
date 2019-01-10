@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "notification_basic_iphone.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "notification_basic_iphone.png",
       "scale" : "2x"
     },
     {

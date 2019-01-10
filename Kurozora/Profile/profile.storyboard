@@ -102,25 +102,28 @@
                                                     </connections>
                                                 </button>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9f-Pm-myg" userLabel="Follow Button View" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="317" y="8" width="50" height="20"/>
+                                                    <rect key="frame" x="299" y="8" width="68" height="22"/>
                                                     <subviews>
                                                         <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-1Z-yJM" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="22"/>
                                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="10"/>
-                                                            <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="12"/>
+                                                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                                             <state key="normal" title=" Follow">
                                                                 <color key="titleColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="10"/>
+                                                                    <real key="value" value="11"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="followButtonPressed:" destination="fRy-jQ-iyE" eventType="touchUpInside" id="1LS-k4-Ddy"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="FRo-tz-bys"/>
+                                                        <constraint firstAttribute="height" constant="22" id="FRo-tz-bys"/>
                                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" secondItem="b9f-Pm-myg" secondAttribute="leading" id="Uzc-mx-YfM"/>
                                                         <constraint firstAttribute="trailing" secondItem="bkn-1Z-yJM" secondAttribute="trailing" id="frW-1G-8I2"/>
                                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="top" secondItem="b9f-Pm-myg" secondAttribute="top" id="haJ-KN-Nyg"/>
@@ -128,7 +131,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="10"/>
+                                                            <real key="value" value="11"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -909,7 +912,7 @@
                         <outlet property="bioTextView" destination="PnU-4p-TFf" id="UVv-TH-vsd"/>
                         <outlet property="bioTextViewHeight" destination="Wxw-S6-N79" id="TiR-VX-3Mr"/>
                         <outlet property="editProfileButton" destination="vil-by-3j0" id="Nnx-TI-16L"/>
-                        <outlet property="followButton" destination="bkn-1Z-yJM" id="Fc2-ib-aXq"/>
+                        <outlet property="followButtonView" destination="b9f-Pm-myg" id="PXg-eh-AVm"/>
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="qOt-b0-ZYc"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="4cR-wp-mMt"/>
                         <outlet property="postButton" destination="pWI-Ge-Fk4" id="HCy-mN-ych"/>

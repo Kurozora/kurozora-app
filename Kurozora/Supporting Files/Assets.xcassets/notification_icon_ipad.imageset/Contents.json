@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "notification_icon_ipad.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "notification_icon_ipad.png",
       "scale" : "2x"
     },
     {

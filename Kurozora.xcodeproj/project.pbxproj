@@ -180,6 +180,7 @@
 		66CE1AF7209B2E7D0007A4DE /* AnimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */; };
 		66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */; };
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
+		66CF5D8221E7E90D00969BBB /* UserFollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D8121E7E90D00969BBB /* UserFollow.swift */; };
 		66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5A20A9775C00F98375 /* ForumViewController.swift */; };
 		66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5D20A9782B00F98375 /* RateViewController.swift */; };
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
@@ -248,9 +249,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.release.xcconfig"; sourceTree = "<group>"; };
 		268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
-		2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KRichTextEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6601F1AB2118488D0074C1DD /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		66058DB5212E95AB0084B79E /* details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = details.storyboard; sourceTree = "<group>"; };
 		66058DB7212E97360084B79E /* ShowSynopsisCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSynopsisCell.swift; sourceTree = "<group>"; };
@@ -306,7 +305,6 @@
 		661F9F7E2087282400CF4153 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		661F9F7F2087282500CF4153 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		661F9F802087282500CF4153 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		6625F95120B5E87A004DB533 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		662A4C0221D6C19200789451 /* SearchThreadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchThreadCell.swift; sourceTree = "<group>"; };
 		664133E021DA64C800CE823A /* SettingsNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationCell.swift; sourceTree = "<group>"; };
 		664133E221DA8C7A00CE823A /* NotificationsOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsOptionsViewController.swift; sourceTree = "<group>"; };
@@ -429,6 +427,7 @@
 		66CEFCFE20AD8C1D00792B1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Kurozora.swift"; sourceTree = "<group>"; };
+		66CF5D8121E7E90D00969BBB /* UserFollow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollow.swift; sourceTree = "<group>"; };
 		66CF6D5A20A9775C00F98375 /* ForumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
 		66CF6D5D20A9782B00F98375 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
@@ -440,7 +439,6 @@
 		66CF6D7020A9934F00F98375 /* profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profile.storyboard; sourceTree = "<group>"; };
 		66D4734F21AB332000A894B7 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
-		66D6236820A0376400304914 /* BoltsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BoltsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D6236B20A09E5400304914 /* ChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
 		66D6236D20A09F6B00304914 /* season.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = season.storyboard; sourceTree = "<group>"; };
 		66D6236F20A189D200304914 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -475,9 +473,7 @@
 		66FE5CFE215B665200E2844A /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.release.xcconfig"; sourceTree = "<group>"; };
-		83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KDatabaseKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KDatabaseKit/Pods-KDatabaseKit.debug.xcconfig"; sourceTree = "<group>"; };
 		950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.debug.xcconfig"; sourceTree = "<group>"; };
-		DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KDatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -506,12 +502,8 @@
 		08E5591EE4C9B9016ACCB5C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6625F95120B5E87A004DB533 /* Alamofire.framework */,
-				66D6236820A0376400304914 /* BoltsSwift.framework */,
 				E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */,
 				EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */,
-				DDC6F79972D258814B235B74 /* Pods_KDatabaseKit.framework */,
-				2D0574565DB60D85965F0867 /* Pods_KRichTextEditor.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -581,6 +573,7 @@
 				66C863FC216CDBB70054EE16 /* UserNotification.swift */,
 				66BEA33421BDD01E00BEA42E /* VoteThread.swift */,
 				660A642521CE90080032FDCF /* JSONError.swift */,
+				66CF5D8121E7E90D00969BBB /* UserFollow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1240,8 +1233,6 @@
 				268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */,
 				950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */,
 				681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */,
-				83124C3C7DDADCF19E150C92 /* Pods-KDatabaseKit.debug.xcconfig */,
-				211FF557F892FCF305AB40EA /* Pods-KDatabaseKit.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1636,6 +1627,7 @@
 				660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */,
 				66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */,
 				66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */,
+				66CF5D8221E7E90D00969BBB /* UserFollow.swift in Sources */,
 				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,
 				6674A0BA20A39EF800AAB527 /* ReminderController.swift in Sources */,
 				669C8D5A2107B9450014EB7A /* KurozoraNavigationController.swift in Sources */,
