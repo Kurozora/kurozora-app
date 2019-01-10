@@ -21,6 +21,7 @@ def common_pods
 	#    pod 'SnowGlobe'
 	pod 'SwiftTheme', '~> 0.4'
 	pod 'SwifterSwift', '~> 4.3'
+	pod 'SwipeCellKit'
 	pod 'Tabman', '~> 1.10'
 	pod 'TRON', '~> 4.0'
 	pod 'UIImageColors', '2.0.0'

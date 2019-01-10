@@ -108,10 +108,17 @@ public class WorkflowController {
 				if alertType == 0 {
 					banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
 				}
-
 				// Notification haptic feedback and vibration
 				if UserSettings.notificationsVibration() {
 					banner.haptic = .heavy
+				} else {
+					banner.haptic = .none
+				}
+				// Notification sound feedback
+				if UserSettings.notificationsSound() {
+					banner.sound = .success
+				} else {
+					banner.sound = .none
 				}
 				// Notification persistency
 				if UserSettings.notificationsPersistent() == 0 {
@@ -122,7 +129,6 @@ public class WorkflowController {
 						banner.dismiss()
 					}
 				}
-
 				banner.show()
 				banner.onTap = {
 					self.showSessions()
@@ -132,6 +138,14 @@ public class WorkflowController {
 				// Notification haptic feedback and vibration
 				if UserSettings.notificationsVibration() {
 					statusBanner.haptic = .heavy
+				} else {
+					statusBanner.haptic = .none
+				}
+				// Notification sound feedback
+				if UserSettings.notificationsSound() {
+					statusBanner.sound = .success
+				} else {
+					statusBanner.sound = .none
 				}
 				// Notification persistency
 				if UserSettings.notificationsPersistent() == 0 {

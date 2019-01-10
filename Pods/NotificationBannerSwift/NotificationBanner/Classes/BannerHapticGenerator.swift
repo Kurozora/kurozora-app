@@ -17,7 +17,8 @@
  */
 
 import UIKit
-import AudioToolbox
+import AVFoundation
+import UserNotifications
 
 public enum BannerHaptic {
     case light
@@ -55,4 +56,40 @@ open class BannerHapticGenerator: NSObject {
 			}
         }
     }
+}
+
+public enum BannerSound {
+	case error
+	case success
+	case none
+
+	@available(iOS 10.0, *)
+	var soundType: String? {
+		switch self {
+		case .error: return "payment_failure"
+		case .success: return "payment_success"
+		case .none: return nil
+		}
+	}
+}
+
+open class BannerSoundGenerator: NSObject {
+	private static let player = AVQueuePlayer()
+
+	/**
+	Generates a sound based on the given type
+	-parameter sound: The sound type to generate when a banner is shown
+	*/
+	open class func generate(_ sound: BannerSound) {
+		if #available(iOS 10.0, *) {
+			if let url = Bundle.main.url(forResource: "sample_song", withExtension: "m4a") {
+
+			}
+			if let type = sound.soundType, let url = Bundle.main.url(forResource: type, withExtension: "m4a") {
+				player.removeAllItems()
+				player.insert(AVPlayerItem(url: url), after: nil)
+				player.play()
+			}
+		}
+	}
 }

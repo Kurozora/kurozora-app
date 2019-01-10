@@ -9,11 +9,11 @@
 import Foundation
 
 extension Array {
-	public func append(contentsOf: [Element]?) {
-		var matching = self
-		guard let append = contentsOf else { return }
-		for element in append {
-			matching.append(element)
-		}
-	}
+//	public func append(contentsOf: [Element]?) {
+//		var matching = self
+//		guard let append = contentsOf else { return }
+//		for element in append {
+//			matching.append(element)
+//		}
+//	}
 }

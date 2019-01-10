@@ -1,5 +1,5 @@
 //
-//  KUserDefaults.swift
+//  UserSettings.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/01/2019.
@@ -9,8 +9,16 @@
 import KCommonKit
 
 class UserSettings: NSObject {
+	/// Return the array of collapsed sections in settings
+	static func collapsedSections() -> [Int] {
+		guard let collapsedSections = GlobalVariables().KUserDefaults?.array(forKey: "collapsedSections") as? [Int] else { return [3] }
+		return collapsedSections
+	}
+
 	/// Notificartions key used to get notifications settings
 	enum UserSettingsKey: String {
+		// Global notification keys
+		case collapsedSections = "collapsedSections"
 
 		// Notification keys
 		case notificationsAllowed = "notificationsAllowed"

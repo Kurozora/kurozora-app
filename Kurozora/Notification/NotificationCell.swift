@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class MessageNotificationCell: UITableViewCell {
+class MessageNotificationCell: SwipeTableViewCell {
     // Header
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!
@@ -20,7 +21,7 @@ class MessageNotificationCell: UITableViewCell {
     @IBOutlet weak var notificationTextLable: UILabel!
 }
 
-class SessionNotificationCell: UITableViewCell {
+class SessionNotificationCell: SwipeTableViewCell {
     // Header
     @IBOutlet weak var notificationDate: UILabel!
     @IBOutlet weak var notificationType: UILabel!

@@ -20,16 +20,7 @@ class SettingsSplitViewController: UISplitViewController, UISplitViewControllerD
 		return .lightContent
 	}
 
-	func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
-//		guard let secondaryAsNavController = secondaryViewController as? KurozoraNavigationController else { return false }
-//		guard let topAsDetailController = secondaryAsNavController.topViewController as? SettingsViewController else { return false }
-//
-//		if topAsDetailController.detailItem == nil {
-//			return true
-//		}
-//		return false
-//	}
-		return false
+	func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+		return true
 	}
-
 }

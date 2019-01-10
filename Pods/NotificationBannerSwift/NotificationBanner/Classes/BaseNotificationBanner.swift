@@ -88,6 +88,9 @@ public class BaseNotificationBanner: UIView {
     
     /// The type of haptic to generate when a banner is displayed
     public var haptic: BannerHaptic = .heavy
+
+	/// The type of sound to generate when a banner is displayed
+	public var sound: BannerSound = .success
     
     /// If true, notification will dismissed when tapped
     public var dismissOnTap: Bool = true
@@ -360,6 +363,7 @@ public class BaseNotificationBanner: UIView {
                            options: [.curveLinear,.allowUserInteraction],
                            animations: {
                             BannerHapticGenerator.generate(self.haptic)
+							BannerSoundGenerator.generate(self.sound)
                             self.frame = self.bannerPositionFrame.endFrame
             }) { (completed) in
                 

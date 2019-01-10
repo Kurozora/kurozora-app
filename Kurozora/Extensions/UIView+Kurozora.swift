@@ -1,5 +1,5 @@
 //
-//  UIView+Image.swift
+//  UIView+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/12/2018.
@@ -21,6 +21,19 @@ extension UIView {
 			let image = UIGraphicsGetImageFromCurrentImageContext()
 			UIGraphicsEndImageContext()
 			return UIImage(cgImage: image!.cgImage!)
+		}
+	}
+
+	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
+		if #available(iOS 11.0, *) {
+			clipsToBounds = true
+			layer.cornerRadius = radius
+			layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+		} else {
+			let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+			let mask = CAShapeLayer()
+			mask.path = path.cgPath
+			layer.mask = mask
 		}
 	}
 }

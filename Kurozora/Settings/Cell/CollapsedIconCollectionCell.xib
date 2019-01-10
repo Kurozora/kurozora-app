@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollapsedIconCollectionCell" id="gTV-IL-0wX" customClass="CollapsedIconCollectionCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giD-XJ-ZKj" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notifications_icon" translatesAutoresizingMaskIntoConstraints="NO" id="w6n-Ja-jDE">
+                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="054-Rz-aHm"/>
+                            <constraint firstAttribute="height" constant="28" id="GyC-rG-5SS"/>
+                            <constraint firstItem="w6n-Ja-jDE" firstAttribute="leading" secondItem="giD-XJ-ZKj" secondAttribute="leading" id="OSa-TV-FZH"/>
+                            <constraint firstAttribute="trailing" secondItem="w6n-Ja-jDE" secondAttribute="trailing" id="U9a-Ai-TxU"/>
+                            <constraint firstItem="w6n-Ja-jDE" firstAttribute="top" secondItem="giD-XJ-ZKj" secondAttribute="top" id="VCP-IZ-pCo"/>
+                            <constraint firstAttribute="bottom" secondItem="w6n-Ja-jDE" secondAttribute="bottom" id="mpC-ez-IAj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
+                                <size key="value" width="0.0" height="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="0.40000000000000002"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="7"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="giD-XJ-ZKj" secondAttribute="trailing" id="MJh-0h-jTD"/>
+                <constraint firstAttribute="bottom" secondItem="giD-XJ-ZKj" secondAttribute="bottom" id="OtF-dH-xT4"/>
+                <constraint firstItem="giD-XJ-ZKj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="apZ-iM-CId"/>
+                <constraint firstItem="giD-XJ-ZKj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="j17-qb-KyJ"/>
+            </constraints>
+            <connections>
+                <outlet property="iconImageView" destination="w6n-Ja-jDE" id="OpU-wG-f4u"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="notifications_icon" width="128" height="128"/>
+    </resources>
+</document>

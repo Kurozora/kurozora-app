@@ -63,6 +63,7 @@ PODS:
   - SwifterSwift/UIKit (4.6.0)
   - SwiftTheme (0.4.3)
   - SwiftyJSON (4.2.0)
+  - SwipeCellKit (2.5.1)
   - Tabman (1.10.2):
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SwifterSwift (~> 4.3)
   - SwiftTheme (~> 0.4)
+  - SwipeCellKit
   - Tabman (~> 1.10)
   - TRON (~> 4.0)
   - UIImageColors (= 2.0.0)
@@ -136,6 +138,7 @@ SPEC REPOS:
     - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
+    - SwipeCellKit
     - Tabman
     - TaskQueue
     - TRON
@@ -191,12 +194,13 @@ SPEC CHECKSUMS:
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  SwipeCellKit: 30fd6a4f8a8b8ac864ea389c8b4c8bac5ba5471a
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
   UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: d922105d5fb793fe32912722a2dc748e714adea7
+PODFILE CHECKSUM: 8b6f31fd46b296d6b1ccbf35907d87005120d345
 
 COCOAPODS: 1.6.0.beta.1

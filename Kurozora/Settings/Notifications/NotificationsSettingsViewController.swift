@@ -141,24 +141,24 @@ extension NotificationsSettingsViewController: UICollectionViewDataSource {
 
 		switch alertsType {
 		case .basic:
-			if let resourcePath = Bundle.main.path(forResource: "notification_basic", ofType: ".gif") {
-				let url = URL(fileURLWithPath: resourcePath)
-				let provider = LocalFileImageDataProvider(fileURL: url)
-				notificationCell.previewImageView.kf.setImage(with: provider)
+			if UIDevice.isPad() {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_basic_ipad")
+			} else {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_basic_iphone")
 			}
 			notificationCell.titleLabel.text = "Basic"
 		case .icon:
-			if let resourcePath = Bundle.main.path(forResource: "notification_icon", ofType: ".gif") {
-				let url = URL(fileURLWithPath: resourcePath)
-				let provider = LocalFileImageDataProvider(fileURL: url)
-				notificationCell.previewImageView.kf.setImage(with: provider)
+			if UIDevice.isPad() {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_icon_ipad")
+			} else {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_icon_iphone")
 			}
 			notificationCell.titleLabel.text = "Icon"
 		case .status:
-			if let resourcePath = Bundle.main.path(forResource: "notification_statusbar", ofType: ".gif") {
-				let url = URL(fileURLWithPath: resourcePath)
-				let provider = LocalFileImageDataProvider(fileURL: url)
-				notificationCell.previewImageView.kf.setImage(with: provider)
+			if UIDevice.isPad() {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_statusbar_ipad")
+			} else {
+				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_statusbar_iphone")
 			}
 			notificationCell.titleLabel.text = "Status Bar"
 		}
