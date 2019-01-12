@@ -952,6 +952,7 @@
 		667F9AD521B47E8B003F6629 /* Badges */ = {
 			isa = PBXGroup;
 			children = (
+				667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */,
 				667F9AD321B47E6D003F6629 /* LeftBadgeCell.swift */,
 				667F9AD621B47EF0003F6629 /* RightBadgeCell.swift */,
 			);
@@ -1105,7 +1106,6 @@
 			isa = PBXGroup;
 			children = (
 				66CF6D7020A9934F00F98375 /* profile.storyboard */,
-				667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */,
 				66CF6D6620A987D100F98375 /* ProfileViewController.swift */,
 				667F9AD521B47E8B003F6629 /* Badges */,
 				66CE1AF8209B300D0007A4DE /* Posts */,

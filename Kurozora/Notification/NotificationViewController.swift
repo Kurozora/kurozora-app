@@ -309,7 +309,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			switch self.grouping {
 			case .automatic, .byType:
 				let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-				Service.shared.deleteNotification(for: notificationID, withSuccess: { (success) in
+				Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
 					DispatchQueue.main.async {
 						if success {
 							self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
@@ -321,7 +321,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				})
 			case .off:
 				let notificationID = self.userNotificationsElement?[indexPath.row].id
-				Service.shared.deleteNotification(for: notificationID, withSuccess: { (success) in
+				Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
 					if success {
 						self.userNotificationsElement?.remove(at: indexPath.row)
 						tableView.beginUpdates()

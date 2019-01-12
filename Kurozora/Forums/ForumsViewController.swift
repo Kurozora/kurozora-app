@@ -22,7 +22,11 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 	var threadSorting: String?
 
     private var viewControllers = [UIViewController]()
-    
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,10 +63,6 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
         })
         
         self.bar.behaviors = [.autoHide(.never)]
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
@@ -128,6 +128,7 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 	@IBAction func createThreadButton(_ sender: Any) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
+		vc?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
 		vc?.sectionID = currentIndex! + 1
 
 		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)

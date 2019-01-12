@@ -22,8 +22,16 @@ struct Service {
     
 // MARK: - User
 // All user related endpoints
-	/// Register a new account
-	func register(withUsername username: String?, _ email: String?, password: String?, withSuccess successHandler:@escaping (Bool) -> Void)  {
+	/**
+		Register a new account
+
+		- Parameter username: The new user's username.
+		- Parameter password: The new user's password.
+		- Parameter email: the new user's email.
+		- Parameter profileImage: The new user's avatar image.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
+	func register(withUsername username: String?, email: String?, password: String?, withSuccess successHandler:@escaping (Bool) -> Void)  {
 		guard let username = username else { return }
 		guard let email = email else { return }
 		guard let password = password else { return }
@@ -53,7 +61,11 @@ struct Service {
 		})
 	}
 
-    /// Reset password request
+	/**
+		Reset password request
+
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
     func resetPassword(_ email: String?, withSuccess successHandler:@escaping (Bool) -> Void)  {
 		guard let email = email else { return }
 
@@ -80,7 +92,13 @@ struct Service {
         })
     }
 
-	/// Update a user's information
+	/**
+		Update a user's information
+
+		- Parameter bio: The new biography to set.
+		- Parameter profileImage: The new user's avatar image.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (Bool) -> Void)  {
 		guard let bio = bio else { return }
 		guard let profileImage = profileImage else { return }
@@ -121,7 +139,11 @@ struct Service {
 		})
 	}
 
-	/// Get a list of sessions for the current user
+	/**
+		Get a list of sessions for the current user
+
+		- Parameter successHandler: Returns an object of type UserSessions.
+	**/
 	func getSessions(withSuccess successHandler:@escaping (UserSessions?) -> Void){
 		guard let userID = User.currentID() else { return }
 
@@ -147,7 +169,12 @@ struct Service {
 		})
 	}
 
-	/// Get a list of items for the current user's library
+	/**
+		Get a list of items for the current user's library
+
+		- Parameter status: The status to retrieve the library items for.
+		- Parameter successHandler: Returns an array of type LibraryElement.
+	**/
 	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping ([LibraryElement]?) -> Void) {
 		guard let status = status else { return }
 		guard let userID = User.currentID() else { return }
@@ -177,7 +204,13 @@ struct Service {
 		})
 	}
 
-	/// Add an item to the current user's library
+	/**
+		Add an item to the current user's library
+
+		- Parameter status: The watch status to assign to the Anime.
+		- Parameter showID: The ID of the Anime to add.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func addToLibrary(withStatus status: String?, showID: Int?,withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let status = status else { return }
 		guard let showID = showID else { return }
@@ -209,7 +242,12 @@ struct Service {
 		})
 	}
 
-	/// Remove an item from the current user's library
+	/**
+		Remove an item from the current user's library
+
+		- Parameter showID: ID of the user.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func removeFromLibrary(withID showID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID() else { return }
@@ -238,13 +276,20 @@ struct Service {
 			print("Received remove library error: \(error)")
 		})
 	}
-    
-    /// User a user's profile details
+
+	/**
+		Get a user's profile details
+
+		- Parameter successHandler: Returns an object of type User.
+	**/
     func getUserProfile(_ userID:Int?, withSuccess successHandler:@escaping (User?) -> Void)  {
 		guard let userID = userID else { return }
 
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/\(userID)/profile")
-        request.headers = headers
+        request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken()
+		]
         request.authorizationRequirement = .required
         request.method = .get
         request.perform(withSuccess: { userProfile in
@@ -262,7 +307,11 @@ struct Service {
         })
     }
 
-	/// Get a list of notifications for the current user
+	/**
+		Get a list of notifications for the current user
+
+		- Parameter successHandler: Returns an array of type UserNotificationsElement.
+	**/
 	func getNotifications(withSuccess successHandler:@escaping ([UserNotificationsElement]?) -> Void){
 		guard let userID = User.currentID() else { return }
 
@@ -288,7 +337,12 @@ struct Service {
 		})
 	}
 
-	/// Search for a user
+	/**
+		Search for a user
+
+		- Parameter user: ID of the user.
+		- Parameter successHandler: Returns an object of type SearchElement.
+	**/
 	func search(forUser user: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
 		guard let user = user else { return }
 
@@ -314,7 +368,12 @@ struct Service {
 		})
 	}
 
-	/// Follow or unfollow a user
+	/**
+		Follow or unfollow a user
+
+		- Parameter userID: ID of the user.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func follow(_ follow: Int?, user userID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let follow = follow else { return }
 		guard let userID = userID else { return }
@@ -347,8 +406,13 @@ struct Service {
 
 // MARK: - Notifications
 // All notifications related endpoints
-	/// Delete a notification
-	func deleteNotification(for notificationID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	/**
+		Delete a notification
+
+		- Parameter notificationID: ID of the notification to be deleted.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
+	func deleteNotification(with notificationID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 
 		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
@@ -377,7 +441,11 @@ struct Service {
 
 // MARK: - Show
 // All show related endpoints
-	/// Get explore page content
+	/**
+		Get explore page content
+
+		- Parameter successHandler: Returns an object of type Explore.
+	**/
 	func getExplore(withSuccess successHandler: @escaping (Explore?) -> Void) {
 		let request: APIRequest<Explore,JSONError> = tron.swiftyJSON.request("anime")
 		request.headers = headers
@@ -397,7 +465,12 @@ struct Service {
 		})
 	}
 
-	/// Get show detail
+	/**
+		Get show detail
+
+		- Parameter showID: ID of the anime.
+		- Parameter completionHandler: Returns an object of type ShowDetails.
+	**/
 	func getDetails(forShow showID: Int?, completionHandler: @escaping (ShowDetails) -> Void) {
 		guard let showID = showID else { return }
 
@@ -421,7 +494,11 @@ struct Service {
 		})
 	}
 
-	/// Get cast details for a show
+	/**
+		Get cast details for a show
+
+		- Parameter successHandler: Returns an array of type ActorsElement.
+	**/
 	func getCastFor(_ showID: Int?, withSuccess successHandler:@escaping ([ActorsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
@@ -443,7 +520,11 @@ struct Service {
 		})
 	}
 
-	/// Get season details for a show
+	/**
+		Get season details for a show
+
+		- Parameter successHandler: Returns an array of type SeasonsElement.
+	**/
 	func getSeasonFor(_ showID: Int?, withSuccess successHandler:@escaping ([SeasonsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
@@ -466,7 +547,13 @@ struct Service {
 		})
 	}
 
-	/// Rate a show
+	/**
+		Rate a show
+
+		- Parameter showID: ID of the anime.
+		- Parameter score: The rating to leave.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func rate(showID: Int?, score: Double?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let rating = score else { return }
 		guard let showID = showID else { return }
@@ -496,7 +583,12 @@ struct Service {
 		})
 	}
 
-	/// Search for a show
+	/**
+		Search for a show
+
+		- Parameter show: The search query.
+		- Parameter successHandler: Returns an array of type SearchElement.
+	**/
 	func search(forShow show: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
 		guard let show = show else { return }
 
@@ -524,7 +616,12 @@ struct Service {
 
 // MARK: - Anime Seasons
 // All show seasons related endpoints
-	/// Get episode details for a show season
+	/**
+		Get episode details for a show season
+
+		- Parameter seasonID: ID of the season.
+		- Parameter successHandler: Returns an object of type Episodes.
+	**/
 	func getEpisodes(forSeason seasonID: Int?, withSuccess successHandler:@escaping (Episodes?) -> Void) {
 		guard let seasonID = seasonID else { return }
 
@@ -552,7 +649,13 @@ struct Service {
 
 // MARK: - Anime Episodes
 // All episode related endpoints
-	/// Mark an episode as "watched" or "not watched"
+	/**
+		Mark an episode status
+
+		- Parameter watched: Mark episode watched or not. (0 = not watched, 1 = watched)
+		- Parameter episodeID: ID of the episode.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func mark(asWatched watched: Int?, forEpisode episodeID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let episodeID = episodeID else { return }
 		guard let watched = watched else { return }
@@ -582,7 +685,11 @@ struct Service {
 
 // MARK: - Forums
 // All forum related endpoints
-	/// Get a list of forum sections
+	/**
+		Get a list of forum sections
+
+		- Parameter successHandler: Returns an array of type ForumSectionsElement.
+	**/
 	func getForumSections(withSuccess successHandler:@escaping ([ForumSectionsElement]?) -> Void) {
 		let request : APIRequest<ForumSections,JSONError> = tron.swiftyJSON.request("forum-sections")
 		request.headers = headers
@@ -603,7 +710,14 @@ struct Service {
 		})
 	}
 
-	/// Get a list of forum threads for a section
+	/**
+		Get a list of forum threads for a section
+
+		- Parameter sectionID: ID of the forum section.
+		- Parameter order: The method of ordering the threads. Currently "top" and "recent".
+		- Parameter page: The page to retrieve threads from. (starts at 0)
+		- Parameter successHandler: Returns an object of type ForumThreads.
+	**/
 	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping (ForumThreads?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let order = order else { return }
@@ -632,7 +746,14 @@ struct Service {
 		})
 	}
 
-	/// Post a new thread to a section
+	/**
+		Post a new thread to a section
+
+		- Parameter title: The title of the thread.
+		- Parameter content: Content of the thread.
+		- Parameter sectionID: ID of the forum section.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func postThread(withTitle title: String?, content: String?, forSection sectionID: Int?, withSuccess successHandler:@escaping (Bool) -> Void){
 		guard let title = title else { return }
 		guard let content = content else { return }
@@ -666,8 +787,13 @@ struct Service {
 
 // MARK: - Forum threads
 // All forum threads related endpoints
-	/// Get the details of a forum thread
-	func getDetails(forThread threadID: Int?, withSuccess successHandler:@escaping (ForumThread?) -> Void){
+	/**
+		Get the details of a forum thread
+
+		- Parameter threadID: ID of the forum thread.
+		- Parameter successHandler: Returns an object of type ForumThreadElement.
+	**/
+	func getDetails(forThread threadID: Int?, withSuccess successHandler:@escaping (ForumThreadElement?) -> Void){
 		guard let threadID = threadID else { return }
 
 		let request : APIRequest<ForumThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
@@ -677,7 +803,7 @@ struct Service {
 		request.perform(withSuccess: { thread in
 			if let success = thread.success {
 				if success {
-					successHandler(thread)
+					successHandler(thread.thread)
 				}
 			}
 		}, failure: { error in
@@ -689,7 +815,13 @@ struct Service {
 		})
 	}
 
-	/// Upvote or downvote a thread
+	/**
+		Upvote or downvote a thread
+
+		- Parameter threadID: ID of the forum thread.
+		- Parameter vote: The vote to submit. (0 = downvote, 1 = upvote)
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
 	func vote(forThread threadID: Int?, vote: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let vote = vote else { return }
@@ -712,14 +844,21 @@ struct Service {
 			}
 		}, failure: { error in
 			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't vote 😔", subTitle: responseMessage)
+				SCLAlertView().showError("Can't vote on this thread 😔", subTitle: responseMessage)
 			}
 
 			print("Received vote thread error: \(error)")
 		})
 	}
 
-	/// Get the replies of a forum thread
+	/**
+		Get the replies of a forum thread
+
+		- Parameter threadID: ID of the forum thread.
+		- Parameter order: The method of ordering the results. Current options are "top" and "recent".
+		- Parameter page: The page to retrieve threads from. (starts at 0)
+		- Parameter successHandler: Returns an array of type ThreadRepliesElement.
+	**/
 	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([ThreadRepliesElement]?) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let order = order else { return }
@@ -740,7 +879,6 @@ struct Service {
 			if let success = replies.success {
 				if success {
 					successHandler(replies.replies)
-					NSLog("----------- REPLIES: \(String(describing: replies.replies))")
 				}
 			}
 		}, failure: { error in
@@ -752,7 +890,13 @@ struct Service {
 		})
 	}
 
-	/// Post reply
+	/**
+		Submit a new thread to a section.
+
+		- Parameter threadID: ID of the forum thread.
+		- Parameter comment: The content of the reply.
+		- Parameter successHandler: Returns true if the request finishes without errors.
+	**/
 	func postReply(withComment comment: String?, forThread threadID: Int?, withSuccess successHandler:@escaping (Bool) -> Void){
 		guard let comment = comment else { return }
 		guard let threadID = threadID else { return }
@@ -780,10 +924,51 @@ struct Service {
 		})
 	}
 
+// MARK: - Forum Replies
+// All forum replies related endpoints
+	/**
+		Upvote or downvote a reply
+
+		- Parameter replyID: ID of the forum reply.
+		- Parameter vote: The vote to submit. (0 = downvote, 1 = upvote)
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
+	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+		guard let replyID = replyID else { return }
+		guard let vote = vote else { return }
+
+		let request : APIRequest<VoteThread,JSONError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken()
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"vote": vote
+		]
+		request.perform(withSuccess: { vote in
+			if let success = vote.success {
+				if success {
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't vote on this reply 😔", subTitle: responseMessage)
+			}
+
+			print("Received vote reply error: \(error)")
+		})
+	}
 
 // MARK: - Sessions
 // All sessions related endpoints
-	/// Create a new session a.k.a login
+	/**
+		Create a new session a.k.a login
+
+		- Parameter successHandler: Returns true if the request finishes without errors.
+	**/
 	func login(_ username:String, _ password:String, _ device:String, withSuccess successHandler:@escaping (Bool) -> Void)  {
 		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("sessions")
 		request.headers = headers
@@ -825,8 +1010,12 @@ struct Service {
 			print("Received login error: \(error)")
 		})
 	}
-    
-    /// Check if the session is valid
+
+	/**
+		Check if the session is valid
+
+		- Parameter successHandler: Returns true if the request finishes without errors.
+	**/
     func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
         if User.authToken() != "" && User.currentID() != nil {
 			guard let sessionID = User.currentSessionID() else { return }
@@ -854,8 +1043,12 @@ struct Service {
             successHandler(false)
         }
     }
-    
-    /// Delete a session according to its ID
+
+	/**
+		Delete a session according to its ID
+
+		- Parameter successHandler: Returns true if the request finishes without errors.
+	**/
     func deleteSession(_ id: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let sessionID = id else { return }
 
@@ -883,7 +1076,11 @@ struct Service {
         })
     }
 
-	/// Logout the current user by deleting the current session
+	/**
+		Logout the current user by deleting the current session
+
+		- Parameter successHandler: Returns true if the request finishes without errors.
+	**/
 	func logout(withSuccess successHandler:@escaping (Bool) -> Void)  {
 		guard let sessionID = User.currentSessionID() else { return }
 
@@ -914,7 +1111,11 @@ struct Service {
 
 // MARK: - Misc
 // All misc related enpoints
-	/// Get the latest privacy policy
+	/**
+		Get the latest privacy policy
+
+		- Parameter successHandler: Returns an object of type PrivacyPolicyElement.
+	**/
 	func getPrivacyPolicy(withSuccess successHandler:@escaping (PrivacyPolicyElement?) -> Void) {
 		let request: APIRequest<PrivacyPolicy,JSONError> = tron.swiftyJSON.request("privacy-policy")
 		request.headers = headers

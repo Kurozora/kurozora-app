@@ -22,6 +22,7 @@ public class ForumCell: UITableViewCell {
 	@IBOutlet weak var contentLabel: UILabel!
 	@IBOutlet weak var informationLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
+	@IBOutlet weak var lockLabel: UILabel!
 
 	// Actions
 	@IBOutlet weak var moreButton: UIButton!

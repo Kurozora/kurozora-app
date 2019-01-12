@@ -135,9 +135,19 @@ class Kurozora: NSObject {
 			}
 		}
 
-		if urlScheme == "forum" || urlScheme == "forums" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 2
+		if urlScheme == "forum" || urlScheme == "forums" || urlScheme == "forumThread" || urlScheme == "forumsThread" || urlScheme == "thread" {
+			let forumThreadID = url.lastPathComponent
+			if forumThreadID != "" {
+				let storyboard = UIStoryboard(name: "forums", bundle: nil)
+				if let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as? ThreadViewController {
+					threadViewController.forumThreadID = Int(forumThreadID)
+
+					UIApplication.topViewController()?.present(threadViewController, animated: true)
+				}
+			} else {
+				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+					tabBarController.selectedIndex = 2
+				}
 			}
 		}
 

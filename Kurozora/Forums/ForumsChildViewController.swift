@@ -11,7 +11,7 @@ import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
 
-class ForumsChildViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
+class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var tableView: UITableView!
 
 	private let refreshControl = UIRefreshControl()
@@ -40,8 +40,8 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			tableView.addSubview(refreshControl)
 		}
 
-		refreshControl.tintColor = UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.tintColor = #colorLiteral(red: 1, green: 0.6823529412, blue: 0.1176470588, alpha: 1)
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		fetchThreads()
@@ -53,7 +53,6 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
         // Setup empty table view
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
-        
         tableView.emptyDataSetView { (view) in
             view.titleLabelString(NSAttributedString(string: sectionTitle))
 				.shouldDisplay(true)
@@ -66,13 +65,14 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 		tableView.estimatedSectionHeaderHeight = 0
     }
 
+	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchThreads()
 	}
 
-	// MARK: - Functions
+	// Fetch threads list for the current section
 	func fetchThreads() {
 		guard let sectionTitle = sectionTitle else { return }
 		guard let sectionID = sectionID else { return }
@@ -90,7 +90,7 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 		self.refreshControl.endRefreshing()
 	}
 
-	// Vote function
+	// Upvote/Downvote a thread
 	func voteFor(_ threadId: Int?, vote: Int?, forumCell: ForumCell?) {
 		Service.shared.vote(forThread: threadId, vote: vote, withSuccess: { (success) in
 			if success {
@@ -107,11 +107,12 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 		})
 	}
 
+	// Populate action list
 	func actionList(forCell forumCell: ForumCell?, _ forumThread: ForumThreadsElement?) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Upvote, downvote and reply actions
-		if let threadID = forumThread?.id, threadID != 0 {
+		if let threadID = forumThread?.id, let locked = forumThread?.locked, threadID != 0 && !locked {
 			action.addAction(UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteFor(threadID, vote: 1, forumCell: forumCell)
 			}))
@@ -186,15 +187,26 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 		}
 	}
 
-	// MARK: - Table view
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "ThreadSegue" {
+			let vc = segue.destination as! ThreadViewController
+			vc.hidesBottomBarWhenPushed = true
+			vc.forumThreadID = sender as? Int
+		}
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension ForumsChildViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let threadsCount = forumThreads?.count, threadsCount != 0 {
 			return threadsCount
 		}
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return 0
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let threadCell:ForumCell = tableView.dequeueReusableCell(withIdentifier: "ForumCell") as! ForumCell
 
 		// Set title label
@@ -212,6 +224,13 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 			threadCell.informationLabel.text = " \(threadScore) ·  \(threadReplyCount)\((threadReplyCount < 1000) ? "" : "K") ·  \(Date.timeAgo(creationDate))"
 		}
 
+		// Set lock label
+		if let locked = forumThreads?[indexPath.row].locked, locked == true {
+			threadCell.lockLabel.isHidden = false
+		} else {
+			threadCell.lockLabel.isHidden = true
+		}
+
 		// Add gesture to cell
 		if threadCell.gestureRecognizers?.count ?? 0 == 0 {
 			// if the cell currently has no gestureRecognizer
@@ -222,24 +241,20 @@ class ForumsChildViewController: UIViewController, UITableViewDataSource, UITabl
 
 		threadCell.forumCellDelegate = self
 
-        return threadCell
-    }
-
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let forumThread = forumThreads?[indexPath.row] {
-			performSegue(withIdentifier: "ThreadSegue", sender: forumThread)
-		}
+		return threadCell
 	}
+}
 
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "ThreadSegue" {
-			let vc = segue.destination as! ThreadViewController
-			vc.hidesBottomBarWhenPushed = true
-			vc.forumThread = sender as! ForumThreadsElement?
+// MARK: - UITableViewDelegate
+extension ForumsChildViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if let forumThreadID = forumThreads?[indexPath.row].id {
+			performSegue(withIdentifier: "ThreadSegue", sender: forumThreadID)
 		}
 	}
 }
 
+// MARK: - ForumCellDelegate
 extension ForumsChildViewController: ForumCellDelegate {
 	func moreButtonPressed(cell: ForumCell) {
 		if let indexPath = tableView.indexPath(for: cell) {
@@ -260,5 +275,12 @@ extension ForumsChildViewController: ForumCellDelegate {
 			guard let threadID = forumThreads?[indexPath.row].id else { return }
 			self.voteFor(threadID, vote: 0, forumCell: cell)
 		}
+	}
+}
+
+extension ForumsChildViewController: KRichTextEditorControllerViewDelegate {
+	func updateThreadsList(with thread: ForumThreadsElement) {
+		forumThreads?.prepend(thread)
+		tableView.reloadData()
 	}
 }

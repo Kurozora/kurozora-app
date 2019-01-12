@@ -21,12 +21,22 @@ class ForumThread: JSONDecodable {
 
 class ForumThreadElement: JSONDecodable {
 	let id: Int?
+	let title: String?
 	let content: String?
-	let replyPages: Int?
+	let locked: Bool?
+	let creationDate: String?
+	let replyCount: Int?
+	let score: Int?
+	let user: UserUser?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
+		self.title = json["title"].stringValue
 		self.content = json["content"].stringValue
-		self.replyPages = json["reply_pages"].intValue
+		self.locked = json["locked"].boolValue
+		self.creationDate = json["creation_date"].stringValue
+		self.replyCount = json["reply_count"].intValue
+		self.score = json["score"].intValue
+		self.user = try? UserUser(json: json["user"])
 	}
 }

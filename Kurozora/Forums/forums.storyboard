@@ -96,13 +96,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DS1-pO-nKZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DS1-pO-nKZ">
                                                     <rect key="frame" x="15" y="8" width="13.666666666666664" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="lHG-6t-rW0"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="14"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcj-Qo-eqh">
+                                                    <rect key="frame" x="15" y="29.999999999999996" width="13.666666666666664" height="14.333333333333332"/>
+                                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="14"/>
+                                                    <color key="textColor" red="1" green="0.30196078430000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Should anime forums be deleted? LMAO lol skittles" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYG-hj-alj">
@@ -170,7 +176,9 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="mcj-Qo-eqh" firstAttribute="trailing" secondItem="DS1-pO-nKZ" secondAttribute="trailing" id="3pX-gQ-1rI"/>
                                                 <constraint firstAttribute="bottom" secondItem="eI5-HY-WY0" secondAttribute="bottom" constant="4" id="6bZ-1u-ONN"/>
+                                                <constraint firstItem="mcj-Qo-eqh" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="leading" id="84W-J3-IhB"/>
                                                 <constraint firstAttribute="trailing" secondItem="eI5-HY-WY0" secondAttribute="trailing" id="9Nf-Ie-28i"/>
                                                 <constraint firstItem="Vj0-oJ-Ifj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="OnD-TB-xXS" secondAttribute="bottom" constant="6" id="JJf-Yo-g6w"/>
                                                 <constraint firstItem="Vj0-oJ-Ifj" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="leading" id="P2C-6p-hXC"/>
@@ -184,6 +192,7 @@
                                                 <constraint firstItem="qYG-hj-alj" firstAttribute="top" secondItem="DS1-pO-nKZ" secondAttribute="top" id="jSJ-pL-Cdj"/>
                                                 <constraint firstItem="eI5-HY-WY0" firstAttribute="leading" secondItem="DS1-pO-nKZ" secondAttribute="leading" id="mEy-pn-0jr"/>
                                                 <constraint firstItem="OnD-TB-xXS" firstAttribute="leading" secondItem="qYG-hj-alj" secondAttribute="leading" id="p1b-Se-MYR"/>
+                                                <constraint firstItem="mcj-Qo-eqh" firstAttribute="top" secondItem="DS1-pO-nKZ" secondAttribute="bottom" id="p1p-0S-RxQ"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="qYG-hj-alj" secondAttribute="trailing" id="thC-fm-JGM"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="lx6-Fq-58E" secondAttribute="trailing" id="vvs-Tg-6r3"/>
                                             </constraints>
@@ -193,6 +202,7 @@
                                             <outlet property="contentLabel" destination="OnD-TB-xXS" id="uHG-3m-G7W"/>
                                             <outlet property="downVoteButton" destination="tUl-Zs-bXf" id="tYc-lf-Xro"/>
                                             <outlet property="informationLabel" destination="Vj0-oJ-Ifj" id="P4f-ib-ziP"/>
+                                            <outlet property="lockLabel" destination="mcj-Qo-eqh" id="5RF-ue-7bu"/>
                                             <outlet property="moreButton" destination="oCQ-lG-Kjt" id="svf-fu-sHr"/>
                                             <outlet property="titleLabel" destination="qYG-hj-alj" id="tD7-3Q-F8a"/>
                                             <outlet property="typeLabel" destination="DS1-pO-nKZ" id="T4F-j7-vBW"/>
@@ -232,7 +242,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-bd-KcR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-bd-KcR">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>

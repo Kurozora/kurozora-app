@@ -8,15 +8,15 @@
 
 import UIKit
 
-public protocol PostCellDelegate: class {
-    func postCellSelectedImage(postCell: PostCell)
+@objc protocol PostCellDelegate: class {
+	 @objc optional func postCellSelectedImage(postCell: PostCell)
     func postCellSelectedUserProfile(postCell: PostCell)
-    func postCellSelectedToUserProfile(postCell: PostCell)
+    @objc optional func postCellSelectedToUserProfile(postCell: PostCell)
     func postCellSelectedComment(postCell: PostCell)
     func postCellSelectedHeart(postCell: PostCell)
 }
 
-public class PostCell: UITableViewCell {
+class PostCell: UITableViewCell {
     
     @IBOutlet weak public var avatar: UIImageView!
     @IBOutlet weak public var username: UILabel?
@@ -63,7 +63,7 @@ public class PostCell: UITableViewCell {
             gestureRecognizer.numberOfTapsRequired = 1
             avatar.addGestureRecognizer(gestureRecognizer)
         }
-        
+
         if let imageContent = imageContent {
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedOnImage))
             gestureRecognizer.numberOfTouchesRequired = 1
@@ -88,17 +88,16 @@ public class PostCell: UITableViewCell {
     }
     
     // MARK: - IBActions
-    
     @objc func pressedUserProfile(sender: AnyObject) {
         delegate?.postCellSelectedUserProfile(postCell: self)
     }
     
     @objc func pressedToUserProfile(sender: AnyObject) {
-        delegate?.postCellSelectedToUserProfile(postCell: self)
+        delegate?.postCellSelectedToUserProfile?(postCell: self)
     }
     
     @objc func pressedOnImage(sender: AnyObject) {
-        delegate?.postCellSelectedImage(postCell: self)
+        delegate?.postCellSelectedImage?(postCell: self)
     }
     
     @IBAction func replyPressed(sender: AnyObject) {

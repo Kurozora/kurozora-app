@@ -912,6 +912,7 @@
                         <outlet property="bioTextView" destination="PnU-4p-TFf" id="UVv-TH-vsd"/>
                         <outlet property="bioTextViewHeight" destination="Wxw-S6-N79" id="TiR-VX-3Mr"/>
                         <outlet property="editProfileButton" destination="vil-by-3j0" id="Nnx-TI-16L"/>
+                        <outlet property="followButton" destination="bkn-1Z-yJM" id="pml-fc-ava"/>
                         <outlet property="followButtonView" destination="b9f-Pm-myg" id="PXg-eh-AVm"/>
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="qOt-b0-ZYc"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="4cR-wp-mMt"/>

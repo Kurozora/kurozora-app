@@ -8,11 +8,11 @@
 
 import UIKit
 
-public protocol LinkCellDelegate: PostCellDelegate {
+protocol LinkCellDelegate: PostCellDelegate {
     func postCellSelectedLink(linkCell: LinkCell)
 }
 
-public class LinkCell: PostCell {
+class LinkCell: PostCell {
     
     @IBOutlet public weak var linkTitleLabel: UILabel!
     @IBOutlet public weak var linkContentLabel: UILabel!

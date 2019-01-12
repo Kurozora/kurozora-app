@@ -50,6 +50,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var activeAgo: UILabel!
 
     @IBOutlet weak var followButtonView: UIView!
+	@IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
 
@@ -227,14 +228,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     private func updateViewWithUser(_ user: User?) {
         // Setup username
-        if let username = user?.username, username != "" {
+        if let username = user?.profile?.username, username != "" {
             usernameLabel.text = username
 		} else {
 			usernameLabel.text = "Unknown"
 		}
         
         // Setup avatar
-        if let avatar = user?.avatar, avatar != "" {
+        if let avatar = user?.profile?.avatar, avatar != "" {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
@@ -247,7 +248,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 
         // Setup banner
-        if let banner = user?.banner, banner != "" {
+        if let banner = user?.profile?.banner, banner != "" {
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
@@ -266,7 +267,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup user bio
-        if let bio = user?.bio, bio != "" {
+        if let bio = user?.profile?.bio, bio != "" {
             self.bioTextView.text = bio
 
 			if (self.bioTextView.frame.height < 67) {
@@ -279,11 +280,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		}
         
         // Setup user activity
-        if let activeEnd = user?.activeEnd, activeEnd != "" {
+        if let activeEnd = user?.profile?.activeEnd, activeEnd != "" {
             let timeAgo = Date.timeAgo(activeEnd)
             let activeEndFormatted = timeAgo == "Just now" ? "Active Now" : timeAgo
             
-            if let activeAgo = user?.active, String(activeAgo) != "" {
+            if let activeAgo = user?.profile?.active, String(activeAgo) != "" {
                 self.activeAgo.text = activeAgo ? "Active Now" : activeEndFormatted
             }
         } else {
@@ -291,7 +292,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup post count
-        if let postCount = user?.postCount, postCount > 0 {
+        if let postCount = user?.profile?.postCount, postCount > 0 {
             if postCount >= 1000 {
                 self.postsBadge.text = "" + String(format: "%.1fk", Float(postCount-49)/1000.0 )
             } else {
@@ -302,7 +303,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup reputation count
-        if let reputationCount = user?.reputationCount, reputationCount > 0 {
+        if let reputationCount = user?.profile?.reputationCount, reputationCount > 0 {
             if reputationCount >= 10000 {
                 self.reputationBadge.text = "" + String(format: "%.1fk", Float(reputationCount-49)/10000.0 )
             } else {
@@ -313,13 +314,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup following & followers count
-        if let following = user?.followingCount, following > 0 {
+        if let following = user?.profile?.followingCount, following > 0 {
             self.followingButton.setTitle("\(following) Following", for: .normal)
         } else {
             self.followingButton.setTitle("0 Following", for: .normal)
         }
         
-        if let follower = user?.followerCount, follower > 0 {
+        if let follower = user?.profile?.followerCount, follower > 0 {
             self.followersButton.setTitle("\(follower) Followers", for: .normal)
         } else {
             self.followersButton.setTitle("0 Followers", for: .normal)
@@ -330,13 +331,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             followButtonView.isHidden = true
 			editProfileButton.isHidden = false
         } else {
+			if let currentlyFollowing = user?.currentlyFollowing, currentlyFollowing == true {
+				followButton.setTitle(" Following", for: .normal)
+			} else {
+				followButton.setTitle(" Follow", for: .normal)
+			}
+
             followButtonView.isHidden = false
             editProfileButton.isHidden = true
         }
 
         // Setup pro badge
         proBadge.isHidden = true
-        if let proBadge = user?.proBadge, String(proBadge) != "" {
+        if let proBadge = user?.profile?.proBadge, String(proBadge) != "" {
             if proBadge {
                 self.proBadge.isHidden = false
                 self.proBadge.text = "PRO"
@@ -344,7 +351,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 
 		// Setup badges
-		if let badges = user?.badges, badges != [] {
+		if let badges = user?.profile?.badges, badges != [] {
 			for badge in badges {
 				self.tagBadge.setTitle(badge["text"].stringValue, for: .normal)
 				self.tagBadge.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
@@ -510,7 +517,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	}
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
-        if let avatar = user?.avatar, avatar != ""  {
+        if let avatar = user?.profile?.avatar, avatar != ""  {
             presentPhotoViewControllerWith(url: avatar)
         } else {
             presentPhotoViewControllerWith(string: "default_avatar")
@@ -518,7 +525,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
-        if let banner = user?.banner, banner != "" {
+        if let banner = user?.profile?.banner, banner != "" {
             presentPhotoViewControllerWith(url: banner)
         } else {
             presentPhotoViewControllerWith(string: "default_banner")
@@ -539,7 +546,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "BadgeSegue" {
 			let vc = segue.destination as! BadgesTableViewController
-			vc.badges = user?.badges
+			vc.badges = user?.profile?.badges
 		}
 	}
 }

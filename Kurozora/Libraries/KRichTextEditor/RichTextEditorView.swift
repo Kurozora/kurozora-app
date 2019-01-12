@@ -10,6 +10,11 @@ import UIKit
 import ColorSlider
 import RichEditorView
 import SCLAlertView
+import SwiftyJSON
+
+protocol KRichTextEditorControllerViewDelegate: class {
+	func updateThreadsList(with thread: ForumThreadsElement)
+}
 
 class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	@IBOutlet weak var richEditorView: RichEditorView?
@@ -29,6 +34,7 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 	var sectionID: Int?
 	var textElement: String?
 	var colorSlider: ColorSlider!
+	weak var delegate: KRichTextEditorControllerViewDelegate?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -79,8 +85,25 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 		guard let content = richEditorView?.contentHTML else { return }
 		guard let sectionID = sectionID else { return }
 
+		let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
+		let contentTeaser = richEditorView?.text
+		let forumThreadJSON = [
+			"title": titleTextField.text!,
+			"content_teaser": contentTeaser!,
+			"locked": false,
+			"poster_user_id": User.currentID()!,
+			"poster_username": User.username()!,
+			"creation_date": creationDate,
+			"reply_count": 0,
+			"score": 0
+		] as JSON
+		guard let forumThreadsElement = try? ForumThreadsElement(json: forumThreadJSON) else { return }
+
 		Service.shared.postThread(withTitle: title, content: content, forSection: sectionID, withSuccess: { (success) in
-			self.dismiss(animated: true, completion: nil)
+			if success {
+				self.delegate?.updateThreadsList(with: forumThreadsElement)
+				self.dismiss(animated: true, completion: nil)
+			}
 		})
 	}
 

@@ -10,6 +10,10 @@ import UIKit
 import SwiftyJSON
 import IQKeyboardManagerSwift
 
+protocol KCommentEditorViewDelegate: class {
+	func updateReplies(with content: String)
+}
+
 class KCommentEditorView: UIViewController {
 	@IBOutlet weak var replyToTextLabel: UILabel!
 	@IBOutlet weak var replyToUsernameLabel: UILabel!
@@ -22,7 +26,8 @@ class KCommentEditorView: UIViewController {
 
 	let charLimit = 240
 
-	var forumThread: ForumThreadsElement?
+	var forumThread: ForumThreadElement?
+	weak var delegate: KCommentEditorViewDelegate?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -38,7 +43,7 @@ class KCommentEditorView: UIViewController {
 			replyToTextLabel.text = replyToText
 		}
 
-		if let replyToUsername = forumThread?.posterUsername {
+		if let replyToUsername = forumThread?.user?.username {
 			replyToUsernameLabel.text = replyToUsername
 		}
 
@@ -72,6 +77,7 @@ class KCommentEditorView: UIViewController {
 			guard let threadID = forumThread?.id else { return }
 			Service.shared.postReply(withComment: comment, forThread: threadID) { (success) in
 				if success {
+					self.delegate?.updateReplies(with: comment)
 					self.dismiss(animated: true, completion: nil)
 				}
 			}

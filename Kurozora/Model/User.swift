@@ -12,12 +12,6 @@ import SwiftyJSON
 import Kingfisher
 
 class User: JSONDecodable {
-    enum userType: Int {
-        case normal = 0
-        case mod
-        case admin
-    }
-    
     let success: Bool?
 	let message: String?
 	let authToken: String?
@@ -25,141 +19,73 @@ class User: JSONDecodable {
     let id: Int?
 	let sessionID: Int?
 	let role: Int?
-	
-    let username: String?
-    let avatar: String?
-    let banner: String?
-    let bio: String?
-    let badges: [JSON]?
-    let proBadge: Bool?
-    let joinDate: String?
-    
-    let followerCount: Int?
-    let followingCount: Int?
-    let reputationCount: Int?
-    let postCount: Int?
-    
-    let rating: Double?
-    
-    let activeStart: String?
-    let activeEnd: String?
-    let active: Bool?
+	let rating: Double?
+	let currentlyFollowing: Bool?
+	let profile: UserProfile?
     
     required init(json: JSON) throws {
-        success = json["success"].boolValue
-		message = json["message"].stringValue
-		authToken = json["kuro_auth_token"].stringValue
-        
-        id = json["user_id"].intValue
-		sessionID = json["session_id"].intValue
-        role = json["role"].intValue
+        self.success = json["success"].boolValue
+		self.message = json["message"].stringValue
+		self.authToken = json["kuro_auth_token"].stringValue
 
-        username = json["profile"]["username"].stringValue
-        avatar = json["profile"]["avatar_url"].stringValue
-        banner = json["profile"]["banner_url"].stringValue
-        bio = json["profile"]["biography"].stringValue
-        badges = json["profile"]["badges"].arrayValue
-        proBadge = json["profile"]["pro_badge"].boolValue
-        joinDate = json["profile"]["join_date"].stringValue
-        
-        followerCount = json["profile"]["follower_count"].intValue
-        followingCount = json["profile"]["following_count"].intValue
-        reputationCount = json["profile"]["reputation_count"].intValue
-        postCount = json["profile"]["post_count"].intValue
-        
-        rating = json["rating"].doubleValue
-        
-        activeStart = json["profile"]["active_start"].stringValue
-        activeEnd = json["profile"]["active_end"].stringValue
-        active = json["profile"]["active"].boolValue
+        self.id = json["user_id"].intValue
+		self.sessionID = json["session_id"].intValue
+        self.role = json["role"].intValue
+		self.rating = json["rating"].doubleValue
+		self.currentlyFollowing = json["currently_following"].boolValue
+		self.profile = try? UserProfile(json: json["profile"])
     }
+}
 
-	/// Returns the username saved in KDefaults
-	static func username() -> String? {
-		if let username = GlobalVariables().KDefaults["username"], username != "" {
-			return username
-		}
-		return nil
+class UserUser: JSONDecodable {
+	let id: Int?
+	let username: String?
+	let avatar: String?
+
+	required init(json: JSON) throws {
+		self.id = json["id"].intValue
+		self.username = json["username"].stringValue
+		self.avatar = json["avatar_url"].stringValue
 	}
+}
 
-	/// Returns the current User ID saved in KDefaults
-	static func currentID() -> Int? {
-		if let userID = GlobalVariables().KDefaults["user_id"], userID != "" {
-			return Int(userID)
-		}
-		return nil
+class UserProfile: JSONDecodable {
+	let username: String?
+	let avatar: String?
+	let banner: String?
+	let bio: String?
+	let badges: [JSON]?
+	let proBadge: Bool?
+	let joinDate: String?
+
+	let followerCount: Int?
+	let followingCount: Int?
+	let reputationCount: Int?
+	let postCount: Int?
+
+	let activeStart: String?
+	let activeEnd: String?
+	let active: Bool?
+
+	required init(json: JSON) throws {
+		self.username = json["username"].stringValue
+		self.avatar = json["avatar_url"].stringValue
+		self.banner = json["banner_url"].stringValue
+		self.bio = json["biography"].stringValue
+		self.badges = json["badges"].arrayValue
+		self.proBadge = json["pro_badge"].boolValue
+		self.joinDate = json["join_date"].stringValue
+
+		self.followerCount = json["follower_count"].intValue
+		self.followingCount = json["following_count"].intValue
+		self.reputationCount = json["reputation_count"].intValue
+		self.postCount = json["post_count"].intValue
+
+		self.activeStart = json["active_start"].stringValue
+		self.activeEnd = json["active_end"].stringValue
+		self.active = json["active"].boolValue
 	}
-
-	/// Returns the Auth Token saved in KDefaults
-	static func authToken() -> String {
-		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
-			return authToken
-		}
-		return "authToken"
-	}
-
-	/// Returns the current user avatar from cache if available, otherwise returns default avatar
-	static func currentUserAvatar() -> UIImage? {
-		var image: UIImage?
-		let cache = ImageCache.default
-
-		cache.retrieveImage(forKey: "currentUserAvatar", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
-			switch result {
-			case .success(let value):
-				// If the `cacheType is `.none`, `image` will be `nil`.
-				if value.cacheType == .none {
-					image = #imageLiteral(resourceName: "default_avatar")
-				} else {
-					image = value.image
-				}
-
-			case .failure(let error):
-				print(error)
-			}
-		}
-
-		return image
-	}
-
-	/// Returns the current Session ID saved in KDefaults
-	static func currentSessionID() -> Int? {
-		if let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" {
-			return Int(sessionID)
-		}
-		return nil
-	}
-
-	/// Returns the current device name
-	static func currentDevice() -> String? {
-		return UIDevice.modelName
-	}
-
-	/// Returns true if current user is logged in
-    static func isLoggedIn() -> Bool? {
-        return User.username() != nil
-    }
-
-	/// Returns true is the current user is PRO
-    static func isPro() -> Bool? {
-        return true
-    }
-
-	/// Returns true if the current user is an admin
-    static func isAdmin() -> Bool? {
-        if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
-            guard let userType = Int(userType) else { return false }
-            guard let type: userType = User.userType(rawValue: userType) else { return false }
-            
-            switch type {
-            case .admin:
-                return true
-            default:
-                return false
-            }
-        }
-        return false
-    }
-    
+}
 //    func following() {
 //        return self.relationForKey("following")
 //    }
@@ -268,4 +194,97 @@ class User: JSONDecodable {
 //        viewController.presentBasicAlertWithTitle(title: "Account muted", message: "Until \(muteDate.mediumDateTime()).\nContact admins for more information.")
 //        return true
 //    }
+
+extension User {
+	enum userType: Int {
+		case normal = 0
+		case mod
+		case admin
+	}
+
+	/// Returns the username saved in KDefaults
+	static func username() -> String? {
+		if let username = GlobalVariables().KDefaults["username"], username != "" {
+			return username
+		}
+		return nil
+	}
+
+	/// Returns the current User ID saved in KDefaults
+	static func currentID() -> Int? {
+		if let userID = GlobalVariables().KDefaults["user_id"], userID != "" {
+			return Int(userID)
+		}
+		return nil
+	}
+
+	/// Returns the Auth Token saved in KDefaults
+	static func authToken() -> String {
+		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
+			return authToken
+		}
+		return ""
+	}
+
+	/// Returns the current user avatar from cache if available, otherwise returns default avatar
+	static func currentUserAvatar() -> UIImage? {
+		var image: UIImage?
+		let cache = ImageCache.default
+
+		cache.retrieveImage(forKey: "currentUserAvatar", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
+			switch result {
+			case .success(let value):
+				// If the `cacheType is `.none`, `image` will be `nil`.
+				if value.cacheType == .none {
+					image = #imageLiteral(resourceName: "default_avatar")
+				} else {
+					image = value.image
+				}
+
+			case .failure(let error):
+				print(error)
+			}
+		}
+
+		return image
+	}
+
+	/// Returns the current Session ID saved in KDefaults
+	static func currentSessionID() -> Int? {
+		if let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" {
+			return Int(sessionID)
+		}
+		return nil
+	}
+
+	/// Returns the current device name
+	static func currentDevice() -> String? {
+		return UIDevice.modelName
+	}
+
+	/// Returns true if current user is logged in
+	static func isLoggedIn() -> Bool? {
+		return User.username() != nil
+	}
+
+	/// Returns true is the current user is PRO
+	static func isPro() -> Bool? {
+		return true
+	}
+
+	/// Returns true if the current user is an admin
+	static func isAdmin() -> Bool? {
+		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
+			guard let userType = Int(userType) else { return false }
+			guard let type: userType = User.userType(rawValue: userType) else { return false }
+
+			switch type {
+			case .admin:
+				return true
+			default:
+				return false
+			}
+		}
+		return false
+	}
 }

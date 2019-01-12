@@ -12,7 +12,7 @@ import SCLAlertView
 import RichTextView
 import Kingfisher
 
-class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ThreadViewController: UIViewController {
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet weak var informationLabel: UILabel!
 	@IBOutlet weak var posterUsernameLabel: UIButton!
@@ -21,12 +21,12 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
 
-	var forumThread: ForumThreadsElement?
-	var thread: ForumThread?
+	var forumThreadID: Int?
+	var forumThread: ForumThreadElement?
 	var replyID: Int?
 	var threadInformation: String?
 
-	// Reply request vars
+	// Reply vars
 	var replies: [ThreadRepliesElement]?
 	var replyPages: Int?
 	var pageNumber = 0
@@ -34,21 +34,16 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		if let replyCount = forumThread?.replyCount, let creationDate = forumThread?.creationDate {
-			informationLabel.text = "Discussion ·  \(replyCount)\((replyCount < 1000) ? "" : "K") ·  \(Date.timeAgo(creationDate)) · by "
-		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let threadID = forumThread?.id, threadID != 0 {
+		if let threadID = forumThreadID, threadID != 0 {
 			Service.shared.getDetails(forThread: threadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
-					self.thread = thread
-					self.replyPages = thread?.thread?.replyPages
-					self.updateDetailsWithThread(self.thread)
+					self.forumThread = thread
+					self.updateThreadDetails()
 					self.tableView.reloadData()
 				}
 			})
@@ -83,78 +78,26 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 	}
 
-	// MARK: - Table view data source
-	func numberOfSections(in tableView: UITableView) -> Int {
-		if let repliesCount = replies?.count, repliesCount != 0 {
-			return repliesCount
-		}
-		return 0
-	}
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-
-	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let repliesCount = replies?.count, indexPath.section == repliesCount - 1 { // last cell
-			if let replyPages = replyPages, replyPages > pageNumber { // more items to fetch
-				// increment `fromIndex` by 20 before server call
-				pageNumber += 1
-				if let threadID = forumThread?.id {
-					getThreadReplies(for: threadID)
-				}
-			}
-		}
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let commentCell: CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
-
-//		if let avatar = replies?[indexPath.section]["user"]["avatar"].stringValue, avatar != "" {
-//			let avatar = URL(string: avatar)
-//			let resource = ImageResource(downloadURL: avatar!)
-//			commentCell.avatar.kf.indicatorType = .activity
-//			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
-//		} else {
-			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
-//		}
-
-//		if let username = replies?[indexPath.section]["user"]["username"].stringValue, username != "" {
-			commentCell.username?.text = "username"
-//		}
-
-		if let dateTime = replies?[indexPath.section].postedAt, dateTime != "" {
-			commentCell.dateTime.text = "· \(Date.timeAgo(dateTime))"
-		} else {
-			commentCell.dateTime.text = ""
-		}
-
-		if let content = replies?[indexPath.section].content {
-			commentCell.textContent.text = content
-		}
-
-		if let score = replies?[indexPath.section].score {
-			commentCell.heartButton.setTitle(" \(score)", for: .normal)
-		}
-
-		return commentCell
-	}
-
 	// MARK: - Functions
-	func updateDetailsWithThread (_ thread: ForumThread?) {
+	func updateThreadDetails() {
+		// Set thread stats
+		if let replyCount = forumThread?.replyCount, let creationDate = forumThread?.creationDate {
+			informationLabel.text = "Discussion ·  \(replyCount)\((replyCount < 1000) ? "" : "K") ·  \(Date.timeAgo(creationDate)) · by "
+		}
+
+		// Set poster username
+		if let posterUsername = forumThread?.user?.username {
+			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
+		}
+
 		// Set thread title
 		if let threadTitle = forumThread?.title {
 			self.title = threadTitle
 			self.threadTitleLabel.text = threadTitle
 		}
 
-		// Set poster username
-		if let posterUsername = forumThread?.posterUsername {
-			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
-		}
-
 		// Set thread content
-		if let threadContent = thread?.thread?.content {
+		if let threadContent = forumThread?.content {
 			self.richTextView.update(input: threadContent, textColor: .white, completion: nil)
 		}
 	}
@@ -190,10 +133,10 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
-		if let posterId = forumThread?.posterUserID, posterId != 0 {
+		if let posterID = forumThread?.user?.id, posterID != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
 			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
-			profileViewController?.otherUserID = posterId
+			profileViewController?.otherUserID = posterID
 
 			let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController!)
 
@@ -214,6 +157,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBAction func replyButton(_ sender: UIButton) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "CommentEditor") as? KCommentEditorView
+		vc?.delegate = self
 		vc?.forumThread = forumThread
 
 		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
@@ -227,7 +171,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	@IBAction func shareThreadButton(_ sender: UIButton) {
 		SCLAlertView().showInfo("This is a test button. No touch only look.")
 	}
-
+}
 
 //    public let FetchLimit = 12
 //
@@ -926,9 +870,135 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        return uniquePosts
 //    }
 //}
-//
-//extension ThreadViewController: ModalTransitionScrollable {
-//    public var transitionScrollView: UIScrollView? {
-//        return tableView
-//    }
+
+// MARK: - UITableViewDelegate
+extension ThreadViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let repliesCount = replies?.count, indexPath.section == repliesCount - 1 { // last cell
+			if let replyPages = replyPages, replyPages > pageNumber { // more items to fetch
+				// increment `fromIndex` by 20 before server call
+				pageNumber += 1
+				if let threadID = forumThread?.id {
+					getThreadReplies(for: threadID)
+				}
+			}
+		}
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension ThreadViewController: UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		if let repliesCount = replies?.count, repliesCount != 0 {
+			return repliesCount
+		}
+		return 0
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 1
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let commentCell: CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
+
+		if let avatar = replies?[indexPath.section].user?.avatar, avatar != "" {
+			let avatar = URL(string: avatar)
+			let resource = ImageResource(downloadURL: avatar!)
+			commentCell.avatar.kf.indicatorType = .activity
+			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		} else {
+			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
+		}
+
+		if let username = replies?[indexPath.section].user?.username, username != "" {
+			commentCell.username?.text = username
+		}
+
+		if let dateTime = replies?[indexPath.section].postedAt, dateTime != "" {
+			commentCell.dateTime.text = "· \(Date.timeAgo(dateTime))"
+		} else {
+			commentCell.dateTime.text = ""
+		}
+
+		if let content = replies?[indexPath.section].content {
+			commentCell.textContent.text = content
+		}
+
+		if let score = replies?[indexPath.section].score {
+			commentCell.heartButton.setTitle(" \(score)", for: .normal)
+		}
+
+		commentCell.delegate = self
+
+		return commentCell
+	}
+}
+
+extension ThreadViewController: PostCellDelegate {
+	func postCellSelectedUserProfile(postCell: PostCell) {
+		if let indexPath = tableView.indexPath(for: postCell) {
+			if let replierID = replies?[indexPath.section].user?.id, replierID != 0 {
+				let storyboard = UIStoryboard(name: "profile", bundle: nil)
+				let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+				profileViewController?.otherUserID = replierID
+
+				let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController!)
+
+				self.present(kurozoraNavigationController, animated: true, completion: nil)
+			}
+		}
+	}
+
+	func postCellSelectedComment(postCell: PostCell) {
+	}
+
+	func postCellSelectedHeart(postCell: PostCell) {
+		var vote = 1
+
+		if postCell.heartButton.titleColor(for: .normal) == #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1) {
+			vote = 1
+		} else {
+			vote = 0
+		}
+
+		if let indexPath = tableView.indexPath(for: postCell) {
+			if let replyID = replies?[indexPath.section].id, let score = replies?[indexPath.section].score, replyID != 0 {
+				Service.shared.vote(forReply: replyID, vote: vote) { (success) in
+					if success {
+						DispatchQueue.main.async {
+							if vote == 1 {
+								postCell.heartButton.setTitleColor(#colorLiteral(red: 1, green: 0.5, blue: 1, alpha: 1), for: .normal)
+								postCell.heartButton.setTitle(" \(score+1)", for: .normal)
+							} else if vote == 0 {
+								postCell.heartButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+								postCell.heartButton.setTitle(" \(score-1)", for: .normal)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+extension ThreadViewController: KCommentEditorViewDelegate {
+	func updateReplies(with content: String) {
+		let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
+		let replyJSON = [
+			"posted_at": postedAt,
+			"user": [
+				"id": User.currentID()!,
+				"username": User.username()!,
+				"avatar": User.currentUserAvatar()!
+			],
+			"score": 0,
+			"content": content
+		] as JSON
+
+		if let threadRepliesElement = try? ThreadRepliesElement(json: replyJSON) {
+			replies?.prepend(threadRepliesElement)
+			tableView.reloadData()
+		}
+	}
 }
