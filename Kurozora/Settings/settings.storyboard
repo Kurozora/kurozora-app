@@ -1166,7 +1166,7 @@ Kurozora 1.0.0 (1)</string>
                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="May dd, yyyy at hh:mm pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mu3-ed-zmd" userLabel="Date Label">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="May dd, yyyy at hh:mm pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mu3-ed-zmd">
                                                             <rect key="frame" x="107" y="38.5" width="251" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1263,13 +1263,10 @@ Kurozora 1.0.0 (1)</string>
                                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="QBc-zY-f4k" id="PmK-TF-GHw"/>
-                                            <outlet property="dateLable" destination="Eer-bB-Mne" id="ehG-0J-jq3"/>
-                                            <outlet property="dateValueLable" destination="Mu3-ed-zmd" id="lMV-n4-byD"/>
-                                            <outlet property="deviceTypeLable" destination="mBT-Fb-1jq" id="OjT-4m-sj2"/>
-                                            <outlet property="deviceTypeValueLable" destination="3Tj-p9-2oa" id="CjG-mp-MJ9"/>
-                                            <outlet property="extraLable" destination="omi-uk-e5E" id="SFA-ws-3a3"/>
-                                            <outlet property="ipAddressLable" destination="hNV-xK-P1h" id="hpl-nd-Tc0"/>
-                                            <outlet property="ipAddressValueLable" destination="Jy2-jj-ViP" id="ymM-Ya-qnQ"/>
+                                            <outlet property="dateValueLabel" destination="Mu3-ed-zmd" id="00y-pq-C7V"/>
+                                            <outlet property="deviceTypeValueLabel" destination="3Tj-p9-2oa" id="InT-Z2-hOJ"/>
+                                            <outlet property="extraLabel" destination="omi-uk-e5E" id="fKT-Zx-VoR"/>
+                                            <outlet property="ipAddressValueLabel" destination="Jy2-jj-ViP" id="xkh-Fe-ioU"/>
                                             <outlet property="removeSessionButton" destination="YHE-si-vCr" id="ZIm-o9-vtk"/>
                                         </connections>
                                     </tableViewCell>
@@ -1409,7 +1406,7 @@ Kurozora 1.0.0 (1)</string>
                         <outlet property="navigationTitleView" destination="9yv-CW-biR" id="Fmy-ep-3Br"/>
                         <outlet property="privacyPolicyTextView" destination="8lI-CU-k9U" id="QoL-xC-PND"/>
                         <outlet property="scrollView" destination="cpX-We-LNt" id="jda-ru-hIE"/>
-                        <outlet property="titleLable" destination="l1U-fb-CQd" id="Xes-Q6-Bo5"/>
+                        <outlet property="titleLabel" destination="l1U-fb-CQd" id="zSz-nW-8fn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mid-HG-B2G" userLabel="First Responder" sceneMemberID="firstResponder"/>

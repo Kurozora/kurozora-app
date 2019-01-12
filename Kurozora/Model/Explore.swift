@@ -42,21 +42,30 @@ class ExploreBanner: JSONDecodable {
 	let id: Int?
 	let title: String?
 	let averageRating: Double?
-	let genre: String?
 	let poster: String?
 	let posterThumbnail: String?
 	let background: String?
 	let backgroundThumbnail: String?
+	let genres: [GenresElement]?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.title = json["title"].stringValue
 		self.averageRating = json["average_rating"].doubleValue
-		self.genre = json["genre"].stringValue
 		self.poster = json["poster"].stringValue
 		self.posterThumbnail = json["poster_thumbnail"].stringValue
 		self.background = json["background"].stringValue
 		self.backgroundThumbnail = json["background_thumbnail"].stringValue
+		var genres = [GenresElement]()
+
+		let genresArray = json["genres"].arrayValue
+		for genreItem in genresArray {
+			if let genresElement = try? GenresElement(json: genreItem) {
+				genres.append(genresElement)
+			}
+		}
+
+		self.genres = genres
 	}
 }
 

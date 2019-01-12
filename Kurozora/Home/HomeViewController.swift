@@ -12,7 +12,7 @@ import SwiftyJSON
 import EmptyDataSet_Swift
 import Kingfisher
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EmptyDataSetDelegate, EmptyDataSetSource {
+class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var tableHeaderView: UIView!
@@ -99,7 +99,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+//        tableView.reloadData()
     }
 
     // MARK: - Functions
@@ -131,56 +131,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 			placeholderTimer = nil
 		}
 	}
-
-    // MARK: - Table view
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if let categoriesCount = categories?.count, categoriesCount != 0 {
-            return categoriesCount
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 38 : 1
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view:UIView, forSection: Int) {
-        if let headerView = view as? UITableViewHeaderFooterView {
-            headerView.textLabel?.font = UIFont(name: "System", size: 22)
-            headerView.textLabel?.textColor = .white
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let categoryTitle = categories?[section].title else { return "" }
-
-		if let categoryShowCount = categories?[section].shows?.count, categoryShowCount != 0 {
-            return categoryTitle
-        }
-        return ""
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (categories?[section].shows?.count != 0) ? 1 : 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let categoryType = categories?[indexPath.section].type, categoryType == "large" {
-            let largeCell = tableView.dequeueReusableCell(withIdentifier: "LargeCategoryCell") as! LargeCategoryCell
-            
-            if let shows = categories?[indexPath.section].shows {
-                largeCell.shows = shows
-            }
-            
-            return largeCell
-        } else {
-            let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
-            if let shows = categories?[indexPath.section].shows {
-                showCell.shows = shows
-            }
-            return showCell
-        }
-    }
 
 	// MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -224,6 +174,62 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 }
 
+// MARK: - UITableViewDataSource
+extension HomeViewController: UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		if let categoriesCount = categories?.count, categoriesCount != 0 {
+			return categoriesCount
+		}
+		return 0
+	}
+
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		guard let categoryTitle = categories?[section].title else { return "" }
+
+		if let categoryShowCount = categories?[section].shows?.count, categoryShowCount != 0 {
+			return categoryTitle
+		}
+		return ""
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return (categories?[section].shows?.count != 0) ? 1 : 0
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let categoryType = categories?[indexPath.section].type, categoryType == "large" {
+			let largeCell = tableView.dequeueReusableCell(withIdentifier: "LargeCategoryCell") as! LargeCategoryCell
+
+			if let shows = categories?[indexPath.section].shows {
+				largeCell.shows = shows
+			}
+
+			return largeCell
+		} else {
+			let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
+			if let shows = categories?[indexPath.section].shows {
+				showCell.shows = shows
+			}
+			return showCell
+		}
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension HomeViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 38 : 1
+	}
+
+	func tableView(_ tableView: UITableView, willDisplayHeaderView view:UIView, forSection: Int) {
+		if let headerView = view as? UITableViewHeaderFooterView {
+			headerView.textLabel?.font = UIFont(name: "System", size: 22)
+			headerView.textLabel?.textColor = .white
+		}
+	}
+}
+
+// MARK: - UISearchControllerDelegate
 extension HomeViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {

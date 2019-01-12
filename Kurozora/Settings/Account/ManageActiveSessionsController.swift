@@ -33,6 +33,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         // Setup table view
         tableView.dataSource = self
         tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
         
         // Setup empty table view
         tableView.emptyDataSetSource = self
@@ -45,8 +46,6 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
                 .isTouchAllowed(true)
                 .isScrollAllowed(true)
         }
-
-		tableView.rowHeight = UITableView.automaticDimension
     }
 
 	private func fetchSessions() {
@@ -109,7 +108,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
             let point = sender.superview!.convert(center, to: self.tableView)
             let indexPath = self.tableView.indexPathForRow(at: point)
             let cell = self.tableView.cellForRow(at: indexPath!) as! SessionsCell
-            let sessionSecret = Int(cell.extraLable.text!)
+			let sessionSecret = Int(cell.extraLabel.text!)
             
             Service.shared.deleteSession(sessionSecret!, withSuccess: { (success) in
                 if success {
@@ -169,35 +168,32 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         
         // No other sessions
         if sessionsCount == 0 {
-            let sessionsCell:NoSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath as IndexPath) as! NoSessionsCell
+            let sessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath) as! NoSessionsCell
             sessionsCell.noSessionsLabel.text = "No other sessions found!"
             return sessionsCell
         }
         
         // Other sessions found
-        let sessionsCell:SessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath as IndexPath) as! SessionsCell
+        let sessionsCell = tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath) as! SessionsCell
         
         // IP Address
-        sessionsCell.ipAddressLable.text = "IP-Adress:"
         if let ipAddress = otherSessionsArray?[indexPath.row].ip {
-            sessionsCell.ipAddressValueLable.text = ipAddress
+			sessionsCell.ipAddressValueLabel.text = ipAddress
         }
         
         // Device Type
-        sessionsCell.deviceTypeLable.text = "Device Type:"
         if let deviceType = otherSessionsArray?[indexPath.row].device {
-            sessionsCell.deviceTypeValueLable.text = "Kurozora for " + deviceType
+			sessionsCell.deviceTypeValueLabel.text = "Kurozora for " + deviceType
         }
         
         // Last Accessed
-        sessionsCell.dateLable.text = "Last Accessed:"
         if let lastValidated = otherSessionsArray?[indexPath.row].lastValidated {
-            sessionsCell.dateValueLable?.text = lastValidated
+			sessionsCell.dateValueLabel?.text = lastValidated
         }
 
         // Misc
         if let id = otherSessionsArray?[indexPath.row].id {
-            sessionsCell.extraLable.text = "\(id)"
+			sessionsCell.extraLabel.text = "\(id)"
         }
         sessionsCell.removeSessionButton.tag = indexPath.row
 

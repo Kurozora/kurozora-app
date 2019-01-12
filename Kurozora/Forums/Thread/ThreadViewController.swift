@@ -24,13 +24,16 @@ class ThreadViewController: UIViewController {
 	var forumThreadID: Int?
 	var forumThread: ForumThreadElement?
 	var replyID: Int?
+	var newReplyID: Int!
 	var threadInformation: String?
 
 	// Reply vars
 	var replies: [ThreadRepliesElement]?
-	var replyPages: Int?
-	var pageNumber = 0
 	var order = "top"
+
+	// Pagination
+	var totalPages = 0
+	var pageNumber = 0
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -49,7 +52,6 @@ class ThreadViewController: UIViewController {
 			})
 
 			getThreadReplies(for: threadID)
-			pageNumber += 1
 		}
 
 		// Register comment cells
@@ -105,11 +107,22 @@ class ThreadViewController: UIViewController {
 	// Get thread replies
 	func getThreadReplies(for threadID: Int) {
 		Service.shared.getReplies(forThread: threadID, order: order, page: pageNumber) { (replies) in
-			if let repliesCount = replies?.count, repliesCount != 0 {
-				DispatchQueue.main.async {
-					self.replies = replies
-					self.tableView.reloadData()
+			DispatchQueue.main.async {
+				if let replyPages = replies.replyPages {
+					self.totalPages = replyPages
 				}
+
+				if self.pageNumber == 0 {
+					self.replies = replies.replies
+					self.pageNumber += 1
+				} else if self.pageNumber <= self.totalPages-1 {
+					for threadRepliesElement in (replies.replies)! {
+						self.replies?.append(threadRepliesElement)
+					}
+					self.pageNumber += 1
+				}
+
+				self.tableView.reloadData()
 			}
 		}
 	}
@@ -169,7 +182,23 @@ class ThreadViewController: UIViewController {
 	}
 
 	@IBAction func shareThreadButton(_ sender: UIButton) {
-		SCLAlertView().showInfo("This is a test button. No touch only look.")
+		var shareText: String!
+		guard let threadID = forumThreadID else { return }
+
+		if let title = forumThread?.title {
+			shareText = "https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"
+		}
+
+		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+
+		if let popoverController = activityVC.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+		self.present(activityVC, animated: true, completion: nil)
 	}
 }
 
@@ -874,13 +903,11 @@ class ThreadViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension ThreadViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let repliesCount = replies?.count, indexPath.section == repliesCount - 1 { // last cell
-			if let replyPages = replyPages, replyPages > pageNumber { // more items to fetch
-				// increment `fromIndex` by 20 before server call
-				pageNumber += 1
-				if let threadID = forumThread?.id {
-					getThreadReplies(for: threadID)
-				}
+		let numberOfSections = tableView.numberOfSections
+
+		if indexPath.section == numberOfSections-1 {
+			if let forumThreadID = forumThreadID, pageNumber <= totalPages-1 {
+				getThreadReplies(for: forumThreadID)
 			}
 		}
 	}
@@ -935,6 +962,7 @@ extension ThreadViewController: UITableViewDataSource {
 	}
 }
 
+// MARK: - PostCellDelegate
 extension ThreadViewController: PostCellDelegate {
 	func postCellSelectedUserProfile(postCell: PostCell) {
 		if let indexPath = tableView.indexPath(for: postCell) {
@@ -982,23 +1010,16 @@ extension ThreadViewController: PostCellDelegate {
 	}
 }
 
+// MARK: - KCommentEditorViewDelegate
 extension ThreadViewController: KCommentEditorViewDelegate {
-	func updateReplies(with content: String) {
-		let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-		let replyJSON = [
-			"posted_at": postedAt,
-			"user": [
-				"id": User.currentID()!,
-				"username": User.username()!,
-				"avatar": User.currentUserAvatar()!
-			],
-			"score": 0,
-			"content": content
-		] as JSON
-
-		if let threadRepliesElement = try? ThreadRepliesElement(json: replyJSON) {
-			replies?.prepend(threadRepliesElement)
-			tableView.reloadData()
+	func updateReplies(with threadRepliesElement: ThreadRepliesElement) {
+		DispatchQueue.main.async {
+			if self.replies == nil {
+				self.replies = [threadRepliesElement]
+			} else {
+				self.replies?.prepend(threadRepliesElement)
+			}
+			self.tableView.reloadData()
 		}
 	}
 }

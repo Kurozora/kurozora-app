@@ -37,6 +37,7 @@ class User: JSONDecodable {
     }
 }
 
+// Temporary and should be removed once the server is updated with the appropriate JSON structure for consistency accross all API responses
 class UserUser: JSONDecodable {
 	let id: Int?
 	let username: String?
@@ -86,15 +87,7 @@ class UserProfile: JSONDecodable {
 		self.active = json["active"].boolValue
 	}
 }
-//    func following() {
-//        return self.relationForKey("following")
-//    }
-//
-//    class func currentUserIsGuest() -> Bool {
-//
-//        return PFAnonymousUtils.isLinkedWithUser(User.currentUser())
-//    }
-    
+
 //    var myAnimeListPassword: String? {
 //        get {
 //            return UserDefaults.standard.object(forKey: User.MyAnimeListPasswordKey) as! String?
@@ -122,49 +115,11 @@ class UserProfile: JSONDecodable {
 //        details.saveInBackground()
 //    }
     
-//    func isAdmin() -> Bool {
-//        return badges.contains("Admin") || isTopAdmin()
-//    }
-//
-//    func isTopAdmin() -> Bool {
-//        return badges.contains("Top Admin")
-//    }
-    
-    // Don't ever name the function isCurrentUser it will conflict with Parse framework
-//    func isTheCurrentUser() -> Bool {
-//        guard let id1 = self.objectId, let currentUser = User.currentUser(), let id2 = currentUser.objectId else {
-//            return false
-//        }
-//        return id1 == id2
-//    }
-    
     // Trial
 //    func hasTrial() -> Bool {
 //        return trialExpiration?.compare(Date()) == .orderedDescending
 //    }
-    
-//    func followUser(user: User, follow: Bool) {
-//
-//        var incrementer = 0
-//        if follow {
-//            let followingRelation = following()
-//            followingRelation.addObject(user)
-//            incrementer = 1
-//            PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":user.objectId!])
-//        } else {
-//            let followingRelation = following()
-//            followingRelation.removeObject(user)
-//            incrementer = -1
-//        }
-//
-//        user.followingThisUser = follow
-//        user.details.incrementKey("followersCount", byAmount: incrementer)
-//        user.saveInBackground()
-//
-//        details.incrementKey("followingCount", byAmount: incrementer)
-//        saveInBackground()
-//    }
-    
+
     // Muting
 //    class func muted(viewController: UIViewController) -> Bool {
     

@@ -11,7 +11,7 @@ import SCLAlertView
 
 class LegalViewController : UIViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
-	@IBOutlet weak var titleLable: UILabel!
+	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var privacyPolicyTextView: UITextView!
     @IBOutlet weak var lastUpdatedLabel: UILabel!
 	@IBOutlet weak var scrollView: UIScrollView!
@@ -41,23 +41,23 @@ class LegalViewController : UIViewController {
 
 extension LegalViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let titleFrame = titleLable.frame
+		let titleFrame = titleLabel.frame
 		let container = CGRect(origin: scrollView.contentOffset, size: scrollView.frame.size)
 
 		if (!container.intersects(titleFrame)) {
 			if self.navigationTitleView.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
 					self.navigationController?.navigationBar.isTranslucent = true
-					self.titleLable.alpha = 0
+					self.titleLabel.alpha = 0
 					self.navigationTitleView.alpha = 1
 				}
 			}
 		} else {
-			if self.titleLable.alpha == 0 {
+			if self.titleLabel.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
 					self.navigationController?.navigationBar.isTranslucent = false
 					self.navigationTitleView.alpha = 0
-					self.titleLable.alpha = 1
+					self.titleLabel.alpha = 1
 				}
 			}
 		}

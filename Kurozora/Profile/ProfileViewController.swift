@@ -100,13 +100,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		fetchPosts()
 
 		// Setup table view
-		tableView.delegate = self
 		tableView.dataSource = self
-
+		tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
+		
 		// Setup empty table view
 		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetSource = self
-
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "There are no posts on your timeline!"))
 				.shouldDisplay(true)
@@ -114,8 +114,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 				.isTouchAllowed(true)
 				.isScrollAllowed(false)
 		}
-
-		tableView.rowHeight = UITableView.automaticDimension
     }
 
     @objc private func refreshPostsData(_ sender: Any) {

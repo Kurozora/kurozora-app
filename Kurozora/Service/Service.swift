@@ -683,6 +683,33 @@ struct Service {
 		})
 	}
 
+// MARK: - Genres
+// All genre related endpoints
+	/**
+		Get a list of genres
+
+		- Parameter successHandler: Returns an array of type GenresElement.
+	**/
+	func getGenres(withSuccess successHandler:@escaping ([GenresElement]?) -> Void) {
+		let request : APIRequest<Genres,JSONError> = tron.swiftyJSON.request("genres")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.perform(withSuccess: { genres in
+			if let success = genres.success {
+				if success {
+					successHandler(genres.genres)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get genres list 😔", subTitle: responseMessage)
+			}
+
+			print("Received get genres error: \(error)")
+		})
+	}
+
 // MARK: - Forums
 // All forum related endpoints
 	/**
@@ -752,9 +779,9 @@ struct Service {
 		- Parameter title: The title of the thread.
 		- Parameter content: Content of the thread.
 		- Parameter sectionID: ID of the forum section.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter successHandler: Returns thread ID if the request finishes with no errors.
 	**/
-	func postThread(withTitle title: String?, content: String?, forSection sectionID: Int?, withSuccess successHandler:@escaping (Bool) -> Void){
+	func postThread(withTitle title: String?, content: String?, forSection sectionID: Int?, withSuccess successHandler:@escaping (Int) -> Void){
 		guard let title = title else { return }
 		guard let content = content else { return }
 		guard let sectionID = sectionID else { return }
@@ -772,8 +799,8 @@ struct Service {
 		]
 		request.perform(withSuccess: { thread in
 			if let success = thread.success {
-				if success {
-					successHandler(success)
+				if success, let threadID = thread.threadID {
+					successHandler(threadID)
 				}
 			}
 		}, failure: { error in
@@ -859,7 +886,7 @@ struct Service {
 		- Parameter page: The page to retrieve threads from. (starts at 0)
 		- Parameter successHandler: Returns an array of type ThreadRepliesElement.
 	**/
-	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping ([ThreadRepliesElement]?) -> Void) {
+	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping (ThreadReplies) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
@@ -878,7 +905,7 @@ struct Service {
 		request.perform(withSuccess: { replies in
 			if let success = replies.success {
 				if success {
-					successHandler(replies.replies)
+					successHandler(replies)
 				}
 			}
 		}, failure: { error in
@@ -895,9 +922,9 @@ struct Service {
 
 		- Parameter threadID: ID of the forum thread.
 		- Parameter comment: The content of the reply.
-		- Parameter successHandler: Returns true if the request finishes without errors.
+		- Parameter successHandler: Returns reply ID if the request finishes without errors.
 	**/
-	func postReply(withComment comment: String?, forThread threadID: Int?, withSuccess successHandler:@escaping (Bool) -> Void){
+	func postReply(withComment comment: String?, forThread threadID: Int?, withSuccess successHandler:@escaping (Int) -> Void){
 		guard let comment = comment else { return }
 		guard let threadID = threadID else { return }
 
@@ -913,7 +940,9 @@ struct Service {
 		]
 		request.perform(withSuccess: { reply in
 			if let success = reply.success {
-				successHandler(success)
+				if success, let replyID = reply.replyID {
+					successHandler(replyID)
+				}
 			}
 		}, failure: { error in
 			if let responseMessage = error.errorModel?.message {

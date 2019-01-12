@@ -65,9 +65,22 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 			headerCell.titleLabel.text = "\(id): " + title
         }
         
-        if let genre = banners?[indexPathRow].genre {
-            headerCell.genreLabel.text = genre
-        }
+        if let genres = banners?[indexPathRow].genres, genres.count != 0 {
+			var genreNames = ""
+			for (genreIndex, genreItem) in genres.enumerated() {
+				if let genreName = genreItem.name {
+            		genreNames += genreName
+				}
+
+				if genreIndex != genres.endIndex-1 {
+					genreNames += ", "
+				}
+			}
+
+			headerCell.genreLabel.text = genreNames
+		} else {
+			headerCell.genreLabel.text = ""
+		}
         
         return headerCell
     }

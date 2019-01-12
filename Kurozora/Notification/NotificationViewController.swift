@@ -64,8 +64,8 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Setup table view
-		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 100
 
@@ -83,7 +83,6 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 	}
 
 	// MARK: - Functions
-
 	func fetchNotifications() {
 		Service.shared.getNotifications(withSuccess: { (notifications) in
 			self.userNotificationsElement = []
@@ -186,7 +185,7 @@ extension NotificationsViewController: UITableViewDataSource {
 
 		switch self.grouping {
 		case .automatic, .byType:
-			titleNotificationCell.notificationTitleLable.text = groupedNotifications[section].sectionTitle
+			titleNotificationCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
 		case .off: break
 		}
 
@@ -219,8 +218,8 @@ extension NotificationsViewController: UITableViewDataSource {
 			}
 
 			if let description = notifications.message {
-				messageNotificationCell.notificationTextLable.text = description
-				sessionNotificationCell.notificationTextLable.text = description
+				messageNotificationCell.notificationTextLabel.text = description
+				sessionNotificationCell.notificationTextLabel.text = description
 			}
 
 			if let type = notifications.type, type != "", let notificationType = NotificationType(rawValue: type) {
@@ -260,8 +259,8 @@ extension NotificationsViewController: UITableViewDataSource {
 			}
 
 			if let description = notifications?.message {
-				messageNotificationCell.notificationTextLable.text = description
-				sessionNotificationCell.notificationTextLable.text = description
+				messageNotificationCell.notificationTextLabel.text = description
+				sessionNotificationCell.notificationTextLabel.text = description
 			}
 
 			if let type = notifications?.type, type != "", let notificationType = NotificationType(rawValue: type) {
@@ -365,77 +364,3 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 		return options
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-//// MARK: - UITableViewDataSource
-//extension NotificationsViewController: UITableViewDataSource {
-//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//		if let notificationsCount = notifications?.count {
-//			return notificationsCount
-//		}
-//		return 0
-//	}
-//
-//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//	let userNotificationCell:UserNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "UserNotificationCell", for: indexPath as IndexPath) as! UserNotificationCell
-//	let notificationCell:NotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath as IndexPath) as! NotificationCell
-//
-//	if let time = notifications?[indexPath.row]["time_string"].stringValue, time != "" {
-//		userNotificationCell.notificationDate.text = time
-//		notificationCell.notificationDate.text = time
-//	} else {
-//		userNotificationCell.notificationDate.text = ""
-//		notificationCell.notificationDate.text = ""
-//	}
-//
-//	if let description = notifications?[indexPath.row]["string"].stringValue, description != "" {
-//		userNotificationCell.notificationTextLable.text = description
-//		notificationCell.notificationTextLable.text = description
-//	} else {
-//		userNotificationCell.notificationTextLable.text = ""
-//		notificationCell.notificationTextLable.text = ""
-//	}
-//
-//	if let notificationType = notifications?[indexPath.row]["type"].stringValue, notificationType != "" {
-//		let type: NotifcationType = NotifcationType(rawValue: notificationType)!
-//
-//		switch type {
-//		case .session:
-//			notificationCell.notificationType.text = "NEW SESSION"
-//			notificationCell.notificationIcon.image = UIImage(named: "session_icon")
-//
-//			return notificationCell
-//		case .follower:
-//			userNotificationCell.notificationType.text = "NEW MESSAGE"
-//			userNotificationCell.notificationIcon.image = UIImage(named: "message_icon")
-//			if let title = notifications?[indexPath.row]["data"]["follower_name"].stringValue, title != "" {
-//				userNotificationCell.notificationTitleLabel.text = title
-//			} else {
-//				userNotificationCell.notificationTitleLabel.text = ""
-//
-//			}
-//
-//			if let avatar = notifications?[indexPath.row]["data"]["follower_avatar"].stringValue, avatar != "" {
-//				let avatarUrl = URL(string: avatar)
-//				let resource = ImageResource(downloadURL: avatarUrl!)
-//				userNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
-//			} else {
-//				userNotificationCell.notificationProfileImage.image = UIImage(named: "")
-//			}
-//		default:
-//			break
-//		}
-//	}
-//
-//	return userNotificationCell
-//	}
-//}

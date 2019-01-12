@@ -17,13 +17,15 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
 
-		self.tableView.emptyDataSetDelegate = self
-		self.tableView.emptyDataSetSource = self
+		// Setup table view
+		tableView.dataSource = self
+        tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
 
+		// Setup empty table view
+		tableView.emptyDataSetDelegate = self
+		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No badges found!"))
 				.shouldDisplay(true)
@@ -31,8 +33,6 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 				.isTouchAllowed(true)
 				.isScrollAllowed(false)
 		}
-
-		tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Table view data source

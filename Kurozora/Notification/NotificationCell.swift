@@ -18,7 +18,7 @@ class MessageNotificationCell: SwipeTableViewCell {
     // Body
     @IBOutlet weak var notificationProfileImage: UIImageView!
     @IBOutlet weak var notificationTitleLabel: UILabel!
-    @IBOutlet weak var notificationTextLable: UILabel!
+    @IBOutlet weak var notificationTextLabel: UILabel!
 }
 
 class SessionNotificationCell: SwipeTableViewCell {
@@ -28,9 +28,9 @@ class SessionNotificationCell: SwipeTableViewCell {
     @IBOutlet weak var notificationIcon: UIImageView!
     
     // Body
-    @IBOutlet weak var notificationTextLable: UILabel!
+	@IBOutlet weak var notificationTextLabel: UILabel!
 }
 
 class TitleNotificationCell: UITableViewCell {
-	@IBOutlet weak var notificationTitleLable: UILabel!
+	@IBOutlet weak var notificationTitleLabel: UILabel!
 }

@@ -11,7 +11,7 @@ import SwiftyJSON
 import IQKeyboardManagerSwift
 
 protocol KCommentEditorViewDelegate: class {
-	func updateReplies(with content: String)
+	func updateReplies(with threadRepliesElement: ThreadRepliesElement)
 }
 
 class KCommentEditorView: UIViewController {
@@ -75,11 +75,25 @@ class KCommentEditorView: UIViewController {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
 			guard let comment = commentTextView.text, comment != "" else { return }
 			guard let threadID = forumThread?.id else { return }
-			Service.shared.postReply(withComment: comment, forThread: threadID) { (success) in
-				if success {
-					self.delegate?.updateReplies(with: comment)
-					self.dismiss(animated: true, completion: nil)
+			Service.shared.postReply(withComment: comment, forThread: threadID) { (replyID) in
+				DispatchQueue.main.async {
+					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
+					let replyJSON: JSON = [
+						"id": replyID,
+						"posted_at": postedAt,
+						"user": [
+							"id": User.currentID()!,
+							"username": User.username()!,
+							"avatar": User.currentUserAvatar()!
+						],
+						"score": 0,
+						"content": comment
+						]
+					if let threadRepliesElement = try? ThreadRepliesElement(json: replyJSON) {
+						self.delegate?.updateReplies(with: threadRepliesElement)
+					}
 				}
+				self.dismiss(animated: true, completion: nil)
 			}
 		}
 	}

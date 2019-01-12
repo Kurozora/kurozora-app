@@ -85,25 +85,26 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 		guard let content = richEditorView?.contentHTML else { return }
 		guard let sectionID = sectionID else { return }
 
-		let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-		let contentTeaser = richEditorView?.text
-		let forumThreadJSON = [
-			"title": titleTextField.text!,
-			"content_teaser": contentTeaser!,
-			"locked": false,
-			"poster_user_id": User.currentID()!,
-			"poster_username": User.username()!,
-			"creation_date": creationDate,
-			"reply_count": 0,
-			"score": 0
-		] as JSON
-		guard let forumThreadsElement = try? ForumThreadsElement(json: forumThreadJSON) else { return }
-
-		Service.shared.postThread(withTitle: title, content: content, forSection: sectionID, withSuccess: { (success) in
-			if success {
-				self.delegate?.updateThreadsList(with: forumThreadsElement)
-				self.dismiss(animated: true, completion: nil)
+		Service.shared.postThread(withTitle: title, content: content, forSection: sectionID, withSuccess: { (threadID) in
+			DispatchQueue.main.async {
+				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
+				let contentTeaser = self.richEditorView?.text
+				let forumThreadJSON: JSON = [
+					"id": threadID,
+					"title": self.titleTextField.text!,
+					"content_teaser": contentTeaser!,
+					"locked": false,
+					"poster_user_id": User.currentID()!,
+					"poster_username": User.username()!,
+					"creation_date": creationDate,
+					"reply_count": 0,
+					"score": 0
+					]
+				if let forumThreadsElement = try? ForumThreadsElement(json: forumThreadJSON) {
+					self.delegate?.updateThreadsList(with: forumThreadsElement)
+				}
 			}
+			self.dismiss(animated: true, completion: nil)
 		})
 	}
 

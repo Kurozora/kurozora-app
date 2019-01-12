@@ -48,8 +48,8 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         // Show genre
-        if let genre = shows?[indexPath.row].genre {
-            showCell.genreLabel.text = genre
+        if let genres = shows?[indexPath.row].genres {
+            showCell.genreLabel.text = genres.first?.name
         }
         
         // Show score

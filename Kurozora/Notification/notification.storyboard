@@ -71,7 +71,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="notificationTitleLable" destination="PRo-PX-3Sg" id="jDB-Kb-Qgr"/>
+                                            <outlet property="notificationTitleLabel" destination="PRo-PX-3Sg" id="eRl-ws-LQs"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageNotificationCell" rowHeight="108" id="x7c-Bl-L9V" customClass="MessageNotificationCell" customModule="Kurozora" customModuleProvider="target">
@@ -126,7 +126,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncV-kl-KEP" userLabel="Username Lable" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncV-kl-KEP" userLabel="Username Label" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="60" y="10" width="47" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -282,7 +282,7 @@
                                             <outlet property="notificationDate" destination="fzO-kT-W8F" id="ONx-Am-PqX"/>
                                             <outlet property="notificationIcon" destination="hVj-vt-Erq" id="klo-LO-88b"/>
                                             <outlet property="notificationProfileImage" destination="vai-jQ-EfR" id="Waa-7h-gqj"/>
-                                            <outlet property="notificationTextLable" destination="4vg-AS-iID" id="RyS-aX-2pl"/>
+                                            <outlet property="notificationTextLabel" destination="4vg-AS-iID" id="vif-pA-GCe"/>
                                             <outlet property="notificationTitleLabel" destination="ncV-kl-KEP" id="dob-kD-07K"/>
                                             <outlet property="notificationType" destination="Van-Qj-Dvp" id="0LF-Au-BBJ"/>
                                         </connections>
@@ -430,7 +430,7 @@
                                         <connections>
                                             <outlet property="notificationDate" destination="IUm-FO-DpJ" id="g2t-yM-Hgg"/>
                                             <outlet property="notificationIcon" destination="6oF-J5-hBq" id="rDF-Rc-TPp"/>
-                                            <outlet property="notificationTextLable" destination="fQ9-BQ-RkH" id="jmQ-IY-ZGZ"/>
+                                            <outlet property="notificationTextLabel" destination="fQ9-BQ-RkH" id="peZ-EW-GAf"/>
                                             <outlet property="notificationType" destination="m9J-Wa-oXf" id="PhN-Ev-2IL"/>
                                         </connections>
                                     </tableViewCell>

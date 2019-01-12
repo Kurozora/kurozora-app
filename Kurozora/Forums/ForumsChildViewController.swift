@@ -22,8 +22,8 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 	var threadOrder: String?
 
 	// Pagination
-	var totalPages: Int?
-	var pageNumber: Int?
+	var totalPages = 0
+	var pageNumber = 0
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -47,8 +47,10 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		fetchThreads()
         
         // Setup table view
-        tableView.delegate = self
         tableView.dataSource = self
+		tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedSectionHeaderHeight = 0
         
         // Setup empty table view
         tableView.emptyDataSetDelegate = self
@@ -60,15 +62,13 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 				.isTouchAllowed(true)
 				.isScrollAllowed(true)
         }
-
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedSectionHeaderHeight = 0
     }
 
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
 		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		pageNumber = 0
 		fetchThreads()
 	}
 
@@ -78,9 +78,22 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		guard let sectionID = sectionID else { return }
 		if let _ = threadOrder { } else { threadOrder = "top" }
 
-		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: 0, withSuccess: { (threads) in
+		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: pageNumber, withSuccess: { (threads) in
 			DispatchQueue.main.async {
-				self.forumThreads = threads?.threads
+				if let threadPages = threads?.threadPages {
+					self.totalPages = threadPages
+				}
+
+				if self.pageNumber == 0 {
+					self.forumThreads = threads?.threads
+					self.pageNumber += 1
+				} else if self.pageNumber <= self.totalPages-1 {
+					for forumThreadElement in (threads?.threads)! {
+						self.forumThreads?.append(forumThreadElement)
+					}
+					self.pageNumber += 1
+				}
+
 				self.tableView.reloadData()
 				self.refreshControl.endRefreshing()
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
@@ -140,17 +153,23 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		// Share thread action
 		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			if let forumCell = forumCell {
-				let activityVC = UIActivityViewController(activityItems: [forumCell], applicationActivities: [])
+				var shareText: String!
+				guard let threadID = forumThread?.id else { return }
+
+				if let title = forumCell.titleLabel.text {
+					shareText = "https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"
+				} else {
+					shareText = "https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"
+				}
+
+				let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 				if let popoverController = activityVC.popoverPresentationController {
 					popoverController.sourceView = self.view
 					popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
 					popoverController.permittedArrowDirections = []
 				}
-
-				if !(self.navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
-					self.present(activityVC, animated: true, completion: nil)
-				}
+				self.present(activityVC, animated: true, completion: nil)
 			}
 		}))
 
@@ -252,6 +271,16 @@ extension ForumsChildViewController: UITableViewDelegate {
 			performSegue(withIdentifier: "ThreadSegue", sender: forumThreadID)
 		}
 	}
+
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let numberOfRows = tableView.numberOfRows()
+
+		if indexPath.row == numberOfRows-1 {
+			if pageNumber <= totalPages-1 {
+				fetchThreads()
+			}
+		}
+	}
 }
 
 // MARK: - ForumCellDelegate
@@ -280,7 +309,13 @@ extension ForumsChildViewController: ForumCellDelegate {
 
 extension ForumsChildViewController: KRichTextEditorControllerViewDelegate {
 	func updateThreadsList(with thread: ForumThreadsElement) {
-		forumThreads?.prepend(thread)
-		tableView.reloadData()
+		DispatchQueue.main.async {
+			if self.forumThreads == nil {
+				self.forumThreads = [thread]
+			} else {
+				self.forumThreads?.prepend(thread)
+			}
+			self.tableView.reloadData()
+		}
 	}
 }

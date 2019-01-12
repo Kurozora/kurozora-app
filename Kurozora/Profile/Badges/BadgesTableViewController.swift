@@ -16,12 +16,14 @@ class BadgesTableViewController: UITableViewController, EmptyDataSetSource, Empt
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		// Setup table view
 		tableView.dataSource = self
 		tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
 
+		// Setup empty table view
 		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetDelegate = self
-
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No badges found!"))
 				.shouldDisplay(true)
@@ -29,8 +31,6 @@ class BadgesTableViewController: UITableViewController, EmptyDataSetSource, Empt
 				.isTouchAllowed(true)
 				.isScrollAllowed(false)
 		}
-
-		tableView.rowHeight = UITableView.automaticDimension
     }
 
     // MARK: - Table view data source

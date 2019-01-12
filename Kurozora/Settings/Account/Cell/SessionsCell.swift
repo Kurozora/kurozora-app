@@ -11,13 +11,10 @@ import SCLAlertView
 
 class SessionsCell: UITableViewCell {
     @IBOutlet weak var bubbleView: DesignableView!
-    @IBOutlet weak var ipAddressLable: UILabel!
-    @IBOutlet weak var ipAddressValueLable: UILabel!
-    @IBOutlet weak var deviceTypeLable: UILabel!
-    @IBOutlet weak var deviceTypeValueLable: UILabel!
-    @IBOutlet weak var dateLable: UILabel!
-    @IBOutlet weak var dateValueLable: UILabel!
+    @IBOutlet weak var ipAddressValueLabel: UILabel!
+    @IBOutlet weak var deviceTypeValueLabel: UILabel!
+    @IBOutlet weak var dateValueLabel: UILabel!
     @IBOutlet weak var removeSessionButton: DesignableButton!
     
-    @IBOutlet weak var extraLable: UILabel!
+    @IBOutlet weak var extraLabel: UILabel!
 }
