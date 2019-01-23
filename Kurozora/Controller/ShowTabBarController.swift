@@ -14,6 +14,9 @@ class ShowTabBarController: ESTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		tabBar.itemPositioning = .centered
+		tabBar.backgroundColor = .clear
+
         let storyboard = UIStoryboard(name: "details", bundle: nil)
 
         // Instantiate views

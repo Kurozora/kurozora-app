@@ -111,12 +111,9 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 
 		if text != "" {
 			switch searchScope {
-			case .anime:
+			case .anime, .forum, .user:
 				search(forText: text, searchScope: selectedScope)
 			case .myLibrary: break
-			case .forum: break
-			case .user:
-				search(forText: text, searchScope: selectedScope)
 			}
 		}
 	}
@@ -131,20 +128,24 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 
 		guard let searchScope = SearchScope(rawValue: searchScope) else { return }
 
-		switch searchScope {
-		case .anime:
-			if text != "" {
+		if text != "" {
+			switch searchScope {
+			case .anime:
 				Service.shared.search(forShow: text) { (results) in
 					DispatchQueue.main.async {
 						self.results = results
 						self.collectionView.reloadData()
 					}
 				}
-			}
-		case .myLibrary: break
-		case .forum: break
-		case .user:
-			if text != "" {
+			case .myLibrary: break
+			case .forum:
+				Service.shared.search(forThread: text) { (results) in
+					DispatchQueue.main.async {
+						self.results = results
+						self.collectionView.reloadData()
+					}
+				}
+			case .user:
 				Service.shared.search(forUser: text) { (results) in
 					DispatchQueue.main.async {
 						self.results = results
@@ -201,6 +202,18 @@ class SearchResultsViewController: UIViewController, UISearchResultsUpdating {
 				let kurozoraNavigationController = segue.destination as? KurozoraNavigationController
 				let profileViewController = kurozoraNavigationController?.topViewController as? ProfileViewController
 				profileViewController?.otherUserID = sender
+			}
+		}  else if segue.identifier == "ThreadSegue" {
+			// Show detail for thread cell
+			if let sender = sender as? Int {
+				if let kurozoraNavigationController = segue.destination as? KurozoraNavigationController {
+					let storyboard = UIStoryboard(name: "forums", bundle: nil)
+					let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as! ThreadViewController
+					threadViewController.isDismissEnabled = true
+					threadViewController.forumThreadID = sender
+
+					kurozoraNavigationController.pushViewController(threadViewController)
+				}
 			}
 		}
 	}
@@ -312,16 +325,10 @@ extension SearchResultsViewController: UICollectionViewDataSource {
 					searchThreadCell.contentTeaserLabel.text = contentTeaser
 				}
 
-				if let locked = results?[indexPath.row].locked {
-					if locked {
-						searchThreadCell.loackedImageView.image = #imageLiteral(resourceName: "lock_icon")
-					} else {
-						searchThreadCell.loackedImageView.isHidden = true
-						searchThreadCell.loackedImageView.alpha = 0
-						searchThreadCell.loackedImageView.width = 0
-						searchThreadCell.lockedImageViewHorizontalToTitleLabel.constant = 0
-//						searchThreadCell.layoutSubviews()
-					}
+				if let locked = results?[indexPath.row].locked, locked {
+					searchThreadCell.lockLabel.isHidden = false
+				} else {
+					searchThreadCell.lockLabel.isHidden = true
 				}
 
 				return searchThreadCell

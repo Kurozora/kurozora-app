@@ -11,6 +11,5 @@ import UIKit
 class SearchThreadCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var contentTeaserLabel: UILabel!
-	@IBOutlet weak var loackedImageView: UIImageView!
-	@IBOutlet weak var lockedImageViewHorizontalToTitleLabel: NSLayoutConstraint!
+	@IBOutlet weak var lockLabel: UILabel!
 }

@@ -16,8 +16,7 @@ import SwiftyJSON
 import UIImageColors
 //import XCDYouTubeKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
-
+class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     enum SelectedFeed: Int {
         case Feed = 0
         case Popular
@@ -77,9 +76,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
-//			if otherUserID != User.currentID() {
-//				editProfileButton.isHidden = true
-//			}
 		} else if let currentID = User.currentID(), String(currentID) != "" {
 			fetchUserDetails(with: currentID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
@@ -92,8 +88,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 			tableView.addSubview(refreshControl)
 		}
 
-		refreshControl.tintColor = UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.tintColor = #colorLiteral(red: 1, green: 0.6823529412, blue: 0.1176470588, alpha: 1)
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
 		// Fetch posts
@@ -116,9 +112,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		}
     }
 
+	// MARK: - Functions
     @objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchPosts()
 	}
 
@@ -126,92 +123,21 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.reloadData()
 		self.refreshControl.endRefreshing()
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let postCount = posts?.count, postCount != 0 {
-			return postCount
-		}
-		return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let timelinePostCell:TimelinePostCell = tableView.dequeueReusableCell(withIdentifier: "TimelinePostCell") as! TimelinePostCell
 
-		// Profile Image
-		if let profileImage = posts?[indexPath.row]["profile_image"].stringValue, profileImage != "" {
-			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
-			timelinePostCell.profileImageView.kf.indicatorType = .activity
-			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
-		}else {
-			timelinePostCell.profileImageView.image = #imageLiteral(resourceName: "default_avatar")
-		}
+//    override public func fetchPosts() {
+//        super.fetchPosts()
+//        let username = self.username ?? user!.kurozoraUsername
+//        fetchUserDetails(username: username)
+//    }
 
-		// Username
-		if let username = posts?[indexPath.row]["username"].stringValue, username != "" {
-			timelinePostCell.userNameLabel.text = username
-		} else {
-			timelinePostCell.userNameLabel.text = "Unknown"
-		}
-
-		// Other Username
-		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
-			timelinePostCell.otherUserNameLabel.text = otherUsername
-
-			timelinePostCell.userSeparatorLabel.isHidden = false
-			timelinePostCell.otherUserNameLabel.isHidden = false
-		} else {
-			timelinePostCell.otherUserNameLabel.isHidden = true
-			timelinePostCell.userSeparatorLabel.isHidden = true
-		}
-
-		// Post
-		if let postText = posts?[indexPath.row]["post"].stringValue, postText != "" {
-			timelinePostCell.postTextView.text = postText
-		} else {
-			timelinePostCell.postTextView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-		}
-
-		// Likes
-		if let hearts = posts?[indexPath.row]["likes"].intValue, hearts != 0 {
-			timelinePostCell.heartButton.setTitle(" \(hearts)", for: .normal)
-		} else {
-			timelinePostCell.heartButton.setTitle("", for: .normal)
-		}
-
-		// Comments
-		if let comments = posts?[indexPath.row]["comments"].intValue, comments != 0 {
-			timelinePostCell.commentButton.setTitle(" \(comments)", for: .normal)
-		} else {
-			timelinePostCell.commentButton.setTitle("", for: .normal)
-		}
-
-		// ReShare
-		if let share = posts?[indexPath.row]["shares"].intValue, share != 0 {
-			timelinePostCell.reshareButton.setTitle(" \(share)", for: .normal)
-		} else {
-			timelinePostCell.reshareButton.setTitle("", for: .normal)
-		}
-
-        return timelinePostCell
-    }
-
-    func sizeHeaderToFit() {
+	func sizeHeaderToFit() {
 		guard let header = tableView.tableHeaderView else {
 			return
 		}
 		let height = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
 		header.frame.size.height = height
 		tableView.tableHeaderView = header
-    }
-
-    // MARK: - Functions
-	
-//    override public func fetchPosts() {
-//        super.fetchPosts()
-//        let username = self.username ?? user!.kurozoraUsername
-//        fetchUserDetails(username: username)
-//    }
+	}
 
 	private func fetchUserDetails(with id: Int) {
         Service.shared.getUserProfile(id, withSuccess: { (user) in
@@ -226,14 +152,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     private func updateViewWithUser(_ user: User?) {
         // Setup username
-        if let username = user?.profile?.username, username != "" {
+        if let username = user?.user?.username, username != "" {
             usernameLabel.text = username
 		} else {
 			usernameLabel.text = "Unknown"
 		}
         
         // Setup avatar
-        if let avatar = user?.profile?.avatar, avatar != "" {
+        if let avatar = user?.user?.avatar, avatar != "" {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
@@ -246,7 +172,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 
         // Setup banner
-        if let banner = user?.profile?.banner, banner != "" {
+        if let banner = user?.user?.banner, banner != "" {
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
@@ -265,7 +191,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup user bio
-        if let bio = user?.profile?.bio, bio != "" {
+        if let bio = user?.user?.bio, bio != "" {
             self.bioTextView.text = bio
 
 			if (self.bioTextView.frame.height < 67) {
@@ -278,11 +204,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 		}
         
         // Setup user activity
-        if let activeEnd = user?.profile?.activeEnd, activeEnd != "" {
+        if let activeEnd = user?.user?.activeEnd, activeEnd != "" {
             let timeAgo = Date.timeAgo(activeEnd)
             let activeEndFormatted = timeAgo == "Just now" ? "Active Now" : timeAgo
             
-            if let activeAgo = user?.profile?.active, String(activeAgo) != "" {
+            if let activeAgo = user?.user?.active, String(activeAgo) != "" {
                 self.activeAgo.text = activeAgo ? "Active Now" : activeEndFormatted
             }
         } else {
@@ -290,7 +216,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup post count
-        if let postCount = user?.profile?.postCount, postCount > 0 {
+        if let postCount = user?.user?.postCount, postCount > 0 {
             if postCount >= 1000 {
                 self.postsBadge.text = "" + String(format: "%.1fk", Float(postCount-49)/1000.0 )
             } else {
@@ -301,7 +227,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup reputation count
-        if let reputationCount = user?.profile?.reputationCount, reputationCount > 0 {
+        if let reputationCount = user?.user?.reputationCount, reputationCount > 0 {
             if reputationCount >= 10000 {
                 self.reputationBadge.text = "" + String(format: "%.1fk", Float(reputationCount-49)/10000.0 )
             } else {
@@ -312,13 +238,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Setup following & followers count
-        if let following = user?.profile?.followingCount, following > 0 {
+        if let following = user?.user?.followingCount, following > 0 {
             self.followingButton.setTitle("\(following) Following", for: .normal)
         } else {
             self.followingButton.setTitle("0 Following", for: .normal)
         }
         
-        if let follower = user?.profile?.followerCount, follower > 0 {
+        if let follower = user?.user?.followerCount, follower > 0 {
             self.followersButton.setTitle("\(follower) Followers", for: .normal)
         } else {
             self.followersButton.setTitle("0 Followers", for: .normal)
@@ -341,7 +267,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
         // Setup pro badge
         proBadge.isHidden = true
-        if let proBadge = user?.profile?.proBadge, String(proBadge) != "" {
+        if let proBadge = user?.user?.proBadge, String(proBadge) != "" {
             if proBadge {
                 self.proBadge.isHidden = false
                 self.proBadge.text = "PRO"
@@ -349,7 +275,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 
 		// Setup badges
-		if let badges = user?.profile?.badges, badges != [] {
+		if let badges = user?.user?.badges, badges != [] {
 			for badge in badges {
 				self.tagBadge.setTitle(badge["text"].stringValue, for: .normal)
 				self.tagBadge.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
@@ -515,7 +441,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	}
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
-        if let avatar = user?.profile?.avatar, avatar != ""  {
+        if let avatar = user?.user?.avatar, avatar != ""  {
             presentPhotoViewControllerWith(url: avatar)
         } else {
             presentPhotoViewControllerWith(string: "default_avatar")
@@ -523,7 +449,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
-        if let banner = user?.profile?.banner, banner != "" {
+        if let banner = user?.user?.banner, banner != "" {
             presentPhotoViewControllerWith(url: banner)
         } else {
             presentPhotoViewControllerWith(string: "default_banner")
@@ -544,9 +470,85 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "BadgeSegue" {
 			let vc = segue.destination as! BadgesTableViewController
-			vc.badges = user?.profile?.badges
+			vc.badges = user?.user?.badges
 		}
 	}
+}
+
+// MARK: - UITableViewDataSource
+extension ProfileViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if let postCount = posts?.count, postCount != 0 {
+			return postCount
+		}
+		return 2
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let timelinePostCell:TimelinePostCell = tableView.dequeueReusableCell(withIdentifier: "TimelinePostCell") as! TimelinePostCell
+
+		// Profile Image
+		if let profileImage = posts?[indexPath.row]["profile_image"].stringValue, profileImage != "" {
+			let profileImage = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
+			timelinePostCell.profileImageView.kf.indicatorType = .activity
+			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		}else {
+			timelinePostCell.profileImageView.image = #imageLiteral(resourceName: "default_avatar")
+		}
+
+		// Username
+		if let username = posts?[indexPath.row]["username"].stringValue, username != "" {
+			timelinePostCell.userNameLabel.text = username
+		} else {
+			timelinePostCell.userNameLabel.text = "Unknown"
+		}
+
+		// Other Username
+		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
+			timelinePostCell.otherUserNameLabel.text = otherUsername
+
+			timelinePostCell.userSeparatorLabel.isHidden = false
+			timelinePostCell.otherUserNameLabel.isHidden = false
+		} else {
+			timelinePostCell.otherUserNameLabel.isHidden = true
+			timelinePostCell.userSeparatorLabel.isHidden = true
+		}
+
+		// Post
+		if let postText = posts?[indexPath.row]["post"].stringValue, postText != "" {
+			timelinePostCell.postTextView.text = postText
+		} else {
+			timelinePostCell.postTextView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		}
+
+		// Likes
+		if let hearts = posts?[indexPath.row]["likes"].intValue, hearts != 0 {
+			timelinePostCell.heartButton.setTitle(" \(hearts)", for: .normal)
+		} else {
+			timelinePostCell.heartButton.setTitle("", for: .normal)
+		}
+
+		// Comments
+		if let comments = posts?[indexPath.row]["comments"].intValue, comments != 0 {
+			timelinePostCell.commentButton.setTitle(" \(comments)", for: .normal)
+		} else {
+			timelinePostCell.commentButton.setTitle("", for: .normal)
+		}
+
+		// ReShare
+		if let share = posts?[indexPath.row]["shares"].intValue, share != 0 {
+			timelinePostCell.reshareButton.setTitle(" \(share)", for: .normal)
+		} else {
+			timelinePostCell.reshareButton.setTitle("", for: .normal)
+		}
+
+		return timelinePostCell
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension ProfileViewController: UITableViewDelegate {
 }
 
 // MARK: - UIImagePickerControllerDelegate

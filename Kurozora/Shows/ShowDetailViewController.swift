@@ -330,7 +330,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: AnyObject) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showID else {return}
 
 			Service.shared.addToLibrary(withStatus: value.lowercased(), showID: showID, withSuccess: { (success) in
@@ -338,7 +338,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
 				} else {
 					self.libraryStatus = value
-					self.listButton.setTitle("\(value.capitalized) ", for: .normal)
+					self.listButton.setTitle(title + " ", for: .normal)
 				}
 			})
 		})

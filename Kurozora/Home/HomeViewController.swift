@@ -19,7 +19,7 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
 
 	// Search bar controller
 	var searchResultsViewController: SearchResultsViewController?
-	let placeholderArray = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Palying Game", "Vampires"]
+	let placeholderArray = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Playing Game", "Vampires"]
 	var placeholderTimer: Timer?
 
 	// Header collection variables

@@ -27,7 +27,7 @@ class ForumThreadElement: JSONDecodable {
 	let creationDate: String?
 	let replyCount: Int?
 	let score: Int?
-	let user: UserUser?
+	let user: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
@@ -37,6 +37,6 @@ class ForumThreadElement: JSONDecodable {
 		self.creationDate = json["creation_date"].stringValue
 		self.replyCount = json["reply_count"].intValue
 		self.score = json["score"].intValue
-		self.user = try? UserUser(json: json["user"])
+		self.user = try? UserProfile(json: json["user"])
 	}
 }

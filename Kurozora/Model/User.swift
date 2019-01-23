@@ -14,43 +14,27 @@ import Kingfisher
 class User: JSONDecodable {
     let success: Bool?
 	let message: String?
-	let authToken: String?
-    
-    let id: Int?
-	let sessionID: Int?
-	let role: Int?
+
 	let rating: Double?
 	let currentlyFollowing: Bool?
-	let profile: UserProfile?
+	let user: UserProfile?
     
     required init(json: JSON) throws {
         self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
-		self.authToken = json["kuro_auth_token"].stringValue
 
-        self.id = json["user_id"].intValue
-		self.sessionID = json["session_id"].intValue
-        self.role = json["role"].intValue
 		self.rating = json["rating"].doubleValue
 		self.currentlyFollowing = json["currently_following"].boolValue
-		self.profile = try? UserProfile(json: json["profile"])
+		self.user = try? UserProfile(json: json["user"])
     }
 }
 
-// Temporary and should be removed once the server is updated with the appropriate JSON structure for consistency accross all API responses
-class UserUser: JSONDecodable {
-	let id: Int?
-	let username: String?
-	let avatar: String?
-
-	required init(json: JSON) throws {
-		self.id = json["id"].intValue
-		self.username = json["username"].stringValue
-		self.avatar = json["avatar_url"].stringValue
-	}
-}
-
 class UserProfile: JSONDecodable {
+	let id: Int?
+	let authToken: String?
+	let sessionID: Int?
+	let role: Int?
+
 	let username: String?
 	let avatar: String?
 	let banner: String?
@@ -69,6 +53,11 @@ class UserProfile: JSONDecodable {
 	let active: Bool?
 
 	required init(json: JSON) throws {
+		self.id = json["id"].intValue
+		self.authToken = json["kuro_auth_token"].stringValue
+		self.sessionID = json["session_id"].intValue
+		self.role = json["role"].intValue
+
 		self.username = json["username"].stringValue
 		self.avatar = json["avatar_url"].stringValue
 		self.banner = json["banner_url"].stringValue
@@ -183,7 +172,7 @@ extension User {
 
 	/// Returns the current user avatar from cache if available, otherwise returns default avatar
 	static func currentUserAvatar() -> UIImage? {
-		var image: UIImage?
+		var image = UIImage(named: "default_avatar")
 		let cache = ImageCache.default
 
 		cache.retrieveImage(forKey: "currentUserAvatar", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
@@ -195,9 +184,9 @@ extension User {
 				} else {
 					image = value.image
 				}
-
 			case .failure(let error):
 				print(error)
+				image = #imageLiteral(resourceName: "default_avatar")
 			}
 		}
 

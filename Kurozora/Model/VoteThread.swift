@@ -11,8 +11,10 @@ import SwiftyJSON
 
 class VoteThread: JSONDecodable {
 	let success: Bool?
+	let action: Int?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
+		self.action = json["action"].intValue
 	}
 }

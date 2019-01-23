@@ -13,19 +13,22 @@ import RichTextView
 import Kingfisher
 
 class ThreadViewController: UIViewController {
-	@IBOutlet var tableView: UITableView!
+	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var lockLabel: UILabel!
 	@IBOutlet weak var informationLabel: UILabel!
 	@IBOutlet weak var posterUsernameLabel: UIButton!
 	@IBOutlet weak var threadTitleLabel: UILabel!
 	@IBOutlet weak var richTextView: RichTextView!
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
+	@IBOutlet weak var replyButton: UIButton!
 
 	var forumThreadID: Int?
 	var forumThread: ForumThreadElement?
 	var replyID: Int?
 	var newReplyID: Int!
 	var threadInformation: String?
+	var isDismissEnabled = false
 
 	// Reply vars
 	var replies: [ThreadRepliesElement]?
@@ -42,6 +45,14 @@ class ThreadViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		// If presented modally, show a dismiss button instead of the default "back" button
+		if isDismissEnabled {
+			navigationItem.leftBarButtonItems = nil
+			let stopItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissPressed(_:)))
+			navigationItem.leftBarButtonItem = stopItem
+		}
+
+		// Fetch thread details
 		if let threadID = forumThreadID, threadID != 0 {
 			Service.shared.getDetails(forThread: threadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
@@ -55,7 +66,7 @@ class ThreadViewController: UIViewController {
 		}
 
 		// Register comment cells
-		tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentTextCell")
+		tableView.register(UINib(nibName: "ReplyCell", bundle: nil), forCellReuseIdentifier: "ReplyCell")
 
 		// Setup table view
 		tableView.dataSource = self
@@ -81,6 +92,11 @@ class ThreadViewController: UIViewController {
 	}
 
 	// MARK: - Functions
+	@objc func dismissPressed(_ sender: AnyObject) {
+		self.dismiss(animated: true, completion: nil)
+	}
+
+	// Update the thread view with the fetched details
 	func updateThreadDetails() {
 		// Set thread stats
 		if let replyCount = forumThread?.replyCount, let creationDate = forumThread?.creationDate {
@@ -101,6 +117,19 @@ class ThreadViewController: UIViewController {
 		// Set thread content
 		if let threadContent = forumThread?.content {
 			self.richTextView.update(input: threadContent, textColor: .white, completion: nil)
+		}
+
+		// Set locked state
+		if let locked = forumThread?.locked, locked {
+			self.lockLabel.isHidden = false
+			self.upVoteButton.isUserInteractionEnabled = false
+			self.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+			self.downVoteButton.isUserInteractionEnabled = false
+			self.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+			self.replyButton.isUserInteractionEnabled = false
+			self.replyButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+		} else {
+			self.lockLabel.text = ""
 		}
 	}
 
@@ -128,20 +157,46 @@ class ThreadViewController: UIViewController {
 	}
 
 	// Vote for current thread
-	func voteFor(_ threadID: Int?, vote: Int?) {
-		Service.shared.vote(forThread: threadID, vote: vote, withSuccess: { (success) in
-			if success {
-				DispatchQueue.main.async {
-					if vote == 1 {
-						self.upVoteButton.setTitleColor(UIColor(red: 86/255, green: 255/255, blue: 67/255, alpha: 1), for: .normal)
-						self.downVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
-					} else if vote == 0 {
-						self.downVoteButton.setTitleColor(UIColor(red: 255/255, green: 77/255, blue: 67/255, alpha: 1), for: .normal)
-						self.upVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
-					}
+	func vote(forThread threadID: Int?, vote: Int?) {
+		Service.shared.vote(forThread: threadID, vote: vote, withSuccess: { (action) in
+			DispatchQueue.main.async {
+				if action == 1 {
+					self.upVoteButton.setTitleColor(#colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1), for: .normal)
+					self.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == 0 {
+					self.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+					self.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == -1 {
+					self.downVoteButton.setTitleColor(#colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1), for: .normal)
+					self.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
 				}
 			}
 		})
+	}
+
+	func vote(forReply replyID: Int?, vote: Int?, replyCell: ReplyCell) {
+		Service.shared.vote(forReply: replyID, vote: vote) { (action) in
+			DispatchQueue.main.async {
+				guard let countLabel = replyCell.upVoteCountLabel.text?.int else { return }
+				if action == 1 {
+					replyCell.upVoteCountLabel.text = String(countLabel + 1)
+					replyCell.upVoteButton.setTitleColor(#colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1), for: .normal)
+					replyCell.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == 0 {
+					if replyCell.upVoteButton.titleColor(for: .normal) == #colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1) {
+						replyCell.upVoteCountLabel.text = String(countLabel - 1)
+					} else if replyCell.downVoteButton.titleColor(for: .normal) == #colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1) {
+						replyCell.upVoteCountLabel.text = String(countLabel + 1)
+					}
+					replyCell.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+					replyCell.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == -1 {
+					replyCell.upVoteCountLabel.text = String(countLabel - 1)
+					replyCell.downVoteButton.setTitleColor(#colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1), for: .normal)
+					replyCell.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				}
+			}
+		}
 	}
 
 	// MARK: - IBActions
@@ -157,17 +212,17 @@ class ThreadViewController: UIViewController {
 		}
 	}
 
-	@IBAction func upVoteButton(_ sender: UIButton) {
+	@IBAction func upVoteButtonPressed(_ sender: UIButton) {
 		guard let threadId = forumThread?.id else { return }
-		voteFor(threadId, vote: 1)
+		vote(forThread: threadId, vote: 1)
 	}
 
-	@IBAction func downVoteButton(_ sender: UIButton) {
+	@IBAction func downVoteButtonPressed(_ sender: UIButton) {
 		guard let threadId = forumThread?.id else { return }
-		voteFor(threadId, vote: 0)
+		vote(forThread: threadId, vote: 0)
 	}
 
-	@IBAction func replyButton(_ sender: UIButton) {
+	@IBAction func replyButtonPressed(_ sender: UIButton) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "CommentEditor") as? KCommentEditorView
 		vc?.delegate = self
@@ -927,45 +982,52 @@ extension ThreadViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let commentCell: CommentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTextCell", for: indexPath) as! CommentCell
+		let replyCell = tableView.dequeueReusableCell(withIdentifier: "ReplyCell", for: indexPath) as! ReplyCell
 
 		if let avatar = replies?[indexPath.section].user?.avatar, avatar != "" {
 			let avatar = URL(string: avatar)
 			let resource = ImageResource(downloadURL: avatar!)
-			commentCell.avatar.kf.indicatorType = .activity
-			commentCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			replyCell.avatar.kf.indicatorType = .activity
+			replyCell.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 		} else {
-			commentCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
+			replyCell.avatar.image = #imageLiteral(resourceName: "default_avatar")
 		}
 
 		if let username = replies?[indexPath.section].user?.username, username != "" {
-			commentCell.username?.text = username
+			replyCell.username?.text = username
 		}
 
 		if let dateTime = replies?[indexPath.section].postedAt, dateTime != "" {
-			commentCell.dateTime.text = "· \(Date.timeAgo(dateTime))"
+			replyCell.dateTime.text = "·  \(Date.timeAgo(dateTime)) ·  "
 		} else {
-			commentCell.dateTime.text = ""
+			replyCell.dateTime.text = ""
 		}
 
 		if let content = replies?[indexPath.section].content {
-			commentCell.textContent.text = content
+			replyCell.textContent.text = content
 		}
 
 		if let score = replies?[indexPath.section].score {
-			commentCell.heartButton.setTitle(" \(score)", for: .normal)
+			replyCell.upVoteCountLabel.text = "\(score)\((score < 1000) ? "" : "K")"
 		}
 
-		commentCell.delegate = self
+		if let locked = forumThread?.locked, locked {
+			replyCell.upVoteButton.isHidden = true
+			replyCell.upVoteButton.isUserInteractionEnabled = false
+			replyCell.downVoteButton.isHidden = true
+			replyCell.downVoteButton.isUserInteractionEnabled = false
+		}
 
-		return commentCell
+		replyCell.delegate = self
+
+		return replyCell
 	}
 }
 
-// MARK: - PostCellDelegate
-extension ThreadViewController: PostCellDelegate {
-	func postCellSelectedUserProfile(postCell: PostCell) {
-		if let indexPath = tableView.indexPath(for: postCell) {
+// MARK: - ReplyCellDelegate
+extension ThreadViewController: ReplyCellDelegate {
+	func replyCellSelectedUserProfile(replyCell: ReplyCell) {
+		if let indexPath = tableView.indexPath(for: replyCell) {
 			if let replierID = replies?[indexPath.section].user?.id, replierID != 0 {
 				let storyboard = UIStoryboard(name: "profile", bundle: nil)
 				let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
@@ -978,33 +1040,21 @@ extension ThreadViewController: PostCellDelegate {
 		}
 	}
 
-	func postCellSelectedComment(postCell: PostCell) {
+	func replyCellSelectedComment(replyCell: ReplyCell) {
 	}
 
-	func postCellSelectedHeart(postCell: PostCell) {
-		var vote = 1
-
-		if postCell.heartButton.titleColor(for: .normal) == #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1) {
-			vote = 1
-		} else {
-			vote = 0
+	func replyCellSelectedUpVoteButton(replyCell: ReplyCell) {
+		if let indexPath = tableView.indexPath(for: replyCell) {
+			if let replyID = replies?[indexPath.section].id, replyID != 0 {
+				vote(forReply: replyID, vote: 1, replyCell: replyCell)
+			}
 		}
+	}
 
-		if let indexPath = tableView.indexPath(for: postCell) {
-			if let replyID = replies?[indexPath.section].id, let score = replies?[indexPath.section].score, replyID != 0 {
-				Service.shared.vote(forReply: replyID, vote: vote) { (success) in
-					if success {
-						DispatchQueue.main.async {
-							if vote == 1 {
-								postCell.heartButton.setTitleColor(#colorLiteral(red: 1, green: 0.5, blue: 1, alpha: 1), for: .normal)
-								postCell.heartButton.setTitle(" \(score+1)", for: .normal)
-							} else if vote == 0 {
-								postCell.heartButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
-								postCell.heartButton.setTitle(" \(score-1)", for: .normal)
-							}
-						}
-					}
-				}
+	func replyCellSelectedDownVoteButton(replyCell: ReplyCell) {
+		if let indexPath = tableView.indexPath(for: replyCell) {
+			if let replyID = replies?[indexPath.section].id, replyID != 0 {
+				vote(forReply: replyID, vote: 0, replyCell: replyCell)
 			}
 		}
 	}

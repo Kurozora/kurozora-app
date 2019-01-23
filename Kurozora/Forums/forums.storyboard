@@ -18,7 +18,7 @@
         <!--Forums View Controller-->
         <scene sceneID="JUs-vM-oWg">
             <objects>
-                <viewController storyboardIdentifier="Forums" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mFM-Oj-KuP" userLabel="Forums View Controller" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Forums" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mFM-Oj-KuP" userLabel="Forums View Controller" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2sA-jp-LG5"/>
                         <viewControllerLayoutGuide type="bottom" id="Jvv-IQ-Yid"/>
@@ -55,7 +55,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wrm-wq-S2a">
-                        <barButtonItem key="rightBarButtonItem" title="Top" id="PAY-O1-jaB">
+                        <barButtonItem key="rightBarButtonItem" title="↑ Top" id="PAY-O1-jaB">
                             <connections>
                                 <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
                             </connections>
@@ -74,7 +74,7 @@
         <!--Forums Child View Controller-->
         <scene sceneID="KQP-FC-cJA">
             <objects>
-                <viewController storyboardIdentifier="ForumsChild" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zes-eq-i8J" customClass="ForumsChildViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForumsChild" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zes-eq-i8J" customClass="ForumsChildViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hcl-Pw-iKw"/>
                         <viewControllerLayoutGuide type="bottom" id="qRh-x9-9As"/>
@@ -83,7 +83,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="REX-2U-bbN">
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="REX-2U-bbN">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -198,6 +198,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="contentLabel" destination="OnD-TB-xXS" id="uHG-3m-G7W"/>
                                             <outlet property="downVoteButton" destination="tUl-Zs-bXf" id="tYc-lf-Xro"/>
@@ -233,7 +234,7 @@
         <!--Thread View Controller-->
         <scene sceneID="Q3h-iE-tYT">
             <objects>
-                <viewController storyboardIdentifier="Thread" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="936-Qn-eIU" customClass="ThreadViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Thread" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="936-Qn-eIU" customClass="ThreadViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xrf-SR-VNl"/>
                         <viewControllerLayoutGuide type="bottom" id="DcN-Gs-UpF"/>
@@ -242,7 +243,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-bd-KcR">
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-bd-KcR">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,14 +253,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEf-Fw-IP5">
+                                            <rect key="frame" x="7.9999999999999991" y="8" width="11.666666666666664" height="16"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
+                                            <color key="textColor" red="1" green="0.30196078430000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion ·  23h ·  3K · by " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fnv-qb-Aq3">
-                                            <rect key="frame" x="16" y="8" width="178.66666666666666" height="16"/>
+                                            <rect key="frame" x="19.666666666666671" y="8" width="178.66666666666663" height="16"/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMR-vY-uOZ">
-                                            <rect key="frame" x="194.66666666666666" y="8" width="53" height="16"/>
+                                            <rect key="frame" x="198.33333333333334" y="8" width="53" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="16" id="80m-Eg-fbV"/>
                                             </constraints>
@@ -272,20 +279,20 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora is cool biash" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cg-Pk-FXV">
-                                            <rect key="frame" x="16" y="28" width="343" height="20.333333333333329"/>
+                                            <rect key="frame" x="8" y="28" width="359" height="20.333333333333329"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-t3-apV" customClass="RichTextView" customModule="RichTextView">
-                                            <rect key="frame" x="16" y="52.333333333333336" width="343" height="123.66666666666666"/>
+                                            <rect key="frame" x="8" y="52.333333333333336" width="359" height="123.66666666666666"/>
                                             <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-PA-c6W" userLabel="Actions View">
-                                            <rect key="frame" x="16" y="180" width="343" height="44"/>
+                                            <rect key="frame" x="8" y="180" width="359" height="44"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54c-1w-rej">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="1"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="1"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="mFb-dM-yaK"/>
@@ -301,7 +308,7 @@
                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="upVoteButton:" destination="936-Qn-eIU" eventType="touchUpInside" id="R3l-nF-WYQ"/>
+                                                                <action selector="upVoteButtonPressed:" destination="936-Qn-eIU" eventType="touchUpInside" id="3ch-iI-X2K"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lG8-Y3-PnZ">
@@ -311,7 +318,7 @@
                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="downVoteButton:" destination="936-Qn-eIU" eventType="touchUpInside" id="Fwm-c3-EWj"/>
+                                                                <action selector="downVoteButtonPressed:" destination="936-Qn-eIU" eventType="touchUpInside" id="5Ds-eP-XWL"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miv-vx-w2E" userLabel="Reply Button">
@@ -321,13 +328,13 @@
                                                                 <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="replyButton:" destination="936-Qn-eIU" eventType="touchUpInside" id="b8N-eP-pDI"/>
+                                                                <action selector="replyButtonPressed:" destination="936-Qn-eIU" eventType="touchUpInside" id="qF7-3K-bLV"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-la-NXr">
-                                                    <rect key="frame" x="313" y="3.6666666666666572" width="30" height="37"/>
+                                                    <rect key="frame" x="329" y="3.6666666666666572" width="30" height="37"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="24"/>
                                                     <state key="normal" title="">
                                                         <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -359,17 +366,20 @@
                                     <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="QMR-vY-uOZ" firstAttribute="top" secondItem="Fnv-qb-Aq3" secondAttribute="top" id="8Ol-f7-MmC"/>
-                                        <constraint firstItem="0cg-Pk-FXV" firstAttribute="leading" secondItem="Fnv-qb-Aq3" secondAttribute="leading" id="BT3-TC-GsD"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="0cg-Pk-FXV" secondAttribute="trailing" constant="8" id="H1g-DH-ZKq"/>
+                                        <constraint firstItem="0cg-Pk-FXV" firstAttribute="leading" secondItem="YEf-Fw-IP5" secondAttribute="leading" id="8hJ-7B-b1t"/>
+                                        <constraint firstItem="Fnv-qb-Aq3" firstAttribute="leading" secondItem="YEf-Fw-IP5" secondAttribute="trailing" id="Ehh-pK-zF1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="0cg-Pk-FXV" secondAttribute="trailing" id="H1g-DH-ZKq"/>
                                         <constraint firstItem="ayZ-PA-c6W" firstAttribute="trailing" secondItem="pXa-t3-apV" secondAttribute="trailing" id="Hw7-1F-Prf"/>
                                         <constraint firstItem="Llo-SE-h9g" firstAttribute="top" secondItem="ayZ-PA-c6W" secondAttribute="bottom" id="Jhe-MO-nCx"/>
+                                        <constraint firstItem="YEf-Fw-IP5" firstAttribute="leading" secondItem="BW8-w8-UAG" secondAttribute="leadingMargin" id="ODE-Tq-v19"/>
                                         <constraint firstItem="0cg-Pk-FXV" firstAttribute="top" secondItem="Fnv-qb-Aq3" secondAttribute="bottom" constant="4" id="SMb-Mi-Vye"/>
                                         <constraint firstItem="ayZ-PA-c6W" firstAttribute="top" secondItem="pXa-t3-apV" secondAttribute="bottom" constant="4" id="Y8t-ur-LVl"/>
+                                        <constraint firstItem="Fnv-qb-Aq3" firstAttribute="top" secondItem="YEf-Fw-IP5" secondAttribute="top" id="YFx-5P-1UQ"/>
                                         <constraint firstItem="Llo-SE-h9g" firstAttribute="leading" secondItem="BW8-w8-UAG" secondAttribute="leading" id="dhb-bG-Nfc"/>
                                         <constraint firstItem="QMR-vY-uOZ" firstAttribute="leading" secondItem="Fnv-qb-Aq3" secondAttribute="trailing" id="enD-1R-GCz"/>
                                         <constraint firstAttribute="trailing" secondItem="Llo-SE-h9g" secondAttribute="trailing" id="iIK-aR-VEn"/>
+                                        <constraint firstItem="YEf-Fw-IP5" firstAttribute="centerY" secondItem="Fnv-qb-Aq3" secondAttribute="centerY" id="klA-Dp-oUz"/>
                                         <constraint firstItem="ayZ-PA-c6W" firstAttribute="leading" secondItem="pXa-t3-apV" secondAttribute="leading" id="lhA-rb-L3g"/>
-                                        <constraint firstItem="Fnv-qb-Aq3" firstAttribute="leading" secondItem="BW8-w8-UAG" secondAttribute="leadingMargin" constant="8" id="mEt-Me-fEI"/>
                                         <constraint firstItem="Fnv-qb-Aq3" firstAttribute="top" secondItem="BW8-w8-UAG" secondAttribute="top" constant="8" id="nP1-lG-A1E"/>
                                         <constraint firstItem="QMR-vY-uOZ" firstAttribute="centerY" secondItem="Fnv-qb-Aq3" secondAttribute="centerY" id="sqY-kd-aiq"/>
                                         <constraint firstItem="pXa-t3-apV" firstAttribute="leading" secondItem="0cg-Pk-FXV" secondAttribute="leading" id="t0R-Iv-Jwu"/>
@@ -394,7 +404,9 @@
                     <connections>
                         <outlet property="downVoteButton" destination="lG8-Y3-PnZ" id="CZr-gJ-t0k"/>
                         <outlet property="informationLabel" destination="Fnv-qb-Aq3" id="WRa-DE-uNu"/>
+                        <outlet property="lockLabel" destination="YEf-Fw-IP5" id="obX-yF-p2x"/>
                         <outlet property="posterUsernameLabel" destination="QMR-vY-uOZ" id="vjd-dX-8lN"/>
+                        <outlet property="replyButton" destination="miv-vx-w2E" id="YLw-nq-1am"/>
                         <outlet property="richTextView" destination="pXa-t3-apV" id="0XJ-nn-Xfm"/>
                         <outlet property="tableView" destination="mF4-bd-KcR" id="3wr-QX-64R"/>
                         <outlet property="threadTitleLabel" destination="0cg-Pk-FXV" id="Laj-1z-MsG"/>
@@ -408,12 +420,11 @@
         <!--Kurozora Navigation Controller-->
         <scene sceneID="zwu-RX-GZY">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zai-WY-qKn" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ForumsNavigation" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="zai-WY-qKn" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="iLq-xE-WxS">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -434,7 +445,7 @@
         <!--Kurozora Navigation Controller-->
         <scene sceneID="puM-W8-nPo">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bni-5S-KjO" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="bni-5S-KjO" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="1CM-gT-WIS">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>

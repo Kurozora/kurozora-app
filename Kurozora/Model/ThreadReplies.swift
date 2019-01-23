@@ -35,14 +35,14 @@ class ThreadReplies: JSONDecodable {
 class ThreadRepliesElement: JSONDecodable {
 	let id: Int?
 	let postedAt: String?
-	let user: UserUser?
+	let user: UserProfile?
 	let score: Int?
 	let content: String?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.postedAt = json["posted_at"].stringValue
-		self.user = try? UserUser(json: json["user"])
+		self.user = try? UserProfile(json: json["user"])
 		self.score = json["score"].intValue
 		self.content = json["content"].stringValue
 	}

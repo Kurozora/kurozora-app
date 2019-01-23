@@ -35,9 +35,11 @@ public class ForumCell: UITableViewCell {
 
 	@IBAction func upVoteButtonAction(_ sender: UIButton) {
 		forumCellDelegate?.upVoteButtonPressed(cell: self)
+		upVoteButton.animateBounce()
 	}
 
 	@IBAction func downVoteButtonAction(_ sender: UIButton) {
 		forumCellDelegate?.downVoteButtonPressed(cell: self)
+		downVoteButton.animateBounce()
 	}
 }

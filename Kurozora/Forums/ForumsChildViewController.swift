@@ -95,8 +95,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 				}
 
 				self.tableView.reloadData()
-				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 255/255, green: 174/255, blue: 30/255, alpha: 1.0)])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 
@@ -104,17 +103,18 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 	}
 
 	// Upvote/Downvote a thread
-	func voteFor(_ threadId: Int?, vote: Int?, forumCell: ForumCell?) {
-		Service.shared.vote(forThread: threadId, vote: vote, withSuccess: { (success) in
-			if success {
-				DispatchQueue.main.async {
-					if vote == 1 {
-						forumCell?.upVoteButton.setTitleColor(UIColor(red: 86/255, green: 255/255, blue: 67/255, alpha: 1), for: .normal)
-						forumCell?.downVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
-					} else if vote == 0 {
-						forumCell?.downVoteButton.setTitleColor(UIColor(red: 255/255, green: 77/255, blue: 67/255, alpha: 1), for: .normal)
-						forumCell?.upVoteButton.setTitleColor(UIColor(red: 149/255, green: 157/255, blue: 173/255, alpha: 1), for: .normal)
-					}
+	func voteFor(_ threadID: Int?, vote: Int?, forumCell: ForumCell?) {
+		Service.shared.vote(forThread: threadID, vote: vote, withSuccess: { (action) in
+			DispatchQueue.main.async {
+				if action == 1 {
+					forumCell?.upVoteButton.setTitleColor(#colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1), for: .normal)
+					forumCell?.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == 0 {
+					forumCell?.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+					forumCell?.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+				} else if action == -1 {
+					forumCell?.downVoteButton.setTitleColor(#colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1), for: .normal)
+					forumCell?.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
 				}
 			}
 		})
@@ -138,7 +138,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 
 		// Username action
 		if let username = forumThread?.posterUsername, username != "" {
-			action.addAction(UIAlertAction.init(title: username, style: .default, handler: { (_) in
+			action.addAction(UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				if let posterId = forumThread?.posterUserID, posterId != 0 {
 					let storyboard = UIStoryboard(name: "profile", bundle: nil)
 					let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
@@ -193,8 +193,8 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		}
 	}
 
-	// MARK: - IBActions
-	@IBAction func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
+	// Show cell options
+	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
 		let pointInTable = longPress.location(in: self.tableView)
 
 		if let indexPath = self.tableView.indexPathForRow(at: pointInTable) {
@@ -209,9 +209,9 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ThreadSegue" {
-			let vc = segue.destination as! ThreadViewController
-			vc.hidesBottomBarWhenPushed = true
-			vc.forumThreadID = sender as? Int
+			let threadViewController = segue.destination as? ThreadViewController
+			threadViewController?.hidesBottomBarWhenPushed = true
+			threadViewController?.forumThreadID = sender as? Int
 		}
 	}
 }
@@ -246,17 +246,24 @@ extension ForumsChildViewController: UITableViewDataSource {
 		// Set lock label
 		if let locked = forumThreads?[indexPath.row].locked, locked == true {
 			threadCell.lockLabel.isHidden = false
+			threadCell.upVoteButton.isUserInteractionEnabled = false
+			threadCell.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+			threadCell.downVoteButton.isUserInteractionEnabled = false
+			threadCell.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
 		} else {
+			let tapGesture = UITapGestureRecognizer(target: self, action: #selector(upVoteCell(_:)))
+			tapGesture.delegate = self
+			tapGesture.numberOfTapsRequired = 2
+			tapGesture.delaysTouchesBegan = true
+			threadCell.addGestureRecognizer(tapGesture)
+
 			threadCell.lockLabel.isHidden = true
 		}
 
 		// Add gesture to cell
-		if threadCell.gestureRecognizers?.count ?? 0 == 0 {
-			// if the cell currently has no gestureRecognizer
-			let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
-			threadCell.addGestureRecognizer(longPressGesture)
-			threadCell.isUserInteractionEnabled = true
-		}
+		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
+		threadCell.addGestureRecognizer(longPressGesture)
+		threadCell.isUserInteractionEnabled = true
 
 		threadCell.forumCellDelegate = self
 
@@ -278,6 +285,24 @@ extension ForumsChildViewController: UITableViewDelegate {
 		if indexPath.row == numberOfRows-1 {
 			if pageNumber <= totalPages-1 {
 				fetchThreads()
+			}
+		}
+	}
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension ForumsChildViewController: UIGestureRecognizerDelegate {
+	// Upvote cell
+	@objc func upVoteCell(_ gesture: UITapGestureRecognizer) {
+		let pointInTable = gesture.location(in: self.tableView)
+
+		if let indexPath = self.tableView.indexPathForRow(at: pointInTable) {
+			if (self.tableView.cellForRow(at: indexPath) as? ForumCell) != nil {
+				let forumCell = gesture.view as? ForumCell
+				guard let threadID = forumThreads?[indexPath.row].id else { return }
+
+				voteFor(threadID, vote: 1, forumCell: forumCell)
+				forumCell?.upVoteButton.animateBounce()
 			}
 		}
 	}
@@ -307,6 +332,7 @@ extension ForumsChildViewController: ForumCellDelegate {
 	}
 }
 
+// MARK: - KRichTextEditorControllerViewDelegate
 extension ForumsChildViewController: KRichTextEditorControllerViewDelegate {
 	func updateThreadsList(with thread: ForumThreadsElement) {
 		DispatchQueue.main.async {

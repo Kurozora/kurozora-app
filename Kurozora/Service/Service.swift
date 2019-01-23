@@ -340,7 +340,7 @@ struct Service {
 	/**
 		Search for a user
 
-		- Parameter user: ID of the user.
+		- Parameter user: The search query.
 		- Parameter successHandler: Returns an object of type SearchElement.
 	**/
 	func search(forUser user: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
@@ -849,7 +849,7 @@ struct Service {
 		- Parameter vote: The vote to submit. (0 = downvote, 1 = upvote)
 		- Parameter successHandler: Returns true if the request finishes with no errors.
 	**/
-	func vote(forThread threadID: Int?, vote: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func vote(forThread threadID: Int?, vote: Int?, withSuccess successHandler:@escaping (Int) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let vote = vote else { return }
 
@@ -865,8 +865,8 @@ struct Service {
 		]
 		request.perform(withSuccess: { vote in
 			if let success = vote.success {
-				if success {
-					successHandler(success)
+				if success, let action = vote.action {
+					successHandler(action)
 				}
 			}
 		}, failure: { error in
@@ -953,6 +953,37 @@ struct Service {
 		})
 	}
 
+	/**
+		Search for a thread
+
+		- Parameter thread: The search query.
+		- Parameter successHandler: Returns an object of type SearchElement.
+	**/
+	func search(forThread thread: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
+		guard let thread = thread else { return }
+
+		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("forum-threads/search")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.parameters = [
+			"query": thread
+		]
+		request.perform(withSuccess: { search in
+			if let success = search.success {
+				if success {
+					successHandler(search.results)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
+			}
+
+			print("Received thread search error: \(error)")
+		})
+	}
+
 // MARK: - Forum Replies
 // All forum replies related endpoints
 	/**
@@ -960,9 +991,9 @@ struct Service {
 
 		- Parameter replyID: ID of the forum reply.
 		- Parameter vote: The vote to submit. (0 = downvote, 1 = upvote)
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter successHandler: Returns an int if the request finishes with no errors.
 	**/
-	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler:@escaping (Int) -> Void) {
 		guard let replyID = replyID else { return }
 		guard let vote = vote else { return }
 
@@ -978,8 +1009,8 @@ struct Service {
 		]
 		request.perform(withSuccess: { vote in
 			if let success = vote.success {
-				if success {
-					successHandler(success)
+				if success, let action = vote.action {
+					successHandler(action)
 				}
 			}
 		}, failure: { error in
@@ -1011,21 +1042,21 @@ struct Service {
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					try? GlobalVariables().KDefaults.set(username, key: "username")
-
-					if let authToken = user.authToken {
-						try? GlobalVariables().KDefaults.set(authToken, key: "auth_token")
-					}
-
-					if let sessionID = user.sessionID {
-						try? GlobalVariables().KDefaults.set(String(sessionID), key: "session_id")
-					}
-
-					if let userId = user.id {
+					if let userId = user.user?.id {
 						try? GlobalVariables().KDefaults.set(String(userId), key: "user_id")
 					}
 
-					if let role = user.role {
+					try? GlobalVariables().KDefaults.set(username, key: "username")
+
+					if let authToken = user.user?.authToken {
+						try? GlobalVariables().KDefaults.set(authToken, key: "auth_token")
+					}
+
+					if let sessionID = user.user?.sessionID {
+						try? GlobalVariables().KDefaults.set(String(sessionID), key: "session_id")
+					}
+
+					if let role = user.user?.role {
 						try? GlobalVariables().KDefaults.set(String(role), key: "user_role")
 					}
 					successHandler(success)

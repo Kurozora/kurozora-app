@@ -69,6 +69,8 @@
 		664A066021EA2089008CF4A6 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065F21EA2089008CF4A6 /* GenreCell.swift */; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
+		665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F49C521F766CC00A7A659 /* ReplyCell.swift */; };
+		665F49C821F767E300A7A659 /* ReplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665F49C721F767E300A7A659 /* ReplyCell.xib */; };
 		66647B542084995500CF624F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66647B532084995500CF624F /* AppDelegate.swift */; };
 		66647B5D2084995E00CF624F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66647B5C2084995E00CF624F /* Assets.xcassets */; };
 		6669387021AF39A000BA9620 /* ForumThreads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumThreads.swift */; };
@@ -319,6 +321,8 @@
 		664A065F21EA2089008CF4A6 /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
+		665F49C521F766CC00A7A659 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
+		665F49C721F767E300A7A659 /* ReplyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyCell.xib; sourceTree = "<group>"; };
 		66647B502084995500CF624F /* Kurozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kurozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66647B532084995500CF624F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66647B5C2084995E00CF624F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -828,6 +832,15 @@
 			path = Genres;
 			sourceTree = "<group>";
 		};
+		665F49C421F766A400A7A659 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				665F49C521F766CC00A7A659 /* ReplyCell.swift */,
+				665F49C721F767E300A7A659 /* ReplyCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		66647B472084995500CF624F = {
 			isa = PBXGroup;
 			children = (
@@ -1002,6 +1015,7 @@
 		66A552D220A2D1F300E515DB /* Forums */ = {
 			isa = PBXGroup;
 			children = (
+				665F49C421F766A400A7A659 /* Cell */,
 				6674A0D220A5848100AAB527 /* Thread */,
 				66A552D520A2D40100E515DB /* forums.storyboard */,
 				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
@@ -1381,6 +1395,7 @@
 				660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
+				665F49C821F767E300A7A659 /* ReplyCell.xib in Resources */,
 				668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */,
 				66A552D620A2D40100E515DB /* forums.storyboard in Resources */,
 				66CF6D7120A9934F00F98375 /* profile.storyboard in Resources */,
@@ -1609,6 +1624,7 @@
 				661F9F822087282500CF4153 /* LoginViewController.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
 				66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,

@@ -64,7 +64,7 @@ class SearchElement: JSONDecodable {
 		self.avatar = json["avatar"].stringValue
 
 		// Thread search unique values
-		self.contentTeaser = json["contentTeaser"].stringValue
+		self.contentTeaser = json["content_teaser"].stringValue
 		self.locked = json["locked"].boolValue
 	}
 }

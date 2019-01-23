@@ -12,21 +12,21 @@ class KurozoraNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.isTranslucent = true
-        
         // Navigation bar
+		self.navigationBar.isTranslucent = true
         self.navigationBar.barStyle = .black
-        self.navigationBar.barTintColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
-        
+		self.navigationBar.barTintColor = #colorLiteral(red: 0.2174186409, green: 0.2404800057, blue: 0.332449615, alpha: 1)
+		self.navigationBar.backgroundColor = .clear
+
         // Navigation item
-        self.navigationBar.tintColor = UIColor.init(red: 255/255.0, green: 147/255.0, blue: 0/255.0, alpha: 1.0)
-        
+        self.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+
         // Navigation Title
-        self.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0), .font: UIFont.systemFont(ofSize: 18.0)]
+        self.navigationBar.titleTextAttributes = [.foregroundColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), .font: UIFont.systemFont(ofSize: 18.0)]
         
         if #available(iOS 11.0, *) {
             self.navigationBar.prefersLargeTitles = true
-            self.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)]
+            self.navigationBar.largeTitleTextAttributes = [.foregroundColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
         }
     }
 }

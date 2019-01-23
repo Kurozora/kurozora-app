@@ -12,7 +12,7 @@
         <!--Settings-->
         <scene sceneID="kgb-BR-Xq6">
             <objects>
-                <tableViewController id="YOh-JN-Nev" customClass="SettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="YOh-JN-Nev" customClass="SettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="oTB-JX-ESW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -808,11 +808,10 @@ Kurozora 1.0.0 (1)</string>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="GHi-cX-FjE">
             <objects>
-                <navigationController storyboardIdentifier="SettingsController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Y0h-Co-3aP">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -832,7 +831,7 @@ Kurozora 1.0.0 (1)</string>
         <!--Settings Split View Controller-->
         <scene sceneID="BXT-wn-ldl">
             <objects>
-                <splitViewController storyboardIdentifier="SettingsSplitView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="SettingsSplitView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="j9b-id-9wy" kind="relationship" relationship="masterViewController" id="VeX-CZ-O8W"/>
                         <segue destination="Zmg-c6-Igs" kind="relationship" relationship="detailViewController" id="0Im-wF-5jX"/>
@@ -1055,22 +1054,22 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVT-vU-Plr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3352.1739130434785" y="-93.080357142857139"/>
+            <point key="canvasLocation" x="-3352" y="-94"/>
         </scene>
         <!--Active Sessions-->
         <scene sceneID="kcW-tp-ujC">
             <objects>
-                <viewController storyboardIdentifier="ActiveSessions" title="Active Sessions" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9bp-OX-sDj" customClass="ManageActiveSessionsController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActiveSessions" title="Active Sessions" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9bp-OX-sDj" customClass="ManageActiveSessionsController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jgu-GW-WJC"/>
                         <viewControllerLayoutGuide type="bottom" id="qcK-7o-oVP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eFm-yf-BEa" userLabel="View">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fX-3RW">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ogi-fX-3RW">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1307,7 +1306,6 @@ Kurozora 1.0.0 (1)</string>
                             <constraint firstItem="ogi-fX-3RW" firstAttribute="leading" secondItem="eFm-yf-BEa" secondAttribute="leading" id="vjZ-LV-3yP"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="currentDeviceType" destination="Ubs-vX-Ky1" id="xiW-sR-Ysw"/>
@@ -1317,22 +1315,22 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4J-g8-zaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2645.5999999999999" y="-93.842364532019715"/>
+            <point key="canvasLocation" x="-2694" y="-94"/>
         </scene>
         <!--Legal View Controller-->
         <scene sceneID="2hQ-ZE-vCZ">
             <objects>
-                <viewController storyboardIdentifier="Legal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9RE-i7-dRr" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Legal" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9RE-i7-dRr" customClass="LegalViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qtD-6i-iFZ"/>
                         <viewControllerLayoutGuide type="bottom" id="DwO-DI-j9E"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8ER-BB-1m8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpX-We-LNt">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1U-fb-CQd">
                                         <rect key="frame" x="16" y="20" width="382" height="36"/>
@@ -1411,13 +1409,13 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mid-HG-B2G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1084.0579710144928" y="-998.4375"/>
+            <point key="canvasLocation" x="-1287" y="-998"/>
         </scene>
         <!--Theme Store-->
         <scene sceneID="mqA-DP-nd1">
             <objects>
-                <viewController storyboardIdentifier="ThemeManager" title="Theme Store" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Tu-xx-7As" customClass="ManageThemesController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="MiY-NY-SRJ">
+                <viewController storyboardIdentifier="ThemeManager" title="Theme Store" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Tu-xx-7As" customClass="ManageThemesController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="MiY-NY-SRJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1436,20 +1434,19 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VkC-q7-lks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-377" y="-1800"/>
+            <point key="canvasLocation" x="-565" y="-1800"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="j5X-bM-MYv">
             <objects>
-                <tableViewController title="Notifications" id="UNB-mq-TT2" customClass="NotificationsSettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="9If-A0-fJr">
+                <tableViewController title="Notifications" extendedLayoutIncludesOpaqueBars="YES" id="UNB-mq-TT2" customClass="NotificationsSettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="9If-A0-fJr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sectionIndexTrackingBackgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="Be9-tS-YgN">
                                 <cells>
@@ -1845,13 +1842,13 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="imn-rx-jgG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2694.202898550725" y="-1800"/>
+            <point key="canvasLocation" x="-2694" y="-1800"/>
         </scene>
         <!--Notification Grouping-->
         <scene sceneID="ORn-kr-zqd">
             <objects>
-                <collectionViewController title="Notification Grouping" id="7iN-dp-W2T" customClass="NotificationsOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="Sfb-S9-1k8">
+                <collectionViewController title="Notification Grouping" extendedLayoutIncludesOpaqueBars="YES" id="7iN-dp-W2T" customClass="NotificationsOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="Sfb-S9-1k8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1937,12 +1934,12 @@ Kurozora 1.0.0 (1)</string>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sj1-CW-Qzb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1994.2028985507247" y="-1800"/>
+            <point key="canvasLocation" x="-1994" y="-1800"/>
         </scene>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="w6f-an-USi">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iD2-d4-Qid" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="iD2-d4-Qid" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Gqs-cW-Rls">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1956,13 +1953,13 @@ Kurozora 1.0.0 (1)</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mu4-iu-Jj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1084" y="-1800"/>
+            <point key="canvasLocation" x="-1288" y="-1800"/>
         </scene>
         <!--KDefaults Manager-->
         <scene sceneID="CQl-QT-tc2">
             <objects>
-                <tableViewController storyboardIdentifier="AdminPanel" title="KDefaults Manager" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fP7-yu-Pf1" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="Mte-P5-PaM">
+                <tableViewController storyboardIdentifier="AdminPanel" title="KDefaults Manager" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fP7-yu-Pf1" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="Mte-P5-PaM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2064,7 +2061,7 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jr-fg-I8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1285" y="-93"/>
+            <point key="canvasLocation" x="-1288" y="-94"/>
         </scene>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
@@ -2074,8 +2071,13 @@ Kurozora 1.0.0 (1)</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ZA3-fv-L1X">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -2084,7 +2086,7 @@ Kurozora 1.0.0 (1)</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-zC-V9X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4020" y="-93"/>
+            <point key="canvasLocation" x="-4014" y="-94"/>
         </scene>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="z0r-0k-lRe">
@@ -2104,14 +2106,14 @@ Kurozora 1.0.0 (1)</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kt3-Xm-frN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1993" y="-93"/>
+            <point key="canvasLocation" x="-1994" y="-93"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fC1-T8-g47">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wYc-CV-Lg4" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="wYc-CV-Lg4" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="E0f-jR-LDn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="E0f-jR-LDn">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
