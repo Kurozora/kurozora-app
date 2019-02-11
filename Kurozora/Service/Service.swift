@@ -984,6 +984,41 @@ struct Service {
 		})
 	}
 
+	/**
+		Lock or unlock a thread.
+
+		- Parameter threadID: ID of the forum thread.
+		- Parameter successHandler: Returns an object of type SearchElement.
+	**/
+	func lockThread(withID threadID: Int?, lock: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+		guard let threadID = threadID else { return }
+		guard let lock = lock else { return }
+
+		let request: APIRequest<ForumThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken()
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"lock": lock
+		]
+		request.perform(withSuccess: { lock in
+			if let success = lock.success {
+				if success, let locked = lock.thread?.locked {
+					successHandler(locked)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't lock thread 😔", subTitle: responseMessage)
+			}
+
+			print("Received thread lock error: \(error)")
+		})
+	}
+
 // MARK: - Forum Replies
 // All forum replies related endpoints
 	/**

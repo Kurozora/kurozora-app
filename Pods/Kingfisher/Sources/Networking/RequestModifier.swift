@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 2016/09/05.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,14 +44,6 @@ public protocol ImageDownloadRequestModifier {
     ///            a `KingfisherError.requestError` with `.emptyRequest` as its reason will occur.
     ///
     func modified(for request: URLRequest) -> URLRequest?
-}
-
-struct NoModifier: ImageDownloadRequestModifier {
-    static let `default` = NoModifier()
-    private init() {}
-    func modified(for request: URLRequest) -> URLRequest? {
-        return request
-    }
 }
 
 /// A wrapper for creating an `ImageDownloadRequestModifier` easier.

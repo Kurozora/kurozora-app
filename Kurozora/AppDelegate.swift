@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		revealingSplashView.playHeartBeatAnimation()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+
         return true
     }
     

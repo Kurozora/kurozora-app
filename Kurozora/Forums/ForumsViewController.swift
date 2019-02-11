@@ -20,6 +20,7 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 	var sections: [ForumSectionsElement]?
 	var sectionsCount: Int?
 	var threadSorting: String?
+	var vc: KRichTextEditorControllerView?
 
     private var viewControllers = [UIViewController]()
 
@@ -63,6 +64,9 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
         })
         
         self.bar.behaviors = [.autoHide(.never)]
+
+		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+		vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
     }
     
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
@@ -127,8 +131,6 @@ class ForumsViewController: TabmanViewController, PageboyViewControllerDataSourc
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
 		vc?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
 		vc?.sectionID = currentIndex! + 1
 

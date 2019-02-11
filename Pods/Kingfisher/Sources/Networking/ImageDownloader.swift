@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/6.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -179,14 +179,16 @@ open class ImageDownloader {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: downloadTimeout)
         request.httpShouldUsePipelining = requestsUsePipelining
 
-        // Modifies request before sending.
-        guard let r = options.requestModifier.modified(for: request) else {
-            options.callbackQueue.execute {
-                completionHandler?(.failure(KingfisherError.requestError(reason: .emptyRequest)))
+        if let requestModifier = options.requestModifier {
+            // Modifies request before sending.
+            guard let r = requestModifier.modified(for: request) else {
+                options.callbackQueue.execute {
+                    completionHandler?(.failure(KingfisherError.requestError(reason: .emptyRequest)))
+                }
+                return nil
             }
-            return nil
+            request = r
         }
-        request = r
         
         // There is a possibility that request modifier changed the url to `nil` or empty.
         // In this case, throw an error.

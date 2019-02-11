@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 2018/10/11.
 //
-//  Copyright (c) 2018年 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,8 +61,10 @@ class ImageDataProcessor {
 
             let result: Result<Image, KingfisherError>
             if let image = image {
-                let imageModifier = callback.options.imageModifier
-                var finalImage = imageModifier.modify(image)
+                var finalImage = image
+                if let imageModifier = callback.options.imageModifier {
+                    finalImage = imageModifier.modify(image)
+                }
                 if callback.options.backgroundDecode {
                     finalImage = finalImage.kf.decoded
                 }

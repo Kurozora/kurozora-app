@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 15/4/6.
 //
-//  Copyright (c) 2018 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -445,11 +445,10 @@ open class ImageCache {
     {
         // No completion handler. No need to start working and early return.
         guard let completionHandler = completionHandler else { return }
-        let imageModifier = options.imageModifier
 
         // Try to check the image from memory cache first.
         if let image = retrieveImageInMemoryCache(forKey: key, options: options) {
-            let image = imageModifier.modify(image)
+            let image = options.imageModifier?.modify(image) ?? image
             callbackQueue.execute { completionHandler(.success(.memory(image))) }
         } else if options.fromMemoryCacheOrRefresh {
             callbackQueue.execute { completionHandler(.success(.none)) }
@@ -460,25 +459,27 @@ open class ImageCache {
                 // The callback queue is already correct in this closure.
                 switch result {
                 case .success(let image):
-                    guard let image = imageModifier.modify(image) else {
+
+                    guard let image = image else {
                         // No image found in disk storage.
                         completionHandler(.success(.none))
                         return
                     }
 
+                    let finalImage = options.imageModifier?.modify(image) ?? image
                     // Cache the disk image to memory.
                     // We are passing `false` to `toDisk`, the memory cache does not change
                     // callback queue, we can call `completionHandler` without another dispatch.
                     var cacheOptions = options
                     cacheOptions.callbackQueue = .untouch
                     self.store(
-                        image,
+                        finalImage,
                         forKey: key,
                         options: cacheOptions,
                         toDisk: false)
                     {
                         _ in
-                        completionHandler(.success(.disk(image)))
+                        completionHandler(.success(.disk(finalImage)))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))

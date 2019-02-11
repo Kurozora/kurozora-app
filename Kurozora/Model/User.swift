@@ -140,7 +140,7 @@ class UserProfile: JSONDecodable {
 //    }
 
 extension User {
-	enum userType: Int {
+	enum UserType: Int {
 		case normal = 0
 		case mod
 		case admin
@@ -220,10 +220,26 @@ extension User {
 	static func isAdmin() -> Bool? {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
-			guard let type: userType = User.userType(rawValue: userType) else { return false }
+			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
 
 			switch type {
 			case .admin:
+				return true
+			default:
+				return false
+			}
+		}
+		return false
+	}
+
+	/// Returns true if the current user is a mod
+	static func isMod() -> Bool? {
+		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
+			guard let userType = Int(userType) else { return false }
+			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
+
+			switch type {
+			case .mod:
 				return true
 			default:
 				return false

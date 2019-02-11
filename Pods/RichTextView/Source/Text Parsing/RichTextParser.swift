@@ -19,15 +19,18 @@ class RichTextParser {
     let latexParser: LatexParserProtocol
     let font: UIFont
     let textColor: UIColor
+    let latexTextBaselineOffset: CGFloat
 
     // MARK: - Init
 
     init(latexParser: LatexParserProtocol = LatexParser(),
          font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
-         textColor: UIColor = UIColor.black) {
+         textColor: UIColor = UIColor.black,
+         latexTextBaselineOffset: CGFloat = 0) {
         self.latexParser = latexParser
         self.font = font
         self.textColor = textColor
+        self.latexTextBaselineOffset = latexTextBaselineOffset
     }
 
     // MARK: - Utility Functions
@@ -85,13 +88,28 @@ class RichTextParser {
             }
             return (latex, nil)
         }
+        if Thread.isMainThread {
+            return self.getAttributedTextFromDown(with: input)
+        }
+
+        var output = NSAttributedString(string: "")
+        var parsingError: ParsingError?
+
+        DispatchQueue.main.sync {
+            (output, parsingError) = self.getAttributedTextFromDown(with: input)
+        }
+
+        return (output, parsingError)
+    }
+
+    private func getAttributedTextFromDown(with input: String) -> (output: NSAttributedString, error: ParsingError?) {
         guard let attributedInput = try? Down(markdownString: self.stripCodeTagsIfNecessary(from: input)).toAttributedString() else {
             return (NSAttributedString(string: input), ParsingError.attributedTextGeneration(text: input))
         }
-        var mutableAttributedInput = NSMutableAttributedString(attributedString: attributedInput)
+
+        let mutableAttributedInput = NSMutableAttributedString(attributedString: attributedInput)
         mutableAttributedInput.replaceFont(with: self.font)
-        mutableAttributedInput = mutableAttributedInput.trimmingTrailingNewlinesAndWhitespaces()
-        return (mutableAttributedInput, nil)
+        return (mutableAttributedInput.trimmingTrailingNewlinesAndWhitespaces(), nil)
     }
 
     func seperateComponents(from input: String) -> [String] {
@@ -105,7 +123,7 @@ class RichTextParser {
     }
 
     func extractLatex(from input: String) -> NSAttributedString? {
-        return self.latexParser.extractLatex(from: input, textColor: self.textColor)
+        return self.latexParser.extractLatex(from: input, textColor: self.textColor, baselineOffset: self.latexTextBaselineOffset)
     }
 
     func isTextLatex(_ text: String) -> Bool {

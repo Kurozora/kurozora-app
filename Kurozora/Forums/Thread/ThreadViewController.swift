@@ -116,7 +116,7 @@ class ThreadViewController: UIViewController {
 
 		// Set thread content
 		if let threadContent = forumThread?.content {
-			self.richTextView.update(input: threadContent, textColor: .white, completion: nil)
+			self.richTextView.update(input: threadContent, completion: nil)
 		}
 
 		// Set locked state

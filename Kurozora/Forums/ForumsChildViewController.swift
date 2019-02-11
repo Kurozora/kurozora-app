@@ -66,7 +66,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
-		guard let sectionTitle = sectionTitle?.lowercased() else {return}
+		guard let sectionTitle = sectionTitle else {return}
 		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		pageNumber = 0
 		fetchThreads()
@@ -123,6 +123,41 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 	// Populate action list
 	func actionList(forCell forumCell: ForumCell?, _ forumThread: ForumThreadsElement?) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		// Mod and Admin features actions
+		if let isAdmin = User.isAdmin(), let isMod = User.isMod() {
+			if isAdmin || isMod {
+				if let threadID = forumThread?.id, let locked = forumThread?.locked, threadID != 0 {
+					var lock = 0
+					var lockTitle = "Unlock"
+
+					if !locked {
+						lock = 1
+						lockTitle = "Lock"
+					}
+
+					action.addAction(UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+						Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+							if locked {
+								forumCell?.lockLabel.isHidden = false
+								forumCell?.upVoteButton.isUserInteractionEnabled = false
+								forumCell?.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+								forumCell?.downVoteButton.isUserInteractionEnabled = false
+								forumCell?.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 0.5), for: .normal)
+								forumThread?.locked = true
+							} else {
+								forumCell?.lockLabel.isHidden = true
+								forumCell?.upVoteButton.isUserInteractionEnabled = true
+								forumCell?.upVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+								forumCell?.downVoteButton.isUserInteractionEnabled = true
+								forumCell?.downVoteButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
+								forumThread?.locked = false
+							}
+						})
+					}))
+				}
+			}
+		}
 
 		// Upvote, downvote and reply actions
 		if let threadID = forumThread?.id, let locked = forumThread?.locked, threadID != 0 && !locked {

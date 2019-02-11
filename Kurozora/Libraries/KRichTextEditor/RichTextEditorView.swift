@@ -16,7 +16,7 @@ protocol KRichTextEditorControllerViewDelegate: class {
 	func updateThreadsList(with thread: ForumThreadsElement)
 }
 
-class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate {
 	@IBOutlet weak var richEditorView: RichEditorView?
 	@IBOutlet weak var titleTextField: UITextField!
 
@@ -177,5 +177,9 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		picker.dismiss(animated: true, completion: nil)
+	}
+
+	func webViewDidFinishLoad(_ webView: UIWebView) {
+		print("Loaded")
 	}
 }

@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (4.8.1)
   - AutoInsetter (1.3.0)
   - AXPhotoViewer (1.6.1):
     - AXPhotoViewer/Core (= 1.6.1)
@@ -19,15 +19,15 @@ PODS:
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
-  - Kingfisher (5.0.1)
+  - Kingfisher (5.1.0)
   - MarqueeLabel/Swift (3.2.0)
   - NGAParallaxMotion (1.1.0)
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
     - SnapKit (~> 4.0.1)
-  - NVActivityIndicatorView (4.5.1):
-    - NVActivityIndicatorView/Presenter (= 4.5.1)
-  - NVActivityIndicatorView/Presenter (4.5.1)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
   - Pageboy (2.6.1)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
@@ -37,7 +37,7 @@ PODS:
   - ReachabilitySwift (4.1.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
-  - RichTextView (1.0.6):
+  - RichTextView (1.0.8):
     - Down
     - iosMath
     - SnapKit
@@ -162,7 +162,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
@@ -177,17 +177,17 @@ SPEC CHECKSUMS:
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  Kingfisher: 4f771421b9208185217550528a06fd48756cb7c2
+  Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
-  NVActivityIndicatorView: ec34a7b88c51fab270004a1a1f32116e711010cd
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
-  RichTextView: 5656d08622754c759dc9fc3a3332359974079436
+  RichTextView: 076c15a1d80620a24be276b13c2781702fc44f57
   SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5

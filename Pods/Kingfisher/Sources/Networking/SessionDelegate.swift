@@ -4,7 +4,7 @@
 //
 //  Created by Wei Wang on 2018/11/1.
 //
-//  Copyright (c) 2018年 Wei Wang <onevcat@gmail.com>
+//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -89,7 +89,7 @@ class SessionDelegate: NSObject {
         return DownloadTask(sessionTask: task, cancelToken: token)
     }
 
-    func remove(_ task: URLSessionTask, acquireLock: Bool) {
+    private func remove(_ task: URLSessionTask, acquireLock: Bool) {
         guard let url = task.originalRequest?.url else {
             return
         }
@@ -98,7 +98,7 @@ class SessionDelegate: NSObject {
         if acquireLock { lock.unlock() }
     }
 
-    func task(for task: URLSessionTask) -> SessionDataTask? {
+    private func task(for task: URLSessionTask) -> SessionDataTask? {
         guard let url = task.originalRequest?.url else {
             return nil
         }
@@ -112,6 +112,8 @@ class SessionDelegate: NSObject {
     }
 
     func task(for url: URL) -> SessionDataTask? {
+        lock.lock()
+        defer { lock.unlock() }
         return tasks[url]
     }
 
@@ -165,9 +167,10 @@ extension SessionDelegate: URLSessionDataDelegate {
         task.didReceiveData(data)
 
         if let expectedContentLength = dataTask.response?.expectedContentLength, expectedContentLength != -1 {
+            let dataLength = Int64(task.mutableData.count)
             DispatchQueue.main.async {
                 task.callbacks.forEach { callback in
-                    callback.onProgress?.call((Int64(task.mutableData.count), expectedContentLength))
+                    callback.onProgress?.call((dataLength, expectedContentLength))
                 }
             }
         }
@@ -219,6 +222,29 @@ extension SessionDelegate: URLSessionDataDelegate {
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
         onReceiveSessionTaskChallenge.call((session, task, challenge, completionHandler))
+    }
+    
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        willPerformHTTPRedirection response: HTTPURLResponse,
+        newRequest request: URLRequest,
+        completionHandler: @escaping (URLRequest?) -> Void)
+    {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let sessionDataTask = self.task(for: task),
+              let redirectHandler = Array(sessionDataTask.callbacks).last?.options.redirectHandler else
+        {
+            completionHandler(request)
+            return
+        }
+        
+        redirectHandler.handleHTTPRedirection(
+            for: sessionDataTask,
+            response: response,
+            newRequest: request,
+            completionHandler: completionHandler)
     }
 
     private func onCompleted(task: URLSessionTask, result: Result<(Data, URLResponse?), KingfisherError>) {
