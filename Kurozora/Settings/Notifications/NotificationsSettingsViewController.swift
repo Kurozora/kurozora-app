@@ -48,6 +48,11 @@ class NotificationsSettingsViewController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		allowNotificationsSwitch.theme_tintColor = "Global.tintColor"
+		soundsSwitch.theme_tintColor = "Global.tintColor"
+		vibrationsSwitch.theme_tintColor = "Global.tintColor"
+		badgeSwitch.theme_tintColor = "Global.tintColor"
+
 		let groupingType = GroupingType(rawValue: UserSettings.notificationsGrouping())!
 		let bannerStyle = BannerStyle(rawValue: UserSettings.notificationsPersistent())!
 
@@ -74,6 +79,8 @@ class NotificationsSettingsViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed()
 		soundsSwitch.isOn = UserSettings.notificationsSound()
 		vibrationsSwitch.isOn = UserSettings.notificationsVibration()
@@ -89,6 +96,34 @@ class NotificationsSettingsViewController: UITableViewController {
 		if !allowNotificationsSwitch.isOn {
 			numberOfSections = 1
 			tableView.reloadData()
+		}
+	}
+
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
+		for cell in tableView.visibleCells {
+			guard let indexPath = tableView.indexPath(for: cell) else { return }
+			var rectCorner: UIRectCorner!
+			var roundCorners = true
+			let numberOfRows: Int = tableView.numberOfRows(inSection: indexPath.section)
+
+			if numberOfRows == 1 {
+				// single cell
+				rectCorner = UIRectCorner.allCorners
+			} else if indexPath.row == numberOfRows - 1 {
+				// bottom cell
+				rectCorner = [.bottomLeft, .bottomRight]
+			} else if indexPath.row == 0 {
+				// top cell
+				rectCorner = [.topLeft, .topRight]
+			} else {
+				roundCorners = false
+			}
+
+			if roundCorners {
+				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
+			}
 		}
 	}
 
@@ -123,12 +158,24 @@ class NotificationsSettingsViewController: UITableViewController {
 	}
 }
 
+// MARK: - UITableViewDataSource
 extension NotificationsSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return numberOfSections
 	}
 }
 
+// MARK: - UITableViewDelegate
+extension NotificationsSettingsViewController {
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let headerView = view as? UITableViewHeaderFooterView {
+			headerView.textLabel?.theme_textColor = "Global.textColor"
+			headerView.textLabel?.alpha = 0.50
+		}
+	}
+}
+
+// MARK: - UICollectionViewDataSource
 extension NotificationsSettingsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 3
@@ -176,5 +223,17 @@ extension NotificationsSettingsViewController: UICollectionViewDataSource {
 	}
 }
 
+// MARK: - UICollectionViewDelegate
 extension NotificationsSettingsViewController: UICollectionViewDelegate {
+}
+
+// MARK: - UICollectionViewDelegate
+extension NotificationsSettingsViewController: UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 5.0
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 5.0
+	}
 }

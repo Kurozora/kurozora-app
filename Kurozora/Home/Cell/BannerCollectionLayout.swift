@@ -114,7 +114,7 @@ class BannerCollectionLayout: UICollectionViewFlowLayout {
 	}
 }
 
-// MARK: helpers
+// MARK: - Helpers
 extension BannerCollectionLayout {
 	fileprivate func centerScaledAttribute(attribute: UICollectionViewLayoutAttributes) {
 		guard let collectionView = collectionView else {

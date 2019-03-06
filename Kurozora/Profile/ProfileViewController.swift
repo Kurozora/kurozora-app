@@ -72,6 +72,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
 
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
@@ -177,18 +178,15 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
 			userBanner.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
-            
-//			if let userBanner = userBanner.image {
-//                let colors = userBanner.getColors()
-//
-//                backgroundView.backgroundColor = colors.background
-//                segmentedControl.tintColor = colors.detail
-//                bioTextView.textColor = colors.secondary
-//                postButton.backgroundColor = colors.primary
-//            }
         } else {
             userBanner.image = #imageLiteral(resourceName: "default_banner")
         }
+
+		// Setup segmented control
+		segmentedControl.theme_tintColor = "Global.tintColor"
+
+		// Setup post button
+		postButton.theme_tintColor = "Global.tintColor"
         
         // Setup user bio
         if let bio = user?.user?.bio, bio != "" {
@@ -253,6 +251,8 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         // Setup follow button
         if otherUserID == User.currentID() || otherUserID == nil {
             followButtonView.isHidden = true
+
+			editProfileButton.theme_tintColor = "Global.tintColor"
 			editProfileButton.isHidden = false
         } else {
 			if let currentlyFollowing = user?.currentlyFollowing, currentlyFollowing == true {
@@ -260,8 +260,10 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			} else {
 				followButton.setTitle(" Follow", for: .normal)
 			}
-
+			followButton.theme_backgroundColor = "Global.tintColor"
+			followButton.theme_setTitleColor("Global.textColor", forState: .normal)
             followButtonView.isHidden = false
+
             editProfileButton.isHidden = true
         }
 

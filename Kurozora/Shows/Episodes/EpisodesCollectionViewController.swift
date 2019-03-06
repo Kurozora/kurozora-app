@@ -24,6 +24,8 @@ class EpisodesCollectionViewController: UICollectionViewController, NVActivityIn
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
         collectionView?.emptyDataSetSource = self
@@ -144,9 +146,9 @@ class EpisodesCollectionViewController: UICollectionViewController, NVActivityIn
 
 		if let episodeWatched = episodes?[indexPath.row].userDetails?.watched {
 			if episodeWatched {
-				episodeCell.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+				episodeCell.episodeWatchedButton.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), for: .normal)
 			} else {
-				episodeCell.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+				episodeCell.episodeWatchedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
 			}
 		}
 
@@ -159,10 +161,9 @@ class EpisodesCollectionViewController: UICollectionViewController, NVActivityIn
 extension EpisodesCollectionViewController: EpisodeCellDelegate {
     func episodeCellWatchedPressed(cell: EpisodeCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
-			guard let watched = episodes?[indexPath.row].userDetails?.watched else { return }
 			guard let episodeID = episodes?[indexPath.row].id else { return }
 
-			if watched {
+			if cell.episodeWatchedButton.titleColorForNormal == #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) {
 				self.watched = 0
 			} else {
                 self.watched = 1
@@ -171,15 +172,15 @@ extension EpisodesCollectionViewController: EpisodeCellDelegate {
 			Service.shared.mark(asWatched: self.watched, forEpisode: episodeID) { (success) in
 				if success {
 					if self.watched == 1 {
-						cell.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+						cell.episodeWatchedButton.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), for: .normal)
 					} else {
-						cell.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+						cell.episodeWatchedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
 					}
 				}
 			}
         }
     }
-
+}
 //    func episodeCellMorePressed(cell: EpisodeCell) {
 //        let indexPath = collectionView.indexPath(for: cell)!
 //        let episode = dataSource[indexPath.row]
@@ -201,7 +202,6 @@ extension EpisodesCollectionViewController: EpisodeCellDelegate {
 //        self.present(activityVC, animated: true, completion: nil)
 //
 //    }
-}
 //
 //extension EpisodesViewController: DropDownListDelegate {
 //    func selectedAction(sender trigger: UIView, action: String, indexPath: IndexPath) {

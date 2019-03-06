@@ -6,11 +6,12 @@
 //  Copyright © 2018 Kusa. All rights reserved.
 //
 
-import UIKit
+import KCommonKit
 import IQKeyboardManagerSwift
 import RevealingSplashView
 import Kingfisher
 import SCLAlertView
+import SwiftTheme
 import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
@@ -21,9 +22,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var authenticated = false
 	var isUnreachable = false
+	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
+		// Initialize theme
+		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
+		if let themeID = GlobalVariables().KUserDefaults?.string(forKey: "currentTheme"), themeID != "" {
+			// If themeID is an integer
+			if Int(themeID) != nil {
+				// Use a non default theme if it exists
+				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
+					ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
+				} else {
+					// Fallback to default if theme doesn't exist
+					ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
+				}
+			} else {
+				// Use one of the chosen default themes
+				ThemeManager.setTheme(plistName: themeID, path: .mainBundle)
+			}
+		} else {
+			// Fallback to default if no theme is chosen
+			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
+		}
+
+		UIApplication.shared.theme_setStatusBarStyle("UIStatusBarStyle", animated: true)
+
 		// Initialize UIWindow
 		window = UIWindow()
 		window?.makeKeyAndVisible()
@@ -50,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
 		// Global app tint color
-		self.window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		self.window?.theme_tintColor = "Global.tintColor"
         
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true

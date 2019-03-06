@@ -12,7 +12,8 @@ import Kingfisher
 
 class LargeCategoryCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
-    
+	@IBOutlet weak var separatorView: UIView!
+
     var homeViewController = HomeViewController()
     var shows: [ExploreBanner]? = nil {
         didSet {

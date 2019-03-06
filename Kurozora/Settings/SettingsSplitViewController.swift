@@ -12,6 +12,8 @@ class SettingsSplitViewController: UISplitViewController, UISplitViewControllerD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		self.preferredDisplayMode = .allVisible
 		self.delegate = self
     }

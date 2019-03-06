@@ -30,13 +30,13 @@ class EpisodeCell: UICollectionViewCell {
         switch watchStatus {
         case .Disabled:
             episodeWatchedButton.isEnabled = false
-            episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+			episodeWatchedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
         case .Watched:
             episodeWatchedButton.isEnabled = true
-            episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			episodeWatchedButton.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), for: .normal)
         case .NotWatched:
             episodeWatchedButton.isEnabled = true
-            episodeWatchedButton.tintColor = #colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1)
+            episodeWatchedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.6156862745, blue: 0.6784313725, alpha: 1), for: .normal)
         }
     }
 

@@ -1232,6 +1232,22 @@ struct Service {
 
 // MARK: - Theme Store
 	/// Get Themes
-	func getThemes(withSuccess successHandler:@escaping ([JSON]) -> Void){
+	func getThemes(withSuccess successHandler:@escaping ([ThemesElement]?) -> Void){
+		let request: APIRequest<Themes,JSONError> = tron.swiftyJSON.request("themes")
+		request.headers = headers
+		request.method = .get
+		request.perform(withSuccess: { themes in
+			if let success = themes.success {
+				if success {
+					successHandler(themes.themes)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: responseMessage)
+			}
+
+			print("Received privacy policy error: \(error)")
+		})
 	}
 }

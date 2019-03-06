@@ -25,7 +25,8 @@ class Kurozora: NSObject {
 			ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
 			// Global app tint color
-			window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+//			window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			window?.theme_tintColor = "Global.tintColor"
 
 			// IQKeyoardManager
 			IQKeyboardManager.shared.enable = true

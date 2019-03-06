@@ -35,6 +35,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

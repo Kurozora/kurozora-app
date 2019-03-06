@@ -22,6 +22,12 @@ This is a UI control for iOS and tvOS written in Swift. It shows a star rating a
 
 *Picture of binary star system of Sirius A and Sirius B by [NASA](http://www.nasa.gov), [ESA](http://www.esa.int/ESA) and G. Bacon ([STScI](http://www.stsci.edu/portal/)). Source: [spacetelescope.org](http://www.spacetelescope.org/images/heic0516b/).*
 
+## Video tutorial
+
+Thanks to Alex Nagy from [rebeloper.com](https://rebeloper.com/) for creating this amazing [video tutorial](https://www.youtube.com/watch?v=Y4A_y29cy7Q) that shows how to use and customize Cosmos from code.
+
+<a href="https://www.youtube.com/watch?v=Y4A_y29cy7Q" target="_blank"><img src='https://raw.githubusercontent.com/evgenyneu/Cosmos/master/graphics/Youtube/rebel_developer/rebel_developer_cosmos_2.jpg' width='450' alt='Cosmos rating video tutorial for Swift 4.2 (Xcode10)'></a>
+
 
 ## Setup
 
@@ -33,7 +39,7 @@ Simply add [CosmosDistrib.swift](https://github.com/evgenyneu/Cosmos/blob/master
 
 #### Setup with Carthage (iOS 8+)
 
-Alternatively, add `github "evgenyneu/Cosmos" ~> 17.0` to your Cartfile and run `carthage update`.
+Alternatively, add `github "evgenyneu/Cosmos" ~> 18.0` to your Cartfile and run `carthage update`.
 
 #### Setup with CocoaPods (iOS 8+)
 
@@ -41,7 +47,7 @@ If you are using CocoaPods add this text to your Podfile and run `pod install`.
 
     use_frameworks!
     target 'Your target name'
-    pod 'Cosmos', '~> 17.0'
+    pod 'Cosmos', '~> 18.0'
 
 
 #### Legacy Swift versions
@@ -163,6 +169,7 @@ Images for the golden star used in the demo app are available in [here](https://
 
 [This manual](https://github.com/evgenyneu/Cosmos/wiki/Using-Cosmos-settings-in-Objective-C) describes how to set/read Cosmos settings in Objective-C apps.
 
+
 ## Demo app
 
 This project includes a demo iOS app.
@@ -205,6 +212,8 @@ We would like to thank the following people for their valuable contributions.
 * [danshevluk](https://github.com/danshevluk) for adding ability to reuse settings in multiple cosmos views.
 * [xrayman](https://github.com/xrayman) for reporting a table view reusability bug and improving the table view screen of the demo app.
 * [chlumik](https://github.com/chlumik) for updating to Swift 4.2.
+* [rebeloper](https://github.com/rebeloper) for creating a [video tutorial](https://www.youtube.com/watch?v=Y4A_y29cy7Q).
+* [yuravake](https://github.com/yuravake) for adding `passTouchesToSuperview` setting.
 
 
 

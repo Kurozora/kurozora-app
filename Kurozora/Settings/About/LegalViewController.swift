@@ -9,7 +9,7 @@
 import UIKit
 import SCLAlertView
 
-class LegalViewController : UIViewController {
+class LegalViewController: UIViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var privacyPolicyTextView: UITextView!
@@ -19,9 +19,12 @@ class LegalViewController : UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+	self.navigationController?.navigationBar.isTranslucent = true
+		self.navigationController?.navigationBar.theme_barTintColor = "Global.barTintColor"
+		self.navigationController?.navigationBar.backgroundColor = .clear
+
         Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
             if let privacyPolicyText = privacyPolicy?.text {
-                self.privacyPolicyTextView.textColor = .white
                 self.privacyPolicyTextView.text = privacyPolicyText
             }
             
@@ -33,6 +36,14 @@ class LegalViewController : UIViewController {
 
 		scrollView.delegate = self
     }
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		titleLabel.theme_textColor = "Global.textColor"
+		privacyPolicyTextView.theme_textColor = "Global.textColor"
+		lastUpdatedLabel.theme_textColor = "Global.textColor"
+	}
 
 	@IBAction func doneButtonPressed(_ sender: UIButton) {
 		self.dismiss(animated: true, completion: nil)
@@ -47,7 +58,6 @@ extension LegalViewController: UIScrollViewDelegate {
 		if (!container.intersects(titleFrame)) {
 			if self.navigationTitleView.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
-					self.navigationController?.navigationBar.isTranslucent = true
 					self.titleLabel.alpha = 0
 					self.navigationTitleView.alpha = 1
 				}
@@ -55,7 +65,6 @@ extension LegalViewController: UIScrollViewDelegate {
 		} else {
 			if self.titleLabel.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
-					self.navigationController?.navigationBar.isTranslucent = false
 					self.navigationTitleView.alpha = 0
 					self.titleLabel.alpha = 1
 				}

@@ -19,76 +19,89 @@ enum SectionList: String {
     case dropped = "Dropped"
 }
 
-class LibraryViewController: TabmanViewController, PageboyViewControllerDataSource {
-    let librarySections: [SectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
-    private var viewControllers = [UIViewController]()
+class LibraryViewController: TabmanViewController {
+	lazy var viewControllers = [UIViewController]()
+	private var shadowImageView: UIImageView?
+
+	let librarySections: [SectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
+	let bar = TMBar.ButtonBar()
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		if shadowImageView == nil {
+			shadowImageView = findShadowImage(under: navigationController!.navigationBar)
+		}
+		shadowImageView?.isHidden = true
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
-        
-        // configure the bar
-        self.bar.location = .top
-        
-        self.bar.appearance = TabmanBar.Appearance({ (appearance) in
-            // State
-            appearance.state.selectedColor = .white
-            appearance.state.color =  UIColor.white.withAlphaComponent(0.5)
-            
-            // Style
-            appearance.style.background = .blur(style: .light)
-            appearance.style.showEdgeFade = true
-            
-            // Indicator
-            appearance.indicator.bounces = true
-            appearance.indicator.useRoundedCorners = true
-            appearance.indicator.color = .orange
-            
-            // Layout
-            appearance.layout.itemDistribution = .fill
-            
-        })
-        
-        self.bar.behaviors = [.autoHide(.never)]
+		view.theme_backgroundColor = "Global.backgroundColor"
+		dataSource = self
+
+		// Indicator
+		bar.indicator.weight = .light
+		bar.indicator.cornerStyle = .eliptical
+		bar.indicator.overscrollBehavior = .bounce
+		bar.indicator.tintColor = .orange
+
+		// State
+		bar.buttons.customize { (button) in
+			button.selectedTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			button.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1).withAlphaComponent(0.4)
+		}
+		bar.buttons.transitionStyle = .progressive
+
+		// Layout
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
+		bar.layout.interButtonSpacing = 24.0
+
+		// Style
+		bar.backgroundView.style = .flat(color: #colorLiteral(red: 0.2801330686, green: 0.2974318862, blue: 0.3791741133, alpha: 1))
+		bar.fadesContentEdges = true
+
+		// configure the bar
+		addBar(bar, dataSource: self, at: .top)
+		bar.isHidden = (bar.items?.count)! <= 1
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		shadowImageView?.isHidden = false
+	}
+
+	// MARK: - Functions
     private func initializeViewControllers(with count: Int) {
         let storyboard = UIStoryboard(name: "library", bundle: nil)
         var viewControllers = [UIViewController]()
-        var barItems = [Item]()
-        
+
         for index in 0 ..< count {
             let viewController = storyboard.instantiateViewController(withIdentifier: "AnimeList") as! AnimeListViewController
-            guard let sectionTitle = librarySections?[index].rawValue else {return}
+            guard let sectionTitle = librarySections?[index].rawValue else { return }
             viewController.sectionTitle = sectionTitle
-            barItems.append(Item(title: sectionTitle))
-            
+
             viewControllers.append(viewController)
         }
-        
-        self.bar.items = barItems
+
         self.viewControllers = viewControllers
     }
-    
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        guard let sectionsCount = librarySections?.count else {return 0}
-        initializeViewControllers(with: sectionsCount)
-        
-        return sectionsCount
-    }
-    
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return self.viewControllers[index]
-    }
-    
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
-    }
 
+	private func findShadowImage(under view: UIView) -> UIImageView? {
+		if view is UIImageView && view.bounds.size.height <= 1 {
+			return (view as! UIImageView)
+		}
+
+		for subview in view.subviews {
+			if let imageView = findShadowImage(under: subview) {
+				return imageView
+			}
+		}
+		return nil
+	}
+
+	// MARK: - IBActions
 	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
 		guard let title = sender.title else { return }
 		let currentSection = self.currentViewController as? AnimeListViewController
@@ -106,6 +119,35 @@ class LibraryViewController: TabmanViewController, PageboyViewControllerDataSour
 		currentSection?.libraryLayout = libraryLayout
 		currentSection?.collectionView.reloadData()
 	}
+}
+
+// MARK: - PageboyViewControllerDataSource
+extension LibraryViewController: PageboyViewControllerDataSource {
+	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+		if let sectionsCount = librarySections?.count, sectionsCount != 0 {
+			initializeViewControllers(with: sectionsCount)
+			return sectionsCount
+		}
+		return 0
+	}
+
+	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
+		return self.viewControllers[index]
+	}
+
+	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+		return nil
+	}
+}
+
+// MARK: - TMBarDataSource
+extension LibraryViewController: TMBarDataSource {
+	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+		guard let sectionTitle = librarySections?[index].rawValue else { return TMBarItem(title: "Section \(index)") }
+		return TMBarItem(title: sectionTitle)
+	}
+}
+
 
 //    let SortTypeDefault = "Library.SortType."
 //    let LayoutTypeDefault = "Library.LayoutType."
@@ -358,4 +400,3 @@ class LibraryViewController: TabmanViewController, PageboyViewControllerDataSour
 //    func libraryControllerFinishedFetchingLibrary(library: [Anime]) {
 //        updateListViewControllers(animeList: library)
 //    }
-}

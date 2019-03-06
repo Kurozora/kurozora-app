@@ -12,8 +12,9 @@ import Kingfisher
 
 class ShowCategoryCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    let homeViewController = HomeViewController()
+	@IBOutlet weak var separatorView: UIView!
+
+	let homeViewController = HomeViewController()
     var shows: [ExploreBanner]? = nil {
         didSet {
             collectionView.reloadData()
@@ -44,11 +45,14 @@ extension ShowCategoryCell: UICollectionViewDelegate, UICollectionViewDataSource
         
         // Show title
         if let title = shows?[indexPath.row].title {
+			showCell.titleLabel.theme_textColor = "Global.textColor"
             showCell.titleLabel.text = title
         }
         
         // Show genre
         if let genres = shows?[indexPath.row].genres {
+			showCell.genreLabel.theme_textColor = "Global.textColor"
+			showCell.genreLabel.alpha = 0.50
             showCell.genreLabel.text = genres.first?.name
         }
         

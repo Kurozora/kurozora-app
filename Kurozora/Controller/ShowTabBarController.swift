@@ -14,8 +14,9 @@ class ShowTabBarController: ESTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		tabBar.itemPositioning = .centered
-		tabBar.backgroundColor = .clear
+		self.tabBar.itemPositioning = .centered
+		self.tabBar.theme_tintColor = "Global.barTitleTextColor"
+		self.tabBar.theme_barTintColor = "Global.barTintColor"
 
         let storyboard = UIStoryboard(name: "details", bundle: nil)
 

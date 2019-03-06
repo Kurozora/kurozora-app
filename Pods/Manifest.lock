@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.8.1)
-  - AutoInsetter (1.3.0)
+  - AutoInsetter (1.5.0)
   - AXPhotoViewer (1.6.1):
     - AXPhotoViewer/Core (= 1.6.1)
   - AXPhotoViewer/Core (1.6.1):
@@ -10,7 +10,7 @@ PODS:
   - AXStateButton (1.1.4)
   - BottomPopup (0.4.1)
   - ColorSlider (4.3)
-  - Cosmos (17.0.0)
+  - Cosmos (18.0.1)
   - CryptoSwift (0.9.0)
   - Down (0.6.2)
   - EmptyDataSet-Swift (4.2.0)
@@ -19,8 +19,9 @@ PODS:
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
-  - Kingfisher (5.1.0)
+  - Kingfisher (5.1.1)
   - MarqueeLabel/Swift (3.2.0)
+  - MBProgressHUD (1.1.0)
   - NGAParallaxMotion (1.1.0)
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
@@ -28,7 +29,7 @@ PODS:
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
-  - Pageboy (2.6.1)
+  - Pageboy (3.0.5)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
     - ReachabilitySwift (~> 4.1.0)
@@ -64,9 +65,9 @@ PODS:
   - SwiftTheme (0.4.3)
   - SwiftyJSON (4.2.0)
   - SwipeCellKit (2.5.1)
-  - Tabman (1.10.2):
-    - AutoInsetter (~> 1.3.0)
-    - Pageboy (~> 2.6.0)
+  - Tabman (2.1.4):
+    - AutoInsetter (~> 1.5)
+    - Pageboy (~> 3.0)
   - TaskQueue (1.1.1)
   - TRON (4.2.1):
     - Alamofire (~> 4.5)
@@ -77,20 +78,21 @@ PODS:
     - Alamofire (~> 4.5)
     - SwiftyJSON (~> 4.0)
     - TRON/Core
-  - UIImageColors (2.0.0)
+  - UIImageColors (2.1.0)
   - WhatsNew (0.4.4)
 
 DEPENDENCIES:
   - AXPhotoViewer
   - BottomPopup
   - ColorSlider
-  - Cosmos (~> 17.0)
-  - EmptyDataSet-Swift (~> 4.2)
-  - ESTabBarController-swift (~> 2.6)
-  - IQKeyboardManagerSwift (~> 6)
-  - KeychainAccess (~> 3.1)
+  - Cosmos
+  - EmptyDataSet-Swift
+  - ESTabBarController-swift
+  - IQKeyboardManagerSwift
+  - KeychainAccess
   - Kingfisher
-  - NGAParallaxMotion (~> 1.1)
+  - MBProgressHUD
+  - NGAParallaxMotion
   - NotificationBannerSwift (= 1.8.0)
   - NVActivityIndicatorView
   - PusherSwift
@@ -98,12 +100,12 @@ DEPENDENCIES:
   - RichEditorView
   - RichTextView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
-  - SwifterSwift (~> 4.3)
-  - SwiftTheme (~> 0.4)
+  - SwifterSwift
+  - SwiftTheme
   - SwipeCellKit
-  - Tabman (~> 1.10)
-  - TRON (~> 4.0)
-  - UIImageColors (= 2.0.0)
+  - Tabman
+  - TRON
+  - UIImageColors
   - WhatsNew
 
 SPEC REPOS:
@@ -125,6 +127,7 @@ SPEC REPOS:
     - KeychainAccess
     - Kingfisher
     - MarqueeLabel
+    - MBProgressHUD
     - NGAParallaxMotion
     - NotificationBannerSwift
     - NVActivityIndicatorView
@@ -163,12 +166,12 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  AutoInsetter: 71875f1a8797e6aec5323ad43fe7d4e8542c7fa4
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   BottomPopup: 052f0ea8bb1110d633e66529cbb07b8599eb227d
   ColorSlider: 83fb6f174a13d7235ef100d8d5fee1f71adf2182
-  Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
+  Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
   Down: 8c59a03cb229ef28dfa774b2132da860f3dee0ac
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
@@ -177,30 +180,31 @@ SPEC CHECKSUMS:
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
+  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
-  Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
+  Pageboy: 64f8b1ac4b43eb622897425a1825223418261e2e
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
-  RevealingSplashView: 40c5a770894459736acdc95655eeba0dd30ce91c
+  RevealingSplashView: 052b2bd7c6fb3b8bb9139df458efd23c8f2633fd
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   RichTextView: 076c15a1d80620a24be276b13c2781702fc44f57
-  SCLAlertView: 9fea8ac145c0bd4989ef6abe1d3859b48f458986
+  SCLAlertView: b5c84b0f396de9b4372aee4f06c74924af0765d9
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwipeCellKit: 30fd6a4f8a8b8ac864ea389c8b4c8bac5ba5471a
-  Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
+  Tabman: f8a6a1967312077334631d2f67010fe905a545f1
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
-  UIImageColors: 3ae0150e539342697808281a3975fe5dec2024ce
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 6580a00fe4d2c70452fe30d7a4f43cc4bb30b4ee
+PODFILE CHECKSUM: d5f5b06169e77f95a8e64b19201c0c7d725ac4b3
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.7.0.beta.1

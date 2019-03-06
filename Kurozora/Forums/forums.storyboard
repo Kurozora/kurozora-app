@@ -48,18 +48,21 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="zCZ-KF-7Xm" secondAttribute="trailing" id="7P2-CL-wDm"/>
                             <constraint firstItem="Jvv-IQ-Yid" firstAttribute="top" secondItem="zCZ-KF-7Xm" secondAttribute="bottom" constant="15" id="9IQ-s8-f8M"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wrm-wq-S2a">
-                        <barButtonItem key="rightBarButtonItem" title="↑ Top" id="PAY-O1-jaB">
-                            <connections>
-                                <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="PFW-e3-Chy"/>
+                            <barButtonItem title="↑ Top" id="PAY-O1-jaB">
+                                <connections>
+                                    <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="createThreadButton" destination="zCZ-KF-7Xm" id="4t6-rb-EX4"/>
@@ -69,7 +72,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPN-KM-2C9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="418.39999999999998" y="483.25123152709364"/>
+            <point key="canvasLocation" x="281" y="483"/>
         </scene>
         <!--Forums Child View Controller-->
         <scene sceneID="KQP-FC-cJA">
@@ -85,9 +88,9 @@
                         <subviews>
                             <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="REX-2U-bbN">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexBackgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ForumCell" rowHeight="112" id="P3D-9d-SI7" customClass="ForumCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="112"/>
@@ -120,7 +123,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Should anime forums be deleted? LMAO lol skittles" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnD-TB-xXS" userLabel="Content Label">
                                                     <rect key="frame" x="30.666666666666657" y="52.666666666666664" width="329.33333333333337" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.71801143884658813" green="0.7250441312789917" blue="0.75686722993850708" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text=" 2.2K ·  3K ·  10hrs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj0-oJ-Ifj">
@@ -197,7 +200,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="lx6-Fq-58E" secondAttribute="trailing" id="vvs-Tg-6r3"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="contentLabel" destination="OnD-TB-xXS" id="uHG-3m-G7W"/>
@@ -205,6 +208,7 @@
                                             <outlet property="informationLabel" destination="Vj0-oJ-Ifj" id="P4f-ib-ziP"/>
                                             <outlet property="lockLabel" destination="mcj-Qo-eqh" id="5RF-ue-7bu"/>
                                             <outlet property="moreButton" destination="oCQ-lG-Kjt" id="svf-fu-sHr"/>
+                                            <outlet property="separatorView" destination="eI5-HY-WY0" id="Mvs-Y9-a84"/>
                                             <outlet property="titleLabel" destination="qYG-hj-alj" id="tD7-3Q-F8a"/>
                                             <outlet property="typeLabel" destination="DS1-pO-nKZ" id="T4F-j7-vBW"/>
                                             <outlet property="upVoteButton" destination="Tpj-Ie-nDp" id="hqk-op-Bgx"/>
@@ -229,7 +233,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yAa-wK-3Cn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2170.4000000000001" y="482.51231527093597"/>
+            <point key="canvasLocation" x="2178" y="483"/>
         </scene>
         <!--Thread View Controller-->
         <scene sceneID="Q3h-iE-tYT">
@@ -245,10 +249,9 @@
                         <subviews>
                             <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-bd-KcR">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="sectionIndexBackgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="BW8-w8-UAG">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -286,7 +289,6 @@
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-t3-apV" customClass="RichTextView" customModule="RichTextView">
                                             <rect key="frame" x="8" y="52.333333333333336" width="359" height="123.66666666666666"/>
-                                            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-PA-c6W" userLabel="Actions View">
                                             <rect key="frame" x="8" y="180" width="359" height="44"/>
@@ -363,7 +365,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="QMR-vY-uOZ" firstAttribute="top" secondItem="Fnv-qb-Aq3" secondAttribute="top" id="8Ol-f7-MmC"/>
                                         <constraint firstItem="0cg-Pk-FXV" firstAttribute="leading" secondItem="YEf-Fw-IP5" secondAttribute="leading" id="8hJ-7B-b1t"/>
@@ -390,7 +392,7 @@
                                 </view>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DcN-Gs-UpF" firstAttribute="top" secondItem="mF4-bd-KcR" secondAttribute="bottom" id="Whm-v6-1Cf"/>
                             <constraint firstAttribute="trailing" secondItem="mF4-bd-KcR" secondAttribute="trailing" id="bwz-IF-XCu"/>
@@ -402,12 +404,14 @@
                         <barButtonItem key="rightBarButtonItem" title="More" image="more_button_no_circle" id="34p-Uk-w0n"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionsSeparatorView" destination="54c-1w-rej" id="Iy1-wn-wBF"/>
                         <outlet property="downVoteButton" destination="lG8-Y3-PnZ" id="CZr-gJ-t0k"/>
                         <outlet property="informationLabel" destination="Fnv-qb-Aq3" id="WRa-DE-uNu"/>
                         <outlet property="lockLabel" destination="YEf-Fw-IP5" id="obX-yF-p2x"/>
                         <outlet property="posterUsernameLabel" destination="QMR-vY-uOZ" id="vjd-dX-8lN"/>
                         <outlet property="replyButton" destination="miv-vx-w2E" id="YLw-nq-1am"/>
                         <outlet property="richTextView" destination="pXa-t3-apV" id="0XJ-nn-Xfm"/>
+                        <outlet property="separatorView" destination="Llo-SE-h9g" id="wAh-1C-iO6"/>
                         <outlet property="tableView" destination="mF4-bd-KcR" id="3wr-QX-64R"/>
                         <outlet property="threadTitleLabel" destination="0cg-Pk-FXV" id="Laj-1z-MsG"/>
                         <outlet property="upVoteButton" destination="Pl0-pM-7J3" id="dCH-3G-BGG"/>
@@ -425,7 +429,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="iLq-xE-WxS">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -440,7 +444,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fcw-ca-yW5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1228" y="482.51231527093597"/>
+            <point key="canvasLocation" x="1359" y="483"/>
         </scene>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="puM-W8-nPo">
@@ -450,8 +454,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="1CM-gT-WIS">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -466,7 +469,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g2g-DN-yWm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-524" y="483.25123152709364"/>
+            <point key="canvasLocation" x="-526" y="483"/>
         </scene>
     </scenes>
     <resources>

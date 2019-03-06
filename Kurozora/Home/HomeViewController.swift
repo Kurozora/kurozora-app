@@ -37,6 +37,8 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
 		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsViewController
 
@@ -204,12 +206,18 @@ extension HomeViewController: UITableViewDataSource {
 				largeCell.shows = shows
 			}
 
+			largeCell.separatorView.theme_backgroundColor = "Global.separatorColor"
+
 			return largeCell
 		} else {
 			let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
+
 			if let shows = categories?[indexPath.section].shows {
 				showCell.shows = shows
 			}
+
+			showCell.separatorView.theme_backgroundColor = "Global.separatorColor"
+
 			return showCell
 		}
 	}
@@ -224,7 +232,7 @@ extension HomeViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, willDisplayHeaderView view:UIView, forSection: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
 			headerView.textLabel?.font = UIFont(name: "System", size: 22)
-			headerView.textLabel?.textColor = .white
+			headerView.textLabel?.theme_textColor = "Global.textColor"
 		}
 	}
 }

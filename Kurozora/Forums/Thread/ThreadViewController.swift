@@ -22,6 +22,8 @@ class ThreadViewController: UIViewController {
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
 	@IBOutlet weak var replyButton: UIButton!
+	@IBOutlet weak var separatorView: UIView!
+	@IBOutlet weak var actionsSeparatorView: UIView!
 
 	var forumThreadID: Int?
 	var forumThread: ForumThreadElement?
@@ -44,6 +46,13 @@ class ThreadViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		posterUsernameLabel.theme_setTitleColor("Global.tintColor", forState: .normal)
+		informationLabel.theme_textColor = "Global.textColor"
+		threadTitleLabel.theme_textColor = "Global.textColor"
+		separatorView.theme_backgroundColor = "Global.separatorColor"
+		actionsSeparatorView.theme_backgroundColor = "Global.separatorColor"
+		richTextView.theme_backgroundColor = "Global.backgroundColor"
 
 		// If presented modally, show a dismiss button instead of the default "back" button
 		if isDismissEnabled {
@@ -116,7 +125,7 @@ class ThreadViewController: UIViewController {
 
 		// Set thread content
 		if let threadContent = forumThread?.content {
-			self.richTextView.update(input: threadContent, completion: nil)
+			self.richTextView.update(input: threadContent, textColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1), completion: nil)
 		}
 
 		// Set locked state

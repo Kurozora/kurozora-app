@@ -13,5 +13,7 @@ class SeasonCollectionCell: UICollectionViewCell {
     @IBOutlet weak var seasonCountLabel: UILabel!
     @IBOutlet weak var seasonTitleLabel: UILabel!
     @IBOutlet weak var seasonStartDateLabel: UILabel!
-    @IBOutlet weak var seasonOverallRating: UILabel!
+	@IBOutlet weak var seasonRatingTitleLabel: UILabel!
+	@IBOutlet weak var seasonRatingLabel: UILabel!
+	@IBOutlet weak var separatorView: UIView!
 }

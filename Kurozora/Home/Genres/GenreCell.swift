@@ -10,5 +10,6 @@ import UIKit
 
 class GenreCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
-	@IBOutlet weak var nsfwLabel: UILabel!
+	@IBOutlet weak var nsfwView: UIView!
+	@IBOutlet weak var separatorView: UIView!
 }

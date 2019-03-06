@@ -31,6 +31,8 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		guard let sectionTitle = sectionTitle else {return}
 
 		// Add Refresh Control to Table View
@@ -266,11 +268,13 @@ extension ForumsChildViewController: UITableViewDataSource {
 		// Set title label
 		if let threadTitle = forumThreads?[indexPath.row].title {
 			threadCell.titleLabel.text = threadTitle
+			threadCell.titleLabel.theme_textColor = "Forums.titleTextColor"
 		}
 
 		// Set content label
 		if let threadContent = forumThreads?[indexPath.row].contentTeaser {
 			threadCell.contentLabel.text = threadContent
+			threadCell.contentLabel.theme_textColor = "Forums.contentTextColor"
 		}
 
 		// Set information label
@@ -301,6 +305,9 @@ extension ForumsChildViewController: UITableViewDataSource {
 		threadCell.isUserInteractionEnabled = true
 
 		threadCell.forumCellDelegate = self
+
+		// Separator
+		threadCell.separatorView.theme_backgroundColor = "Global.separatorColor"
 
 		return threadCell
 	}

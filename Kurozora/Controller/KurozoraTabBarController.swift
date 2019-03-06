@@ -12,8 +12,9 @@ import ESTabBarController_swift
 class KurozoraTabBarController: ESTabBarController {
     override func viewDidLoad() {
 		super.viewDidLoad()
-		tabBar.itemPositioning = .centered
-		tabBar.backgroundColor = .clear
+		self.tabBar.itemPositioning = .centered
+		self.tabBar.theme_tintColor = "Global.barTitleTextColor"
+		self.tabBar.theme_barTintColor = "Global.barTintColor"
 
         // Instantiate views
         let homeStoryboard = UIStoryboard(name: "home", bundle: nil)

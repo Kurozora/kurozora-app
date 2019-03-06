@@ -43,6 +43,8 @@ class SettingsViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		// facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
 		tableView.register(UINib(nibName: "CollapsibleSectionHeaderCell", bundle: nil), forCellReuseIdentifier: "SectionHeaderCell")
 		tableView.register(UINib(nibName: "CollapsedIconTableCell", bundle: nil), forCellReuseIdentifier: "CollapsedIconTableCell")
@@ -77,9 +79,8 @@ class SettingsViewController: UITableViewController {
 			}
 
 			if roundCorners {
-				tableView.cellForRow(at: indexPath)?.roundedCorners(rectCorner, radius: 10)
+				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
 			}
-
 		}
 	}
     
@@ -147,6 +148,7 @@ extension SettingsViewController {
 
 		let sectionCell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell") as! CollapsibleSectionHeaderCell
 		sectionCell.sectionTitleLabel.text = sectionTitles[section]
+		sectionCell.sectionTitleLabel.theme_textColor = "Global.textColor"
 		sectionCell.sectionButton.tag = section
 		sectionCell.sectionButton.addTarget(self, action: #selector(collapse(_:)), for: .touchUpInside)
 
@@ -296,4 +298,14 @@ extension SettingsViewController {
 	//            return nil
 	//        }
 	//    }
+}
+
+// MARK: - UITableViewDelegate
+extension SettingsViewController {
+	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+		if let footerView = view as? UITableViewHeaderFooterView {
+			footerView.textLabel?.theme_textColor = "Global.textColor"
+			footerView.textLabel?.alpha = 0.50
+		}
+	}
 }

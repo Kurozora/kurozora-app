@@ -6,7 +6,7 @@
     <a href="https://travis-ci.org/uias/Pageboy">
         <img src="https://travis-ci.org/uias/Pageboy.svg?branch=master" />
     </a>
-    <img src="https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat" />
+    <img src="https://img.shields.io/badge/Swift-4-orange.svg?style=flat" />
     <a href="https://cocoapods.org/pods/Pageboy">
         <img src="https://img.shields.io/cocoapods/v/Pageboy.svg" alt="CocoaPods" />
     </a>
@@ -16,9 +16,6 @@
 	<a href="https://github.com/Carthage/Carthage">
         <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
     </a>
-	<a href="https://codecov.io/gh/uias/Pageboy">
-        <img src="https://codecov.io/gh/uias/Pageboy/branch/master/graph/badge.svg" />
-    </a>
 	<a href="https://github.com/uias/Pageboy/releases">
         <img src="https://img.shields.io/github/release/uias/Pageboy.svg" />
     </a>
@@ -26,42 +23,36 @@
 
 **TL;DR** *UIPageViewController done properly.*
 
-**Pageboy** is a simple, highly informative page view controller.
-
 ## ⭐️ Features
-- [x] Simplified data source management.
-- [x] Enhanced delegation; featuring exact relative positional data and reliable updates.
+- [x] Simplified data source management & enhanced delgation.
+- [x] Dynamically insert & remove pages.
 - [x] Infinite scrolling support.
 - [x] Automatic timer-based page transitioning.
-- [x] Support for custom page transitions.
+- [x] Support for custom animated page transitions.
 
 ## 📋 Requirements
-Pageboy requires iOS 9 / tvOS 10 or above; and is written in Swift 4.2.
+Pageboy requires iOS 9 / tvOS 10; and Swift 4.
 
 ## 📲 Installation
 ### CocoaPods
-Pageboy is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
+Pageboy is available through [CocoaPods](http://cocoapods.org):
 ```ruby
-pod 'Pageboy', '~> 2.6'
+pod 'Pageboy', '~> 3.0'
 ```
-And run `pod install`.
 
 ### Carthage
-Pageboy is available through [Carthage](https://github.com/Carthage/Carthage). Simply install carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
-```
-
-Add Pageboy to your `Cartfile`:
-
+Pageboy is also available through [Carthage](https://github.com/Carthage/Carthage):
 ```ogdl
-github "uias/Pageboy" ~> 2.6
+github "uias/Pageboy" ~> 3.0
 ```
 
 ## 🚀 Usage
-### Getting Started
+- [The Basics](#the-basics)
+- [PageboyViewControllerDelegate](#pageboyViewControllerDelegate)
+- [Navigation](#navigation)
+- [Insertion & Deletion](#insertion-&-deletion)
+
+### The Basics
 
 1) Create an instance of a `PageboyViewController` and provide it with a `PageboyViewControllerDataSource`.
 
@@ -70,7 +61,7 @@ class PageViewController: PageboyViewController, PageboyViewControllerDataSource
 
     override func viewDidLoad() {
         super.viewDidLoad()
-	
+        
 	self.dataSource = self
     }
 }
@@ -82,102 +73,104 @@ class PageViewController: PageboyViewController, PageboyViewControllerDataSource
 func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
     return viewControllers.count
 }
-    
+
 func viewController(for pageboyViewController: PageboyViewController,
                     at index: PageboyViewController.PageIndex) -> UIViewController? {
     return viewControllers[index]
 }
-    
+
 func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
     return nil
 }
 ```
 
-3) Enjoy.
+### PageboyViewControllerDelegate
 
-### Delegation
-
-Unfortunately, `UIPageViewController` doesn't provide the most useful delegate methods for detecting positional data. `PageboyViewControllerDelegate` provides a number of functions for being able to detect where the page view controller is, and where it's headed.
+The delegate functions provided by a `PageboyViewController` are much more reliable and useful than what a raw `UIPageViewController` provides. You can use them to find out exactly where the current page is, and when it's moved, where it's headed.
 
 #### willScrollToPageAtIndex
-The page view controller is about to embark on a transition to a new page.
+About to embark on a transition to a new page.
 
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            willScrollToPageAt index: Int,
-                           direction: PageboyViewController.NavigationDirection,
+                           direction: NavigationDirection,
                            animated: Bool)
 ```
 
 #### didScrollToPosition
-The page view controller was scrolled to a relative position along the way transitioning to a new page. Also provided is the direction of the transition.
+Scrolled to a relative position along the way transitioning to a new page.
 
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            didScrollTo position: CGPoint,
-                           direction: PageboyViewController.NavigationDirection,
+                           direction: NavigationDirection,
                            animated: Bool)
 ```
 
 #### didScrollToPage
-The page view controller has successfully completed a scroll transition to a page.
+Successfully completed a scroll transition to a page.
 
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            didScrollToPageAt index: Int,
-                           direction: PageboyViewController.NavigationDirection,
+                           direction: NavigationDirection,
                            animated: Bool)
 ```
 
 #### didReload
-The page view controller has reloaded its child view controllers.
+Child view controllers have been reloaded.
 
 ```swift
 func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            didReloadWith currentViewController: UIViewController,
-                           currentPageIndex: PageboyViewController.PageIndex)
+                           currentPageIndex: PageIndex)
 ```
 
-## ⚡️ Extras
+### Navigation
+You can navigate programmatically through a `PageboyViewController` using `scrollToPage()`:
+```swift
+pageViewController.scrollToPage(.next, animated: true)
+```
 
-- `reloadPages()` - Reload the view controllers in the page view controller. (Refreshes the data source).
-- `scrollToPage()` - Scroll the page view controller to a new page programatically.
+- Infinite scrolling can be enabled with `.isInfiniteScrollEnabled`.
+- Interactive scrolling can also be controlled with `.isScrollEnabled`.
 
-	```swift
-	public func scrollToPage(_ pageIndex: PageIndex,
-                               animated: Bool,
-                               completion: PageTransitionCompletion? = nil)
-	```
+### Insertion & Deletion
+Pageboy provides the ability to insert and delete pages dynamically in the `PageboyViewController`.
+
+```swift
+func insertPage(at index: PageIndex, then updateBehavior: PageUpdateBehavior)
+func deletePage(at index: PageIndex, then updateBehavior: PageUpdateBehavior)
+```
+
+*This behaves similarly to the insertion of rows in `UITableView`, in the fact that you have to update the data source prior to calling any of the update functions.*
+
+**Example:**
+
+```swift
+let index = 2
+viewControllers.insert(UIViewController(), at: index)
+pageViewController.insertPage(at: index)
+```
+
+*The default behaviour after inserting or deleting a page is to scroll to the update location, this however can be configured by passing a  `PageUpdateBehavior` value other than `.scrollToUpdate`.*
+
+## ⚡️ Other Extras
+
+- `reloadData()` - Reload the view controllers in the page view controller. (Reloads the data source).
 - `.navigationOrientation` - Whether to orientate the pages horizontally or vertically.
-- `.isScrollEnabled` - Whether or not scrolling is allowed on the page view controller.
-- `.isInfiniteScrollEnabled` - Whether the page view controller should infinitely scroll at the end of page ranges.
 - `.currentViewController` - The currently visible view controller if it exists.
 - `.currentPosition` - The exact current relative position of the page view controller.
 - `.currentIndex` - The index of the currently visible page.
-- `.showsPageControl` - Whether to show the built-in page control.
-- `.parentPageboy` - Access the parent `PageboyViewController` from any child `UIViewController`.
-    ```swift
-    class ChildViewController: UIViewController {
+- `.parentPageboy` - Access the immediate parent `PageboyViewController` from any child view controller.
 
-        func doSomething() {
-            parentPageboy?.scrollToPage(.next, animated: true)
-        }
-    }
-    ```
-
-### Transitioning
-Pageboy also provides custom animated transition support. This can be customised via the `.transition` property on `PageboyViewController`. 
+### Animated Transitions
+Pageboy also provides custom transition support for **animated transitions**. This can be customised via the `.transition` property on `PageboyViewController`.
 
 ```swift
 pageboyViewController.transition = Transition(style: .push, duration: 1.0)
 ```
-
-The following styles are available: 
-
-- `.push`
-- `.fade`
-- `.moveIn`
-- `.reveal`
 
 *Note: By default this is set to `nil`, which uses the standard animation provided by `UIPageViewController`.*
 
@@ -187,6 +180,7 @@ The following styles are available:
 ```swift
 pageboyViewController.autoScroller.enable()
 ```
+
 Support for custom intermission duration and other scroll behaviors is also available.
 
 ## 👨🏻‍💻 About

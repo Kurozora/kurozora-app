@@ -94,7 +94,6 @@ import UIKit
 }
 
 @IBDesignable class DesignableTextField: UITextField {
-//extension UITextField {
     //	Placeholder color
     @IBInspectable var placeholderColor: UIColor? {
 		didSet {

@@ -17,12 +17,14 @@ class SeasonsCollectionViewController: UICollectionViewController, NVActivityInd
     var canFadeImages = true
     var laidOutSubviews = false
 
-    var showID:Int?
-    var seasonID:Int?
-    var seasons:[SeasonsElement]?
+    var showID: Int?
+    var seasonID: Int?
+    var seasons: [SeasonsElement]?
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+
         startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
         
         collectionView?.emptyDataSetSource = self
@@ -35,10 +37,6 @@ class SeasonsCollectionViewController: UICollectionViewController, NVActivityInd
                 .isTouchAllowed(true)
                 .isScrollAllowed(false)
         }
-
-//		if #available(iOS 11.0, *) {
-//			collectionView?.contentInsetAdjustmentBehavior = .never
-//		}
 
 		showID = KCommonKit.shared.showID
         fetchSeasons()
@@ -58,7 +56,8 @@ class SeasonsCollectionViewController: UICollectionViewController, NVActivityInd
             updateLayoutWithSize(viewSize: view.bounds.size)
         }
     }
-    
+
+	// MARK: - Functions
     func updateLayoutWithSize(viewSize: CGSize) {
         let height: CGFloat = 126
 
@@ -105,59 +104,76 @@ class SeasonsCollectionViewController: UICollectionViewController, NVActivityInd
     @IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
-    
-    // MARK: - UICollectionViewDataSource
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let seasonsCount = seasons?.count, seasonsCount != 0 {
-            return seasonsCount
-        }
-        return 0
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let seasonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCell", for: indexPath) as! SeasonCollectionCell
-        
-        let posterUrl = URL(string: "https://something.com/somthing")
-        let resource = ImageResource(downloadURL: posterUrl!)
-        seasonCell.seasonPosterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))])
-        
-        if let seasonNumber = seasons?[indexPath.row].number, seasonNumber != 0 {
-            seasonCell.seasonCountLabel.text = "Season \(seasonNumber)"
-        } else {
-            seasonCell.seasonCountLabel.text = "Season ?"
-        }
-        
-        if let seasonTitle = seasons?[indexPath.row].title, seasonTitle != "" {
-            seasonCell.seasonTitleLabel.text = seasonTitle
+}
+
+// MARK: - UICollectionViewDataSource
+extension SeasonsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if let seasonsCount = seasons?.count, seasonsCount != 0 {
+			return seasonsCount
+		}
+		return 0
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let seasonCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCell", for: indexPath) as! SeasonCollectionCell
+
+		let posterUrl = URL(string: "https://something.com/somthing")
+		let resource = ImageResource(downloadURL: posterUrl!)
+		seasonCell.seasonPosterImageView.kf.setImage(with: resource, placeholder: UIImage(named: "placeholder_poster"), options: [.transition(.fade(0.2))])
+
+		// Season number
+		seasonCell.seasonCountLabel.theme_textColor = "Global.textColor"
+		seasonCell.seasonCountLabel.alpha = 0.64
+		if let seasonNumber = seasons?[indexPath.row].number, seasonNumber != 0 {
+			seasonCell.seasonCountLabel.text = "Season \(seasonNumber)"
+		} else {
+			seasonCell.seasonCountLabel.text = "Season ?"
+		}
+
+		// Season title
+		seasonCell.seasonTitleLabel.theme_textColor = "Global.textColor"
+		if let seasonTitle = seasons?[indexPath.row].title, seasonTitle != "" {
+			seasonCell.seasonTitleLabel.text = seasonTitle
 		} else {
 			seasonCell.seasonTitleLabel.text = "Unknown"
 		}
 
-        seasonCell.seasonStartDateLabel.text = "12-10-2000"
-        seasonCell.seasonOverallRating.text = "5.00"
-        return seasonCell
-    }
-    
-    // MARK: - UICollectionViewDelegate
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-     }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let seasonID = seasons?[indexPath.item].id {
-            performSegue(withIdentifier: "EpisodeSegue", sender: seasonID)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EpisodeSegue" {
-            let vc = segue.destination as! EpisodesCollectionViewController
-            vc.seasonID = sender as? Int
-        }
-    }
+		// Season date
+		seasonCell.seasonStartDateLabel.theme_textColor = "Global.textColor"
+		seasonCell.seasonStartDateLabel.alpha = 0.56
+		seasonCell.seasonStartDateLabel.text = "12-10-2000"
+
+		// Season rating
+		seasonCell.seasonRatingTitleLabel.theme_textColor = "Global.textColor"
+		seasonCell.seasonRatingLabel.theme_textColor = "Global.textColor"
+		seasonCell.seasonRatingLabel.text = "5.00"
+
+		seasonCell.separatorView.theme_backgroundColor = "Global.separatorColor"
+		return seasonCell
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension SeasonsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+		return false
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+		return false
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let seasonID = seasons?[indexPath.item].id {
+			performSegue(withIdentifier: "EpisodeSegue", sender: seasonID)
+		}
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EpisodeSegue" {
+			let vc = segue.destination as! EpisodesCollectionViewController
+			vc.seasonID = sender as? Int
+		}
+	}
 }

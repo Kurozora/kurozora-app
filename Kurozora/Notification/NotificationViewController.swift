@@ -63,6 +63,8 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		// Setup table view
 		tableView.dataSource = self
 		tableView.delegate = self
@@ -186,6 +188,7 @@ extension NotificationsViewController: UITableViewDataSource {
 		switch self.grouping {
 		case .automatic, .byType:
 			titleNotificationCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			titleNotificationCell.notificationTitleLabel.theme_textColor = "Notifications.accentColor"
 		case .off: break
 		}
 
@@ -214,7 +217,12 @@ extension NotificationsViewController: UITableViewDataSource {
 
 			if let creationDate = notifications.creationDate {
 				messageNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
+				messageNotificationCell.notificationDate.theme_textColor = "Notifications.accentColor"
+				messageNotificationCell.notificationType.theme_textColor = "Notifications.accentColor"
+				
 				sessionNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
+				sessionNotificationCell.notificationDate.theme_textColor = "Notifications.accentColor"
+				sessionNotificationCell.notificationType.theme_textColor = "Notifications.accentColor"
 			}
 
 			if let description = notifications.message {
@@ -359,7 +367,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 		options.expansionDelegate = ScaleAndAlphaExpansion.default
 
 		options.buttonSpacing = 4
-		options.backgroundColor = #colorLiteral(red: 0.2705882353, green: 0.3098039216, blue: 0.3882352941, alpha: 1)
+		options.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
 
 		return options
 	}

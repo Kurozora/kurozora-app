@@ -18,6 +18,7 @@ protocol ForumCellDelegate: class {
 public class ForumCell: UITableViewCell {
 	weak var forumCellDelegate: ForumCellDelegate?
 
+	// Content
     @IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var contentLabel: UILabel!
 	@IBOutlet weak var informationLabel: UILabel!
@@ -29,6 +30,10 @@ public class ForumCell: UITableViewCell {
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
 
+	// Separator
+	@IBOutlet weak var separatorView: UIView!
+
+	// MARK: - IBACtions
 	@IBAction func moreButtonAction(_ sender: UIButton) {
 		forumCellDelegate?.moreButtonPressed(cell: self)
 	}

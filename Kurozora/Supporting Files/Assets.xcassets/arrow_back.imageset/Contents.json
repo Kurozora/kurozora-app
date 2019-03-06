@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "arrow_back@1x.png",
+      "filename" : "Disclosure Indicator.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "arrow_back@2x.png",
+      "filename" : "Disclosure Indicator@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "arrow_back@3x.png",
+      "filename" : "Disclosure Indicator@3x.png",
       "scale" : "3x"
     }
   ],

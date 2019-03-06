@@ -12,10 +12,14 @@ import SCLAlertView
 import EmptyDataSet_Swift
 import SwifterSwift
 
-class ManageActiveSessionsController: UIViewController, UITableViewDataSource, UITableViewDelegate, EmptyDataSetSource, EmptyDataSetDelegate {
+class ManageActiveSessionsController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var tableView: UITableView!
-    @IBOutlet weak var currentIPAddress: UILabel!
-    @IBOutlet weak var currentDeviceType: UILabel!
+
+	@IBOutlet weak var currentSessionTitleLabel: UILabel!
+	@IBOutlet weak var ipAddressTitleLabel: UILabel!
+	@IBOutlet weak var currentIPAddress: UILabel!
+	@IBOutlet weak var deviceTypeTitleLabel: UILabel!
+	@IBOutlet weak var currentDeviceType: UILabel!
 
 	var otherSessionsArray: [UserSessionsElement]?
     
@@ -25,6 +29,11 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		currentSessionTitleLabel.theme_textColor = "Global.textColor"
+		ipAddressTitleLabel.theme_textColor = "Global.textColor"
+		deviceTypeTitleLabel.theme_textColor = "Global.textColor"
+
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
 
@@ -48,6 +57,7 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
         }
     }
 
+	// MARK: - Functions
 	private func fetchSessions() {
 		Service.shared.getSessions( withSuccess: { (sessions) in
 			DispatchQueue.main.async() {
@@ -128,76 +138,69 @@ class ManageActiveSessionsController: UIViewController, UITableViewDataSource, U
 
         alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
     }
-    
-//    MARK: - Table
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Other sessions"
-    }
+}
 
-    // Section header
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor.init(red: 55/255.0, green: 61/255.0, blue: 85/255.0, alpha: 1.0)
-        
-        let headerLabel = UILabel(frame: CGRect(x: 8, y: 0, width:
-            tableView.bounds.size.width, height: tableView.bounds.size.height))
-        headerLabel.font = UIFont(name: "System", size: 17)
-        headerLabel.textColor = UIColor.white
-        headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
-        headerLabel.sizeToFit()
-        headerView.addSubview(headerLabel)
-
-        return headerView
-    }
-
-	// Section header hight
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 18
+// MARK: - UITableViewDataSource
+extension ManageActiveSessionsController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return "Other sessions"
 	}
 
-    // Number of rows in table
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let sessionsCount = otherSessionsArray?.count else {return 0}
-        
-        return sessionsCount
-    }
 
-    // Session cells
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return sessionsCount
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let sessionsCount = otherSessionsArray?.count
-        
-        // No other sessions
-        if sessionsCount == 0 {
-            let sessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath) as! NoSessionsCell
-            sessionsCell.noSessionsLabel.text = "No other sessions found!"
-            return sessionsCell
-        }
-        
-        // Other sessions found
-        let sessionsCell = tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath) as! SessionsCell
-        
-        // IP Address
-        if let ipAddress = otherSessionsArray?[indexPath.row].ip {
+
+		// No other sessions
+		if sessionsCount == 0 {
+			let sessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath) as! NoSessionsCell
+			sessionsCell.noSessionsLabel.theme_textColor = "Global.textColor"
+			sessionsCell.noSessionsLabel.text = "No other sessions found!"
+			return sessionsCell
+		}
+
+		// Other sessions found
+		let sessionsCell = tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath) as! SessionsCell
+
+		// IP Address
+		if let ipAddress = otherSessionsArray?[indexPath.row].ip {
 			sessionsCell.ipAddressValueLabel.text = ipAddress
-        }
-        
-        // Device Type
-        if let deviceType = otherSessionsArray?[indexPath.row].device {
+		}
+
+		// Device Type
+		if let deviceType = otherSessionsArray?[indexPath.row].device {
 			sessionsCell.deviceTypeValueLabel.text = "Kurozora for " + deviceType
-        }
-        
-        // Last Accessed
-        if let lastValidated = otherSessionsArray?[indexPath.row].lastValidated {
+		}
+
+		// Last Accessed
+		if let lastValidated = otherSessionsArray?[indexPath.row].lastValidated {
 			sessionsCell.dateValueLabel?.text = lastValidated
-        }
+		}
 
-        // Misc
-        if let id = otherSessionsArray?[indexPath.row].id {
+		// Misc
+		if let id = otherSessionsArray?[indexPath.row].id {
 			sessionsCell.extraLabel.text = "\(id)"
-        }
-        sessionsCell.removeSessionButton.tag = indexPath.row
+		}
+		sessionsCell.removeSessionButton.tag = indexPath.row
 
-        return sessionsCell
-    }
-    
+		return sessionsCell
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension ManageActiveSessionsController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let headerView = view as? UITableViewHeaderFooterView {
+			headerView.textLabel?.font = UIFont.systemFont(ofSize: 17)
+			headerView.textLabel?.theme_textColor = "Global.textColor"
+		}
+	}
+
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 21
+	}
 }

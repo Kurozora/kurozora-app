@@ -18,6 +18,7 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
 
 		fetchGenres()
 
@@ -65,13 +66,16 @@ extension GenresTableViewController {
 
 		if let name = genres?[indexPath.row].name {
 			genreCell.nameLabel.text = name
+			genreCell.nameLabel.theme_textColor = "Global.textColor"
 		}
 
 		if let nsfw = genres?[indexPath.row].nsfw, nsfw {
-			genreCell.nsfwLabel.isHidden = false
+			genreCell.nsfwView.isHidden = false
 		} else {
-			genreCell.nsfwLabel.isHidden = true
+			genreCell.nsfwView.isHidden = true
 		}
+
+		genreCell.separatorView.theme_backgroundColor = "Global.separatorColor"
 
 		return genreCell
 	}

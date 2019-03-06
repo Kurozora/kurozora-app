@@ -12,10 +12,6 @@ import SCLAlertView
 import SwiftyJSON
 import Kingfisher
 
-//protocol AnimeListControllerDelegate: class {
-//    func controllerRequestRefresh() -> BFTask
-//}
-
 class AnimeListViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var collectionView: UICollectionView!
 
@@ -31,6 +27,8 @@ class AnimeListViewController: UIViewController, EmptyDataSetSource, EmptyDataSe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
 
 		// Add Refresh Control to Collection View
@@ -71,7 +69,7 @@ class AnimeListViewController: UIViewController, EmptyDataSetSource, EmptyDataSe
 	}
 
 	private func fetchLibrary() {
-		guard let sectionTitle = sectionTitle?.lowercased() else {return}
+		guard let sectionTitle = sectionTitle else {return}
 
 		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (library) in
 			DispatchQueue.main.async {
@@ -158,6 +156,7 @@ extension AnimeListViewController: UICollectionViewDelegate {
 	}
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension AnimeListViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if libraryLayout == "Detailed" {

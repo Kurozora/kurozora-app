@@ -9,30 +9,31 @@ use_frameworks!
 # MARK: - Defs
 def common_pods
 	pod 'BottomPopup'
-    pod 'AXPhotoViewer'
-    pod 'EmptyDataSet-Swift', '~> 4.2'
-	pod 'ESTabBarController-swift', '~> 2.6'
-	pod 'KeychainAccess', '~> 3.1'
+	pod 'AXPhotoViewer'
+	pod 'EmptyDataSet-Swift'
+	pod 'ESTabBarController-swift'
+	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	#    pod 'Lightbox', '2.1.2'
 	pod 'NVActivityIndicatorView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 	#    pod 'Shimmer', '1.0.2'
 	#    pod 'SnowGlobe'
-	pod 'SwiftTheme', '~> 0.4'
-	pod 'SwifterSwift', '~> 4.3'
+	pod 'SwiftTheme'
+	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
-	pod 'Tabman', '~> 1.10'
-	pod 'TRON', '~> 4.0'
-	pod 'UIImageColors', '2.0.0'
+	pod 'Tabman'
+	pod 'TRON'
+	# pod 'UIImageColors'
 end
 
 def kurozora_pods
-    # pod 'Hero'
+	# pod 'Hero'
 	pod 'ColorSlider'
-	pod 'Cosmos', '~> 17.0'
-	pod 'IQKeyboardManagerSwift', '~> 6'
-	pod 'NGAParallaxMotion', '~> 1.1'
+	pod 'Cosmos'
+	pod 'IQKeyboardManagerSwift'
+	pod 'MBProgressHUD'
+	pod 'NGAParallaxMotion'
 	pod 'NotificationBannerSwift', '1.8.0'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
@@ -40,6 +41,7 @@ def kurozora_pods
 	pod 'RichTextView'
 	# pod 'Siren' for app update notifications
 	pod 'WhatsNew'
+	# pod 'Zip'
 end
 
 # MARK: - Targets
@@ -52,13 +54,8 @@ target 'KCommonKit' do
 	common_pods
 end
 
-# Workaround for Cocoapods issue #7606
+# Require Swift version 4.2 on all pods
 post_install do |installer|
-    installer.pods_project.build_configurations.each do |config|
-        config.build_settings.delete('CODE_SIGNING_ALLOWED')
-        config.build_settings.delete('CODE_SIGNING_REQUIRED')
-    end
-	
 	installer.pods_project.targets.each do |target|
 		target.build_configurations.each do |config|
 			config.build_settings['SWIFT_VERSION'] = '4.2'

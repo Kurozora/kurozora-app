@@ -19,6 +19,7 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
 
 		// Setup collection view
         collectionView.dataSource = self
@@ -46,7 +47,7 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
     
     // MARK: - Collection view data source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let actorsCount = actors?.count else {return 0}
+        guard let actorsCount = actors?.count else { return 0 }
         
         return actorsCount
     }
@@ -56,10 +57,12 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
         
         if let actorName = actors?[indexPath.row].name {
             castCell.actorName.text = actorName
+			castCell.actorName.theme_textColor = "Global.tintColor"
         }
         
         if let actorRole = actors?[indexPath.row].role {
             castCell.actorJob.text = actorRole
+			castCell.actorJob.theme_textColor = "Global.textColor"
         }
         
         if let actorImage = actors?[indexPath.row].image, actorImage != ""  {
@@ -70,6 +73,8 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
 		} else {
 			castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
 		}
+
+		castCell.separatorView.theme_backgroundColor = "Global.separatorColor"
         
         return castCell
     }

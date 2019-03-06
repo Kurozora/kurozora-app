@@ -64,6 +64,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	@IBOutlet weak var compactDetailsView: UIView!
 	@IBOutlet weak var compactShowTitleLabel: UILabel!
 	@IBOutlet weak var compactTagsLabel: UILabel!
+	@IBOutlet weak var compactCloseButton: UIButton!
 
 	// Action buttons
 	@IBOutlet weak var listButton: UIButton!
@@ -78,6 +79,14 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	@IBOutlet weak var trailerButton: UIButton!
 	@IBOutlet weak var statusLabel: UILabel!
 	@IBOutlet weak var favoriteButton: UIButton!
+
+	// Analytics title view
+	@IBOutlet weak var scoreRankTitleLabel: UILabel!
+	@IBOutlet weak var popularityRankTitleLabel: UILabel!
+	@IBOutlet weak var ratingTitleLabel: UILabel!
+	@IBOutlet weak var membersCountTitleLabel: UILabel!
+
+	// Analytics detail view
 	@IBOutlet weak var scoreRankLabel: UILabel!
 	@IBOutlet weak var popularityRankLabel: UILabel!
 	@IBOutlet weak var ratingLabel: UILabel!
@@ -105,6 +114,19 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = "Global.backgroundColor"
+		compactDetailsView.theme_backgroundColor = "Global.backgroundColor"
+		compactCloseButton.theme_setTitleColor("Global.tintColor", forState: .normal)
+
+		scoreRankTitleLabel.theme_textColor = "Global.textColor"
+		scoreRankTitleLabel.alpha = 0.80
+		popularityRankTitleLabel.theme_textColor = "Global.textColor"
+		popularityRankTitleLabel.alpha = 0.80
+		ratingTitleLabel.theme_textColor = "Global.textColor"
+		ratingTitleLabel.alpha = 0.80
+		membersCountTitleLabel.theme_textColor = "Global.textColor"
+		membersCountTitleLabel.alpha = 0.80
+		
 		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
 		if UIDevice.hasTapticEngine {
@@ -167,6 +189,8 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			}
 
 			// Configure title label
+			showTitleLabel.theme_textColor = "Global.textColor"
+			compactShowTitleLabel.theme_textColor = "Global.textColor"
 			if let title = showDetails?.title {
 				showTitleLabel.text = title
 				compactShowTitleLabel.text = title
@@ -184,6 +208,10 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			}
 
 			// Configure tags label
+			tagsLabel.theme_textColor = "Global.textColor"
+			tagsLabel.alpha = 0.80
+			compactTagsLabel.theme_textColor = "Global.textColor"
+			compactTagsLabel.alpha = 0.80
 			if let tags = showDetails?.informationString() {
 				tagsLabel.text = tags
 				compactTagsLabel.text = tags
@@ -220,12 +248,14 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			//            }
 
 			// Configure ratings label
+			ratingLabel.theme_textColor = "Global.textColor"
 			if let averageRating = showDetails?.averageRating, averageRating > 0.00 {
 				ratingLabel.text = String(format:"%.2f / %d", averageRating, /*show?.progress?.score ??*/ 5.00)
 			} else {
 				ratingLabel.text = "Not enough ratings"
 			}
 
+			membersCountLabel.theme_textColor = "Global.textColor"
 			if let ratingCount = showDetails?.ratingCount, ratingCount > 0 {
 				membersCountLabel.text = String(ratingCount)
 			} else {
@@ -233,18 +263,21 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			}
 
 			// Configure rank label
+			scoreRankLabel.theme_textColor = "Global.textColor"
 			if let scoreRank = showDetails?.rank, scoreRank > 0 {
 				scoreRankLabel.text = String(scoreRank)
 			} else {
 				scoreRankLabel.text = "-"
 			}
 
+			popularityRankLabel.theme_textColor = "Global.textColor"
 			if let popularRank = showDetails?.popularityRank, popularRank > 0 {
 				popularityRankLabel.text = String(popularRank)
 			} else {
 				popularityRankLabel.text = "-"
 			}
 
+			// Configure poster view
 			if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
 				let posterThumb = URL(string: posterThumb)
 				let resource = ImageResource(downloadURL: posterThumb!)
@@ -254,6 +287,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
+			// Configure banner view
 			if let bannerImage = showDetails?.banner, bannerImage != "" {
 				let bannerImage = URL(string: bannerImage)
 				let resource = ImageResource(downloadURL: bannerImage!)
@@ -330,10 +364,10 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: AnyObject) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "planning"),("Watching","watching"),("Completed","completed"),("Dropped","dropped"),("On-Hold", "on-hold")], currentSelection: libraryStatus, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"),("Watching","Watching"),("Completed","Completed"),("Dropped","Dropped"),("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showID else {return}
 
-			Service.shared.addToLibrary(withStatus: value.lowercased(), showID: showID, withSuccess: { (success) in
+			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 				if !success {
 					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
 				} else {
@@ -425,6 +459,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	}
 }
 
+// MARK: - UIScrollViewDelegate
 extension ShowDetailViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		updateHeaderView()
@@ -544,6 +579,9 @@ extension ShowDetailViewController: UITableViewDataSource {
 				indexPath.row = 2
 			}
 
+			informationCell.titleLabel.theme_textColor = "Global.tintColor"
+			informationCell.detailLabel.theme_textColor = "Global.textColor"
+
 			switch indexPath.row {
 			case 0:
 				informationCell.titleLabel.text = "ID"
@@ -647,11 +685,13 @@ extension ShowDetailViewController: UITableViewDataSource {
 			// Actor name
 			if let actorName = actors?[indexPath.row].name {
 				castCell.actorName.text = actorName
+				castCell.actorName.theme_textColor = "Global.tintColor"
 			}
 
 			// Actor role
 			if let actorRole = actors?[indexPath.row].role {
 				castCell.actorJob.text = actorRole
+				castCell.actorJob.theme_textColor = "Global.textColor"
 			}
 
 			// Actor image view
@@ -674,8 +714,12 @@ extension ShowDetailViewController: UITableViewDataSource {
 
 			// Show more button when casts exceed 5 rows
 			if indexPath.row == 5 {
-				let moreCell = tableView.dequeueReusableCell(withIdentifier: "SeeMoreCell")!
-				return moreCell
+				let seeMoreCharactersCell: SeeMoreCharactersCell = tableView.dequeueReusableCell(withIdentifier: "SeeMoreCell") as! SeeMoreCharactersCell
+
+				seeMoreCharactersCell.moreButton.theme_backgroundColor = "Global.tintColor"
+				seeMoreCharactersCell.moreButton.theme_setTitleColor("Global.textColor", forState: .normal)
+				
+				return seeMoreCharactersCell
 			}
 
 			castCell.layoutIfNeeded()
@@ -698,6 +742,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		}
 
 		showTitleCell.titleLabel.text = title
+		showTitleCell.titleLabel.theme_textColor = "Global.textColor"
 		return showTitleCell.contentView
 	}
 
