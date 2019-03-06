@@ -8,14 +8,7 @@
 
 import UIKit
 
-public extension UIViewController {
-    
-    /// The parent PageboyViewController.
-    /// Available from any direct child view controllers within a PageboyViewController.
-    @available(*, renamed: "parentPageboy")
-    public var parentPageboyViewController: PageboyViewController? {
-        return parentPageboy
-    }
+extension UIViewController {
     
     /// The parent PageboyViewController.
     /// Available from any direct child view controllers within a PageboyViewController.

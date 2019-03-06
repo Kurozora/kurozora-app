@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.8.1)
-  - AutoInsetter (1.5.0)
+  - AutoInsetter (1.5.1)
   - AXPhotoViewer (1.6.1):
     - AXPhotoViewer/Core (= 1.6.1)
   - AXPhotoViewer/Core (1.6.1):
@@ -8,7 +8,7 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - BottomPopup (0.4.1)
+  - BottomPopup (0.5.0)
   - ColorSlider (4.3)
   - Cosmos (18.0.1)
   - CryptoSwift (0.9.0)
@@ -16,10 +16,11 @@ PODS:
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.6.4)
   - FLAnimatedImage (1.0.12)
+  - Hero (1.4.0)
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
-  - Kingfisher (5.1.1)
+  - Kingfisher (5.2.0)
   - MarqueeLabel/Swift (3.2.0)
   - MBProgressHUD (1.1.0)
   - NGAParallaxMotion (1.1.0)
@@ -29,7 +30,7 @@ PODS:
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
-  - Pageboy (3.0.5)
+  - Pageboy (3.0.7)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
     - ReachabilitySwift (~> 4.1.0)
@@ -78,7 +79,6 @@ PODS:
     - Alamofire (~> 4.5)
     - SwiftyJSON (~> 4.0)
     - TRON/Core
-  - UIImageColors (2.1.0)
   - WhatsNew (0.4.4)
 
 DEPENDENCIES:
@@ -88,6 +88,7 @@ DEPENDENCIES:
   - Cosmos
   - EmptyDataSet-Swift
   - ESTabBarController-swift
+  - Hero
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher
@@ -105,7 +106,6 @@ DEPENDENCIES:
   - SwipeCellKit
   - Tabman
   - TRON
-  - UIImageColors
   - WhatsNew
 
 SPEC REPOS:
@@ -122,6 +122,7 @@ SPEC REPOS:
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
+    - Hero
     - iosMath
     - IQKeyboardManagerSwift
     - KeychainAccess
@@ -145,7 +146,6 @@ SPEC REPOS:
     - Tabman
     - TaskQueue
     - TRON
-    - UIImageColors
     - WhatsNew
 
 EXTERNAL SOURCES:
@@ -166,10 +166,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  AutoInsetter: 71875f1a8797e6aec5323ad43fe7d4e8542c7fa4
+  AutoInsetter: 249b103e316d5a9f2c7b88193e966f59bc1aa7b2
   AXPhotoViewer: 45d93a29d097e8bf4c07a6f3dedb4fa155dfbb51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  BottomPopup: 052f0ea8bb1110d633e66529cbb07b8599eb227d
+  BottomPopup: d487f2fd398805f07e4563a29cf79233f531cbe7
   ColorSlider: 83fb6f174a13d7235ef100d8d5fee1f71adf2182
   Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
@@ -177,16 +177,17 @@ SPEC CHECKSUMS:
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
+  Kingfisher: 07067cfacf371117330dceb4b4b8f5c4b691ab42
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
-  Pageboy: 64f8b1ac4b43eb622897425a1825223418261e2e
+  Pageboy: 8210fff0db9dd487f58dc9769d5d046f2618ebe0
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 052b2bd7c6fb3b8bb9139df458efd23c8f2633fd
@@ -202,9 +203,8 @@ SPEC CHECKSUMS:
   Tabman: f8a6a1967312077334631d2f67010fe905a545f1
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
-  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: d5f5b06169e77f95a8e64b19201c0c7d725ac4b3
+PODFILE CHECKSUM: 67f083a44d7ac180a05fe81c7976d2996f688614
 
 COCOAPODS: 1.7.0.beta.1

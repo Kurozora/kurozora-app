@@ -28,7 +28,7 @@ def common_pods
 end
 
 def kurozora_pods
-	# pod 'Hero'
+	pod 'Hero'
 	pod 'ColorSlider'
 	pod 'Cosmos'
 	pod 'IQKeyboardManagerSwift'

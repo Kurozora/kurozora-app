@@ -40,6 +40,7 @@ extension CALayer {
       let copiedAnim = anim.copy() as! CAAnimation
       copiedAnim.delegate = nil // having delegate resulted some weird animation behavior
       CALayer.heroAddedAnimations!.append((self, forKey!, copiedAnim))
+      hero_add(anim: anim, forKey: forKey)
     } else {
       hero_add(anim: anim, forKey: forKey)
     }
@@ -150,7 +151,7 @@ internal class HeroCoreAnimationViewContext: HeroAnimatorViewContext {
       anim = banim
     }
 
-    anim.fillMode = kCAFillModeBoth
+    anim.fillMode = CAMediaTimingFillMode.both
     anim.isRemovedOnCompletion = false
     anim.beginTime = beginTime
     return anim
