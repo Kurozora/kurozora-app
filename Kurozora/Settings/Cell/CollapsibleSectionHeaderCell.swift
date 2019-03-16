@@ -10,7 +10,7 @@ import UIKit
 
 class CollapsibleSectionHeaderCell: UITableViewCell {
 	@IBOutlet weak var sectionTitleLabel: UILabel!
-	@IBOutlet weak var sectionButton: DesignableButton!
+	@IBOutlet weak var sectionButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

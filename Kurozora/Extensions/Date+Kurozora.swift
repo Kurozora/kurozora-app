@@ -9,7 +9,8 @@
 import UIKit
 
 extension Date {
-	static func timeAgo(_ time: String) -> String {
+	static func timeAgo(_ time: String?) -> String {
+		guard let time = time else { return "" }
 		let formatter = DateFormatter()
 		formatter.locale = Locale(identifier: "US_en")
 		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

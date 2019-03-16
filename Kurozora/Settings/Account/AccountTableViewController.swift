@@ -27,7 +27,7 @@ class AccountTableViewController: UITableViewController {
 
 		// Setup user email
         userEmailLabel.text = "some@email.com"
-        userEmailLabel.theme_textColor = "Global.textcolor"
+        userEmailLabel.theme_textColor = "Global.textColor"
         userEmailLabel.textAlignment = .center
         userEmailLabel.font = UIFont(name: "System", size: 13)
     }

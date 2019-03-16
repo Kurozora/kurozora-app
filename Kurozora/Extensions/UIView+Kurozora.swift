@@ -24,6 +24,7 @@ extension UIView {
 		}
 	}
 
+	/// Add rounded corners for each specified corner.
 	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
 		if #available(iOS 11.0, *) {
 			clipsToBounds = true
@@ -35,5 +36,22 @@ extension UIView {
 			mask.path = path.cgPath
 			layer.mask = mask
 		}
+	}
+
+	/// Adds parallax effect to view. Default amount is 50.
+	func addParallax(with amount: Int = 50) {
+		let amount = amount
+
+		let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+		horizontal.minimumRelativeValue = -amount
+		horizontal.maximumRelativeValue = amount
+
+		let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+		vertical.minimumRelativeValue = -amount
+		vertical.maximumRelativeValue = amount
+
+		let group = UIMotionEffectGroup()
+		group.motionEffects = [horizontal, vertical]
+		self.addMotionEffect(group)
 	}
 }

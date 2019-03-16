@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="1" id="pqE-G1-Qyh"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="ZQo-zy-zA0" userLabel="Avatar" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="ZQo-zy-zA0" userLabel="Avatar" customClass="AnimatableImageView" customModule="IBAnimatable">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -114,7 +114,7 @@
                             <constraint firstAttribute="height" priority="999" constant="180" id="oZP-M0-frs"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyQ-q7-aIu" userLabel="ButtonTrailer" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyQ-q7-aIu" userLabel="ButtonTrailer" customClass="AnimatableButton" customModule="IBAnimatable">
                         <rect key="frame" x="130" y="153.5" width="60" height="60"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -122,7 +122,7 @@
                             <constraint firstAttribute="width" constant="60" id="xeb-ef-b1Z"/>
                         </constraints>
                         <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                        <state key="normal" image="play_white">
+                        <state key="normal" image="play">
                             <color key="titleShadowColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <userDefinedRuntimeAttributes>
@@ -207,6 +207,6 @@
     </objects>
     <resources>
         <image name="default_avatar" width="100" height="100"/>
-        <image name="play_white" width="30" height="30"/>
+        <image name="play" width="30" height="30"/>
     </resources>
 </document>

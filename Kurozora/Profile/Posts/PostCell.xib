@@ -41,7 +41,7 @@
                                     <constraint firstAttribute="height" constant="1" id="wth-pd-sbT"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-04-9PP" userLabel="Avatar" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-04-9PP" userLabel="Avatar" customClass="AnimatableImageView" customModule="IBAnimatable">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -123,7 +123,7 @@
                             <action selector="replyPressedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pen-fh-bpw"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-cT-mmc" userLabel="Heart Button" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-cT-mmc" userLabel="Heart Button">
                         <rect key="frame" x="4" y="88.5" width="50" height="38"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="38" id="OP9-df-3ae"/>

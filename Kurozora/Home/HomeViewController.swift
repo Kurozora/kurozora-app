@@ -3,19 +3,18 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
 import SCLAlertView
 import SwiftyJSON
 import EmptyDataSet_Swift
-import Kingfisher
 
-class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-    @IBOutlet var tableView: UITableView!
+class HomeViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var tableHeaderView: UIView!
+	@IBOutlet weak var separatorView: UIView!
 
 	// Search bar controller
 	var searchResultsViewController: SearchResultsViewController?
@@ -29,7 +28,7 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
 
     var categories: [ExploreCategory]?
     var banners: [ExploreBanner]?
-    var showId:Int?
+    var showID:Int?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -38,6 +37,7 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = "Global.backgroundColor"
+		separatorView.theme_backgroundColor = "Global.separatorColor"
 		
 		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
 		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsViewController
@@ -88,9 +88,13 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
 		let height = width * (9/16)
 		itemSize = CGSize(width: width, height: height - 20)
 
+		// Register cells
+		let exploreSectionHeaderCellNib = UINib(nibName: "ExploreSectionHeaderCell", bundle: nil)
+		tableView.register(exploreSectionHeaderCellNib, forHeaderFooterViewReuseIdentifier: "ExploreSectionHeader")
+
         // Setup table view
-        tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.dataSource = self
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -99,20 +103,7 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
         tableView.emptyDataSetSource = self
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        tableView.reloadData()
-    }
-
     // MARK: - Functions
-	func showDetailFor(_ showID: Int) {
-        let storyboard = UIStoryboard(name: "details", bundle: nil)
-        let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController
-        showTabBarController?.showID = showID
-
-        self.present(showTabBarController!, animated: true, completion: nil)
-    }
-
 	@objc func updateSearchPlaceholder(_ timer: Timer) {
 		if let searchControllerBar = timer.userInfo as? UISearchBar {
 			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
@@ -137,103 +128,85 @@ class HomeViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSo
 	// MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {
-            // Show detail for header cell
-            if let sender = sender as? Int {
-                let vc = segue.destination as! ShowTabBarController
-                vc.showID = sender
-            }
-            
-            // Show detail for show cell
-            if let collectionCell: ShowCell = sender as? ShowCell {
-                if let collectionView: UICollectionView = collectionCell.superview as? UICollectionView {
-                    if let view: UIView = collectionView.superview {
-                        if let tableViewCell: ShowCategoryCell = view.superview as? ShowCategoryCell {
-                            if let destination = segue.destination as? ShowTabBarController {
-                                if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showID = tableViewCell.shows?[indexPathRow].id
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Show detail for large Cell
-            if let collectionCell: LargeCell = sender as? LargeCell {
-                if let collectionView: UICollectionView = collectionCell.superview as? UICollectionView {
-                    if let view: UIView = collectionView.superview {
-                        if let tableViewCell: LargeCategoryCell = view.superview as? LargeCategoryCell {
-                            if let destination = segue.destination as? ShowTabBarController {
-                                if let indexPathRow = collectionView.indexPath(for: collectionCell)?.row {
-                                    destination.showID = tableViewCell.shows?[indexPathRow].id
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            // Show detail for explore cell
+			if let currentCell = sender as? ExploreCell, let showTabBarController = segue.destination as? ShowTabBarController {
+				showTabBarController.showID = currentCell.showElement?.id
+				showTabBarController.showTitle = currentCell.showElement?.title
+				showTabBarController.heroID = "explore"
+			}
         }
     }
 }
 
 // MARK: - UITableViewDataSource
-extension HomeViewController: UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
-		if let categoriesCount = categories?.count, categoriesCount != 0 {
-			return categoriesCount
-		}
-		return 0
+extension HomeViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		guard let categoriesCount = categories?.count else { return 0 }
+		return categoriesCount + 1
 	}
 
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard let categoryTitle = categories?[section].title else { return "" }
-
-		if let categoryShowCount = categories?[section].shows?.count, categoryShowCount != 0 {
-			return categoryTitle
-		}
-		return ""
-	}
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return (categories?[section].shows?.count != 0) ? 1 : 0
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let categoryType = categories?[indexPath.section].type, categoryType == "large" {
-			let largeCell = tableView.dequeueReusableCell(withIdentifier: "LargeCategoryCell") as! LargeCategoryCell
-
-			if let shows = categories?[indexPath.section].shows {
-				largeCell.shows = shows
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section < (categories?.count)! {
+			if let categorySection = categories?[section] {
+				return (categorySection.shows?.count != 0) ? 1 : 0
 			}
-
-			largeCell.separatorView.theme_backgroundColor = "Global.separatorColor"
-
-			return largeCell
-		} else {
-			let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
-
-			if let shows = categories?[indexPath.section].shows {
-				showCell.shows = shows
-			}
-
-			showCell.separatorView.theme_backgroundColor = "Global.separatorColor"
-
-			return showCell
 		}
+
+		return 1
+	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section < (categories?.count)! {
+			if let categoryType = categories?[indexPath.section].type, categoryType == "large" {
+				let largeCell = tableView.dequeueReusableCell(withIdentifier: "LargeCategoryCell") as! LargeCategoryCell
+
+				if let shows = categories?[indexPath.section].shows {
+					largeCell.shows = shows
+				}
+
+				return largeCell
+			} else if let categoryType = categories?[indexPath.section].type, categoryType == "normal"  {
+				let showCell = tableView.dequeueReusableCell(withIdentifier: "ShowCategoryCell") as! ShowCategoryCell
+
+				if let shows = categories?[indexPath.section].shows {
+					showCell.shows = shows
+				}
+
+				return showCell
+			}
+		}
+
+		let footnoteCell: FootnoteCell = tableView.dequeueReusableCell(withIdentifier: "FootnoteCell") as! FootnoteCell
+
+		return footnoteCell
 	}
 }
 
 // MARK: - UITableViewDelegate
-extension HomeViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 38 : 1
+extension HomeViewController {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if section < (categories?.count)! {
+			return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? 54 : 1
+		}
+
+		return 1
 	}
 
-	func tableView(_ tableView: UITableView, willDisplayHeaderView view:UIView, forSection: Int) {
-		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.font = UIFont(name: "System", size: 22)
-			headerView.textLabel?.theme_textColor = "Global.textColor"
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		if section < (categories?.count)! {
+			if let categoryShowCount = categories?[section].shows?.count, categoryShowCount != 0 {
+				if let headerView: ExploreSectionHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ExploreSectionHeader") as? ExploreSectionHeaderCell {
+
+					headerView.separatorView.theme_backgroundColor = "Global.separatorColor"
+					headerView.titleLabel.theme_textColor = "Global.textColor"
+					headerView.titleLabel.text = categories?[section].title
+
+					return headerView
+				}
+			}
 		}
+
+		return ExploreSectionHeaderCell()
 	}
 }
 

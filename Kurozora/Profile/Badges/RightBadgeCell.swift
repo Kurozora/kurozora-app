@@ -11,5 +11,6 @@ import UIKit
 class RightBadgeCell: UITableViewCell {
 	@IBOutlet weak var badgeTitleLabel: UILabel!
 	@IBOutlet weak var badgeDescriptionLabel: UILabel!
-	@IBOutlet weak var badgeImageView: DesignableImageView!
+	@IBOutlet weak var badgeImageView: UIImageView!
 }
+

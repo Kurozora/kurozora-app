@@ -3,19 +3,18 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 17/04/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Foundation
 import KCommonKit
 import Alamofire
 import SwiftyJSON
 import SCLAlertView
 
 class RegisterViewController: UIViewController {
-    @IBOutlet weak var usernameTextField: CustomTextField!
-    @IBOutlet weak var emailTextField: CustomTextField!
-    @IBOutlet weak var passwordTextField: CustomTextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
     @IBOutlet weak var selectButton: UIButton!
@@ -27,35 +26,39 @@ class RegisterViewController: UIViewController {
         super.viewWillAppear(animated)
         
         registerButton.isEnabled = false
+		registerButton.alpha = 0.5
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        usernameTextField.becomeFirstResponder()
-        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+		view.theme_backgroundColor = "Global.backgroundColor"
+		registerButton.theme_setTitleColor("Global.textColor", forState: .normal)
+		registerButton.theme_backgroundColor = "Global.tintColor"
     }
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+		emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+		passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+	}
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    //MARK: Actions
-    
+    //MARK: - IBActions
     @IBAction func dismissPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func registerPressed(sender: AnyObject) {
         registerButton.isEnabled = false
-
-        usernameTextField.trimSpaces()
-        emailTextField.trimSpaces()
+		registerButton.alpha = 0.5
         
-        let username = usernameTextField.text!
-        let email = emailTextField.text!
+        let username = usernameTextField.trimmedText!
+        let email = emailTextField.trimmedText!
         let password = passwordTextField.text!
         let image = profileImage.image
         
@@ -116,7 +119,7 @@ class RegisterViewController: UIViewController {
         }
     }
 
-//    Image picker
+	// Image picker
     @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "Profile Picture 🖼", message: "Choose an awesome picture 😉", preferredStyle: .actionSheet)
@@ -130,7 +133,7 @@ class RegisterViewController: UIViewController {
         
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         
-        //If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
+        // If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             alert.popoverPresentationController?.sourceView = sender
@@ -142,9 +145,10 @@ class RegisterViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    //MARK: - Open the camera
-    func openCamera(){
+
+	// MARK: - Functions
+    // Open the camera
+    func openCamera() {
         if(UIImagePickerController .isSourceTypeAvailable(.camera)){
             imagePicker.sourceType = .camera
             imagePicker.allowsEditing = true
@@ -159,8 +163,8 @@ class RegisterViewController: UIViewController {
         }
     }
     
-    //MARK: - Choose image from camera roll
-    func openPhotoLibrary(){
+    // Choose image from camera roll
+    func openPhotoLibrary() {
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
@@ -169,6 +173,7 @@ class RegisterViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension RegisterViewController: UITextFieldDelegate {
     @objc func editingChanged(_ textField: UITextField) {
         if textField.text?.count == 1 {
@@ -180,10 +185,12 @@ extension RegisterViewController: UITextFieldDelegate {
         
         guard let username = usernameTextField.text, !username.isEmpty, let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else {
                 registerButton.isEnabled = false
+				registerButton.alpha = 0.5
                 return
         }
         
         registerButton.isEnabled = true
+		registerButton.alpha = 1.0
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -209,7 +216,7 @@ extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigation
             self.profileImage.image = editedImage
         }
         
-        //Dismiss the UIImagePicker after selection
+        // Dismiss the UIImagePicker after selection
         picker.dismiss(animated: true, completion: nil)
     }
     

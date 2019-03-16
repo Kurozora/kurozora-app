@@ -147,7 +147,7 @@
                                                 <constraint firstAttribute="height" constant="60" id="vgq-oH-dwm"/>
                                             </constraints>
                                             <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                                            <state key="normal" image="play_white">
+                                            <state key="normal" image="play">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
@@ -254,8 +254,8 @@
     </scenes>
     <resources>
         <image name="create_new" width="30" height="30"/>
-        <image name="more_button_no_circle" width="28" height="7"/>
-        <image name="play_white" width="30" height="30"/>
+        <image name="more_button_no_circle" width="24" height="8"/>
+        <image name="play" width="30" height="30"/>
     </resources>
     <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
 </document>

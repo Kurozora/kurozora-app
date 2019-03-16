@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/04/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
@@ -15,7 +15,7 @@ import SwiftTheme
 import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
-let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
+let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: "Global.backgroundColor") ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,8 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// Fallback to default if no theme is chosen
 			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
 		}
-
-		UIApplication.shared.theme_setStatusBarStyle("UIStatusBarStyle", animated: true)
 
 		// Initialize UIWindow
 		window = UIWindow()

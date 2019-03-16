@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
@@ -11,13 +11,18 @@ import SwiftyJSON
 import Tabman
 import Pageboy
 import SCLAlertView
+import SwiftTheme
 
 class ForumsViewController: TabmanViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
-	var sections: [ForumSectionsElement]?
+	var sections: [ForumSectionsElement]? {
+		didSet {
+			self.reloadData()
+		}
+	}
 	var sectionsCount: Int?
 	var threadSorting: String?
 	var vc: KRichTextEditorControllerView?
@@ -41,9 +46,8 @@ class ForumsViewController: TabmanViewController {
 
 		Service.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
-				self.sections = sections
 				self.sectionsCount = sections?.count
-				self.reloadData()
+				self.sections = sections
 			}
 		})
 
@@ -57,8 +61,8 @@ class ForumsViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			button.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1).withAlphaComponent(0.4)
+			button.selectedTintColor = ThemeManager.color(for: "Global.tintColor")
+			button.tintColor = ThemeManager.color(for: "Global.tintColor")?.withAlphaComponent(0.4)
 		}
 
 		// Layout
@@ -66,7 +70,7 @@ class ForumsViewController: TabmanViewController {
 		bar.layout.interButtonSpacing = 24.0
 
 		// Style
-		bar.backgroundView.style = .flat(color: #colorLiteral(red: 0.2801330686, green: 0.2974318862, blue: 0.3791741133, alpha: 1))
+		bar.backgroundView.style = .blur(style: .dark)
 		bar.fadesContentEdges = true
 
 		// configure the bar
@@ -97,6 +101,7 @@ class ForumsViewController: TabmanViewController {
 				viewController.sectionID = sectionID
 			}
 
+			viewController.sectionIndex = index
             viewControllers.append(viewController)
         }
 
@@ -166,7 +171,8 @@ extension ForumsViewController: PageboyViewControllerDataSource {
 	}
 
 	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		return nil
+		guard let pageIndex = GlobalVariables().KUserDefaults?.integer(forKey: "ForumsPage") else { return nil }
+		return .at(index: pageIndex)
 	}
 }
 

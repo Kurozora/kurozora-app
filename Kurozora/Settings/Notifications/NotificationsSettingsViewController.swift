@@ -48,10 +48,10 @@ class NotificationsSettingsViewController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		allowNotificationsSwitch.theme_tintColor = "Global.tintColor"
-		soundsSwitch.theme_tintColor = "Global.tintColor"
-		vibrationsSwitch.theme_tintColor = "Global.tintColor"
-		badgeSwitch.theme_tintColor = "Global.tintColor"
+		allowNotificationsSwitch.theme_onTintColor = "Global.tintColor"
+		soundsSwitch.theme_onTintColor = "Global.tintColor"
+		vibrationsSwitch.theme_onTintColor = "Global.tintColor"
+		badgeSwitch.theme_onTintColor = "Global.tintColor"
 
 		let groupingType = GroupingType(rawValue: UserSettings.notificationsGrouping())!
 		let bannerStyle = BannerStyle(rawValue: UserSettings.notificationsPersistent())!

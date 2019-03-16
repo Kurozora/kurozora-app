@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "login_wallpaper.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "login_wallpaper.jpg",
       "scale" : "2x"
     },
     {

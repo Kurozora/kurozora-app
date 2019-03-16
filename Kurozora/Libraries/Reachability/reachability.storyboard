@@ -43,7 +43,7 @@
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kon-XY-Vpb" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kon-XY-Vpb" customClass="AnimatableView" customModule="IBAnimatable">
                                 <rect key="frame" x="143" y="301.5" width="128" height="128"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_signal_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ND4-6U-Mvi">
@@ -58,8 +58,8 @@
                                     <constraint firstItem="ND4-6U-Mvi" firstAttribute="top" secondItem="kon-XY-Vpb" secondAttribute="top" id="vmo-FB-pYw"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>

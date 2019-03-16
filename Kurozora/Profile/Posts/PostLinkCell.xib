@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="1" id="rAv-fg-J1O"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="i5S-Tr-rBn" userLabel="Avatar" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="i5S-Tr-rBn" userLabel="Avatar" customClass="AnimatableImageView" customModule="IBAnimatable">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

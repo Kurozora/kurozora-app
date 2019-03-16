@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit

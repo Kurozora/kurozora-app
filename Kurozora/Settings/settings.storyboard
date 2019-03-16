@@ -22,7 +22,7 @@
                         <sections>
                             <tableViewSection id="fyi-rV-9vP" userLabel="Account">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="Y2b-ub-jkR" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="Y2b-ub-jkR" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="35" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Y2b-ub-jkR" id="uQJ-sF-39N">
@@ -42,8 +42,8 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WP-Ke-ygy">
-                                                                            <rect key="frame" x="88" y="8" width="1" height="18"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WP-Ke-ygy">
+                                                                            <rect key="frame" x="89" y="8" width="78" height="18"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -62,10 +62,10 @@
                                                                         </imageView>
                                                                     </subviews>
                                                                     <constraints>
+                                                                        <constraint firstItem="ylA-h3-wi2" firstAttribute="leading" secondItem="3WP-Ke-ygy" secondAttribute="leading" id="3wt-Q6-ORL"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="iNr-Xf-WLb" secondAttribute="trailing" constant="14" id="45N-UN-dDE"/>
-                                                                        <constraint firstItem="3WP-Ke-ygy" firstAttribute="top" secondItem="ylA-h3-wi2" secondAttribute="top" id="6bT-c4-pck"/>
+                                                                        <constraint firstItem="ylA-h3-wi2" firstAttribute="top" secondItem="3WP-Ke-ygy" secondAttribute="bottom" constant="5" id="MV1-n4-MBr"/>
                                                                         <constraint firstItem="iNr-Xf-WLb" firstAttribute="centerY" secondItem="hJR-4y-Fty" secondAttribute="centerY" id="QG0-dO-qF5"/>
-                                                                        <constraint firstItem="3WP-Ke-ygy" firstAttribute="top" secondItem="ylA-h3-wi2" secondAttribute="bottom" constant="5" id="q65-iz-HAh"/>
                                                                     </constraints>
                                                                 </view>
                                                                 <vibrancyEffect>
@@ -77,10 +77,10 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bu-hX-cms" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bu-hX-cms" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="60" height="60"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc7-tL-ktD" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc7-tL-ktD" customClass="AnimatableImageView" customModule="IBAnimatable">
                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -106,8 +106,8 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="30"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -139,8 +139,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -154,7 +154,7 @@
                             </tableViewSection>
                             <tableViewSection id="MHd-4G-NJF" userLabel="Admin">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="JOT-UC-FzH" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="JOT-UC-FzH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="151" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JOT-UC-FzH" id="dvE-bh-36R">
@@ -201,7 +201,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQT-78-yYq" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQT-78-yYq" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kdefaults_icon" translatesAutoresizingMaskIntoConstraints="NO" id="foc-ZL-iJG">
@@ -217,8 +217,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="foc-ZL-iJG" secondAttribute="trailing" id="ma8-Mh-xj6"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -243,8 +243,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -258,7 +258,7 @@
                             </tableViewSection>
                             <tableViewSection id="A9f-4q-T1M" userLabel="System">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="jUN-6z-tHb" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="jUN-6z-tHb" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="235" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jUN-6z-tHb" id="HnR-iO-UYT">
@@ -305,7 +305,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7A-Bi-B0i" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7A-Bi-B0i" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notifications_icon" translatesAutoresizingMaskIntoConstraints="NO" id="eTh-nB-wox">
@@ -321,8 +321,8 @@
                                                         <constraint firstItem="eTh-nB-wox" firstAttribute="leading" secondItem="J7A-Bi-B0i" secondAttribute="leading" id="x02-0E-MEX"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -350,8 +350,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -365,7 +365,7 @@
                             </tableViewSection>
                             <tableViewSection id="OLi-fI-Ga7" userLabel="General">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="52R-F4-sBi" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="52R-F4-sBi" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="319" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="52R-F4-sBi" id="roo-Xj-Efg">
@@ -412,7 +412,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mug-uQ-IMY" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mug-uQ-IMY" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="theme_icon" translatesAutoresizingMaskIntoConstraints="NO" id="fdc-Xr-P6N">
@@ -428,8 +428,8 @@
                                                         <constraint firstAttribute="bottom" secondItem="fdc-Xr-P6N" secondAttribute="bottom" id="xeP-0t-dRk"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -457,8 +457,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -468,7 +468,7 @@
                                             <segue destination="iD2-d4-Qid" kind="showDetail" id="Wli-vc-FKA"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="lgZ-0g-Glx" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="lgZ-0g-Glx" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="367" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lgZ-0g-Glx" id="Zef-GX-A8C">
@@ -517,7 +517,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pER-xi-ry9" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pER-xi-ry9" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear_cache_icon" translatesAutoresizingMaskIntoConstraints="NO" id="2bj-xf-aps">
@@ -533,8 +533,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="2bj-xf-aps" secondAttribute="trailing" id="ulm-44-cFL"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -562,8 +562,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -574,7 +574,7 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="Going pro unlocks lots of awesome features and helps us keep improving the app 👍" id="taO-7I-gbe" userLabel="IAP">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Gep-34-3XZ" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Gep-34-3XZ" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="451" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gep-34-3XZ" id="66g-YK-e0D">
@@ -611,7 +611,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUK-XL-aFR" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUK-XL-aFR" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlock_icon" translatesAutoresizingMaskIntoConstraints="NO" id="uxl-Zz-4aX">
@@ -627,8 +627,8 @@
                                                         <constraint firstAttribute="height" constant="28" id="leC-yy-Gi6"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -656,15 +656,15 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="9Vh-tu-z7Z" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="9Vh-tu-z7Z" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="499" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Vh-tu-z7Z" id="NeA-6z-AO2">
@@ -701,7 +701,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OyS-Uf-sZ1" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OyS-Uf-sZ1" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restore_icon" translatesAutoresizingMaskIntoConstraints="NO" id="59y-C4-kOT">
@@ -717,8 +717,8 @@
                                                         <constraint firstAttribute="height" constant="28" id="qMA-pB-DIK"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -746,8 +746,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -758,7 +758,7 @@
                             </tableViewSection>
                             <tableViewSection id="rYQ-Cv-TgN" userLabel="Rate">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="wn1-rO-zzl" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="wn1-rO-zzl" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="611" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wn1-rO-zzl" id="XKj-TQ-Zcf">
@@ -795,7 +795,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pas-3C-DrF" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pas-3C-DrF" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rate_icon" translatesAutoresizingMaskIntoConstraints="NO" id="JEN-qI-Azj">
@@ -811,8 +811,8 @@
                                                         <constraint firstAttribute="width" constant="28" id="gBI-l9-rf2"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -840,8 +840,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -852,7 +852,7 @@
                             </tableViewSection>
                             <tableViewSection id="oWy-T0-QGJ" userLabel="Social">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="859-Pa-dbj" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="859-Pa-dbj" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="695" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="859-Pa-dbj" id="H1F-H9-aqi">
@@ -889,7 +889,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95M-cq-BXa" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95M-cq-BXa" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter_icon" translatesAutoresizingMaskIntoConstraints="NO" id="RjH-JZ-8py">
@@ -905,8 +905,8 @@
                                                         <constraint firstAttribute="width" constant="28" id="tf6-Rs-IEr"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -933,15 +933,15 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="oft-f3-bd9" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="oft-f3-bd9" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="743" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oft-f3-bd9" id="LNS-ql-w3k">
@@ -978,7 +978,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ne1-dc-xzC" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ne1-dc-xzC" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="medium_icon" translatesAutoresizingMaskIntoConstraints="NO" id="dne-N5-PHG">
@@ -994,11 +994,14 @@
                                                         <constraint firstAttribute="bottom" secondItem="dne-N5-PHG" secondAttribute="bottom" id="nYj-2I-gaO"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                            <real key="value" value="7"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -1020,8 +1023,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -1034,7 +1037,7 @@
                                 <string key="footerTitle">Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
 Kurozora 1.0.0 (1)</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="tCb-iz-6eH" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="tCb-iz-6eH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="827" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tCb-iz-6eH" id="ecE-JJ-Wqh">
@@ -1071,7 +1074,7 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGA-K8-Qze" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGA-K8-Qze" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10.5" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privacy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="bnX-tf-lW4">
@@ -1087,8 +1090,8 @@ Kurozora 1.0.0 (1)</string>
                                                         <constraint firstAttribute="bottom" secondItem="bnX-tf-lW4" secondAttribute="bottom" id="peu-o9-nNs"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -1116,8 +1119,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -1203,10 +1206,10 @@ Kurozora 1.0.0 (1)</string>
                             <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7s-5f-sBZ" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7s-5f-sBZ" customClass="AnimatableView" customModule="IBAnimatable">
                                     <rect key="frame" x="167" y="16" width="80" height="80"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-J5-8Aq" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-J5-8Aq" customClass="AnimatableImageView" customModule="IBAnimatable">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <userDefinedRuntimeAttributes>
@@ -1226,8 +1229,8 @@ Kurozora 1.0.0 (1)</string>
                                         <constraint firstItem="8zi-J5-8Aq" firstAttribute="leading" secondItem="w7s-5f-sBZ" secondAttribute="leading" id="fjD-LY-oAL"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                            <size key="value" width="0.0" height="0.0"/>
+                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                            <point key="value" x="0.0" y="0.0"/>
                                         </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                             <real key="value" value="0.40000000000000002"/>
@@ -1274,7 +1277,7 @@ Kurozora 1.0.0 (1)</string>
                         <sections>
                             <tableViewSection id="dqH-TN-aza">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tSV-Y6-VF3" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tSV-Y6-VF3" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="170" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tSV-Y6-VF3" id="cob-nN-CK7">
@@ -1324,7 +1327,7 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Br2-RL-ifK" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Br2-RL-ifK" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="10" width="28" height="28"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="6Am-M6-PLh">
@@ -1340,8 +1343,8 @@ Kurozora 1.0.0 (1)</string>
                                                         <constraint firstItem="6Am-M6-PLh" firstAttribute="leading" secondItem="Br2-RL-ifK" secondAttribute="leading" id="rLO-EO-2mH"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
@@ -1369,8 +1372,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -1387,7 +1390,7 @@ Kurozora 1.0.0 (1)</string>
                             </tableViewSection>
                             <tableViewSection id="K6S-N0-rbD">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" id="2Y3-G3-aBq" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" id="2Y3-G3-aBq" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="250" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Y3-G3-aBq" id="Ob4-dA-Lj6">
@@ -1439,8 +1442,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -1571,7 +1574,7 @@ Kurozora 1.0.0 (1)</string>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </visualEffectView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBc-zY-f4k" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBc-zY-f4k" customClass="AnimatableView" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="11" width="374" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP-Address:" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-xK-P1h" userLabel="IP-Address Label">
@@ -1610,7 +1613,7 @@ Kurozora 1.0.0 (1)</string>
                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHE-si-vCr" userLabel="Remove  Button" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHE-si-vCr" userLabel="Remove  Button" customClass="AnimatableButton" customModule="IBAnimatable">
                                                             <rect key="frame" x="342" y="19.5" width="24" height="24"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <constraints>
@@ -1620,6 +1623,9 @@ Kurozora 1.0.0 (1)</string>
                                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <state key="normal" title="X"/>
                                                             <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                                    <point key="value" x="0.0" y="0.0"/>
+                                                                </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                     <real key="value" value="12"/>
                                                                 </userDefinedRuntimeAttribute>
@@ -1628,9 +1634,6 @@ Kurozora 1.0.0 (1)</string>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                                                     <real key="value" value="7"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                                    <size key="value" width="0.0" height="0.0"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
@@ -1674,6 +1677,9 @@ Kurozora 1.0.0 (1)</string>
                                                         <constraint firstItem="Mu3-ed-zmd" firstAttribute="trailing" secondItem="3Tj-p9-2oa" secondAttribute="trailing" id="wrT-Yl-Gja"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                            <point key="value" x="0.0" y="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                             <real key="value" value="0.40000000000000002"/>
                                                         </userDefinedRuntimeAttribute>
@@ -1682,9 +1688,6 @@ Kurozora 1.0.0 (1)</string>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                            <size key="value" width="0.0" height="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -1702,8 +1705,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -1910,6 +1913,9 @@ Kurozora 1.0.0 (1)</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="button" destination="m4W-03-3NS" id="iFe-Gs-kx5"/>
@@ -1939,7 +1945,7 @@ Kurozora 1.0.0 (1)</string>
                         <sections>
                             <tableViewSection id="Be9-tS-YgN">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Dri-nW-8KK" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Dri-nW-8KK" customClass="AnimatableTableViewCell" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="35" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dri-nW-8KK" id="P9c-pd-nhv">
@@ -1984,6 +1990,7 @@ Kurozora 1.0.0 (1)</string>
                                                 </visualEffectView>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEo-XB-6IV">
                                                     <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="switchTapped:" destination="UNB-mq-TT2" eventType="valueChanged" id="Y9i-ms-aSw"/>
@@ -2001,8 +2008,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2016,7 +2023,7 @@ Kurozora 1.0.0 (1)</string>
                             </tableViewSection>
                             <tableViewSection headerTitle="Alerts" id="Muk-1I-h2s">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="O49-ug-HC6" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="O49-ug-HC6" customClass="AnimatableTableViewCell" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="139" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O49-ug-HC6" id="O79-5j-Wjy">
@@ -2075,38 +2082,46 @@ Kurozora 1.0.0 (1)</string>
                                                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSq-oW-Q52" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kD9-dD-Ov7" customClass="AnimatableView" customModule="IBAnimatable">
                                                                         <rect key="frame" x="40" y="142" width="30" height="30"/>
-                                                                        <state key="normal">
-                                                                            <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        </state>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="kD9-dD-Ov7" secondAttribute="height" multiplier="1:1" id="sDI-3v-b0Z"/>
+                                                                        </constraints>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                                 <real key="value" value="15"/>
                                                                             </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </userDefinedRuntimeAttribute>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                                 <real key="value" value="2"/>
                                                                             </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.29775791952054792" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                            </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
-                                                                    </button>
+                                                                    </view>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-Dv-8f6">
+                                                                        <rect key="frame" x="40" y="142" width="30" height="30"/>
+                                                                    </imageView>
                                                                 </subviews>
                                                             </view>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="KSq-oW-Q52" secondAttribute="bottom" constant="8" id="Mkv-55-bSz"/>
+                                                                <constraint firstItem="kD9-dD-Ov7" firstAttribute="top" secondItem="4Id-Dv-8f6" secondAttribute="top" id="3x1-gk-fPz"/>
+                                                                <constraint firstAttribute="bottom" secondItem="4Id-Dv-8f6" secondAttribute="bottom" constant="8" id="Aqw-p6-Ko7"/>
+                                                                <constraint firstItem="kD9-dD-Ov7" firstAttribute="bottom" secondItem="4Id-Dv-8f6" secondAttribute="bottom" id="K40-ir-Unz"/>
                                                                 <constraint firstItem="lmT-B5-CY5" firstAttribute="leading" secondItem="SG2-Ln-EPt" secondAttribute="leading" id="Shf-AS-kGR"/>
+                                                                <constraint firstItem="kD9-dD-Ov7" firstAttribute="leading" secondItem="4Id-Dv-8f6" secondAttribute="leading" id="T7B-wb-DVh"/>
                                                                 <constraint firstItem="lmT-B5-CY5" firstAttribute="top" secondItem="tzh-eZ-eEJ" secondAttribute="bottom" constant="4" id="TU0-bt-Yga"/>
                                                                 <constraint firstItem="tzh-eZ-eEJ" firstAttribute="centerX" secondItem="SG2-Ln-EPt" secondAttribute="centerX" id="UUT-y7-7cc"/>
-                                                                <constraint firstItem="KSq-oW-Q52" firstAttribute="centerX" secondItem="SG2-Ln-EPt" secondAttribute="centerXWithinMargins" id="Yq6-vU-MJl"/>
+                                                                <constraint firstItem="4Id-Dv-8f6" firstAttribute="centerX" secondItem="SG2-Ln-EPt" secondAttribute="centerX" id="Wfm-qn-WLj"/>
+                                                                <constraint firstItem="kD9-dD-Ov7" firstAttribute="trailing" secondItem="4Id-Dv-8f6" secondAttribute="trailing" id="XXJ-aC-JNz"/>
+                                                                <constraint firstItem="4Id-Dv-8f6" firstAttribute="top" secondItem="lmT-B5-CY5" secondAttribute="bottom" constant="12" id="Xo7-N2-tGt"/>
                                                                 <constraint firstItem="tzh-eZ-eEJ" firstAttribute="top" secondItem="SG2-Ln-EPt" secondAttribute="top" id="ckJ-xd-Vdx"/>
-                                                                <constraint firstItem="KSq-oW-Q52" firstAttribute="top" secondItem="lmT-B5-CY5" secondAttribute="bottom" constant="12" id="efq-QT-SbO"/>
                                                                 <constraint firstAttribute="trailing" secondItem="lmT-B5-CY5" secondAttribute="trailing" id="sAo-vI-a4j"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="placeholder" destination="kD9-dD-Ov7" id="B1J-RL-KCN"/>
                                                                 <outlet property="previewImageView" destination="tzh-eZ-eEJ" id="bVy-JR-bzR"/>
-                                                                <outlet property="selectButton" destination="KSq-oW-Q52" id="MoD-qf-FYM"/>
+                                                                <outlet property="selectImageView" destination="4Id-Dv-8f6" id="6Hp-wN-Akn"/>
                                                                 <outlet property="titleLabel" destination="lmT-B5-CY5" id="N8m-ku-dbv"/>
                                                             </connections>
                                                         </collectionViewCell>
@@ -2126,8 +2141,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2137,7 +2152,7 @@ Kurozora 1.0.0 (1)</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="oTk-XI-pNq" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="oTk-XI-pNq" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="339" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oTk-XI-pNq" id="r6O-5S-7hf">
@@ -2163,13 +2178,13 @@ Kurozora 1.0.0 (1)</string>
                                                                             <color key="textColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Temporary" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hd7-uB-lHp">
+                                                                        <label opaque="NO" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Temporary" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hd7-uB-lHp">
                                                                             <rect key="frame" x="279" y="10" width="82.5" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="arrow_forward" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-qL-vQI">
+                                                                        <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="arrow_forward" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-qL-vQI">
                                                                             <rect key="frame" x="366" y="10.5" width="26" height="20"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="ugS-8U-mDo"/>
@@ -2206,8 +2221,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2227,7 +2242,7 @@ Kurozora 1.0.0 (1)</string>
                             </tableViewSection>
                             <tableViewSection id="T5Z-Vu-8gg">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="ZhD-ue-R8f" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="ZhD-ue-R8f" customClass="AnimatableTableViewCell" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="427" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZhD-ue-R8f" id="to9-8C-g3d">
@@ -2272,6 +2287,7 @@ Kurozora 1.0.0 (1)</string>
                                                 </visualEffectView>
                                                 <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HHe-uF-4eo">
                                                     <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="switchTapped:" destination="UNB-mq-TT2" eventType="valueChanged" id="sbP-8n-2l7"/>
@@ -2289,8 +2305,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2300,7 +2316,7 @@ Kurozora 1.0.0 (1)</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="qIs-7X-nPD" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="qIs-7X-nPD" customClass="AnimatableTableViewCell" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="471" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qIs-7X-nPD" id="ymD-Cb-Jc4">
@@ -2345,6 +2361,7 @@ Kurozora 1.0.0 (1)</string>
                                                 </visualEffectView>
                                                 <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ckh-t0-AvR">
                                                     <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="switchTapped:" destination="UNB-mq-TT2" eventType="valueChanged" id="VNC-6z-Xg1"/>
@@ -2362,8 +2379,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                                 <real key="value" value="7"/>
@@ -2373,7 +2390,7 @@ Kurozora 1.0.0 (1)</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="YxB-WK-0oN" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="YxB-WK-0oN" customClass="AnimatableTableViewCell" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="515" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YxB-WK-0oN" id="QSv-1b-mba">
@@ -2418,6 +2435,7 @@ Kurozora 1.0.0 (1)</string>
                                                 </visualEffectView>
                                                 <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sig-yt-cam">
                                                     <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="onTintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="switchTapped:" destination="UNB-mq-TT2" eventType="valueChanged" id="khY-QB-ikc"/>
@@ -2435,8 +2453,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2450,7 +2468,7 @@ Kurozora 1.0.0 (1)</string>
                             </tableViewSection>
                             <tableViewSection headerTitle="Options" id="5yG-ma-koh">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="FRW-Wn-LOH" customClass="DesignableTableView" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="FRW-Wn-LOH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="619" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRW-Wn-LOH" id="sfb-d2-yCh">
@@ -2476,13 +2494,13 @@ Kurozora 1.0.0 (1)</string>
                                                                             <color key="textColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Automatic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yK5-eb-pZR">
+                                                                        <label opaque="NO" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Automatic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yK5-eb-pZR">
                                                                             <rect key="frame" x="284" y="10" width="78" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="arrow_forward" translatesAutoresizingMaskIntoConstraints="NO" id="tVu-l0-fiV">
+                                                                        <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="arrow_forward" translatesAutoresizingMaskIntoConstraints="NO" id="tVu-l0-fiV">
                                                                             <rect key="frame" x="366" y="10.5" width="26" height="20"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="dnf-R7-ELg"/>
@@ -2519,8 +2537,8 @@ Kurozora 1.0.0 (1)</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
@@ -2602,20 +2620,10 @@ Kurozora 1.0.0 (1)</string>
                                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9jz-V4-RBh">
-                                                                            <rect key="frame" x="375" y="15" width="31" height="20.5"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                                                            <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
                                                                     </subviews>
                                                                     <constraints>
-                                                                        <constraint firstItem="9jz-V4-RBh" firstAttribute="top" secondItem="jCk-bK-82v" secondAttribute="top" constant="15" id="6o9-Gp-sGH"/>
-                                                                        <constraint firstItem="9jz-V4-RBh" firstAttribute="centerY" secondItem="jCk-bK-82v" secondAttribute="centerY" id="A1C-Te-sd5"/>
                                                                         <constraint firstAttribute="bottom" secondItem="HAg-yE-fOA" secondAttribute="bottom" constant="15" id="UuK-Mk-OUn"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="9jz-V4-RBh" secondAttribute="bottom" constant="15" id="VeP-IL-Z1P"/>
                                                                         <constraint firstItem="HAg-yE-fOA" firstAttribute="top" secondItem="jCk-bK-82v" secondAttribute="top" constant="15" id="ZG9-CR-ohk"/>
-                                                                        <constraint firstAttribute="trailingMargin" secondItem="9jz-V4-RBh" secondAttribute="trailing" id="nPa-1E-I5a"/>
                                                                         <constraint firstItem="HAg-yE-fOA" firstAttribute="leading" secondItem="jCk-bK-82v" secondAttribute="leadingMargin" id="za0-9g-WZr"/>
                                                                     </constraints>
                                                                 </view>
@@ -2628,9 +2636,15 @@ Kurozora 1.0.0 (1)</string>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="89F-1O-cxv">
+                                                    <rect key="frame" x="345" y="15" width="22" height="20"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="uIR-Z7-qQq" secondAttribute="bottom" id="3fI-o4-CSl"/>
+                                                <constraint firstAttribute="bottom" secondItem="89F-1O-cxv" secondAttribute="bottom" constant="15" id="DKF-96-mal"/>
+                                                <constraint firstItem="89F-1O-cxv" firstAttribute="top" secondItem="F2f-V1-KyV" secondAttribute="top" constant="15" id="HiT-dc-Ran"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="89F-1O-cxv" secondAttribute="trailing" id="KcG-tY-fGi"/>
                                                 <constraint firstItem="uIR-Z7-qQq" firstAttribute="top" secondItem="F2f-V1-KyV" secondAttribute="top" id="RZE-Qz-GDY"/>
                                                 <constraint firstAttribute="trailing" secondItem="uIR-Z7-qQq" secondAttribute="trailing" id="TgE-ca-dJA"/>
                                                 <constraint firstItem="uIR-Z7-qQq" firstAttribute="leading" secondItem="F2f-V1-KyV" secondAttribute="leading" id="yMG-tc-Hyt"/>
@@ -2650,8 +2664,8 @@ Kurozora 1.0.0 (1)</string>
                                     <constraint firstAttribute="bottom" secondItem="F2f-V1-KyV" secondAttribute="bottom" id="zff-4j-jOC"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -2661,7 +2675,7 @@ Kurozora 1.0.0 (1)</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="selectedLabel" destination="9jz-V4-RBh" id="8eS-QO-xPG"/>
+                                    <outlet property="selectedImageView" destination="89F-1O-cxv" id="ZOq-Hp-9G1"/>
                                     <outlet property="titleLabel" destination="HAg-yE-fOA" id="Bjf-OP-d73"/>
                                 </connections>
                             </collectionViewCell>
@@ -2760,7 +2774,7 @@ Kurozora 1.0.0 (1)</string>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="13" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OJY-WN-Xfg" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
+                                                                <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="13" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OJY-WN-Xfg" customClass="AnimatableTextField" customModule="IBAnimatable">
                                                                     <rect key="frame" x="106" y="10" width="300" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="Hut-G3-SvA"/>
@@ -2772,14 +2786,14 @@ Kurozora 1.0.0 (1)</string>
                                                                         <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                                             <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </userDefinedRuntimeAttribute>
+                                                                        <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                                            <point key="value" x="0.0" y="0.0"/>
+                                                                        </userDefinedRuntimeAttribute>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                                             <real key="value" value="0.40000000000000002"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                                                             <real key="value" value="7"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                        <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                                            <size key="value" width="0.0" height="0.0"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                             <real key="value" value="10"/>
@@ -2820,8 +2834,8 @@ Kurozora 1.0.0 (1)</string>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -2898,7 +2912,7 @@ Kurozora 1.0.0 (1)</string>
         <!--Navigation Controller-->
         <scene sceneID="fC1-T8-g47">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="wYc-CV-Lg4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PrivacyNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="wYc-CV-Lg4" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="E0f-jR-LDn">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -2922,7 +2936,7 @@ Kurozora 1.0.0 (1)</string>
         </scene>
     </scenes>
     <resources>
-        <image name="arrow_forward" width="8" height="13"/>
+        <image name="arrow_forward" width="10" height="15"/>
         <image name="clear_cache_icon" width="128" height="128"/>
         <image name="kdefaults_icon" width="128" height="128"/>
         <image name="medium_icon" width="128" height="128"/>

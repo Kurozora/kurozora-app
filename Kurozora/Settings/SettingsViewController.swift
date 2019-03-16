@@ -3,13 +3,14 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 21/04/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import UIKit
 import KCommonKit
 import Kingfisher
 import SCLAlertView
+import IBAnimatable
 
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 
@@ -104,11 +105,9 @@ class SettingsViewController: UITableViewController {
 		for rowIndex in 1...numberOfCollapsedCells {
 			guard let cell = tableView.cellForRow(at: IndexPath(row: rowIndex-1, section: section)) else { return }
 			for subview in cell.contentView.subviews {
-				if let view = subview as? DesignableView {
-					for subview in view.subviews {
-						if let icon = subview as? UIImageView, let iconImage = icon.image {
-							icons.append(iconImage)
-						}
+				for subview in subview.subviews {
+					if let icon = subview as? UIImageView, let iconImage = icon.image {
+						icons.append(iconImage)
 					}
 				}
 			}
@@ -306,6 +305,16 @@ extension SettingsViewController {
 		if let footerView = view as? UITableViewHeaderFooterView {
 			footerView.textLabel?.theme_textColor = "Global.textColor"
 			footerView.textLabel?.alpha = 0.50
+		}
+	}
+}
+
+class SettingsCell: AnimatableTableViewCell {
+	override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+		if highlighted {
+			contentView.alpha = 0.50
+		} else {
+			contentView.alpha = 1.0
 		}
 	}
 }

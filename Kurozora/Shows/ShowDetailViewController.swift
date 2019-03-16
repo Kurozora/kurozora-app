@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 09/08/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
@@ -26,30 +26,6 @@ enum AnimeSection: Int {
 }
 
 class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, ShowRatingDelegate {
-	override var prefersStatusBarHidden: Bool {
-		return true
-	}
-
-	// Compact detail vars
-	let headerHeightInSection: CGFloat = 40
-	var headerViewHeight: CGFloat = 470
-	let compactDetailsHeight: CGFloat = 88
-
-	// View vars
-	var headerView: UIView!
-
-	// Drag to dismiss vars
-	let lightImpact = UIImpactFeedbackGenerator(style: .light)
-	let heavyImpact = UIImpactFeedbackGenerator(style: .heavy)
-	var scrollToTop = false
-
-	// Misc vars
-	var showDetails: ShowDetails?
-	var showID: Int?
-	var libraryStatus: String?
-	var showRating: Double?
-	var actors: [ActorsElement]?
-
 	// MARK: - IBoutlet
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var bannerImageView: UIImageView!
@@ -91,10 +67,48 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	@IBOutlet weak var popularityRankLabel: UILabel!
 	@IBOutlet weak var ratingLabel: UILabel!
 	@IBOutlet weak var membersCountLabel: UILabel!
+	
+	// Compact detail vars
+	let headerHeightInSection: CGFloat = 40
+	var headerViewHeight: CGFloat = 470
+	let compactDetailsHeight: CGFloat = 88
+
+	// View vars
+	var headerView: UIView!
+
+	// Drag to dismiss vars
+	let lightImpact = UIImpactFeedbackGenerator(style: .light)
+	let heavyImpact = UIImpactFeedbackGenerator(style: .heavy)
+	var scrollToTop = false
+
+	// Misc vars
+	var showDetails: ShowDetails?
+	var showID: Int?
+	var showTitle: String?
+	var heroID: String?
+	var libraryStatus: String?
+	var showRating: Double?
+	var actors: [ActorsElement]?
+
+	var statusBarShouldBeHidden = false
+
+	override var prefersStatusBarHidden: Bool {
+		return statusBarShouldBeHidden
+	}
+
+	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+		return .slide
+	}
+
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.scrollViewDidScroll(tableView)
+
+		// Show the status bar
+		statusBarShouldBeHidden = true
+		UIView.animate(withDuration: 0.25) {
+			self.setNeedsStatusBarAppearanceUpdate()
+		}
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -114,6 +128,8 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		// Theme
 		view.theme_backgroundColor = "Global.backgroundColor"
 		compactDetailsView.theme_backgroundColor = "Global.backgroundColor"
 		compactCloseButton.theme_setTitleColor("Global.tintColor", forState: .normal)
@@ -126,6 +142,14 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		ratingTitleLabel.alpha = 0.80
 		membersCountTitleLabel.theme_textColor = "Global.textColor"
 		membersCountTitleLabel.alpha = 0.80
+
+		// Hero transition
+		if let showTitle = showTitle, let heroID = heroID {
+			showTitleLabel.hero.id = "\(heroID)_\(showTitle)_title"
+			bannerImageView.hero.id = "\(heroID)_\(showTitle)_banner"
+			tagsLabel.hero.id = "\(heroID)_\(showTitle)_progress"
+			posterImageView.hero.id = "\(heroID)_\(showTitle)_poster"
+		}
 		
 		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
@@ -178,6 +202,17 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 //		}
 	}
 
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		// Hide the status bar
+		statusBarShouldBeHidden = false
+		UIView.animate(withDuration: 0.25) {
+			self.setNeedsStatusBarAppearanceUpdate()
+		}
+	}
+
+	// MARK: - Functions
 	// Update view with details
 	func updateDetailWithShow(_ show: ShowDetails?) {
 		if showDetails != nil {
@@ -311,7 +346,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		}
 	}
 
-	// MARK: - Functions
 	func scrollView() -> UIScrollView {
 		return tableView
 	}
@@ -585,8 +619,8 @@ extension ShowDetailViewController: UITableViewDataSource {
 			switch indexPath.row {
 			case 0:
 				informationCell.titleLabel.text = "ID"
-				if let showId = showDetails?.id, showId > 0 {
-					informationCell.detailLabel.text = String(showId)
+				if let showID = showDetails?.id, showID > 0 {
+					informationCell.detailLabel.text = String(showID)
 				} else {
 					informationCell.detailLabel.text = "No show id found"
 				}

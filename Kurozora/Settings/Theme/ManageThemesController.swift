@@ -3,13 +3,14 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/08/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
+import SwiftTheme
 
 class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     @IBOutlet var collectionView: UICollectionView!
@@ -46,19 +47,6 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 				.isScrollAllowed(true)
 		}
     }
-
-	// MARK: - IBActions
-	@objc func tapDefault(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.default)
-	}
-
-	@objc func tapDay(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.day)
-	}
-
-	@objc func tapNight(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.night)
-	}
 
 	// MARK: - Functions
 	fileprivate func downloadStart(for theme: ThemesElement?) {
@@ -115,25 +103,10 @@ extension ManageThemesController: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let themeCell : TestThemeCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! TestThemeCell
+		let themeCell: TestThemeCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! TestThemeCell
 
-		if let themeName = themes?[indexPath.row].name {
-			themeCell.button.setTitle(themeName, for: .normal)
-		}
-
-		if indexPath.row == 0 {
-			themeCell.button.backgroundColor = #colorLiteral(red: 0.2174186409, green: 0.2404800057, blue: 0.332449615, alpha: 1)
-			themeCell.button.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1),for: .normal)
-			themeCell.button.addTarget(self, action: #selector(tapDefault(_:)), for: .touchUpInside)
-		} else if indexPath.row == 1 {
-			themeCell.button.backgroundColor = #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9568627451, alpha: 1)
-			themeCell.button.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1),for: .normal)
-			themeCell.button.addTarget(self, action: #selector(tapDay(_:)), for: .touchUpInside)
-		} else if indexPath.row == 2 {
-			themeCell.button.backgroundColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
-			themeCell.button.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1),for: .normal)
-			themeCell.button.addTarget(self, action: #selector(tapNight(_:)), for: .touchUpInside)
-		}
+		themeCell.row = indexPath.row
+		themeCell.themeElement = themes?[indexPath.row]
 
 		return themeCell
 	}

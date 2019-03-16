@@ -3,27 +3,22 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
 import Tabman
 import Pageboy
 import SCLAlertView
-
-enum SectionList: String {
-    case planning = "Planning"
-    case watching = "Watching"
-    case completed = "Completed"
-    case onHold = "On-Hold"
-    case dropped = "Dropped"
-}
+import SwiftTheme
 
 class LibraryViewController: TabmanViewController {
+	@IBOutlet weak var changeLayoutButton: UIBarButtonItem!
+
 	lazy var viewControllers = [UIViewController]()
 	private var shadowImageView: UIImageView?
 
-	let librarySections: [SectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
+	let librarySections: [LibrarySectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
 	let bar = TMBar.ButtonBar()
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -48,8 +43,8 @@ class LibraryViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			button.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1).withAlphaComponent(0.4)
+			button.selectedTintColor = ThemeManager.color(for: "Global.tintColor")
+			button.tintColor = ThemeManager.color(for: "Global.tintColor")?.withAlphaComponent(0.4)
 		}
 		bar.buttons.transitionStyle = .progressive
 
@@ -58,7 +53,7 @@ class LibraryViewController: TabmanViewController {
 		bar.layout.interButtonSpacing = 24.0
 
 		// Style
-		bar.backgroundView.style = .flat(color: #colorLiteral(red: 0.2801330686, green: 0.2974318862, blue: 0.3791741133, alpha: 1))
+		bar.backgroundView.style = .blur(style: .dark)
 		bar.fadesContentEdges = true
 
 		// configure the bar
@@ -78,10 +73,20 @@ class LibraryViewController: TabmanViewController {
         var viewControllers = [UIViewController]()
 
         for index in 0 ..< count {
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AnimeList") as! AnimeListViewController
-            guard let sectionTitle = librarySections?[index].rawValue else { return }
-            viewController.sectionTitle = sectionTitle
+            let viewController = storyboard.instantiateViewController(withIdentifier: "LibraryList") as! LibraryListViewController
+            guard var sectionTitle = librarySections?[index].rawValue else { return }
+			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
 
+			// Get the user's preferred library layout
+			if let LibraryLayouts = GlobalVariables().KUserDefaults?.dictionary(forKey: "LibraryLayouts") as? [String:String] {
+				guard let currentLayout = LibraryLayouts[sectionTitle] else { return }
+				guard let libraryLayout = LibraryListStyle(rawValue: "\(currentLayout)Cell") else { return }
+
+				viewController.libraryLayout = libraryLayout
+			}
+			viewController.sectionTitle = sectionTitle
+			viewController.sectionIndex = index
+			viewController.delegate = self
             viewControllers.append(viewController)
         }
 
@@ -101,23 +106,61 @@ class LibraryViewController: TabmanViewController {
 		return nil
 	}
 
-	// MARK: - IBActions
-	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
-		guard let title = sender.title else { return }
-		let currentSection = self.currentViewController as? AnimeListViewController
-		var libraryLayout = "Detailed"
+	// Change layout button icon to reflect current layout when switching between views
+	private func updateChangeLayoutButtonIcon(_ layout: LibraryListStyle) {
+		if layout == .compact {
+			changeLayoutButton.title = "Compact"
+			changeLayoutButton.image = #imageLiteral(resourceName: "compact_view_icon")
+		} else if layout == .detailed {
+			changeLayoutButton.title = "Detailed"
+			changeLayoutButton.image = #imageLiteral(resourceName: "detailed_view_icon")
+		}
+	}
 
-		if title == "Detailed" {
-			libraryLayout = "Compact"
-			sender.title = "Compact"
-			sender.image = #imageLiteral(resourceName: "compact_view_icon")
-		} else if title == "Compact" {
-			sender.title = "Detailed"
-			sender.image = #imageLiteral(resourceName: "detailed_view_icon")
+	// Change layout between compact and detailed cells
+	private func changeLayout() {
+		guard let buttonTitle = changeLayoutButton.title else { return }
+		guard let currentSection = self.currentViewController as? LibraryListViewController else { return }
+		guard let sectionTitle = currentSection.sectionTitle else { return }
+
+		var libraryLayout: LibraryListStyle = .detailed
+
+		// Change button information
+		if buttonTitle == "Detailed" {
+			libraryLayout = .compact
+			changeLayoutButton.title = "Compact"
+			changeLayoutButton.image = #imageLiteral(resourceName: "compact_view_icon")
+		} else if buttonTitle == "Compact" {
+			changeLayoutButton.title = "Detailed"
+			changeLayoutButton.image = #imageLiteral(resourceName: "detailed_view_icon")
 		}
 
-		currentSection?.libraryLayout = libraryLayout
-		currentSection?.collectionView.reloadData()
+		// Add to KUserDefaults
+		if let libraryLayouts = GlobalVariables().KUserDefaults?.dictionary(forKey: "LibraryLayouts") as? [String:String] {
+			var newLibraryLayouts = libraryLayouts
+			newLibraryLayouts[sectionTitle] = changeLayoutButton.title
+			GlobalVariables().KUserDefaults?.set(newLibraryLayouts, forKey: "LibraryLayouts")
+		}
+
+		// Update library list
+		currentSection.libraryLayout = libraryLayout
+		currentSection.collectionView.performBatchUpdates({
+			currentSection.collectionView.invalidateIntrinsicContentSize()
+		}) { (_) in
+
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
+		changeLayout()
+	}
+}
+
+// MARK: - LibraryListViewControllerDelegate
+extension LibraryViewController: LibraryListViewControllerDelegate {
+	func updateLayoutChangeButton(current layout: LibraryListStyle) {
+		updateChangeLayoutButtonIcon(layout)
 	}
 }
 
@@ -136,7 +179,8 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 	}
 
 	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		return nil
+		guard let pageIndex = GlobalVariables().KUserDefaults?.integer(forKey: "LibraryPage") else { return nil }
+		return .at(index: pageIndex)
 	}
 }
 

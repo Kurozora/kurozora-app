@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 @objc protocol ReplyCellDelegate: class {
 	func replyCellSelectedUserProfile(replyCell: ReplyCell)
@@ -24,6 +25,12 @@ class ReplyCell: UITableViewCell {
 	@IBOutlet weak var downVoteButton: UIButton!
 
 	weak var delegate: ReplyCellDelegate?
+	var forumThreadElement: ForumThreadElement!
+	var threadRepliesElement: ThreadRepliesElement? {
+		didSet {
+			setup()
+		}
+	}
 
 //	class func registerNibFor(tableView: UITableView) {
 //		let listNib = UINib(nibName: "ReplyCell", bundle: nil)
@@ -45,6 +52,34 @@ class ReplyCell: UITableViewCell {
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			username.addGestureRecognizer(gestureRecognizer)
+		}
+	}
+
+	fileprivate func setup() {
+		guard let threadRepliesElement = threadRepliesElement else { return }
+
+		if let avatar = threadRepliesElement.user?.avatar, avatar != "" {
+			let avatar = URL(string: avatar)
+			let resource = ImageResource(downloadURL: avatar!)
+			self.avatar.kf.indicatorType = .activity
+			self.avatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		} else {
+			avatar.image = #imageLiteral(resourceName: "default_avatar")
+		}
+
+		username?.text = threadRepliesElement.user?.username
+		dateTime.text = "·  \(Date.timeAgo(threadRepliesElement.postedAt)) ·  "
+		textContent.text = threadRepliesElement.content
+
+		if let score = threadRepliesElement.score {
+			upVoteCountLabel.text = "\(score)\((score < 1000) ? "" : "K")"
+		}
+
+		if let locked = forumThreadElement.locked, locked {
+			upVoteButton.isHidden = true
+			upVoteButton.isUserInteractionEnabled = false
+			downVoteButton.isHidden = true
+			downVoteButton.isUserInteractionEnabled = false
 		}
 	}
 

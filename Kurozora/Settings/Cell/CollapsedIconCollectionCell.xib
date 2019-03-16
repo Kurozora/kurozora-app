@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giD-XJ-ZKj" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giD-XJ-ZKj" customClass="AnimatableView" customModule="IBAnimatable">
                         <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notifications_icon" translatesAutoresizingMaskIntoConstraints="NO" id="w6n-Ja-jDE">
@@ -34,8 +34,8 @@
                             <constraint firstAttribute="bottom" secondItem="w6n-Ja-jDE" secondAttribute="bottom" id="mpC-ez-IAj"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                <size key="value" width="0.0" height="0.0"/>
+                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                <point key="value" x="0.0" y="0.0"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                 <real key="value" value="0.40000000000000002"/>

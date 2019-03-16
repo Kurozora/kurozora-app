@@ -14,34 +14,35 @@ def common_pods
 	pod 'ESTabBarController-swift'
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
-	#    pod 'Lightbox', '2.1.2'
+#	pod 'Lightbox', '2.1.2'
 	pod 'NVActivityIndicatorView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
-	#    pod 'Shimmer', '1.0.2'
-	#    pod 'SnowGlobe'
+#	pod 'Shimmer', '1.0.2'
+#	pod 'SnowGlobe'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
 	pod 'TRON'
-	# pod 'UIImageColors'
+#	pod 'UIImageColors'
 end
 
 def kurozora_pods
-	pod 'Hero'
+	pod 'Hero', '1.4'
 	pod 'ColorSlider'
 	pod 'Cosmos'
 	pod 'IQKeyboardManagerSwift'
+	pod 'IBAnimatable'
 	pod 'MBProgressHUD'
-	pod 'NGAParallaxMotion'
+#	pod 'NGAParallaxMotion'
 	pod 'NotificationBannerSwift', '1.8.0'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'RichEditorView'
 	pod 'RichTextView'
-	# pod 'Siren' for app update notifications
+#	pod 'Siren' for app update notifications
 	pod 'WhatsNew'
-	# pod 'Zip'
+#	pod 'Zip'
 end
 
 # MARK: - Targets

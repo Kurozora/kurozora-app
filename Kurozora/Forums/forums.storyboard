@@ -27,7 +27,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCZ-KF-7Xm" userLabel="Create Thread Button" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCZ-KF-7Xm" userLabel="Create Thread Button" customClass="AnimatableButton" customModule="IBAnimatable">
                                 <rect key="frame" x="315" y="719" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -127,7 +127,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text=" 2.2K ·  3K ·  10hrs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj0-oJ-Ifj">
-                                                    <rect key="frame" x="15" y="79" width="140.66666666666666" height="20"/>
+                                                    <rect key="frame" x="15" y="79.666666666666671" width="140.66666666666666" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="rdJ-P0-IOI"/>
                                                     </constraints>
@@ -136,7 +136,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lx6-Fq-58E">
-                                                    <rect key="frame" x="254" y="70.666666666666671" width="106" height="37"/>
+                                                    <rect key="frame" x="254" y="71" width="106" height="37"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCQ-lG-Kjt">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="37"/>
@@ -171,10 +171,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eI5-HY-WY0">
-                                                    <rect key="frame" x="15" y="107" width="360" height="1"/>
+                                                    <rect key="frame" x="15" y="107.66666666666667" width="360" height="0.3333333333333286"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="gHH-Nn-u6r"/>
+                                                        <constraint firstAttribute="height" constant="0.5" id="gHH-Nn-u6r"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -474,7 +474,7 @@
     </scenes>
     <resources>
         <image name="create_new" width="30" height="30"/>
-        <image name="more_button_no_circle" width="28" height="7"/>
+        <image name="more_button_no_circle" width="24" height="8"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

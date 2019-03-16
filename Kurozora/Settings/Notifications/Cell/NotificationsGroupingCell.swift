@@ -10,14 +10,25 @@ import UIKit
 
 class NotificationsGroupingCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var selectedLabel: UILabel!
+	@IBOutlet weak var selectedImageView: UIImageView!
 
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				selectedLabel.text = "✔︎"
+				selectedImageView.image = #imageLiteral(resourceName: "check")
+				selectedImageView.theme_tintColor = "Global.tintColor"
 			} else {
-				selectedLabel.text = ""
+				selectedImageView.image = nil
+			}
+		}
+	}
+
+	override var isHighlighted: Bool {
+		didSet {
+			if isHighlighted {
+				contentView.alpha = 0.50
+			} else {
+				contentView.alpha = 1.0
 			}
 		}
 	}

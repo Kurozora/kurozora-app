@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="z99-fr-eSh">
-    <device id="retina5_9" orientation="portrait">
+    <device id="ipad12_9rounded" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,20 +18,15 @@
                         <viewControllerLayoutGuide type="bottom" id="Lif-yq-sTy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UBc-FX-H7t">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
-                                <rect key="frame" x="0.0" y="-80" width="375" height="940"/>
+                                <rect key="frame" x="0.0" y="-100" width="1024" height="1528"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="812" id="YzP-QX-n8O"/>
                                     <constraint firstAttribute="width" constant="1212" id="duG-2g-wgp"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
-                                        <integer key="value" value="50"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="YzP-QX-n8O"/>
@@ -39,8 +34,8 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="651" width="343" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="AnimatableButton" customModule="IBAnimatable">
+                                <rect key="frame" x="275" y="1216" width="474.5" height="52"/>
                                 <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="60E-Br-h3d"/>
@@ -50,18 +45,11 @@
                                         <fragment content="✉️">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="15" name="AppleColorEmoji"/>
+                                                <font key="NSFont" size="15" name=".AppleColorEmojiUI"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
-                                        <fragment content=" ">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="15" name="Luminari-Regular"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="Register with email">
+                                        <fragment content=" Register with email">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="15" name=".AppleSystemUIFont"/>
@@ -74,14 +62,14 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -91,8 +79,8 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KVe-1O-Ujq" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="711" width="343" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KVe-1O-Ujq" customClass="AnimatableButton" customModule="IBAnimatable">
+                                <rect key="frame" x="275" y="1276" width="474.5" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="wDd-PZ-6tH"/>
@@ -102,7 +90,7 @@
                                         <fragment content="Have a Kurozora account? Log in">
                                             <attributes>
                                                 <color key="NSColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="15" name=".AppleSystemUIFontEmphasized"/>
+                                                <font key="NSFont" size="15" name=".SFNSText-Bold"/>
                                                 <font key="NSOriginalFont" size="15" name=".AppleSystemUIFontEmphasized"/>
                                             </attributes>
                                         </fragment>
@@ -112,14 +100,14 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -129,8 +117,8 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="88.000000000000014" y="124" width="199.33333333333337" height="84.333333333333314"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B" customClass="AnimatableLabel" customModule="IBAnimatable">
+                                <rect key="frame" x="379" y="108" width="266" height="112.5"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -145,8 +133,8 @@ Kurozora</string>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -155,9 +143,48 @@ Kurozora</string>
                                         <real key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment>
+                                            <string key="content">Welcome to
+Kurozora</string>
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="20" name="AllerDisplay"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment>
+                                            <string key="content">Welcome to
+Kurozora</string>
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="32" name="AllerDisplay"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <attributedString key="attributedText">
+                                        <fragment>
+                                            <string key="content">Welcome to
+Kurozora</string>
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="48" name="AllerDisplay"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="218.33333333333334" width="343" height="40.666666666666657"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA" customClass="AnimatableLabel" customModule="IBAnimatable">
+                                <rect key="frame" x="275" y="230.5" width="474.5" height="57.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The largest mobile app for ">
                                         <attributes>
@@ -214,8 +241,8 @@ Kurozora</string>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -224,16 +251,192 @@ Kurozora</string>
                                         <real key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment content="The largest mobile app for ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="tracking">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content">, 
+</string>
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="sharing">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                                <font key="NSOriginalFont" size="14" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" and ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="discovering">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                                <font key="NSOriginalFont" size="14" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" anime with friends">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment content="The largest mobile app for ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="tracking">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content">, 
+</string>
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="sharing">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue-Bold"/>
+                                                <font key="NSOriginalFont" size="16" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" and ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="discovering">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue-Bold"/>
+                                                <font key="NSOriginalFont" size="16" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" anime with friends">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <attributedString key="attributedText">
+                                        <fragment content="The largest mobile app for ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="tracking">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment>
+                                            <string key="content">, 
+</string>
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="sharing">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" and ">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="discovering">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" anime with friends">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黒空" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL" customClass="DesignableLabel" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="88.000000000000014" y="103.66666666666667" width="199.33333333333337" height="20.333333333333329"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL" customClass="AnimatableLabel" customModule="IBAnimatable">
+                                <rect key="frame" x="379" y="84" width="266" height="24"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="黒空">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="17" name=".PingFangSC-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -242,28 +445,59 @@ Kurozora</string>
                                         <real key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment content="黒空">
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="14" name=".PingFangSC-Regular"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <attributedString key="attributedText">
+                                        <fragment content="黒空">
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="16" name=".PingFangSC-Regular"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <attributedString key="attributedText">
+                                        <fragment content="黒空">
+                                            <attributes>
+                                                <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="24" name=".PingFangSC-Regular"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="eaM-Zl-uea" firstAttribute="trailing" secondItem="x1n-dr-1eA" secondAttribute="trailing" id="58w-BA-4mi"/>
                             <constraint firstAttribute="centerY" secondItem="liW-fg-TRx" secondAttribute="centerY" id="5yk-Sr-zIX"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="leading" secondItem="UBc-FX-H7t" secondAttribute="leading" constant="16" id="Gny-hD-iRj"/>
-                            <constraint firstItem="UC5-fz-v9B" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="80" id="Hjx-tp-ban"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="trailing" secondItem="eaM-Zl-uea" secondAttribute="trailing" id="KqJ-Rc-nO0"/>
+                            <constraint firstItem="eaM-Zl-uea" firstAttribute="leading" secondItem="x1n-dr-1eA" secondAttribute="leading" id="O6b-Rq-eIW"/>
                             <constraint firstItem="KVe-1O-Ujq" firstAttribute="top" secondItem="eaM-Zl-uea" secondAttribute="bottom" constant="8" id="Q2b-qA-hdz"/>
                             <constraint firstAttribute="centerX" secondItem="liW-fg-TRx" secondAttribute="centerX" id="XKT-86-sT1"/>
                             <constraint firstItem="liW-fg-TRx" firstAttribute="leading" secondItem="UBc-FX-H7t" secondAttribute="leading" id="YJI-d0-ds3"/>
+                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="trailing" secondItem="eaM-Zl-uea" secondAttribute="trailing" id="Z5f-kZ-rHN"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="trailing" secondItem="UC5-fz-v9B" secondAttribute="trailing" id="a8U-hb-adt"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="leading" secondItem="eaM-Zl-uea" secondAttribute="leading" id="aNF-ZZ-3gb"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="trailing" secondItem="UBc-FX-H7t" secondAttribute="trailing" constant="-16" id="bMb-bZ-L4B"/>
-                            <constraint firstAttribute="trailing" secondItem="x1n-dr-1eA" secondAttribute="trailing" constant="16" id="cQ2-IR-eOX"/>
+                            <constraint firstItem="U6d-22-UCL" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="60" id="aDG-c8-twq"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="leading" secondItem="UC5-fz-v9B" secondAttribute="leading" id="dbi-Rg-Lh3"/>
-                            <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="KVe-1O-Ujq" secondAttribute="bottom" constant="15" id="g1k-Ff-R9y"/>
+                            <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="KVe-1O-Ujq" secondAttribute="bottom" constant="18" id="g1k-Ff-R9y"/>
                             <constraint firstItem="liW-fg-TRx" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="-124" id="kUC-bh-MY8"/>
                             <constraint firstItem="UC5-fz-v9B" firstAttribute="top" secondItem="U6d-22-UCL" secondAttribute="bottom" id="mF1-37-joS"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="top" secondItem="UC5-fz-v9B" secondAttribute="bottom" constant="10" id="oBl-8E-Le7"/>
                             <constraint firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="rFw-Sx-euo"/>
-                            <constraint firstItem="x1n-dr-1eA" firstAttribute="leading" secondItem="UBc-FX-H7t" secondAttribute="leading" constant="16" id="vPW-Ye-O7P"/>
+                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="leading" secondItem="eaM-Zl-uea" secondAttribute="leading" id="tos-im-wRu"/>
                             <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="liW-fg-TRx" secondAttribute="bottom" constant="-82" id="wlb-j3-uwU"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="xRL-4i-8Xv"/>
                         </constraints>
@@ -273,6 +507,9 @@ Kurozora</string>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="liW-fg-TRx" id="4Ej-cN-D6d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Klu-0O-Ed8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -287,82 +524,192 @@ Kurozora</string>
                         <viewControllerLayoutGuide type="bottom" id="E7w-q3-Lpu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Fbe-E7-8m7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="The cool username you claimed 🙌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Vj-t3-jHE" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="158" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.30980392156862746" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3q-ja-fL6" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="148" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWY-2v-ad0">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yTH-qR-reW">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-2D-3oy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eA0-Vn-Xbp">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="The cool username you claimed 🙌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Vj-t3-jHE" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="310" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="z1G-pN-YZx" id="jtD-Dh-8qi"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="top" secondItem="eA0-Vn-Xbp" secondAttribute="top" id="T2Q-P0-RRz"/>
+                                                            <constraint firstAttribute="trailing" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="cN1-tr-sGe"/>
+                                                            <constraint firstAttribute="bottom" secondItem="9Vj-t3-jHE" secondAttribute="bottom" id="eG2-yG-HYf"/>
+                                                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="leading" secondItem="eA0-Vn-Xbp" secondAttribute="leading" id="kNM-2A-EkX"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="dns-j5-wfS"/>
+                                    <constraint firstAttribute="height" constant="52" id="79U-j5-Yfv"/>
+                                    <constraint firstAttribute="bottom" secondItem="JWY-2v-ad0" secondAttribute="bottom" id="ncM-Wg-gSQ"/>
+                                    <constraint firstItem="JWY-2v-ad0" firstAttribute="leading" secondItem="d3q-ja-fL6" secondAttribute="leading" id="v8C-68-uab"/>
+                                    <constraint firstAttribute="trailing" secondItem="JWY-2v-ad0" secondAttribute="trailing" id="whB-UZ-fQA"/>
+                                    <constraint firstItem="JWY-2v-ad0" firstAttribute="top" secondItem="d3q-ja-fL6" secondAttribute="top" id="y2c-VL-Vgb"/>
                                 </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="z1G-pN-YZx" id="yls-Ew-iEm"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your super secret password 👀" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xXb-po-gdH" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="228" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.30980392156862746" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CrY-bi-MKu" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="218" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wmp-AK-zKv">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rmJ-wy-57w">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="anD-Vl-gj0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="IYi-jE-84t">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your super secret password 👀" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xXb-po-gdH" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="280.5" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="z1G-pN-YZx" id="7Jd-FS-dOO"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="xXb-po-gdH" secondAttribute="bottom" id="1bZ-T5-OFM"/>
+                                                            <constraint firstItem="xXb-po-gdH" firstAttribute="leading" secondItem="IYi-jE-84t" secondAttribute="leading" id="d9o-hF-w9H"/>
+                                                            <constraint firstAttribute="trailing" secondItem="xXb-po-gdH" secondAttribute="trailing" id="g45-9s-xOp"/>
+                                                            <constraint firstItem="xXb-po-gdH" firstAttribute="top" secondItem="IYi-jE-84t" secondAttribute="top" id="wdb-od-Oyu"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.40000000000000002"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="7"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                <size key="value" width="0.0" height="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="lWy-N8-nIL"/>
+                                    <constraint firstAttribute="bottom" secondItem="wmp-AK-zKv" secondAttribute="bottom" id="0wd-rF-Jwz"/>
+                                    <constraint firstItem="wmp-AK-zKv" firstAttribute="top" secondItem="CrY-bi-MKu" secondAttribute="top" id="MmP-AK-PYp"/>
+                                    <constraint firstItem="wmp-AK-zKv" firstAttribute="leading" secondItem="CrY-bi-MKu" secondAttribute="leading" id="POs-Nn-98Z"/>
+                                    <constraint firstAttribute="height" constant="52" id="XaE-JC-J2W"/>
+                                    <constraint firstAttribute="trailing" secondItem="wmp-AK-zKv" secondAttribute="trailing" id="di9-h5-SaA"/>
                                 </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="calibratedRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="z1G-pN-YZx" id="7Jd-FS-dOO"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk">
-                                <rect key="frame" x="16" y="288" width="343" height="40"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk" customClass="AnimatableButton" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="278" width="984" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="wlq-rw-AcS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Forgot your password? Time to use your email 📧"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="H2e-ia-XEL" kind="show" id="Mx1-IL-98E">
                                         <segue key="commit" inheritsFrom="parent" id="FPX-Jz-lvQ"/>
@@ -370,8 +717,8 @@ Kurozora</string>
                                     </segue>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-2e-Lgl" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="346" width="343" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-2e-Lgl" customClass="TKTransitionSubmitButton" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="336" width="984" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="C8t-5L-AhG"/>
@@ -384,14 +731,14 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="7"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -402,19 +749,18 @@ Kurozora</string>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xXb-po-gdH" firstAttribute="top" secondItem="9Vj-t3-jHE" secondAttribute="bottom" constant="18" id="36s-fF-xdb"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="top" secondItem="KkB-fQ-5lk" secondAttribute="bottom" constant="18" id="5jH-jX-6QK"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="leading" secondItem="KkB-fQ-5lk" secondAttribute="leading" id="AAu-CF-VJV"/>
-                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="leading" secondItem="xXb-po-gdH" secondAttribute="leading" id="C2e-A6-idX"/>
-                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="18" id="FCa-2v-CA9"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" id="Flm-1e-1Pk"/>
-                            <constraint firstItem="xXb-po-gdH" firstAttribute="trailing" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="PCz-bi-xCf"/>
-                            <constraint firstItem="xXb-po-gdH" firstAttribute="leading" secondItem="9Vj-t3-jHE" secondAttribute="leading" id="eqP-Me-zNm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="fis-b6-7dx"/>
-                            <constraint firstAttribute="centerX" secondItem="9Vj-t3-jHE" secondAttribute="centerX" id="hvn-cj-s60"/>
-                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="trailing" secondItem="xXb-po-gdH" secondAttribute="trailing" id="jPX-xf-1Bv"/>
-                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="top" secondItem="xXb-po-gdH" secondAttribute="bottom" constant="8" id="tiF-0n-HCW"/>
-                            <constraint firstItem="9Vj-t3-jHE" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leadingMargin" id="xxL-eD-b3D"/>
+                            <constraint firstItem="CrY-bi-MKu" firstAttribute="top" secondItem="d3q-ja-fL6" secondAttribute="bottom" constant="18" id="S0a-sY-rhA"/>
+                            <constraint firstItem="CrY-bi-MKu" firstAttribute="leading" secondItem="d3q-ja-fL6" secondAttribute="leading" id="TRk-pQ-bsJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="d3q-ja-fL6" secondAttribute="trailing" id="W4f-RL-7cz"/>
+                            <constraint firstItem="CrY-bi-MKu" firstAttribute="trailing" secondItem="d3q-ja-fL6" secondAttribute="trailing" id="XeH-fV-7nK"/>
+                            <constraint firstItem="CrY-bi-MKu" firstAttribute="leading" secondItem="KkB-fQ-5lk" secondAttribute="leading" id="fdl-Vf-eqg"/>
+                            <constraint firstItem="CrY-bi-MKu" firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" id="lJD-22-Ams"/>
+                            <constraint firstItem="d3q-ja-fL6" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leadingMargin" id="mmR-ij-9LF"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="top" secondItem="CrY-bi-MKu" secondAttribute="bottom" constant="8" id="msc-Zi-vst"/>
+                            <constraint firstItem="d3q-ja-fL6" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="22" id="o4c-0f-k8v"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Log in" id="6Um-CX-X07">
@@ -426,9 +772,9 @@ Kurozora</string>
                     </navigationItem>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="KkB-fQ-5lk" id="qIQ-wX-m2C"/>
-                        <outlet property="loginButton" destination="uHc-2e-Lgl" id="050-kA-qmj"/>
-                        <outlet property="passwordTextField" destination="xXb-po-gdH" id="e6D-nf-DBW"/>
-                        <outlet property="usernameTextField" destination="9Vj-t3-jHE" id="syC-cZ-YlX"/>
+                        <outlet property="loginButton" destination="uHc-2e-Lgl" id="Zbv-Z5-PFw"/>
+                        <outlet property="passwordTextField" destination="xXb-po-gdH" id="oN7-sp-Ukf"/>
+                        <outlet property="usernameTextField" destination="9Vj-t3-jHE" id="SdU-7K-ctU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kee-qt-4KT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -437,7 +783,7 @@ Kurozora</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </objects>
-            <point key="canvasLocation" x="1276" y="-202"/>
+            <point key="canvasLocation" x="1275.3623188405797" y="-202.23214285714286"/>
         </scene>
         <!--Register-->
         <scene sceneID="G87-hy-JAc">
@@ -448,13 +794,13 @@ Kurozora</string>
                         <viewControllerLayoutGuide type="bottom" id="uHv-7O-q8U"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xiI-oE-uwh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-qw-04R" customClass="DesignableView" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="147.66666666666666" y="156" width="80" height="80"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-qw-04R" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="472" y="148" width="80" height="80"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture" customClass="DesignableImageView" customModule="Kurozora" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture" customClass="AnimatableImageView" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -469,18 +815,18 @@ Kurozora</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd" customClass="AnimatableButton" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <state key="normal" title="Select"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <real key="value" value="3"/>
+                                                <real key="value" value="7"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                 <real key="value" value="0.40000000000000002"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                <point key="value" x="0.0" y="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -501,121 +847,262 @@ Kurozora</string>
                                     <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerY" secondItem="1Y3-d1-RaH" secondAttribute="centerY" id="jcR-6d-nL6"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="40"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Username: pick a cool one 🐵" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F4k-8e-thL" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="254" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeC-Wl-Zoj" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="246" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kge-1a-fuP">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LuW-84-965">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7oq-AR-ZFi">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2Rd-qH-Hem">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Username: pick a cool one 🐵" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F4k-8e-thL" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="234" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="username"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="dOV-d6-9Vv"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="F4k-8e-thL" firstAttribute="top" secondItem="2Rd-qH-Hem" secondAttribute="top" id="7FY-rR-DaL"/>
+                                                            <constraint firstItem="F4k-8e-thL" firstAttribute="leading" secondItem="2Rd-qH-Hem" secondAttribute="leading" id="AGc-DN-HHs"/>
+                                                            <constraint firstAttribute="bottom" secondItem="F4k-8e-thL" secondAttribute="bottom" id="GGx-Eq-U40"/>
+                                                            <constraint firstAttribute="trailing" secondItem="F4k-8e-thL" secondAttribute="trailing" id="MmY-Dx-Cbh"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="6DF-o5-pZh"/>
+                                        </constraints>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="0uR-xx-che"/>
+                                    <constraint firstAttribute="bottom" secondItem="kge-1a-fuP" secondAttribute="bottom" id="9Po-eD-tLL"/>
+                                    <constraint firstAttribute="trailing" secondItem="kge-1a-fuP" secondAttribute="trailing" id="mH7-xV-yhD"/>
+                                    <constraint firstItem="kge-1a-fuP" firstAttribute="leading" secondItem="qeC-Wl-Zoj" secondAttribute="leading" id="sip-TG-0nV"/>
+                                    <constraint firstAttribute="height" constant="52" id="trA-qh-YBR"/>
+                                    <constraint firstItem="kge-1a-fuP" firstAttribute="top" secondItem="qeC-Wl-Zoj" secondAttribute="top" id="ulB-TP-VW4"/>
                                 </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="dOV-d6-9Vv"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email: we all forget our passwords 🙈" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mxT-kb-wjP" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="324" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="rsA-6n-g73"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nW-TE-FDh" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="316" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zi-mH-wua">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="on7-tp-GRz">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CuM-BK-U7g">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zcF-0Y-d2l">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Email: we all forget our passwords 🙈" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mxT-kb-wjP" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="291" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="FS1-Aq-u7P"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="mxT-kb-wjP" secondAttribute="bottom" id="CfS-gJ-asT"/>
+                                                            <constraint firstAttribute="trailing" secondItem="mxT-kb-wjP" secondAttribute="trailing" id="Jgw-RJ-p2Z"/>
+                                                            <constraint firstItem="mxT-kb-wjP" firstAttribute="leading" secondItem="zcF-0Y-d2l" secondAttribute="leading" id="QD6-pO-D9n"/>
+                                                            <constraint firstItem="mxT-kb-wjP" firstAttribute="top" secondItem="zcF-0Y-d2l" secondAttribute="top" id="nVV-Ot-jwc"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="Old-kp-wk1"/>
+                                        </constraints>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="1zi-mH-wua" firstAttribute="leading" secondItem="8nW-TE-FDh" secondAttribute="leading" id="FmF-8x-aHl"/>
+                                    <constraint firstItem="1zi-mH-wua" firstAttribute="top" secondItem="8nW-TE-FDh" secondAttribute="top" id="N08-pn-m2c"/>
+                                    <constraint firstAttribute="bottom" secondItem="1zi-mH-wua" secondAttribute="bottom" id="SBq-jK-Y4I"/>
+                                    <constraint firstAttribute="trailing" secondItem="1zi-mH-wua" secondAttribute="trailing" id="psu-Zn-xe1"/>
+                                    <constraint firstAttribute="height" constant="52" id="vYv-Vg-6Sv"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="FS1-Aq-u7P"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password: make it super secret 🙊" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WhX-QR-jOO" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="394" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="PIf-ua-Oi3"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="join" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
-                                <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Keg-Dw-rVo" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="386" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d68-7q-rpI">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QJj-Sh-FIh">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Raf-Dr-LU6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XYd-Ms-zax">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password: make it super secret 🙊" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WhX-QR-jOO" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="269.5" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="join" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="SMo-ZR-GZE"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="WhX-QR-jOO" secondAttribute="trailing" id="IbZ-Pc-Vig"/>
+                                                            <constraint firstItem="WhX-QR-jOO" firstAttribute="top" secondItem="XYd-Ms-zax" secondAttribute="top" id="Mt5-0l-QWf"/>
+                                                            <constraint firstItem="WhX-QR-jOO" firstAttribute="leading" secondItem="XYd-Ms-zax" secondAttribute="leading" id="Wif-Gm-Y57"/>
+                                                            <constraint firstAttribute="bottom" secondItem="WhX-QR-jOO" secondAttribute="bottom" id="eqt-pY-iIP"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="guN-wB-FuV"/>
+                                        </constraints>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="d68-7q-rpI" secondAttribute="bottom" id="94c-XD-nNc"/>
+                                    <constraint firstAttribute="trailing" secondItem="d68-7q-rpI" secondAttribute="trailing" id="LXc-hR-eYn"/>
+                                    <constraint firstItem="d68-7q-rpI" firstAttribute="leading" secondItem="Keg-Dw-rVo" secondAttribute="leading" id="MLi-8e-v5z"/>
+                                    <constraint firstItem="d68-7q-rpI" firstAttribute="top" secondItem="Keg-Dw-rVo" secondAttribute="top" id="OpZ-km-ytb"/>
+                                    <constraint firstAttribute="height" constant="52" id="uhS-EE-qfo"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="VSj-jZ-zJW" id="SMo-ZR-GZE"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwY-OW-6rP" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="476" width="343" height="52"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwY-OW-6rP" customClass="AnimatableButton" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="468" width="984" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="mQI-iM-tjz"/>
@@ -625,14 +1112,11 @@ Kurozora</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -649,21 +1133,20 @@ Kurozora</string>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xwY-OW-6rP" firstAttribute="trailing" secondItem="WhX-QR-jOO" secondAttribute="trailing" id="1Qk-PC-Qbh"/>
-                            <constraint firstItem="xwY-OW-6rP" firstAttribute="top" secondItem="WhX-QR-jOO" secondAttribute="bottom" constant="30" id="3qG-iF-Opw"/>
-                            <constraint firstItem="F4k-8e-thL" firstAttribute="top" secondItem="4fv-qw-04R" secondAttribute="bottom" constant="18" id="5lc-K3-eo3"/>
-                            <constraint firstItem="mxT-kb-wjP" firstAttribute="leading" secondItem="F4k-8e-thL" secondAttribute="leading" id="7pb-ck-nY8"/>
-                            <constraint firstItem="F4k-8e-thL" firstAttribute="leading" secondItem="xiI-oE-uwh" secondAttribute="leadingMargin" id="DWQ-pH-Kdg"/>
-                            <constraint firstItem="mxT-kb-wjP" firstAttribute="trailing" secondItem="F4k-8e-thL" secondAttribute="trailing" id="MvZ-Z1-oxD"/>
+                            <constraint firstItem="Keg-Dw-rVo" firstAttribute="top" secondItem="8nW-TE-FDh" secondAttribute="bottom" constant="18" id="0Gi-hR-ufn"/>
+                            <constraint firstItem="xwY-OW-6rP" firstAttribute="top" secondItem="Keg-Dw-rVo" secondAttribute="bottom" constant="30" id="43R-Fr-LPP"/>
+                            <constraint firstItem="Keg-Dw-rVo" firstAttribute="trailing" secondItem="8nW-TE-FDh" secondAttribute="trailing" id="46t-hF-8D0"/>
+                            <constraint firstItem="8nW-TE-FDh" firstAttribute="leading" secondItem="qeC-Wl-Zoj" secondAttribute="leading" id="EEB-Mt-JMo"/>
+                            <constraint firstItem="Keg-Dw-rVo" firstAttribute="trailing" secondItem="xwY-OW-6rP" secondAttribute="trailing" id="M7f-jN-Ln3"/>
                             <constraint firstItem="4fv-qw-04R" firstAttribute="centerX" secondItem="xiI-oE-uwh" secondAttribute="centerX" id="Opf-zf-BmS"/>
-                            <constraint firstAttribute="centerX" secondItem="mxT-kb-wjP" secondAttribute="centerX" id="TS1-AP-jF3"/>
-                            <constraint firstItem="4fv-qw-04R" firstAttribute="top" secondItem="MME-1S-QyH" secondAttribute="bottom" constant="16" id="eCd-6Q-H8t"/>
-                            <constraint firstItem="WhX-QR-jOO" firstAttribute="trailing" secondItem="mxT-kb-wjP" secondAttribute="trailing" id="lZg-sG-Hcf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="F4k-8e-thL" secondAttribute="trailing" id="mzl-Q0-n4s"/>
-                            <constraint firstItem="mxT-kb-wjP" firstAttribute="top" secondItem="F4k-8e-thL" secondAttribute="bottom" constant="18" id="oBw-pm-SUa"/>
-                            <constraint firstItem="WhX-QR-jOO" firstAttribute="leading" secondItem="mxT-kb-wjP" secondAttribute="leading" id="vKo-dd-Cxo"/>
-                            <constraint firstItem="WhX-QR-jOO" firstAttribute="top" secondItem="mxT-kb-wjP" secondAttribute="bottom" constant="18" id="yXW-n7-H7b"/>
-                            <constraint firstItem="xwY-OW-6rP" firstAttribute="leading" secondItem="WhX-QR-jOO" secondAttribute="leading" id="z7y-MC-ceH"/>
+                            <constraint firstItem="Keg-Dw-rVo" firstAttribute="leading" secondItem="xwY-OW-6rP" secondAttribute="leading" id="Pm4-cM-Ykx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qeC-Wl-Zoj" secondAttribute="trailing" id="Rwm-nQ-ZWB"/>
+                            <constraint firstItem="8nW-TE-FDh" firstAttribute="trailing" secondItem="qeC-Wl-Zoj" secondAttribute="trailing" id="Wg8-Gq-PCd"/>
+                            <constraint firstItem="Keg-Dw-rVo" firstAttribute="leading" secondItem="8nW-TE-FDh" secondAttribute="leading" id="ZYS-v1-x4z"/>
+                            <constraint firstItem="4fv-qw-04R" firstAttribute="top" secondItem="MME-1S-QyH" secondAttribute="bottom" constant="22" id="eCd-6Q-H8t"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="qeC-Wl-Zoj" secondAttribute="leading" id="evN-jm-IVJ"/>
+                            <constraint firstItem="8nW-TE-FDh" firstAttribute="top" secondItem="qeC-Wl-Zoj" secondAttribute="bottom" constant="18" id="rw5-pc-ycO"/>
+                            <constraint firstItem="qeC-Wl-Zoj" firstAttribute="top" secondItem="4fv-qw-04R" secondAttribute="bottom" constant="18" id="zVR-qe-7J1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Register" id="0VO-jm-vjU">
@@ -684,7 +1167,7 @@ Kurozora</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTP-XS-ViW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="541"/>
+            <point key="canvasLocation" x="1275.3623188405797" y="540.40178571428567"/>
         </scene>
         <!--Reset password-->
         <scene sceneID="8DN-6Q-tcr">
@@ -695,44 +1178,89 @@ Kurozora</string>
                         <viewControllerLayoutGuide type="bottom" id="azt-3l-ZyK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yzU-Lb-xOA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="DesignableTextField" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="162" width="343" height="52"/>
-                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tw1-AW-xJv" customClass="AnimatableView" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="148" width="984" height="52"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tel-Vl-EFb">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bSa-sq-kUY">
+                                            <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Eq-g9-IGW">
+                                                    <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="GBa-mp-MUb">
+                                                        <rect key="frame" x="0.0" y="0.0" width="984" height="52"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                                                <rect key="frame" x="0.0" y="0.0" width="216" height="21"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                                        <real key="value" value="18"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="H2e-ia-XEL" id="edu-ur-CP8"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" id="NMh-9T-rJ7"/>
+                                                            <constraint firstAttribute="bottom" secondItem="BEp-na-6qS" secondAttribute="bottom" id="Z4I-m2-lDP"/>
+                                                            <constraint firstItem="BEp-na-6qS" firstAttribute="top" secondItem="GBa-mp-MUb" secondAttribute="top" id="gMb-5e-zDd"/>
+                                                            <constraint firstItem="BEp-na-6qS" firstAttribute="leading" secondItem="GBa-mp-MUb" secondAttribute="leading" id="q9O-wG-DXs"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="dark"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <blurEffect style="light"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="G9r-tU-K6u"/>
+                                    <constraint firstItem="Tel-Vl-EFb" firstAttribute="top" secondItem="tw1-AW-xJv" secondAttribute="top" id="1ja-hR-4Ap"/>
+                                    <constraint firstItem="Tel-Vl-EFb" firstAttribute="leading" secondItem="tw1-AW-xJv" secondAttribute="leading" id="Iz4-xC-kta"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tel-Vl-EFb" secondAttribute="trailing" id="b6M-Q9-0jI"/>
+                                    <constraint firstAttribute="height" constant="52" id="faX-yw-RHh"/>
+                                    <constraint firstAttribute="bottom" secondItem="Tel-Vl-EFb" secondAttribute="bottom" id="uvL-S9-Jmt"/>
                                 </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="H2e-ia-XEL" id="edu-ur-CP8"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="DesignableButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="16" y="244" width="343" height="52"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="AnimatableButton" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="230" width="984" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="0M8-Qa-8zM"/>
@@ -745,8 +1273,8 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowBackgroundOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                        <point key="value" x="0.0" y="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>
@@ -763,13 +1291,12 @@ Kurozora</string>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="BEp-na-6qS" secondAttribute="bottom" constant="30" id="HNR-33-DqN"/>
-                            <constraint firstAttribute="centerX" secondItem="BEp-na-6qS" secondAttribute="centerX" id="Pl2-SM-Bsd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BEp-na-6qS" secondAttribute="trailing" id="QT2-Js-k1o"/>
-                            <constraint firstItem="BEp-na-6qS" firstAttribute="leading" secondItem="yzU-Lb-xOA" secondAttribute="leadingMargin" id="gZf-CL-sOW"/>
-                            <constraint firstItem="BEp-na-6qS" firstAttribute="top" secondItem="w3P-GZ-aU7" secondAttribute="bottom" constant="22" id="hgn-BT-xB1"/>
-                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" id="tXH-do-oD7"/>
-                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="leading" secondItem="BEp-na-6qS" secondAttribute="leading" id="vqv-1s-3zg"/>
+                            <constraint firstItem="tw1-AW-xJv" firstAttribute="trailing" secondItem="t4u-TJ-OFg" secondAttribute="trailing" id="3Ja-El-Z1V"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="tw1-AW-xJv" secondAttribute="leading" id="3QK-g3-Dn1"/>
+                            <constraint firstItem="tw1-AW-xJv" firstAttribute="top" secondItem="w3P-GZ-aU7" secondAttribute="bottom" constant="22" id="5Mx-0N-Hyj"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="tw1-AW-xJv" secondAttribute="bottom" constant="30" id="Jyb-ku-gPc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tw1-AW-xJv" secondAttribute="trailing" id="ewU-1B-Zon"/>
+                            <constraint firstItem="tw1-AW-xJv" firstAttribute="leading" secondItem="t4u-TJ-OFg" secondAttribute="leading" id="xhK-BE-4gg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS"/>
@@ -780,7 +1307,7 @@ Kurozora</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edG-lm-8X7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2025" y="-202"/>
+            <point key="canvasLocation" x="2024.6376811594205" y="-202.23214285714286"/>
         </scene>
         <!--Kurozora Navigation Controller-->
         <scene sceneID="UHM-Wc-4qv">
@@ -788,7 +1315,7 @@ Kurozora</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oGH-lg-KeC" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="2sx-91-4W8">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -807,7 +1334,7 @@ Kurozora</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FAW-mw-c86" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="4zv-b6-S1d">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>

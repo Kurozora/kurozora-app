@@ -10,17 +10,22 @@ import UIKit
 import EmptyDataSet_Swift
 
 class GenresTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-	var genres: [GenresElement]?
+	var genres: [GenresElement]? {
+		didSet {
+			tableView.reloadData()
+		}
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		fetchGenres()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = "Global.backgroundColor"
 
-		fetchGenres()
+//		fetchGenres()
 
 		// Setup table view
 		tableView.dataSource = self
@@ -44,7 +49,6 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		Service.shared.getGenres { (genres) in
 			DispatchQueue.main.async() {
 				self.genres = genres
-				self.tableView.reloadData()
 			}
 		}
 	}

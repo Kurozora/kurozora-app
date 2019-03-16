@@ -1,6 +1,0 @@
-framework module NGAParallaxMotion {
-  umbrella header "NGAParallaxMotion-umbrella.h"
-
-  export *
-  module * { export * }
-}

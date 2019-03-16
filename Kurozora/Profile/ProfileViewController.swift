@@ -3,7 +3,7 @@
 //  Kurozora
 //
 //  Created by Khoren Katklian on 14/05/2018.
-//  Copyright © 2018 Kusa. All rights reserved.
+//  Copyright © 2018 Kurozora. All rights reserved.
 //
 
 import KCommonKit
@@ -13,7 +13,6 @@ import FLAnimatedImage
 import Kingfisher
 import SCLAlertView
 import SwiftyJSON
-import UIImageColors
 //import XCDYouTubeKit
 
 class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
@@ -37,7 +36,6 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 	var profileImageCache: UIImage?
 
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var backgroundView: UIView!
 
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
@@ -59,7 +57,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
     @IBOutlet weak var tagBadge: UIButton!
-    @IBOutlet weak var reputationBadge: DesignableLabel!
+    @IBOutlet weak var reputationBadge: UILabel!
     
 	@IBOutlet weak var selectBannerImageButton: UIButton!
 	@IBOutlet weak var selectProfileImageButton: UIButton!

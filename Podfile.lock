@@ -17,20 +17,20 @@ PODS:
   - ESTabBarController-swift (2.6.4)
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
+  - IBAnimatable (5.2.1)
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.2.0)
   - KeychainAccess (3.1.2)
   - Kingfisher (5.2.0)
   - MarqueeLabel/Swift (3.2.0)
   - MBProgressHUD (1.1.0)
-  - NGAParallaxMotion (1.1.0)
   - NotificationBannerSwift (1.8.0):
     - MarqueeLabel/Swift (~> 3.2.0)
     - SnapKit (~> 4.0.1)
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
-  - Pageboy (3.0.7)
+  - Pageboy (3.1.0)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
     - ReachabilitySwift (~> 4.1.0)
@@ -66,9 +66,9 @@ PODS:
   - SwiftTheme (0.4.3)
   - SwiftyJSON (4.2.0)
   - SwipeCellKit (2.5.1)
-  - Tabman (2.1.4):
+  - Tabman (2.2.0):
     - AutoInsetter (~> 1.5)
-    - Pageboy (~> 3.0)
+    - Pageboy (~> 3.1)
   - TaskQueue (1.1.1)
   - TRON (4.2.1):
     - Alamofire (~> 4.5)
@@ -88,12 +88,12 @@ DEPENDENCIES:
   - Cosmos
   - EmptyDataSet-Swift
   - ESTabBarController-swift
-  - Hero
+  - Hero (= 1.4)
+  - IBAnimatable
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher
   - MBProgressHUD
-  - NGAParallaxMotion
   - NotificationBannerSwift (= 1.8.0)
   - NVActivityIndicatorView
   - PusherSwift
@@ -123,13 +123,13 @@ SPEC REPOS:
     - ESTabBarController-swift
     - FLAnimatedImage
     - Hero
+    - IBAnimatable
     - iosMath
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
     - MarqueeLabel
     - MBProgressHUD
-    - NGAParallaxMotion
     - NotificationBannerSwift
     - NVActivityIndicatorView
     - Pageboy
@@ -178,16 +178,16 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  IBAnimatable: a46b835ec6875178516cf7e014a40194d6bfa3fc
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   Kingfisher: 07067cfacf371117330dceb4b4b8f5c4b691ab42
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  NGAParallaxMotion: 8772f51f75e5177840053229bbf32bf6f7687e52
   NotificationBannerSwift: 49fc4be7fabada55b189b50e72184c92edd5f7f7
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
-  Pageboy: 8210fff0db9dd487f58dc9769d5d046f2618ebe0
+  Pageboy: 338e39c26c64d1793704bb252df0897b4d7edf40
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RevealingSplashView: 052b2bd7c6fb3b8bb9139df458efd23c8f2633fd
@@ -200,11 +200,11 @@ SPEC CHECKSUMS:
   SwiftTheme: 628345b948068a48d330d76dffb1a990ea5f90aa
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwipeCellKit: 30fd6a4f8a8b8ac864ea389c8b4c8bac5ba5471a
-  Tabman: f8a6a1967312077334631d2f67010fe905a545f1
+  Tabman: e5b1b3faef854c666bc8e500aebb26fbaf7674c8
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
   TRON: eb0f572d97dd51ec309a27bc785ec82148500512
   WhatsNew: ebb4e2a85a0975c7c2705087c0c67939451f8b49
 
-PODFILE CHECKSUM: 67f083a44d7ac180a05fe81c7976d2996f688614
+PODFILE CHECKSUM: 4a4ce85640cc1f596a8863b793d53f3d1e1e2650
 
 COCOAPODS: 1.7.0.beta.1

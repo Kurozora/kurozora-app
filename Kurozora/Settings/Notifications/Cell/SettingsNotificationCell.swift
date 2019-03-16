@@ -11,18 +11,23 @@ import UIKit
 class SettingsNotificationCell: UICollectionViewCell {
 	@IBOutlet weak var previewImageView: UIImageView!
 	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var selectButton: UIButton!
+	@IBOutlet weak var selectImageView: UIImageView!
+	@IBOutlet weak var placeholder: UIView!
 
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				selectButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-				selectButton.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-				selectButton.setTitle("✔︎", for: .normal)
+				selectImageView.theme_tintColor = "Global.tintColor"
+				selectImageView.image = #imageLiteral(resourceName: "check_circle")
+
+				placeholder.borderColor = .none
+				placeholder.borderWidth = 0
+				placeholder.cornerRadius = 0
 			} else {
-				selectButton.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-				selectButton.borderColor = #colorLiteral(red: 0.2174186409, green: 0.2404800057, blue: 0.332449615, alpha: 1)
-				selectButton.setTitle("", for: .normal)
+				selectImageView.image = nil
+				placeholder.borderColor = .lightGray
+				placeholder.borderWidth = 2
+				placeholder.cornerRadius = 15
 			}
 		}
 	}

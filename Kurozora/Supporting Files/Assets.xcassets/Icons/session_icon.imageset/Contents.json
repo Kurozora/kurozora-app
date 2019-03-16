@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "session_icon.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "session_icon@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "session_icon@3x.png",
-      "scale" : "3x"
+      "filename" : "session_icon.pdf"
     }
   ],
   "info" : {
