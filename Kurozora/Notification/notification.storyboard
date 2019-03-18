@@ -442,7 +442,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="yKf-dw-o6p">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="IQh-eU-OV2" userLabel="Serach"/>
+                        <barButtonItem key="rightBarButtonItem" title="Search" image="search" id="IQh-eU-OV2" userLabel="Serach"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="inb-5P-rLZ" id="Fje-XJ-OZk"/>
@@ -480,6 +480,7 @@
     </scenes>
     <resources>
         <image name="message_icon" width="128" height="128"/>
+        <image name="search" width="30" height="30"/>
         <image name="session_icon" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

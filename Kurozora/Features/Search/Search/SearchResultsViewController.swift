@@ -9,6 +9,7 @@
 import KCommonKit
 import SwiftyJSON
 import Kingfisher
+import SwiftTheme
 
 class SearchResultsViewController: UIViewController {
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -16,6 +17,12 @@ class SearchResultsViewController: UIViewController {
 	@IBOutlet weak var suggestionsCollctionViewHeight: NSLayoutConstraint!
 	@IBOutlet weak var suggestionsHeaderView: UIView!
 
+	var statusBarStyle: UIStatusBarStyle {
+		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
+		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
+
+		return statusBarStyle
+	}
 	var results: [SearchElement]?
 	var timer: Timer?
 	var currentScope: Int!
@@ -39,6 +46,10 @@ class SearchResultsViewController: UIViewController {
 		}
 
 		return results
+	}
+
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return statusBarStyle
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

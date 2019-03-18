@@ -17,7 +17,7 @@
         <!--Kurozora Navigation Controller-->
         <scene sceneID="Au8-Ad-oj1">
             <objects>
-                <navigationController id="38B-e3-pz3" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="38B-e3-pz3" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="trA-Wa-Z9y">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -44,7 +44,7 @@
         <!--Library-->
         <scene sceneID="pHk-vl-DjH">
             <objects>
-                <viewController storyboardIdentifier="Library" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rJi-TH-V33" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Library" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rJi-TH-V33" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hdx-DS-rCP"/>
                         <viewControllerLayoutGuide type="bottom" id="1XQ-we-1Xk"/>
@@ -60,7 +60,11 @@
                                 <action selector="changeLayoutButtonPressed:" destination="rJi-TH-V33" id="t9w-WB-9cp"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="O6l-kz-ffM"/>
+                        <barButtonItem key="rightBarButtonItem" title="Search" image="search" id="O6l-kz-ffM">
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="rJi-TH-V33" id="JgE-15-a06"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="changeLayoutButton" destination="K6M-4k-hEU" id="6dX-nh-SaJ"/>
@@ -73,7 +77,7 @@
         <!--Library List View Controller-->
         <scene sceneID="CFs-et-a1j">
             <objects>
-                <viewController storyboardIdentifier="LibraryList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DQz-ro-QWa" customClass="LibraryListViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LibraryList" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DQz-ro-QWa" customClass="LibraryListViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Seu-4u-lzF"/>
                         <viewControllerLayoutGuide type="bottom" id="gJ0-Oh-pvr"/>
@@ -448,6 +452,7 @@
         <image name="detailed_view_icon" width="30" height="30"/>
         <image name="placeholder_banner" width="1920" height="1080"/>
         <image name="placeholder_poster" width="680" height="1000"/>
+        <image name="search" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xaO-2w-QfG"/>

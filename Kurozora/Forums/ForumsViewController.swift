@@ -100,7 +100,6 @@ class ForumsViewController: TabmanViewController {
 			if let sectionID = sections?[index].id, sectionID != 0 {
 				viewController.sectionID = sectionID
 			}
-
 			viewController.sectionIndex = index
             viewControllers.append(viewController)
         }

@@ -44,7 +44,7 @@ class KurozoraNavigationController: UINavigationController {
 
 			return titleTextAttributes
 		}
-        
+
         if #available(iOS 11.0, *) {
             self.navigationBar.prefersLargeTitles = true
 			self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: "Global.barTitleTextColor") { value -> [NSAttributedString.Key : AnyObject]? in

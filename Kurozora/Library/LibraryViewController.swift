@@ -35,6 +35,8 @@ class LibraryViewController: TabmanViewController {
 		view.theme_backgroundColor = "Global.backgroundColor"
 		dataSource = self
 
+
+
 		// Indicator
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
@@ -155,6 +157,27 @@ class LibraryViewController: TabmanViewController {
 	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
 		changeLayout()
 	}
+
+	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
+		if let searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsViewController {
+			let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: searchResultsViewController)
+
+			if #available(iOS 11.0, *) {
+				let searchController = SearchController(searchResultsController: searchResultsViewController)
+				searchController.delegate = self
+				searchController.searchResultsUpdater = searchResultsViewController
+
+				let searchControllerBar = searchController.searchBar
+				searchControllerBar.delegate = searchResultsViewController
+
+				kurozoraNavigationController.navigationItem.searchController = searchController
+			}
+
+			self.modalPresentationStyle = .overCurrentContext
+			self.present(kurozoraNavigationController, animated: true)
+		}
+	}
 }
 
 // MARK: - LibraryListViewControllerDelegate
@@ -192,7 +215,26 @@ extension LibraryViewController: TMBarDataSource {
 	}
 }
 
+// MARK: - UISearchControllerDelegate
+extension LibraryViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
+	}
 
+	func willDismissSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
+	}
+}
 //    let SortTypeDefault = "Library.SortType."
 //    let LayoutTypeDefault = "Library.LayoutType."
 //

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pPe-Wd-N8n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hQ6-ng-PdZ">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -49,7 +49,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bm-fu-36U">
-                                <rect key="frame" x="0.0" y="66" width="375" height="28"/>
+                                <rect key="frame" x="0.0" y="162" width="375" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OUR SUGGESTIONS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlW-OS-SsJ">
                                         <rect key="frame" x="8.0000000000000071" y="0.0" width="123.66666666666669" height="28"/>
@@ -78,7 +78,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hSD-1e-xq7">
-                                <rect key="frame" x="0.0" y="94" width="375" height="324"/>
+                                <rect key="frame" x="0.0" y="190" width="375" height="324"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="324" id="b0G-kQ-5ou"/>
                                 </constraints>
@@ -193,7 +193,7 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d3S-5Y-KNV">
-                                <rect key="frame" x="0.0" y="44" width="375" height="746"/>
+                                <rect key="frame" x="0.0" y="140" width="375" height="650"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="2HE-t7-nxy">
                                     <size key="itemSize" width="375" height="136"/>
@@ -587,6 +587,7 @@
                             <constraint firstItem="d3S-5Y-KNV" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="zvS-hg-7fe"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="7wn-Nj-6mA"/>
                     <connections>
                         <outlet property="collectionView" destination="d3S-5Y-KNV" id="IMD-Em-gl2"/>
                         <outlet property="searchDisplayController" destination="xGC-Sx-7nh" id="23B-wv-d7K"/>
@@ -608,7 +609,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="317.60000000000002" y="150.73891625615764"/>
+            <point key="canvasLocation" x="1260" y="150.73891625615764"/>
         </scene>
         <!--ShowTabBarController-->
         <scene sceneID="sEx-ch-J5e">
@@ -616,7 +617,7 @@
                 <viewControllerPlaceholder storyboardName="details" referencedIdentifier="ShowTabBarController" id="kWy-vp-aKx" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVz-Yf-Prr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="925" y="98"/>
+            <point key="canvasLocation" x="1867.2" y="97.536945812807886"/>
         </scene>
         <!--ForumsNavigation-->
         <scene sceneID="4hh-j3-mcN">
@@ -624,7 +625,7 @@
                 <viewControllerPlaceholder storyboardName="forums" referencedIdentifier="ForumsNavigation" id="AEz-xT-jfB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bv8-00-ReG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="905" y="151"/>
+            <point key="canvasLocation" x="1847.2" y="150.73891625615764"/>
         </scene>
         <!--ProfileNavigation-->
         <scene sceneID="ww2-I0-p6Y">
@@ -632,7 +633,32 @@
                 <viewControllerPlaceholder storyboardName="profile" referencedIdentifier="ProfileNavigation" id="sGa-wM-2xH" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Qx-9L-HCG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900" y="200"/>
+            <point key="canvasLocation" x="1842.4000000000001" y="199.50738916256159"/>
+        </scene>
+        <!--Kurozora Navigation Controller-->
+        <scene sceneID="dI9-VK-jhk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hQ6-ng-PdZ" customClass="KurozoraNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="Rbp-M6-TvY">
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pPe-Wd-N8n" kind="relationship" relationship="rootViewController" id="3Au-qa-GYP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6TF-sT-nwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="317.60000000000002" y="150.73891625615764"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

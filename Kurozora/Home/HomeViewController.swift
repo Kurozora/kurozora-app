@@ -51,10 +51,6 @@ class HomeViewController: UITableViewController, EmptyDataSetDelegate, EmptyData
 			startPlaceholderTimer(for: searchControllerBar)
 			searchControllerBar.delegate = searchResultsViewController
 
-			if let textfield = searchControllerBar.value(forKey: "searchField") as? UITextField {
-				textfield.textColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-			}
-
 			navigationItem.searchController = searchController
         }
         
@@ -93,8 +89,6 @@ class HomeViewController: UITableViewController, EmptyDataSetDelegate, EmptyData
 		tableView.register(exploreSectionHeaderCellNib, forHeaderFooterViewReuseIdentifier: "ExploreSectionHeader")
 
         // Setup table view
-//        tableView.delegate = self
-//        tableView.dataSource = self
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
         

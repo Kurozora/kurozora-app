@@ -856,7 +856,7 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="7wo-9q-m1Y">
+                        <barButtonItem key="rightBarButtonItem" title="Search" image="search" id="7wo-9q-m1Y">
                             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
@@ -1326,7 +1326,8 @@
         <image name="default_avatar" width="100" height="100"/>
         <image name="default_banner" width="1130" height="706"/>
         <image name="more_button_no_circle" width="24" height="8"/>
-        <image name="settings" width="75" height="75"/>
+        <image name="search" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7DX-hs-zha"/>

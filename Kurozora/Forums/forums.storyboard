@@ -56,7 +56,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Wrm-wq-S2a">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="search" id="PFW-e3-Chy"/>
+                            <barButtonItem title="Search" image="search" id="PFW-e3-Chy"/>
                             <barButtonItem title="↑ Top" id="PAY-O1-jaB">
                                 <connections>
                                     <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
@@ -475,6 +475,7 @@
     <resources>
         <image name="create_new" width="30" height="30"/>
         <image name="more_button_no_circle" width="24" height="8"/>
+        <image name="search" width="30" height="30"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
