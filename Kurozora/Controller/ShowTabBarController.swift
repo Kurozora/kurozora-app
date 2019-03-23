@@ -17,10 +17,12 @@ class ShowTabBarController: ESTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		self.tabBar.isTranslucent = true
 		self.tabBar.itemPositioning = .centered
-		self.tabBar.theme_tintColor = "Global.barTitleTextColor"
-		self.tabBar.theme_barTintColor = "Global.barTintColor"
 		self.tabBar.backgroundColor = .clear
+		self.tabBar.barStyle = .default
+		self.tabBar.theme_tintColor = "Global.tintColor"
+		self.tabBar.theme_barTintColor = "Global.barTintColor"
 
         let storyboard = UIStoryboard(name: "details", bundle: nil)
 

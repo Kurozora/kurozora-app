@@ -570,6 +570,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hSD-1e-xq7" firstAttribute="top" secondItem="5bm-fu-36U" secondAttribute="bottom" id="5sT-uP-sWG"/>
                             <constraint firstAttribute="trailing" secondItem="d3S-5Y-KNV" secondAttribute="trailing" id="7f3-YI-EDR"/>
@@ -587,10 +588,15 @@
                             <constraint firstItem="d3S-5Y-KNV" firstAttribute="top" secondItem="vVp-kK-N2E" secondAttribute="bottom" id="zvS-hg-7fe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7wn-Nj-6mA"/>
+                    <navigationItem key="navigationItem" id="7wn-Nj-6mA">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="cancel" id="bh3-5p-XsW">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="pPe-Wd-N8n" id="YPx-l2-1d6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="d3S-5Y-KNV" id="IMD-Em-gl2"/>
-                        <outlet property="searchDisplayController" destination="xGC-Sx-7nh" id="23B-wv-d7K"/>
                         <outlet property="suggestionsCollctionViewHeight" destination="b0G-kQ-5ou" id="A1C-UD-Gdv"/>
                         <outlet property="suggestionsCollectionView" destination="hSD-1e-xq7" id="5ZG-UD-FBe"/>
                         <outlet property="suggestionsHeaderView" destination="5bm-fu-36U" id="lFL-mQ-tBl"/>
@@ -643,6 +649,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="Rbp-M6-TvY">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

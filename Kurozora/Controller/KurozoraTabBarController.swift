@@ -16,7 +16,11 @@ class KurozoraTabBarController: ESTabBarController {
 		super.viewWillAppear(animated)
 
 		if !once {
-			self.tabBar.theme_tintColor = "Global.barTitleTextColor"
+			self.tabBar.isTranslucent = true
+			self.tabBar.itemPositioning = .centered
+			self.tabBar.backgroundColor = .clear
+			self.tabBar.barStyle = .default
+			self.tabBar.theme_tintColor = "Global.tintColor"
 			self.tabBar.theme_barTintColor = "Global.barTintColor"
 
 			once = true
@@ -25,9 +29,6 @@ class KurozoraTabBarController: ESTabBarController {
 
     override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		self.tabBar.itemPositioning = .centered
-		self.tabBar.backgroundColor = .clear
 
         // Instantiate views
         let homeStoryboard = UIStoryboard(name: "home", bundle: nil)

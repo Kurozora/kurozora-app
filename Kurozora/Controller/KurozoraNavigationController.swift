@@ -25,10 +25,10 @@ class KurozoraNavigationController: UINavigationController {
         super.viewDidLoad()
 
 		self.navigationBar.isTranslucent = true
-        self.navigationBar.barStyle = .black
+        self.navigationBar.barStyle = .default
+		self.navigationBar.backgroundColor = .clear
 		self.navigationBar.theme_tintColor = "Global.tintColor"
 		self.navigationBar.theme_barTintColor = "Global.barTintColor"
-		self.navigationBar.backgroundColor = .clear
 		self.navigationBar.theme_titleTextAttributes = ThemeDictionaryPicker(keyPath: "Global.barTitleTextColor") { value -> [NSAttributedString.Key : AnyObject]? in
 			guard let rgba = value as? String else {
 				return nil

@@ -139,6 +139,10 @@ class SearchResultsViewController: UIViewController {
 		}
 	}
 
+	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+		self.dismiss(animated: true, completion: nil)
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let sender = sender as? Int {

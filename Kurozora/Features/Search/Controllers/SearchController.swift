@@ -22,7 +22,10 @@ class SearchController: UISearchController, UISearchBarDelegate {
 
 		let searchControllerBar = self.searchBar
 		searchControllerBar.theme_barTintColor = "Global.tintColor"
-		searchControllerBar.barStyle = .default
+		searchControllerBar.barStyle = .black
+		searchControllerBar.searchBarStyle = .default
+		searchControllerBar.isTranslucent = true
+		searchControllerBar.enableCancelButton()
 		searchControllerBar.scopeButtonTitles = scopeButtonTitles
 		searchControllerBar.textField?.theme_textColor = "Global.textColor"
 	}
