@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIScrollView {
+extension UITableView {
 	var isAtTop: Bool {
 		return contentOffset.y <= verticalOffsetForTop
 	}

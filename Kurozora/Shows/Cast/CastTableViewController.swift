@@ -7,19 +7,22 @@
 //
 
 import UIKit
-import SwiftyJSON
-import Kingfisher
 import BottomPopup
 import EmptyDataSet_Swift
 
-class CastTableViewController: BottomPopupViewController, UICollectionViewDataSource, UICollectionViewDelegate, EmptyDataSetDelegate, EmptyDataSetSource {
+class CastCollectionViewController: BottomPopupViewController, EmptyDataSetDelegate, EmptyDataSetSource {
+	@IBOutlet var grabberView: UIView! {
+		didSet {
+			grabberView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+		}
+	}
     @IBOutlet var collectionView: UICollectionView!
-    
+
     var actors: [ActorsElement]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup collection view
         collectionView.dataSource = self
@@ -36,52 +39,42 @@ class CastTableViewController: BottomPopupViewController, UICollectionViewDataSo
 				.isScrollAllowed(true)
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    // MARK: - Collection view data source
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let actorsCount = actors?.count else { return 0 }
-        
-        return actorsCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
-        
-        if let actorName = actors?[indexPath.row].name {
-            castCell.actorName.text = actorName
-			castCell.actorName.theme_textColor = "Global.tintColor"
-        }
-        
-        if let actorRole = actors?[indexPath.row].role {
-            castCell.actorJob.text = actorRole
-			castCell.actorJob.theme_textColor = "Global.textColor"
-        }
-        
-        if let actorImage = actors?[indexPath.row].image, actorImage != ""  {
-            let actorImageUrl = URL(string: actorImage)
-            let resource = ImageResource(downloadURL: actorImageUrl!)
-            castCell.actorImageView.kf.indicatorType = .activity
-            castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
-		} else {
-			castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
-		}
 
-		castCell.separatorView.theme_backgroundColor = "Global.separatorColor"
-        
-        return castCell
-    }
-    
     // Bottom popup delegate methods
     override func getPopupHeight() -> CGFloat {
         let height: CGFloat = UIScreen.main.bounds.size.height / 1.5
         return height
     }
 }
+
+// MARK: - UICollectionViewDataSource
+extension CastCollectionViewController: UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		guard let actorsCount = actors?.count else { return 0 }
+		return actorsCount
+	}
+
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
+		castCell.actorElement = actors?[indexPath.row]
+		castCell.delegate = self
+		return castCell
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension CastCollectionViewController: UICollectionViewDelegate {
+
+}
+
+// MARK: - ShowCharacterCellDelegate
+extension CastCollectionViewController: ShowCharacterCellDelegate {
+	func presentPhoto(withString string: String, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(string: string, from: imageView)
+	}
+
+	func presentPhoto(withUrl url: String, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(url: url, from: imageView)
+	}
+}
+

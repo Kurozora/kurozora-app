@@ -7,29 +7,37 @@
 //
 
 import KCommonKit
-import Alamofire
-import SwiftyJSON
-import SCLAlertView
-import PusherSwift
 
 class LoginViewController: UIViewController {
     var window: UIWindow?
 
-	@IBOutlet weak var usernameTextField: UITextField!
-	@IBOutlet weak var passwordTextField: UITextField!
-	@IBOutlet weak var loginButton: TKTransitionSubmitButton!
-	@IBOutlet weak var forgotPasswordButton: UIButton!
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
+	@IBOutlet weak var usernameTextField: UITextField! {
+		didSet {
+			usernameTextField.theme_textColor = KThemePicker.textColor.rawValue
+			usernameTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var passwordTextField: UITextField! {
+		didSet {
+			passwordTextField.theme_textColor = KThemePicker.textColor.rawValue
+			passwordTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var loginButton: TKTransitionSubmitButton! {
+		didSet {
+			loginButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			loginButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var forgotPasswordButton: UIButton! {
+		didSet {
+			forgotPasswordButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		forgotPasswordButton.theme_setTitleColor("Global.textColor", forState: .normal)
-		loginButton.theme_setTitleColor("Global.textColor", forState: .normal)
-		loginButton.theme_backgroundColor = "Global.tintColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
  
         loginButton.isEnabled = false
 		loginButton.alpha = 0.5

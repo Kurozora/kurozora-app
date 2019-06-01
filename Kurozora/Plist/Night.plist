@@ -18,6 +18,8 @@
 		<string>#FFF</string>
 		<key>separatorColor</key>
 		<string>#C6C5C5</string>
+		<key>separatorColorLight</key>
+		<string>#555555</string>
 	</dict>
 	<key>Forums</key>
 	<dict>

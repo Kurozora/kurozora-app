@@ -84,15 +84,11 @@ public class WorkflowController {
 		if UIApplication.topViewController() as? ManageActiveSessionsController != nil {
 		} else {
 			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
+			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
+			manageActiveSessionsController?.dismissEnabled = true
+			let kurozoraNavigationController = KNavigationController.init(rootViewController: manageActiveSessionsController!)
 
-			let splitView = storyBoard.instantiateViewController(withIdentifier: "SettingsSplitView") as? UISplitViewController
-			let kurozoraNavigationController = storyBoard.instantiateViewController(withIdentifier: "SettingsController") as? KurozoraNavigationController
-			let vc = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
-
-			kurozoraNavigationController?.setViewControllers([vc!], animated: true)
-			splitView?.showDetailViewController(kurozoraNavigationController!, sender: nil)
-
-			UIApplication.topViewController()?.present(splitView!, animated: true)
+			UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
 		}
 	}
 
@@ -115,11 +111,11 @@ public class WorkflowController {
 					banner.haptic = .none
 				}
 				// Notification sound feedback
-				if UserSettings.notificationsSound() {
-					banner.sound = .success
-				} else {
-					banner.sound = .none
-				}
+//				if UserSettings.notificationsSound() {
+//					banner.sound = .success
+//				} else {
+//					banner.sound = .none
+//				}
 				// Notification persistency
 				if UserSettings.notificationsPersistent() == 0 {
 					banner.autoDismiss = true
@@ -142,11 +138,11 @@ public class WorkflowController {
 					statusBanner.haptic = .none
 				}
 				// Notification sound feedback
-				if UserSettings.notificationsSound() {
-					statusBanner.sound = .success
-				} else {
-					statusBanner.sound = .none
-				}
+//				if UserSettings.notificationsSound() {
+//					statusBanner.sound = .success
+//				} else {
+//					statusBanner.sound = .none
+//				}
 				// Notification persistency
 				if UserSettings.notificationsPersistent() == 0 {
 					statusBanner.autoDismiss = true

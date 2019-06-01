@@ -2,9 +2,9 @@
 #define CMARK_AST_H
 
 #include <stdio.h>
+#include "references.h"
 #include "node.h"
 #include "buffer.h"
-#include "memory.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,6 +22,7 @@ struct cmark_parser {
   bufsize_t column;
   bufsize_t first_nonspace;
   bufsize_t first_nonspace_column;
+  bufsize_t thematic_break_kill_pos;
   int indent;
   bool blank;
   bool partially_consumed_tab;

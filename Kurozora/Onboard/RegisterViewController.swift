@@ -12,28 +12,41 @@ import SwiftyJSON
 import SCLAlertView
 
 class RegisterViewController: UIViewController {
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var registerButton: UIButton!
-    
+	@IBOutlet weak var usernameTextField: UITextField! {
+		didSet {
+			usernameTextField.theme_textColor = KThemePicker.textColor.rawValue
+			usernameTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var emailTextField: UITextField! {
+		didSet {
+			emailTextField.theme_textColor = KThemePicker.textColor.rawValue
+			emailTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var passwordTextField: UITextField! {
+		didSet {
+			passwordTextField.theme_textColor = KThemePicker.textColor.rawValue
+			passwordTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var registerButton: UIButton! {
+		didSet {
+			registerButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			registerButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     
     var imagePicker = UIImagePickerController()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        registerButton.isEnabled = false
-		registerButton.alpha = 0.5
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		registerButton.theme_setTitleColor("Global.textColor", forState: .normal)
-		registerButton.theme_backgroundColor = "Global.tintColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		registerButton.isEnabled = false
+		registerButton.alpha = 0.5
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -44,10 +57,6 @@ class RegisterViewController: UIViewController {
 		passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 	}
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     //MARK: - IBActions
     @IBAction func dismissPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -121,7 +130,6 @@ class RegisterViewController: UIViewController {
 
 	// Image picker
     @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
-        
         let alert = UIAlertController(title: "Profile Picture 🖼", message: "Choose an awesome picture 😉", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
             self.openCamera()

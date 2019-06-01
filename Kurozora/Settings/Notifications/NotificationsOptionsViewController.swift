@@ -9,33 +9,17 @@
 import UIKit
 
 class NotificationsOptionsViewController: UICollectionViewController {
-	var segueType: SegueType!
+	var segueType: NotificationSegueIdentifier!
 	public var segueIdentifier: String!
-
-	enum SegueType: String {
-		case notificationsGrouping = "notificationsGroupingSegue"
-		case bannerStyle = "bannerStyleSegue"
-	}
-
-	enum NotificationGrouping: Int {
-		case automatic = 0
-		case byType
-		case off
-	}
-
-	enum BannerStyle: Int {
-		case temporary = 0
-		case persistent
-	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		segueType = SegueType(rawValue: segueIdentifier)
+		segueType = NotificationSegueIdentifier(rawValue: segueIdentifier)
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -55,7 +39,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 
 		switch segueType {
 		case .notificationsGrouping:
-			let grouping = NotificationGrouping(rawValue: indexPath.item)!
+			let grouping = NotificationGroupStyle(rawValue: indexPath.item)!
 			let selected = UserSettings.notificationsGrouping()
 
 			switch grouping {
@@ -71,7 +55,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 				notificationsGroupingCell.isSelected = true
 			}
 		case .bannerStyle:
-			let bannerStyle = BannerStyle(rawValue: indexPath.item)!
+			let bannerStyle = NotificationBannerStyle(rawValue: indexPath.item)!
 			let selected = UserSettings.notificationsPersistent()
 
 			switch bannerStyle {

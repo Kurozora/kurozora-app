@@ -23,7 +23,7 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		Service.shared.getThemes( withSuccess: { (themes) in
 			self.themes = themes
@@ -54,13 +54,13 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 		guard let themeID = theme?.id else { return }
 		let HUD = navigationController!.showHUD("Downloading \(themeName)...")
 
-		KurozoraThemes.downloadThemeTask(for: theme) { isSuccess in
+		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
 			HUD.label.text = isSuccess ? "Done!" : "Download failed :("
 			HUD.mode = .text
 			HUD.hide(animated: true, afterDelay: 1)
 
 			if isSuccess {
-				KurozoraThemes.switchTo(theme: themeID)
+				KThemeStyle.switchTo(theme: themeID)
 			}
 		}
 	}
@@ -70,7 +70,7 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 extension ManageThemesController: UIAlertViewDelegate {
 	fileprivate func tapDownload(for theme: ThemesElement?) {
 		guard let themeID = theme?.id else { return }
-		guard KurozoraThemes.themeExist(for: themeID) else {
+		guard KThemeStyle.themeExist(for: themeID) else {
 			let title   = "Not Downloaded"
 			let message = "Download the theme right now?"
 
@@ -90,7 +90,7 @@ extension ManageThemesController: UIAlertViewDelegate {
 			return
 		}
 
-		KurozoraThemes.switchTo(theme: themeID)
+		KThemeStyle.switchTo(theme: themeID)
 	}
 }
 

@@ -16,23 +16,12 @@ class LibraryViewController: TabmanViewController {
 	@IBOutlet weak var changeLayoutButton: UIBarButtonItem!
 
 	lazy var viewControllers = [UIViewController]()
-	private var shadowImageView: UIImageView?
-
 	let librarySections: [LibrarySectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
 	let bar = TMBar.ButtonBar()
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		if shadowImageView == nil {
-			shadowImageView = findShadowImage(under: navigationController!.navigationBar)
-		}
-		shadowImageView?.isHidden = true
-	}
-
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		dataSource = self
 
 		// Indicator
@@ -43,8 +32,8 @@ class LibraryViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: "Global.tintColor")
-			button.tintColor = ThemeManager.color(for: "Global.tintColor")?.withAlphaComponent(0.4)
+			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())
+			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())?.withAlphaComponent(0.4)
 		}
 		bar.buttons.transitionStyle = .progressive
 
@@ -60,12 +49,6 @@ class LibraryViewController: TabmanViewController {
 		addBar(bar, dataSource: self, at: .top)
 		bar.isHidden = (bar.items?.count)! <= 1
     }
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		shadowImageView?.isHidden = false
-	}
 
 	// MARK: - Functions
     private func initializeViewControllers(with count: Int) {
@@ -92,19 +75,6 @@ class LibraryViewController: TabmanViewController {
 
         self.viewControllers = viewControllers
     }
-
-	private func findShadowImage(under view: UIView) -> UIImageView? {
-		if view is UIImageView && view.bounds.size.height <= 1 {
-			return (view as! UIImageView)
-		}
-
-		for subview in view.subviews {
-			if let imageView = findShadowImage(under: subview) {
-				return imageView
-			}
-		}
-		return nil
-	}
 
 	// Change layout button icon to reflect current layout when switching between views
 	private func updateChangeLayoutButtonIcon(_ layout: LibraryListStyle) {
@@ -144,11 +114,8 @@ class LibraryViewController: TabmanViewController {
 
 		// Update library list
 		currentSection.libraryLayout = libraryLayout
-		currentSection.collectionView.performBatchUpdates({
-			currentSection.collectionView.invalidateIntrinsicContentSize()
-		}) { (_) in
-
-		}
+		currentSection.collectionView.performBatchUpdates({})
+		currentSection.collectionView.reloadData()
 	}
 
 	// MARK: - IBActions
@@ -158,7 +125,7 @@ class LibraryViewController: TabmanViewController {
 
 	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
 		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		if let searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsViewController {
+		if let searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController {
 			if #available(iOS 11.0, *) {
 				let searchController = SearchController(searchResultsController: searchResultsViewController)
 				searchController.delegate = self
@@ -183,11 +150,9 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		if let sectionsCount = librarySections?.count, sectionsCount != 0 {
-			initializeViewControllers(with: sectionsCount)
-			return sectionsCount
-		}
-		return 0
+		guard let sectionsCount = librarySections?.count else { return 0 }
+		initializeViewControllers(with: sectionsCount)
+		return sectionsCount
 	}
 
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {

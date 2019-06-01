@@ -28,14 +28,13 @@ def common_pods
 end
 
 def kurozora_pods
-	pod 'Hero', '1.4'
+	pod 'Hero'
 	pod 'ColorSlider'
 	pod 'Cosmos'
 	pod 'IQKeyboardManagerSwift'
 	pod 'IBAnimatable'
 	pod 'MBProgressHUD'
-#	pod 'NGAParallaxMotion'
-	pod 'NotificationBannerSwift', '1.8.0'
+	pod 'NotificationBannerSwift'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'RichEditorView'
@@ -55,11 +54,10 @@ target 'KCommonKit' do
 	common_pods
 end
 
-# Require Swift version 4.2 on all pods
 post_install do |installer|
 	installer.pods_project.targets.each do |target|
 		target.build_configurations.each do |config|
-			config.build_settings['SWIFT_VERSION'] = '4.2'
+			config.build_settings['SWIFT_VERSION'] = '5.0'
 		end
 	end
 end

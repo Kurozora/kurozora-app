@@ -13,6 +13,20 @@ import Pageboy
 import SCLAlertView
 import SwiftTheme
 
+enum ForumSortingStyle: String {
+	case top = "top"
+	case recent = "recent"
+
+	func image() -> UIImage? {
+		switch self {
+		case .top:
+			return #imageLiteral(resourceName: "sort_top")
+		case .recent:
+			return #imageLiteral(resourceName: "sort_recent")
+		}
+	}
+}
+
 class ForumsViewController: TabmanViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var createThreadButton: UIButton!
@@ -25,7 +39,7 @@ class ForumsViewController: TabmanViewController {
 	}
 	var sectionsCount: Int?
 	var threadSorting: String?
-	var vc: KRichTextEditorControllerView?
+	var kRichTextEditorControllerView: KRichTextEditorControllerView?
 	private var shadowImageView: UIImageView?
 	lazy var viewControllers = [UIViewController]()
 
@@ -42,7 +56,7 @@ class ForumsViewController: TabmanViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		Service.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
@@ -57,12 +71,12 @@ class ForumsViewController: TabmanViewController {
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
 		bar.indicator.overscrollBehavior = .bounce
-		bar.indicator.tintColor = .orange
+		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: "Global.tintColor")
-			button.tintColor = ThemeManager.color(for: "Global.tintColor")?.withAlphaComponent(0.4)
+			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())
+			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())?.withAlphaComponent(0.4)
 		}
 
 		// Layout
@@ -70,7 +84,7 @@ class ForumsViewController: TabmanViewController {
 		bar.layout.interButtonSpacing = 24.0
 
 		// Style
-		bar.backgroundView.style = .blur(style: .dark)
+		bar.backgroundView.style = .blur(style: .regular)
 		bar.fadesContentEdges = true
 
 		// configure the bar
@@ -78,7 +92,7 @@ class ForumsViewController: TabmanViewController {
 		bar.isHidden = false
 
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		vc = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
+		kRichTextEditorControllerView = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
     }
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -126,7 +140,8 @@ class ForumsViewController: TabmanViewController {
 			let currentSection = self.currentViewController as? ForumsChildViewController
 			currentSection?.threadOrder = value
 			currentSection?.pageNumber = 0
-			self.sortingBarButtonItem.title = title
+			self.sortingBarButtonItem.title = value
+			self.sortingBarButtonItem.image = ForumSortingStyle(rawValue: value)?.image()
 			currentSection?.fetchThreads()
 		})
 
@@ -143,10 +158,10 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-		vc?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
-		vc?.sectionID = currentIndex! + 1
+		kRichTextEditorControllerView?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
+		kRichTextEditorControllerView?.sectionID = currentIndex! + 1
 
-		let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: vc!)
+		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorControllerView!)
 		if #available(iOS 11.0, *) {
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 		}

@@ -10,15 +10,11 @@ import UIKit
 import KCommonKit
 import Kingfisher
 import SCLAlertView
-import IBAnimatable
+import SwiftTheme
 
 let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 
 class SettingsViewController: UITableViewController {
-	@IBOutlet weak var usernameLabel: UILabel!
-	@IBOutlet weak var userAvatar: UIImageView!
-	@IBOutlet weak var cacheSizeLabel: UILabel!
-
     //    let FacebookPageDeepLink = "fb://profile/713541968752502"
     //    let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
     let TwitterPageDeepLink = "twitter://user?id=991929359052177409"
@@ -27,72 +23,34 @@ class SettingsViewController: UITableViewController {
     let MediumPageURL = "https://medium.com/@kurozora"
 
 	// Section vars
-	let sectionTitles = ["Account", "Admin", "System", "General", "IAP", "Rate", "Social", "Privacy"]
+	let sectionTitles = ["Account", "Admin", "Alerts", "General", "In-App Purchases", "Rate", "Social", "About"]
 	var numberOfCollapsedCells = 0
 	var icons = [UIImage]()
 	var firstTime = true
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-		
-		userAvatar.image = User.currentUserAvatar()
-        usernameLabel.text = GlobalVariables().KDefaults["username"]
-        
-        // Calculate cache size
-        caculateCache()
-    }
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		
-		// facebookLikeButton.objectID = "https://www.facebook.com/KurozoraApp"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
 		tableView.register(UINib(nibName: "CollapsibleSectionHeaderCell", bundle: nil), forCellReuseIdentifier: "SectionHeaderCell")
-		tableView.register(UINib(nibName: "CollapsedIconTableCell", bundle: nil), forCellReuseIdentifier: "CollapsedIconTableCell")
-		caculateCache()
-//		UserSettings.set([], forKey: .collapsedSections)
+//		tableView.register(UINib(nibName: "CollapsedIconTableCell", bundle: nil), forCellReuseIdentifier: "CollapsedIconTableCell")
+
+		UserSettings.set([], forKey: .collapsedSections)
+
 		if firstTime {
 			firstTime = false
 			tableView.reloadData()
 		}
 	}
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		for cell in tableView.visibleCells {
-			guard let indexPath = tableView.indexPath(for: cell) else { return }
-			var rectCorner: UIRectCorner!
-			var roundCorners = true
-			let numberOfRows: Int = tableView.numberOfRows(inSection: indexPath.section)
-
-			if numberOfRows == 1 {
-				// single cell
-				rectCorner = UIRectCorner.allCorners
-			} else if indexPath.row == numberOfRows - 1 {
-				// bottom cell
-				rectCorner = [.bottomLeft, .bottomRight]
-			} else if indexPath.row == 0 {
-				// top cell
-				rectCorner = [.topLeft, .topRight]
-			} else {
-				roundCorners = false
-			}
-
-			if roundCorners {
-				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
-			}
-		}
-	}
-    
     // MARK: - Functions
-    func caculateCache() {
+	func calculateCache(withSuccess successHandler:@escaping (String) -> Void) {
 		ImageCache.default.calculateDiskStorageSize { (result) in
 			switch result {
 			case .success(let size):
 				// Convert from bytes to mebibytes (2^20)
 				let sizeInMiB = Double(size) / 1024 / 1024
-				self.cacheSizeLabel.text = String(format:"%.2f", sizeInMiB) + "MiB"
+				successHandler(String(format:"%.2f", sizeInMiB) + "MiB")
 			case .failure(let error):
 				print("Cache size calculation error: \(error)")
 			}
@@ -139,29 +97,28 @@ class SettingsViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension SettingsViewController {
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 44
+		return (section != sectionTitles.count - 1) ? 33 : 1
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let numberOfRows: Int = tableView.numberOfRows(inSection: section)
+//		let numberOfRows: Int = tableView.numberOfRows(inSection: section)
 
 		let sectionCell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell") as! CollapsibleSectionHeaderCell
-		sectionCell.sectionTitleLabel.text = sectionTitles[section]
-		sectionCell.sectionTitleLabel.theme_textColor = "Global.textColor"
-		sectionCell.sectionButton.tag = section
-		sectionCell.sectionButton.addTarget(self, action: #selector(collapse(_:)), for: .touchUpInside)
-
-		let collapsedSections = UserSettings.collapsedSections()
-		if collapsedSections.contains(section) {
-			sectionCell.sectionButton.setTitle("Show More", for: .normal)
-		} else {
-			sectionCell.sectionButton.setTitle("Show Less", for: .normal)
-		}
-
-		if numberOfRows == 1 && sectionCell.sectionButton.title(for: .normal) == "Show Less" {
-			sectionCell.sectionButton.isEnabled = false
-			sectionCell.sectionButton.isHidden = true
-		}
+		sectionCell.sectionTitleLabel.text = (section != sectionTitles.count - 1) ? sectionTitles[section].uppercased() : ""
+//		sectionCell.sectionButton.tag = section
+//		sectionCell.sectionButton.addTarget(self, action: #selector(collapse(_:)), for: .touchUpInside)
+//
+//		let collapsedSections = UserSettings.collapsedSections()
+//		if collapsedSections.contains(section) {
+//			sectionCell.sectionButton.setTitle("Show More", for: .normal)
+//		} else {
+//			sectionCell.sectionButton.setTitle("Show Less", for: .normal)
+//		}
+//
+//		if numberOfRows == 1 && sectionCell.sectionButton.title(for: .normal) == "Show Less" {
+//			sectionCell.sectionButton.isEnabled = false
+//			sectionCell.sectionButton.isHidden = true
+//		}
 
 		return sectionCell.contentView
 	}
@@ -183,7 +140,8 @@ extension SettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let collapsedSections = UserSettings.collapsedSections()
+//		let collapsedSections = UserSettings.collapsedSections()
+		let settingsCell = super.tableView(tableView, cellForRowAt: indexPath) as! SettingsCell
 
 		if let isAdmin = User.isAdmin() {
 			if !isAdmin && indexPath.section == 1 {
@@ -191,24 +149,26 @@ extension SettingsViewController {
 			}
 		}
 
-		if collapsedSections.contains(indexPath.section) && !firstTime {
-			let collapsedIconTableCell = tableView.dequeueReusableCell(withIdentifier: "CollapsedIconTableCell", for: indexPath) as! CollapsedIconTableCell
-			collapsedIconTableCell.numberOfCollapsedItems = numberOfCollapsedCells
-			collapsedIconTableCell.icons = icons
+//		if collapsedSections.contains(indexPath.section) && !firstTime {
+//			let collapsedIconTableCell = tableView.dequeueReusableCell(withIdentifier: "CollapsedIconTableCell", for: indexPath) as! CollapsedIconTableCell
+//			collapsedIconTableCell.numberOfCollapsedItems = numberOfCollapsedCells
+//			collapsedIconTableCell.icons = icons
+//
+//			return collapsedIconTableCell
+//		}
 
-			return collapsedIconTableCell
-		}
-
-		return super.tableView(tableView, cellForRowAt: indexPath)
+		return settingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
 
 		switch (indexPath.section, indexPath.row) {
-		// case (0,0): break
-		// case (1,0): break
-		// case (2,0): break
+//		case (0,0): break
+//		case (1,0): break
+//		case (2,0): break
+//		case (3,0): break
 		case (3,1): // Clear cache
 			let alertView = SCLAlertView()
 			alertView.addButton("Clear 🗑", action: {
@@ -222,32 +182,29 @@ extension SettingsViewController {
 				KingfisherManager.shared.cache.cleanExpiredDiskCache()
 
 				// Refresh cacheSizeLabel
-				self.caculateCache()
+				self.calculateCache(withSuccess: { (cacheSize) in
+					settingsCell.cacheSizeLabel?.text = cacheSize
+				})
 			})
 
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
-			//        case (0,2):
-			//        case (3,0):
-			//            // Unlock features
-			//            let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
-			//            navigationController?.pushViewController(controller, animated: true)
-			//        case (3,1):
-			//            // Restore purchases
-			//            InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
-			//
-			//                if let _ = task.result {
-			//                    let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-			//                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-			//
-			//                    self.presentViewController(alert, animated: true, completion: nil)
-			//                }
-			//
-			//                return nil
-			//            })
-			//        case (4,0):
-			//            // Rate app
-		//            iRate.sharedInstance().openRatingsPageInAppStore()
-		case (5,0): // Open Twitter
+//		case (4,0): // Unlock features
+//			let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
+//			navigationController?.pushViewController(controller, animated: true)
+//		case (4,1): // Restore purchases
+//			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
+//				if let _ = task.result {
+//					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+//					alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+//
+//					self.presentViewController(alert, animated: true, completion: nil)
+//				}
+//
+//				return nil
+//			})
+//		case (5,0): // Rate app
+//			iRate.sharedInstance().openRatingsPageInAppStore()
+		case (6,0): // Open Twitter
 			var url: URL?
 			let twitterScheme = URL(string: "twitter://")!
 
@@ -257,7 +214,7 @@ extension SettingsViewController {
 				url = URL(string: TwitterPageURL)
 			}
 			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-		case (5,1): // Open Medium
+		case (6,1): // Open Medium
 			var url: URL?
 			let mediumScheme = URL(string: "medium://")!
 
@@ -273,7 +230,6 @@ extension SettingsViewController {
 	}
 
 	//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-	//
 	//        switch section {
 	//        case 0:
 	//            return nil
@@ -301,20 +257,97 @@ extension SettingsViewController {
 
 // MARK: - UITableViewDelegate
 extension SettingsViewController {
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+
+		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+
+		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+	}
+
 	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
 		if let footerView = view as? UITableViewHeaderFooterView {
-			footerView.textLabel?.theme_textColor = "Global.textColor"
-			footerView.textLabel?.alpha = 0.50
+			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 }
 
-class SettingsCell: AnimatableTableViewCell {
-	override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-		if highlighted {
-			contentView.alpha = 0.50
-		} else {
-			contentView.alpha = 1.0
+class SettingsCell: UITableViewCell {
+	@IBOutlet weak var cellTitle: UILabel? {
+		didSet {
+			self.cellTitle?.theme_textColor = KThemePicker.textColor.rawValue
 		}
+	}
+	@IBOutlet weak var cellSubTitle: UILabel? {
+		didSet {
+			self.cellSubTitle?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var usernameLabel: UILabel? {
+		didSet {
+			self.usernameLabel?.text = GlobalVariables().KDefaults["username"]
+			self.usernameLabel?.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var userAvatar: UIImageView? {
+		didSet {
+			self.userAvatar?.image = User.currentUserAvatar()
+			self.userAvatar?.borderColor = ThemeManager.color(for: KThemePicker.tableViewCellChevronColor.stringValue())
+		}
+	}
+	@IBOutlet weak var cacheSizeLabel: UILabel? {
+		didSet {
+			self.cacheSizeLabel?.theme_textColor = KThemePicker.separatorColor.rawValue
+		}
+	}
+	@IBOutlet weak var selectedView: UIView? {
+		didSet {
+			self.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			self.selectedView?.clipsToBounds = true
+			self.selectedView?.cornerRadius = 10
+		}
+	}
+	@IBOutlet weak var bubbleView: UIView? {
+		didSet {
+			self.bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			self.bubbleView?.clipsToBounds = true
+			self.bubbleView?.cornerRadius = 10
+		}
+	}
+	@IBOutlet weak var chevronImageView: UIImageView? {
+		didSet {
+			self.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		}
+	}
+	@IBOutlet weak var notificationGroupingValueLabel: UILabel? {
+		didSet {
+			self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping())?.stringValue()
+			self.notificationGroupingValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var bannerStyleValueLabel: UILabel? {
+		didSet {
+			self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent())?.stringValue()
+			self.bannerStyleValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.selectionStyle = .none
 	}
 }

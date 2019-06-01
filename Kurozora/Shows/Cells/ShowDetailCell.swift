@@ -1,5 +1,5 @@
 //
-//  ShowDetailCell.swift
+//  InformationTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 13/08/2018.
@@ -8,19 +8,151 @@
 
 import UIKit
 
-class ShowDetailCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
+class InformationTableViewCell: UITableViewCell {
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			titleLabel.theme_textColor = KThemePicker.tintColor.rawValue
+			titleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var detailLabel: UILabel! {
+		didSet {
+			detailLabel.theme_textColor = KThemePicker.textColor.rawValue
+			detailLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var separatorView: UIView! {
+		didSet {
+			separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
+		}
+	}
+
+	var indexPathRow: Int?
+	var showDetailsElement: ShowDetailsElement? {
+		didSet {
+			setup()
+		}
+	}
+
+	fileprivate func setup() {
+		guard let showDetail = showDetailsElement else { return }
+		if let isAdmin = User.isAdmin(), isAdmin == false && indexPathRow == 0 {
+			indexPathRow = 2
+		}
+
+		switch indexPathRow {
+		case 0:
+			titleLabel.text = "ID"
+			if let showID = showDetail.id, showID > 0 {
+				detailLabel.text = "\(showID)"
+			} else {
+				detailLabel.text = "No show id found"
+			}
+		case 1:
+			titleLabel.text = "IMDB ID"
+			if let imdbId = showDetail.imdbId, imdbId != "" {
+				detailLabel.text = imdbId
+			} else {
+				detailLabel.text = "No IMDB ID found"
+			}
+		case 2:
+			titleLabel.text = "Type"
+			if let type = showDetail.type, type != "" {
+				detailLabel.text = type
+			} else {
+				detailLabel.text = "-"
+			}
+		case 3:
+			titleLabel.text = "Seasons"
+			if let seasons = showDetail.seasons, seasons > 0 {
+				detailLabel.text = seasons.description
+			} else {
+				detailLabel.text = "-"
+			}
+		case 4:
+			titleLabel.text = "Episodes"
+			if let episode = showDetail.episodes, episode > 0 {
+				detailLabel.text = episode.description
+			} else {
+				detailLabel.text = "-"
+			}
+		case 5:
+			titleLabel.text = "Aired"
+			if let startDate = showDetail.startDate, let endDate = showDetail.endDate {
+				detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
+			} else {
+				detailLabel.text = "N/A - N/A"
+			}
+		case 6:
+			titleLabel.text = "Network"
+			if let network = showDetail.network, network != "" {
+				detailLabel.text = network
+			} else {
+				detailLabel.text = "-"
+			}
+		case 7:
+			titleLabel.text = "Duration"
+			if let duration = showDetail.runtime, duration > 0 {
+				detailLabel.text = "\(duration) min"
+			} else {
+				detailLabel.text = "-"
+			}
+		case 8:
+			titleLabel.text = "Rating"
+			if let watchRating = showDetail.watchRating, watchRating != "" {
+				detailLabel.text = watchRating
+			} else {
+				detailLabel.text = "-"
+			}
+		case 9:
+			titleLabel.text = "Languages"
+			if let languages = showDetail.languages, languages != "" {
+				detailLabel.text = languages
+			} else {
+				detailLabel.text = "Japanese"
+			}
+		case 10:
+			titleLabel.text = "Genres"
+			if let genre = showDetail.genre, genre != "" {
+				detailLabel.text = genre
+			} else {
+				detailLabel.text = "-"
+			}
+			separatorView.isHidden = true
+			//            case 9:
+			//                cell.titleLabel.text = "English Titles"
+			//                if let englishTitle = showDetailsElement?.englishTitles, englishTitle != "" {
+			//         er           cell.detailLabel.text = englishTitle
+			//                } else {
+			//                    cell.detailLabel.text = "-"
+			//                }
+			//            case 10:
+			//                cell.titleLabel.text = "Japanese Titles"
+			//                if let japaneseTitle = showDetailsElement?.japaneseTitles, japaneseTitle != "" {
+			//                    cell.detailLabel.text = japaneseTitle
+			//                } else {
+			//                    cell.detailLabel.text = "-"
+			//                }
+			//            case 11:
+			//                cell.titleLabel.text = "Synonyms"
+			//                if let synonyms = showDetailsElement?.synonyms, synonyms != "" {
+			//                    cell.detailLabel.text = synonyms
+			//                } else {
+			//                    cell.detailLabel.text = "-"
+			//                }
+		default: break
+		}
+	}
 }
 
 //import UIKit
 //
-//class ShowDetailCell: BaseCell {
+//class InformationTableViewCell: BaseCell {
 //
-//    var showDetails: Show? {
+//    var showDetailsElement: Show? {
 //        didSet {
-//            guard let showDetails = showDetails else { return }
-//            configure(showDetails)
+//            guard let showDetailsElement = showDetailsElement else { return }
+//            configure(showDetailsElement)
 //        }
 //    }
 //
@@ -264,7 +396,6 @@ class ShowDetailCell: UITableViewCell {
 //}
 //
 //extension UIView {
-//
 //    func addConstraintsWithFormat(format: String, views: UIView...) {
 //        var viewsDictionary = [String: UIView]()
 //        for (index, view) in views.enumerated() {

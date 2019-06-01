@@ -9,61 +9,40 @@
 import KCommonKit
 import Kingfisher
 import SCLAlertView
+import SwiftTheme
 
 class AccountTableViewController: UITableViewController {
-    @IBOutlet weak var userAvatar: UIImageView!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var userEmailLabel: UILabel!
+	@IBOutlet weak var userAvatar: UIImageView! {
+		didSet {
+			self.userAvatar?.image = User.currentUserAvatar()
+			self.userAvatar?.borderColor = ThemeManager.color(for: KThemePicker.subTextColor.stringValue())
+		}
+	}
+	@IBOutlet weak var usernameLabel: UILabel! {
+		didSet {
+			usernameLabel.text = GlobalVariables().KDefaults["username"]
+			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var userEmailLabel: UILabel! {
+		didSet {
+			userEmailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-		// Setup user avatar
-		userAvatar.image = User.currentUserAvatar()
-
-		// Setup username
-        usernameLabel.text = GlobalVariables().KDefaults["username"]
-		usernameLabel.theme_textColor = "Global.textColor"
-
 		// Setup user email
-        userEmailLabel.text = "some@email.com"
-        userEmailLabel.theme_textColor = "Global.textColor"
+		userEmailLabel.text = "\(GlobalVariables().KDefaults["username"] ?? "kurozora")@kurozora.app"
         userEmailLabel.textAlignment = .center
         userEmailLabel.font = UIFont(name: "System", size: 13)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
     }
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		for cell in tableView.visibleCells {
-			guard let indexPath = tableView.indexPath(for: cell) else { return }
-			var rectCorner: UIRectCorner!
-			var roundCorners = true
-			let numberOfRows: Int = tableView.numberOfRows(inSection: indexPath.section)
-
-			if numberOfRows == 1 {
-				// single cell
-				rectCorner = UIRectCorner.allCorners
-			} else if indexPath.row == numberOfRows - 1 {
-				// bottom cell
-				rectCorner = [.bottomLeft, .bottomRight]
-			} else if indexPath.row == 0 {
-				// top cell
-				rectCorner = [.topLeft, .topRight]
-			} else {
-				roundCorners = false
-			}
-
-			if roundCorners {
-				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
-			}
-		}
-	}
 }
 
 // MARK: - UITableViewDataSource
@@ -72,7 +51,7 @@ extension AccountTableViewController {
 		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
 		switch (indexPath.section, indexPath.row) {
-		//		case (0,0): break
+//		case (0,0): break
 		case (1,0):
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
@@ -93,8 +72,27 @@ extension AccountTableViewController {
 				}
 			})
 
-			alertView.showNotice("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
+			alertView.showError("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
 		default: break
 		}
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension AccountTableViewController {
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+
+		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+
+		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 	}
 }

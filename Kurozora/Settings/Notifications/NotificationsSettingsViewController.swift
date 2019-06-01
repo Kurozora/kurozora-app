@@ -11,81 +11,37 @@ import Kingfisher
 
 class NotificationsSettingsViewController: UITableViewController {
 	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {
+		didSet {
+			allowNotificationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+	@IBOutlet weak var soundsSwitch: UISwitch! {
+		didSet {
+			soundsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+	@IBOutlet weak var vibrationsSwitch: UISwitch! {
+		didSet {
+			vibrationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+	@IBOutlet weak var badgeSwitch: UISwitch! {
+		didSet {
+			badgeSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
+		}
+	}
 
-	@IBOutlet weak var allowNotificationsSwitch: UISwitch!
-	@IBOutlet weak var soundsSwitch: UISwitch!
-	@IBOutlet weak var vibrationsSwitch: UISwitch!
-	@IBOutlet weak var badgeSwitch: UISwitch!
-	@IBOutlet weak var notificationGroupingValueLabel: UILabel!
-	@IBOutlet weak var bannerStyleValueLabel: UILabel!
-
-	var onceOnly = true
 	var numberOfSections = 4
-
-	enum Alerts: Int {
-		case basic = 0
-		case icon
-		case status
-	}
-
-	enum Switch: Int {
-		case allowNotifications = 0
-		case sounds
-		case vibrations
-		case badge
-	}
-
-	enum GroupingType: Int {
-		case automatic = 0
-		case byType
-		case off
-	}
-
-	enum BannerStyle: Int {
-		case temporary = 0
-		case persistent
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		allowNotificationsSwitch.theme_onTintColor = "Global.tintColor"
-		soundsSwitch.theme_onTintColor = "Global.tintColor"
-		vibrationsSwitch.theme_onTintColor = "Global.tintColor"
-		badgeSwitch.theme_onTintColor = "Global.tintColor"
-
-		let groupingType = GroupingType(rawValue: UserSettings.notificationsGrouping())!
-		let bannerStyle = BannerStyle(rawValue: UserSettings.notificationsPersistent())!
-
-		var groupingValue = "Automatic"
-		var bannerStyleValue = "Temporary"
-
-		switch groupingType {
-		case .automatic: break
-		case .byType:
-			groupingValue = "By Type"
-		case .off:
-			groupingValue = "Off"
-		}
-
-		switch bannerStyle {
-		case .temporary: break
-		case .persistent:
-			bannerStyleValue = "Persistent"
-		}
-
-		notificationGroupingValueLabel.text = groupingValue
-		bannerStyleValueLabel.text = bannerStyleValue
-	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed()
 		soundsSwitch.isOn = UserSettings.notificationsSound()
 		vibrationsSwitch.isOn = UserSettings.notificationsVibration()
 		badgeSwitch.isOn = UserSettings.notificationsBadge()
-
 
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -99,37 +55,9 @@ class NotificationsSettingsViewController: UITableViewController {
 		}
 	}
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		for cell in tableView.visibleCells {
-			guard let indexPath = tableView.indexPath(for: cell) else { return }
-			var rectCorner: UIRectCorner!
-			var roundCorners = true
-			let numberOfRows: Int = tableView.numberOfRows(inSection: indexPath.section)
-
-			if numberOfRows == 1 {
-				// single cell
-				rectCorner = UIRectCorner.allCorners
-			} else if indexPath.row == numberOfRows - 1 {
-				// bottom cell
-				rectCorner = [.bottomLeft, .bottomRight]
-			} else if indexPath.row == 0 {
-				// top cell
-				rectCorner = [.topLeft, .topRight]
-			} else {
-				roundCorners = false
-			}
-
-			if roundCorners {
-				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
-			}
-		}
-	}
-
 	// MARK: - IBActions
 	@IBAction func switchTapped(_ sender: UISwitch) {
-		let switchType = Switch(rawValue: sender.tag)!
+		let switchType = NotificationOptions(rawValue: sender.tag)!
 		let isOn = sender.isOn
 
 		switch switchType {
@@ -169,8 +97,32 @@ extension NotificationsSettingsViewController {
 extension NotificationsSettingsViewController {
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.theme_textColor = "Global.textColor"
-			headerView.textLabel?.alpha = 0.50
+			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+			headerView.textLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		if settingsCell.selectedView != nil {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		if settingsCell.selectedView != nil {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 }
@@ -183,7 +135,7 @@ extension NotificationsSettingsViewController: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotificationCell", for: indexPath) as! SettingsNotificationCell
-		let alertsType = Alerts(rawValue: indexPath.row)!
+		let alertsType = NotificationAlertStyle(rawValue: indexPath.row)!
 		let selected = UserSettings.alertType()
 
 		switch alertsType {

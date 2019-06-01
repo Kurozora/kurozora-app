@@ -20,8 +20,8 @@ class KurozoraTabBarController: ESTabBarController {
 			self.tabBar.itemPositioning = .centered
 			self.tabBar.backgroundColor = .clear
 			self.tabBar.barStyle = .default
-			self.tabBar.theme_tintColor = "Global.tintColor"
-			self.tabBar.theme_barTintColor = "Global.barTintColor"
+			self.tabBar.theme_tintColor = KThemePicker.tintColor.rawValue
+			self.tabBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 
 			once = true
 		}
@@ -32,7 +32,7 @@ class KurozoraTabBarController: ESTabBarController {
 
         // Instantiate views
         let homeStoryboard = UIStoryboard(name: "home", bundle: nil)
-        let home = homeStoryboard.instantiateViewController(withIdentifier: "Home") as! HomeViewController
+        let home = homeStoryboard.instantiateViewController(withIdentifier: "Home") as! HomeCollectionViewController
         
         let libraryStoryboard = UIStoryboard(name: "library", bundle: nil)
         let library = libraryStoryboard.instantiateViewController(withIdentifier: "Library") as! LibraryViewController
@@ -50,15 +50,15 @@ class KurozoraTabBarController: ESTabBarController {
 		home.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Explore", image: #imageLiteral(resourceName: "home"), selectedImage: #imageLiteral(resourceName: "home"))
         library.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Library", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
         forums.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "note"), selectedImage: #imageLiteral(resourceName: "note"))
-        notifications.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "notification_icon.png"), selectedImage: #imageLiteral(resourceName: "notification_icon.png"))
+        notifications.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "notification"), selectedImage: #imageLiteral(resourceName: "notification"))
         profile.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Profile", image: #imageLiteral(resourceName: "user_male"), selectedImage: #imageLiteral(resourceName: "user_male"))
 
         // Setup navigation and title
-        let n1 = KurozoraNavigationController.init(rootViewController: home)
-        let n2 = KurozoraNavigationController.init(rootViewController: library)
-        let n3 = KurozoraNavigationController.init(rootViewController: forums)
-        let n4 = KurozoraNavigationController.init(rootViewController: notifications)
-        let n5 = KurozoraNavigationController.init(rootViewController: profile)
+        let n1 = KNavigationController.init(rootViewController: home)
+        let n2 = KNavigationController.init(rootViewController: library)
+        let n3 = KNavigationController.init(rootViewController: forums)
+        let n4 = KNavigationController.init(rootViewController: notifications)
+        let n5 = KNavigationController.init(rootViewController: profile)
         
         home.title = "Explore"
         library.title = "Library"

@@ -10,7 +10,7 @@ import UIKit
 import EmptyDataSet_Swift
 
 class GenresTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-	var genres: [GenresElement]? {
+	var genres: [GenreElement]? {
 		didSet {
 			tableView.reloadData()
 		}
@@ -23,14 +23,13 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-
-//		fetchGenres()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup table view
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
 		tableView.emptyDataSetSource = self
@@ -59,6 +58,7 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 	}
 }
 
+// MARK: - UITableViewDataSource
 extension GenresTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let genresCount = genres?.count else { return 0 }
@@ -66,21 +66,17 @@ extension GenresTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let genreCell = tableView.dequeueReusableCell(withIdentifier: "GenreCell", for: indexPath) as! GenreCell
+		let genreTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GenreTableViewCell", for: indexPath) as! GenreTableViewCell
 
-		if let name = genres?[indexPath.row].name {
-			genreCell.nameLabel.text = name
-			genreCell.nameLabel.theme_textColor = "Global.textColor"
-		}
+		genreTableViewCell.genreElement = genres?[indexPath.row]
 
-		if let nsfw = genres?[indexPath.row].nsfw, nsfw {
-			genreCell.nsfwView.isHidden = false
-		} else {
-			genreCell.nsfwView.isHidden = true
-		}
+		return genreTableViewCell
+	}
+}
 
-		genreCell.separatorView.theme_backgroundColor = "Global.separatorColor"
-
-		return genreCell
+// MARK - UITableViewDelegate
+extension GenresTableViewController {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
 }

@@ -11,27 +11,27 @@ import Foundation
 /**
 	List of search cases
 
-	- case show = "ShowCell"
-	- case myLibrary = "LibraryCell"
-	- case thread = "ThreadCell"
-	- case user = "UserCell"
+	- case show = "ShowResultCell"
+	- case myLibrary = "LibraryResultCell"
+	- case thread = "ThreadResultCell"
+	- case user = "UserResultCell"
 */
 enum SearchList: String {
-	case show = "ShowCell"
-	case myLibrary = "LibraryCell"
-	case thread = "ThreadCell"
-	case user = "UserCell"
+	case show = "ShowResultCell"
+	case myLibrary = "LibraryResultCell"
+	case thread = "ThreadResultCell"
+	case user = "UserResultCell"
 
 	static func fromScope(_ scope: SearchScope) -> String {
 		switch scope {
 		case .show:
-			return "ShowCell"
-		case .thread:
-			return "ThreadCell"
-		case .user:
-			return "UserCell"
+			return "ShowResultCell"
 		case .myLibrary:
-			return "LibraryCell"
+			return "LibraryResultCell"
+		case .thread:
+			return "ThreadResultCell"
+		case .user:
+			return "UserResultCell"
 		}
 	}
 }

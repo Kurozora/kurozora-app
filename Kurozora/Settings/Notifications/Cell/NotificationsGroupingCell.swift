@@ -9,16 +9,31 @@
 import UIKit
 
 class NotificationsGroupingCell: UICollectionViewCell {
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var selectedImageView: UIImageView!
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			self.titleLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var selectedImageView: UIImageView! {
+		didSet {
+			self.selectedImageView.image = nil
+		}
+	}
+	@IBOutlet weak var selectedView: UIView! {
+		didSet {
+			self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			self.selectedView.clipsToBounds = true
+			self.selectedView.cornerRadius = 10
+		}
+	}
 
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				selectedImageView.image = #imageLiteral(resourceName: "check")
-				selectedImageView.theme_tintColor = "Global.tintColor"
+				self.selectedImageView.image = #imageLiteral(resourceName: "check")
+				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 			} else {
-				selectedImageView.image = nil
+				self.selectedImageView.image = nil
 			}
 		}
 	}
@@ -26,9 +41,11 @@ class NotificationsGroupingCell: UICollectionViewCell {
 	override var isHighlighted: Bool {
 		didSet {
 			if isHighlighted {
-				contentView.alpha = 0.50
+				self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+				self.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 			} else {
-				contentView.alpha = 1.0
+				self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+				self.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 			}
 		}
 	}

@@ -6,11 +6,26 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
 import TRON
 import SwiftyJSON
 
 class ShowDetails: JSONDecodable {
+	var showDetailsElement: ShowDetailsElement?
+	var userProfile: UserProfile?
+
+	required init(json: JSON) throws {
+		let showDetailsJson = json["anime"]
+		let userProfileJson = json["user"]
+
+		let showDetailsElement = try? ShowDetailsElement(json: showDetailsJson)
+		let userProfile = try? UserProfile(json: userProfileJson)
+
+		self.showDetailsElement = showDetailsElement
+		self.userProfile = userProfile
+	}
+}
+
+class ShowDetailsElement: JSONDecodable {
     // General
     let id: Int?
 	let imdbId: String?
@@ -45,60 +60,54 @@ class ShowDetails: JSONDecodable {
     let nsfw: Bool?
     
     // Extra's
+	let languages: String?
     let englishTitles: String?
     let japaneseTitles: String?
     let synonyms: String?
     let externalLinks: String?
-    let youtubeId: String?
-    
-    // User
-    var currentRating: Double?
-	var libraryStatus: String?
-    
+    let youtubeID: String?
+
     required init(json: JSON) throws {
         // Anime
-        id = json["anime"]["id"].intValue
-		imdbId = json["anime"]["imdb_id"].stringValue
-        title = json["anime"]["title"].stringValue
-        genre = json["anime"]["genre"].stringValue
-        poster = json["anime"]["poster"].stringValue
-        posterThumbnail = json["anime"]["poster_thumbnail"].stringValue
-        banner = json["anime"]["background"].stringValue
-        bannerThumbnail = json["anime"]["background_thumbnail"].stringValue
+        id = json["id"].intValue
+		imdbId = json["imdb_id"].stringValue
+        title = json["title"].stringValue
+        genre = json["genre"].stringValue
+        poster = json["poster"].stringValue
+        posterThumbnail = json["poster_thumbnail"].stringValue
+        banner = json["background"].stringValue
+        bannerThumbnail = json["background_thumbnail"].stringValue
         
         // Details
-        screenshots = json["anime"]["screenshots"].rawValue as? [String]
-        synopsis = json["anime"]["synopsis"].stringValue
-        type = json["anime"]["type"].stringValue
-        seasons = json["anime"]["seasons"].intValue
-        episodes = json["anime"]["episodes"].intValue
-        status = json["anime"]["status"].stringValue
-        aired = json["anime"]["aired"].stringValue
-        runtime = json["anime"]["runtime"].intValue
-        watchRating = json["anime"]["watch_rating"].stringValue
-        year = json["anime"]["year"].intValue
+        screenshots = json["screenshots"].rawValue as? [String]
+        synopsis = json["synopsis"].stringValue
+        type = json["type"].stringValue
+        seasons = json["seasons"].intValue
+        episodes = json["episodes"].intValue
+        status = json["status"].stringValue
+        aired = json["aired"].stringValue
+        runtime = json["runtime"].intValue
+        watchRating = json["watch_rating"].stringValue
+        year = json["year"].intValue
         
         // Ratings & ranks
-        averageRating = json["anime"]["average_rating"].doubleValue
-        ratingCount = json["anime"]["rating_count"].intValue
-        rank = json["anime"]["rank"].intValue
-        popularityRank = json["anime"]["popularity_rank"].intValue
-        startDate = json["anime"]["start_date"].rawValue as? Date
-        endDate = json["anime"]["end_date"].rawValue as? Date
-        network = json["anime"]["network"].stringValue
-        producers = json["anime"]["producers"].stringValue
-        nsfw = json["anime"]["nsfw"].boolValue
+        averageRating = json["average_rating"].doubleValue
+        ratingCount = json["rating_count"].intValue
+        rank = json["rank"].intValue
+        popularityRank = json["popularity_rank"].intValue
+        startDate = json["start_date"].rawValue as? Date
+        endDate = json["end_date"].rawValue as? Date
+        network = json["network"].stringValue
+        producers = json["producers"].stringValue
+        nsfw = json["nsfw"].boolValue
         
         // Extra's
-        englishTitles = json["anime"]["english_titles"].stringValue
-        japaneseTitles = json["anime"]["japanese_titles"].stringValue
-        synonyms = json["anime"]["synonyms"].stringValue
-        externalLinks = json["anime"]["external_links"].stringValue
-        youtubeId = json["anime"]["youtube_id"].stringValue
-        
-        // User
-        currentRating = json["user"]["current_rating"].doubleValue
-		libraryStatus = json["user"]["library_status"].stringValue
+		languages = json["languages"].stringValue
+        englishTitles = json["english_titles"].stringValue
+        japaneseTitles = json["japanese_titles"].stringValue
+        synonyms = json["synonyms"].stringValue
+        externalLinks = json["external_links"].stringValue
+        youtubeID = json["youtube_id"].stringValue
     }
     
     public func informationString() -> String {
@@ -110,13 +119,10 @@ class ShowDetails: JSONDecodable {
     
     public func attributedSynopsis() -> NSAttributedString? {
         if let synopsis = synopsis, let data = synopsis.data(using: String.Encoding.unicode) {
-            let font = UIFont.systemFont(ofSize: 15)
+            let font = UIFont.systemFont(ofSize: 17)
             
-            if let attributedString = try? NSMutableAttributedString(
-                data: data,
-                options: [.documentType:NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType:NSAttributedString.DocumentType.html], documentAttributes: nil) {
                 attributedString.addAttribute(.font, value: font, range: NSMakeRange(0, attributedString.length))
-                attributedString.addAttribute(.foregroundColor, value: UIColor.white , range:  NSMakeRange(0, attributedString.length))
                 return attributedString
             }
         }

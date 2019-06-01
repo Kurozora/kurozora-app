@@ -10,8 +10,18 @@ import KCommonKit
 import SCLAlertView
 
 class ResetPasswordViewController: UIViewController {
-    @IBOutlet weak var userEmailTextField: UITextField!
-    @IBOutlet weak var resetButton: UIButton!
+	@IBOutlet weak var userEmailTextField: UITextField! {
+		didSet {
+			userEmailTextField.theme_textColor = KThemePicker.textColor.rawValue
+			userEmailTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var resetButton: UIButton! {
+		didSet {
+			resetButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			resetButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -19,9 +29,7 @@ class ResetPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		resetButton.theme_setTitleColor("Global.textColor", forState: .normal)
-		resetButton.theme_backgroundColor = "Global.tintColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
         
         resetButton.isEnabled = false
 		resetButton.alpha = 0.5
@@ -43,7 +51,7 @@ class ResetPasswordViewController: UIViewController {
         
         let userEmail = userEmailTextField.trimmedText
 
-		if let isEmail = userEmail?.isEmail, isEmail {
+		if let isEmail = userEmail?.isValidEmail, isEmail {
 			Service.shared.resetPassword(userEmail, withSuccess: { (reset) in
 				let appearance = SCLAlertView.SCLAppearance(
 					showCloseButton: false

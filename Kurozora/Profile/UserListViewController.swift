@@ -6,10 +6,11 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import Alamofire
+import UIKit
+//import Alamofire
 //import Bolts
 //import Parse
-import KCommonKit
+//import KCommonKit
 
 class UserListViewController: UIViewController {
 
@@ -29,9 +30,9 @@ class UserListViewController: UIViewController {
 //        titleToSet = title
 //    }
 //
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
+    override func viewDidLoad() {
+        super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 //        title = titleToSet
 //
 //        tableView.estimatedRowHeight = 44.0
@@ -40,8 +41,8 @@ class UserListViewController: UIViewController {
 //        loadingView = LoaderView(parentView: view)
 //
 //        fetchUserFriends()
-//    }
-//
+    }
+
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
 //        tableView.reloadData()

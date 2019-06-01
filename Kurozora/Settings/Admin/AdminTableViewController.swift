@@ -10,7 +10,12 @@ import KCommonKit
 import EmptyDataSet_Swift
 
 class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-	@IBOutlet weak var warningLabel: UILabel!
+	@IBOutlet weak var warningLabel: UILabel! {
+		didSet {
+			warningLabel.theme_textColor = KThemePicker.textColor.rawValue
+			warningLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
 
     let kDefaultItems = GlobalVariables().KDefaults.allItems()
     let kDefaultKeys = GlobalVariables().KDefaults.allKeys()
@@ -18,13 +23,11 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		warningLabel.theme_textColor = "Global.textColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		
 		// Setup table view
 		tableView.dataSource = self
         tableView.delegate = self
-		tableView.rowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
 		tableView.emptyDataSetDelegate = self
@@ -91,7 +94,7 @@ extension AdminTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let kDefaultsCell:KDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
+		let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
 
 		if let key = kDefaultItems[indexPath.row]["key"] as? String, key != "" {
 			kDefaultsCell.keyLabel.text = key

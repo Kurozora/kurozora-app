@@ -18,7 +18,7 @@ class RateViewController: UIViewController {
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var rateTextLabel: UILabel!
     
-    var showDetails: ShowDetails?
+    weak var showDetailsElement: ShowDetailsElement?
     var showRating: Double?
     var showRatingdelegate: ShowRatingDelegate?
     
@@ -44,7 +44,7 @@ class RateViewController: UIViewController {
         super.viewDidLoad()
         
         cosmosView.didFinishTouchingCosmos = { rating in
-            if let id = self.showDetails?.id, id != 0 {
+            if let id = self.showDetailsElement?.id, id != 0 {
                 self.updateShow(withId: id, withRating: rating)
             }
         }
@@ -55,7 +55,7 @@ class RateViewController: UIViewController {
             self.cosmosView.rating = 0.0
         }
         
-        if let title = self.showDetails?.title {
+        if let title = self.showDetailsElement?.title {
             self.rateTextLabel.text = "Rate \(title)"
         } else {
             self.rateTextLabel.text = "Rate this anime!"

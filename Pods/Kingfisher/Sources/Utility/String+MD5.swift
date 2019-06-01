@@ -2,7 +2,7 @@
 //  String+MD5.swift
 //  Kingfisher
 //
-//  Created by Wei Wang on 18//25.
+//  Created by Wei Wang on 18/09/25.
 //
 //  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
 //
@@ -27,7 +27,7 @@
 import Foundation
 import CommonCrypto
 
-extension String: KingfisherCompatible { }
+extension String: KingfisherCompatibleValue { }
 extension KingfisherWrapper where Base == String {
     var md5: String {
         guard let data = base.data(using: .utf8) else {

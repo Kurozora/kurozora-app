@@ -42,14 +42,14 @@ class TestThemeCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@objc func tapDefault(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.default)
+		KThemeStyle.switchTo(.default)
 	}
 
 	@objc func tapDay(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.day)
+		KThemeStyle.switchTo(.day)
 	}
 
 	@objc func tapNight(_ sender: AnyObject) {
-		KurozoraThemes.switchTo(.night)
+		KThemeStyle.switchTo(.night)
 	}
 }

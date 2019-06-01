@@ -14,7 +14,12 @@ class UITextViewGenerator {
 
     // MARK: - Utility Functions
 
-    static func getTextView(from input: NSAttributedString, font: UIFont, textColor: UIColor, isSelectable: Bool, isEditable: Bool) -> UITextView {
+    static func getTextView(from input: NSAttributedString,
+                            font: UIFont,
+                            textColor: UIColor,
+                            isSelectable: Bool,
+                            isEditable: Bool,
+                            textViewDelegate: RichTextViewDelegate?) -> UITextView {
         let textView = UITextView()
         let mutableInput = NSMutableAttributedString(attributedString: input)
         mutableInput.replaceFont(with: font)
@@ -27,10 +32,10 @@ class UITextViewGenerator {
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
-		textView.backgroundColor = #colorLiteral(red: 0.2174186409, green: 0.2404800057, blue: 0.332449615, alpha: 0)
         if #available(iOS 10.0, *) {
             textView.adjustsFontForContentSizeCategory = true
         }
+        textView.delegate = textViewDelegate
         return textView
     }
 }

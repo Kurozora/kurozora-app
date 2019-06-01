@@ -15,7 +15,7 @@ import SwiftTheme
 import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
-let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: "Global.backgroundColor") ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
+let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue()) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
 		// Global app tint color
-		self.window?.theme_tintColor = "Global.tintColor"
+		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
         
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true
@@ -151,5 +151,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		return false
+	}
+
+	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+		if authenticated {
+			Kurozora.shortcutHandler(application, shortcutItem)
+		}
 	}
 }

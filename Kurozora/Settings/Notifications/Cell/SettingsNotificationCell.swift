@@ -10,14 +10,18 @@ import UIKit
 
 class SettingsNotificationCell: UICollectionViewCell {
 	@IBOutlet weak var previewImageView: UIImageView!
-	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var selectImageView: UIImageView!
 	@IBOutlet weak var placeholder: UIView!
 
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				selectImageView.theme_tintColor = "Global.tintColor"
+				selectImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 				selectImageView.image = #imageLiteral(resourceName: "check_circle")
 
 				placeholder.borderColor = .none

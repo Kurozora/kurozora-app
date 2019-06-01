@@ -6,17 +6,17 @@
 
 ColorSlider is an iOS color picker with live preview written in [Swift](https://developer.apple.com/swift/).
 
-[![Build Status](https://travis-ci.org/gizmosachin/ColorSlider.svg?branch=master)](https://travis-ci.org/gizmosachin/ColorSlider) ![Pod Version](https://img.shields.io/cocoapods/v/ColorSlider.svg) [![Swift Version](https://img.shields.io/badge/language-swift%204.0-brightgreen.svg)](https://developer.apple.com/swift) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/gizmosachin/ColorSlider.svg?branch=master)](https://travis-ci.org/gizmosachin/ColorSlider) ![Pod Version](https://img.shields.io/cocoapods/v/ColorSlider.svg) [![Swift Version](https://img.shields.io/badge/language-swift%205.0-brightgreen.svg)](https://developer.apple.com/swift) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
 
 |           | Features                                 |
 | :-------: | :--------------------------------------- |
-| :ghost: | "[Snapchat](http://snapchat.com)-style" color picker |
+| :ghost: | "[Snapchat](https://snapchat.com)-style" color picker |
 | :rainbow: | Extensible live preview                  |
 | :art: | Customizable appearance                  |
 | :cyclone: | Vertical and horizontal support          |
 | :musical_keyboard: | Black and white colors included          |
-| :books: | Fully [documented](http://gizmosachin.github.io/ColorSlider) |
-| :baby_chick: | [Swift 4](https://developer.apple.com/swift/) |
+| :books: | Fully [documented](https://gizmosachin.github.io/ColorSlider) |
+| :baby_chick: | [Swift 5](https://developer.apple.com/swift/) |
 
 ## Usage
 
@@ -24,7 +24,7 @@ Create and add a ColorSlider to your view:
 
 ``` Swift
 let colorSlider = ColorSlider(orientation: .vertical, previewSide: .left)
-colorSlider.frame = CGRectMake(0, 0, 12, 150)
+colorSlider.frame = CGRect(x: 0, y: 0, width: 12, height: 150)
 view.addSubview(colorSlider)
 ```
 
@@ -44,7 +44,7 @@ Customize appearance attributes:
 ``` Swift
 // Add a border
 colorSlider.gradientView.layer.borderWidth = 2.0
-colorSlider.gradientView.layer.borderColor = UIColor.white
+colorSlider.gradientView.layer.borderColor = UIColor.white.cgColor
 
 // Disable rounded corners
 colorSlider.gradientView.automaticallyAdjustsCornerRadius = false
@@ -77,11 +77,11 @@ To disable the preview, simply pass `nil` to ColorSlider's initializer:
 let colorSlider = ColorSlider(orientation: .vertical, previewView: nil)
 ```
 
-See the [documentation](http://gizmosachin.github.io/ColorSlider) for more details on custom previews.
+See the [documentation](https://gizmosachin.github.io/ColorSlider) for more details on custom previews.
 
 ### Documentation
 
-ColorSlider is fully documented [here](http://gizmosachin.github.io/ColorSlider).
+ColorSlider is fully documented [here](https://gizmosachin.github.io/ColorSlider).
 
 ## Installation
 
@@ -89,21 +89,21 @@ ColorSlider is fully documented [here](http://gizmosachin.github.io/ColorSlider)
 
 ``` ruby
 platform :ios, '9.0'
-pod 'ColorSlider', '~> 4.3'
+pod 'ColorSlider', '~> 4.4'
 ```
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
 ``` ruby
-github "gizmosachin/ColorSlider" >= 4.3
+github "gizmosachin/ColorSlider" >= 4.4
 ```
 
 ## Version Compatibility
 
 | Swift Version | ColorSlider Version |
 | ------------- | ------------------- |
-| 4.2           | master              |
-| 4.0           | 4.2                 |
+| 5.0           | master              |
+| 4.2           | 4.3                 |
 
 ## Demo
 

@@ -184,7 +184,7 @@ internal extension PageboyViewController {
     func setUpPageViewController(reloadViewControllers: Bool = true) {
         let existingZIndex: Int?
         if let pageViewController = self.pageViewController { // destroy existing page VC
-            existingZIndex = view.subviews.index(of: pageViewController.view)
+            existingZIndex = view.subviews.firstIndex(of: pageViewController.view)
             destroyCurrentPageViewController()
         } else {
             existingZIndex = nil
@@ -255,7 +255,7 @@ internal extension PageboyViewController {
             options[.interPageSpacing] = interPageSpacing
         }
         
-        guard options.count > 0 else {
+        guard !options.isEmpty else {
             return nil
         }
         return options
@@ -269,7 +269,7 @@ internal extension PageboyViewController {
             options[UIPageViewControllerOptionInterPageSpacingKey] = interPageSpacing
         }
         
-        guard options.count > 0 else {
+        guard !options.isEmpty else {
             return nil
         }
         return options

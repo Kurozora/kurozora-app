@@ -63,7 +63,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		
 		// Setup table view
 		tableView.dataSource = self
@@ -188,7 +188,6 @@ extension NotificationsViewController: UITableViewDataSource {
 		switch self.grouping {
 		case .automatic, .byType:
 			titleNotificationCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
-			titleNotificationCell.notificationTitleLabel.theme_textColor = "Notifications.accentColor"
 		case .off: break
 		}
 
@@ -217,12 +216,8 @@ extension NotificationsViewController: UITableViewDataSource {
 
 			if let creationDate = notifications.creationDate {
 				messageNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-				messageNotificationCell.notificationDate.theme_textColor = "Notifications.accentColor"
-				messageNotificationCell.notificationType.theme_textColor = "Notifications.accentColor"
 				
 				sessionNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-				sessionNotificationCell.notificationDate.theme_textColor = "Notifications.accentColor"
-				sessionNotificationCell.notificationType.theme_textColor = "Notifications.accentColor"
 			}
 
 			if let description = notifications.message {

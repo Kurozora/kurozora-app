@@ -52,6 +52,9 @@ class UserProfile: JSONDecodable {
 	let activeEnd: String?
 	let active: Bool?
 
+	let currentRating: Double?
+	let libraryStatus: String?
+
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.authToken = json["kuro_auth_token"].stringValue
@@ -74,6 +77,9 @@ class UserProfile: JSONDecodable {
 		self.activeStart = json["active_start"].stringValue
 		self.activeEnd = json["active_end"].stringValue
 		self.active = json["active"].boolValue
+
+		self.currentRating = json["current_rating"].doubleValue
+		self.libraryStatus = json["library_status"].stringValue
 	}
 }
 

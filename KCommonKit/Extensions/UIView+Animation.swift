@@ -25,7 +25,7 @@ extension UIView {
         }, completion: nil)
     }
     
-    public func animateBounce(growth: CGFloat = 2) {
+    public func animateBounce(growth: CGFloat = 1.25) {
         transform = .identity
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.transform = self.transform.scaledBy(x: growth, y: growth)

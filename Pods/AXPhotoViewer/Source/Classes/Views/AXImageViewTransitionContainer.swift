@@ -46,9 +46,7 @@ final class AXImageViewTransitionContainer: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        guard let imageSize = self.imageView.image?.size else {
-            return
-        }
+        guard let imageSize = self.imageView.image?.size else { return }
         
         switch self.contentMode {
         case .scaleToFill:
@@ -90,6 +88,8 @@ final class AXImageViewTransitionContainer: UIView {
         case .bottomRight:
             self.imageView.bounds = imageSize.rect()
             self.imageView.center = self.bounds.size.bottomRight(forSize: imageSize)
+        @unknown default:
+            break
         }
     }
     

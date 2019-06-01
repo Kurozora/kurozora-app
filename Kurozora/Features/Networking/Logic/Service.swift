@@ -13,6 +13,7 @@ import SCLAlertView
 
 struct Service {
 	let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+	let newTron = TRON(baseURL: "https://api.jsonbin.io/b/5cb59f560367e61b21b9d531", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
 	fileprivate let headers = [
 		"Content-Type": "application/x-www-form-urlencoded"
@@ -447,8 +448,13 @@ struct Service {
 		- Parameter successHandler: Returns an object of type Explore.
 	**/
 	func getExplore(withSuccess successHandler: @escaping (Explore?) -> Void) {
-		let request: APIRequest<Explore,JSONError> = tron.swiftyJSON.request("anime")
-		request.headers = headers
+		let request: APIRequest<Explore,JSONError> = newTron.swiftyJSON.request("")
+//			tron.swiftyJSON.request("anime")
+//		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"secret-key": "$2a$10$9KXu20j5ZrnRlDtIxMWr1.u4XaWA8AHeBid8wjrbWeXV5JcyVZYkq"
+		]
 		request.method = .get
 		request.perform(withSuccess: { explore in
 			if let success = explore.success {
@@ -660,7 +666,7 @@ struct Service {
 		guard let episodeID = episodeID else { return }
 		guard let watched = watched else { return }
 
-		let request : APIRequest<EpisodesWatched,JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
+		let request : APIRequest<EpisodesUserDetails,JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken()
@@ -670,9 +676,9 @@ struct Service {
 		request.parameters = [
 			"watched": watched
 		]
-		request.perform(withSuccess: { watched in
-			if let success = watched.success {
-				successHandler(success)
+		request.perform(withSuccess: { episode in
+			if let watchedStatus = episode.watched {
+				successHandler(watchedStatus)
 			}
 		}, failure: { error in
 			if let responseMessage = error.errorModel?.message {
@@ -688,9 +694,9 @@ struct Service {
 	/**
 		Get a list of genres
 
-		- Parameter successHandler: Returns an array of type GenresElement.
+		- Parameter successHandler: Returns an array of type GenreElement.
 	**/
-	func getGenres(withSuccess successHandler:@escaping ([GenresElement]?) -> Void) {
+	func getGenres(withSuccess successHandler:@escaping ([GenreElement]?) -> Void) {
 		let request : APIRequest<Genres,JSONError> = tron.swiftyJSON.request("genres")
 		request.headers = headers
 		request.authorizationRequirement = .required

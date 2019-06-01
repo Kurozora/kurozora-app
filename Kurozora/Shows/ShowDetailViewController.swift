@@ -7,40 +7,51 @@
 //
 
 import KCommonKit
-import TRON
-import SwiftyJSON
 import Kingfisher
-import SCLAlertView
 import BottomPopup
 import Cosmos
 import NVActivityIndicatorView
 import Intents
 import IntentsUI
 
-enum AnimeSection: Int {
-	case synopsis
-	case information
-	case cast
-
-	static var allSections: [AnimeSection] = [.synopsis, .information, .cast]
+protocol ShowDetailViewControllerDelegate: class {
+	func updateShowInLibrary(for cell: LibraryCollectionViewCell?)
 }
 
-class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, ShowRatingDelegate {
+class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 	// MARK: - IBoutlet
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var bannerImageView: UIImageView!
+	@IBOutlet weak var shadowImageView: UIImageView! {
+		didSet {
+			shadowImageView.theme_tintColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var bannerContainerView: UIView!
 	@IBOutlet weak var closeButton: UIButton!
 	@IBOutlet weak var moreButton: UIButton!
 
-	// Drag to dismiss
-	@IBOutlet weak var dismissButton: UIButton!
-	@IBOutlet weak var dismissButtonCenterToMoreButton: NSLayoutConstraint!
-
 	// Compact detail view
-	@IBOutlet weak var compactDetailsView: UIView!
-	@IBOutlet weak var compactShowTitleLabel: UILabel!
-	@IBOutlet weak var compactTagsLabel: UILabel!
-	@IBOutlet weak var compactCloseButton: UIButton!
+	@IBOutlet weak var compactDetailsView: UIView! {
+		didSet {
+			compactDetailsView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var compactShowTitleLabel: UILabel! {
+		didSet {
+			compactShowTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var compactTagsLabel: UILabel! {
+		didSet {
+			compactTagsLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var compactCloseButton: UIButton! {
+		didSet {
+			compactCloseButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+		}
+	}
 
 	// Action buttons
 	@IBOutlet weak var listButton: UIButton!
@@ -49,47 +60,69 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	// Quick details view
 	@IBOutlet weak var quickDetailsView: UIView!
-	@IBOutlet weak var showTitleLabel: UILabel!
+	@IBOutlet weak var showTitleLabel: UILabel! {
+		didSet {
+			showTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var tagsLabel: UILabel!
+	@IBOutlet weak var statusButton: UIButton!
+	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var trailerButton: UIButton!
-	@IBOutlet weak var statusLabel: UILabel!
 	@IBOutlet weak var favoriteButton: UIButton!
 
-	// Analytics title view
-	@IBOutlet weak var scoreRankTitleLabel: UILabel!
-	@IBOutlet weak var popularityRankTitleLabel: UILabel!
+	// Analytics view
+	@IBOutlet weak var ratingScoreLabel: UILabel!
+	@IBOutlet weak var ratingScoreDecimalLabel: UILabel!
 	@IBOutlet weak var ratingTitleLabel: UILabel!
-	@IBOutlet weak var membersCountTitleLabel: UILabel!
-
-	// Analytics detail view
-	@IBOutlet weak var scoreRankLabel: UILabel!
-	@IBOutlet weak var popularityRankLabel: UILabel!
-	@IBOutlet weak var ratingLabel: UILabel!
-	@IBOutlet weak var membersCountLabel: UILabel!
+	@IBOutlet weak var rankTitleLabel: UILabel!
+	@IBOutlet weak var ageTitleLabel: UILabel!
 	
 	// Compact detail vars
-	let headerHeightInSection: CGFloat = 40
-	var headerViewHeight: CGFloat = 470
+	let headerHeightInSection: CGFloat = 48
+	var headerViewHeight: CGFloat = 390
 	let compactDetailsHeight: CGFloat = 88
 
-	// View vars
+	// Snapshot and Stretchy view vars
 	var headerView: UIView!
+	private var blurView: UIView?
+	private let snapshotView = UIImageView()
+	var shouldSnapshot = true
+	var viewsAreHidden: Bool = false {
+		didSet {
+			self.tableView.alpha = viewsAreHidden ? 0 : 1
+			self.tabBarController?.tabBar.alpha = viewsAreHidden ? 0 : 1
+			// self.compactDetailsView.alpha = 0 // Should always be hidden
 
-	// Drag to dismiss vars
-	let lightImpact = UIImpactFeedbackGenerator(style: .light)
-	let heavyImpact = UIImpactFeedbackGenerator(style: .heavy)
-	var scrollToTop = false
+			if viewsAreHidden {
+				view.backgroundColor = .clear
+			} else {
+				view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			}
+		}
+	}
+
+	// Hero Transition vars
+	var showID: Int?
+	var heroID: String?
 
 	// Misc vars
-	var showDetails: ShowDetails?
-	var showID: Int?
-	var showTitle: String?
-	var heroID: String?
+	var showDetails: ShowDetails? {
+		didSet {
+			self.updateDetails()
+		}
+	}
+	var actors: [ActorsElement]? {
+		didSet {
+			self.tableView.reloadData()
+		}
+	}
+	var delegate: ShowDetailViewControllerDelegate?
 	var libraryStatus: String?
 	var showRating: Double?
-	var actors: [ActorsElement]?
-
+	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
+	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	var statusBarShouldBeHidden = false
 
 	override var prefersStatusBarHidden: Bool {
@@ -100,13 +133,12 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		return .slide
 	}
 
-
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Show the status bar
 		statusBarShouldBeHidden = true
-		UIView.animate(withDuration: 0.25) {
+		UIView.animate(withDuration: 0.3) {
 			self.setNeedsStatusBarAppearanceUpdate()
 		}
 	}
@@ -114,7 +146,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	override func viewDidAppear(_ animated: Bool) {
 		// Donate suggestion to Siri
 		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetails?.title, let showID = showID {
+		if let title = showDetails?.showDetailsElement?.title, let showID = showID {
 			let title = "Open \(title)"
 			userActivity?.title = title
 			userActivity?.userInfo = ["showID": showID]
@@ -128,34 +160,17 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		// Theme
-		view.theme_backgroundColor = "Global.backgroundColor"
-		compactDetailsView.theme_backgroundColor = "Global.backgroundColor"
-		compactCloseButton.theme_setTitleColor("Global.tintColor", forState: .normal)
-
-		scoreRankTitleLabel.theme_textColor = "Global.textColor"
-		scoreRankTitleLabel.alpha = 0.80
-		popularityRankTitleLabel.theme_textColor = "Global.textColor"
-		popularityRankTitleLabel.alpha = 0.80
-		ratingTitleLabel.theme_textColor = "Global.textColor"
-		ratingTitleLabel.alpha = 0.80
-		membersCountTitleLabel.theme_textColor = "Global.textColor"
-		membersCountTitleLabel.alpha = 0.80
-
-		// Hero transition
-		if let showTitle = showTitle, let heroID = heroID {
-			showTitleLabel.hero.id = "\(heroID)_\(showTitle)_title"
-			bannerImageView.hero.id = "\(heroID)_\(showTitle)_banner"
-			tagsLabel.hero.id = "\(heroID)_\(showTitle)_progress"
-			posterImageView.hero.id = "\(heroID)_\(showTitle)_poster"
+		if exploreCollectionViewCell != nil {
+			guard let exploreCollectionViewCell = exploreCollectionViewCell else { return }
+			configureShowDetails(from: exploreCollectionViewCell)
+		} else if libraryCollectionViewCell != nil {
+			guard let libraryCollectionViewCell = libraryCollectionViewCell else { return }
+			configureShowDetails(from: libraryCollectionViewCell)
 		}
-		
-		startAnimating(CGSize(width: 100, height: 100), type: NVActivityIndicatorType.ballScaleMultiple, color: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1), minimumDisplayTime: 3)
 
-		if UIDevice.hasTapticEngine {
-			dismissButtonCenterToMoreButton.constant = 22
-		}
+		toggleHeroID(on: true)
 
 		// Make header view stretchable
 		headerView = tableView.tableHeaderView
@@ -163,7 +178,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		tableView.addSubview(headerView)
 		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
 		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
-		updateHeaderView()
 
 		if UIDevice.isPad() {
 			var frame = headerView.frame
@@ -179,16 +193,13 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			Service.shared.getDetails(forShow: showID) { (showDetails) in
 				DispatchQueue.main.async() {
 					self.showDetails = showDetails
-					self.libraryStatus = showDetails.libraryStatus
-					self.updateDetailWithShow(self.showDetails)
-					self.tableView.reloadData()
+					self.libraryStatus = showDetails.userProfile?.libraryStatus
 				}
 			}
 
 			Service.shared.getCastFor(showID, withSuccess: { (actors) in
 				DispatchQueue.main.async() {
 					self.actors = actors
-					self.tableView.reloadData()
 				}
 			})
 		}
@@ -196,10 +207,6 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
-
-//		if #available(iOS 12.0, *) {
-//			presentAddAnimeToSiriViewController()
-//		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -207,150 +214,213 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 
 		// Hide the status bar
 		statusBarShouldBeHidden = false
-		UIView.animate(withDuration: 0.25) {
+		UIView.animate(withDuration: 0.3) {
 			self.setNeedsStatusBarAppearanceUpdate()
 		}
 	}
 
 	// MARK: - Functions
+	fileprivate func dismiss() {
+		viewsAreHidden = true
+		blurView?.isHidden = true
+		snapshotView.isHidden = false
+		toggleHeroID(on: false)
+		dismiss(animated: true, completion: nil)
+	}
+
+	fileprivate func configureShowDetails(from cell: ExploreCollectionViewCell) {
+		if cell.bannerImageView != nil {
+			showTitleLabel.text = cell.titleLabel?.text
+			bannerImageView.image = cell.bannerImageView?.image
+		} else {
+			posterImageView.image = cell.posterImageView?.image
+
+			var decimalScore = cell.scoreLabel?.text
+			decimalScore?.removeFirst()
+
+			ratingScoreLabel.text = "\(cell.scoreLabel?.text?.first ?? "0")"
+			ratingScoreDecimalLabel.text = (decimalScore != "") ? decimalScore : "0"
+		}
+
+		// Setup shadows
+		shadowView.applyShadow(shadowPathSize: CGSize(width: posterImageView.width, height: posterImageView.height))
+		reminderButton.applyShadow(shadowPathSize: CGSize(width: reminderButton.width, height: reminderButton.height))
+		reminderButton.clipsToBounds = false
+		favoriteButton.applyShadow(shadowPathSize: CGSize(width: favoriteButton.width, height: favoriteButton.height))
+		favoriteButton.clipsToBounds = false
+	}
+
+	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell) {
+		showTitleLabel.text = cell.titleLabel?.text
+		bannerImageView.image = cell.episodeImageView?.image
+		posterImageView.image = cell.posterView?.image
+	}
+
 	// Update view with details
-	func updateDetailWithShow(_ show: ShowDetails?) {
-		if showDetails != nil {
-			// Configure library status
-			if let libraryStatus = showDetails?.libraryStatus, libraryStatus != "" {
-				listButton.setTitle("\(libraryStatus.capitalized) ", for: .normal)
+	fileprivate func updateDetails() {
+		guard let showDetailsElement = showDetails?.showDetailsElement else { return }
+		guard let userProfile = showDetails?.userProfile else { return }
+
+		// Configure library status
+		if let libraryStatus = userProfile.libraryStatus, libraryStatus != "" {
+			let mutableAttributedTitle = NSMutableAttributedString()
+			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+			let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+			mutableAttributedTitle.append(attributedTitleString)
+			mutableAttributedTitle.append(attributedIconString)
+
+			listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
+		} else {
+			listButton.setTitle("ADD", for: .normal)
+		}
+
+		// Configure title label
+		if let title = showDetailsElement.title, title != "" {
+			showTitleLabel.text = title
+			compactShowTitleLabel.text = title
+		} else {
+			showTitleLabel.text = "Unknown"
+			compactShowTitleLabel.text = "Unknown"
+		}
+
+		// Configure rating button
+		if let rating = userProfile.currentRating, rating != 0 {
+			self.showRating = rating
+			self.cosmosView.rating = rating
+		} else {
+			self.cosmosView.rating = 0.0
+		}
+
+		// Configure tags label
+		compactTagsLabel.alpha = 0.80
+		tagsLabel.text = showDetailsElement.informationString()
+		compactTagsLabel.text = showDetailsElement.informationString()
+
+		// Configure status label
+		if let status = showDetailsElement.status, status != "" {
+			statusButton.setTitle(status, for: .normal)
+			if status == "Ended" {
+				statusButton.backgroundColor = .dropped()
 			} else {
-				listButton.setTitle("Add to list ", for: .normal)
+				statusButton.backgroundColor = .planning()
 			}
+		} else {
+			statusButton.setTitle("TBA", for: .normal)
+			statusButton.backgroundColor = .onHold()
+		}
 
-			// Configure title label
-			showTitleLabel.theme_textColor = "Global.textColor"
-			compactShowTitleLabel.theme_textColor = "Global.textColor"
-			if let title = showDetails?.title {
-				showTitleLabel.text = title
-				compactShowTitleLabel.text = title
-			} else {
-				showTitleLabel.text = "Unknown"
-				compactShowTitleLabel.text = "Unknown"
-			}
+		//            if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
+		//                switch status {
+		//                case .currentlyAiring:
+		//                    statusLabel.text = "Airing"
+		//                    statusLabel.backgroundColor = .watching()
+		//                case .finishedAiring:
+		//                    statusLabel.text = "Aired"
+		//                    statusLabel.backgroundColor = UIColor.completed()
+		//                case .notYetAired:
+		//                    statusLabel.text = "Not Aired"
+		//                    statusLabel.backgroundColor = UIColor.onHold()
+		//                }
+		//            }
 
-			// Configure rating button
-			if let rating = showDetails?.currentRating {
-				showRating = rating
-				self.cosmosView.rating = rating
-			} else {
-				self.cosmosView.rating = 0.0
-			}
+		// Configure ratings label
+		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
+			var decimalScore = "\(modf(averageRating).1)"
+			decimalScore.removeFirst()
 
-			// Configure tags label
-			tagsLabel.theme_textColor = "Global.textColor"
-			tagsLabel.alpha = 0.80
-			compactTagsLabel.theme_textColor = "Global.textColor"
-			compactTagsLabel.alpha = 0.80
-			if let tags = showDetails?.informationString() {
-				tagsLabel.text = tags
-				compactTagsLabel.text = tags
-			} else {
-				tagsLabel.text = "Unknown · N/A · 0 eps · 0 min · 0000"
-				compactTagsLabel.text = "Unknown · N/A · 0 eps · 0 min · 0000"
-			}
+			ratingScoreLabel.text = "\(modf(averageRating).0)"
+			ratingScoreDecimalLabel.text = "." + decimalScore
+			ratingTitleLabel.text = "\(ratingCount) Ratings"
+		} else {
+			ratingScoreLabel.text = "0"
+			ratingScoreDecimalLabel.text = ".0"
+			ratingTitleLabel.text = "Not enough ratings"
+			ratingTitleLabel.adjustsFontSizeToFitWidth = true
+		}
 
-			// Configure status label
-			if let status = showDetails?.status, status != "" {
-				statusLabel.text = status.capitalized
-				if status == "Ended" {
-					statusLabel.backgroundColor = .dropped()
-				} else {
-					statusLabel.backgroundColor = .planning()
-				}
-			} else {
-				statusLabel.backgroundColor = .onHold()
-				statusLabel.text = "TBA".capitalized
-			}
+		// Configure rank label
+		if let scoreRank = showDetailsElement.rank, scoreRank > 0 {
+			rankTitleLabel.text = "\(scoreRank)"
+		} else {
+			rankTitleLabel.text = "-"
+		}
 
-			//            if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
-			//                switch status {
-			//                case .currentlyAiring:
-			//                    statusLabel.text = "Airing"
-			//                    statusLabel.backgroundColor = .watching()
-			//                case .finishedAiring:
-			//                    statusLabel.text = "Aired"
-			//                    statusLabel.backgroundColor = UIColor.completed()
-			//                case .notYetAired:
-			//                    statusLabel.text = "Not Aired"
-			//                    statusLabel.backgroundColor = UIColor.onHold()
-			//                }
-			//            }
+		// Configure poster view
+		if let posterThumb = showDetailsElement.posterThumbnail, posterThumb != "" {
+			let posterThumb = URL(string: posterThumb)
+			let resource = ImageResource(downloadURL: posterThumb!)
+			posterImageView.kf.indicatorType = .activity
+			posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+		} else {
+			posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+		}
 
-			// Configure ratings label
-			ratingLabel.theme_textColor = "Global.textColor"
-			if let averageRating = showDetails?.averageRating, averageRating > 0.00 {
-				ratingLabel.text = String(format:"%.2f / %d", averageRating, /*show?.progress?.score ??*/ 5.00)
-			} else {
-				ratingLabel.text = "Not enough ratings"
-			}
+		// Configure banner view
+		if let bannerImage = showDetailsElement.banner, bannerImage != "" {
+			let bannerImage = URL(string: bannerImage)
+			let resource = ImageResource(downloadURL: bannerImage!)
+			bannerImageView.kf.indicatorType = .activity
+			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+		} else {
+			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
+		}
 
-			membersCountLabel.theme_textColor = "Global.textColor"
-			if let ratingCount = showDetails?.ratingCount, ratingCount > 0 {
-				membersCountLabel.text = String(ratingCount)
-			} else {
-				membersCountLabel.text = "-"
-			}
+//		if let youtubeID = showDetailsElement.youtubeID, youtubeID != "" {
+//			trailerButton.isHidden = false
+//		} else {
+//			trailerButton.isHidden = true
+//		}
+		trailerButton.isHidden = false
 
-			// Configure rank label
-			scoreRankLabel.theme_textColor = "Global.textColor"
-			if let scoreRank = showDetails?.rank, scoreRank > 0 {
-				scoreRankLabel.text = String(scoreRank)
-			} else {
-				scoreRankLabel.text = "-"
-			}
+		// Display details
+		quickDetailsView.isHidden = false
+		tableView.reloadData()
+	}
 
-			popularityRankLabel.theme_textColor = "Global.textColor"
-			if let popularRank = showDetails?.popularityRank, popularRank > 0 {
-				popularityRankLabel.text = String(popularRank)
-			} else {
-				popularityRankLabel.text = "-"
-			}
+	fileprivate func toggleHeroID(on: Bool) {
+		guard let heroID = heroID else { return }
+		showTitleLabel.hero.id = on ? "\(heroID)_title" : nil
+		tagsLabel.hero.id = on ? "\(heroID)_tags" : nil
+		posterImageView.hero.id = on ? "\(heroID)_poster" : nil
+		bannerContainerView.hero.id = on ? "\(heroID)_banner" : nil
 
-			// Configure poster view
-			if let posterThumb = showDetails?.posterThumbnail, posterThumb != "" {
-				let posterThumb = URL(string: posterThumb)
-				let resource = ImageResource(downloadURL: posterThumb!)
-				posterImageView.kf.indicatorType = .activity
-				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
-			} else {
-				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
-			}
-
-			// Configure banner view
-			if let bannerImage = showDetails?.banner, bannerImage != "" {
-				let bannerImage = URL(string: bannerImage)
-				let resource = ImageResource(downloadURL: bannerImage!)
-				bannerImageView.kf.indicatorType = .activity
-				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
-			} else {
-				bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
-			}
-
-			if let youtubeID = showDetails?.youtubeId, youtubeID.count > 0 {
-				trailerButton.isHidden = false
-				trailerButton.layer.borderWidth = 1.0;
-				trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor;
-			} else {
-				trailerButton.isHidden = true
-			}
-
-			// Display details
-			quickDetailsView.isHidden = false
-			self.stopAnimating()
+		if libraryCollectionViewCell?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
+			snapshotView.hero.id = on ? nil : "\(heroID)_banner"
+		} else {
+			snapshotView.hero.id = on ? nil : "\(heroID)_poster"
 		}
 	}
 
-	func scrollView() -> UIScrollView {
-		return tableView
+	fileprivate func createSnapshotOfView() {
+		if !UIAccessibility.isReduceTransparencyEnabled {
+			let blurEffect = UIBlurEffect(style: .extraLight)
+			let blurEffectView = UIVisualEffectView(effect: blurEffect)
+			blurEffectView.frame = self.view.bounds
+			blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+			self.view.addSubview(blurEffectView)
+			blurView = blurEffectView
+			blurView?.isHidden = true
+		}
+
+		snapshotView.clipsToBounds = true
+		snapshotView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		snapshotView.isUserInteractionEnabled = true
+
+		snapshotView.layer.shadowColor = UIColor.black.cgColor
+		snapshotView.layer.shadowOpacity = 0.2
+		snapshotView.layer.shadowRadius = 10
+		snapshotView.layer.shadowOffset = CGSize(width: -1, height: 2)
+
+		let snapshotImage = view.createSnapshot()
+		snapshotView.image = snapshotImage
+
+		view.addSubview(snapshotView)
+		snapshotView.frame = view.frame
+		snapshotView.isHidden = true
 	}
 
-	func updateHeaderView() {
+	fileprivate func updateHeaderView() {
 		var headerRect = CGRect(x: 0, y: -headerViewHeight, width: tableView.bounds.width, height: headerViewHeight)
 
 		if tableView.contentOffset.y < -headerViewHeight {
@@ -361,33 +431,27 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		headerView.frame = headerRect
 	}
 
-	func getRating(value: Double?) {
-		if let rating = value {
-			self.cosmosView.rating = rating
-			self.cosmosView.update()
-		}
-	}
-
 	// MARK: - IBActions
 	@IBAction func favoriteButtonPressed(_ sender: Any) {
 		tableView.reloadData()
 	}
 
 	@IBAction func closeButtonPressed(_ sender: UIButton) {
-		dismiss(animated: true, completion: nil)
+		if shouldSnapshot {
+			createSnapshotOfView()
+		}
+		dismiss()
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		var shareText: String!
 		guard let showID = showID else { return }
+		var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
 
-		if let title = showDetails?.title {
-			shareText = "https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"
-		} else {
-			shareText = "https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"
+		if let title = showDetails?.showDetailsElement?.title, title != "" {
+			shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
 		}
 
-		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
 			popoverController.sourceView = self.view
@@ -402,22 +466,35 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 			guard let showID = self.showID else {return}
 
 			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
-				if !success {
-					SCLAlertView().showError("Error adding to library", subTitle: "There was an error while adding this anime to your library. Please try again!")
-				} else {
+				if success {
+					// Update entry in library
 					self.libraryStatus = value
-					self.listButton.setTitle(title + " ", for: .normal)
+					self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+
+					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+
+					let mutableAttributedTitle = NSMutableAttributedString()
+					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+					let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+					mutableAttributedTitle.append(attributedTitleString)
+					mutableAttributedTitle.append(attributedIconString)
+
+					self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
 				}
 			})
 		})
 
 		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
 			Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
-				if !success {
-					SCLAlertView().showError("Error removing from library", subTitle: "There was an error while removing this anime from your library. Please try again!")
-				} else {
+				if success {
 					self.libraryStatus = ""
-					self.listButton.setTitle("Add to list ", for: .normal)
+					self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+
+					let mutableAttributedTitle = NSMutableAttributedString()
+					let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+					mutableAttributedTitle.append(attributedTitleString)
+					self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
 				}
 			})
 		}))
@@ -433,18 +510,10 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 		self.present(action, animated: true, completion: nil)
 	}
 
-	@IBAction func showCastDrawer(_ sender: AnyObject) {
-		let storyboard:UIStoryboard? = UIStoryboard(name: "details", bundle: nil)
-		guard let popupVC = storyboard?.instantiateViewController(withIdentifier: "Actors") as? CastTableViewController else { return }
-		popupVC.actors = actors
-		present(popupVC, animated: true, completion: nil)
-	}
-
-	// MARK: - UITapGestureRecognizer
 	@IBAction func showRating(_ sender: Any) {
 		let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
 		let rateViewController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
-		rateViewController?.showDetails = showDetails
+		rateViewController?.showDetailsElement = showDetails?.showDetailsElement
 		rateViewController?.showRatingdelegate = self
 		rateViewController?.modalTransitionStyle = .crossDissolve
 		rateViewController?.modalPresentationStyle = .overCurrentContext
@@ -452,146 +521,65 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable, S
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let banner = showDetails?.banner, banner != "" {
-			presentPhotoViewControllerWith(url: banner)
+		if let banner = showDetails?.showDetailsElement?.banner, banner != "" {
+			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "placeholder_banner")
+			presentPhotoViewControllerWith(string: "placeholder_banner", from: bannerImageView)
 		}
 	}
 
 	@IBAction func showPoster(_ sender: AnyObject) {
-		if let poster = showDetails?.poster, poster != "" {
-			presentPhotoViewControllerWith(url: poster)
+		if let poster = showDetails?.showDetailsElement?.poster, poster != "" {
+			presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "placeholder_poster")
+			presentPhotoViewControllerWith(string: "placeholder_poster", from: posterImageView)
 		}
 	}
 
-	@IBAction func showCast(_ tap: UITapGestureRecognizer) {
-		let cell = tap.view as? ShowCharacterCell
-		let pointInCell: CGPoint = tap.location(in: cell?.contentView)
-		let view: UIView? = cell?.contentView.hitTest(pointInCell, with: nil)
-		let pointInTable = tap.location(in: self.tableView)
-
-		if let indexPath = self.tableView.indexPathForRow(at: pointInTable) {
-			if (self.tableView.cellForRow(at: indexPath) as? ShowCharacterCell) != nil {
-				if view == cell?.actorImageView {
-					if let imageUrl = actors?[indexPath.row].image, imageUrl != "" {
-						presentPhotoViewControllerWith(url: imageUrl)
-					} else {
-						presentPhotoViewControllerWith(string: "placeholder_person")
-					}
-				}
-			}
-		}
-	}
-
-	@IBAction func playTrailerPressed(sender: AnyObject) {
-		//        if let trailerURL = showDetails?.youtubeId {
-		////            presentLightboxViewController(imageUrl: "", text: "", videoUrl: trailerURL)
-		//        }
-	}
-}
-
-// MARK: - UIScrollViewDelegate
-extension ShowDetailViewController: UIScrollViewDelegate {
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		updateHeaderView()
-
-		let bannerHeight = bannerImageView.bounds.height
-		let newOffset = bannerHeight - scrollView.contentOffset.y
-		let compactDetailsOffset = newOffset - compactDetailsHeight
-
-		if compactDetailsOffset > bannerHeight {
-			UIView.animate(withDuration: 0.75) {
-				self.quickDetailsView.alpha = 1
-			}
-
-			UIView.animate(withDuration: 0) {
-				self.compactDetailsView.alpha = 0
-			}
+	@IBAction func playTrailerPressed(_ sender: UIButton) {
+		if let youtubeID = showDetails?.showDetailsElement?.youtubeID, youtubeID != "" {
+			presentVideoViewControllerWith(string: youtubeID)
 		} else {
-			UIView.animate(withDuration: 0) {
-				self.quickDetailsView.alpha = 0
-			}
-
-			UIView.animate(withDuration: 0.75) {
-				self.compactDetailsView.alpha = 1
-			}
-		}
-
-		// Reached the top of view
-		if (scrollView.isAtTop) {
-			let actualPosition = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
-
-			if (actualPosition.y >= 250 && actualPosition.y <= 260) {
-				// If user scrolls down when at the top of the view
-				self.lightImpact.impactOccurred()
-				UIView.animate(withDuration: 0.75, animations: {
-					self.dismissButton.setTitle("Drag To Dismiss", for: .normal)
-					self.dismissButton.alpha = 1
-				})
-			} else if (actualPosition.y >= 300 && actualPosition.y <= 310) {
-				// If user scrolls down past "Drag To Dismiss"
-				self.heavyImpact.impactOccurred()
-				UIView.animate(withDuration: 0.45, animations: {
-					self.dismissButton.setTitle("Release To Dismiss", for: .normal)
-				})
-			} else if (actualPosition.y <= 250) {
-				// If scroll is idle
-				UIView.animate(withDuration: 0.45, animations: {
-					self.dismissButton.setTitle("Drag To Dismiss", for: .normal)
-					self.dismissButton.alpha = 0
-				})
-			}
+			presentVideoViewControllerWith(string: "-QpuPy9EPhk")
 		}
 	}
 
-	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-		if scrollView.isAtTop {
-			let actualPosition = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
-
-			if (actualPosition.y > 300) {
-				// If user lifts finger after "Release To Dismiss" shows up
-				self.heavyImpact.impactOccurred()
-				self.dismiss(animated: true, completion: nil)
-			} else if (actualPosition.y < 300) {
-				// If user lifts finger before "Release To Dismiss" shows up
-				self.lightImpact.impactOccurred()
-				UIView.animate(withDuration: 0.45, animations: {
-					self.dismissButton.alpha = 0
-				})
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "SynopsisSegue" {
+			if let synopsisViewController = segue.destination as? SynopsisViewController {
+				synopsisViewController.synopsis = showDetails?.showDetailsElement?.synopsis
+			}
+		} else if segue.identifier == "ActorsSegue" {
+			if let castTableViewController = segue.destination as? CastCollectionViewController {
+				castTableViewController.actors = actors
 			}
 		}
-	}
-
-	func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-
-		scrollToTop = true
 	}
 }
 
 // MARK: - UITableViewDataSource
 extension ShowDetailViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return showDetails != nil ? AnimeSection.allSections.count : 0
+		return showDetails?.showDetailsElement != nil ? ShowSections.allSections.count : 0
 	}
 
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
 		var numberOfRows = 0
 
-		switch AnimeSection(rawValue: section)! {
-		case .synopsis: numberOfRows = (showDetails?.synopsis != "") ? 1 : 0
-		case .information: numberOfRows = (User.isAdmin() == true) ? 9 : 8
+		switch ShowSections(rawValue: section)! {
+		case .synopsis:
+			numberOfRows = (showDetails?.showDetailsElement?.synopsis != "") ? 1 : 0
+		case .information:
+			numberOfRows = (User.isAdmin() == true) ? 11 : 10
 		case .cast:
-			if let actorsCount = actors?.count, actorsCount <= 5 {
-				numberOfRows = actorsCount
-			} else if let actorsCount = actors?.count, actorsCount > 5 {
-				numberOfRows = 6
+			if let actorsCount = actors?.count, actorsCount > 0 {
+				numberOfRows = 2
 			} else {
 				numberOfRows = 0
 			}
+		case .related:
+			numberOfRows = 0
 		}
 
 		return numberOfRows
@@ -600,164 +588,30 @@ extension ShowDetailViewController: UITableViewDataSource {
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var indexPath = indexPath
 
-		switch AnimeSection(rawValue: indexPath.section)! {
+		switch ShowSections(rawValue: indexPath.section)! {
 		case .synopsis:
-			let synopsisCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! ShowSynopsisCell
-			synopsisCell.synopsisTextView.attributedText = showDetails?.attributedSynopsis()
+			let synopsisCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisCell
+			synopsisCell.showDetailsElement = showDetails?.showDetailsElement
 			synopsisCell.layoutIfNeeded()
 			return synopsisCell
 		case .information:
-			let informationCell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! ShowDetailCell
-
-			if let isAdmin = User.isAdmin(), isAdmin == false && indexPath.row == 0 {
-				indexPath.row = 2
-			}
-
-			informationCell.titleLabel.theme_textColor = "Global.tintColor"
-			informationCell.detailLabel.theme_textColor = "Global.textColor"
-
-			switch indexPath.row {
-			case 0:
-				informationCell.titleLabel.text = "ID"
-				if let showID = showDetails?.id, showID > 0 {
-					informationCell.detailLabel.text = String(showID)
-				} else {
-					informationCell.detailLabel.text = "No show id found"
-				}
-			case 1:
-				informationCell.titleLabel.text = "IMDB ID"
-				if let imdbId = showDetails?.imdbId, imdbId != "" {
-					informationCell.detailLabel.text = imdbId
-				} else {
-					informationCell.detailLabel.text = "No IMDB ID found"
-				}
-			case 2:
-				informationCell.titleLabel.text = "Type"
-				if let type = showDetails?.type, type != "" {
-					informationCell.detailLabel.text = type
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-			case 3:
-				informationCell.titleLabel.text = "Seasons"
-				if let seasons = showDetails?.seasons, seasons > 0 {
-					informationCell.detailLabel.text = seasons.description
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-			case 4:
-				informationCell.titleLabel.text = "Episodes"
-				if let episode = showDetails?.episodes, episode > 0 {
-					informationCell.detailLabel.text = episode.description
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-			case 5:
-				informationCell.titleLabel.text = "Aired"
-				if let startDate = showDetails?.startDate, let endDate = showDetails?.endDate {
-					informationCell.detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
-				} else {
-					informationCell.detailLabel.text = "N/A - N/A"
-				}
-			case 6:
-				informationCell.titleLabel.text = "Network"
-				if let network = showDetails?.network, network != "" {
-					informationCell.detailLabel.text = network
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-				//            case 6:
-				//                cell.titleLabel.text = "Genres"
-				//                if let genre = showDetails?.genre, genre != "" {
-				//                    cell.detailLabel.text = genre
-				//                } else {
-				//                    cell.detailLabel.text = "-"
-			//                }
-			case 7:
-				informationCell.titleLabel.text = "Duration"
-				if let duration = showDetails?.runtime, duration > 0 {
-					informationCell.detailLabel.text = "\(duration) min"
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-			case 8:
-				informationCell.titleLabel.text = "Rating"
-				if let watchRating = showDetails?.watchRating, watchRating != "" {
-					informationCell.detailLabel.text = watchRating
-				} else {
-					informationCell.detailLabel.text = "-"
-				}
-				//            case 9:
-				//                cell.titleLabel.text = "English Titles"
-				//                if let englishTitle = showDetails?.englishTitles, englishTitle != "" {
-				//         er           cell.detailLabel.text = englishTitle
-				//                } else {
-				//                    cell.detailLabel.text = "-"
-				//                }
-				//            case 10:
-				//                cell.titleLabel.text = "Japanese Titles"
-				//                if let japaneseTitle = showDetails?.japaneseTitles, japaneseTitle != "" {
-				//                    cell.detailLabel.text = japaneseTitle
-				//                } else {
-				//                    cell.detailLabel.text = "-"
-				//                }
-				//            case 11:
-				//                cell.titleLabel.text = "Synonyms"
-				//                if let synonyms = showDetails?.synonyms, synonyms != "" {
-				//                    cell.detailLabel.text = synonyms
-				//                } else {
-				//                    cell.detailLabel.text = "-"
-			//                }
-			default:
-				break
-			}
+			let informationCell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! InformationTableViewCell
+			informationCell.indexPathRow = indexPath.row
+			informationCell.showDetailsElement = showDetails?.showDetailsElement
 			informationCell.layoutIfNeeded()
 			return informationCell
 		case .cast:
 			let castCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
-
-			// Actor name
-			if let actorName = actors?[indexPath.row].name {
-				castCell.actorName.text = actorName
-				castCell.actorName.theme_textColor = "Global.tintColor"
+			castCell.actorElement = actors?[indexPath.row]
+			castCell.delegate = self
+			if indexPath.row == 1 {
+				castCell.separatorView.isHidden = true
 			}
-
-			// Actor role
-			if let actorRole = actors?[indexPath.row].role {
-				castCell.actorJob.text = actorRole
-				castCell.actorJob.theme_textColor = "Global.textColor"
-			}
-
-			// Actor image view
-			if let actorImage = actors?[indexPath.row].image, actorImage != "" {
-				let actorImageUrl = URL(string: actorImage)
-				let resource = ImageResource(downloadURL: actorImageUrl!)
-				castCell.actorImageView.kf.indicatorType = .activity
-				castCell.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
-			} else {
-				castCell.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
-			}
-
-			// Add gesture to actors image view
-			if castCell.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
-				// if the image currently has no gestureRecognizer
-				let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCast(_:)))
-				castCell.actorImageView.addGestureRecognizer(tapGesture)
-				castCell.actorImageView.isUserInteractionEnabled = true
-			}
-
-			// Show more button when casts exceed 5 rows
-			if indexPath.row == 5 {
-				let seeMoreCharactersCell: SeeMoreCharactersCell = tableView.dequeueReusableCell(withIdentifier: "SeeMoreCell") as! SeeMoreCharactersCell
-
-				seeMoreCharactersCell.moreButton.theme_backgroundColor = "Global.tintColor"
-				seeMoreCharactersCell.moreButton.theme_setTitleColor("Global.textColor", forState: .normal)
-				
-				return seeMoreCharactersCell
-			}
-
 			castCell.layoutIfNeeded()
 			return castCell
+		case .related:
+			let relatedCell = tableView.dequeueReusableCell(withIdentifier: "ShowRelatedCell") as! ShowRelatedCell
+			return relatedCell
 		}
 	}
 
@@ -765,18 +619,21 @@ extension ShowDetailViewController: UITableViewDataSource {
 		let showTitleCell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
 		var title = ""
 
-		switch AnimeSection(rawValue: section)! {
+		switch ShowSections(rawValue: section)! {
 		case .synopsis:
-			title = (showDetails?.synopsis != "") ? "Synopsis" : ""
+			title = (showDetails?.showDetailsElement?.synopsis != "") ? "Synopsis" : ""
 		case .information:
 			title = "Information"
 		case .cast:
 			guard let castCount = actors?.count else { return showTitleCell.contentView }
 			title = (castCount != 0) ? "Actors" : ""
+			showTitleCell.seeMoreActorsButton.isHidden = !(castCount > 2)
+		case .related:
+			title = "Related"
 		}
 
 		showTitleCell.titleLabel.text = title
-		showTitleCell.titleLabel.theme_textColor = "Global.textColor"
+
 		return showTitleCell.contentView
 	}
 
@@ -796,14 +653,96 @@ extension ShowDetailViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ShowDetailViewController: UITableViewDelegate {
-	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let section = AnimeSection(rawValue: indexPath.section)!
-		tableView.deselectRow(at: indexPath, animated: true)
 
-		switch section {
-		case .synopsis: break
-		case .information: break
-		case .cast: break
+}
+
+// MARK: - UIScrollViewDelegate
+extension ShowDetailViewController: UIScrollViewDelegate {
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		updateHeaderView()
+		if shouldSnapshot && scrollView.isTracking {
+			self.createSnapshotOfView()
+			shouldSnapshot = false
 		}
+
+		// Variables for showing/hiding compact details view
+		let bannerHeight = bannerImageView.bounds.height
+		let newOffset = bannerHeight - scrollView.contentOffset.y
+		let compactDetailsOffset = newOffset - compactDetailsHeight
+
+		// Logic for showing/hiding compact details view
+		if compactDetailsOffset > bannerHeight {
+			UIView.animate(withDuration: 0.75) {
+				self.quickDetailsView.alpha = 1
+			}
+
+			UIView.animate(withDuration: 0) {
+				self.compactDetailsView.alpha = 0
+			}
+		} else {
+			UIView.animate(withDuration: 0) {
+				self.quickDetailsView.alpha = 0
+			}
+
+			UIView.animate(withDuration: 0.75) {
+				self.compactDetailsView.alpha = 1
+			}
+		}
+
+		let yPositionForDismissal: CGFloat = 30
+		let yContentOffset = tableView.contentOffset.y
+		let newHeaderViewHeight = headerViewHeight + topLayoutGuide.length
+
+		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
+			viewsAreHidden = true
+			snapshotView.isHidden = false
+			blurView?.isHidden = false
+
+			let scale = (300 + newHeaderViewHeight + yContentOffset) / 300
+
+			snapshotView.transform = CGAffineTransform(scaleX: scale, y: scale)
+			snapshotView.layer.cornerRadius = -yContentOffset > yPositionForDismissal ? yPositionForDismissal : -yContentOffset
+
+			if yPositionForDismissal + yContentOffset <= -newHeaderViewHeight + -yPositionForDismissal {
+				scrollView.isScrollEnabled = false
+				dismiss()
+			}
+		} else if snapshotView.transform.a > 0.90 && scrollView.isTracking && scrollView.panGestureRecognizer.translation(in: scrollView.superview).y < 0 {
+			viewsAreHidden = false
+			snapshotView.isHidden = true
+			blurView?.isHidden = true
+		}
+	}
+
+	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		let yContentOffset = tableView.contentOffset.y
+		let newHeaderViewHeight = headerViewHeight + topLayoutGuide.length
+
+		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
+			viewsAreHidden = false
+			snapshotView.isHidden = true
+			blurView?.isHidden = true
+		}
+	}
+}
+
+// MARK: - ShowRatingDelegate
+extension ShowDetailViewController: ShowRatingDelegate {
+	func getRating(value: Double?) {
+		if let rating = value {
+			self.cosmosView.rating = rating
+			self.cosmosView.update()
+		}
+	}
+}
+
+// MARK: - ShowCharacterCellDelegate
+extension ShowDetailViewController: ShowCharacterCellDelegate {
+	func presentPhoto(withString string: String, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(string: string, from: imageView)
+	}
+
+	func presentPhoto(withUrl url: String, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(url: url, from: imageView)
 	}
 }

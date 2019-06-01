@@ -22,6 +22,10 @@ import UIKit
         get { return getThemePicker(self, "setTintColor:") as? ThemeColorPicker }
         set { setThemePicker(self, "setTintColor:", newValue) }
     }
+	var theme_borderColor: ThemeColorPicker? {
+		get { return getThemePicker(self, "setBorderColor:") as? ThemeColorPicker }
+		set { setThemePicker(self, "setBorderColor:", newValue) }
+	}
 }
 @objc public extension UIApplication
 {
@@ -199,6 +203,13 @@ import UIKit
     var theme_activityIndicatorViewStyle: ThemeActivityIndicatorViewStylePicker? {
         get { return getThemePicker(self, "setActivityIndicatorViewStyle:") as? ThemeActivityIndicatorViewStylePicker }
         set { setThemePicker(self, "setActivityIndicatorViewStyle:", newValue) }
+    }
+}
+@objc public extension UIScrollView
+{
+    var theme_indicatorStyle: ThemeScrollViewIndicatorStylePicker? {
+        get { return getThemePicker(self, "setIndicatorStyle:") as? ThemeScrollViewIndicatorStylePicker }
+        set { setThemePicker(self, "setIndicatorStyle:", newValue) }
     }
 }
 @objc public extension UIButton

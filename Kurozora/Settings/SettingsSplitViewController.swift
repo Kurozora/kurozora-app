@@ -23,7 +23,7 @@ class SettingsSplitViewController: UISplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		self.preferredDisplayMode = .allVisible
 		self.delegate = self

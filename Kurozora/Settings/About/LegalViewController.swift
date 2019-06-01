@@ -11,16 +11,28 @@ import SCLAlertView
 
 class LegalViewController: UIViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var privacyPolicyTextView: UITextView!
-    @IBOutlet weak var lastUpdatedLabel: UILabel!
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var privacyPolicyTextView: UITextView! {
+		didSet {
+			privacyPolicyTextView.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var lastUpdatedLabel: UILabel! {
+		didSet {
+			lastUpdatedLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var scrollView: UIScrollView!
 
 	override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-	self.navigationController?.navigationBar.isTranslucent = true
-		self.navigationController?.navigationBar.theme_barTintColor = "Global.barTintColor"
+		self.navigationController?.navigationBar.isTranslucent = true
+		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.navigationController?.navigationBar.backgroundColor = .clear
 
         Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
@@ -39,10 +51,7 @@ class LegalViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
-		titleLabel.theme_textColor = "Global.textColor"
-		privacyPolicyTextView.theme_textColor = "Global.textColor"
-		lastUpdatedLabel.theme_textColor = "Global.textColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
 	@IBAction func doneButtonPressed(_ sender: UIButton) {
@@ -50,6 +59,7 @@ class LegalViewController: UIViewController {
 	}
 }
 
+// MARK: - UIScrollViewDelegate
 extension LegalViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let titleFrame = titleLabel.frame

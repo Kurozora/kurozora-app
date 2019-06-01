@@ -1,5 +1,5 @@
 //
-//  SearchCell.swift
+//  SearchResultsCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/03/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class SearchCell: UICollectionViewCell {
+class SearchResultsCell: UITableViewCell {
 	// Global and suggestion search cell outlets
 	@IBOutlet weak var posterImageView: UIImageView?
 	@IBOutlet weak var titleLabel: UILabel?

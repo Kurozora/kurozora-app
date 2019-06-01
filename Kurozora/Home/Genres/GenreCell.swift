@@ -1,5 +1,5 @@
 //
-//  GenreCell.swift
+//  GenreTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 12/01/2019.
@@ -8,8 +8,33 @@
 
 import UIKit
 
-class GenreCell: UITableViewCell {
-	@IBOutlet weak var nameLabel: UILabel!
+class GenreTableViewCell: UITableViewCell {
+	@IBOutlet weak var nameLabel: UILabel! {
+		didSet {
+			nameLabel.theme_textColor = KThemePicker.textColor.rawValue
+			nameLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		}
+	}
 	@IBOutlet weak var nsfwView: UIView!
-	@IBOutlet weak var separatorView: UIView!
+	@IBOutlet weak var separatorView: UIView! {
+		didSet {
+			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+		}
+	}
+
+	var genreElement: GenreElement? {
+		didSet {
+			setupCell()
+		}
+	}
+
+	fileprivate func setupCell() {
+		guard let genreElement = genreElement else { return }
+
+		nameLabel.text = genreElement.name
+
+		if let isNsfw = genreElement.nsfw {
+			nsfwView.isHidden = isNsfw ? false : true
+		}
+	}
 }

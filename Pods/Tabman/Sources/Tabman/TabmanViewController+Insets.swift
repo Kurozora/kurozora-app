@@ -9,7 +9,7 @@
 import UIKit
 import AutoInsetter
 
-public extension TabmanViewController {
+extension TabmanViewController {
     
     /// Object containing inset data that is required for all bars in a `TabmanViewController`.
     public struct Insets {
@@ -27,27 +27,34 @@ public extension TabmanViewController {
         public let barInsets: UIEdgeInsets
         
         /// Inset specification for AutoInsetter.
-        internal let spec: InsetsSpec
+        internal var spec: AutoInsetSpec {
+            return InsetsSpec(allRequiredInsets: UIEdgeInsets(top: safeAreaInsets.top + barInsets.top,
+                                                              left: safeAreaInsets.left + barInsets.left,
+                                                              bottom: safeAreaInsets.bottom + barInsets.bottom,
+                                                              right: safeAreaInsets.right + barInsets.right),
+                              additionalRequiredInsets: barInsets)
+        }
         
         // MARK: Init
         
         private init(tabmanViewController: TabmanViewController) {
-            self.safeAreaInsets = Insets.makeSafeAreaInsets(for: tabmanViewController)
-            self.barInsets = UIEdgeInsets(top: tabmanViewController.topBarContainer.bounds.size.height,
-                                          left: 0.0,
-                                          bottom: tabmanViewController.bottomBarContainer.bounds.size.height,
-                                          right: 0.0)
+            let safeAreaInsets = Insets.makeSafeAreaInsets(for: tabmanViewController)
+            let barInsets = UIEdgeInsets(top: tabmanViewController.topBarContainer.bounds.size.height,
+                                         left: 0.0,
+                                         bottom: tabmanViewController.bottomBarContainer.bounds.size.height,
+                                         right: 0.0)
             
-            self.spec = InsetsSpec(allRequiredInsets: UIEdgeInsets(top: safeAreaInsets.top + barInsets.top,
-                                                                   left: safeAreaInsets.left + barInsets.left,
-                                                                   bottom: safeAreaInsets.bottom + barInsets.bottom,
-                                                                   right: safeAreaInsets.right + barInsets.right),
-                                   additionalRequiredInsets: barInsets)
+            self.init(barInsets: barInsets, safeAreaInsets: safeAreaInsets)
+        }
+        
+        public init(barInsets: UIEdgeInsets, safeAreaInsets: UIEdgeInsets) {
+            self.barInsets = barInsets
+            self.safeAreaInsets = safeAreaInsets
         }
         
         // MARK: Utility
         
-        private static func makeSafeAreaInsets(for viewController: UIViewController) -> UIEdgeInsets {
+        public static func makeSafeAreaInsets(for viewController: UIViewController) -> UIEdgeInsets {
             if #available(iOS 11, *) {
                 return viewController.view.safeAreaInsets
             } else {
@@ -63,7 +70,7 @@ public extension TabmanViewController {
     }
 }
 
-internal extension TabmanViewController {
+extension TabmanViewController {
     
     /// Spec for AutoInsetter
     internal struct InsetsSpec: AutoInsetSpec {

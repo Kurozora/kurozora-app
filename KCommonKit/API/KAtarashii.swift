@@ -40,13 +40,11 @@ public struct MALProgress: Hashable {
     
     func toDictionary() -> [String: Any] {
         return ["anime_id": myAnimeListID, "status": status, "episodes": episodes, "score": score]
-    }
-    
-    public var hashValue: Int {
-        get {
-            return myAnimeListID
-        }
-    }
+	}
+
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(myAnimeListID)
+	}
 }
 
 public func ==(lhs: MALProgress, rhs: MALProgress) -> Bool {
@@ -61,7 +59,7 @@ public struct KAtarashii {
         static let BaseURLString = "https://api.atarashiiapp.com/2"
         
         case animeCast(id: Int)
-        case verifyCredentials()
+        case verifyCredentials(Void)
         case animeList(username: String)
         case profile(username: String)
         case friends(username: String)

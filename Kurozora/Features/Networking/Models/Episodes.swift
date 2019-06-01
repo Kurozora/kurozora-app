@@ -53,9 +53,11 @@ class EpisodesElement: JSONDecodable {
 }
 
 class EpisodesUserDetails: JSONDecodable {
-	let watched: Bool?
+	let success: Bool?
+	var watched: Bool?
 
 	required init(json: JSON) throws {
+		self.success = json["success"].boolValue
 		self.watched = json["watched"].boolValue
 	}
 }

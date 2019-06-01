@@ -1,5 +1,5 @@
 //
-//  LibraryCell.swift
+//  LibraryCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
@@ -8,31 +8,34 @@
 
 import UIKit
 import Kingfisher
-import Hero
 
 //protocol LibraryCellDelegate: class {
-//    func cellPressedWatched(cell: LibraryCell, anime: Anime)
-//    func cellPressedEpisodeThread(cell: LibraryCell, anime: Anime, episode: Episode)
+//    func cellPressedWatched(cell: LibraryCollectionViewCell, anime: Anime)
+//    func cellPressedEpisodeThread(cell: LibraryCollectionViewCell, anime: Anime, episode: Episode)
 //}
 
-class LibraryCell: UICollectionViewCell {
-//
+class LibraryCollectionViewCell: UICollectionViewCell {
 //    weak var delegate: LibraryAnimeCellDelegate?
 //    var anime: Anime?
 //    weak var episode: Episode?
 //    var currentCancellationToken: Operation?
-	
 	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var posterView: UIImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton?
-    @IBOutlet weak var commentButton: UIButton?
+//	@IBOutlet weak var cellShadowView: UIView!
+	@IBOutlet weak var posterShadowView: UIView?
+	@IBOutlet weak var posterView: UIImageView!
     @IBOutlet weak var episodeImageView: UIImageView?
 
 	var libraryElement: LibraryElement? {
 		didSet {
 			setup()
 		}
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		contentView.applyShadow(shadowPathSize: CGSize(width: self.width, height: self.height))
 	}
 
 	fileprivate func setup() {
@@ -56,6 +59,8 @@ class LibraryCell: UICollectionViewCell {
 			} else {
 				episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
+
+			posterShadowView?.applyShadow(shadowPathSize: CGSize(width: posterView.width, height: posterView.height))
 		}
 
 		posterView.hero.id = "library_\(showTitle)_poster"

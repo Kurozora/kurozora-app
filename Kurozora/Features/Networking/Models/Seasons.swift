@@ -31,10 +31,14 @@ class SeasonsElement: JSONDecodable {
 	let id: Int?
 	let title: String?
 	let number: Int?
+	let poster: String?
+	let episodesCount: Int?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.title = json["title"].stringValue
 		self.number = json["number"].intValue
+		self.poster = json["poster"].stringValue
+		self.episodesCount = json["episodes_count"].intValue
 	}
 }

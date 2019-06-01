@@ -7,7 +7,13 @@ It is compatible with **iOS** (8.0 - 11.0), **OSX** (10.9 - 10.13) and **tvOS** 
 Inspired by https://github.com/tonymillion/Reachability
 
 ## Supporting **Reachability.swift**
-Keeping **Reachability.swift** up-to-date is a time consuming task. Making updates, reviewing pull requests, responding to issues and answering emails all take time. If you'd like to help keep me motivated, please download my free app, [Photo Flipper] from the App Store. (To really motivate me, pay $1.99 for the IAP 😀)
+Keeping **Reachability.swift** up-to-date is a time consuming task. Making updates, reviewing pull requests, responding to issues and answering emails all take time. 
+
+If you're an iOS developer who's looking for a quick and easy way to create App Store screenshots, please try out my app [Screenshot Producer](https://itunes.apple.com/app/apple-store/id1252374855?pt=215893&ct=reachability&mt=8)…
+
+ Devices | Layout | Copy | Localize | Export      
+:------:|:------:|:------:|:------:|:------:
+![](http://is2.mzstatic.com/image/thumb/Purple118/v4/64/af/55/64af55bc-2ef0-691c-f5f3-4963685f7f63/source/552x414bb.jpg) |  ![](http://is4.mzstatic.com/image/thumb/Purple128/v4/fb/4c/bd/fb4cbd2f-dd04-22ba-4fdf-5ac652693fb8/source/552x414bb.jpg) |  ![](http://is1.mzstatic.com/image/thumb/Purple118/v4/5a/4f/cf/5a4fcfdf-ca04-0307-9f2e-83178e8ad90d/source/552x414bb.jpg) |  ![](http://is4.mzstatic.com/image/thumb/Purple128/v4/17/ea/56/17ea562e-e045-96e7-fcac-cfaaf4f499fd/source/552x414bb.jpg) |  ![](http://is4.mzstatic.com/image/thumb/Purple118/v4/59/9e/dd/599edd50-f05c-f413-8e88-e614731fd828/source/552x414bb.jpg)
 
 And don't forget to **★** the repo. This increases its visibility and encourages others to contribute.
 
@@ -42,8 +48,6 @@ var connection: Connection
 
 ### Other changes:
 
-- `isReachableViaWWAN` has been renamed to `isReachableViaCellular`
-
 - `reachableOnWWAN` has been renamed to `allowsCellularConnection`
 
 - `reachability.currentReachabilityString` has been deprecated. Use `"\(reachability.connection)"` instead.
@@ -59,7 +63,7 @@ var connection: Connection
 
 ## Got a problem?
 
-Please read https://github.com/ashleymills/Reachability.swift/wiki/Raising-an-issue before raising an issue.
+Please read https://github.com/ashleymills/Reachability.swift/blob/master/CONTRIBUTING.md before raising an issue.
 
 ## Installation
 ### Manual
@@ -99,11 +103,11 @@ To install Reachability.swift with Carthage:
 
 3. Run `carthage update`.
 
-4. Drag `ReachabilitySwift.framework` from the `Carthage/Build/iOS/` directory to the `Linked Frameworks and Libraries` section of your Xcode project’s `General` settings.
+4. Drag `Reachability.framework` from the `Carthage/Build/iOS/` directory to the `Linked Frameworks and Libraries` section of your Xcode project’s `General` settings.
 
-5. Add `$(SRCROOT)/Carthage/Build/iOS/ReachabilitySwiift.framework` to `Input Files` of Run Script Phase for Carthage.
+5. Add `$(SRCROOT)/Carthage/Build/iOS/Reachability.framework` to `Input Files` of Run Script Phase for Carthage.
 
-6. In your code import Reachability likse so:
+6. In your code import Reachability like so:
 `import Reachability`
 
 
@@ -145,7 +149,7 @@ reachability.stopNotifier()
 
 ## Example - notifications
 
-NOTE: All notifications are delviered on the **main queue**.
+NOTE: All notifications are delivered on the **main queue**.
 
 ```swift
 //declare this property where it won't go out of scope relative to your listener
@@ -153,7 +157,7 @@ let reachability = Reachability()!
 
 //declare this inside of viewWillAppear
 
-     NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: .reachabilityChanged, object: reachability)
+     NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
     do{
       try reachability.startNotifier()
     }catch{
@@ -164,7 +168,7 @@ let reachability = Reachability()!
 and
 
 ```swift
-func reachabilityChanged(note: Notification) {
+@objc func reachabilityChanged(note: Notification) {
 
   let reachability = note.object as! Reachability
 
@@ -183,7 +187,7 @@ and for stopping notifications
 
 ```swift
 reachability.stopNotifier()
-NotificationCenter.default.removeObserver(self, name: .eachabilityChanged, object: reachability)
+NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
 ```
 
 ## Want to help?

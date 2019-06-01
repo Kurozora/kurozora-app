@@ -4,7 +4,7 @@
     <a href="https://travis-ci.org/uias/Tabman">
         <img src="https://travis-ci.org/uias/Tabman.svg?branch=master" />
     </a>
-    <img src="https://img.shields.io/badge/Swift-4-orange.svg?style=flat" />
+    <img src="https://img.shields.io/badge/Swift-4 | 5-orange.svg?style=flat" />
     <a href="https://cocoapods.org/pods/Tabman">
         <img src="https://img.shields.io/cocoapods/v/Tabman.svg" alt="CocoaPods" />
     </a>
@@ -29,21 +29,21 @@
 - Automatically insets child view controller contents.
 
 ## 📋 Requirements
-Tabman requires iOS 9; and is written in Swift 4.
+Tabman requires iOS 9 or above; and is compatibile with Swift 4/5.
 
 ## 📲 Installation
 ### CocoaPods
 Tabman is available through [CocoaPods](http://cocoapods.org):
 
 ```ruby
-pod 'Tabman', '~> 2.2'
+pod 'Tabman', '~> 2.4'
 ```
 
 ### Carthage
 Tabman is also available through [Carthage](https://github.com/Carthage/Carthage):
 
 ```ogdl
-github "uias/Tabman" ~> 2.2
+github "uias/Tabman" ~> 2.4
 ```
 
 ## 🚀 Usage
@@ -76,7 +76,7 @@ class TabViewController: TabmanViewController {
 }
 ```
 
-*When adding a bar, you can choose to add it to the predefined areas (`.top`, `.bottom`) or to a custom view with `.custom(view, layout)`. If you set `layout` to be `nil`, the bar will be constrained to leading, trailing, top and bottom anchors of the view automatically.*
+**When adding a bar, you can choose to add it to the predefined areas (`.top`, `.bottom`, `.navigationItem(item:)`) or to a custom view with `.custom(view:layout:)`. For more information, read the [Adding a Bar](https://uias.github.io/Tabman/master/adding-a-bar.html) guide.**
 
 4) Configure your data sources.
 
@@ -103,7 +103,23 @@ extension TabViewController: PageboyViewControllerDataSource, TMBarDataSource {
 }
 ```
 
-*UIKit objects such as `UINavigationItem` and `UITabBarItem` also conform to `TMBarItemable`. However they don't support dynamic updating, such as setting `.title` after it has been provided to the data source.*
+### Bar Items
+A bar will ask for a `TMBarItemable` for each page that is provided to the `TabmanViewController` `dataSource`. `TMBarItemable` is a  protocol that can be used for custom item types, the default in Tabman being `TMBarItem`:
+
+```swift
+let item = TMBarItem()
+item.title = "Item 1"
+item.image = UIImage(named: "item.png")
+item.badgeValue = "New"
+```
+
+#### UIKit Itemables
+
+Tabman also provides support for some native `UIKit` types as `TMBarItemable`:
+- `UINavigationItem`
+- `UITabBarItem`
+
+*These types are unfortunately unable to support the dynamic updating of the bar when setting properties.*
 
 ### Choosing a look
 Tabman provides numerous, easy to use template styles out of the box:
@@ -150,6 +166,7 @@ bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right:
 - `contentMode` - How the layout should display its contents; either restricted to the bar width with `.fit` or intrinsically sized with `.intrinsic`.
 - `contentInset` - Inset to be applied to the edges of the layout.
 - `transitionStyle` - How the layout should perform transition animations.
+- `alignment` - How the layout should be aligned in the bar.
 
 **More: [**TMBarLayout Docs**](https://uias.github.io/Tabman/master/Layout.html)**
 

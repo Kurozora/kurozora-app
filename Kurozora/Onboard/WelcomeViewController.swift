@@ -50,9 +50,9 @@ class WelcomeViewController: UIViewController {
 				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon")),
 				])
 			whatsNew.titleText = "What's New"
-			whatsNew.itemSubtitleColor = .darkGray
+			whatsNew.itemSubtitleColor = #colorLiteral(red: 0.3300000131, green: 0.3300000131, blue: 0.3300000131, alpha: 1)
 			whatsNew.buttonText = "Continue"
-			whatsNew.buttonTextColor = .white
+			whatsNew.buttonTextColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			whatsNew.buttonBackgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
 			present(whatsNew, animated: true, completion: nil)
 		}

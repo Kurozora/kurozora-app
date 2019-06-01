@@ -114,7 +114,7 @@ extension UIColor {
     
     // Orange
     public class func onHold() -> UIColor {
-        return #colorLiteral(red: 0.9568627451, green: 0.262745098, blue: 0.2117647059, alpha: 1)
+        return #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
     }
     
     // Gray

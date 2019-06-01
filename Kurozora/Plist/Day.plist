@@ -8,23 +8,47 @@
 	<dict>
 		<key>backgroundColor</key>
 		<string>#FFFFFF</string>
-		<key>textColor</key>
-		<string>#000000</string>
-		<key>tintColor</key>
-		<string>#FF9300</string>
+		<key>tintedBackgroundColor</key>
+		<string>#FFF3E3</string>
 		<key>barTintColor</key>
 		<string>#FFFFFF</string>
 		<key>barTitleTextColor</key>
 		<string>#FF9300</string>
+		<key>textColor</key>
+		<string>#000000</string>
+		<key>textFieldBackgroundColor</key>
+		<string>#929292</string>
+		<key>tintColor</key>
+		<string>#FF9300</string>
+		<key>tintedButtonTextColor</key>
+		<string>#FFFFFF</string>
 		<key>separatorColor</key>
-		<string>#C6C5C5</string>
+		<string>#979797</string>
+		<key>separatorColorLight</key>
+		<string>#BBBBBB</string>
+		<key>subTextColor</key>
+		<string>#979797</string>
 	</dict>
-	<key>Forums</key>
+	<key>TableViewCell</key>
 	<dict>
+		<key>backgroundColor</key>
+		<string>#F6F6F6</string>
 		<key>titleTextColor</key>
 		<string>#000000</string>
-		<key>contentTextColor</key>
-		<string>#B7B9C1</string>
+		<key>subTextColor</key>
+		<string>#9B9B9B</string>
+		<key>chevronColor</key>
+		<string>#9B9B9B</string>
+		<key>selectedBackgroundColor</key>
+		<string>#DFEDFD</string>
+		<key>selectedTitleTextColor</key>
+		<string>#0079FF</string>
+		<key>selectedSubTextColor</key>
+		<string>#78B9FF</string>
+		<key>selectedChevronColor</key>
+		<string>#0079FF</string>
+		<key>actionDefaultColor</key>
+		<string>#777777</string>
 	</dict>
 	<key>Notifications</key>
 	<dict>

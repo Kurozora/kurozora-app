@@ -1,5 +1,5 @@
 //
-//  ForumCell.swift
+//  ForumsCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/05/2018.
@@ -9,28 +9,35 @@
 import UIKit
 import SwiftyJSON
 
-//protocol ForumCellDelegate: class {
-//	func moreButtonPressed(cell: ForumCell)
-//	func upVoteButtonPressed(cell: ForumCell)
-//	func downVoteButtonPressed(cell: ForumCell)
-//}
+protocol ForumsCellDelegate: class {
+	func moreButtonPressed(cell: ForumsCell)
+	func upVoteButtonPressed(cell: ForumsCell)
+	func downVoteButtonPressed(cell: ForumsCell)
+}
 
-public class ForumCell: UITableViewCell {
-//	weak var forumCellDelegate: ForumCellDelegate?
-	// Content
-    @IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var contentLabel: UILabel!
+public class ForumsCell: UITableViewCell {
+	weak var delegate: ForumsCellDelegate?
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			titleLabel.theme_textColor = KThemePicker.forumsCellTitleTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var contentLabel: UILabel! {
+		didSet {
+			contentLabel.theme_textColor = KThemePicker.forumsCellContentTextColor.rawValue
+		}
+	}
 	@IBOutlet weak var informationLabel: UILabel!
-    @IBOutlet weak var typeLabel: UILabel!
 	@IBOutlet weak var lockLabel: UILabel!
 
-	// Actions
 	@IBOutlet weak var moreButton: UIButton!
 	@IBOutlet weak var upVoteButton: UIButton!
 	@IBOutlet weak var downVoteButton: UIButton!
-
-	// Separator
-	@IBOutlet weak var separatorView: UIView!
+	@IBOutlet weak var bubbleView: UIView! {
+		didSet {
+			bubbleView.theme_backgroundColor = KThemePicker.forumsCellBackgroundColor.rawValue
+		}
+	}
 
 	// MARK: - IBActions
 	@IBAction func moreButtonAction(_ sender: UIButton) {
@@ -54,18 +61,14 @@ public class ForumCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
-
-	// Setup UITableViewCell
 	fileprivate func setup() {
 		guard let forumThreadsElement = forumThreadsElement else { return }
 
 		// Set title label
 		titleLabel.text = forumThreadsElement.title
-		titleLabel.theme_textColor = "Forums.titleTextColor"
 
 		// Set content label
 		contentLabel.text = forumThreadsElement.contentTeaser
-		contentLabel.theme_textColor = "Forums.contentTextColor"
 
 		// Set information label
 		if let threadScore = forumThreadsElement.score, let threadReplyCount = forumThreadsElement.replyCount, let creationDate = forumThreadsElement.creationDate, creationDate != "" {
@@ -87,11 +90,6 @@ public class ForumCell: UITableViewCell {
 		let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showCellOptions(_:)))
 		addGestureRecognizer(longPressGesture)
 		isUserInteractionEnabled = true
-
-//		forumCellDelegate = self
-
-		// Separator
-		separatorView.theme_backgroundColor = "Global.separatorColor"
 	}
 
 	// Upvote/Downvote a thread
@@ -173,7 +171,7 @@ public class ForumCell: UITableViewCell {
 //					let storyboard = UIStoryboard(name: "profile", bundle: nil)
 //					let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
 //					profileViewController?.otherUserID = posterId
-//					let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController!)
+//					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 //
 //					self.present(kurozoraNavigationController, animated: true, completion: nil)
 //				}

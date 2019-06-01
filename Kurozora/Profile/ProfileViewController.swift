@@ -16,7 +16,52 @@ import SwiftyJSON
 //import XCDYouTubeKit
 
 class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-    enum SelectedFeed: Int {
+	@IBOutlet var tableView: UITableView!
+
+	@IBOutlet weak var profileNavigationItem: UINavigationItem!
+
+	@IBOutlet weak var userAvatar: UIImageView!
+	@IBOutlet weak var usernameLabel: UILabel!
+	@IBOutlet weak var userBanner: UIImageView!
+	@IBOutlet weak var bioTextView: UITextView!
+	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
+	@IBOutlet weak var activeAgo: UILabel!
+
+	@IBOutlet weak var followButton: UIButton! {
+		didSet {
+			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var followingButton: UIButton!
+	@IBOutlet weak var followersButton: UIButton!
+
+	@IBOutlet weak var userButtonsStackView: UIStackView!
+	@IBOutlet weak var segmentedControl: UISegmentedControl! {
+		didSet {
+			segmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+
+	@IBOutlet weak var proBadge: UILabel!
+	@IBOutlet weak var postsBadge: UILabel!
+	@IBOutlet weak var tagBadge: UIButton!
+	@IBOutlet weak var reputationBadge: UILabel!
+
+	@IBOutlet weak var selectBannerImageButton: UIButton!
+	@IBOutlet weak var selectProfileImageButton: UIButton!
+	@IBOutlet weak var editProfileButton: UIButton! {
+		didSet {
+			editProfileButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+	@IBOutlet weak var postButton: UIButton! {
+		didSet {
+			postButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+
+    enum SelectedFeedStyle: Int {
         case Feed = 0
         case Popular
         case Global
@@ -35,42 +80,9 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 	var bioTextCache: String?
 	var profileImageCache: UIImage?
 
-    @IBOutlet var tableView: UITableView!
-
-	@IBOutlet weak var profileNavigationItem: UINavigationItem!
-
-    @IBOutlet weak var userAvatar: UIImageView!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var userBanner: UIImageView!
-    @IBOutlet weak var bioTextView: UITextView!
-	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var activeAgo: UILabel!
-
-    @IBOutlet weak var followButtonView: UIView!
-	@IBOutlet weak var followButton: UIButton!
-    @IBOutlet weak var followingButton: UIButton!
-    @IBOutlet weak var followersButton: UIButton!
-
-	@IBOutlet weak var userButtonsStackView: UIStackView!
-	@IBOutlet weak var segmentedControl: UISegmentedControl!
-
-    @IBOutlet weak var proBadge: UILabel!
-    @IBOutlet weak var postsBadge: UILabel!
-    @IBOutlet weak var tagBadge: UIButton!
-    @IBOutlet weak var reputationBadge: UILabel!
-    
-	@IBOutlet weak var selectBannerImageButton: UIButton!
-	@IBOutlet weak var selectProfileImageButton: UIButton!
-	@IBOutlet weak var editProfileButton: UIButton!
-    @IBOutlet weak var postButton: UIButton!
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
@@ -87,7 +99,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			tableView.addSubview(refreshControl)
 		}
 
-		refreshControl.tintColor = #colorLiteral(red: 1, green: 0.6823529412, blue: 0.1176470588, alpha: 1)
+		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
@@ -180,12 +192,6 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
             userBanner.image = #imageLiteral(resourceName: "default_banner")
         }
 
-		// Setup segmented control
-		segmentedControl.theme_tintColor = "Global.tintColor"
-
-		// Setup post button
-		postButton.theme_tintColor = "Global.tintColor"
-        
         // Setup user bio
         if let bio = user?.user?.bio, bio != "" {
             self.bioTextView.text = bio
@@ -248,9 +254,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         
         // Setup follow button
         if otherUserID == User.currentID() || otherUserID == nil {
-            followButtonView.isHidden = true
-
-			editProfileButton.theme_tintColor = "Global.tintColor"
+            followButton.isHidden = true
 			editProfileButton.isHidden = false
         } else {
 			if let currentlyFollowing = user?.currentlyFollowing, currentlyFollowing == true {
@@ -258,10 +262,8 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			} else {
 				followButton.setTitle(" Follow", for: .normal)
 			}
-			followButton.theme_backgroundColor = "Global.tintColor"
-			followButton.theme_setTitleColor("Global.textColor", forState: .normal)
-            followButtonView.isHidden = false
 
+            followButton.isHidden = false
             editProfileButton.isHidden = true
         }
 
@@ -442,17 +444,17 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
         if let avatar = user?.user?.avatar, avatar != ""  {
-            presentPhotoViewControllerWith(url: avatar)
+            presentPhotoViewControllerWith(url: avatar, from: userAvatar)
         } else {
-            presentPhotoViewControllerWith(string: "default_avatar")
+            presentPhotoViewControllerWith(string: "default_avatar", from: userAvatar)
         }
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
         if let banner = user?.user?.banner, banner != "" {
-            presentPhotoViewControllerWith(url: banner)
+			presentPhotoViewControllerWith(url: banner, from: userBanner)
         } else {
-            presentPhotoViewControllerWith(string: "default_banner")
+            presentPhotoViewControllerWith(string: "default_banner", from: userBanner)
         }
     }
 
@@ -651,7 +653,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 //        innerQuery.whereKey("replyLevel", equalTo: 0)
 //        innerQuery.orderByDescending("createdAt")
 //
-//        let selectedFeed = SelectedFeed(rawValue: segmentedControl.selectedSegmentIndex)!
+//        let selectedFeed = SelectedFeedStyle(rawValue: segmentedControl.selectedSegmentIndex)!
 //        switch selectedFeed {
 //        case .Feed:
 //            let followingQuery = userProfile!.following().query()

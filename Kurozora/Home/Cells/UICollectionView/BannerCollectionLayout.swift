@@ -8,137 +8,122 @@
 
 import UIKit
 
-private let maxScaleOffset: CGFloat = 85
-private let minScale: CGFloat = 0.9
-private let minAlpha: CGFloat = 0.3
+class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
+	// MARK: - Public Properties
+	override var collectionViewContentSize: CGSize {
+		let leftmostEdge = cachedItemsAttributes.values.map { $0.frame.minX }.min() ?? 0
+		let rightmostEdge = cachedItemsAttributes.values.map { $0.frame.maxX }.max() ?? 0
+		return CGSize(width: rightmostEdge - leftmostEdge, height: itemSize.height)
+	}
 
-class BannerCollectionLayout: UICollectionViewFlowLayout {
-	var scaled: Bool = true
+	// MARK: - Private Properties
+	private var cachedItemsAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
+	override var itemSize: CGSize {
+		get { return _itemSize }
+		set { _itemSize = newValue }
+	}
+	private var _itemSize: CGSize {
+		get {
+			guard let collectionView = self.collectionView else { return .zero }
+			let gaps = CGFloat(10 * collectionView.numberOfItems(inSection: 0))
 
-	fileprivate var lastCollectionViewSize: CGSize = CGSize.zero
+			if UIDevice.isLandscape() {
+				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
+			}
+			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
+		}
+		set { itemSize = newValue }
+	}
+	private let spacing: CGFloat = 5
+	private let spacingWhenFocused: CGFloat = 15
 
-	override func prepare() {
+	private var continuousFocusedIndex: CGFloat {
+		guard let collectionView = collectionView else { return 0 }
+		let offset = collectionView.bounds.width / 2 + collectionView.contentOffset.x - itemSize.width / 2
+		return offset / (itemSize.width + spacing)
+	}
+
+	// MARK: - Public Methods
+	override open func prepare() {
+		super.prepare()
+		guard let collectionView = self.collectionView else { return }
+		updateInsets()
+		guard cachedItemsAttributes.isEmpty else { return }
+		collectionView.decelerationRate = .fast
 		scrollDirection = .horizontal
-	}
-	
-	override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
-		super.invalidateLayout(with: context)
-
-		guard let collectionView = collectionView else { return }
-
-		if collectionView.bounds.size != lastCollectionViewSize {
-			configureInset()
-			lastCollectionViewSize = collectionView.bounds.size
+		let itemsCount = collectionView.numberOfItems(inSection: 0)
+		for item in 0..<itemsCount {
+			let indexPath = IndexPath(item: item, section: 0)
+			cachedItemsAttributes[indexPath] = createAttributesForItem(at: indexPath)
 		}
-	}
-
-	override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-		guard let attribute = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes else {
-			return nil
-		}
-		if !scaled {
-			return attribute
-		}
-		centerScaledAttribute(attribute: attribute)
-		return attribute
 	}
 
 	override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-		guard let attributes = super.layoutAttributesForElements(in: rect) else {
-			return nil
-		}
-		if !scaled {
-			return attributes
-		}
-		guard case let newAttributesArray as [UICollectionViewLayoutAttributes] = NSArray(array: attributes, copyItems: true) else {
-			return nil
-		}
-		newAttributesArray.forEach { attribute in
-			centerScaledAttribute(attribute: attribute)
-		}
-		return newAttributesArray
+		return cachedItemsAttributes
+			.map { $0.value }
+			.filter { $0.frame.intersects(rect) }
+			.map { self.shiftedAttributes(from: $0) }
 	}
 
+	override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+		guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset) }
+		let collectionViewMidX: CGFloat = collectionView.bounds.size.width / 2
+		guard let closestAttribute = findClosestAttributes(toXPosition: proposedContentOffset.x + collectionViewMidX) else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset) }
+		return CGPoint(x: closestAttribute.center.x - collectionViewMidX, y: proposedContentOffset.y)
+	}
+
+	// MARK: - Invalidate layout
 	override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+		if newBounds.size != collectionView?.bounds.size { cachedItemsAttributes.removeAll() }
 		return true
 	}
 
-	override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint,
-											 withScrollingVelocity velocity: CGPoint) -> CGPoint {
-		guard let collectionView = collectionView else {
-			return proposedContentOffset
-		}
-
-		let proposedRect = CGRect(x: proposedContentOffset.x,
-								  y: 0,
-								  width: collectionView.bounds.width,
-								  height: maxScaleOffset)
-		guard let layoutAttributes = layoutAttributesForElements(in: proposedRect) else {
-			return proposedContentOffset
-		}
-
-		var shouldBeChosenAttributes: UICollectionViewLayoutAttributes?
-		var shouldBeChosenIndex: Int = -1
-
-		let proposedCenterX = proposedRect.midX
-
-		for (i, attributes) in layoutAttributes.enumerated() {
-			guard attributes .representedElementCategory == .cell else {
-				continue
-			}
-			guard let currentChosenAttributes = shouldBeChosenAttributes else {
-				shouldBeChosenAttributes = attributes
-				shouldBeChosenIndex = i
-				continue
-			}
-			if (abs(attributes.frame.midX - proposedCenterX) < abs(currentChosenAttributes.frame.midX - proposedCenterX)) {
-				shouldBeChosenAttributes = attributes
-				shouldBeChosenIndex = i
-			}
-		}
-		// Adjust the case where a quick but small scroll occurs.
-		if (abs(collectionView.contentOffset.x - proposedContentOffset.x) < itemSize.width) {
-			if velocity.x < -0.3 {
-				shouldBeChosenIndex = shouldBeChosenIndex > 0 ? shouldBeChosenIndex - 1 : shouldBeChosenIndex
-			} else if velocity.x > 0.3 {
-				shouldBeChosenIndex = shouldBeChosenIndex < layoutAttributes.count - 1 ?
-					shouldBeChosenIndex + 1 : shouldBeChosenIndex
-			}
-			shouldBeChosenAttributes = layoutAttributes[shouldBeChosenIndex]
-		}
-		guard let finalAttributes = shouldBeChosenAttributes else {
-			return proposedContentOffset
-		}
-		return CGPoint(x: finalAttributes.frame.midX - collectionView.bounds.size.width / 2,
-					   y: proposedContentOffset.y)
-	}
-}
-
-// MARK: - Helpers
-extension BannerCollectionLayout {
-	fileprivate func centerScaledAttribute(attribute: UICollectionViewLayoutAttributes) {
-		guard let collectionView = collectionView else {
-			return
-		}
-		let visibleRect = CGRect(x: collectionView.contentOffset.x,
-								 y: collectionView.contentOffset.y,
-								 width: collectionView.bounds.size.width,
-								 height: maxScaleOffset)
-		let visibleCenterX = visibleRect.midX
-		let distanceFromCenter = visibleCenterX - attribute.center.x
-		let distance = min(abs(distanceFromCenter), maxScaleOffset / 2) // Distance between items
-		let scale = distance * (minScale - 1) / maxScaleOffset + 1
-		attribute.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)
-		attribute.alpha = distance * (minAlpha - 1) / maxScaleOffset + 1
+	override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
+		if context.invalidateDataSourceCounts { cachedItemsAttributes.removeAll() }
+		super.invalidateLayout(with: context)
 	}
 
-	fileprivate func configureInset() -> Void {
-		guard let collectionView = collectionView else {
-			return
-		}
+	// MARK: - Items
+	override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+		guard let attributes = cachedItemsAttributes[indexPath] else { fatalError("No attributes cached") }
+		return shiftedAttributes(from: attributes)
+	}
 
-		let inset = collectionView.bounds.size.width / 2 - itemSize.width / 2
-		collectionView.contentInset  = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-		collectionView.contentOffset = CGPoint(x: -inset, y: 0)
+	private func createAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+		let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+		guard let collectionView = collectionView else { return nil }
+		attributes.frame.size = itemSize
+		attributes.frame.origin.y = (collectionView.bounds.height - itemSize.height) / 2
+		attributes.frame.origin.x = CGFloat(indexPath.item) * (itemSize.width + spacing)
+		return attributes
+	}
+
+	private func shiftedAttributes(from attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+		guard let attributes = attributes.copy() as? UICollectionViewLayoutAttributes else { fatalError("Couldn't copy attributes") }
+		let roundedFocusedIndex = round(continuousFocusedIndex)
+		guard attributes.indexPath.item != Int(roundedFocusedIndex) else { return attributes }
+		let shiftArea = (roundedFocusedIndex - 0.5)...(roundedFocusedIndex + 0.5)
+		let distanceToClosestIdentityPoint = min(abs(continuousFocusedIndex - shiftArea.lowerBound), abs(continuousFocusedIndex - shiftArea.upperBound))
+		let normalizedShiftFactor = distanceToClosestIdentityPoint * 2
+		let translation = (spacingWhenFocused - spacing) * normalizedShiftFactor
+		let translationDirection: CGFloat = attributes.indexPath.item < Int(roundedFocusedIndex) ? -1 : 1
+		attributes.transform = CGAffineTransform(translationX: translationDirection * translation, y: 0)
+		return attributes
+	}
+
+	// MARK: - Private Methods
+	private func findClosestAttributes(toXPosition xPosition: CGFloat) -> UICollectionViewLayoutAttributes? {
+		guard let collectionView = collectionView else { return nil }
+		let searchRect = CGRect(
+			x: xPosition - collectionView.bounds.width, y: collectionView.bounds.minY,
+			width: collectionView.bounds.width * 2, height: collectionView.bounds.height
+		)
+		return layoutAttributesForElements(in: searchRect)?.min(by: { abs($0.center.x - xPosition) < abs($1.center.x - xPosition) })
+	}
+
+	private func updateInsets() {
+		guard let collectionView = collectionView else { return }
+		collectionView.contentInset.left = (collectionView.bounds.size.width - itemSize.width) / 2
+		collectionView.contentInset.right = (collectionView.bounds.size.width - itemSize.width) / 2
 	}
 }

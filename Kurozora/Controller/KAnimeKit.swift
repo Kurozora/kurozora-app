@@ -42,12 +42,12 @@ public class KAnimeKit {
         return (controller, controller.viewControllers.last! as! NotificationThreadViewController)
     }
     
-    class func searchViewController() -> (UINavigationController, SearchResultsViewController) {
+    class func searchViewController() -> (UINavigationController, SearchResultsTableViewController) {
         let navigation = UIStoryboard(name: "Browse", bundle: nil).instantiateViewController(withIdentifier: "NavSearch") as! UINavigationController
         navigation.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         navigation.modalPresentationStyle = .overCurrentContext
         
-        let controller = navigation.viewControllers.last as! SearchResultsViewController
+        let controller = navigation.viewControllers.last as! SearchResultsTableViewController
         return (navigation, controller)
     }
 }

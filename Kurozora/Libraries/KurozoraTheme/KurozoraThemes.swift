@@ -1,5 +1,5 @@
 //
-//  KurozoraThemes.swift
+//  KThemeStyle.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/02/2019.
@@ -15,23 +15,23 @@ let cachesURL = FileManager.SearchPathDirectory.cachesDirectory
 let libraryURL = FileManager.SearchPathDomainMask.userDomainMask
 let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
-enum KurozoraThemes: Int {
+enum KThemeStyle: Int {
 	case `default` 	= 0
 	case day 		= 1
 	case night 		= 2
 	case other		= 3
 
-	static var current = KurozoraThemes.default
-	static var before  = KurozoraThemes.default
+	static var current: KThemeStyle = .default
+	static var before: KThemeStyle = .default
 	static let tron = TRON(baseURL: "", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 	static let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
 	// MARK: - Switch Theme
-	static func switchTo(_ theme: KurozoraThemes) {
+	static func switchTo(_ style: KThemeStyle) {
 		before  = current
-		current = theme
+		current = style
 
-		switch theme {
+		switch style {
 			case .default:
 				ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
 				changeIcon(to: nil)
@@ -63,7 +63,7 @@ enum KurozoraThemes: Int {
 		if themeExist(for: themeID) { max += 1 }
 		if next >= max { next = 0 }
 
-		switchTo(KurozoraThemes(rawValue: next)!)
+		switchTo(KThemeStyle(rawValue: next)!)
 	}
 
 	// MARK: - Switch Night

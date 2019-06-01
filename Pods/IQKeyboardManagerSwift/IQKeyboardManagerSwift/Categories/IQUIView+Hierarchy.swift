@@ -27,7 +27,7 @@ import UIKit
 /**
 UIView hierarchy category.
 */
-public extension UIView {
+@objc public extension UIView {
     
     ///----------------------
     /// MARK: viewControllers
@@ -36,7 +36,7 @@ public extension UIView {
     /**
     Returns the UIViewController object that manages the receiver.
     */
-    @objc public func viewContainingController()->UIViewController? {
+    @objc func viewContainingController()->UIViewController? {
         
         var nextResponder: UIResponder? = self
         
@@ -55,7 +55,7 @@ public extension UIView {
     /**
     Returns the topMost UIViewController object in hierarchy.
     */
-    @objc public func topMostController()->UIViewController? {
+    @objc func topMostController()->UIViewController? {
         
         var controllersHierarchy = [UIViewController]()
 
@@ -89,7 +89,7 @@ public extension UIView {
     /**
      Returns the UIViewController object that is actually the parent of this object. Most of the time it's the viewController object which actually contains it, but result may be different if it's viewController is added as childViewController of another viewController.
      */
-    @objc public func parentContainerViewController()->UIViewController? {
+    @objc func parentContainerViewController()->UIViewController? {
         
         var matchController = viewContainingController()
         var parentContainerViewController : UIViewController?
@@ -147,8 +147,13 @@ public extension UIView {
     
     /**
     Returns the superView of provided class type.
-    */
-    @objc public func superviewOfClassType(_ classType:UIView.Type)->UIView? {
+
+     
+     @param classType class type of the object which is to be search in above hierarchy and return
+     
+     @param belowView view object in upper hierarchy where method should stop searching and return nil
+*/
+    @objc func superviewOfClassType(_ classType:UIView.Type, belowView:UIView? = nil) -> UIView? {
 
         var superView = superview
         
@@ -173,6 +178,8 @@ public extension UIView {
                 else {
                     return superView
                 }
+            } else if unwrappedSuperView == belowView {
+                return nil
             }
             
             superView = unwrappedSuperView.superview
@@ -322,7 +329,7 @@ public extension UIView {
     
 }
 
-public extension UIViewController {
+@objc public extension UIViewController {
 
     func parentIQContainerViewController() -> UIViewController? {
         return self

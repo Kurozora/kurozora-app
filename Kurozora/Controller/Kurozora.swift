@@ -26,7 +26,7 @@ class Kurozora: NSObject {
 
 			// Global app tint color
 //			window?.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			window?.theme_tintColor = "Global.tintColor"
+			window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
 			// IQKeyoardManager
 			IQKeyboardManager.shared.enable = true
@@ -91,6 +91,22 @@ class Kurozora: NSObject {
 		return success
 	}
 
+	static func shortcutHandler(_ app: UIApplication, _ shortcutItem: UIApplicationShortcutItem) {
+		if shortcutItem.type == "HomeShortcut" {
+			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 0
+			}
+		} else if shortcutItem.type == "NotificationShortcut" {
+			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 3
+			}
+		} else if shortcutItem.type == "ProfileShortcut" {
+			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 4
+			}
+		}
+	}
+
 	static func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
 		let urlScheme = url.host?.removingPercentEncoding
 
@@ -113,7 +129,7 @@ class Kurozora: NSObject {
 				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController {
 					profileViewController.otherUserID = Int(userID)
 
-					let kurozoraNavigationController = KurozoraNavigationController.init(rootViewController: profileViewController)
+					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
 					UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
 				}

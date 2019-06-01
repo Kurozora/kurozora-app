@@ -1,5 +1,5 @@
 //
-//  SearchResultsViewController.swift
+//  SearchResultsTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 25/04/2018.
@@ -11,14 +11,9 @@ import SwiftyJSON
 import Kingfisher
 import SwiftTheme
 
-class SearchResultsViewController: UIViewController {
-	@IBOutlet weak var collectionView: UICollectionView!
-	@IBOutlet weak var suggestionsCollectionView: UICollectionView!
-	@IBOutlet weak var suggestionsCollctionViewHeight: NSLayoutConstraint!
-	@IBOutlet weak var suggestionsHeaderView: UIView!
-
+class SearchResultsTableViewController: UITableViewController {
 	var statusBarStyle: UIStatusBarStyle {
-		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
+		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
 		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
 
 		return statusBarStyle
@@ -51,38 +46,34 @@ class SearchResultsViewController: UIViewController {
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return statusBarStyle
 	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		collectionView.isHidden = true
-		collectionView.delegate = self
-		collectionView.dataSource = self
+		// Blurred table view background
+		let blurEffect = UIBlurEffect(style: .regular)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
 
-		// Suggestions collection view
-		suggestionsCollctionViewHeight.constant = suggestionsCollctionViewHeight.constant / 2
-		suggestionsCollectionView.delegate = self
-		suggestionsCollectionView.dataSource = self
+		for subview in blurEffectView.subviews {
+			subview.backgroundColor = nil
+		}
+
+		tableView.backgroundView = blurEffectView
+
+		// Setup table view
+		tableView.dataSource = self
+		tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-		suggestionsCollectionView.isHidden = false
-		suggestionsHeaderView.isHidden = false
-		collectionView.isHidden = true
     }
 
 	// MARK: - Functions
 	fileprivate func search(forText text: String, searchScope: Int) {
 		// Prepare view for search
-		suggestionsCollectionView.isHidden = true
-		suggestionsHeaderView.isHidden = true
-		collectionView.isHidden = false
 		currentScope = searchScope
 
 		guard let searchScope = SearchScope(rawValue: searchScope) else { return }
@@ -93,7 +84,7 @@ class SearchResultsViewController: UIViewController {
 				Service.shared.search(forShow: text) { (results) in
 					DispatchQueue.main.async {
 						self.results = results
-						self.collectionView.reloadData()
+						self.tableView.reloadData()
 					}
 				}
 			case .myLibrary: break
@@ -101,14 +92,14 @@ class SearchResultsViewController: UIViewController {
 				Service.shared.search(forThread: text) { (results) in
 					DispatchQueue.main.async {
 						self.results = results
-						self.collectionView.reloadData()
+						self.tableView.reloadData()
 					}
 				}
 			case .user:
 				Service.shared.search(forUser: text) { (results) in
 					DispatchQueue.main.async {
 						self.results = results
-						self.collectionView.reloadData()
+						self.tableView.reloadData()
 					}
 				}
 			}
@@ -123,21 +114,21 @@ class SearchResultsViewController: UIViewController {
 	}
 
 	// MARK: - IBActions
-	@IBAction func showMoreButtonPressed(_ sender: UIButton) {
-		if sender.title(for: .normal) == "Show More" {
-			sender.setTitle("Show Less", for: .normal)
-			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant * 2
-			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-				self.view.layoutIfNeeded()
-			}, completion: nil)
-		} else {
-			sender.setTitle("Show More", for: .normal)
-			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant / 2
-			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-				self.view.layoutIfNeeded()
-			}, completion: nil)
-		}
-	}
+//	@IBAction func showMoreButtonPressed(_ sender: UIButton) {
+//		if sender.title(for: .normal) == "Show More" {
+//			sender.setTitle("Show Less", for: .normal)
+//			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant * 2
+//			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+//				self.view.layoutIfNeeded()
+//			}, completion: nil)
+//		} else {
+//			sender.setTitle("Show More", for: .normal)
+//			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant / 2
+//			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+//				self.view.layoutIfNeeded()
+//			}, completion: nil)
+//		}
+//	}
 
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
@@ -145,52 +136,55 @@ class SearchResultsViewController: UIViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let sender = sender as? Int {
+		if let currentCell = sender as? SearchResultsCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
 				let showTabBarController = segue.destination as? ShowTabBarController
-				showTabBarController?.showID = sender
+				showTabBarController?.showID = currentCell.searchElement?.id
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
-				if let kurozoraNavigationController = segue.destination as? KurozoraNavigationController {
+				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileViewController {
-						profileViewController.otherUserID = sender
+						profileViewController.otherUserID = currentCell.searchElement?.id
 					}
 				}
 			}  else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
-				if let kurozoraNavigationController = segue.destination as? KurozoraNavigationController {
+				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					let storyboard = UIStoryboard(name: "forums", bundle: nil)
 					if let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as? ThreadViewController {
 						threadViewController.isDismissEnabled = true
-						threadViewController.forumThreadID = sender
+						threadViewController.forumThreadID = currentCell.searchElement?.id
 
 						kurozoraNavigationController.pushViewController(threadViewController)
 					}
 				}
+			}
+		} else if let currentCell = sender as? SuggestionResultCell {
+			if segue.identifier == "ShowDetailsSegue" {
+				// Show detail for show cell
+				let showTabBarController = segue.destination as? ShowTabBarController
+				showTabBarController?.showID = currentCell.searchElement?.id
 			}
 		}
 	}
 }
 
 // MARK: - UISearchResultsUpdating
-extension SearchResultsViewController: UISearchResultsUpdating {
+extension SearchResultsTableViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
-		suggestionsCollectionView.isHidden = false
-		suggestionsHeaderView.isHidden = false
-		collectionView.isHidden = true
 		searchController.searchResultsController?.view.isHidden = false
 	}
 }
 
 // MARK: - UISearchBarDelegate
-extension SearchResultsViewController: UISearchBarDelegate {
+extension SearchResultsTableViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 		guard let text = searchBar.text else { return }
 
-		results = []
-		collectionView.reloadData()
+		results = nil
+		tableView.reloadData()
 
 		if text != "" {
 			switch searchScope {
@@ -214,110 +208,62 @@ extension SearchResultsViewController: UISearchBarDelegate {
 			timer?.invalidate()
 			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)
 		} else {
-			results = []
-			collectionView.reloadData()
+			results = nil
+			tableView.reloadData()
 		}
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		results = []
-		collectionView.reloadData()
+		results = nil
+		tableView.reloadData()
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension SearchResultsViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		if collectionView == suggestionsCollectionView {
-			return 10
-		}
-		return 0
+// MARK: - UITableViewDataSource
+extension SearchResultsTableViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let resultsCount = results?.count else { return 1 }
+		return resultsCount
 	}
 
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		if collectionView == suggestionsCollectionView {
-			return 10
-		}
-		return 0
-	}
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if collectionView == self.collectionView {
-			if let resultsCount = results?.count, resultsCount != 0 {
-				return resultsCount
-			}
-			return 0
-		}
-		// Search suggestion cell
-		return suggestions.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if collectionView == self.collectionView {
-			if let searchScope = SearchScope(rawValue: currentScope) {
-				let identifier = SearchList.fromScope(searchScope)
-				let searchCell: SearchCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! SearchCell
-
-				switch searchScope {
-				case .show, .thread, .user:
-					searchCell.searchElement = results?[indexPath.row]
-				case .myLibrary: break
-				}
-				return searchCell
-			}
-		}
-
-		// Search suggestion cell
-		let searchSuggestionCell: SearchCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchSuggestionCell", for: indexPath) as! SearchCell
-
-		searchSuggestionCell.searchElement = suggestions[indexPath.row]
-
-		return searchSuggestionCell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension SearchResultsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if collectionView == self.collectionView {
-			guard let searchScope = SearchScope(rawValue: currentScope) else { return }
-			guard let searchID = results?[indexPath.item].id else { return }
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if results != nil {
+			let searchScope = SearchScope(rawValue: currentScope)
+			let identifier = SearchList.fromScope(searchScope!)
+			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
 
 			switch searchScope {
-			case .show:
-				self.performSegue(withIdentifier: "ShowDetailsSegue", sender: searchID)
-			case .myLibrary: break
-			case .thread:
-				self.performSegue(withIdentifier: "ThreadSegue", sender: searchID)
-			case .user:
-				self.performSegue(withIdentifier: "ProfileSegue", sender: searchID)
+			case .show?, .thread?, .user?:
+				searchResultsCell.searchElement = results?[indexPath.row]
+			case .myLibrary?: break
+			default: break
 			}
+
+			if tableView.numberOfRows() == 1 {
+				searchResultsCell.separatorView?.isHidden = true
+			} else {
+				searchResultsCell.separatorView?.isHidden = false
+			}
+
+			if indexPath.row == 0 {
+				searchResultsCell.visualEffectView?.roundCorners([.topRight, .topLeft], radius: 10)
+			} else if indexPath.row == results!.count - 1 {
+				searchResultsCell.visualEffectView?.roundCorners([.bottomRight, .bottomLeft], radius: 10)
+			} else {
+				searchResultsCell.visualEffectView?.roundCorners(.allCorners, radius: 0)
+			}
+
+			return searchResultsCell
 		} else {
-			// Search suggestion cell
-			let showID = suggestions[indexPath.item].id
-			self.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
+			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SuggestionResultCell", for: indexPath) as! SearchResultsCell
+
+			searchResultsCell.suggestionElement = suggestions
+
+			return searchResultsCell
 		}
-    }
+	}
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension SearchResultsViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if collectionView == self.collectionView {
-			guard let searchScope = SearchScope(rawValue: currentScope) else { return CGSize.zero }
-			let cellWidth = collectionView.bounds.size.width
-
-			switch searchScope {
-			case .show:
-				return CGSize(width: cellWidth, height: 136)
-			case .myLibrary: break
-			case .thread, .user:
-				return CGSize(width: cellWidth, height: 82)
-			}
-		}
-
-		// Search suggestion cell
-		let suggestionsCollectionViewSize = CGSize(width: 68, height: 130)
-		return suggestionsCollectionViewSize
-	}
+// MARK: - UITableViewDelegate
+extension SearchResultsTableViewController {
 }

@@ -1,13 +1,17 @@
 /*
 Copyright (c) 2014, Ashley Mills
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
+
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
+
 2. Redistributions in binary form must reproduce the above copyright notice,
 this list of conditions and the following disclaimer in the documentation
 and/or other materials provided with the distribution.
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -24,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 import SystemConfiguration
 import Foundation
 
-public enum KurozoraReachabilityError: Error {
+public enum ReachabilityError: Error {
 	case FailedToCreateWithAddress(sockaddr_in)
 	case FailedToCreateWithHostname(String)
 	case UnableToSetCallback
@@ -36,7 +40,7 @@ public enum KurozoraReachabilityError: Error {
 public let ReachabilityChangedNotification = NSNotification.Name("ReachabilityChangedNotification")
 
 public extension Notification.Name {
-	public static let reachabilityChanged = Notification.Name("reachabilityChanged")
+	static let reachabilityChanged = Notification.Name("reachabilityChanged")
 }
 
 public class KurozoraReachability {
@@ -70,16 +74,16 @@ public class KurozoraReachability {
 	public var whenReachable: NetworkReachable?
 	public var whenUnreachable: NetworkUnreachable?
 
-	@available(*, deprecated: 4.0, renamed: "allowsCellularConnection")
+	@available(*, deprecated, renamed: "allowsCellularConnection")
 	public let reachableOnWWAN: Bool = true
 
-	/// Set to `false` to force KurozoraReachability.connection to .none when on cellular connection (default value `true`)
+	/// Set to `false` to force Reachability.connection to .none when on cellular connection (default value `true`)
 	public var allowsCellularConnection: Bool
 
 	// The notification center on which "reachability changed" events are being posted
 	public var notificationCenter: NotificationCenter = NotificationCenter.default
 
-	@available(*, deprecated: 4.0, renamed: "connection.description")
+	@available(*, deprecated, renamed: "connection.description")
 	public var currentReachabilityString: String {
 		return "\(connection)"
 	}
@@ -162,12 +166,12 @@ public extension KurozoraReachability {
 		context.info = UnsafeMutableRawPointer(Unmanaged<KurozoraReachability>.passUnretained(self).toOpaque())
 		if !SCNetworkReachabilitySetCallback(reachabilityRef, callback, &context) {
 			stopNotifier()
-			throw KurozoraReachabilityError.UnableToSetCallback
+			throw ReachabilityError.UnableToSetCallback
 		}
 
 		if !SCNetworkReachabilitySetDispatchQueue(reachabilityRef, reachabilitySerialQueue) {
 			stopNotifier()
-			throw KurozoraReachabilityError.UnableToSetDispatchQueue
+			throw ReachabilityError.UnableToSetDispatchQueue
 		}
 
 		// Perform an initial check
@@ -184,18 +188,18 @@ public extension KurozoraReachability {
 	}
 
 	// MARK: - *** Connection test methods ***
-	@available(*, deprecated: 4.0, message: "Please use `connection != .none`")
+	@available(*, deprecated, message: "Please use `connection != .none`")
 	var isReachable: Bool {
 		return connection != .none
 	}
 
-	@available(*, deprecated: 4.0, message: "Please use `connection == .cellular`")
+	@available(*, deprecated, message: "Please use `connection == .cellular`")
 	var isReachableViaWWAN: Bool {
 		// Check we're not on the simulator, we're REACHABLE and check we're on WWAN
 		return connection == .cellular
 	}
 
-	@available(*, deprecated: 4.0, message: "Please use `connection == .wifi`")
+	@available(*, deprecated, message: "Please use `connection == .wifi`")
 	var isReachableViaWiFi: Bool {
 		return connection == .wifi
 	}
@@ -223,7 +227,7 @@ fileprivate extension KurozoraReachability {
 			var flags = SCNetworkReachabilityFlags()
 			if !SCNetworkReachabilityGetFlags(self.reachabilityRef, &flags) {
 				self.stopNotifier()
-				throw KurozoraReachabilityError.UnableToGetInitialFlags
+				throw ReachabilityError.UnableToGetInitialFlags
 			}
 
 			self.flags = flags
@@ -234,9 +238,9 @@ fileprivate extension KurozoraReachability {
 		let block = connection != .none ? whenReachable : whenUnreachable
 
 		DispatchQueue.main.async { [weak self] in
-			guard let strongSelf = self else { return }
-			block?(strongSelf)
-			strongSelf.notificationCenter.post(name: .reachabilityChanged, object: strongSelf)
+			guard let self = self else { return }
+			block?(self)
+			self.notificationCenter.post(name: .reachabilityChanged, object: self)
 		}
 	}
 }

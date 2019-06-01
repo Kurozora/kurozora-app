@@ -36,9 +36,10 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = "Global.backgroundColor"
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		
-		guard let sectionTitle = sectionTitle?.lowercased() else {return}
+		guard let sectionTitle = sectionTitle else {return}
+		let lowerdSectionTitle = sectionTitle.lowercased()
 
 		// Add Refresh Control to Collection View
 		if #available(iOS 10.0, *) {
@@ -47,9 +48,13 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 			collectionView.addSubview(refreshControl)
 		}
 
-		refreshControl.theme_tintColor = "Global.tintColor"
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: "Global.tintColor") ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
+
+		// Observe NotificationCenter for update notification
+		let libraryUpdateNotificationName = Notification.Name("Update\(sectionTitle)Section")
+		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: libraryUpdateNotificationName, object: nil)
 
 		fetchLibrary()
 
@@ -62,7 +67,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
         collectionView.emptyDataSetSource = self
         
         collectionView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "Your \(sectionTitle) list is empty!"))
+			view.titleLabelString(NSAttributedString(string: "Your \(lowerdSectionTitle) list is empty!"))
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
@@ -73,11 +78,11 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 	@objc private func refreshLibraryData(_ sender: Any) {
 		// Fetch library data
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: "Global.tintColor") ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchLibrary()
 	}
 
-	private func fetchLibrary() {
+	@objc private func fetchLibrary() {
 		guard let sectionTitle = sectionTitle else {return}
 
 		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (library) in
@@ -85,17 +90,35 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 				self.library = library
 				self.collectionView.reloadData()
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: "Global.tintColor") ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCell, let showTabBarController = segue.destination as? ShowTabBarController {
+		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowTabBarController {
+			showTabBarController.libraryCollectionViewCell = currentCell
 			showTabBarController.showID = currentCell.libraryElement?.id
-			showTabBarController.showTitle = currentCell.libraryElement?.title
-			showTabBarController.heroID = "library"
+			if let showTitle = currentCell.libraryElement?.title {
+				showTabBarController.heroID = "library_\(showTitle)"
+				showTabBarController.showDetailViewControllerDelegate = self
+			}
 		}
+	}
+}
+
+// MARK: - ShowDetailViewControllerDelegate
+extension LibraryListViewController: ShowDetailViewControllerDelegate {
+	func updateShowInLibrary(for libraryCell: LibraryCollectionViewCell?) {
+		guard let libraryCell = libraryCell else { return }
+		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
+
+		collectionView.performBatchUpdates({
+			library?.remove(at: indexPath.item)
+			collectionView.deleteItems(at: [indexPath])
+		})
+
+		collectionView.reloadData()
 	}
 }
 
@@ -109,7 +132,7 @@ extension LibraryListViewController: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryLayout.rawValue, for: indexPath) as! LibraryCell
+		let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryLayout.rawValue, for: indexPath) as! LibraryCollectionViewCell
 
 		libraryCell.libraryElement = library?[indexPath.item]
 
@@ -119,6 +142,29 @@ extension LibraryListViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension LibraryListViewController: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)
+		UIView.animate(withDuration: 0.5,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.8,
+					   initialSpringVelocity: 0.2,
+					   options: .beginFromCurrentState,
+					   animations: {
+						cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+		}, completion: nil)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+		let cell = collectionView.cellForItem(at: indexPath)
+		UIView.animate(withDuration: 0.5,
+					   delay: 0.0,
+					   usingSpringWithDamping: 0.4,
+					   initialSpringVelocity: 0.2,
+					   options: .beginFromCurrentState,
+					   animations: {
+						cell?.transform = CGAffineTransform.identity
+		}, completion: nil)
+	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

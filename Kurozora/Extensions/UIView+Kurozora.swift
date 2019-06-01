@@ -9,21 +9,6 @@
 import UIKit
 
 extension UIView {
-	func asImage() -> UIImage {
-		if #available(iOS 10.0, *) {
-			let renderer = UIGraphicsImageRenderer(bounds: bounds)
-			return renderer.image { rendererContext in
-				layer.render(in: rendererContext.cgContext)
-			}
-		} else {
-			UIGraphicsBeginImageContext(self.frame.size)
-			self.layer.render(in:UIGraphicsGetCurrentContext()!)
-			let image = UIGraphicsGetImageFromCurrentImageContext()
-			UIGraphicsEndImageContext()
-			return UIImage(cgImage: image!.cgImage!)
-		}
-	}
-
 	/// Add rounded corners for each specified corner.
 	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
 		if #available(iOS 11.0, *) {
@@ -35,6 +20,20 @@ extension UIView {
 			let mask = CAShapeLayer()
 			mask.path = path.cgPath
 			layer.mask = mask
+		}
+	}
+	
+	/// Give the view a nice shadow
+	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize, shouldRasterize: Bool = false) {
+		layer.shadowColor = shadowColor.cgColor
+		layer.shadowOpacity = shadowOpacity
+		layer.shadowRadius = shadowRadius
+		layer.shadowOffset = shadowOffset
+		layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: shadowPathSize), cornerRadius: 10).cgPath
+
+		if shouldRasterize {
+			layer.shouldRasterize = true
+			layer.rasterizationScale = UIScreen.main.scale
 		}
 	}
 
@@ -54,4 +53,30 @@ extension UIView {
 		group.motionEffects = [horizontal, vertical]
 		self.addMotionEffect(group)
 	}
+
+	/// Create a snapshot of current view.
+	func createSnapshot() -> UIImage? {
+		UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+		drawHierarchy(in: frame, afterScreenUpdates: true)
+
+		let image = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+
+		return image
+	}
+
+	//	func asImage() -> UIImage {
+	//		if #available(iOS 10.0, *) {
+	//			let renderer = UIGraphicsImageRenderer(bounds: bounds)
+	//			return renderer.image { rendererContext in
+	//				layer.render(in: rendererContext.cgContext)
+	//			}
+	//		} else {
+	//			UIGraphicsBeginImageContext(self.frame.size)
+	//			self.layer.render(in: UIGraphicsGetCurrentContext()!)
+	//			let image = UIGraphicsGetImageFromCurrentImageContext()
+	//			UIGraphicsEndImageContext()
+	//			return UIImage(cgImage: image!.cgImage!)
+	//		}
+	//	}
 }

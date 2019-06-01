@@ -2,19 +2,20 @@
 [![Build Status](https://travis-ci.org/iwasrobbed/Down.svg?branch=master)](https://travis-ci.org/iwasrobbed/Down)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/iwasrobbed/Down/blob/master/LICENSE)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Down.svg?maxAge=10800)]()
-[![Swift 4](https://img.shields.io/badge/language-Swift-blue.svg)](https://swift.org)
+[![Swift 5](https://img.shields.io/badge/language-Swift-blue.svg)](https://swift.org)
 [![macOS](https://img.shields.io/badge/OS-macOS-orange.svg)](https://developer.apple.com/macos/)
 [![iOS](https://img.shields.io/badge/OS-iOS-orange.svg)](https://developer.apple.com/ios/)
 [![tvOS](https://img.shields.io/badge/OS-tvOS-orange.svg)](https://developer.apple.com/tvos/)
 [![Coverage Status](https://coveralls.io/repos/github/iwasrobbed/Down/badge.svg?branch=master)](https://coveralls.io/github/iwasrobbed/Down?branch=master)
 
-Blazing fast Markdown (CommonMark) rendering in Swift, built upon [cmark v0.28.3](https://github.com/commonmark/cmark).
+Blazing fast Markdown (CommonMark) rendering in Swift, built upon [cmark v0.29.0](https://github.com/commonmark/cmark).
 
 Is your app using it? [Let us know!](mailto:rob@robphillips.me)
 
 #### Maintainers
 
 - [Rob Phillips](https://github.com/iwasrobbed)
+- [John Nguyen](https://github.com/johnxnguyen)
 - [Keaton Burleson](https://github.com/128keaton)
 - [phoney](https://github.com/phoney)
 - [Tony Arnold](https://github.com/tonyarnold)
@@ -24,7 +25,7 @@ Is your app using it? [Let us know!](mailto:rob@robphillips.me)
 
 ### Installation
 
-Note: Swift 4 support is now on the `master` branch and any tag >= 0.4.x (Swift 3 is 0.3.x)
+Note: Swift 5 support is now on the `master` branch and any tag >= 0.8.1 (Swift 4 is >= 0.4.x, Swift 3 is 0.3.x)
 
 Quickly install using [CocoaPods](https://cocoapods.org):
 
@@ -234,4 +235,4 @@ Please feel free to fork and create a pull request for bug fixes or improvements
 ### Credit
 This library is a wrapper around [cmark](https://github.com/commonmark/cmark), which is built upon the [CommonMark](http://commonmark.org) Markdown specification.
 
-[cmark](https://github.com/commonmark/cmark) is Copyright (c) 2014 - 2017, John MacFarlane. View [full license](https://github.com/commonmark/cmark/blob/master/COPYING).
+[cmark](https://github.com/commonmark/cmark) is Copyright (c) 2014, John MacFarlane. View [full license](https://github.com/commonmark/cmark/blob/master/COPYING).

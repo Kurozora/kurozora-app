@@ -1,44 +1,36 @@
 import UIKit
 
 @IBDesignable
-open class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
-    
+open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
     lazy var spiner: SpinerLayer! = {
         let s = SpinerLayer(frame: self.frame)
         self.layer.addSublayer(s)
         return s
     }()
-    
-    @IBInspectable open var spinnerColor: UIColor = UIColor.white {
-        didSet {
-            spiner.spinnerColor = spinnerColor
-        }
-    }
-    
-    open var didEndFinishAnimation : (()->())? = nil
-    
-    let springGoEase = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
-    let shrinkCurve = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-    let expandCurve = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
-    let shrinkDuration: CFTimeInterval  = 0.1
-    @IBInspectable open var normalCornerRadius:CGFloat = 0.0 {
-        didSet {
-            self.layer.cornerRadius = normalCornerRadius
-        }
-    }
-    
-    var cachedTitle: String?
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setup()
-    }
-    
+	open var didEndFinishAnimation : (()->())? = nil
+	@IBInspectable open var spinnerColor: UIColor = UIColor.white {
+		didSet {
+			spiner.spinnerColor = spinnerColor
+		}
+	}
+	@IBInspectable open var normalCornerRadius: CGFloat = 0.0 {
+		didSet {
+			self.layer.cornerRadius = normalCornerRadius
+		}
+	}
+	var cachedTitle: String?
+
+	let springGoEase = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
+	let shrinkCurve = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+	let expandCurve = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
+	let shrinkDuration: CFTimeInterval  = 0.1
+
     public required init!(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         self.setup()
     }
-    
+
+	// MARK: - Functions
     func setup() {
         self.clipsToBounds = true
         spiner.spinnerColor = spinnerColor
@@ -87,7 +79,6 @@ open class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningDel
     }
     
     open func returnToOriginalState() {
-        
         self.layer.removeAllAnimations()
         self.setTitle(self.cachedTitle, for: UIControl.State())
         self.spiner.stopAnimation()
@@ -115,5 +106,4 @@ open class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningDel
         expandAnim.isRemovedOnCompletion = false
         layer.add(expandAnim, forKey: expandAnim.keyPath)
     }
-    
 }

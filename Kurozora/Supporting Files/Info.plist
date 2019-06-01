@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7059</string>
+	<string>8540</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -368,6 +368,7 @@
 		<string>twitter</string>
 		<string>fb</string>
 		<string>whatsapp</string>
+		<string>youtube</string>
 	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.0</string>
@@ -395,6 +396,33 @@
 		<string>FontAwesome.ttf</string>
 		<string>Aller_Bd.ttf</string>
 		<string>AllerDisplay.ttf</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>home</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Home</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>HomeShortcut</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>notification</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Notifications</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>NotificationShortcut</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>user_male</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Profile</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>ProfileShortcut</string>
+		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
