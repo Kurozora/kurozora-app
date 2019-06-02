@@ -28,7 +28,7 @@ class LibraryViewController: TabmanViewController {
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
 		bar.indicator.overscrollBehavior = .bounce
-		bar.indicator.tintColor = .orange
+		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		// State
 		bar.buttons.customize { (button) in
@@ -42,7 +42,7 @@ class LibraryViewController: TabmanViewController {
 		bar.layout.interButtonSpacing = 24.0
 
 		// Style
-		bar.backgroundView.style = .blur(style: .dark)
+		bar.backgroundView.style = .blur(style: .regular)
 		bar.fadesContentEdges = true
 
 		// configure the bar

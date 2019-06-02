@@ -20,10 +20,18 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
-	@IBOutlet weak var userAvatar: UIImageView!
+	@IBOutlet weak var userAvatar: UIImageView! {
+		didSet {
+			userAvatar.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
 	@IBOutlet weak var usernameLabel: UILabel!
 	@IBOutlet weak var userBanner: UIImageView!
-	@IBOutlet weak var bioTextView: UITextView!
+	@IBOutlet weak var bioTextView: UITextView! {
+		didSet {
+			bioTextView.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
 	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
 	@IBOutlet weak var activeAgo: UILabel!
 
@@ -33,8 +41,21 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var followingButton: UIButton!
-	@IBOutlet weak var followersButton: UIButton!
+	@IBOutlet weak var followingButton: UIButton! {
+		didSet {
+			followingButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var followersButton: UIButton! {
+		didSet {
+			followersButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var badgesButton: UIButton!  {
+		didSet {
+			badgesButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
 
 	@IBOutlet weak var userButtonsStackView: UIStackView!
 	@IBOutlet weak var segmentedControl: UISegmentedControl! {
