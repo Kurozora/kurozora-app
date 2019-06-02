@@ -27,26 +27,6 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
 
-	// Notification types
-	enum NotificationType: String {
-        case unknown = "TYPE_UNKNOWN"
-        case session = "TYPE_NEW_SESSION"
-        case follower = "TYPE_NEW_FOLLOWER"
-    }
-
-	// Notification group types
-	enum GroupingType: Int {
-		case automatic = 0
-		case byType
-		case off
-	}
-
-	// Notification grouping
-	struct GroupedNotifications {
-		var sectionTitle: String!
-		var sectionNotifications: [UserNotificationsElement]!
-	}
-
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping() {
@@ -69,7 +49,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = 100
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
 		tableView.emptyDataSetSource = self
@@ -102,20 +82,6 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 		})
 	}
 
-	func groupNotificationsElement(by type: NotificationType) -> String {
-		var typeString = ""
-		// Name of week day
-		switch type {
-		case .follower:
-			typeString = "Messages"
-		case .session:
-			typeString = "Sessions"
-		case .unknown: break
-		}
-
-		return typeString
-	}
-
 	func groupNotifications(_ userNotificationsElement: [UserNotificationsElement]?) {
 		switch self.grouping {
 		case .automatic:
@@ -138,11 +104,12 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 			self.groupedNotifications.sort(by: {Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate)})
 		case .byType:
 			self.groupedNotifications = []
+
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
 			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
 				guard let type = userNotificationsElement.type else { return }
 				guard let notificationType = NotificationType(rawValue: type) else { return }
-				let timeKey = groupNotificationsElement(by: notificationType)
+				let timeKey = notificationType.stringValue()
 
 				result[timeKey, default: []].append(userNotificationsElement)
 			})
@@ -183,15 +150,15 @@ extension NotificationsViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let titleNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "TitleNotificationCell") as! TitleNotificationCell
+		let notificationTitleCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationTitleCell") as! NotificationTitleCell
 
 		switch self.grouping {
 		case .automatic, .byType:
-			titleNotificationCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			notificationTitleCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
 		case .off: break
 		}
 
-		return titleNotificationCell.contentView
+		return notificationTitleCell.contentView
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -214,83 +181,24 @@ extension NotificationsViewController: UITableViewDataSource {
 		case .automatic, .byType:
 			let notifications = groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
 
-			if let creationDate = notifications.creationDate {
-				messageNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-				
-				sessionNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-			}
-
-			if let description = notifications.message {
-				messageNotificationCell.notificationTextLabel.text = description
-				sessionNotificationCell.notificationTextLabel.text = description
-			}
-
 			if let type = notifications.type, type != "", let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
-					sessionNotificationCell.notificationType.text = "NEW SESSION"
-					sessionNotificationCell.notificationIcon.image = #imageLiteral(resourceName: "session_icon")
-
 					return sessionNotificationCell
 				case .follower:
-					messageNotificationCell.notificationType.text = "NEW MESSAGE"
-					messageNotificationCell.notificationIcon.image = #imageLiteral(resourceName: "message_icon")
-					if let title = notifications.data?.name, title != "" {
-						messageNotificationCell.notificationTitleLabel.text = title
-					} else {
-						messageNotificationCell.notificationTitleLabel.text = ""
-
-					}
-
-					if let avatar = notifications.data?.avatar, avatar != "" {
-						let avatarUrl = URL(string: avatar)
-						let resource = ImageResource(downloadURL: avatarUrl!)
-						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
-					} else {
-						messageNotificationCell.notificationProfileImage.image = #imageLiteral(resourceName: "default_avatar")
-					}
-				default:
-					break
+					messageNotificationCell.notificationsElement = notifications
+				default: break
 				}
 			}
 		case .off:
 			let notifications = userNotificationsElement?[indexPath.row]
-
-			if let creationDate = notifications?.creationDate {
-				messageNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-				sessionNotificationCell.notificationDate.text = Date.timeAgo(creationDate)
-			}
-
-			if let description = notifications?.message {
-				messageNotificationCell.notificationTextLabel.text = description
-				sessionNotificationCell.notificationTextLabel.text = description
-			}
-
 			if let type = notifications?.type, type != "", let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
-					sessionNotificationCell.notificationType.text = "NEW SESSION"
-					sessionNotificationCell.notificationIcon.image = #imageLiteral(resourceName: "session_icon")
 					return sessionNotificationCell
 				case .follower:
-					messageNotificationCell.notificationType.text = "NEW MESSAGE"
-					messageNotificationCell.notificationIcon.image = #imageLiteral(resourceName: "message_icon")
-
-					if let title = notifications?.data?.name, title != "" {
-						messageNotificationCell.notificationTitleLabel.text = title
-					} else {
-						messageNotificationCell.notificationTitleLabel.text = ""
-					}
-
-					if let avatar = notifications?.data?.avatar, avatar != "" {
-						let avatarUrl = URL(string: avatar)
-						let resource = ImageResource(downloadURL: avatarUrl!)
-						messageNotificationCell.notificationProfileImage.kf.setImage(with: resource, placeholder: UIImage(named: ""), options: [.transition(.fade(0.2))])
-					} else {
-						messageNotificationCell.notificationProfileImage.image = #imageLiteral(resourceName: "default_avatar")
-					}
-				default:
-					break
+					messageNotificationCell.notificationsElement = notifications
+				default: break
 				}
 			}
 		}
