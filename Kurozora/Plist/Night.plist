@@ -7,26 +7,48 @@
 	<key>Global</key>
 	<dict>
 		<key>backgroundColor</key>
-		<string>#292b38</string>
+		<string>#202020</string>
+		<key>tintedBackgroundColor</key>
+		<string>#46423C</string>
+		<key>barTintColor</key>
+		<string>#202020</string>
+		<key>barTitleTextColor</key>
+		<string>#EEEEEE</string>
 		<key>textColor</key>
-		<string>#ECF0F1</string>
+		<string>#EEEEEE</string>
+		<key>textFieldBackgroundColor</key>
+		<string>#2D2D2D</string>
 		<key>tintColor</key>
 		<string>#FF9300</string>
-		<key>barTintColor</key>
-		<string>#01040D</string>
-		<key>barTitleTextColor</key>
-		<string>#FFF</string>
+		<key>tintedButtonTextColor</key>
+		<string>#FFFFFF</string>
 		<key>separatorColor</key>
 		<string>#C6C5C5</string>
 		<key>separatorColorLight</key>
 		<string>#555555</string>
+		<key>subTextColor</key>
+		<string>#A2A2A2</string>
 	</dict>
-	<key>Forums</key>
+	<key>TableViewCell</key>
 	<dict>
+		<key>backgroundColor</key>
+		<string>#2D2D2D</string>
 		<key>titleTextColor</key>
-		<string>#FFFFFF</string>
-		<key>contentTextColor</key>
-		<string>#B7B9C1</string>
+		<string>#EEEEEE</string>
+		<key>subTextColor</key>
+		<string>#A2A2A2</string>
+		<key>chevronColor</key>
+		<string>#A2A2A2</string>
+		<key>selectedBackgroundColor</key>
+		<string>#494949</string>
+		<key>selectedTitleTextColor</key>
+		<string>#EEEEEE</string>
+		<key>selectedSubTextColor</key>
+		<string>#A2A2A2</string>
+		<key>selectedChevronColor</key>
+		<string>#A2A2A2</string>
+		<key>actionDefaultColor</key>
+		<string>#777777</string>
 	</dict>
 	<key>Notifications</key>
 	<dict>

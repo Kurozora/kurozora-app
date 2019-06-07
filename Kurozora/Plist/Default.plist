@@ -8,23 +8,47 @@
 	<dict>
 		<key>backgroundColor</key>
 		<string>#353A50</string>
+		<key>tintedBackgroundColor</key>
+		<string>#7078AA</string>
+		<key>barTintColor</key>
+		<string>#353A50</string>
+		<key>barTitleTextColor</key>
+		<string>#EEEEEE</string>
 		<key>textColor</key>
-		<string>#FFFFFF</string>
+		<string>#EEEEEE</string>
+		<key>textFieldBackgroundColor</key>
+		<string>#454F63</string>
 		<key>tintColor</key>
 		<string>#FF9300</string>
-		<key>barTintColor</key>
-		<string>#2A2E43</string>
-		<key>barTitleTextColor</key>
-		<string>#FFFFFF</string>
+		<key>tintedButtonTextColor</key>
+		<string>#EEEEEE</string>
 		<key>separatorColor</key>
 		<string>#C6C5C5</string>
+		<key>separatorColorLight</key>
+		<string>#E7E7E7</string>
+		<key>subTextColor</key>
+		<string>#AFAFAF</string>
 	</dict>
-	<key>Forums</key>
+	<key>TableViewCell</key>
 	<dict>
+		<key>backgroundColor</key>
+		<string>#454F63</string>
 		<key>titleTextColor</key>
-		<string>#FFFFFF</string>
-		<key>contentTextColor</key>
-		<string>#B7B9C1</string>
+		<string>#EEEEEE</string>
+		<key>subTextColor</key>
+		<string>#AFAFAF</string>
+		<key>chevronColor</key>
+		<string>#AFAFAF</string>
+		<key>selectedBackgroundColor</key>
+		<string>#667286</string>
+		<key>selectedTitleTextColor</key>
+		<string>#EEEEEE</string>
+		<key>selectedSubTextColor</key>
+		<string>#AFAFAF</string>
+		<key>selectedChevronColor</key>
+		<string>#AFAFAF</string>
+		<key>actionDefaultColor</key>
+		<string>#777777</string>
 	</dict>
 	<key>Notifications</key>
 	<dict>
