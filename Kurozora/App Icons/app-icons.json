@@ -1,0 +1,69 @@
+{
+	"Default": [
+		{
+			"name": "Kurozora",
+			"image": "AppIcon60x60"
+		},
+		{
+			"name": "Day",
+			"image": "App-Icon-iPhone-Day"
+		},
+		{
+			"name": "Night",
+			"image": "App-Icon-iPhone-Night"
+		}
+	],
+	"Premium": [
+		{
+			"name": "Blue",
+			"image": "App-Icon-iPhone-Blue"
+		},
+		{
+			"name": "Coral",
+			"image": "App-Icon-iPhone-Coral"
+		},
+		{
+			"name": "Dutch Orange",
+			"image": "App-Icon-iPhone-Dutch-Orange"
+		},
+		{
+			"name": "Emerald",
+			"image": "App-Icon-iPhone-Emerald"
+		},
+		{
+			"name": "Green",
+			"image": "App-Icon-iPhone-Green"
+		},
+		{
+			"name": "Lime",
+			"image": "App-Icon-iPhone-Lime"
+		},
+		{
+			"name": "Orange",
+			"image": "App-Icon-iPhone-Orange"
+		},
+		{
+			"name": "Red",
+			"image": "App-Icon-iPhone-Red"
+		},
+		{
+			"name": "Rose Gold",
+			"image": "App-Icon-iPhone-Rose-Gold"
+		},
+
+		{
+			"name": "Saphire",
+			"image": "App-Icon-iPhone-Saphire"
+		},
+		{
+			"name": "Yellow",
+			"image": "App-Icon-iPhone-Yellow"
+		}
+	],
+	"Limited": [
+		{
+			"name": "Product(RED)",
+			"image": "App-Icon-iPhone-Product-RED"
+		}
+	]
+}

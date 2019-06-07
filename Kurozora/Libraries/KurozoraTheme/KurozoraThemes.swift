@@ -34,15 +34,12 @@ enum KThemeStyle: Int {
 		switch style {
 			case .default:
 				ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
-				changeIcon(to: nil)
 				GlobalVariables().KUserDefaults?.set("Default", forKey: "currentTheme")
 			case .day:
 				ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
-				changeIcon(to: "Day")
 				GlobalVariables().KUserDefaults?.set("Day", forKey: "currentTheme")
 			case .night:
 				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
-				changeIcon(to: "Night")
 				GlobalVariables().KUserDefaults?.set("Night", forKey: "currentTheme")
 			case .other: break
 		}
@@ -159,7 +156,6 @@ enum KThemeStyle: Int {
 
 			// Set alternate icon
 			UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
-
 				if let error = error {
 					print("App icon failed to change due to \(error.localizedDescription)")
 				} else {

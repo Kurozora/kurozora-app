@@ -63,7 +63,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="iNr-Xf-WLb">
-                                                            <rect key="frame" x="350" y="37" width="16" height="16"/>
+                                                            <rect key="frame" x="354" y="37" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="Mrz-Ix-RSu"/>
@@ -139,7 +139,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="az4-C9-HBM">
-                                                            <rect key="frame" x="350" y="17" width="16" height="16"/>
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="dB2-ZB-mKK"/>
@@ -217,7 +217,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="JEA-Le-BNg">
-                                                            <rect key="frame" x="350" y="17" width="16" height="16"/>
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="iYE-Y7-8kE"/>
@@ -295,7 +295,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="FWh-8H-rNb">
-                                                            <rect key="frame" x="350" y="17" width="16" height="16"/>
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="eZq-wB-Y9J"/>
@@ -369,7 +369,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-js-w8F">
-                                                            <rect key="frame" x="350" y="17" width="16" height="16"/>
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="vLM-1l-Aqe"/>
@@ -401,6 +401,7 @@
                                             <outlet property="cellTitle" destination="e5A-7O-n3O" id="QYs-Fj-NJi"/>
                                             <outlet property="chevronImageView" destination="Elk-js-w8F" id="rvR-bV-vn2"/>
                                             <outlet property="selectedView" destination="jjL-Oe-PNI" id="Kdd-Tu-MEy"/>
+                                            <segue destination="4UV-W6-1yL" kind="showDetail" id="djV-vT-6Uk"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="lgZ-0g-Glx" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -730,7 +731,7 @@
                                         <rect key="frame" x="0.0" y="839" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="859-Pa-dbj" id="H1F-H9-aqi">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ccc-PK-OzU">
@@ -788,7 +789,7 @@
                                         <rect key="frame" x="0.0" y="889" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oft-f3-bd9" id="LNS-ql-w3k">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="54.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o1G-K3-Wal">
@@ -1127,7 +1128,7 @@ Kurozora 1.0.0 (1)</string>
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="mutedStandard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpy-uv-THx">
+                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpy-uv-THx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                         </mapView>
                                     </subviews>
@@ -1446,7 +1447,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="admin" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2201" y="-982"/>
+            <point key="canvasLocation" x="-2202" y="-965"/>
         </scene>
         <!--about-->
         <scene sceneID="IwF-zp-Lsq">
@@ -1454,7 +1455,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="about" id="GAQ-MX-p4x" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2201" y="-948"/>
+            <point key="canvasLocation" x="-2205" y="-932"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="j5X-bM-MYv">
@@ -2013,7 +2014,15 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2201" y="-1015"/>
+            <point key="canvasLocation" x="-2202" y="-1032"/>
+        </scene>
+        <!--IconManagerNavigation-->
+        <scene sceneID="pCk-tB-aID">
+            <objects>
+                <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="IconManagerNavigation" id="4UV-W6-1yL" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2126" y="-998"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">

@@ -9,23 +9,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Manage Icon Table View Controller-->
+        <!--App Icon-->
         <scene sceneID="0ij-Qx-K3l">
             <objects>
-                <tableViewController storyboardIdentifier="ManageIcon" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XF9-Uc-m7K">
+                <tableViewController storyboardIdentifier="IconManager" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XF9-Uc-m7K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="81" id="VmY-Ft-EV5" customClass="IconTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="81"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IconTableViewCell" rowHeight="80" id="VmY-Ft-EV5" customClass="IconTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VmY-Ft-EV5" id="V3W-Ng-aqU">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="di9-jP-HIL">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="di9-jP-HIL">
                                             <rect key="frame" x="20" y="11" width="374" height="58"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-5D-WtX">
@@ -34,6 +34,11 @@
                                                         <constraint firstAttribute="width" constant="48" id="GYk-hT-yR8"/>
                                                         <constraint firstAttribute="height" constant="48" id="Rk9-TM-DbM"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qww-A6-RRK">
                                                     <rect key="frame" x="64" y="18.5" width="42" height="21"/>
@@ -51,6 +56,11 @@
                                                 <constraint firstAttribute="bottom" secondItem="Zfx-5D-WtX" secondAttribute="bottom" constant="5" id="uFF-Zy-e4R"/>
                                                 <constraint firstItem="qww-A6-RRK" firstAttribute="centerY" secondItem="Zfx-5D-WtX" secondAttribute="centerY" id="wrE-J8-NTw"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -61,6 +71,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="iconImageView" destination="Zfx-5D-WtX" id="hBR-ZE-Jq8"/>
+                                    <outlet property="iconTitleLabel" destination="qww-A6-RRK" id="5xJ-GS-DfS"/>
+                                    <outlet property="selectedView" destination="di9-jP-HIL" id="REI-ea-E3r"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -68,10 +83,11 @@
                             <outlet property="delegate" destination="1wL-21-iAr" id="JyV-nh-Sgb"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="App Icon" id="VgL-e1-ZI3"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jns-gi-tmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1158" y="-1673"/>
+            <point key="canvasLocation" x="406" y="-948"/>
         </scene>
         <!--Theme Store-->
         <scene sceneID="3E2-TG-DNE">
@@ -162,5 +178,31 @@
             </objects>
             <point key="canvasLocation" x="-339" y="-1673"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tJG-Zi-YSt">
+            <objects>
+                <navigationController storyboardIdentifier="IconManagerNavigation" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IFw-XN-rGE" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="thU-M7-P8X">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1wL-21-iAr" kind="relationship" relationship="rootViewController" id="jx7-2a-DaM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4pm-cC-aUu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-339" y="-948"/>
+        </scene>
     </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -39,7 +39,7 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Dutch-Orange</key>
+			<key>Dutch Orange</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
@@ -93,11 +93,11 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>RED</key>
+			<key>Product(RED)</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-RED</string>
+					<string>App-Icon-iPhone-Product-RED</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -111,7 +111,7 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Rose-Gold</key>
+			<key>Rose Gold</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
@@ -199,7 +199,7 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Dutch-Orange</key>
+			<key>Dutch Orange</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
@@ -255,12 +255,12 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>RED</key>
+			<key>Product(RED)</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPad-RED</string>
-					<string>App-Icon-iPad-Pro-RED</string>
+					<string>App-Icon-iPad-Product-RED</string>
+					<string>App-Icon-iPad-Pro-Product-RED</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -275,7 +275,7 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Rose-Gold</key>
+			<key>Rose Gold</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8623</string>
+	<string>8692</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
