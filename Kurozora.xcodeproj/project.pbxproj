@@ -268,6 +268,11 @@
 		66BF02D3209FBA1700BDAF41 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02D2209FB95000BDAF41 /* Resources.xcassets */; };
 		66BF02D4209FBA1A00BDAF41 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66BF02D2209FB95000BDAF41 /* Resources.xcassets */; };
 		66C2C5262107ACA10020E21F /* KurozoraTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */; };
+		66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */; };
+		66C5797722A83387001B8F51 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5797622A83387001B8F51 /* IconTableViewCell.swift */; };
+		66C5797922A83726001B8F51 /* theme.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* theme.storyboard */; };
+		66C5797B22A86435001B8F51 /* admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* admin.storyboard */; };
+		66C5797D22A864CB001B8F51 /* about.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* about.storyboard */; };
 		66C741C822470F4300A20799 /* HorizontalExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C741C722470F4300A20799 /* HorizontalExploreCollectionViewCell.swift */; };
 		66C863FD216CDBB70054EE16 /* UserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C863FC216CDBB70054EE16 /* UserNotification.swift */; };
 		66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C863FE216CE7240054EE16 /* ShowDetails.swift */; };
@@ -604,6 +609,11 @@
 		66BF02CF209F9FA200BDAF41 /* Action.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		66BF02D2209FB95000BDAF41 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KurozoraTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraTabBarController.swift; sourceTree = "<group>"; };
+		66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManageIconTableViewController.swift; path = Kurozora/Settings/Theme/ManageIconTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		66C5797622A83387001B8F51 /* IconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IconTableViewCell.swift; path = Kurozora/Settings/Theme/Cell/IconTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		66C5797822A83726001B8F51 /* theme.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = theme.storyboard; sourceTree = "<group>"; };
+		66C5797A22A86435001B8F51 /* admin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = admin.storyboard; sourceTree = "<group>"; };
+		66C5797C22A864CB001B8F51 /* about.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = about.storyboard; sourceTree = "<group>"; };
 		66C741C722470F4300A20799 /* HorizontalExploreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HorizontalExploreCollectionViewCell.swift; path = UICollectionView/HorizontalExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C863FC216CDBB70054EE16 /* UserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotification.swift; sourceTree = "<group>"; };
 		66C863FE216CE7240054EE16 /* ShowDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
@@ -788,6 +798,7 @@
 		660B5B622152545B002D05F3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				66C5797622A83387001B8F51 /* IconTableViewCell.swift */,
 				66752635222820E0007C1617 /* TestThemeCell.swift */,
 				660B42A82125A07C0051EF66 /* ThemeCell.xib */,
 				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
@@ -857,6 +868,7 @@
 		6614409121DA40F300E54915 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				66C5797A22A86435001B8F51 /* admin.storyboard */,
 				66FE5CFE215B665200E2844A /* AdminTableViewController.swift */,
 				6614409421DA415F00E54915 /* Cell */,
 			);
@@ -866,9 +878,9 @@
 		6614409221DA411C00E54915 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				6614409521DA417300E54915 /* Cell */,
 				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
 				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
+				6614409521DA417300E54915 /* Cell */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -876,6 +888,7 @@
 		6614409321DA413B00E54915 /* About */ = {
 			isa = PBXGroup;
 			children = (
+				66C5797C22A864CB001B8F51 /* about.storyboard */,
 				66B69BD5214544DB007154BD /* LegalViewController.swift */,
 			);
 			path = About;
@@ -892,9 +905,9 @@
 		6614409521DA417300E54915 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				66E08368211324D300B39A75 /* OtherSessionsCell.swift */,
 				662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */,
 				660B5B652152F47A002D05F3 /* NoSessionsCell.swift */,
+				66E08368211324D300B39A75 /* OtherSessionsCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1018,6 +1031,8 @@
 		664133DE21DA42F900CE823A /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				66C5797822A83726001B8F51 /* theme.storyboard */,
+				66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */,
 				660B42A621259E300051EF66 /* ManageThemesController.swift */,
 				660B5B622152545B002D05F3 /* Cell */,
 			);
@@ -1848,6 +1863,7 @@
 				660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
+				66C5797B22A86435001B8F51 /* admin.storyboard in Resources */,
 				6648019C222D17110063143A /* App-Icon-iPad-Pro-Day@2x.png in Resources */,
 				664801D9222DE76A0063143A /* App-Icon-iPad-Blue@2x.png in Resources */,
 				6641D6F2222EA3DF0067BD3A /* App-Icon-iPad-Emerald@2x.png in Resources */,
@@ -1901,6 +1917,7 @@
 				6641D6F5222EA3DF0067BD3A /* App-Icon-iPhone-Emerald@2x.png in Resources */,
 				66A5250C21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib in Resources */,
 				664801C5222DE76A0063143A /* App-Icon-iPad-Pro-Blue@2x.png in Resources */,
+				66C5797922A83726001B8F51 /* theme.storyboard in Resources */,
 				664801E3222DE76A0063143A /* App-Icon-iPhone-RED@3x.png in Resources */,
 				66A8AF23209991310011A342 /* AnimeCell.xib in Resources */,
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
@@ -1911,6 +1928,7 @@
 				66D6236E20A09F6B00304914 /* season.storyboard in Resources */,
 				668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */,
 				66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */,
+				66C5797D22A864CB001B8F51 /* about.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6641D6F4222EA3DF0067BD3A /* App-Icon-iPad-Dutch.png in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
@@ -2138,6 +2156,7 @@
 				6675263822282B06007C1617 /* Themes.swift in Sources */,
 				662A5FE9223913AB00F3B61D /* TransitionSubmitButton.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				66C5797722A83387001B8F51 /* IconTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
@@ -2280,6 +2299,7 @@
 				66BDEC7421C3F0A100D5487B /* KCommentEditorView.swift in Sources */,
 				66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */,
 				6648ED6E22A4633400E1BE18 /* GroupingType.swift in Sources */,
+				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,
 				66A2517A224EC9D400815A78 /* ExploreSectionHeaderCell.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
 				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,

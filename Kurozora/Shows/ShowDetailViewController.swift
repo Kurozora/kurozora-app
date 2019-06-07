@@ -586,7 +586,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 	}
 
 	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var indexPath = indexPath
+		let indexPath = indexPath
 
 		switch ShowSections(rawValue: indexPath.section)! {
 		case .synopsis:

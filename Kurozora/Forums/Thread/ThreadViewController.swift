@@ -303,50 +303,82 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 		if let isAdmin = User.isAdmin(), let isMod = User.isMod() {
 			if isAdmin || isMod {
 				if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
-					var lock = 0
-					var lockTitle = "Unlock"
+					var lock: Int
+					var lockTitle: String
 
-					if !locked {
+					if locked {
 						lock = 1
 						lockTitle = "Lock"
+					} else {
+						lock = 0
+						lockTitle = "Unock"
 					}
 
-					action.addAction(UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+					let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
 						Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 							self.isLocked(locked)
 						})
-					}))
+					})
+					lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+					if locked {
+						lockAction.setValue(#imageLiteral(resourceName: "locked"), forKey: "image")
+					} else {
+						lockAction.setValue(#imageLiteral(resourceName: "unlocked"), forKey: "image")
+					}
+
+					action.addAction(lockAction)
 				}
 			}
 		}
 
 		// Upvote, downvote and reply actions
 		if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 && !locked {
-			action.addAction(UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
+			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 1)
-			}))
-			action.addAction(UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
+			})
+			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 0)
-			}))
-			action.addAction(UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
-			}))
+			})
+			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+			})
+
+			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")
+			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			downvoteAction.setValue(#imageLiteral(resourceName: "arrow_down"), forKey: "image")
+			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			replyAction.setValue(#imageLiteral(resourceName: "comment"), forKey: "image")
+			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+			action.addAction(upvoteAction)
+			action.addAction(downvoteAction)
+			action.addAction(replyAction)
 		}
 
 		// Username action
 		if let username = forumThreadElement.user?.username, username != "" {
-			action.addAction(UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
+			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
-			}))
+			})
+			userAction.setValue(#imageLiteral(resourceName: "user_male"), forKey: "image")
+			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(userAction)
 		}
 
 		// Share thread action
-		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
+		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			self.shareThread()
-		}))
+		})
+		shareAction.setValue(#imageLiteral(resourceName: "share"), forKey: "image")
+		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(shareAction)
 
 		// Report thread action
-		action.addAction(UIAlertAction.init(title: "Report", style: .default, handler: { (_) in
-		}))
+		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+		})
+		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
+		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(reportAction)
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 

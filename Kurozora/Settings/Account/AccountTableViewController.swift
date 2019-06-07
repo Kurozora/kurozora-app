@@ -15,7 +15,7 @@ class AccountTableViewController: UITableViewController {
 	@IBOutlet weak var userAvatar: UIImageView! {
 		didSet {
 			self.userAvatar?.image = User.currentUserAvatar()
-			self.userAvatar?.borderColor = ThemeManager.color(for: KThemePicker.subTextColor.stringValue())
+			self.userAvatar?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {

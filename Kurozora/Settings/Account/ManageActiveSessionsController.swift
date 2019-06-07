@@ -11,9 +11,65 @@ import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
 import SwifterSwift
+import MapKit
+import CoreLocation
+
+class ImageAnnotation : NSObject, MKAnnotation {
+	var coordinate: CLLocationCoordinate2D
+	var title: String?
+	var subtitle: String?
+	var image: UIImage?
+	var colour: UIColor?
+
+	override init() {
+		self.coordinate = CLLocationCoordinate2D()
+		self.title = nil
+		self.subtitle = nil
+		self.image = nil
+		self.colour = UIColor.white
+	}
+}
+
+class ImageAnnotationView: MKAnnotationView {
+	private var imageView: UIImageView!
+
+	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+		super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+
+		self.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+		self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+		self.addSubview(self.imageView)
+
+		self.imageView.layer.cornerRadius = self.imageView.height / 2
+		self.imageView.borderColor = .green
+		self.imageView.borderWidth = 2
+		self.imageView.layer.masksToBounds = true
+	}
+
+	override var image: UIImage? {
+		get {
+			return self.imageView.image
+		}
+		set {
+			self.imageView.image = newValue
+		}
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
 
 class ManageActiveSessionsController: UIViewController {
-    @IBOutlet var tableView: UITableView!
+	@IBOutlet var tableView: UITableView!
+	@IBOutlet weak var mapView: MKMapView!
+
+	var devices: [UserSessionsElement?] = [
+		try? UserSessionsElement(json: ["device": "London", "ip": "iphone", "latitude": 51.507222, "longitude": -0.1275]),
+		try? UserSessionsElement(json: ["device": "Mondon", "ip": "ipad", "latitude": 51.506222, "longitude": -0.1265]),
+		try? UserSessionsElement(json: ["device": "Nondon", "ip": "apple_tv", "latitude": 51.505222, "longitude": -0.1255]),
+		try? UserSessionsElement(json: ["device": "Pondon", "ip": "macbook", "latitude": 51.504222, "longitude": -0.1245])
+	]
 
 	var dismissEnabled: Bool = false
 	var sessions: UserSessions? {
@@ -21,7 +77,10 @@ class ManageActiveSessionsController: UIViewController {
 			tableView.reloadData()
 		}
 	}
-    
+	var pointAnnotation: MKPointAnnotation!
+	var pinAnnotationView: MKPinAnnotationView!
+	let locationManager = CLLocationManager()
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 		if dismissEnabled {
@@ -38,8 +97,30 @@ class ManageActiveSessionsController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
 
 		fetchSessions()
-        
+
+		mapView.delegate = self
+		mapView.showsUserLocation = true
+
+		createAnnotations()
+
+		if CLLocationManager.locationServicesEnabled() == true {
+			if CLLocationManager.authorizationStatus() == .restricted ||
+				CLLocationManager.authorizationStatus() == .denied ||
+				CLLocationManager.authorizationStatus() == .notDetermined {
+
+				locationManager.requestWhenInUseAuthorization()
+			}
+
+			locationManager.desiredAccuracy = 1.0
+			locationManager.delegate = self
+			locationManager.startUpdatingLocation()
+
+		} else {
+			print("PLease turn on location services or GPS")
+		}
+
         // Setup table view
+		tableView.tableHeaderView?.height = self.view.frame.height / 3
         tableView.dataSource = self
         tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
@@ -56,6 +137,24 @@ class ManageActiveSessionsController: UIViewController {
 
 	@objc func dismiss(_ sender: Any?) {
 		self.dismiss(animated: true, completion: nil)
+	}
+
+	private func createAnnotations() {
+		for device in devices {
+			let annotation = ImageAnnotation()
+			if let image = device?.ip {
+				annotation.image = UIImage(named: image)
+			}
+			annotation.title = device?.device
+			if let longitude = device?.longitude, let latitude = device?.latitude {
+				annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+			}
+			mapView.addAnnotation(annotation)
+		}
+
+		locationManager.desiredAccuracy = kCLLocationAccuracyBest
+		locationManager.requestAlwaysAuthorization()
+		locationManager.startUpdatingLocation()
 	}
 
 	private func removeSession(_ otherSessionsCell: OtherSessionsCell) {
@@ -112,6 +211,18 @@ class ManageActiveSessionsController: UIViewController {
 			}
 		}
 	}
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+
+		if UIDevice.isLandscape() {
+			self.tableView.tableHeaderView?.height = self.view.frame.height / 3
+		} else {
+			DispatchQueue.main.async() {
+				self.tableView.tableHeaderView?.height = self.view.frame.height / 3
+			}
+		}
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -132,7 +243,7 @@ extension ManageActiveSessionsController: UITableViewDataSource {
 		if section == 0 {
 			return 1
 		} else {
-			guard let sessionsCount = sessions?.otherSessions?.count else { return 0 }
+			guard let sessionsCount = sessions?.otherSessions?.count else { return 1 }
 			return sessionsCount
 		}
 	}
@@ -146,7 +257,7 @@ extension ManageActiveSessionsController: UITableViewDataSource {
 			let otherSessionsCount = sessions?.otherSessions?.count
 
 			// No other sessions
-			if otherSessionsCount == 0 {
+			if otherSessionsCount == nil || otherSessionsCount == 0 {
 				let noSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath) as! NoSessionsCell
 				return noSessionsCell
 			}
@@ -176,5 +287,82 @@ extension ManageActiveSessionsController: UITableViewDelegate {
 extension ManageActiveSessionsController: OtherSessionsCellDelegate {
 	func removeSession(for otherSessionsCell: OtherSessionsCell) {
 		self.removeSession(otherSessionsCell)
+	}
+}
+
+extension ManageActiveSessionsController: MKMapViewDelegate {
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//		guard !(annotation is MKPointAnnotation) else { return nil }
+
+		if annotation.isEqual(mapView.userLocation) {
+			return nil
+		}
+
+		if !annotation.isKind(of: ImageAnnotation.self) {
+			var pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "DefaultPinView")
+			if pinAnnotationView == nil {
+				pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "DefaultPinView")
+			}
+			return pinAnnotationView
+		}
+
+		if #available(iOS 11.0, *) {
+			var annotationView = MKMarkerAnnotationView()
+			if let markerAnnotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation") as? MKMarkerAnnotationView {
+				annotationView = markerAnnotationView
+			} else {
+				annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
+				let annotation = annotation as! ImageAnnotation
+				annotationView.glyphImage = annotation.image
+			}
+
+			annotationView.markerTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+
+			return annotationView
+		}
+
+		var imageAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation")
+		imageAnnotationView = ImageAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
+
+		let annotation = annotation as! ImageAnnotation
+		imageAnnotationView?.image = annotation.image
+		imageAnnotationView?.annotation = annotation
+		imageAnnotationView?.canShowCallout = true
+
+		return imageAnnotationView
+
+//		else {
+//			let annotationIdentifier = "pin"
+//			var annotationView: MKAnnotationView?
+//
+//			if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+//				annotationView = dequeuedAnnotationView
+//				annotationView?.annotation = annotation
+//			} else {
+//				annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+//				annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//			}
+//
+//			if let annotationView = annotationView {
+//				annotationView.canShowCallout = true
+//				annotationView.image = #imageLiteral(resourceName: "default_avatar")
+//			}
+//
+//			return annotationView
+//		}
+	}
+}
+
+extension ManageActiveSessionsController: CLLocationManagerDelegate {
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//		if let location = locations.last {
+//			let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+//			let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//			self.mapView.setRegion(region, animated: true)
+//		}
+	}
+
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		print("Unable to access your current location")
 	}
 }

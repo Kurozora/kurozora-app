@@ -7,7 +7,6 @@
 //
 
 import KCommonKit
-import AXPhotoViewer
 import EmptyDataSet_Swift
 import FLAnimatedImage
 import Kingfisher

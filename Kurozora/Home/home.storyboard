@@ -18,10 +18,10 @@
             </objects>
             <point key="canvasLocation" x="2318" y="396"/>
         </scene>
-        <!--PrivacyNavigationController-->
+        <!--about-->
         <scene sceneID="TgQ-yC-U46">
             <objects>
-                <viewControllerPlaceholder storyboardName="settings" referencedIdentifier="PrivacyNavigationController" id="iCt-dj-RF4" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="about" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1588" y="594"/>
