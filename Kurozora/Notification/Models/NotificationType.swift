@@ -16,9 +16,9 @@ import Foundation
 	- case follower = "TYPE_NEW_FOLLOWER"
 */
 enum NotificationType: String {
-	case unknown = "TYPE_UNKNOWN"
-	case session = "TYPE_NEW_SESSION"
-	case follower = "TYPE_NEW_FOLLOWER"
+	case unknown 	= "TYPE_UNKNOWN"
+	case session 	= "TYPE_NEW_SESSION"
+	case follower 	= "TYPE_NEW_FOLLOWER"
 
 	func stringValue() -> String {
 		switch self {

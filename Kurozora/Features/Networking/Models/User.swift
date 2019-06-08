@@ -153,7 +153,7 @@ extension User {
 	}
 
 	/// Returns the username saved in KDefaults
-	static func username() -> String? {
+	static var username: String? {
 		if let username = GlobalVariables().KDefaults["username"], username != "" {
 			return username
 		}
@@ -161,7 +161,7 @@ extension User {
 	}
 
 	/// Returns the current User ID saved in KDefaults
-	static func currentID() -> Int? {
+	static var currentID: Int? {
 		if let userID = GlobalVariables().KDefaults["user_id"], userID != "" {
 			return Int(userID)
 		}
@@ -169,15 +169,31 @@ extension User {
 	}
 
 	/// Returns the Auth Token saved in KDefaults
-	static func authToken() -> String {
+	static var authToken: String {
 		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
 			return authToken
 		}
 		return ""
 	}
 
+	/// Returns the user's latitude saved in KDefaults
+	static var latitude: Double {
+		if let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "", let latitude = Double(latitudeString) {
+			return latitude
+		}
+		return 0.0
+	}
+
+	/// Returns the user's longitude saved in KDefaults
+	static var longitude: Double {
+		if let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "", let longitude = Double(longitudeString) {
+			return longitude
+		}
+		return 0.0
+	}
+
 	/// Returns the current user avatar from cache if available, otherwise returns default avatar
-	static func currentUserAvatar() -> UIImage? {
+	static var currentUserAvatar: UIImage? {
 		var image = UIImage(named: "default_avatar")
 		let cache = ImageCache.default
 
@@ -213,17 +229,17 @@ extension User {
 	}
 
 	/// Returns true if current user is logged in
-	static func isLoggedIn() -> Bool? {
-		return User.username() != nil
+	static var isLoggedIn: Bool? {
+		return User.username != nil
 	}
 
 	/// Returns true is the current user is PRO
-	static func isPro() -> Bool? {
+	static var isPro: Bool? {
 		return true
 	}
 
 	/// Returns true if the current user is an admin
-	static func isAdmin() -> Bool? {
+	static var isAdmin: Bool? {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
@@ -239,7 +255,7 @@ extension User {
 	}
 
 	/// Returns true if the current user is a mod
-	static func isMod() -> Bool? {
+	static var isMod: Bool? {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = User.UserType(rawValue: userType) else { return false }

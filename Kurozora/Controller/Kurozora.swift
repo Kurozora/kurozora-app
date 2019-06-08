@@ -35,7 +35,7 @@ class Kurozora: NSObject {
 			IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
 			// User login status
-			if User.username() != nil {
+			if User.username != nil {
 //				authenticated = true
 				let customTabBar = KurozoraTabBarController()
 				window?.rootViewController = customTabBar

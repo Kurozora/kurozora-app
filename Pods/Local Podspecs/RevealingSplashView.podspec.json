@@ -23,5 +23,6 @@
   "source_files": [
     "RevealingSplashView/",
     "RevealingSplashView/**/*.{h,m,swift}"
-  ]
+  ],
+  "swift_version": "4.2"
 }

@@ -33,7 +33,7 @@ class SettingsCell: UITableViewCell {
 	}
 	@IBOutlet weak var userAvatar: UIImageView? {
 		didSet {
-			self.userAvatar?.image = User.currentUserAvatar()
+			self.userAvatar?.image = User.currentUserAvatar
 			self.userAvatar?.theme_borderColor = KThemePicker.tableViewCellChevronColor.rawValue
 		}
 	}

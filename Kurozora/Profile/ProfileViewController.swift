@@ -107,7 +107,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 		if let otherUserID = otherUserID, otherUserID != 0 {
 			fetchUserDetails(with: otherUserID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
-		} else if let currentID = User.currentID(), String(currentID) != "" {
+		} else if let currentID = User.currentID, String(currentID) != "" {
 			fetchUserDetails(with: currentID)
 			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
 		}
@@ -273,7 +273,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         }
         
         // Setup follow button
-        if otherUserID == User.currentID() || otherUserID == nil {
+        if otherUserID == User.currentID || otherUserID == nil {
             followButton.isHidden = true
 			editProfileButton.isHidden = false
         } else {

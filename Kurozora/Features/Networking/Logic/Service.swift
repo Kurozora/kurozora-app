@@ -103,7 +103,7 @@ struct Service {
 	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (Bool) -> Void)  {
 		guard let bio = bio else { return }
 		guard let profileImage = profileImage else { return }
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request : UploadAPIRequest<User,JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
@@ -113,7 +113,7 @@ struct Service {
 
 		request.headers = [
 			"Content-Type": "multipart/form-data",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -146,12 +146,12 @@ struct Service {
 		- Parameter successHandler: Returns an object of type UserSessions.
 	**/
 	func getSessions(withSuccess successHandler:@escaping (UserSessions?) -> Void){
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -178,12 +178,12 @@ struct Service {
 	**/
 	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping ([LibraryElement]?) -> Void) {
 		guard let status = status else { return }
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -215,12 +215,12 @@ struct Service {
 	func addToLibrary(withStatus status: String?, showID: Int?,withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let status = status else { return }
 		guard let showID = showID else { return }
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -251,12 +251,12 @@ struct Service {
 	**/
 	func removeFromLibrary(withID showID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let showID = showID else { return }
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -289,7 +289,7 @@ struct Service {
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/\(userID)/profile")
         request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
         request.authorizationRequirement = .required
         request.method = .get
@@ -314,12 +314,12 @@ struct Service {
 		- Parameter successHandler: Returns an array of type UserNotificationsElement.
 	**/
 	func getNotifications(withSuccess successHandler:@escaping ([UserNotificationsElement]?) -> Void){
-		guard let userID = User.currentID() else { return }
+		guard let userID = User.currentID else { return }
 
 		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -382,7 +382,7 @@ struct Service {
 		let request : APIRequest<UserFollow,JSONError> = tron.swiftyJSON.request("users/\(userID)/follow")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -420,7 +420,7 @@ struct Service {
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -483,7 +483,7 @@ struct Service {
 		let request : APIRequest<ShowDetails,JSONError> = tron.swiftyJSON.request("anime/\(showID)")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -567,7 +567,7 @@ struct Service {
 		let request: APIRequest<User,JSONError> = tron.swiftyJSON.request("anime/\(showID)/rate")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -634,7 +634,7 @@ struct Service {
 		let request : APIRequest<Episodes,JSONError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -669,7 +669,7 @@ struct Service {
 		let request : APIRequest<EpisodesUserDetails,JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -795,7 +795,7 @@ struct Service {
 		let request : APIRequest<ThreadPost,JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -862,7 +862,7 @@ struct Service {
 		let request : APIRequest<VoteThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -900,7 +900,7 @@ struct Service {
 		let request : APIRequest<ThreadReplies,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .get
@@ -937,7 +937,7 @@ struct Service {
 		let request : APIRequest<ThreadReply,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -1003,7 +1003,7 @@ struct Service {
 		let request: APIRequest<ForumThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -1041,7 +1041,7 @@ struct Service {
 		let request : APIRequest<VoteThread,JSONError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post
@@ -1123,12 +1123,12 @@ struct Service {
 		- Parameter successHandler: Returns true if the request finishes without errors.
 	**/
     func validateSession(withSuccess successHandler:@escaping (Bool) -> Void) {
-        if User.authToken() != "" && User.currentID() != nil {
+        if User.authToken != "" && User.currentID != nil {
 			guard let sessionID = User.currentSessionID() else { return }
 			let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [
 				"Content-Type": "application/x-www-form-urlencoded",
-				"kuro-auth": User.authToken()
+				"kuro-auth": User.authToken
 			]
             request.authorizationRequirement = .required
             request.method = .post
@@ -1162,7 +1162,7 @@ struct Service {
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
         request.authorizationRequirement = .required
         request.method = .post
@@ -1194,7 +1194,7 @@ struct Service {
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken()
+			"kuro-auth": User.authToken
 		]
 		request.authorizationRequirement = .required
 		request.method = .post

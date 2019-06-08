@@ -64,6 +64,35 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 			}
 		}
 	}
+
+	@IBAction func nightThemeButtonPressed(_ sender: UIBarButtonItem) {
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		action.addAction(UIAlertAction(title: "Turn On Night Mode", style: .default, handler: { (alert) in
+			UserSettings.set(false, forKey: .automaticNightTheme)
+			KThemeStyle.switchNight(true)
+		}))
+
+		action.addAction(UIAlertAction(title: "Automatic (Sunrise/Sunset)", style: .default, handler: { (alert) in
+			UserSettings.set(true, forKey: .automaticNightTheme)
+			KThemeStyle.checkSunSchedule()
+		}))
+
+		action.addAction(UIAlertAction(title: "Turn Off Night Mode", style: .destructive, handler: { (_) in
+			UserSettings.set(false, forKey: .automaticNightTheme)
+			KThemeStyle.switchNight(false)
+		}))
+
+		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = self.view
+			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
 }
 
 // MARK: - UIAlertViewDelegate
@@ -103,7 +132,7 @@ extension ManageThemesController: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let themeCell: TestThemeCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! TestThemeCell
+		let themeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! TestThemeCell
 
 		themeCell.row = indexPath.row
 		themeCell.themeElement = themes?[indexPath.row]

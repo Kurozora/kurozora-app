@@ -300,7 +300,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin(), let isMod = User.isMod() {
+		if let isAdmin = User.isAdmin, let isMod = User.isMod {
 			if isAdmin || isMod {
 				if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
 					var lock: Int

@@ -12,7 +12,7 @@ PODS:
   - ColorSlider (4.4)
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
-  - Down (0.8.3)
+  - Down (0.8.4)
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
@@ -24,7 +24,7 @@ PODS:
   - Kingfisher (5.5.0)
   - MarqueeLabel (4.0.0)
   - MBProgressHUD (1.1.0)
-  - NotificationBannerSwift (2.2.0):
+  - NotificationBannerSwift (2.2.2):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - NVActivityIndicatorView (4.7.0):
@@ -42,8 +42,10 @@ PODS:
     - Down
     - iosMath
     - SnapKit
+  - Schedule (2.0.2)
   - SCLAlertView (0.8.1)
   - SnapKit (5.0.0)
+  - Solar (2.1.0)
   - Starscream (3.0.6)
   - SwifterSwift (5.0.0):
     - SwifterSwift/AppKit (= 5.0.0)
@@ -100,7 +102,9 @@ DEPENDENCIES:
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichEditorView
   - RichTextView
+  - Schedule
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
+  - Solar
   - SwifterSwift
   - SwiftTheme
   - SwipeCellKit
@@ -137,7 +141,9 @@ SPEC REPOS:
     - ReachabilitySwift
     - RichEditorView
     - RichTextView
+    - Schedule
     - SnapKit
+    - Solar
     - Starscream
     - SwifterSwift
     - SwiftTheme
@@ -172,7 +178,7 @@ SPEC CHECKSUMS:
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
-  Down: 58ee4aa8941dcd959a8ef2eb64394967ee3fa836
+  Down: 533c1fc9a76275c150f924441e2907c07ddd9891
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -184,16 +190,18 @@ SPEC CHECKSUMS:
   Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  NotificationBannerSwift: 0ebb4b35e18c0515fdfe01b5ebd90c3eb1255e3d
+  NotificationBannerSwift: 2d46cc1b4a0ebf4372baef383f2a2ca82bf0c235
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   Pageboy: b6e8f5082c23ef2490ddf21339fb6e19673d1453
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
-  RevealingSplashView: 052b2bd7c6fb3b8bb9139df458efd23c8f2633fd
+  RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   RichTextView: 7e7d874a6222d173f0a39a558ed3ccb87331a9f6
-  SCLAlertView: 2b51007c2309ad28a3587f4400ca8dd1f690fb98
+  Schedule: 937b2b998a1502e943e37d1b67f38c9e53429c7e
+  SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
@@ -203,6 +211,6 @@ SPEC CHECKSUMS:
   TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 179254f7e668fac51de2f03753d28e76f0454859
+PODFILE CHECKSUM: 3c3084be454f948eedc72f4a28d04b75b7cb4abb
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.7.1

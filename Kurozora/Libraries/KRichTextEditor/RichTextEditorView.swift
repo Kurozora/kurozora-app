@@ -94,8 +94,8 @@ class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichE
 					"title": self.titleTextField.text!,
 					"content_teaser": contentTeaser!,
 					"locked": false,
-					"poster_user_id": User.currentID()!,
-					"poster_username": User.username()!,
+					"poster_user_id": User.currentID!,
+					"poster_username": User.username!,
 					"creation_date": creationDate,
 					"reply_count": 0,
 					"score": 0

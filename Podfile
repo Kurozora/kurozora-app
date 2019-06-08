@@ -40,6 +40,8 @@ def kurozora_pods
 	pod 'RichEditorView'
 	pod 'RichTextView'
 #	pod 'Siren' for app update notifications
+	pod 'Schedule'
+	pod 'Solar'
 	pod 'WhatsNew'
 #	pod 'Zip'
 end

@@ -9,16 +9,11 @@
 import KCommonKit
 
 class UserSettings: NSObject {
-	/// Return the array of collapsed sections in settings
-	static func collapsedSections() -> [Int] {
-		guard let collapsedSections = GlobalVariables().KUserDefaults?.array(forKey: "collapsedSections") as? [Int] else { return [3] }
-		return collapsedSections
-	}
-
 	/// Notificartions key used to get notifications settings
 	enum UserSettingsKey: String {
 		// Global notification keys
 		case collapsedSections = "collapsedSections"
+		case automaticNightTheme = "automaticNightTheme"
 
 		// Library keys
 		case libraryPage = "libraryPage"
@@ -44,6 +39,18 @@ class UserSettings: NSObject {
 	/// Set value for key in shared KDefaults
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
 		GlobalVariables().KUserDefaults?.set(value, forKey: key.rawValue)
+	}
+
+	/// Return the array of collapsed sections in settings
+	static var collapsedSections: [Int] {
+		guard let collapsedSections = GlobalVariables().KUserDefaults?.array(forKey: "collapsedSections") as? [Int] else { return [3] }
+		return collapsedSections
+	}
+
+	/// Returns a boolean indicating if automatic night theme is on
+	static var automaticNightTheme: Bool {
+		guard let automaticNightTheme = GlobalVariables().KUserDefaults?.bool(forKey: "automaticNightTheme") else { return false }
+		return automaticNightTheme
 	}
 
 	/// Returns a boolean indicating if notifications are allowed

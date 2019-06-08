@@ -144,7 +144,13 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Theme Store" id="hFW-di-jJ1"/>
+                    <navigationItem key="navigationItem" title="Theme Store" id="hFW-di-jJ1">
+                        <barButtonItem key="rightBarButtonItem" title="Dark mode" image="darkmode" id="krm-5A-cX3">
+                            <connections>
+                                <action selector="nightThemeButtonPressed:" destination="S9q-8X-BS8" id="yJg-bi-PG3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="6Tq-kd-oNC" id="YJ5-fp-uGy"/>
                     </connections>
@@ -204,5 +210,8 @@
             <point key="canvasLocation" x="-339" y="-948"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="darkmode" width="57" height="57"/>
+    </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

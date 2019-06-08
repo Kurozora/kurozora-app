@@ -47,10 +47,10 @@ class KCommentEditorView: UIViewController {
 			replyToUsernameLabel.text = replyToUsername
 		}
 
-		let image = User.currentUserAvatar()
+		let image = User.currentUserAvatar
 		userAvatarImageView.image = image
 
-		if let currentUsername = User.username() {
+		if let currentUsername = User.username {
 			currentUsernameLabel.text = currentUsername
 		}
 
@@ -82,9 +82,9 @@ class KCommentEditorView: UIViewController {
 						"id": replyID,
 						"posted_at": postedAt,
 						"user": [
-							"id": User.currentID()!,
-							"username": User.username()!,
-							"avatar": User.currentUserAvatar()!
+							"id": User.currentID!,
+							"username": User.username!,
+							"avatar": User.currentUserAvatar!
 						],
 						"score": 0,
 						"content": comment

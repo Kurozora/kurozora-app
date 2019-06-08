@@ -14,7 +14,7 @@ import SwiftTheme
 class AccountTableViewController: UITableViewController {
 	@IBOutlet weak var userAvatar: UIImageView! {
 		didSet {
-			self.userAvatar?.image = User.currentUserAvatar()
+			self.userAvatar?.image = User.currentUserAvatar
 			self.userAvatar?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
@@ -55,7 +55,7 @@ extension AccountTableViewController {
 		case (1,0):
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
-				if let isLoggedIn = User.isLoggedIn() {
+				if let isLoggedIn = User.isLoggedIn {
 					if isLoggedIn {
 						Service.shared.logout(withSuccess: { (success) in
 							let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)

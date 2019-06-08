@@ -190,7 +190,7 @@ class ReplyCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin(), let isMod = User.isMod() {
+		if let isAdmin = User.isAdmin, let isMod = User.isMod {
 			if isAdmin || isMod {
 			}
 		}

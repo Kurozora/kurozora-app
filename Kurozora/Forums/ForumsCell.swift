@@ -180,7 +180,7 @@ public class ForumsCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin(), let isMod = User.isMod() {
+		if let isAdmin = User.isAdmin, let isMod = User.isMod {
 			if isAdmin || isMod {
 				if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
 					var lock = 0

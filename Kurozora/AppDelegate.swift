@@ -31,23 +31,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Initialize theme
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
-		if let themeID = UserSettings.currentTheme, themeID != "" {
+		if UserSettings.automaticNightTheme {
+			KThemeStyle.checkSunSchedule()
+		} else if let themeIDString = UserSettings.currentTheme, themeIDString != "" {
 			// If themeID is an integer
-			if Int(themeID) != nil {
+			if let themeID = Int(themeIDString) {
 				// Use a non default theme if it exists
 				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
-					ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
+					KThemeStyle.switchTo(theme: themeID)
 				} else {
 					// Fallback to default if theme doesn't exist
-					ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
+					KThemeStyle.switchTo(.day)
 				}
 			} else {
 				// Use one of the chosen default themes
-				ThemeManager.setTheme(plistName: themeID, path: .mainBundle)
+				KThemeStyle.switchTo(theme: themeIDString)
 			}
 		} else {
 			// Fallback to default if no theme is chosen
-			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
+			KThemeStyle.switchTo(.day)
 		}
 
 		// Initialize UIWindow
@@ -126,6 +128,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 //		KNetworkManager.isReachable { _ in
 //			self.authenticated = Kurozora.validateSession(window: self.window)
+			if UserSettings.automaticNightTheme {
+				KThemeStyle.checkSunSchedule()
+			}
 //		}
     }
 

@@ -22,7 +22,7 @@ public class WorkflowController {
 
 	/// Initialise Pusher and connect to subsequent channels
 	class func pusherInit() {
-		if let currentID = User.currentID(), currentID != 0 {
+		if let currentID = User.currentID, currentID != 0 {
 			pusher.connect()
 
 			let myChannel = pusher.subscribe("private-user.\(currentID)")

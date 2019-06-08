@@ -24,5 +24,6 @@
   },
   "source_files": "SCLAlertView/*.{swift}",
   "swift_versions": "5.0",
-  "requires_arc": true
+  "requires_arc": true,
+  "swift_version": "5.0"
 }

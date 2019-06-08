@@ -571,7 +571,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .synopsis:
 			numberOfRows = (showDetails?.showDetailsElement?.synopsis != "") ? 1 : 0
 		case .information:
-			numberOfRows = (User.isAdmin() == true) ? 11 : 10
+			numberOfRows = (User.isAdmin == true) ? 11 : 10
 		case .cast:
 			if let actorsCount = actors?.count, actorsCount > 0 {
 				numberOfRows = 2
