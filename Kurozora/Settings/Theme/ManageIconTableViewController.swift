@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
+import KCommonKit
 import SwiftyJSON
 
 class ManageIconTableViewController: UITableViewController {
@@ -114,6 +114,9 @@ extension ManageIconTableViewController {
 		} else {
 			KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 		}
+
+		GlobalVariables().KUserDefaults?.set(iconTableViewCell.alternativeIconsElement?.image, forKey: "AppIcon")
+		NotificationCenter.default.post(name: updateAppIconNotification, object: nil)
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

@@ -44,7 +44,6 @@ class AlternativeIcons: JSONDecodable {
 		self.defaultIcons = defaultIcons
 		self.premiumIcons = premiumIcons
 		self.limitedIcons = limitedIcons
-		print("dionnnnnsssssserrrrrr")
 	}
 }
 

@@ -398,6 +398,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="appIconImageView" destination="nMG-xE-VQv" id="3O5-Yq-myS"/>
                                             <outlet property="cellTitle" destination="e5A-7O-n3O" id="QYs-Fj-NJi"/>
                                             <outlet property="chevronImageView" destination="Elk-js-w8F" id="rvR-bV-vn2"/>
                                             <outlet property="selectedView" destination="jjL-Oe-PNI" id="Kdd-Tu-MEy"/>

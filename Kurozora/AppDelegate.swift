@@ -15,6 +15,8 @@ import SwiftTheme
 import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
+let updateAppIconNotification = Notification.Name("updateAppIconNotification")
+let updateNotificationSettingsValueLabelsNotification = Notification.Name("updateNotificationSettingsValueLabelsNotification")
 let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue()) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain

@@ -83,6 +83,7 @@ class NotificationsOptionsViewController: UICollectionViewController {
 			UserSettings.set(indexPath.item, forKey: .notificationsPersistent)
 		}
 
+		NotificationCenter.default.post(name: updateNotificationSettingsValueLabelsNotification, object: nil)
 		collectionView.reloadData()
 	}
 }
