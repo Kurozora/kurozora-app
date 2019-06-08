@@ -29,8 +29,8 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping() {
-			let notificationsGrouping = UserSettings.notificationsGrouping()
+		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping {
+			let notificationsGrouping = UserSettings.notificationsGrouping
 			grouping = GroupingType(rawValue: notificationsGrouping)!
 			fetchNotifications()
 		}
@@ -38,7 +38,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		oldGrouping = UserSettings.notificationsGrouping()
+		oldGrouping = UserSettings.notificationsGrouping
 	}
 
 	override func viewDidLoad() {

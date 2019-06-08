@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 		// Initialize theme
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
-		if let themeID = GlobalVariables().KUserDefaults?.string(forKey: "currentTheme"), themeID != "" {
+
+		if let themeID = UserSettings.currentTheme, themeID != "" {
 			// If themeID is an integer
 			if Int(themeID) != nil {
 				// Use a non default theme if it exists
@@ -38,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 				} else {
 					// Fallback to default if theme doesn't exist
-					ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
+					ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
 				}
 			} else {
 				// Use one of the chosen default themes
@@ -46,59 +47,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		} else {
 			// Fallback to default if no theme is chosen
-			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
+			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
 		}
 
 		// Initialize UIWindow
 		window = UIWindow()
 		window?.makeKeyAndVisible()
 
-		// If the network is unreachable show the offline page
-		KNetworkManager.isUnreachable { _ in
-			self.isUnreachable = true
-		}
-
-		if isUnreachable {
-			Kurozora.showOfflinePage(for: window)
-			return true
-		}
-
-		// Monitor network availability
-		KNetworkManager.shared.reachability.whenUnreachable = { _ in
-			Kurozora.showOfflinePage(for: nil)
-		}
-
-		// Initialize Pusher
-		WorkflowController.pusherInit()
-
-        // Max disk cache size
-		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
-
+//		// If the network is unreachable show the offline page
+//		KNetworkManager.isUnreachable { _ in
+//			self.isUnreachable = true
+//		}
+//
+//		if isUnreachable {
+//			Kurozora.showOfflinePage(for: window)
+//			return true
+//		}
+//
+//		// Monitor network availability
+//		KNetworkManager.shared.reachability.whenUnreachable = { _ in
+//			Kurozora.showOfflinePage(for: nil)
+//		}
+//
+//		// Initialize Pusher
+//		WorkflowController.pusherInit()
+//
+//        // Max disk cache size
+//		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
+//
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
-        
+
         // IQKeyoardManager
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+//
+//		// User login status
+//        if User.username() != nil {
+//			authenticated = true
+//            let customTabBar = KurozoraTabBarController()
+//            self.window?.rootViewController = customTabBar
+//        } else {
+//            revealingSplashView.heartAttack = true
+//            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+//            self.window?.rootViewController = vc
 
-		// User login status
-        if User.username() != nil {
-			authenticated = true
-            let customTabBar = KurozoraTabBarController()
-            self.window?.rootViewController = customTabBar
-        } else {
-            revealingSplashView.heartAttack = true
-            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-            self.window?.rootViewController = vc
-        }
-        
-        window?.addSubview(revealingSplashView)
-		revealingSplashView.playHeartBeatAnimation()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+		let storyboard: UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
+		let vc = storyboard.instantiateInitialViewController()
+		self.window?.rootViewController = vc
+//        }
+//
+//        window?.addSubview(revealingSplashView)
+//		revealingSplashView.playHeartBeatAnimation()
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
 
         return true
     }
@@ -119,9 +124,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-		KNetworkManager.isReachable { _ in
-			self.authenticated = Kurozora.validateSession(window: self.window)
-		}
+//		KNetworkManager.isReachable { _ in
+//			self.authenticated = Kurozora.validateSession(window: self.window)
+//		}
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

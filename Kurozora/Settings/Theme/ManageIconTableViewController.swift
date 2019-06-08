@@ -115,7 +115,7 @@ extension ManageIconTableViewController {
 			KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
 		}
 
-		GlobalVariables().KUserDefaults?.set(iconTableViewCell.alternativeIconsElement?.image, forKey: "AppIcon")
+		UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
 		NotificationCenter.default.post(name: updateAppIconNotification, object: nil)
 	}
 

@@ -30,7 +30,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		GlobalVariables().KUserDefaults?.set(sectionIndex, forKey: "LibraryPage")
+		UserSettings.set(sectionIndex, forKey: .libraryPage)
 		delegate?.updateLayoutChangeButton(current: libraryLayout)
 	}
     

@@ -185,8 +185,7 @@ extension ForumsViewController: PageboyViewControllerDataSource {
 	}
 
 	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		guard let pageIndex = GlobalVariables().KUserDefaults?.integer(forKey: "ForumsPage") else { return nil }
-		return .at(index: pageIndex)
+		return .at(index: UserSettings.forumsPage)
 	}
 }
 

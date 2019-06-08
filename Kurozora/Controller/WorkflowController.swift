@@ -94,9 +94,9 @@ public class WorkflowController {
 
 		class func notificationsHandler(_ sessionID: Int, _ device: String, _ ip: String, _ lastValidated: String) {
 		// If notifications enabled
-		if UserSettings.notificationsAllowed() {
+		if UserSettings.notificationsAllowed {
 
-			let alertType = UserSettings.alertType()
+			let alertType = UserSettings.alertType
 
 			if alertType == 0 || alertType == 1 {
 				var banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
@@ -105,7 +105,7 @@ public class WorkflowController {
 					banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
 				}
 				// Notification haptic feedback and vibration
-				if UserSettings.notificationsVibration() {
+				if UserSettings.notificationsVibration {
 					banner.haptic = .heavy
 				} else {
 					banner.haptic = .none
@@ -117,7 +117,7 @@ public class WorkflowController {
 //					banner.sound = .none
 //				}
 				// Notification persistency
-				if UserSettings.notificationsPersistent() == 0 {
+				if UserSettings.notificationsPersistent == 0 {
 					banner.autoDismiss = true
 				} else {
 					banner.autoDismiss = false
@@ -132,7 +132,7 @@ public class WorkflowController {
 			} else if alertType == 2 {
 				let statusBanner = StatusBarNotificationBanner(title: "New login detected from " + device, style: .info)
 				// Notification haptic feedback and vibration
-				if UserSettings.notificationsVibration() {
+				if UserSettings.notificationsVibration {
 					statusBanner.haptic = .heavy
 				} else {
 					statusBanner.haptic = .none
@@ -144,7 +144,7 @@ public class WorkflowController {
 //					statusBanner.sound = .none
 //				}
 				// Notification persistency
-				if UserSettings.notificationsPersistent() == 0 {
+				if UserSettings.notificationsPersistent == 0 {
 					statusBanner.autoDismiss = true
 				} else {
 					statusBanner.autoDismiss = false

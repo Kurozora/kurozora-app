@@ -61,7 +61,7 @@ class LibraryViewController: TabmanViewController {
 			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
 
 			// Get the user's preferred library layout
-			if let LibraryLayouts = GlobalVariables().KUserDefaults?.dictionary(forKey: "LibraryLayouts") as? [String:String] {
+			if let LibraryLayouts = UserSettings.libraryLayouts as? [String:String] {
 				guard let currentLayout = LibraryLayouts[sectionTitle] else { return }
 				guard let libraryLayout = LibraryListStyle(rawValue: "\(currentLayout)Cell") else { return }
 
@@ -105,11 +105,11 @@ class LibraryViewController: TabmanViewController {
 			changeLayoutButton.image = #imageLiteral(resourceName: "detailed_view_icon")
 		}
 
-		// Add to KUserDefaults
-		if let libraryLayouts = GlobalVariables().KUserDefaults?.dictionary(forKey: "LibraryLayouts") as? [String:String] {
+		// Add to UserSettings
+		if let libraryLayouts = UserSettings.libraryLayouts as? [String:String] {
 			var newLibraryLayouts = libraryLayouts
 			newLibraryLayouts[sectionTitle] = changeLayoutButton.title
-			GlobalVariables().KUserDefaults?.set(newLibraryLayouts, forKey: "LibraryLayouts")
+			UserSettings.set(newLibraryLayouts, forKey: .libraryLayouts)
 		}
 
 		// Update library list
@@ -160,8 +160,7 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 	}
 
 	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		guard let pageIndex = GlobalVariables().KUserDefaults?.integer(forKey: "LibraryPage") else { return nil }
-		return .at(index: pageIndex)
+		return .at(index: UserSettings.libraryPage)
 	}
 }
 

@@ -10,7 +10,6 @@ import UIKit
 import Kingfisher
 
 class NotificationsSettingsViewController: UITableViewController {
-	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {
 		didSet {
 			allowNotificationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
@@ -38,16 +37,13 @@ class NotificationsSettingsViewController: UITableViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		
-		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed()
-		soundsSwitch.isOn = UserSettings.notificationsSound()
-		vibrationsSwitch.isOn = UserSettings.notificationsVibration()
-		badgeSwitch.isOn = UserSettings.notificationsBadge()
+		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed
+		soundsSwitch.isOn = UserSettings.notificationsSound
+		vibrationsSwitch.isOn = UserSettings.notificationsVibration
+		badgeSwitch.isOn = UserSettings.notificationsBadge
 
 		tableView.delegate = self
 		tableView.dataSource = self
-
-		collectionView.dataSource = self
-		collectionView.delegate = self
 
 		if !allowNotificationsSwitch.isOn {
 			numberOfSections = 1
@@ -91,6 +87,15 @@ extension NotificationsSettingsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return numberOfSections
 	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let notificationSettingsCell = super.tableView(tableView, cellForRowAt: indexPath) as? NotificationSettingsCell {
+			notificationSettingsCell.updateAlertType(with: UserSettings.alertType)
+			return notificationSettingsCell
+		}
+
+		return super.tableView(tableView, cellForRowAt: indexPath)
+	}
 }
 
 // MARK: - UITableViewDelegate
@@ -103,89 +108,26 @@ extension NotificationsSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		if settingsCell.selectedView != nil {
-			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
+		if settingsCell?.selectedView != nil {
+			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			settingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell?.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		if settingsCell.selectedView != nil {
-			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
+		if settingsCell?.selectedView != nil {
+			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			settingsCell.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell?.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
-	}
-}
-
-// MARK: - UICollectionViewDataSource
-extension NotificationsSettingsViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 3
-	}
-
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotificationCell", for: indexPath) as! SettingsNotificationCell
-		let alertsType = NotificationAlertStyle(rawValue: indexPath.row)!
-		let selected = UserSettings.alertType()
-
-		switch alertsType {
-		case .basic:
-			if UIDevice.isPad() {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_basic_ipad")
-			} else {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_basic_iphone")
-			}
-			notificationCell.titleLabel.text = "Basic"
-		case .icon:
-			if UIDevice.isPad() {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_icon_ipad")
-			} else {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_icon_iphone")
-			}
-			notificationCell.titleLabel.text = "Icon"
-		case .status:
-			if UIDevice.isPad() {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_statusbar_ipad")
-			} else {
-				notificationCell.previewImageView.image = #imageLiteral(resourceName: "notification_statusbar_iphone")
-			}
-			notificationCell.titleLabel.text = "Status Bar"
-		}
-
-		if alertsType.rawValue == selected {
-			notificationCell.isSelected = true
-		}
-
-		return notificationCell
-	}
-
-	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		UserSettings.set(indexPath.row, forKey: .alertType)
-		collectionView.reloadData()
-	}
-}
-
-// MARK: - UICollectionViewDelegate
-extension NotificationsSettingsViewController: UICollectionViewDelegate {
-}
-
-// MARK: - UICollectionViewDelegate
-extension NotificationsSettingsViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return 5.0
-	}
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 5.0
 	}
 }

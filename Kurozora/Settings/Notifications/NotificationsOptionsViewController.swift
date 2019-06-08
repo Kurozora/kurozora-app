@@ -43,7 +43,7 @@ extension NotificationsOptionsViewController {
 		switch segueType {
 		case .notificationsGrouping:
 			let grouping = NotificationGroupStyle(rawValue: indexPath.item)!
-			let selected = UserSettings.notificationsGrouping()
+			let selected = UserSettings.notificationsGrouping
 
 			switch grouping {
 			case .automatic:
@@ -59,7 +59,7 @@ extension NotificationsOptionsViewController {
 			}
 		case .bannerStyle:
 			let bannerStyle = NotificationBannerStyle(rawValue: indexPath.item)!
-			let selected = UserSettings.notificationsPersistent()
+			let selected = UserSettings.notificationsPersistent
 
 			switch bannerStyle {
 			case .temporary:

@@ -34,13 +34,13 @@ enum KThemeStyle: Int {
 		switch style {
 			case .default:
 				ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
-				GlobalVariables().KUserDefaults?.set("Default", forKey: "currentTheme")
+				UserSettings.set("Default", forKey: .currentTheme)
 			case .day:
 				ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
-				GlobalVariables().KUserDefaults?.set("Day", forKey: "currentTheme")
+				UserSettings.set("Day", forKey: .currentTheme)
 			case .night:
 				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
-				GlobalVariables().KUserDefaults?.set("Night", forKey: "currentTheme")
+				UserSettings.set("Night", forKey: .currentTheme)
 			case .other: break
 		}
 	}
@@ -50,7 +50,7 @@ enum KThemeStyle: Int {
 		current = .other
 
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
-		GlobalVariables().KUserDefaults?.set("\(themeID)", forKey: "currentTheme")
+		UserSettings.set("\(themeID)", forKey: .currentTheme)
 	}
 
 	static func switchToNext(theme themeID: Int) {

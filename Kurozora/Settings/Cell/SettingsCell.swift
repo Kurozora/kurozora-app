@@ -81,14 +81,11 @@ class SettingsCell: UITableViewCell {
 
 	// MARK: - Functions
 	@objc func updateAppIcon() {
-		if let imageString = GlobalVariables().KUserDefaults?.string(forKey: "AppIcon"), imageString != "" {
-			print(imageString)
-			self.appIconImageView?.image = UIImage(named: imageString)
-		}
+		self.appIconImageView?.image = UIImage(named: UserSettings.appIcon)
 	}
 
 	@objc func updateNotificationValueLabels() {
-		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping())?.stringValue()
-		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent())?.stringValue()
+		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue()
+		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue()
 	}
 }

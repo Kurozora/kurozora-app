@@ -330,6 +330,8 @@
 		66E1B86E20911F7500D7AC1A /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B86D20911F7500D7AC1A /* BrowseViewController.swift */; };
 		66E1B87020911F8B00D7AC1A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B86F20911F8B00D7AC1A /* FilterViewController.swift */; };
 		66EC939A2274B90100D584F7 /* ShowSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowSections.swift */; };
+		66ED9D8722ABD60400C7A45C /* notificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* notificationSettings.storyboard */; };
+		66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */; };
 		66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF148E21B728B60080FF14 /* ThreadReply.swift */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
 		66F51CD6226A65CC00207407 /* ActionExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F51CD5226A65CC00207407 /* ActionExploreCollectionViewCell.swift */; };
@@ -693,6 +695,8 @@
 		66E1B86F20911F8B00D7AC1A /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		66E1B87120911F9600D7AC1A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowSections.swift; path = ../ShowSections.swift; sourceTree = "<group>"; };
+		66ED9D8622ABD60400C7A45C /* notificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = notificationSettings.storyboard; sourceTree = "<group>"; };
+		66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsCell.swift; sourceTree = "<group>"; };
 		66EF148E21B728B60080FF14 /* ThreadReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReply.swift; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
 		66F51CD5226A65CC00207407 /* ActionExploreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActionExploreCollectionViewCell.swift; path = UICollectionView/ActionExploreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -877,6 +881,7 @@
 		6614409021DA40AB00E54915 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				66ED9D8622ABD60400C7A45C /* notificationSettings.storyboard */,
 				66AEABEE22993E9B00949FD8 /* NotificationsOptionsViewController.swift */,
 				66AF50DC21D9B67900FC622E /* NotificationsSettingsViewController.swift */,
 				664133DF21DA64AB00CE823A /* Cell */,
@@ -1063,6 +1068,7 @@
 		664133DF21DA64AB00CE823A /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */,
 				664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */,
 				664133E021DA64C800CE823A /* SettingsNotificationCell.swift */,
 			);
@@ -1890,6 +1896,7 @@
 				6641D6EE222EA3DF0067BD3A /* App-Icon-iPhone-Orange@2x.png in Resources */,
 				66D75CE721E37D2C00C20B12 /* CollapsedIconTableCell.xib in Resources */,
 				668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */,
+				66ED9D8722ABD60400C7A45C /* notificationSettings.storyboard in Resources */,
 				664801A0222D17800063143A /* App-Icon-iPhone-Night@2x.png in Resources */,
 				66A254D022AA9FD3002A0E34 /* App-Icon-iPad-Red.png in Resources */,
 				66B216AC21C1681F006E167D /* editor.storyboard in Resources */,
@@ -2237,6 +2244,7 @@
 				66058DBE212E97CA0084B79E /* ShowTitleCell.swift in Sources */,
 				6611F195213313AA009BF736 /* ShowTabBarController.swift in Sources */,
 				66112341208E28C200E6033A /* InAppTransactionController.swift in Sources */,
+				66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */,
 				667943632273933400E2D0D0 /* SynopsisCell.swift in Sources */,
 				66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,

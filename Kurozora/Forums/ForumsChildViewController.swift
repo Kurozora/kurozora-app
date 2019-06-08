@@ -33,7 +33,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		GlobalVariables().KUserDefaults?.set(sectionIndex, forKey: "ForumsPage")
+		UserSettings.set(sectionIndex, forKey: .forumsPage)
 	}
     
     override func viewDidLoad() {
