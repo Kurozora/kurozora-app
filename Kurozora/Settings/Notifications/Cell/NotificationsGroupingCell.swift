@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsGroupingCell: UICollectionViewCell {
+class NotificationsGroupingCell: UITableViewCell {
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			self.titleLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -34,18 +34,6 @@ class NotificationsGroupingCell: UICollectionViewCell {
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 			} else {
 				self.selectedImageView.image = nil
-			}
-		}
-	}
-
-	override var isHighlighted: Bool {
-		didSet {
-			if isHighlighted {
-				self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-				self.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			} else {
-				self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-				self.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 			}
 		}
 	}

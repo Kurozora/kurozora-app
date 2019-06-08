@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsOptionsViewController: UICollectionViewController {
+class NotificationsOptionsViewController: UITableViewController {
 	var segueType: NotificationSegueIdentifier!
 	public var segueIdentifier: String!
 
@@ -21,8 +21,11 @@ class NotificationsOptionsViewController: UICollectionViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
+}
 
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - UITableViewDataSource
+extension NotificationsOptionsViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let segueType = segueType else { return 0 }
 
 		switch segueType {
@@ -33,8 +36,8 @@ class NotificationsOptionsViewController: UICollectionViewController {
 		}
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let notificationsGroupingCell = collectionView.dequeueReusableCell(withReuseIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
 		guard let segueType = segueType else { return notificationsGroupingCell }
 
 		switch segueType {
@@ -72,8 +75,11 @@ class NotificationsOptionsViewController: UICollectionViewController {
 
 		return notificationsGroupingCell
 	}
+}
 
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+// MARK: - UITableViewDelegate
+extension NotificationsOptionsViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let segueType = segueType else { return }
 
 		switch segueType {
@@ -84,6 +90,20 @@ class NotificationsOptionsViewController: UICollectionViewController {
 		}
 
 		NotificationCenter.default.post(name: updateNotificationSettingsValueLabelsNotification, object: nil)
-		collectionView.reloadData()
+		tableView.reloadData()
+	}
+
+	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
+
+		notificationsGroupingCell.selectedView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		notificationsGroupingCell.titleLabel.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+	}
+
+	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
+
+		notificationsGroupingCell.selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		notificationsGroupingCell.titleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 	}
 }
