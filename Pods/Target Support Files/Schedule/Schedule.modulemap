@@ -1,6 +1,0 @@
-framework module Schedule {
-  umbrella header "Schedule-umbrella.h"
-
-  export *
-  module * { export * }
-}

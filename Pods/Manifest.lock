@@ -42,7 +42,6 @@ PODS:
     - Down
     - iosMath
     - SnapKit
-  - Schedule (2.0.2)
   - SCLAlertView (0.8.1)
   - SnapKit (5.0.0)
   - Solar (2.1.0)
@@ -102,7 +101,6 @@ DEPENDENCIES:
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichEditorView
   - RichTextView
-  - Schedule
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - Solar
   - SwifterSwift
@@ -141,7 +139,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - RichEditorView
     - RichTextView
-    - Schedule
     - SnapKit
     - Solar
     - Starscream
@@ -198,7 +195,6 @@ SPEC CHECKSUMS:
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   RichTextView: 7e7d874a6222d173f0a39a558ed3ccb87331a9f6
-  Schedule: 937b2b998a1502e943e37d1b67f38c9e53429c7e
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
@@ -211,6 +207,6 @@ SPEC CHECKSUMS:
   TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 3c3084be454f948eedc72f4a28d04b75b7cb4abb
+PODFILE CHECKSUM: 2ef064af51544282f8ac6465e578775a38d5e2e1
 
 COCOAPODS: 1.7.1
