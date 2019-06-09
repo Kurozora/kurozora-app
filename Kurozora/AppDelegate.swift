@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		if UserSettings.automaticNightTheme {
 			KThemeStyle.checkSunSchedule()
+			_ = KThemeStyle.automaticNightTimeSchedule
 		} else if let themeIDString = UserSettings.currentTheme, themeIDString != "" {
 			// If themeID is an integer
 			if let themeID = Int(themeIDString) {

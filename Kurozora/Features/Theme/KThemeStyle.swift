@@ -27,6 +27,9 @@ enum KThemeStyle: Int {
 	static var before: KThemeStyle = .default
 	static let tron = TRON(baseURL: "", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 	static let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
+	static let automaticNightTimeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
+		KThemeStyle.checkSunSchedule()
+	}
 
 	/// Return a string value for a given KThemeStyle
 	func stringValue() -> String {
