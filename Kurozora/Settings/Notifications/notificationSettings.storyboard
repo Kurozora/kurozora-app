@@ -600,7 +600,7 @@
                         <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationsGroupingCell" id="c4x-NC-ZRm" customClass="NotificationsGroupingCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationsGroupingCell" id="c4x-NC-ZRm" customClass="NotificationsGroupingCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c4x-NC-ZRm" id="emc-CR-VDS">
@@ -644,9 +644,9 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="cellTitle" destination="n2F-8z-qcc" id="khb-ei-AJS"/>
                                     <outlet property="selectedImageView" destination="uQp-5F-VbL" id="jmB-A8-9c9"/>
                                     <outlet property="selectedView" destination="gb2-yE-gYA" id="3g1-Rg-Qh7"/>
-                                    <outlet property="titleLabel" destination="n2F-8z-qcc" id="b4e-aK-HTx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

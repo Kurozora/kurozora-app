@@ -17,6 +17,7 @@ import TRON
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 let updateAppIconNotification = Notification.Name("updateAppIconNotification")
 let updateNotificationSettingsValueLabelsNotification = Notification.Name("updateNotificationSettingsValueLabelsNotification")
+let updateAuthenticationRequireValueLabelNotification = Notification.Name("updateAuthenticationRequireValueLabelNotification")
 let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue()) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
@@ -97,11 +98,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
 //            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
 //            self.window?.rootViewController = vc
-
+//        }
 		let storyboard: UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
 		let vc = storyboard.instantiateInitialViewController()
 		self.window?.rootViewController = vc
-//        }
+
+		// Check if user should authenticate
+		Kurozora.shared.userHasToAuthenticate()
 //
 //        window?.addSubview(revealingSplashView)
 //		revealingSplashView.playHeartBeatAnimation()
@@ -123,16 +126,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+		Kurozora.shared.userShouldAuthenticate()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+
 //		KNetworkManager.isReachable { _ in
 //			self.authenticated = Kurozora.validateSession(window: self.window)
-			if UserSettings.automaticNightTheme {
-				KThemeStyle.checkSunSchedule()
+			if Date().uptime() > Kurozora.shared.authenticationInterval {
+				Kurozora.shared.prepareForAuthentication(true)
 			}
 //		}
+
+		if UserSettings.automaticNightTheme {
+			KThemeStyle.checkSunSchedule()
+		}
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -144,7 +153,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		// TODO: - Check if authetication handler is working as intended
 		if authenticated {
+			if Date().uptime() > Kurozora.shared.authenticationInterval {
+				Kurozora.shared.prepareForAuthentication(true)
+			}
 			Kurozora.schemeHandler(app, open: url, options: options)
 		}
 
@@ -152,6 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+		// TODO: - Add authentication handler
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
 			let storyboard = UIStoryboard(name: "details", bundle: nil)
@@ -159,6 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				showTabBarController.showID = showID
 
 				UIApplication.topViewController()?.present(showTabBarController, animated: true)
+				
 			}
 			return true
 		}

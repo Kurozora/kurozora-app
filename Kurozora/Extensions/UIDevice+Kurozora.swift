@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 public extension UIDevice {
 	/// Get current device model name in a readable form
@@ -89,4 +90,28 @@ public extension UIDevice {
 
 		return platform == "iPhone X" || platform == "iPhone XS" ||	platform == "iPhone XS Max" || platform == "iPhone XR" || platform == "Simulator"
 	}()
+
+	/// Check what type of biometric the current device supports
+	static var supportedBiomtetric: BiometricType {
+		let context = LAContext.init()
+		var error: NSError?
+
+		if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+			if #available(iOS 11.0, *) {
+				switch context.biometryType {
+				case .faceID:
+					return .faceID
+				case .touchID:
+					return .touchID
+				default:
+					return .none
+				}
+			} else {
+				// Fallback on earlier versions
+				return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) ? .touchID : .none
+			}
+		} else {
+			return .none
+		}
+	}
 }

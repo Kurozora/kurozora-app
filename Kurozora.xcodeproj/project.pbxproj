@@ -67,6 +67,15 @@
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
 		663C65D9226AA60100825F89 /* EpisodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesTableViewController.swift */; };
+		6640E18922AD633500D0F575 /* authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E18822AD633500D0F575 /* authentication.storyboard */; };
+		6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */; };
+		6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18C22ADD0A500D0F575 /* BiometricType.swift */; };
+		6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */; };
+		6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */; };
+		6640E19722ADD30100D0F575 /* authenticationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */; };
+		6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */; };
+		6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */; };
+		6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */; };
 		664133E121DA64C800CE823A /* SettingsNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E021DA64C800CE823A /* SettingsNotificationCell.swift */; };
 		664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */; };
 		664133E821DB828E00CE823A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
@@ -430,6 +439,15 @@
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		663C65D8226AA60100825F89 /* EpisodesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewController.swift; sourceTree = "<group>"; };
+		6640E18822AD633500D0F575 /* authentication.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = authentication.storyboard; sourceTree = "<group>"; };
+		6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		6640E18C22ADD0A500D0F575 /* BiometricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricType.swift; sourceTree = "<group>"; };
+		6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSettingsCell.swift; sourceTree = "<group>"; };
+		6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTableViewController.swift; sourceTree = "<group>"; };
+		6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = authenticationSettings.storyboard; sourceTree = "<group>"; };
+		6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsCell.swift; sourceTree = "<group>"; };
+		6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsViewController.swift; sourceTree = "<group>"; };
+		6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RequireAuthentication.swift; path = Models/RequireAuthentication.swift; sourceTree = "<group>"; };
 		664133E021DA64C800CE823A /* SettingsNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationCell.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -1055,6 +1073,45 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		6640E18722AD631F00D0F575 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				6640E18822AD633500D0F575 /* authentication.storyboard */,
+				6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */,
+				6640E19022ADD1A500D0F575 /* Models */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		6640E19022ADD1A500D0F575 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6640E18C22ADD0A500D0F575 /* BiometricType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6640E19122ADD20700D0F575 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */,
+				6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */,
+				6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */,
+				6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */,
+				6640E19222ADD24400D0F575 /* Cells */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		6640E19222ADD24400D0F575 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */,
+				6640E18E22ADD19000D0F575 /* AuthenticationSettingsCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		664133DE21DA42F900CE823A /* Theme */ = {
 			isa = PBXGroup;
 			children = (
@@ -1282,6 +1339,7 @@
 				6614409121DA40F300E54915 /* Admin */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				664133DE21DA42F900CE823A /* Theme */,
+				6640E19122ADD20700D0F575 /* Authentication */,
 				6614409321DA413B00E54915 /* About */,
 			);
 			path = Settings;
@@ -1466,6 +1524,7 @@
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				6640E18722AD631F00D0F575 /* Authentication */,
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				66B4F1D3223BC906007C5048 /* Networking */,
 				66B4F1D2223BC901007C5048 /* Search */,
@@ -1896,6 +1955,7 @@
 				66A254D022AA9FD3002A0E34 /* App-Icon-iPad-Red.png in Resources */,
 				66B216AC21C1681F006E167D /* editor.storyboard in Resources */,
 				664801CD222DE76A0063143A /* App-Icon-iPad-Pro-Yellow@2x.png in Resources */,
+				6640E19722ADD30100D0F575 /* authenticationSettings.storyboard in Resources */,
 				6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */,
 				66480195222D16BD0063143A /* App-Icon-iPad-Day@2x.png in Resources */,
 				66D6237F20A1CC1D00304914 /* library.storyboard in Resources */,
@@ -1966,6 +2026,7 @@
 				66A254DA22AAE55B002A0E34 /* app-icons.json in Resources */,
 				66A8AF23209991310011A342 /* AnimeCell.xib in Resources */,
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
+				6640E18922AD633500D0F575 /* authentication.storyboard in Resources */,
 				664801DA222DE76A0063143A /* App-Icon-iPhone-Green@3x.png in Resources */,
 				6641D6EC222EA3DF0067BD3A /* App-Icon-iPhone-Saphire@2x.png in Resources */,
 				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
@@ -2204,6 +2265,7 @@
 				661F9F822087282500CF4153 /* LoginViewController.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsTableViewController.swift in Sources */,
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
+				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				6675263822282B06007C1617 /* Themes.swift in Sources */,
 				662A5FE9223913AB00F3B61D /* TransitionSubmitButton.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
@@ -2215,6 +2277,7 @@
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
 				6674A0BF20A45E4700AAB527 /* AnimeSynopsisCell.swift in Sources */,
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
+				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */,
 				66B4F1E0223D3853007C5048 /* SearchList.swift in Sources */,
 				66752636222820E0007C1617 /* TestThemeCell.swift in Sources */,
@@ -2230,6 +2293,7 @@
 				66D6237020A189D200304914 /* ChartViewController.swift in Sources */,
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66AEABED2298AC6A00949FD8 /* NotificationOptions.swift in Sources */,
+				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				667C0F13224CC50200A8CB56 /* ExploreCellStyle.swift in Sources */,
 				66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */,
@@ -2274,6 +2338,7 @@
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
 				66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */,
 				66DEB4B221D419420093725F /* SearchController.swift in Sources */,
+				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,
 				660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */,
 				66058DBA212E97670084B79E /* ShowReviewCell.swift in Sources */,
@@ -2284,6 +2349,7 @@
 				66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
+				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
 				66C863FD216CDBB70054EE16 /* UserNotification.swift in Sources */,
 				6619EE70216F86C500655B99 /* ForumSections.swift in Sources */,
 				66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */,
@@ -2298,6 +2364,7 @@
 				66D6237D20A1CB9C00304914 /* LibraryCell.swift in Sources */,
 				6611233F208E287400E6033A /* InAppPurchaseViewController.swift in Sources */,
 				66C2C5262107ACA10020E21F /* KurozoraTabBarController.swift in Sources */,
+				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsChildViewController.swift in Sources */,
 				662A5FE6223913AB00F3B61D /* TimerEx.swift in Sources */,
@@ -2350,6 +2417,7 @@
 				66F51CD6226A65CC00207407 /* ActionExploreCollectionViewCell.swift in Sources */,
 				661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */,
 				66BDEC7421C3F0A100D5487B /* KCommentEditorView.swift in Sources */,
+				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */,
 				6648ED6E22A4633400E1BE18 /* GroupingType.swift in Sources */,
 				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,

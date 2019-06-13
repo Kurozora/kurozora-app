@@ -30,4 +30,8 @@ extension UIApplication {
 		}
 		return base
 	}
+
+	func topViewController() -> UIViewController? {
+		return UIApplication.topViewController()
+	}
 }

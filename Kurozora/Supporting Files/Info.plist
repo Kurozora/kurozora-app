@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8752</string>
+	<string>8797</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -381,6 +381,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your phone’s camera.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) uses Face ID or your device's passcode so only you can access the app.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

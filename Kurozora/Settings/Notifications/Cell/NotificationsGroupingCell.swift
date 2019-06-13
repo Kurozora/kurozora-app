@@ -8,22 +8,10 @@
 
 import UIKit
 
-class NotificationsGroupingCell: UITableViewCell {
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-			self.titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+class NotificationsGroupingCell: SettingsCell {
 	@IBOutlet weak var selectedImageView: UIImageView! {
 		didSet {
 			self.selectedImageView.image = nil
-		}
-	}
-	@IBOutlet weak var selectedView: UIView! {
-		didSet {
-			self.selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			self.selectedView.clipsToBounds = true
-			self.selectedView.cornerRadius = 10
 		}
 	}
 

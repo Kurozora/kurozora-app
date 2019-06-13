@@ -11,6 +11,7 @@ import SwiftTheme
 
 enum KThemePicker: ThemeColorPicker {
 	// Global
+	case statusBarStyle = "UIStatusBarStyle"
 	case backgroundColor = "Global.backgroundColor"
 	case tintedBackgroundColor = "Global.tintedBackgroundColor"
 	case barTintColor = "Global.barTintColor"
@@ -40,6 +41,8 @@ enum KThemePicker: ThemeColorPicker {
 	func stringValue() -> String {
 		switch self {
 		// Global
+		case .statusBarStyle:
+			return "UIStatusBarStyle"
 		case .backgroundColor:
 			return "Global.backgroundColor"
 		case .tintedBackgroundColor:
@@ -88,6 +91,16 @@ enum KThemePicker: ThemeColorPicker {
 	}
 
 	func colorValue() -> UIColor {
-		return ThemeManager.color(for: self.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		switch self {
+		case .statusBarStyle:
+			switch UIStatusBarStyle.fromString(self.stringValue()) {
+			case .lightContent:
+				return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+			default:
+				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+			}
+		default:
+			return ThemeManager.color(for: self.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		}
 	}
 }

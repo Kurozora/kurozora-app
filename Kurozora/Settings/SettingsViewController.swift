@@ -258,25 +258,37 @@ extension SettingsViewController {
 // MARK: - UITableViewDelegate
 extension SettingsViewController {
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
+			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			authenticationSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-		settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			authenticationSettingsCell.authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		} else if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
+			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			authenticationSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			authenticationSettingsCell.authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		} else if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {

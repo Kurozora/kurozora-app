@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5pL-t1-VJe">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Authentication View Controller-->
+        <scene sceneID="Rro-IK-pHc">
+            <objects>
+                <viewController id="5pL-t1-VJe" customClass="AuthenticationViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fJg-Qu-t5Z">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZQ-9T-UrF">
+                                <rect key="frame" x="20" y="401.5" width="374" height="103"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGH-9M-cuk">
+                                        <rect key="frame" x="101" y="0.0" width="172" height="41"/>
+                                        <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                        <state key="normal" title="Unlock Kurozora">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="unlockButtonPressed:" destination="5pL-t1-VJe" eventType="touchUpInside" id="Xo5-lp-LQp"/>
+                                        </connections>
+                                    </button>
+                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use the button above to unlock Kurozora or if you're snooping around someone else's device then press the home button to exit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfF-KK-GqB">
+                                        <rect key="frame" x="8" y="49" width="358" height="54"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="WfF-KK-GqB" secondAttribute="bottom" id="1P5-Ld-B9a"/>
+                                    <constraint firstItem="WfF-KK-GqB" firstAttribute="top" secondItem="FGH-9M-cuk" secondAttribute="bottom" constant="8" symbolic="YES" id="6xL-wZ-CXV"/>
+                                    <constraint firstItem="FGH-9M-cuk" firstAttribute="centerX" secondItem="wZQ-9T-UrF" secondAttribute="centerX" id="Xfd-T1-N1L"/>
+                                    <constraint firstItem="WfF-KK-GqB" firstAttribute="leading" secondItem="wZQ-9T-UrF" secondAttribute="leadingMargin" id="eO0-IT-ebl"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="WfF-KK-GqB" secondAttribute="trailing" id="oTG-Jb-hrL"/>
+                                    <constraint firstItem="FGH-9M-cuk" firstAttribute="top" secondItem="wZQ-9T-UrF" secondAttribute="top" id="oTM-8a-eSF"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="0pE-C4-Ed3">
+                                <rect key="frame" x="157" y="144" width="100" height="100"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="2Pu-dv-CC6"/>
+                                    <constraint firstAttribute="height" constant="100" id="3pv-kV-TOf"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="0pE-C4-Ed3" secondAttribute="trailing" id="0qr-JJ-ceb"/>
+                            <constraint firstItem="0pE-C4-Ed3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fJg-Qu-t5Z" secondAttribute="leadingMargin" id="9PH-UD-RNO"/>
+                            <constraint firstItem="0pE-C4-Ed3" firstAttribute="top" secondItem="fJg-Qu-t5Z" secondAttribute="topMargin" constant="100" id="JEZ-QS-K6d"/>
+                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fJg-Qu-t5Z" secondAttribute="leadingMargin" id="VCq-Bz-ePN"/>
+                            <constraint firstItem="0pE-C4-Ed3" firstAttribute="centerX" secondItem="sff-Hj-Ntx" secondAttribute="centerX" id="l60-t8-ZEO"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="wZQ-9T-UrF" secondAttribute="trailing" id="nch-l2-V0M"/>
+                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerY" secondItem="sff-Hj-Ntx" secondAttribute="centerY" id="wAQ-Wg-d35"/>
+                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerX" secondItem="sff-Hj-Ntx" secondAttribute="centerX" id="yXW-Ss-IZl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sff-Hj-Ntx"/>
+                    </view>
+                    <connections>
+                        <outlet property="lockImageView" destination="0pE-C4-Ed3" id="gjL-s0-L05"/>
+                        <outlet property="subTextLabel" destination="WfF-KK-GqB" id="KE2-ob-q3F"/>
+                        <outlet property="unlockButton" destination="FGH-9M-cuk" id="ucm-wv-OAN"/>
+                        <outlet property="unlockDescriptionView" destination="wZQ-9T-UrF" id="x46-Bg-n3a"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="noT-jJ-00E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="394" y="-306"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="locked" width="28" height="28"/>
+    </resources>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</document>

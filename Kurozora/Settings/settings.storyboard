@@ -405,11 +405,11 @@
                                             <segue destination="4UV-W6-1yL" kind="showDetail" id="djV-vT-6Uk"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="lgZ-0g-Glx" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="438" width="414" height="60"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="lgZ-0g-Glx" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="438" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lgZ-0g-Glx" id="Zef-GX-A8C">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="glU-xp-6ms">
@@ -463,7 +463,7 @@
                                                 <constraint firstItem="glU-xp-6ms" firstAttribute="top" secondItem="Zef-GX-A8C" secondAttribute="top" constant="5" id="7hl-BI-axv"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="glU-xp-6ms" secondAttribute="leading" id="dYd-l1-Kt7"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="glU-xp-6ms" secondAttribute="trailing" id="fYB-jN-mjh"/>
-                                                <constraint firstAttribute="bottom" secondItem="glU-xp-6ms" secondAttribute="bottom" constant="5" id="i2d-id-Ws1"/>
+                                                <constraint firstAttribute="bottom" secondItem="glU-xp-6ms" secondAttribute="bottom" id="i2d-id-Ws1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -473,15 +473,90 @@
                                             <outlet property="selectedView" destination="glU-xp-6ms" id="Pju-0x-Sdm"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="tCb-iz-6eH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="498" width="414" height="50"/>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="sEn-DY-Qgr" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="493" width="414" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sEn-DY-Qgr" id="4Yy-G2-S8D">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98N-MO-Z9C">
+                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
+                                                    <subviews>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weu-bc-LFl">
+                                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_id_icon" translatesAutoresizingMaskIntoConstraints="NO" id="tO3-0T-2hm">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="tO3-0T-2hm" secondAttribute="bottom" id="6Vs-k1-j04"/>
+                                                                <constraint firstAttribute="height" constant="30" id="Afh-Dx-yqS"/>
+                                                                <constraint firstAttribute="width" constant="30" id="DIg-C5-QN1"/>
+                                                                <constraint firstItem="tO3-0T-2hm" firstAttribute="top" secondItem="weu-bc-LFl" secondAttribute="top" id="hKO-jT-x0j"/>
+                                                                <constraint firstItem="tO3-0T-2hm" firstAttribute="leading" secondItem="weu-bc-LFl" secondAttribute="leading" id="sOM-24-E5V"/>
+                                                                <constraint firstAttribute="trailing" secondItem="tO3-0T-2hm" secondAttribute="trailing" id="zlF-MQ-mZF"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <integer key="value" value="6"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Biometry &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vot-mU-lgj">
+                                                            <rect key="frame" x="46" y="14.5" width="164" height="21"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="XKy-Ps-7eq">
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="1ss-Yy-uMW"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="weu-bc-LFl" firstAttribute="leading" secondItem="98N-MO-Z9C" secondAttribute="leadingMargin" id="3l6-VB-3vU"/>
+                                                        <constraint firstItem="weu-bc-LFl" firstAttribute="centerY" secondItem="98N-MO-Z9C" secondAttribute="centerY" id="IjG-Ww-AWH"/>
+                                                        <constraint firstItem="vot-mU-lgj" firstAttribute="leading" secondItem="weu-bc-LFl" secondAttribute="trailing" constant="8" symbolic="YES" id="YoV-RG-Lnl"/>
+                                                        <constraint firstItem="vot-mU-lgj" firstAttribute="centerY" secondItem="weu-bc-LFl" secondAttribute="centerY" id="rj2-DH-LiB"/>
+                                                        <constraint firstItem="weu-bc-LFl" firstAttribute="top" secondItem="98N-MO-Z9C" secondAttribute="top" constant="10" id="utI-je-fNb"/>
+                                                        <constraint firstAttribute="bottom" secondItem="weu-bc-LFl" secondAttribute="bottom" constant="10" id="wh5-ni-MVn"/>
+                                                        <constraint firstItem="XKy-Ps-7eq" firstAttribute="centerY" secondItem="98N-MO-Z9C" secondAttribute="centerY" id="xzT-ua-7Sf"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="XKy-Ps-7eq" secondAttribute="trailing" id="zwJ-HY-Kb0"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="98N-MO-Z9C" firstAttribute="top" secondItem="4Yy-G2-S8D" secondAttribute="top" constant="5" id="3SR-er-sMn"/>
+                                                <constraint firstAttribute="bottom" secondItem="98N-MO-Z9C" secondAttribute="bottom" id="5al-0h-O3B"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="98N-MO-Z9C" secondAttribute="leading" id="h40-U2-uaQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="98N-MO-Z9C" secondAttribute="trailing" id="xRB-9X-tS6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="authenticationImageView" destination="tO3-0T-2hm" id="Wcs-ja-S6E"/>
+                                            <outlet property="authenticationTitleLabel" destination="vot-mU-lgj" id="uGb-je-hSp"/>
+                                            <outlet property="chevronImageView" destination="XKy-Ps-7eq" id="Hp7-F4-QH4"/>
+                                            <outlet property="selectedView" destination="98N-MO-Z9C" id="eMZ-R8-6W3"/>
+                                            <segue destination="Q1h-nG-Q6g" kind="showDetail" id="EwG-di-U5z"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="tCb-iz-6eH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="548" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tCb-iz-6eH" id="ecE-JJ-Wqh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GMa-NT-Kmi">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SGA-K8-Qze">
                                                             <rect key="frame" x="8" y="10" width="30" height="30"/>
@@ -519,7 +594,7 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="GMa-NT-Kmi" firstAttribute="top" secondItem="ecE-JJ-Wqh" secondAttribute="top" id="5iP-um-3Db"/>
+                                                <constraint firstItem="GMa-NT-Kmi" firstAttribute="top" secondItem="ecE-JJ-Wqh" secondAttribute="top" constant="5" id="5iP-um-3Db"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="GMa-NT-Kmi" secondAttribute="trailing" id="DtR-VN-WGL"/>
                                                 <constraint firstAttribute="bottom" secondItem="GMa-NT-Kmi" secondAttribute="bottom" id="YJ6-DN-mY5"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="GMa-NT-Kmi" secondAttribute="leading" id="hGO-cO-4c1"/>
@@ -537,7 +612,7 @@
                             <tableViewSection footerTitle="Going pro unlocks lots of awesome features and helps us keep improving the app 👍" id="taO-7I-gbe" userLabel="IAP">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Gep-34-3XZ" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="584" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="639" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gep-34-3XZ" id="66g-YK-e0D">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -600,7 +675,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="9Vh-tu-z7Z" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="634" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="689" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Vh-tu-z7Z" id="NeA-6z-AO2">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -662,10 +737,10 @@
                             <tableViewSection id="rYQ-Cv-TgN" userLabel="Rate">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wn1-rO-zzl" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="753" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="808" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wn1-rO-zzl" id="XKj-TQ-Zcf">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHM-q3-bxx">
@@ -729,7 +804,7 @@
                             <tableViewSection id="oWy-T0-QGJ" userLabel="Social">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="859-Pa-dbj" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="839" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="894" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="859-Pa-dbj" id="H1F-H9-aqi">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
@@ -787,7 +862,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="oft-f3-bd9" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="889" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="944" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oft-f3-bd9" id="LNS-ql-w3k">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="54.5"/>
@@ -1448,7 +1523,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="admin" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2202" y="-965"/>
+            <point key="canvasLocation" x="-2202" y="-982"/>
         </scene>
         <!--about-->
         <scene sceneID="IwF-zp-Lsq">
@@ -1456,7 +1531,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="about" id="GAQ-MX-p4x" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2205" y="-932"/>
+            <point key="canvasLocation" x="-2205" y="-949"/>
         </scene>
         <!--theme-->
         <scene sceneID="snc-re-vTw">
@@ -1464,7 +1539,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2202" y="-1032"/>
+            <point key="canvasLocation" x="-2202" y="-1050"/>
         </scene>
         <!--IconManagerNavigation-->
         <scene sceneID="pCk-tB-aID">
@@ -1472,7 +1547,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="IconManagerNavigation" id="4UV-W6-1yL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2126" y="-998"/>
+            <point key="canvasLocation" x="-2128" y="-1016"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
@@ -1505,12 +1580,21 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="notificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2143" y="-1065"/>
+            <point key="canvasLocation" x="-2142" y="-1083"/>
+        </scene>
+        <!--authenticationSettings-->
+        <scene sceneID="EBP-ej-D5t">
+            <objects>
+                <viewControllerPlaceholder storyboardName="authenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2130" y="-915"/>
         </scene>
     </scenes>
     <resources>
         <image name="App-Icon-iPhone-Day@3.png" width="180" height="180"/>
         <image name="clear_cache_icon" width="128" height="128"/>
+        <image name="face_id_icon" width="128" height="128"/>
         <image name="forward_chevron" width="12" height="22"/>
         <image name="kdefaults_icon" width="128" height="128"/>
         <image name="medium_icon" width="128" height="128"/>
@@ -1524,7 +1608,7 @@ Kurozora 1.0.0 (1)</string>
         <image name="unlock_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Im-wF-5jX"/>
+        <segue reference="gXD-Me-I3f"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
