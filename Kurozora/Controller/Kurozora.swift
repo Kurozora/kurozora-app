@@ -17,8 +17,8 @@ import SCLAlertView
 class Kurozora: NSObject {
 	static var success = false
 	static let shared = Kurozora()
+	var authenticationEnabled = false
 	var authenticationInterval = 0
-	fileprivate var shouldAuthenticate: Bool = false
 
 	static func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
@@ -71,7 +71,7 @@ class Kurozora: NSObject {
 				let storyboard = UIStoryboard(name: "reachability", bundle: nil)
 				let reachabilityViewController = storyboard.instantiateViewController(withIdentifier: "Reachability")
 
-				let topViewController = UIApplication.topViewController()
+				let topViewController = UIApplication.topViewController
 				topViewController?.modalPresentationStyle = .overFullScreen
 				topViewController?.present(reachabilityViewController, animated: false, completion: nil)
 			}
@@ -95,23 +95,23 @@ class Kurozora: NSObject {
 		return success
 	}
 
-	static func shortcutHandler(_ app: UIApplication, _ shortcutItem: UIApplicationShortcutItem) {
+	func shortcutHandler(_ app: UIApplication, _ shortcutItem: UIApplicationShortcutItem) {
 		if shortcutItem.type == "HomeShortcut" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 0
 			}
 		} else if shortcutItem.type == "NotificationShortcut" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 3
 			}
 		} else if shortcutItem.type == "ProfileShortcut" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 			}
 		}
 	}
 
-	static func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
+	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
 		let urlScheme = url.host?.removingPercentEncoding
 
 		if urlScheme == "anime" {
@@ -121,7 +121,7 @@ class Kurozora: NSObject {
 				if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
 					showTabBarController.showID = Int(showID)
 
-					UIApplication.topViewController()?.present(showTabBarController, animated: true)
+					UIApplication.topViewController?.present(showTabBarController, animated: true)
 				}
 			}
 		}
@@ -135,23 +135,23 @@ class Kurozora: NSObject {
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
-					UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
+					UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
 				}
 			} else {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+				if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 					tabBarController.selectedIndex = 4
 				}
 			}
 		}
 
 		if urlScheme == "explore" || urlScheme == "home" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 0
 			}
 		}
 
 		if urlScheme == "notification" || urlScheme == "notifications" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 3
 			}
 		}
@@ -163,17 +163,17 @@ class Kurozora: NSObject {
 				if let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as? ThreadViewController {
 					threadViewController.forumThreadID = Int(forumThreadID)
 
-					UIApplication.topViewController()?.present(threadViewController, animated: true)
+					UIApplication.topViewController?.present(threadViewController, animated: true)
 				}
 			} else {
-				if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+				if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 					tabBarController.selectedIndex = 2
 				}
 			}
 		}
 
 		if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
-			if let tabBarController = UIApplication.topViewController()?.tabBarController as? ESTabBarController {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 1
 			}
 		}
@@ -191,6 +191,8 @@ extension Kurozora {
 	func userShouldAuthenticate() {
 		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
+				self.authenticationEnabled = authenticationEnabled
+				prepareView()
 				prepareTimer()
 			}
 		}
@@ -199,15 +201,21 @@ extension Kurozora {
 	func userHasToAuthenticate() {
 		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
-				prepareForAuthentication(true)
+				prepareForAuthentication()
 			}
 		}
 	}
 
-	/// Asks the user to authenticate
-	func userWillAuthenticate() {
-		if shouldAuthenticate {
-			handleUserAuthentication()
+	/// Prepares view to prepare the app for authentication
+	func prepareView() {
+		let blurEffect = UIBlurEffect(style: .dark)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
+		blurEffectView.frame = UIApplication.shared.keyWindow!.frame
+		blurEffectView.tag = 5614325
+		UIApplication.shared.keyWindow?.addSubview(blurEffectView)
+
+		if let authenticationViewController = UIApplication.topViewController as? AuthenticationViewController {
+			authenticationViewController.dismiss(animated: false, completion: nil)
 		}
 	}
 
@@ -236,28 +244,21 @@ extension Kurozora {
 	}
 
 	/// Prepares the app for authentication
-	@objc func prepareForAuthentication(_ forcedAuthentication: Bool = false) {
-		let topViewController = UIApplication.topViewController()
+	@objc func prepareForAuthentication() {
+		let topViewController = UIApplication.topViewController
 
 		// If user should authenticate but the top view controller isn't AuthenticationViewController
 		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
 			let storyboard = UIStoryboard(name: "authentication", bundle: nil)
 			if let authenticationViewController = storyboard.instantiateInitialViewController() as? AuthenticationViewController {
-				UIApplication.topViewController()?.present(authenticationViewController, animated: true, completion: nil)
+				UIApplication.topViewController?.present(authenticationViewController, animated: true, completion: nil)
 			}
-		}
-
-		shouldAuthenticate = true
-
-		// If opening the app after completely closing it
-		if forcedAuthentication {
-			userWillAuthenticate()
 		}
 	}
 
 	/// Handle the user authentication
 	func handleUserAuthentication() {
-		guard let viewController = UIApplication.topViewController() as? AuthenticationViewController else { return }
+		guard let viewController = UIApplication.topViewController as? AuthenticationViewController else { return }
 
 		localAuthentication(viewController: viewController, withSuccess: { success in
 			if success {

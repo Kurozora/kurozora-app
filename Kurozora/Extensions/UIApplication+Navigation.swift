@@ -10,7 +10,7 @@ import UIKit
 
 extension UIApplication {
 	/// Present a view controller on top of the root view controller
-	class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+	private class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
 		if let nav = base as? UINavigationController {
 			let top = topViewController(nav.visibleViewController)
 			return top
@@ -31,7 +31,8 @@ extension UIApplication {
 		return base
 	}
 
-	func topViewController() -> UIViewController? {
+	/// Present a view controller on top of the root view controller
+	static var topViewController: UIViewController? {
 		return UIApplication.topViewController()
 	}
 }

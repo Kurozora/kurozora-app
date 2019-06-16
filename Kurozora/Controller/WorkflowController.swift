@@ -56,7 +56,7 @@ public class WorkflowController {
 							vc.logoutReason = reason
 							vc.isKiller = isKiller
 
-							UIApplication.topViewController()?.present(vc, animated: true)
+							UIApplication.topViewController?.present(vc, animated: true)
 						} else if sessionID == User.currentSessionID(), isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
@@ -77,18 +77,18 @@ public class WorkflowController {
 
 		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
 		let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
-		UIApplication.topViewController()?.present(vc, animated: true)
+		UIApplication.topViewController?.present(vc, animated: true)
 	}
 
 	class func showSessions() {
-		if UIApplication.topViewController() as? ManageActiveSessionsController != nil {
+		if UIApplication.topViewController as? ManageActiveSessionsController != nil {
 		} else {
 			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
 			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
 			manageActiveSessionsController?.dismissEnabled = true
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: manageActiveSessionsController!)
 
-			UIApplication.topViewController()?.present(kurozoraNavigationController, animated: true)
+			UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
 		}
 	}
 

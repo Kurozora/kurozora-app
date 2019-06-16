@@ -24,6 +24,7 @@ let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceN
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var authenticated = false
+	var authenticationCount = 0
 	var isUnreachable = false
 	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
@@ -58,27 +59,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow()
 		window?.makeKeyAndVisible()
 
-//		// If the network is unreachable show the offline page
-//		KNetworkManager.isUnreachable { _ in
-//			self.isUnreachable = true
-//		}
-//
-//		if isUnreachable {
-//			Kurozora.showOfflinePage(for: window)
-//			return true
-//		}
-//
-//		// Monitor network availability
-//		KNetworkManager.shared.reachability.whenUnreachable = { _ in
-//			Kurozora.showOfflinePage(for: nil)
-//		}
-//
-//		// Initialize Pusher
-//		WorkflowController.pusherInit()
-//
-//        // Max disk cache size
-//		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
-//
+		// If the network is unreachable show the offline page
+		KNetworkManager.isUnreachable { _ in
+			self.isUnreachable = true
+		}
+
+		if isUnreachable {
+			Kurozora.showOfflinePage(for: window)
+			return true
+		}
+
+		// Monitor network availability
+		KNetworkManager.shared.reachability.whenUnreachable = { _ in
+			Kurozora.showOfflinePage(for: nil)
+		}
+
+		// Initialize Pusher
+		WorkflowController.pusherInit()
+
+        // Max disk cache size
+		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
+
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
@@ -87,29 +88,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-//
-//		// User login status
-//        if User.username() != nil {
-//			authenticated = true
-//            let customTabBar = KurozoraTabBarController()
-//            self.window?.rootViewController = customTabBar
-//        } else {
-//            revealingSplashView.heartAttack = true
-//            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
-//            self.window?.rootViewController = vc
-//        }
-		let storyboard: UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
-		let vc = storyboard.instantiateInitialViewController()
-		self.window?.rootViewController = vc
+
+		// User login status
+		if User.username != nil {
+			authenticated = true
+            let customTabBar = KurozoraTabBarController()
+            self.window?.rootViewController = customTabBar
+        } else {
+			authenticated = false
+            revealingSplashView.heartAttack = true
+            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+            self.window?.rootViewController = vc
+        }
 
 		// Check if user should authenticate
 		Kurozora.shared.userHasToAuthenticate()
-//
-//        window?.addSubview(revealingSplashView)
-//		revealingSplashView.playHeartBeatAnimation()
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+
+        window?.addSubview(revealingSplashView)
+		revealingSplashView.playHeartBeatAnimation()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
 
         return true
     }
@@ -127,17 +126,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 		Kurozora.shared.userShouldAuthenticate()
+		authenticationCount = 0
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-
-//		KNetworkManager.isReachable { _ in
-//			self.authenticated = Kurozora.validateSession(window: self.window)
-			if Date().uptime() > Kurozora.shared.authenticationInterval {
-				Kurozora.shared.prepareForAuthentication(true)
-			}
-//		}
+		KNetworkManager.isReachable { _ in
+			self.authenticated = Kurozora.validateSession(window: self.window)
+		}
 
 		if UserSettings.automaticNightTheme {
 			KThemeStyle.checkSunSchedule()
@@ -146,6 +142,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+		if authenticationCount < 1 {
+			if Date().uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
+				Kurozora.shared.prepareForAuthentication()
+			}
+			UIApplication.shared.keyWindow?.viewWithTag(5614325)?.removeFromSuperview()
+		}
+
+		authenticationCount += 1
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -153,37 +157,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-		// TODO: - Check if authetication handler is working as intended
-		if authenticated {
-			if Date().uptime() > Kurozora.shared.authenticationInterval {
-				Kurozora.shared.prepareForAuthentication(true)
-			}
-			Kurozora.schemeHandler(app, open: url, options: options)
-		}
+		Kurozora.shared.schemeHandler(app, open: url, options: options)
 
 		return true
 	}
 
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-		// TODO: - Add authentication handler
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
+
 			let storyboard = UIStoryboard(name: "details", bundle: nil)
 			if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
 				showTabBarController.showID = showID
-
-				UIApplication.topViewController()?.present(showTabBarController, animated: true)
-				
+				UIApplication.topViewController?.present(showTabBarController, animated: true)
 			}
-			return true
 		}
 
-		return false
+		return true
 	}
 
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		if authenticated {
-			Kurozora.shortcutHandler(application, shortcutItem)
-		}
+		Kurozora.shared.shortcutHandler(application, shortcutItem)
 	}
 }

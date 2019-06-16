@@ -104,7 +104,11 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 	}
 
 	// Hero Transition vars
-	var showID: Int?
+	var showID: Int? {
+		didSet {
+			fetchDetails()
+		}
+	}
 	var heroID: String?
 
 	// Misc vars
@@ -187,22 +191,7 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 		}
 
 		// Fetch details
-		if let showID = showID {
-			KCommonKit.shared.showID = showID
-
-			Service.shared.getDetails(forShow: showID) { (showDetails) in
-				DispatchQueue.main.async() {
-					self.showDetails = showDetails
-					self.libraryStatus = showDetails.userProfile?.libraryStatus
-				}
-			}
-
-			Service.shared.getCastFor(showID, withSuccess: { (actors) in
-				DispatchQueue.main.async() {
-					self.actors = actors
-				}
-			})
-		}
+//		fetchDetails()
 
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -220,6 +209,25 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 	}
 
 	// MARK: - Functions
+	func fetchDetails() {
+		if let showID = showID {
+			KCommonKit.shared.showID = showID
+
+			Service.shared.getDetails(forShow: showID) { (showDetails) in
+				DispatchQueue.main.async() {
+					self.showDetails = showDetails
+					self.libraryStatus = showDetails.userProfile?.libraryStatus
+				}
+			}
+
+			Service.shared.getCastFor(showID, withSuccess: { (actors) in
+				DispatchQueue.main.async() {
+					self.actors = actors
+				}
+			})
+		}
+	}
+
 	fileprivate func dismiss() {
 		viewsAreHidden = true
 		blurView?.isHidden = true

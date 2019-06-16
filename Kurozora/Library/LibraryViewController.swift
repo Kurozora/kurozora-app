@@ -61,8 +61,8 @@ class LibraryViewController: TabmanViewController {
 			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
 
 			// Get the user's preferred library layout
-			if let LibraryLayouts = UserSettings.libraryLayouts as? [String:String] {
-				guard let currentLayout = LibraryLayouts[sectionTitle] else { return }
+			if let libraryLayouts = UserSettings.libraryLayouts as? [String:String] {
+				let currentLayout = libraryLayouts[sectionTitle] ?? "Detailed"
 				guard let libraryLayout = LibraryListStyle(rawValue: "\(currentLayout)Cell") else { return }
 
 				viewController.libraryLayout = libraryLayout

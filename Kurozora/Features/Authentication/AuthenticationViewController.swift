@@ -39,6 +39,12 @@ class AuthenticationViewController: UIViewController {
 		return statusBarStyle
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		Kurozora().handleUserAuthentication()
+		unlockDescriptionView.isHidden = true
+		lockImageView.isHidden = false
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
