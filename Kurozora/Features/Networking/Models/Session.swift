@@ -35,15 +35,29 @@ class UserSessionsElement: JSONDecodable {
 	let device: String?
 	let ip: String?
 	let lastValidated: String?
-	let longitude: Double?
-	let latitude: Double?
+	let location: UserSessionsLocation?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.device = json["device"].stringValue
 		self.ip = json["ip"].stringValue
 		self.lastValidated = json["last_validated"].stringValue
-		self.longitude = json["longitude"].doubleValue
+		self.location = try? UserSessionsLocation(json: json["location"])
+	}
+}
+
+class UserSessionsLocation: JSONDecodable {
+	let city: String?
+	let region: String?
+	let country: String?
+	let latitude: Double?
+	let longitude: Double?
+
+	required init(json: JSON) throws {
+		self.city = json["city"].stringValue
+		self.region = json["region"].stringValue
+		self.country = json["country"].stringValue
 		self.latitude = json["latitude"].doubleValue
+		self.longitude = json["longitude"].doubleValue
 	}
 }

@@ -13,22 +13,15 @@ import EmptyDataSet_Swift
 import SwifterSwift
 import MapKit
 import CoreLocation
-import Solar
 
 class ManageActiveSessionsController: UIViewController {
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet weak var mapView: MKMapView!
 
-	var devices: [UserSessionsElement?] = [
-		try? UserSessionsElement(json: ["device": "London", "ip": "iphone", "latitude": 51.507222, "longitude": -0.1275]),
-		try? UserSessionsElement(json: ["device": "Mondon", "ip": "ipad", "latitude": 51.506222, "longitude": -0.1265]),
-		try? UserSessionsElement(json: ["device": "Nondon", "ip": "apple_tv", "latitude": 51.505222, "longitude": -0.1255]),
-		try? UserSessionsElement(json: ["device": "Pondon", "ip": "macbook", "latitude": 51.504222, "longitude": -0.1245])
-	]
-
 	var dismissEnabled: Bool = false
 	var sessions: UserSessions? {
 		didSet {
+			createAnnotations()
 			tableView.reloadData()
 		}
 	}
@@ -56,8 +49,6 @@ class ManageActiveSessionsController: UIViewController {
 		mapView.delegate = self
 		mapView.showsUserLocation = true
 
-		createAnnotations()
-
 		if CLLocationManager.locationServicesEnabled() == true {
 			if CLLocationManager.authorizationStatus() == .restricted ||
 				CLLocationManager.authorizationStatus() == .denied ||
@@ -71,7 +62,7 @@ class ManageActiveSessionsController: UIViewController {
 			locationManager.startUpdatingLocation()
 
 		} else {
-			print("PLease turn on location services or GPS")
+			print("Please turn on location services or GPS")
 		}
 
         // Setup table view
@@ -79,18 +70,6 @@ class ManageActiveSessionsController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
-
-		let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: 52.857760, longitude: 6.516210))
-		print("Sunset: \(solar?.sunset)")
-		print("Sunrise: \(solar?.sunrise)")
-		print("Civic Sunset: \(solar?.civilSunset)")
-		print("Civic Sunrise: \(solar?.civilSunrise)")
-		print("Nautical Sunset: \(solar?.nauticalSunset)")
-		print("Nautical Sunrise: \(solar?.nauticalSunrise)")
-		print("Astronomic Sunset: \(solar?.astronomicalSunrise)")
-		print("Astronomic Sunrise: \(solar?.astronomicalSunset)")
-		print("Daytime: \(solar?.isDaytime)")
-		print("Nighttime: \(solar?.isNighttime)")
     }
 
 	// MARK: - Functions
@@ -107,15 +86,31 @@ class ManageActiveSessionsController: UIViewController {
 	}
 
 	private func createAnnotations() {
-		for device in devices {
+		guard let otherSessions = sessions?.otherSessions else { return }
+
+		for session in otherSessions {
 			let annotation = ImageAnnotation()
-			if let image = device?.ip {
-				annotation.image = UIImage(named: image)
+			if let deviceString = session.device, let range = deviceString.range(of: " on ") {
+				let device = deviceString[deviceString.startIndex..<range.lowerBound]
+				annotation.title = "\(device)"
+
+				if device.contains("iPhone") {
+					annotation.image = #imageLiteral(resourceName: "iphone")
+				} else if device.contains("iPad") {
+					annotation.image = #imageLiteral(resourceName: "ipad")
+				} else if device.contains("Apple TV") {
+					annotation.image = #imageLiteral(resourceName: "apple_tv")
+				} else if device.contains("MacBook") {
+					annotation.image = #imageLiteral(resourceName: "macbook")
+				} else {
+					annotation.image = #imageLiteral(resourceName: "other_devices")
+				}
 			}
-			annotation.title = device?.device
-			if let longitude = device?.longitude, let latitude = device?.latitude {
+
+			if let latitude = session.location?.latitude, let longitude = session.location?.longitude {
 				annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 			}
+
 			mapView.addAnnotation(annotation)
 		}
 
