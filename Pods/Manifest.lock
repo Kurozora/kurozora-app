@@ -12,16 +12,16 @@ PODS:
   - ColorSlider (4.4)
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
-  - Down (0.8.4)
+  - Down (0.8.5)
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
-  - IBAnimatable (5.2.1)
+  - IBAnimatable (6.0.0)
   - iosMath (0.9.4)
-  - IQKeyboardManagerSwift (6.3.0)
+  - IQKeyboardManagerSwift (6.4.0)
   - KeychainAccess (3.2.0)
-  - Kingfisher (5.5.0)
+  - Kingfisher (5.6.0)
   - MarqueeLabel (4.0.0)
   - MBProgressHUD (1.1.0)
   - NotificationBannerSwift (2.2.2):
@@ -30,7 +30,7 @@ PODS:
   - NVActivityIndicatorView (4.7.0):
     - NVActivityIndicatorView/Presenter (= 4.7.0)
   - NVActivityIndicatorView/Presenter (4.7.0)
-  - Pageboy (3.2.2)
+  - Pageboy (3.2.3)
   - PusherSwift (7.0.0):
     - CryptoSwift (~> 0.9)
     - ReachabilitySwift (= 4.3.0)
@@ -175,21 +175,21 @@ SPEC CHECKSUMS:
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
-  Down: 533c1fc9a76275c150f924441e2907c07ddd9891
+  Down: d2554b5006cf45bdb2bc6f19d91ca4fec6a45b31
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
-  IBAnimatable: a46b835ec6875178516cf7e014a40194d6bfa3fc
+  IBAnimatable: d49f9fee0c401b5b08d31b77256b77fb067e0e92
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
-  IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
+  IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
+  Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NotificationBannerSwift: 2d46cc1b4a0ebf4372baef383f2a2ca82bf0c235
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
-  Pageboy: b6e8f5082c23ef2490ddf21339fb6e19673d1453
+  Pageboy: 347c49b3a7f15aa78ddb6bf5c6c3b113e382fe52
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf

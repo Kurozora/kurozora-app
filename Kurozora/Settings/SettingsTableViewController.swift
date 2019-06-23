@@ -165,7 +165,7 @@ extension SettingsTableViewController {
 //		case (1,0): break
 //		case (2,0): break
 //		case (3,0): break
-		case (3,2): // Clear cache
+		case (3,4): // Clear cache
 			let alertView = SCLAlertView()
 			alertView.addButton("Clear 🗑", action: {
 				// Clear memory cache right away.

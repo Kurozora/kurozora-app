@@ -14,6 +14,7 @@ import SwiftTheme
 class FeedTabsViewController: TabmanViewController {
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet weak var createThreadButton: UIButton!
+	@IBOutlet weak var navigationProfileButton: UIButton!
 
 	var sections: [FeedSectionsElement]? {
 		didSet {
@@ -40,12 +41,17 @@ class FeedTabsViewController: TabmanViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		Service.shared.getFeedSections(withSuccess: { (sections) in
-			DispatchQueue.main.async {
-				self.sectionsCount = sections?.count
-				self.sections = sections
-			}
-		})
+		navigationProfileButton.setImage(User.currentUserAvatar, for: .normal)
+		navigationProfileButton.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		navigationProfileButton.borderWidth = 2
+		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
+
+//		Service.shared.getFeedSections(withSuccess: { (sections) in
+//			DispatchQueue.main.async {
+//				self.sectionsCount = sections?.count
+//				self.sections = sections
+//			}
+//		})
 
 		dataSource = self
 

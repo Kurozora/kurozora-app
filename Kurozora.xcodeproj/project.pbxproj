@@ -147,6 +147,8 @@
 		664A065C21EA1187008CF4A6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065B21EA1187008CF4A6 /* Genres.swift */; };
 		664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */; };
 		664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */; };
+		664B52D122C03C0900B988B3 /* display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664B52D022C03C0900B988B3 /* display.storyboard */; };
+		664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
 		665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F49C521F766CC00A7A659 /* ReplyCell.swift */; };
@@ -310,7 +312,7 @@
 		66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5A20A9775C00F98375 /* ForumViewController.swift */; };
 		66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5D20A9782B00F98375 /* RateViewController.swift */; };
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
-		66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileViewController.swift */; };
+		66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */; };
 		66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserListViewController.swift */; };
 		66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */; };
 		66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */; };
@@ -524,6 +526,8 @@
 		664A065B21EA1187008CF4A6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresTableViewController.swift; sourceTree = "<group>"; };
 		664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
+		664B52D022C03C0900B988B3 /* display.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = display.storyboard; sourceTree = "<group>"; };
+		664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsCell.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
 		665F49C521F766CC00A7A659 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
@@ -687,7 +691,7 @@
 		66CF6D5A20A9775C00F98375 /* ForumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
 		66CF6D5D20A9782B00F98375 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
-		66CF6D6620A987D100F98375 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D6820A98CAA00F98375 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
@@ -860,6 +864,15 @@
 				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		661049BE22C0425800A2A354 /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				664B52D022C03C0900B988B3 /* display.storyboard */,
+				664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */,
+			);
+			path = Display;
 			sourceTree = "<group>";
 		};
 		66112342208E28C800E6033A /* In-App Purchases */ = {
@@ -1352,6 +1365,7 @@
 				6614409121DA40F300E54915 /* Admin */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				664133DE21DA42F900CE823A /* Theme */,
+				661049BE22C0425800A2A354 /* Display */,
 				6640E19122ADD20700D0F575 /* Authentication */,
 				6614409321DA413B00E54915 /* About */,
 			);
@@ -1703,7 +1717,7 @@
 			isa = PBXGroup;
 			children = (
 				66CF6D7020A9934F00F98375 /* profile.storyboard */,
-				66CF6D6620A987D100F98375 /* ProfileViewController.swift */,
+				66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */,
 				667F9AD521B47E8B003F6629 /* Badges */,
 				66CE1AF8209B300D0007A4DE /* Posts */,
 				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
@@ -2077,6 +2091,7 @@
 				664801D8222DE76A0063143A /* App-Icon-iPhone-Rose-Gold@3x.png in Resources */,
 				6641D6F1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Saphire@2x.png in Resources */,
 				66707835208B842E00471FBC /* settings.storyboard in Resources */,
+				664B52D122C03C0900B988B3 /* display.storyboard in Resources */,
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
 				6641D6FB222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */,
 				66A254C622AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png in Resources */,
@@ -2353,7 +2368,7 @@
 				66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */,
 				6674A0D420A5849D00AAB527 /* ThreadViewController.swift in Sources */,
 				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
-				66CF6D6720A987D100F98375 /* ProfileViewController.swift in Sources */,
+				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
 				66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */,
@@ -2465,6 +2480,7 @@
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
 				660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */,
+				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
 				66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */,
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */,

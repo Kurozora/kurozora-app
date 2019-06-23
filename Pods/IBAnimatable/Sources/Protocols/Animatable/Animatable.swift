@@ -52,7 +52,7 @@ public protocol Animatable: class {
 }
 
 public extension Animatable {
-  public func configureAnimatableProperties() {
+  func configureAnimatableProperties() {
     // Apply default values
     if duration.isNaN {
       duration = 0.7
@@ -74,15 +74,15 @@ public extension Animatable {
 
 public extension Animatable where Self: UIView {
   @discardableResult
-  public func animate(_ animation: AnimationType,
-                      duration: TimeInterval? = nil,
-                      damping: CGFloat? = nil,
-                      velocity: CGFloat? = nil,
-                      force: CGFloat? = nil) -> AnimationPromise<Self> {
+  func animate(_ animation: AnimationType,
+               duration: TimeInterval? = nil,
+               damping: CGFloat? = nil,
+               velocity: CGFloat? = nil,
+               force: CGFloat? = nil) -> AnimationPromise<Self> {
     return AnimationPromise(view: self).delay(delay).then(animation, duration: duration, damping: damping, velocity: velocity, force: force)
   }
 
-  public func delay(_ delay: TimeInterval) -> AnimationPromise<Self> {
+  func delay(_ delay: TimeInterval) -> AnimationPromise<Self> {
     let promise = AnimationPromise(view: self)
     return promise.delay(delay)
 
@@ -163,8 +163,7 @@ fileprivate extension UIView {
       }
       switch run {
       case .sequential:
-        let launch = animations.reversed().reduce(completion) { result, animation in
-          return {
+        let launch = animations.reversed().reduce(completion) { result, animation in {
             self.doAnimation(animation, configuration: configuration, completion: result)
           }
         }
@@ -756,13 +755,13 @@ fileprivate extension UIView {
 // Animations for `UIBarItem`
 public extension Animatable where Self: UIBarItem {
 
-  public func animate(_ animation: AnimationType? = nil,
-                      duration: TimeInterval? = nil,
-                      damping: CGFloat? = nil,
-                      velocity: CGFloat? = nil,
-                      force: CGFloat? = nil,
-                      view: UIView,
-                      completion: AnimatableCompletion? = nil) {
+  func animate(_ animation: AnimationType? = nil,
+               duration: TimeInterval? = nil,
+               damping: CGFloat? = nil,
+               velocity: CGFloat? = nil,
+               force: CGFloat? = nil,
+               view: UIView,
+               completion: AnimatableCompletion? = nil) {
 
     let configuration = AnimationConfiguration(damping: damping ?? self.damping,
                                                velocity: velocity ?? self.velocity,
@@ -779,7 +778,7 @@ public extension Animatable where Self: UIBarItem {
 public extension AnimationType {
 
   /// This animation use damping and velocity parameters.
-  public var isSpring: Bool {
+  var isSpring: Bool {
     switch self {
     case .moveBy, .moveTo, .scale:
       return true
@@ -793,7 +792,7 @@ public extension AnimationType {
       return false
     case .compound(let animations, _):
       return animations.reduce(false) { result, animation in
-        return result || animation.isSpring
+        result || animation.isSpring
       }
     case .none:
       return false
@@ -801,7 +800,7 @@ public extension AnimationType {
   }
 
   /// This animation use timing function parameter.
-  public var isCubic: Bool {
+  var isCubic: Bool {
     switch self {
     case .moveBy, .moveTo, .scale:
       return true
@@ -815,7 +814,7 @@ public extension AnimationType {
       return false
     case .compound(let animations, _):
       return animations.reduce(false) { result, animation in
-        return result || animation.isCubic
+        result || animation.isCubic
       }
     case .none:
       return false

@@ -14,6 +14,7 @@ class UserSettings: NSObject {
 		// Global notification keys
 		case collapsedSections = "collapsedSections"
 		case automaticNightTheme = "automaticNightTheme"
+		case largeTitles = "largeTitles"
 
 		// Library keys
 		case libraryPage = "libraryPage"
@@ -51,6 +52,12 @@ class UserSettings: NSObject {
 	static var automaticNightTheme: Bool {
 		guard let automaticNightTheme = GlobalVariables().KUserDefaults?.bool(forKey: "automaticNightTheme") else { return false }
 		return automaticNightTheme
+	}
+
+	/// Returns a boolean indicating if large titles is on
+	static var largeTitles: Bool {
+		guard let largeTitles = GlobalVariables().KUserDefaults?.bool(forKey: "largeTitles") else { return false }
+		return largeTitles
 	}
 
 	/// Returns a boolean indicating if notifications are allowed

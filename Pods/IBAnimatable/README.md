@@ -5,9 +5,10 @@ Design and prototype customized UI, interaction, navigation, transition and anim
 ![IBAnimatable hero image](https://raw.githubusercontent.com/IBAnimatable/IBAnimatable-Misc/master/IBAnimatable/IBAnimatable.gif)
 
 [![Build Status](https://travis-ci.org/IBAnimatable/IBAnimatable.svg?branch=master)](https://travis-ci.org/IBAnimatable/IBAnimatable)
-[![Language](https://img.shields.io/badge/language-Swift%204.2-orange.svg)](https://swift.org)
+[![Language](https://img.shields.io/badge/language-Swift%205-orange.svg)](https://swift.org)
 [![CocoaPods](https://img.shields.io/cocoapods/v/IBAnimatable.svg?style=flat)](http://cocoadocs.org/docsets/IBAnimatable/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Accio supported](https://img.shields.io/badge/Accio-supported-0A7CF5.svg?style=flat)](https://github.com/JamitLabs/Accio)
 [![License](https://img.shields.io/github/license/IBAnimatable/IBAnimatable.svg?style=flat)](https://github.com/IBAnimatable/IBAnimatable/blob/master/LICENSE)
 
 **The app was made in Interface Builder with `IBAnimatable` without a single line of code**. Due to the size of [the GIF file on Dribbble](https://dribbble.com/shots/2453933-IBAnimatable-Design-App-Store-ready-Apps-in-Interface-Builder), it only demonstrates a subset of features. We can also find the full HD version on [YouTube](https://www.youtube.com/watch?v=dvD8X6J1YLM) or [MP4 on Github](https://github.com/IBAnimatable/IBAnimatable-Misc/blob/master/Videos/IBAnimatable.mp4?raw=true)
@@ -40,7 +41,7 @@ Copy and paste `IBAnimatable` folder in your Xcode project.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/IBAnimatable/IBAnimatable.git", .upToNextMajor(from: "5.0.0"))
+.package(url: "https://github.com/IBAnimatable/IBAnimatable.git", .upToNextMajor(from: "6.0.0"))
 ```
 
 ### [CocoaPods](https://cocoapods.org)
@@ -57,7 +58,25 @@ Add the following entry in your Cartfile:
    github "IBAnimatable/IBAnimatable"
 ```
 
-Please Notice, there is [a limitation of a built framework for `@IBDesignable` and `@IBInspectable`](https://github.com/Carthage/Carthage/issues/335), that will impact on `IBAnimatable` when you use Carthage. There is a workaround to use Carthage or Swift package manager with `IBAnimatable`, please have a look at [Carthage – no Animatable UI Classes appearing in Storyboard](https://github.com/IBAnimatable/IBAnimatable/issues/354)
+### [Accio](https://github.com/JamitLabs/Accio)
+Add the following entry in your Package.swift:
+
+```swift
+.package(url: "https://github.com/IBAnimatable/IBAnimatable.git", .upToNextMajor(from: "6.0.0")),
+```
+
+Next, add `IBAnimatable` to your App targets dependencies like so:
+
+```swift
+.target(
+    name: "App",
+    dependencies: [
+        "IBAnimatable",
+    ]
+),
+```
+
+Please Notice, there is [a limitation of a built framework for `@IBDesignable` and `@IBInspectable`](https://github.com/Carthage/Carthage/issues/335), that will impact on `IBAnimatable` when you use Carthage or Accio. There is a workaround to use Carthage, Accio or Swift package manager with `IBAnimatable`, please have a look at [Carthage – no Animatable UI Classes appearing in Storyboard](https://github.com/IBAnimatable/IBAnimatable/issues/354)
 
 As @DanielAsher mentioned
 > I use carthage update --use-submodules --no-build --no-use-binaries and manually add the both the framework project and the framework as an embedded dependency.
@@ -67,10 +86,13 @@ As @DanielAsher mentioned
 
 Add this repo as a submodule, and add the project file to your workspace. You can then link against `IBAnimatable.framework` for your application target. 
 
-## Version 5.2
-IBAnimatable 5.2 is the latest major release of IBAnimatable. This version supports Swift 4.2. There are no API breaking changes from migrating from version 4.x. 
+## Version 6
+IBAnimatable 6 is the latest major release of IBAnimatable. This version supports Swift 5. There are no API breaking changes from migrating from version 5.x.
 
-If you migrate from version 3.x. Please check out [IBAnimatable 4.0 Migration Guide](Documentation/IBAnimatable 4.0 Migration Guide.md) for more information.
+## Version 5.2
+This version supports Swift 4.2. There are no API breaking changes from migrating from version 4.x. 
+
+If you migrate from version 3.x. Please check out [IBAnimatable 4.0 Migration Guide](Documentation/IBAnimatable%204.0%20Migration%20Guide.md) for more information.
 
 ## Swift version
 ### Swift 4.2
@@ -94,7 +116,7 @@ There are no API breaking changes when migrating from Swift 3.1 to Swift 3.2 usi
 If you are using Xcode 9 and Swift 3.2, please use the 4.2 release.
 
 ### Swift 3 or 3.1
-If you migrate from Swift 2.x, please check out [IBAnimatable 3.0 Migration Guide](Documentation/IBAnimatable 3.0 Migration Guide.md) for more information about how to migrate your project to 3.0. Version 3 follows Swift 3 [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) and contains a lot of breaking changes from version 2.x. 
+If you migrate from Swift 2.x, please check out [IBAnimatable 3.0 Migration Guide](Documentation/IBAnimatable%203.0%20Migration%20Guide.md) for more information about how to migrate your project to 3.0. Version 3 follows Swift 3 [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) and contains a lot of breaking changes from version 2.x. 
 
 If you are using Xcode 8 with Swift 3, please use the latest tagged 4.x release.
 
@@ -226,7 +248,7 @@ All of us can contribute to this project. Fewer overheads mean less time to buil
 
 * If you like the project, please share it with the other designers and developers, and star 🌟 the project. 🤗
 
-Many thanks to [all contributors](graphs/contributors) 🤗 especially to [@tbaranes](https://github.com/tbaranes) who develops a lot of features and maintains the project.
+Many thanks to [all contributors](https://github.com/IBAnimatable/IBAnimatable/graphs/contributors) 🤗 especially to [@tbaranes](https://github.com/tbaranes) who develops a lot of features and maintains the project.
 
 ## Roadmap
 [Vision, Technical Considerations and Roadmap](Documentation/Roadmap.md)

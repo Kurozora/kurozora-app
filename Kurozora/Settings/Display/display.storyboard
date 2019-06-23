@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Display & Blindness-->
+        <scene sceneID="ofI-Cu-SE0">
+            <objects>
+                <tableViewController title="Display &amp; Blindness" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2K-Bn-OHN" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aHe-u0-qgI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <sections>
+                            <tableViewSection footerTitle="Enable this option if you prefer larger title in the navigation bar." id="PWQ-vE-3Vx">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="35" width="414" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Idl-Sy-4tK" id="wIn-nf-umu">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhC-GQ-TLe">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                                    <subviews>
+                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Titles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B7h-A4-wen">
+                                                            <rect key="frame" x="8" y="14.5" width="89.5" height="21"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S6w-ZM-ihQ">
+                                                            <rect key="frame" x="315" y="9.5" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="enabledSwitchSwitched:" destination="Idl-Sy-4tK" eventType="valueChanged" id="MIe-gD-YXm"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="B7h-A4-wen" firstAttribute="top" secondItem="xhC-GQ-TLe" secondAttribute="top" constant="14.5" id="2Kv-uE-907"/>
+                                                        <constraint firstItem="S6w-ZM-ihQ" firstAttribute="centerY" secondItem="xhC-GQ-TLe" secondAttribute="centerYWithinMargins" id="Buk-y3-Isn"/>
+                                                        <constraint firstAttribute="bottom" secondItem="B7h-A4-wen" secondAttribute="bottom" constant="14.5" id="Lla-91-nSP"/>
+                                                        <constraint firstItem="B7h-A4-wen" firstAttribute="leading" secondItem="xhC-GQ-TLe" secondAttribute="leadingMargin" id="ldy-HR-ZK9"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="S6w-ZM-ihQ" secondAttribute="trailing" constant="2" id="o2g-JS-Bpl"/>
+                                                        <constraint firstItem="S6w-ZM-ihQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B7h-A4-wen" secondAttribute="trailing" constant="10" id="wj3-eJ-fS9"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xhC-GQ-TLe" firstAttribute="top" secondItem="wIn-nf-umu" secondAttribute="top" id="DL3-wA-iBs"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="xhC-GQ-TLe" secondAttribute="leading" id="KkM-ZM-30R"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xhC-GQ-TLe" secondAttribute="trailing" id="Qa8-S1-BfO"/>
+                                                <constraint firstAttribute="bottom" secondItem="xhC-GQ-TLe" secondAttribute="bottom" id="naz-dG-OLN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="bubbleView" destination="xhC-GQ-TLe" id="aOV-Bo-xY5"/>
+                                            <outlet property="cellTitle" destination="B7h-A4-wen" id="vK1-fb-2tZ"/>
+                                            <outlet property="enabledSwitch" destination="S6w-ZM-ihQ" id="JXz-9A-WVc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Y2K-Bn-OHN" id="Rnq-tM-xVf"/>
+                            <outlet property="delegate" destination="Y2K-Bn-OHN" id="iev-Ow-6hk"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Display &amp; Blindness" id="N56-L9-EfP"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5I5-sB-O4W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3322" y="-269"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xj3-NW-aHV">
+            <objects>
+                <navigationController storyboardIdentifier="DisplayKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="svG-2R-sWh" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="wZl-Va-6Ax">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y2K-Bn-OHN" kind="relationship" relationship="rootViewController" id="rrJ-jI-h3R"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VlF-Eg-iD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4038" y="-269"/>
+        </scene>
+    </scenes>
+</document>

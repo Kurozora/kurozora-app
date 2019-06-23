@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import UIKit
+import KCommonKit
 import SwiftTheme
 
 class KNavigationController: UINavigationController {
@@ -37,6 +37,7 @@ class KNavigationController: UINavigationController {
 			self.navigationBar.backgroundColor = .clear
 			self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
 			self.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
+
 			self.navigationBar.theme_titleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue()) { value -> [NSAttributedString.Key : AnyObject]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
@@ -46,7 +47,7 @@ class KNavigationController: UINavigationController {
 			}
 
 			if #available(iOS 11.0, *) {
-				self.navigationBar.prefersLargeTitles = true
+				self.navigationBar.prefersLargeTitles = UserSettings.largeTitles
 				self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue()) { value -> [NSAttributedString.Key : AnyObject]? in
 					guard let rgba = value as? String else { return nil }
 					let color = UIColor(rgba: rgba)
