@@ -17,7 +17,7 @@ class User: JSONDecodable {
 
 	let rating: Double?
 	let currentlyFollowing: Bool?
-	let user: UserProfile?
+	let profile: UserProfile?
     
     required init(json: JSON) throws {
         self.success = json["success"].boolValue
@@ -25,7 +25,7 @@ class User: JSONDecodable {
 
 		self.rating = json["rating"].doubleValue
 		self.currentlyFollowing = json["currently_following"].boolValue
-		self.user = try? UserProfile(json: json["user"])
+		self.profile = try? UserProfile(json: json["user"])
     }
 }
 
@@ -224,22 +224,22 @@ extension User {
 	}
 
 	/// Returns the current device name
-	static func currentDevice() -> String? {
+	static func currentDevice() -> String {
 		return UIDevice.modelName
 	}
 
 	/// Returns true if current user is logged in
-	static var isLoggedIn: Bool? {
+	static var isLoggedIn: Bool {
 		return User.username != nil
 	}
 
 	/// Returns true is the current user is PRO
-	static var isPro: Bool? {
+	static var isPro: Bool {
 		return true
 	}
 
 	/// Returns true if the current user is an admin
-	static var isAdmin: Bool? {
+	static var isAdmin: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
@@ -255,7 +255,7 @@ extension User {
 	}
 
 	/// Returns true if the current user is a mod
-	static var isMod: Bool? {
+	static var isMod: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = User.UserType(rawValue: userType) else { return false }

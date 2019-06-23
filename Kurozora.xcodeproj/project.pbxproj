@@ -296,6 +296,11 @@
 		66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C863FE216CE7240054EE16 /* ShowDetails.swift */; };
 		66C86402216DF9270054EE16 /* SeasonsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86401216DF9270054EE16 /* SeasonsTableViewController.swift */; };
 		66C86404216DFB850054EE16 /* SeasonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86403216DFB850054EE16 /* SeasonsTableViewCell.swift */; };
+		66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */; };
+		66CBA53722BC454600FBEC13 /* feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CBA53622BC454600FBEC13 /* feed.storyboard */; };
+		66CBA53922BCEBD000FBEC13 /* FeedTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */; };
+		66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53A22BCED5300FBEC13 /* FeedSections.swift */; };
+		66CBA53D22BCFE1E00FBEC13 /* FeedPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */; };
 		66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */; };
 		66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF3209B2C710007A4DE /* AnimeController.swift */; };
 		66CE1AF7209B2E7D0007A4DE /* AnimeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */; };
@@ -658,6 +663,11 @@
 		66C863FE216CE7240054EE16 /* ShowDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
 		66C86401216DF9270054EE16 /* SeasonsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsTableViewController.swift; sourceTree = "<group>"; };
 		66C86403216DFB850054EE16 /* SeasonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsTableViewCell.swift; sourceTree = "<group>"; };
+		66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
+		66CBA53622BC454600FBEC13 /* feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = feed.storyboard; sourceTree = "<group>"; };
+		66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabsViewController.swift; sourceTree = "<group>"; };
+		66CBA53A22BCED5300FBEC13 /* FeedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSections.swift; sourceTree = "<group>"; };
+		66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPosts.swift; sourceTree = "<group>"; };
 		66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailCell.swift; sourceTree = "<group>"; };
 		66CE1AF3209B2C710007A4DE /* AnimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeController.swift; sourceTree = "<group>"; };
 		66CE1AF6209B2E7D0007A4DE /* AnimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeData.swift; sourceTree = "<group>"; };
@@ -812,6 +822,8 @@
 		660923E921355EC30082F02E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */,
+				66CBA53A22BCED5300FBEC13 /* FeedSections.swift */,
 				660E9FC621455F3100F6813C /* Cast.swift */,
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
 				660A642D21D175110032FDCF /* EpisodesWatched.swift */,
@@ -1284,6 +1296,7 @@
 				66D6237520A1BB4000304914 /* Library */,
 				66A552D220A2D1F300E515DB /* Forums */,
 				6601F1AA2118486A0074C1DD /* Notification */,
+				66CBA53322BC44F100FBEC13 /* Feed */,
 				66CF6D6320A9875600F98375 /* Profile */,
 				66707836208B844800471FBC /* Settings */,
 				66A8AF1F209990CE0011A342 /* View */,
@@ -1629,6 +1642,16 @@
 				66C86403216DFB850054EE16 /* SeasonsTableViewCell.swift */,
 			);
 			path = Seasons;
+			sourceTree = "<group>";
+		};
+		66CBA53322BC44F100FBEC13 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				66CBA53622BC454600FBEC13 /* feed.storyboard */,
+				66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */,
+				66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		66CE1AF2209B2C3D0007A4DE /* Controller */ = {
@@ -2009,6 +2032,7 @@
 				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
 				66A254C722AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png in Resources */,
 				664801CA222DE76A0063143A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */,
+				66CBA53722BC454600FBEC13 /* feed.storyboard in Resources */,
 				66E1B86C20911F4A00D7AC1A /* browse.storyboard in Resources */,
 				6614408F21DA387800E54915 /* Settings.bundle in Resources */,
 				66A254CE22AA9FD3002A0E34 /* App-Icon-iPhone-Red@2x.png in Resources */,
@@ -2269,6 +2293,7 @@
 				6675263822282B06007C1617 /* Themes.swift in Sources */,
 				662A5FE9223913AB00F3B61D /* TransitionSubmitButton.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
+				66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
@@ -2309,6 +2334,7 @@
 				667943632273933400E2D0D0 /* SynopsisCell.swift in Sources */,
 				66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
+				66CBA53922BCEBD000FBEC13 /* FeedTabsViewController.swift in Sources */,
 				6676B3C4216FF70B00877AFC /* EpisodesTableViewCell.swift in Sources */,
 				66A8AF22209991310011A342 /* AnimeCell.swift in Sources */,
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
@@ -2316,6 +2342,7 @@
 				660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */,
 				66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */,
 				66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */,
+				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,
 				66714F4A226FA84C006113DA /* SynopsisViewController.swift in Sources */,
 				66CF5D8221E7E90D00969BBB /* UserFollow.swift in Sources */,
 				66752633222815C2007C1617 /* KThemeStyle.swift in Sources */,
@@ -2411,6 +2438,7 @@
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				667F9AD721B47EF0003F6629 /* RightBadgeCell.swift in Sources */,
 				66160C3E215C271700D0D722 /* KurozoraReachability.swift in Sources */,
+				66CBA53D22BCFE1E00FBEC13 /* FeedPosts.swift in Sources */,
 				660B5B5F21523612002D05F3 /* Session.swift in Sources */,
 				666938B121B1D4DC00BA9620 /* CommentCell.swift in Sources */,
 				6674A0D620A58AA300AAB527 /* NotificationThreadViewController.swift in Sources */,

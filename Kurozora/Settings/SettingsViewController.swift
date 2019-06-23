@@ -125,10 +125,8 @@ extension SettingsViewController {
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let count = super.tableView(tableView, numberOfRowsInSection: section)
-		if let isAdmin = User.isAdmin {
-			if !isAdmin && section == 1 {
-				return count - 1
-			}
+		if !User.isAdmin && section == 1 {
+			return count - 1
 		}
 
 		let collapsedSections = UserSettings.collapsedSections
@@ -143,10 +141,8 @@ extension SettingsViewController {
 //		let collapsedSections = UserSettings.collapsedSections()
 		let settingsCell = super.tableView(tableView, cellForRowAt: indexPath) as! SettingsCell
 
-		if let isAdmin = User.isAdmin {
-			if !isAdmin && indexPath.section == 1 {
-				return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
-			}
+		if !User.isAdmin && indexPath.section == 1 {
+			return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
 		}
 
 //		if collapsedSections.contains(indexPath.section) && !firstTime {

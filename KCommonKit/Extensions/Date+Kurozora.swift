@@ -11,7 +11,7 @@ import Foundation
 extension Date {
     var mediumFormatter: DateFormatter {
         struct Static {
-            static let instance : DateFormatter = {
+            static let instance: DateFormatter = {
                 let formatter = DateFormatter()
                 formatter.dateStyle = DateFormatter.Style.medium
                 return formatter
@@ -22,7 +22,7 @@ extension Date {
     
     var mediumDateTimeFormatter: DateFormatter {
         struct Static {
-            static let instance : DateFormatter = {
+            static let instance: DateFormatter = {
                 let formatter = DateFormatter()
                 formatter.dateStyle = DateFormatter.Style.medium
                 formatter.timeStyle = DateFormatter.Style.medium
@@ -41,7 +41,6 @@ extension Date {
     }
     
     public func timeAgo() -> String {
-        
         let timeInterval = Int(-timeIntervalSince(Date()))
         
         if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {

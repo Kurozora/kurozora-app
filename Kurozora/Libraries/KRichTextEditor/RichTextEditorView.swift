@@ -14,6 +14,7 @@ import SwiftyJSON
 
 protocol KRichTextEditorControllerViewDelegate: class {
 	func updateThreadsList(with thread: ForumThreadsElement)
+	func updateFeedPosts(with thread: FeedPostsElement)
 }
 
 class KRichTextEditorControllerView: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate {

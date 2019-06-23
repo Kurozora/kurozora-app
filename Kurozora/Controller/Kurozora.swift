@@ -130,7 +130,7 @@ class Kurozora: NSObject {
 			let userID = url.lastPathComponent
 			if userID != "" {
 				let storyboard = UIStoryboard(name: "profile", bundle: nil)
-				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController {
+				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController {
 					profileViewController.otherUserID = Int(userID)
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
@@ -240,7 +240,7 @@ extension Kurozora {
 			interval = 300
 		}
 
-		authenticationInterval = Date().uptime() + interval
+		authenticationInterval = Date.uptime() + interval
 	}
 
 	/// Prepares the app for authentication

@@ -10,7 +10,7 @@ import UIKit
 
 extension Date {
 	/// Get system uptime
-	func uptime() -> time_t {
+	static func uptime() -> time_t {
 		var boottime = timeval()
 		var mib: [Int32] = [CTL_KERN, KERN_BOOTTIME]
 		var size = MemoryLayout<timeval>.stride
@@ -25,6 +25,7 @@ extension Date {
 		return uptime
 	}
 
+	/// Retunrs string representing how much time has passed since given date
 	static func timeAgo(_ time: String?) -> String {
 		guard let time = time else { return "" }
 		let formatter = DateFormatter()
@@ -59,6 +60,7 @@ extension Date {
 		}
 	}
 
+	/// Returns a string indicating the group a given date falls in (i.e. Last Week, Last Month, etc.)
 	static func groupTime(by date: String) -> String {
 		let formatter = DateFormatter()
 		formatter.locale = Locale(identifier: "US_en")
@@ -86,6 +88,7 @@ extension Date {
 		}
 	}
 
+	/// Returns a date object for given string
 	static func stringToDateTime(string: String?) -> Date {
 		guard let string = string else { return Date() }
 		let dateFormatter = DateFormatter()

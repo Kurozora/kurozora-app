@@ -143,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 		if authenticationCount < 1 {
-			if Date().uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
+			if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
 				Kurozora.shared.prepareForAuthentication()
 			}
 			UIApplication.shared.keyWindow?.viewWithTag(5614325)?.removeFromSuperview()

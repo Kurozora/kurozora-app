@@ -36,7 +36,7 @@ class InformationTableViewCell: UITableViewCell {
 
 	fileprivate func setup() {
 		guard let showDetail = showDetailsElement else { return }
-		if let isAdmin = User.isAdmin, isAdmin == false && indexPathRow == 0 {
+		if !User.isAdmin && indexPathRow == 0 {
 			indexPathRow = 2
 		}
 

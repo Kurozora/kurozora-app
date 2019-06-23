@@ -716,6 +716,66 @@ struct Service {
 		})
 	}
 
+// MARK: - Feed
+// All feed related endpoints
+	/**
+		Get a list of feed sections
+
+		- Parameter successHandler: Returns an array of type FeedSectionsElement.
+	**/
+	func getFeedSections(withSuccess successHandler:@escaping ([FeedSectionsElement]?) -> Void) {
+		let request : APIRequest<FeedSections,JSONError> = tron.swiftyJSON.request("feed-sections")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.perform(withSuccess: { sections in
+			if let success = sections.success {
+				if success {
+					successHandler(sections.sections)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get feed sections 😔", subTitle: responseMessage)
+			}
+
+			print("Received get feed sections error: \(error)")
+		})
+	}
+
+	/**
+		Get a list of feed posts for a section
+
+		- Parameter sectionID: ID of the feed section.
+		- Parameter page: The page to retrieve threads from. (starts at 0)
+		- Parameter successHandler: Returns an object of type ForumThreads.
+	**/
+	func getFeedPosts(for sectionID: Int?, page: Int?, withSuccess successHandler:@escaping (FeedPosts?) -> Void) {
+		guard let sectionID = sectionID else { return }
+		guard let page = page else { return }
+
+		let request : APIRequest<FeedPosts,JSONError> = tron.swiftyJSON.request("feed-sections/\(sectionID)/posts")
+		request.headers = headers
+		request.authorizationRequirement = .required
+		request.method = .get
+		request.parameters = [
+			"page": page
+		]
+		request.perform(withSuccess: { threads in
+			if let success = threads.success {
+				if success {
+					successHandler(threads)
+				}
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get feed posts 😔", subTitle: responseMessage)
+			}
+
+			print("Received get feed posts error: \(error)")
+		})
+	}
+
 // MARK: - Forums
 // All forum related endpoints
 	/**
@@ -1087,21 +1147,21 @@ struct Service {
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					if let userId = user.user?.id {
+					if let userId = user.profile?.id {
 						try? GlobalVariables().KDefaults.set(String(userId), key: "user_id")
 					}
 
 					try? GlobalVariables().KDefaults.set(username, key: "username")
 
-					if let authToken = user.user?.authToken {
+					if let authToken = user.profile?.authToken {
 						try? GlobalVariables().KDefaults.set(authToken, key: "auth_token")
 					}
 
-					if let sessionID = user.user?.sessionID {
+					if let sessionID = user.profile?.sessionID {
 						try? GlobalVariables().KDefaults.set(String(sessionID), key: "session_id")
 					}
 
-					if let role = user.user?.role {
+					if let role = user.profile?.role {
 						try? GlobalVariables().KDefaults.set(String(role), key: "user_role")
 					}
 					successHandler(success)

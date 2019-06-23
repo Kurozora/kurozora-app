@@ -121,7 +121,7 @@ public class ForumsCell: UITableViewCell {
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
@@ -180,23 +180,21 @@ public class ForumsCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin, let isMod = User.isMod {
-			if isAdmin || isMod {
-				if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
-					var lock = 0
-					var lockTitle = "Unlock"
+		if User.isAdmin || User.isMod {
+			if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
+				var lock = 0
+				var lockTitle = "Unlock"
 
-					if !locked {
-						lock = 1
-						lockTitle = "Lock"
-					}
-
-					action.addAction(UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-						Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
-							self.isLocked(locked)
-						})
-					}))
+				if !locked {
+					lock = 1
+					lockTitle = "Lock"
 				}
+
+				action.addAction(UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+					Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+						self.isLocked(locked)
+					})
+				}))
 			}
 		}
 

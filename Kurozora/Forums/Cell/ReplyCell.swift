@@ -157,7 +157,7 @@ class ReplyCell: UITableViewCell {
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = threadRepliesElement?.user?.id, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
@@ -190,9 +190,7 @@ class ReplyCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin, let isMod = User.isMod {
-			if isAdmin || isMod {
-			}
+		if User.isAdmin || User.isMod {
 		}
 
 		// Upvote, downvote and reply actions

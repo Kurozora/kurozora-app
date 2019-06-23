@@ -286,7 +286,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	func visitPosterProfilePage() {
 		if let posterId = forumThreadElement?.user?.id, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
@@ -300,35 +300,33 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if let isAdmin = User.isAdmin, let isMod = User.isMod {
-			if isAdmin || isMod {
-				if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
-					var lock: Int
-					var lockTitle: String
+		if User.isAdmin || User.isMod {
+			if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
+				var lock: Int
+				var lockTitle: String
 
-					if locked {
-						lock = 1
-						lockTitle = "Lock"
-					} else {
-						lock = 0
-						lockTitle = "Unock"
-					}
-
-					let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-						Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
-							self.isLocked(locked)
-						})
-					})
-					lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-					if locked {
-						lockAction.setValue(#imageLiteral(resourceName: "locked"), forKey: "image")
-					} else {
-						lockAction.setValue(#imageLiteral(resourceName: "unlocked"), forKey: "image")
-					}
-
-					action.addAction(lockAction)
+				if locked {
+					lock = 1
+					lockTitle = "Lock"
+				} else {
+					lock = 0
+					lockTitle = "Unock"
 				}
+
+				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+					Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+						self.isLocked(locked)
+					})
+				})
+				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+				if locked {
+					lockAction.setValue(#imageLiteral(resourceName: "locked"), forKey: "image")
+				} else {
+					lockAction.setValue(#imageLiteral(resourceName: "unlocked"), forKey: "image")
+				}
+
+				action.addAction(lockAction)
 			}
 		}
 
@@ -400,7 +398,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
 		if let posterID = forumThreadElement?.user?.id, posterID != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterID
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)

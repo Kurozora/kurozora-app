@@ -22,8 +22,8 @@ public class KAnimeKit {
 //        return tabBarController
 //    }
     
-    class func profileViewController() -> ProfileViewController {
-        let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+    class func profileViewController() -> ProfileTableViewController {
+        let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileTableViewController
         return controller
     }
     

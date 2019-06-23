@@ -43,28 +43,28 @@ class KurozoraTabBarController: ESTabBarController {
         let notificationStoryboard = UIStoryboard(name: "notification", bundle: nil)
         let notifications = notificationStoryboard.instantiateViewController(withIdentifier: "Notification") as! NotificationsViewController
         
-        let profileStoryboard = UIStoryboard(name: "profile", bundle: nil)
-        let profile = profileStoryboard.instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
+        let feedStoryboard = UIStoryboard(name: "feed", bundle: nil)
+        let feed = feedStoryboard.instantiateViewController(withIdentifier: "FeedTableViewController") as! FeedTableViewController
         
         // Setup animation, title and image
 		home.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Explore", image: #imageLiteral(resourceName: "home"), selectedImage: #imageLiteral(resourceName: "home"))
         library.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Library", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
         forums.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "note"), selectedImage: #imageLiteral(resourceName: "note"))
         notifications.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "notification"), selectedImage: #imageLiteral(resourceName: "notification"))
-        profile.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Profile", image: #imageLiteral(resourceName: "user_male"), selectedImage: #imageLiteral(resourceName: "user_male"))
+        feed.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Feed", image: #imageLiteral(resourceName: "user_male"), selectedImage: #imageLiteral(resourceName: "user_male"))
 
         // Setup navigation and title
         let n1 = KNavigationController.init(rootViewController: home)
         let n2 = KNavigationController.init(rootViewController: library)
         let n3 = KNavigationController.init(rootViewController: forums)
         let n4 = KNavigationController.init(rootViewController: notifications)
-        let n5 = KNavigationController.init(rootViewController: profile)
+        let n5 = KNavigationController.init(rootViewController: feed)
         
         home.title = "Explore"
         library.title = "Library"
         forums.title = "Forums"
         notifications.title = "Notifications"
-        profile.title = "Profile"
+        feed.title = "Feed"
         
         // Initialize views
         viewControllers = [n1, n2, n3, n4, n5]

@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  ProfileTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 14/05/2018.
@@ -14,9 +14,7 @@ import SCLAlertView
 import SwiftyJSON
 //import XCDYouTubeKit
 
-class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-	@IBOutlet var tableView: UITableView!
-
+class ProfileTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
 	@IBOutlet weak var userAvatar: UIImageView! {
@@ -31,13 +29,23 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			bioTextView.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var bioTextViewHeight: NSLayoutConstraint!
-	@IBOutlet weak var activeAgo: UILabel!
 
 	@IBOutlet weak var followButton: UIButton! {
 		didSet {
 			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
+
+
+	@IBOutlet weak var reputationButton: UIButton! {
+		didSet {
+			reputationButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var badgesButton: UIButton!  {
+		didSet {
+			badgesButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var followingButton: UIButton! {
@@ -50,45 +58,25 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			followersButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var badgesButton: UIButton!  {
-		didSet {
-			badgesButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
 
-	@IBOutlet weak var userButtonsStackView: UIStackView!
-	@IBOutlet weak var segmentedControl: UISegmentedControl! {
-		didSet {
-			segmentedControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-
-	@IBOutlet weak var proBadge: UILabel!
-	@IBOutlet weak var postsBadge: UILabel!
-	@IBOutlet weak var tagBadge: UIButton!
-	@IBOutlet weak var reputationBadge: UILabel!
+	@IBOutlet weak var proBadgeButton: UIButton!
+	@IBOutlet weak var tagBadgeButton: UIButton!
 
 	@IBOutlet weak var selectBannerImageButton: UIButton!
 	@IBOutlet weak var selectProfileImageButton: UIButton!
 	@IBOutlet weak var editProfileButton: UIButton! {
 		didSet {
-			editProfileButton.theme_tintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var postButton: UIButton! {
-		didSet {
-			postButton.theme_tintColor = KThemePicker.tintColor.rawValue
+			editProfileButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			editProfileButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 
-    enum SelectedFeedStyle: Int {
+	enum SelectedFeedStyle: Int {
         case Feed = 0
         case Popular
         case Global
         case Profile
     }
-
-	private let refreshControl = UIRefreshControl()
 
     var user: User?
 	var otherUserID: Int?
@@ -112,16 +100,9 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
 		}
 
-		// Add Refresh Control to Collection View
-		if #available(iOS 10.0, *) {
-			tableView.refreshControl = refreshControl
-		} else {
-			tableView.addSubview(refreshControl)
-		}
-
-		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
-		refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
 		// Fetch posts
 		fetchPosts()
@@ -135,7 +116,12 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "There are no posts on your timeline!"))
+			var title = "There are no posts on this timeline! Be the first to post :D"
+			if User.currentID == self.user?.profile?.id {
+				title = "There are no posts on your timeline!"
+			}
+
+			view.titleLabelString(NSAttributedString(string: title))
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
@@ -146,13 +132,13 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 	// MARK: - Functions
     @objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchPosts()
 	}
 
     private func fetchPosts() {
         self.tableView.reloadData()
-		self.refreshControl.endRefreshing()
+		self.refreshControl?.endRefreshing()
     }
 
 //    override public func fetchPosts() {
@@ -183,14 +169,14 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 
     private func updateViewWithUser(_ user: User?) {
         // Setup username
-        if let username = user?.user?.username, username != "" {
+        if let username = user?.profile?.username, username != "" {
             usernameLabel.text = username
 		} else {
 			usernameLabel.text = "Unknown"
 		}
         
         // Setup avatar
-        if let avatar = user?.user?.avatar, avatar != "" {
+        if let avatar = user?.profile?.avatar, avatar != "" {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
             userAvatar.kf.indicatorType = .activity
@@ -203,7 +189,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         }
 
         // Setup banner
-        if let banner = user?.user?.banner, banner != "" {
+        if let banner = user?.profile?.banner, banner != "" {
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
             userBanner.kf.indicatorType = .activity
@@ -213,7 +199,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         }
 
         // Setup user bio
-        if let bio = user?.user?.bio, bio != "" {
+        if let bio = user?.profile?.bio, bio != "" {
             self.bioTextView.text = bio
 
 			if (self.bioTextView.frame.height < 67) {
@@ -221,53 +207,24 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			} else {
 				self.bioTextView.sizeThatFits(CGSize(width: self.bioTextView.frame.width, height: 67))
 			}
-		} else {
-			self.bioTextViewHeight.constant = 0
 		}
         
-        // Setup user activity
-        if let activeEnd = user?.user?.activeEnd, activeEnd != "" {
-            let timeAgo = Date.timeAgo(activeEnd)
-            let activeEndFormatted = timeAgo == "Just now" ? "Active Now" : timeAgo
-            
-            if let activeAgo = user?.user?.active, String(activeAgo) != "" {
-                self.activeAgo.text = activeAgo ? "Active Now" : activeEndFormatted
-            }
-        } else {
-            self.activeAgo.text = "Active Now"
-        }
-        
-        // Setup post count
-        if let postCount = user?.user?.postCount, postCount > 0 {
-            if postCount >= 1000 {
-                self.postsBadge.text = "" + String(format: "%.1fk", Float(postCount-49)/1000.0 )
-            } else {
-                self.postsBadge.text = "" + String(postCount)
-            }
-        } else {
-            self.postsBadge.text = "0"
-        }
-        
         // Setup reputation count
-        if let reputationCount = user?.user?.reputationCount, reputationCount > 0 {
-            if reputationCount >= 10000 {
-                self.reputationBadge.text = "" + String(format: "%.1fk", Float(reputationCount-49)/10000.0 )
-            } else {
-                self.reputationBadge.text = "" + String(reputationCount)
-            }
+        if let reputationCount = user?.profile?.reputationCount, reputationCount > 0 {
+			self.reputationButton.setTitle("\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)") Reputation", for: .normal)
         } else {
-            self.postsBadge.text = "0"
+			self.reputationButton.setTitle("0 Reputation", for: .normal)
         }
         
         // Setup following & followers count
-        if let following = user?.user?.followingCount, following > 0 {
-            self.followingButton.setTitle("\(following) Following", for: .normal)
+        if let followingCount = user?.profile?.followingCount, followingCount > 0 {
+            self.followingButton.setTitle("\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)") Following", for: .normal)
         } else {
             self.followingButton.setTitle("0 Following", for: .normal)
         }
         
-        if let follower = user?.user?.followerCount, follower > 0 {
-            self.followersButton.setTitle("\(follower) Followers", for: .normal)
+        if let followerCount = user?.profile?.followerCount, followerCount > 0 {
+            self.followersButton.setTitle("\((followerCount >= 10000) ? followerCount.kFormatted : "\(followerCount)") Followers", for: .normal)
         } else {
             self.followersButton.setTitle("0 Followers", for: .normal)
         }
@@ -288,24 +245,24 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
         }
 
         // Setup pro badge
-        proBadge.isHidden = true
-        if let proBadge = user?.user?.proBadge, String(proBadge) != "" {
+        proBadgeButton.isHidden = true
+        if let proBadge = user?.profile?.proBadge, String(proBadge) != "" {
             if proBadge {
-                self.proBadge.isHidden = false
-                self.proBadge.text = "PRO"
+                self.proBadgeButton.isHidden = false
+                self.proBadgeButton.setTitle("PRO", for: .normal)
             }
         }
 
 		// Setup badges
-		if let badges = user?.user?.badges, badges != [] {
+		if let badges = user?.profile?.badges, badges != [] {
 			for badge in badges {
-				self.tagBadge.setTitle(badge["text"].stringValue, for: .normal)
-				self.tagBadge.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
-				self.tagBadge.backgroundColor = UIColor(hexString: badge["backgroundColor"].stringValue)
+				self.tagBadgeButton.setTitle(badge["text"].stringValue, for: .normal)
+				self.tagBadgeButton.setTitleColor(UIColor(hexString: badge["textColor"].stringValue), for: .normal)
+				self.tagBadgeButton.backgroundColor = UIColor(hexString: badge["backgroundColor"].stringValue)
 				break
 			}
 		} else {
-			self.tagBadge.setTitle("Kokosei", for: .normal)
+			self.tagBadgeButton.setTitle("Kokosei", for: .normal)
 		}
     }
 
@@ -324,13 +281,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 
 			// Unhide previously hidden items
 			self.editProfileButton.alpha = 1
-			self.tagBadge.alpha = 1
-			self.postsBadge.alpha = 1
-			self.reputationBadge.alpha = 1
-			self.activeAgo.alpha = 1
-			self.userButtonsStackView.alpha = 1
-			self.segmentedControl.alpha = 1
-			self.postButton.alpha = 1
+			self.tagBadgeButton.alpha = 1
 
 			// Show relevant actions
 			self.profileNavigationItem.setLeftBarButton(nil, animated: true)
@@ -343,22 +294,8 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			self.bioTextView.isScrollEnabled = false
 			self.bioTextView.isEditable = false
 
-			// Reverse bio text view constraint change
-			if self.bioTextView.text == "" {
-				self.bioTextViewHeight.constant = 0
-			} else {
-				self.bioTextViewHeight.constant = 67
-				self.tableView.tableHeaderView?.frame.size.height = 352
-			}
-
 			// Header view size to fit
 //			self.sizeHeaderToFit()
-
-			// Unhide table view cells
-			// TODO: - Find a better way to hide/unhide ALL cells and not visible ones only
-			for tableCell in self.tableView.visibleCells {
-				tableCell.contentView.alpha = 1
-			}
 		}
 	}
 
@@ -418,18 +355,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			// Setup edit view
 			// Hide distractions
 			self.editProfileButton.alpha = 0
-			self.tagBadge.alpha = 0
-			self.postsBadge.alpha = 0
-			self.reputationBadge.alpha = 0
-			self.activeAgo.alpha = 0
-			self.userButtonsStackView.alpha = 0
-			self.segmentedControl.alpha = 0
-			self.postButton.alpha = 0
-
-			// Hide table view cells
-			for tableCell in self.tableView.visibleCells {
-				tableCell.contentView.alpha = 0
-			}
+			self.tagBadgeButton.alpha = 0
 
 			// Add relevant actions
 			// Save old actions
@@ -454,16 +380,13 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 			self.bioTextView.isScrollEnabled = true
 			self.bioTextView.isEditable = true
 
-			// Change bio text view height
-			self.bioTextViewHeight.constant = 300
-
 			// Header view size to fit
 			self.sizeHeaderToFit()
 		}
 	}
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
-        if let avatar = user?.user?.avatar, avatar != ""  {
+        if let avatar = user?.profile?.avatar, avatar != ""  {
             presentPhotoViewControllerWith(url: avatar, from: userAvatar)
         } else {
             presentPhotoViewControllerWith(string: "default_avatar", from: userAvatar)
@@ -471,7 +394,7 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
-        if let banner = user?.user?.banner, banner != "" {
+        if let banner = user?.profile?.banner, banner != "" {
 			presentPhotoViewControllerWith(url: banner, from: userBanner)
         } else {
             presentPhotoViewControllerWith(string: "default_banner", from: userBanner)
@@ -482,99 +405,99 @@ class ProfileViewController: UIViewController, EmptyDataSetSource, EmptyDataSetD
 		self.dismiss(animated: true, completion: nil)
 	}
 
-	@IBAction func settingsBtnPressed(_ sender: Any) {
-		let storyboard:UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "SettingsSplitView") as! UISplitViewController
-		self.present(vc, animated: true, completion: nil)
-	}
+//	@IBAction func settingsBtnPressed(_ sender: Any) {
+//		let storyboard:UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
+//		let vc = storyboard.instantiateViewController(withIdentifier: "SettingsSplitView") as! UISplitViewController
+//		self.present(vc, animated: true, completion: nil)
+//	}
 
 	// MARK: - Prepare for segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "BadgeSegue" {
 			let vc = segue.destination as! BadgesTableViewController
-			vc.badges = user?.user?.badges
+			vc.badges = user?.profile?.badges
 		}
 	}
 }
 
 // MARK: - UITableViewDataSource
-extension ProfileViewController: UITableViewDataSource {
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ProfileTableViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let postCount = posts?.count, postCount != 0 {
 			return postCount
 		}
 		return 2
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let timelinePostCell:TimelinePostCell = tableView.dequeueReusableCell(withIdentifier: "TimelinePostCell") as! TimelinePostCell
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let feedPostCell: FeedPostCell = tableView.dequeueReusableCell(withIdentifier: "FeedPostCell") as! FeedPostCell
 
 		// Profile Image
 		if let profileImage = posts?[indexPath.row]["profile_image"].stringValue, profileImage != "" {
 			let profileImage = URL(string: profileImage)
 			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
-			timelinePostCell.profileImageView.kf.indicatorType = .activity
-			timelinePostCell.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			feedPostCell.profileImageView?.kf.indicatorType = .activity
+			feedPostCell.profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 		}else {
-			timelinePostCell.profileImageView.image = #imageLiteral(resourceName: "default_avatar")
+			feedPostCell.profileImageView?.image = #imageLiteral(resourceName: "default_avatar")
 		}
 
 		// Username
 		if let username = posts?[indexPath.row]["username"].stringValue, username != "" {
-			timelinePostCell.userNameLabel.text = username
+			feedPostCell.usernameLabel?.text = username
 		} else {
-			timelinePostCell.userNameLabel.text = "Unknown"
+			feedPostCell.usernameLabel?.text = "Unknown"
 		}
 
 		// Other Username
 		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
-			timelinePostCell.otherUserNameLabel.text = otherUsername
+			feedPostCell.otherUserNameLabel?.text = otherUsername
 
-			timelinePostCell.userSeparatorLabel.isHidden = false
-			timelinePostCell.otherUserNameLabel.isHidden = false
+			feedPostCell.userSeparatorLabel?.isHidden = false
+			feedPostCell.otherUserNameLabel?.isHidden = false
 		} else {
-			timelinePostCell.otherUserNameLabel.isHidden = true
-			timelinePostCell.userSeparatorLabel.isHidden = true
+			feedPostCell.otherUserNameLabel?.isHidden = true
+			feedPostCell.userSeparatorLabel?.isHidden = true
 		}
 
 		// Post
 		if let postText = posts?[indexPath.row]["post"].stringValue, postText != "" {
-			timelinePostCell.postTextView.text = postText
+			feedPostCell.postTextView?.text = postText
 		} else {
-			timelinePostCell.postTextView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+			feedPostCell.postTextView?.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 		}
 
 		// Likes
 		if let hearts = posts?[indexPath.row]["likes"].intValue, hearts != 0 {
-			timelinePostCell.heartButton.setTitle(" \(hearts)", for: .normal)
+			feedPostCell.heartButton?.setTitle(" \(hearts)", for: .normal)
 		} else {
-			timelinePostCell.heartButton.setTitle("", for: .normal)
+			feedPostCell.heartButton?.setTitle("", for: .normal)
 		}
 
 		// Comments
 		if let comments = posts?[indexPath.row]["comments"].intValue, comments != 0 {
-			timelinePostCell.commentButton.setTitle(" \(comments)", for: .normal)
+			feedPostCell.commentButton?.setTitle(" \(comments)", for: .normal)
 		} else {
-			timelinePostCell.commentButton.setTitle("", for: .normal)
+			feedPostCell.commentButton?.setTitle("", for: .normal)
 		}
 
 		// ReShare
 		if let share = posts?[indexPath.row]["shares"].intValue, share != 0 {
-			timelinePostCell.reshareButton.setTitle(" \(share)", for: .normal)
+			feedPostCell.shareButton?.setTitle(" \(share)", for: .normal)
 		} else {
-			timelinePostCell.reshareButton.setTitle("", for: .normal)
+			feedPostCell.shareButton?.setTitle("", for: .normal)
 		}
 
-		return timelinePostCell
+		return feedPostCell
 	}
 }
 
 // MARK: - UITableViewDelegate
-extension ProfileViewController: UITableViewDelegate {
+extension ProfileTableViewController {
 }
 
 // MARK: - UIImagePickerControllerDelegate
-extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		if let editedImage = info[.editedImage] as? UIImage{
 			self.userAvatar.image = editedImage

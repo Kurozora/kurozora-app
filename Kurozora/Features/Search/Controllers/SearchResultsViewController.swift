@@ -144,7 +144,7 @@ class SearchResultsTableViewController: UITableViewController {
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
-					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileViewController {
+					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
 						profileViewController.otherUserID = currentCell.searchElement?.id
 					}
 				}

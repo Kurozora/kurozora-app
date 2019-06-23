@@ -169,6 +169,9 @@ extension ForumsChildViewController: UITableViewDelegate {
 
 // MARK: - KRichTextEditorControllerViewDelegate
 extension ForumsChildViewController: KRichTextEditorControllerViewDelegate {
+	func updateFeedPosts(with thread: FeedPostsElement) {
+	}
+
 	func updateThreadsList(with thread: ForumThreadsElement) {
 		DispatchQueue.main.async {
 			if self.forumThreads == nil {
