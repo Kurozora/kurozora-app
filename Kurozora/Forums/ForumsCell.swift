@@ -121,7 +121,7 @@ public class ForumsCell: UITableViewCell {
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 

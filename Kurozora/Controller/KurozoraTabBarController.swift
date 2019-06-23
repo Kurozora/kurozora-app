@@ -32,7 +32,7 @@ class KurozoraTabBarController: ESTabBarController {
 
         // Instantiate views
         let homeStoryboard = UIStoryboard(name: "home", bundle: nil)
-        let home = homeStoryboard.instantiateViewController(withIdentifier: "Home") as! HomeCollectionViewController
+        let home = homeStoryboard.instantiateViewController(withIdentifier: "HomeCollectionViewController") as! HomeCollectionViewController
         
         let libraryStoryboard = UIStoryboard(name: "library", bundle: nil)
         let library = libraryStoryboard.instantiateViewController(withIdentifier: "Library") as! LibraryViewController

@@ -14,13 +14,13 @@
         </array>
     </customFonts>
     <scenes>
-        <!--ShowTabBarController-->
+        <!--details-->
         <scene sceneID="sEx-ch-J5e">
             <objects>
-                <viewControllerPlaceholder storyboardName="details" referencedIdentifier="ShowTabBarController" id="kWy-vp-aKx" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="details" id="kWy-vp-aKx" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVz-Yf-Prr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1690" y="114"/>
+            <point key="canvasLocation" x="1614" y="115"/>
         </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="lfD-Or-ghU">
@@ -137,7 +137,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRy-uH-r84" userLabel="Rating View">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DRy-uH-r84" userLabel="Rating View">
                                             <rect key="frame" x="110" y="84.666666666666671" width="107" height="22"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoQ-Bm-O9Z">
@@ -152,7 +152,7 @@
                                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ooQ-Mg-rII" customClass="CosmosView" customModule="Cosmos">
+                                                <view contentMode="redraw" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooQ-Mg-rII" customClass="CosmosView" customModule="Cosmos">
                                                     <rect key="frame" x="25" y="4" width="82" height="14"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -584,21 +584,21 @@
             </objects>
             <point key="canvasLocation" x="1040.8" y="150.73891625615764"/>
         </scene>
-        <!--ForumsNavigation-->
+        <!--forums-->
         <scene sceneID="4hh-j3-mcN">
             <objects>
-                <viewControllerPlaceholder storyboardName="forums" referencedIdentifier="ForumsNavigation" id="AEz-xT-jfB" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="forums" id="AEz-xT-jfB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bv8-00-ReG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1670" y="205"/>
+            <point key="canvasLocation" x="1615" y="206"/>
         </scene>
-        <!--ProfileNavigation-->
+        <!--profile-->
         <scene sceneID="ww2-I0-p6Y">
             <objects>
-                <viewControllerPlaceholder storyboardName="profile" referencedIdentifier="ProfileNavigation" id="sGa-wM-2xH" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="profile" id="sGa-wM-2xH" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Qx-9L-HCG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1665" y="168"/>
+            <point key="canvasLocation" x="1613" y="168"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dI9-VK-jhk">

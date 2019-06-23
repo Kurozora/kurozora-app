@@ -12,7 +12,7 @@
         <!--Face ID & Passcode-->
         <scene sceneID="Zlg-Mm-Dfw">
             <objects>
-                <tableViewController storyboardIdentifier="Account" title="Face ID &amp; Passcode" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F5a-ci-Zsf" customClass="AuthenticationTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AuthenticationTableViewController" title="Face ID &amp; Passcode" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F5a-ci-Zsf" customClass="AuthenticationTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5YI-6P-tHA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -180,7 +180,7 @@
         <!--Require Authentication-->
         <scene sceneID="9ks-wb-R4r">
             <objects>
-                <tableViewController title="Require Authentication" extendedLayoutIncludesOpaqueBars="YES" id="S4V-aO-eN0" customClass="AuthenticationOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AuthenticationOptionsViewController" title="Require Authentication" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S4V-aO-eN0" customClass="AuthenticationOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="17" sectionFooterHeight="22" id="1SZ-0X-9sO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,7 +252,7 @@
         <!--Navigation Controller-->
         <scene sceneID="PMn-yS-Fyc">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bTF-rJ-AtF" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AuthenticationKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bTF-rJ-AtF" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="hNa-kx-6yu">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

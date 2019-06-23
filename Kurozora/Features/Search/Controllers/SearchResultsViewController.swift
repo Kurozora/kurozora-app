@@ -139,7 +139,7 @@ class SearchResultsTableViewController: UITableViewController {
 		if let currentCell = sender as? SearchResultsCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showTabBarController = segue.destination as? ShowTabBarController
+				let showTabBarController = segue.destination as? ShowDetailTabBarController
 				showTabBarController?.showID = currentCell.searchElement?.id
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
@@ -163,7 +163,7 @@ class SearchResultsTableViewController: UITableViewController {
 		} else if let currentCell = sender as? SuggestionResultCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showTabBarController = segue.destination as? ShowTabBarController
+				let showTabBarController = segue.destination as? ShowDetailTabBarController
 				showTabBarController?.showID = currentCell.searchElement?.id
 			}
 		}

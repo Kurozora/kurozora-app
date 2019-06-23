@@ -349,7 +349,7 @@ class ChartViewController: UIViewController {
 //
 //        if let _ = InAppController.hasAnyPro() {
 //
-//            let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
+//            let controller = UIStoryboard(name: "season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
 //            presentViewController(controller, animated: true, completion: nil)
 //
 //        } else {

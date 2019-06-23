@@ -9,26 +9,33 @@
 import UIKit
 
 class NotificationsOptionsViewController: UITableViewController {
-	var segueType: NotificationSegueIdentifier!
-	public var segueIdentifier: String!
+	var notificationSegueIdentifier: NotificationSegueIdentifier = .bannerStyle
+	var segueIdentifier: String!
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		segueType = NotificationSegueIdentifier(rawValue: segueIdentifier)
+		if let notificationSegueIdentifier = NotificationSegueIdentifier(rawValue: segueIdentifier) {
+			self.notificationSegueIdentifier = notificationSegueIdentifier
+		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		switch notificationSegueIdentifier {
+		case .notificationsGrouping:
+			title = "Notification Grouping"
+		case .bannerStyle:
+			title = "Banner Style"
+		}
 	}
 }
 
 // MARK: - UITableViewDataSource
 extension NotificationsOptionsViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let segueType = segueType else { return 0 }
-
-		switch segueType {
+		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			return 3
 		case .bannerStyle:
@@ -38,9 +45,7 @@ extension NotificationsOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
-		guard let segueType = segueType else { return notificationsGroupingCell }
-
-		switch segueType {
+		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			let grouping = NotificationGroupStyle(rawValue: indexPath.item)!
 			let selected = UserSettings.notificationsGrouping
@@ -80,9 +85,7 @@ extension NotificationsOptionsViewController {
 // MARK: - UITableViewDelegate
 extension NotificationsOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let segueType = segueType else { return }
-
-		switch segueType {
+		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			UserSettings.set(indexPath.item, forKey: .notificationsGrouping)
 		case .bannerStyle:

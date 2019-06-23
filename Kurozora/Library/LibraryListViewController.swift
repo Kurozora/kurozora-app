@@ -96,7 +96,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowTabBarController {
+		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
 			showTabBarController.libraryCollectionViewCell = currentCell
 			showTabBarController.showID = currentCell.libraryElement?.id
 			if let showTitle = currentCell.libraryElement?.title {

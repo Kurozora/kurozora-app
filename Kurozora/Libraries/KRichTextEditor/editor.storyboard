@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8Vn-8I-M1E">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Rich Text Editor Controller View-->
+        <!--Rich Text Editor View Controller-->
         <scene sceneID="LgR-HU-k6r">
             <objects>
-                <viewController storyboardIdentifier="RichEditor" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hhy-HY-4Mq" customClass="KRichTextEditorControllerView" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KRichTextEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hhy-HY-4Mq" customClass="KRichTextEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4En-jk-kIz"/>
                         <viewControllerLayoutGuide type="bottom" id="WDF-aN-cLz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="N1I-XK-qUo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6La-NS-Ber" customClass="AnimatableView" customModule="IBAnimatable">
-                                <rect key="frame" x="20" y="80" width="560" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6La-NS-Ber">
+                                <rect key="frame" x="20" y="104" width="374" height="44"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Thread title" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="j89-fz-JFL" customClass="AnimatableTextField" customModule="IBAnimatable">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -56,11 +60,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5BB-1p-TAp" customClass="AnimatableView" customModule="IBAnimatable">
-                                <rect key="frame" x="20" y="132" width="560" height="468"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5BB-1p-TAp">
+                                <rect key="frame" x="20" y="156" width="374" height="706"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4y6-Eq-tbU" customClass="RichEditorView" customModule="RichEditorView">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="468"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="706"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -122,15 +126,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k0-4G-HKi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="761" y="158"/>
+            <point key="canvasLocation" x="613" y="157"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5nr-DB-Sc1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Vn-8I-M1E" customClass="KNavigationController" customModule="Kurozora" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="KRichTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Vn-8I-M1E" customClass="KNavigationController" customModule="Kurozora" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="s8r-pe-0Hu">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -150,29 +154,29 @@
             </objects>
             <point key="canvasLocation" x="-180" y="158.12807881773401"/>
         </scene>
-        <!--Comment Editor View-->
+        <!--Comment Editor View Controller-->
         <scene sceneID="Ak7-c4-VU3">
             <objects>
-                <viewController storyboardIdentifier="CommentEditor" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mMj-Q5-bpV" customClass="KCommentEditorView" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KCommentEditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mMj-Q5-bpV" customClass="KCommentEditorViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WMu-9D-4eN"/>
                         <viewControllerLayoutGuide type="bottom" id="FPS-n3-jeS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3Xn-jC-Ocb">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkW-jb-kza" userLabel="Reply To User Container" customClass="AnimatableView" customModule="IBAnimatable">
-                                <rect key="frame" x="20" y="80" width="560" height="55.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkW-jb-kza" userLabel="Reply To User Container">
+                                <rect key="frame" x="20" y="104" width="374" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Photos Taken Right Before Something Tragic Happened" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-UU-0qu">
-                                        <rect key="frame" x="8" y="8" width="544" height="20.5"/>
+                                        <rect key="frame" x="8" y="8" width="358" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JM-0l-wTQ">
-                                        <rect key="frame" x="8" y="30.5" width="544" height="17"/>
+                                        <rect key="frame" x="8" y="51" width="358" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -203,13 +207,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuH-90-nho" userLabel="Comment Preview Container" customClass="AnimatableView" customModule="IBAnimatable">
-                                <rect key="frame" x="20" y="143.5" width="560" height="440.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuH-90-nho" userLabel="Comment Preview Container">
+                                <rect key="frame" x="20" y="188" width="374" height="658"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR" userLabel="User Avatar Image View Container" customClass="AnimatableView" customModule="IBAnimatable">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR" userLabel="User Avatar Image View Container">
                                         <rect key="frame" x="8" y="8" width="35" height="35"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs">
                                                 <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -255,13 +259,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhZ-4v-9Lm">
-                                        <rect key="frame" x="528" y="8" width="24" height="21"/>
+                                        <rect key="frame" x="342" y="8" width="24" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-mS-n8Z">
-                                        <rect key="frame" x="8" y="47" width="544" height="385.5"/>
+                                        <rect key="frame" x="8" y="47" width="358" height="603"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -331,15 +335,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-DL-cSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="762" y="828"/>
+            <point key="canvasLocation" x="612" y="828"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oST-Et-9ob">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CbS-6R-0C9" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="KCommentEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CbS-6R-0C9" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="oCM-6j-SJi">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>

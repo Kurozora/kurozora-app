@@ -98,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			authenticated = false
             revealingSplashView.heartAttack = true
             let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+            let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController
             self.window?.rootViewController = vc
         }
 
@@ -167,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			let showID = parameters["showID"]
 
 			let storyboard = UIStoryboard(name: "details", bundle: nil)
-			if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
+			if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowDetailTabBarController") as? ShowDetailTabBarController {
 				showTabBarController.showID = showID
 				UIApplication.topViewController?.present(showTabBarController, animated: true)
 			}

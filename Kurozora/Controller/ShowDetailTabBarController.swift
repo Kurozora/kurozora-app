@@ -1,5 +1,5 @@
 //
-//  ShowTabBarController.swift
+//  ShowDetailTabBarController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 26/08/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import ESTabBarController_swift
 
-class ShowTabBarController: ESTabBarController {
+class ShowDetailTabBarController: ESTabBarController {
     var showID: Int?
 	var heroID: String?
 	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
@@ -29,7 +29,7 @@ class ShowTabBarController: ESTabBarController {
         let storyboard = UIStoryboard(name: "details", bundle: nil)
 
         // Instantiate views
-        let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetail") as! ShowDetailViewController
+        let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetailViewController") as! ShowDetailViewController
 		showDetail.exploreCollectionViewCell = exploreCollectionViewCell
 		showDetail.libraryCollectionViewCell = libraryCollectionViewCell
 		showDetail.modalPresentationCapturesStatusBarAppearance = true
@@ -37,7 +37,7 @@ class ShowTabBarController: ESTabBarController {
 		showDetail.heroID = heroID
 		showDetail.delegate = showDetailViewControllerDelegate
         
-        let seasons = storyboard.instantiateViewController(withIdentifier: "Season") as! SeasonsTableViewController
+        let seasons = storyboard.instantiateViewController(withIdentifier: "SeasonsTableViewController") as! SeasonsTableViewController
 		seasons.modalPresentationCapturesStatusBarAppearance = true
 		if let heroID = heroID {
 			if libraryCollectionViewCell?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {

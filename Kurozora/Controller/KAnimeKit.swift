@@ -23,7 +23,7 @@ public class KAnimeKit {
 //    }
     
     class func profileViewController() -> ProfileTableViewController {
-        let controller = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileTableViewController
+        let controller = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileTableViewController
         return controller
     }
     

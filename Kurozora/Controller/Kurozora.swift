@@ -46,7 +46,7 @@ class Kurozora: NSObject {
 			} else {
 				revealingSplashView.heartAttack = true
 				let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-				let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as? WelcomeViewController
+				let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController
 				window?.rootViewController = vc
 			}
 
@@ -83,7 +83,7 @@ class Kurozora: NSObject {
 			if !success {
 				if window?.rootViewController as? WelcomeViewController == nil {
 					let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-					let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+					let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
 					window?.rootViewController = vc
 					self.success = success
 				}
@@ -118,7 +118,7 @@ class Kurozora: NSObject {
 			let showID = url.lastPathComponent
 			if showID != "" {
 				let storyboard = UIStoryboard(name: "details", bundle: nil)
-				if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowTabBarController") as? ShowTabBarController {
+				if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowDetailTabBarController") as? ShowDetailTabBarController {
 					showTabBarController.showID = Int(showID)
 
 					UIApplication.topViewController?.present(showTabBarController, animated: true)
@@ -130,7 +130,7 @@ class Kurozora: NSObject {
 			let userID = url.lastPathComponent
 			if userID != "" {
 				let storyboard = UIStoryboard(name: "profile", bundle: nil)
-				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController {
+				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController {
 					profileViewController.otherUserID = Int(userID)
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)

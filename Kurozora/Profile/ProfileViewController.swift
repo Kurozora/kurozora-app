@@ -407,7 +407,7 @@ class ProfileTableViewController: UITableViewController, EmptyDataSetSource, Emp
 
 //	@IBAction func settingsBtnPressed(_ sender: Any) {
 //		let storyboard:UIStoryboard = UIStoryboard(name: "settings", bundle: nil)
-//		let vc = storyboard.instantiateViewController(withIdentifier: "SettingsSplitView") as! UISplitViewController
+//		let vc = storyboard.instantiateViewController(withIdentifier: "SettingsSplitViewController") as! SettingsSplitViewController
 //		self.present(vc, animated: true, completion: nil)
 //	}
 
@@ -779,7 +779,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //
 //        if let userProfile = userProfile, userProfile.isTheCurrentUser() {
 //            alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
-//                let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "EditProfile") as! EditProfileViewController
+//                let editProfileController =  UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "EditProfile") as! EditProfileViewController
 //                editProfileController.delegate = self
 //                if UIDevice.isPad() {
 //                    self.presentSmallViewController(viewController: editProfileController, sender: sender)
@@ -789,7 +789,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //            }))
 //
 //            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
-//                let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+//                let settings = UIStoryboard(name: "settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
 //                if UIDevice.isPad() {
 //                    self.presentSmallViewController(viewController: settings, sender: sender)
 //                } else {
@@ -798,13 +798,13 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //            }))
 //
 //            alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
-//                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
+//                let userListController = UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "UserListViewController") as! UserListViewController
 //
 //                self.presentSmallViewController(viewController: userListController, sender: sender)
 //            }))
 //
 //            alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
-//                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "UserList") as! UserListViewController
+//                let userListController = UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "UserListViewController") as! UserListViewController
 //	
 //                self.presentSmallViewController(viewController: userListController, sender: sender)
 //            }))

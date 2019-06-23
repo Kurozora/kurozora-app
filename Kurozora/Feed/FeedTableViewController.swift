@@ -132,8 +132,8 @@ extension FeedTableViewController {
 	}
 }
 
-// MARK: - KRichTextEditorControllerViewDelegate
-extension FeedTableViewController: KRichTextEditorControllerViewDelegate {
+// MARK: - KRichTextEditorViewDelegate
+extension FeedTableViewController: KRichTextEditorViewDelegate {
 	func updateThreadsList(with thread: ForumThreadsElement) {
 	}
 

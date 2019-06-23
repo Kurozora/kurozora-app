@@ -52,7 +52,7 @@ public class WorkflowController {
 							logoutUser()
 
 							let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-							let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+							let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
 							vc.logoutReason = reason
 							vc.isKiller = isKiller
 
@@ -76,7 +76,7 @@ public class WorkflowController {
 		try? GlobalVariables().KDefaults.removeAll()
 
 		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+		let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
 		UIApplication.topViewController?.present(vc, animated: true)
 	}
 
@@ -84,7 +84,7 @@ public class WorkflowController {
 		if UIApplication.topViewController as? ManageActiveSessionsController != nil {
 		} else {
 			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
-			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ActiveSessions") as? ManageActiveSessionsController
+			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ManageActiveSessionsController") as? ManageActiveSessionsController
 			manageActiveSessionsController?.dismissEnabled = true
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: manageActiveSessionsController!)
 

@@ -47,7 +47,7 @@ class HomeCollectionViewController: UICollectionViewController {
         Service.shared.validateSession(withSuccess: { (success) in
             if !success {
                 let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+                let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
                 self.present(vc, animated: true, completion: nil)
             }
             NotificationCenter.default.post(name: heartAttackNotification, object: nil)
@@ -94,7 +94,7 @@ class HomeCollectionViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {
             // Show detail for explore cell
-			if let currentCell = sender as? ExploreCollectionViewCell, let showTabBarController = segue.destination as? ShowTabBarController {
+			if let currentCell = sender as? ExploreCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
 				showTabBarController.exploreCollectionViewCell = currentCell
 				showTabBarController.showID = currentCell.showElement?.id
 				if let showTitle = currentCell.showElement?.title {

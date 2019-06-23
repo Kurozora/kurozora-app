@@ -39,7 +39,7 @@ class ForumsViewController: TabmanViewController {
 	}
 	var sectionsCount: Int?
 	var threadSorting: String?
-	var kRichTextEditorControllerView: KRichTextEditorControllerView?
+	var kRichTextEditorViewController: KRichTextEditorViewController?
 	private var shadowImageView: UIImageView?
 	lazy var viewControllers = [UIViewController]()
 
@@ -92,7 +92,7 @@ class ForumsViewController: TabmanViewController {
 		bar.isHidden = false
 
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		kRichTextEditorControllerView = storyboard.instantiateViewController(withIdentifier: "RichEditor") as? KRichTextEditorControllerView
+		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
     }
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -158,10 +158,10 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-		kRichTextEditorControllerView?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
-		kRichTextEditorControllerView?.sectionID = currentIndex! + 1
+		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
+		kRichTextEditorViewController?.sectionID = currentIndex! + 1
 
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorControllerView!)
+		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
 		if #available(iOS 11.0, *) {
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 		}

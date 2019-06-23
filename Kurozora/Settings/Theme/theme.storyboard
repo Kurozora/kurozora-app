@@ -12,7 +12,7 @@
         <!--App Icon-->
         <scene sceneID="0ij-Qx-K3l">
             <objects>
-                <tableViewController storyboardIdentifier="IconManager" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ManageIconTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XF9-Uc-m7K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -92,7 +92,7 @@
         <!--Theme Store-->
         <scene sceneID="3E2-TG-DNE">
             <objects>
-                <viewController storyboardIdentifier="ThemeManager" title="Theme Store" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S9q-8X-BS8" customClass="ManageThemesController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManageThemesController" title="Theme Store" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S9q-8X-BS8" customClass="ManageThemesController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" springLoaded="YES" id="6Tq-kd-oNC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -162,7 +162,7 @@
         <!--Navigation Controller-->
         <scene sceneID="jbc-HC-Hfj">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="xyg-hs-K1N" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ManageThemesKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xyg-hs-K1N" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="kHM-1M-zT8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -187,7 +187,7 @@
         <!--Navigation Controller-->
         <scene sceneID="tJG-Zi-YSt">
             <objects>
-                <navigationController storyboardIdentifier="IconManagerNavigation" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IFw-XN-rGE" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ManageIconKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IFw-XN-rGE" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="thU-M7-P8X">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

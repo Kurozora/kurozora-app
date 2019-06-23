@@ -286,7 +286,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	func visitPosterProfilePage() {
 		if let posterId = forumThreadElement?.user?.id, posterId != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
@@ -398,7 +398,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
 		if let posterID = forumThreadElement?.user?.id, posterID != 0 {
 			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "Profile") as? ProfileTableViewController
+			let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController
 			profileViewController?.otherUserID = posterID
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
@@ -419,7 +419,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 
 	@IBAction func replyButtonPressed(_ sender: UIButton) {
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "CommentEditor") as? KCommentEditorView
+		let vc = storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController") as? KCommentEditorViewController
 		vc?.delegate = self
 		vc?.forumThread = forumThreadElement
 

@@ -167,8 +167,8 @@ extension ForumsChildViewController: UITableViewDelegate {
 	}
 }
 
-// MARK: - KRichTextEditorControllerViewDelegate
-extension ForumsChildViewController: KRichTextEditorControllerViewDelegate {
+// MARK: - KRichTextEditorViewDelegate
+extension ForumsChildViewController: KRichTextEditorViewDelegate {
 	func updateFeedPosts(with thread: FeedPostsElement) {
 	}
 

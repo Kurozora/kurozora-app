@@ -12,7 +12,7 @@
         <!--Welcome View Controller-->
         <scene sceneID="b5C-cf-MYh">
             <objects>
-                <viewController storyboardIdentifier="Welcome" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z99-fr-eSh" customClass="WelcomeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z99-fr-eSh" customClass="WelcomeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PJX-we-HM3"/>
                         <viewControllerLayoutGuide type="bottom" id="Lif-yq-sTy"/>
@@ -102,7 +102,7 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B" customClass="AnimatableLabel" customModule="IBAnimatable">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B">
                                 <rect key="frame" x="118.5" y="120" width="177.5" height="75"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -168,7 +168,7 @@ Kurozora</string>
                                     </attributedString>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA" customClass="AnimatableLabel" customModule="IBAnimatable">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA">
                                 <rect key="frame" x="49" y="205" width="316.5" height="38.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The largest mobile app for ">
@@ -406,7 +406,7 @@ Kurozora</string>
                                     </attributedString>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL" customClass="AnimatableLabel" customModule="IBAnimatable">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
                                 <rect key="frame" x="118.5" y="104" width="177.5" height="16"/>
                                 <attributedString key="attributedText">
                                     <fragment content="黒空">
@@ -503,7 +503,7 @@ Kurozora</string>
         <!--Log in-->
         <scene sceneID="Ett-nk-rYv">
             <objects>
-                <viewController storyboardIdentifier="login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z1G-pN-YZx" customClass="LoginViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z1G-pN-YZx" customClass="LoginViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6pn-V5-rQq"/>
                         <viewControllerLayoutGuide type="bottom" id="E7w-q3-Lpu"/>
@@ -578,7 +578,7 @@ Kurozora</string>
                                     <constraint firstItem="xXb-po-gdH" firstAttribute="top" secondItem="CrY-bi-MKu" secondAttribute="top" id="q0Z-JB-Zgj"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk" customClass="AnimatableButton" customModule="IBAnimatable">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk">
                                 <rect key="frame" x="20" y="292" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="wlq-rw-AcS"/>
@@ -666,7 +666,7 @@ Kurozora</string>
         <!--Register-->
         <scene sceneID="G87-hy-JAc">
             <objects>
-                <viewController id="VSj-jZ-zJW" customClass="RegisterViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VSj-jZ-zJW" customClass="RegisterViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MME-1S-QyH"/>
                         <viewControllerLayoutGuide type="bottom" id="uHv-7O-q8U"/>
@@ -678,7 +678,7 @@ Kurozora</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-qw-04R">
                                 <rect key="frame" x="167" y="162" width="80" height="80"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Y3-d1-RaH" userLabel="Profile Picture">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -693,7 +693,7 @@ Kurozora</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd" customClass="AnimatableButton" customModule="IBAnimatable">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <state key="normal" title="Select"/>
                                         <userDefinedRuntimeAttributes>
@@ -909,7 +909,7 @@ Kurozora</string>
         <!--Reset password-->
         <scene sceneID="8DN-6Q-tcr">
             <objects>
-                <viewController id="H2e-ia-XEL" customClass="ResetPasswordViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResetPasswordViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H2e-ia-XEL" customClass="ResetPasswordViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w3P-GZ-aU7"/>
                         <viewControllerLayoutGuide type="bottom" id="azt-3l-ZyK"/>
@@ -1007,7 +1007,7 @@ Kurozora</string>
         <!--Navigation Controller-->
         <scene sceneID="UHM-Wc-4qv">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oGH-lg-KeC" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGH-lg-KeC" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="2sx-91-4W8">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -1026,7 +1026,7 @@ Kurozora</string>
         <!--Navigation Controller-->
         <scene sceneID="0qL-2n-vup">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FAW-mw-c86" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RegisterKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FAW-mw-c86" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="4zv-b6-S1d">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>

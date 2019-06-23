@@ -37,7 +37,7 @@ class InAppPurchaseViewController: UITableViewController {
 //        NotificationCenter.defaultCenter.addObserver(self, selector: "setPrices", name: PurchasedProNotification, object: nil)
 //
 //        if let navController = parent as? UINavigationController {
-//            if let firstController = navController.viewControllers.first, !firstController.isKindOfClass(SettingsViewController) {
+//            if let firstController = navController.viewControllers.first, !firstController.isKindOfClass(SettingsTableViewController) {
 //                navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: "dismissViewControllerPressed")
 //            }
 //        }

@@ -12,7 +12,7 @@
         <!--KDefaults Manager-->
         <scene sceneID="B2T-e1-T86">
             <objects>
-                <tableViewController storyboardIdentifier="AdminPanel" title="KDefaults Manager" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WH9-p1-zZB" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AdminTableViewController" title="KDefaults Manager" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WH9-p1-zZB" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="TsW-1U-qHf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,7 +112,7 @@
         <!--Navigation Controller-->
         <scene sceneID="pBo-4M-7iG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1gb-P5-jdL" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AdminKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1gb-P5-jdL" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="KN7-JL-Rsb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

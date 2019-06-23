@@ -58,13 +58,13 @@ extension AccountTableViewController {
 				if User.isLoggedIn {
 					Service.shared.logout(withSuccess: { (success) in
 						let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-						let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+						let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
 
 						self.present(vc, animated: true, completion: nil)
 					})
 				} else {
 					let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-					let vc = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+					let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
 
 					self.present(vc, animated: true, completion: nil)
 				}

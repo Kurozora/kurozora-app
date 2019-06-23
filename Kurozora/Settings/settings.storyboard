@@ -12,7 +12,7 @@
         <!--Settings-->
         <scene sceneID="kgb-BR-Xq6">
             <objects>
-                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="YOh-JN-Nev" customClass="SettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsTableViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YOh-JN-Nev" customClass="SettingsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="oTB-JX-ESW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -744,10 +744,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHM-q3-bxx">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                                    <rect key="frame" x="8" y="0.0" width="398" height="50.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pas-3C-DrF">
-                                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                                            <rect key="frame" x="8" y="10.5" width="30" height="30"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rate_icon" translatesAutoresizingMaskIntoConstraints="NO" id="JEN-qI-Azj">
                                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -943,12 +943,12 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDy-34-LOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2694.202898550725" y="-998.4375"/>
+            <point key="canvasLocation" x="-2481" y="-998"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GHi-cX-FjE">
             <objects>
-                <navigationController storyboardIdentifier="SettingsController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Y0h-Co-3aP">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -966,12 +966,12 @@ Kurozora 1.0.0 (1)</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cJu-79-oFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3351" y="-998"/>
+            <point key="canvasLocation" x="-3252" y="-998"/>
         </scene>
         <!--Settings Split View Controller-->
         <scene sceneID="BXT-wn-ldl">
             <objects>
-                <splitViewController storyboardIdentifier="SettingsSplitView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="SettingsSplitViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="j9b-id-9wy" kind="relationship" relationship="masterViewController" id="VeX-CZ-O8W"/>
                         <segue destination="Zmg-c6-Igs" kind="relationship" relationship="detailViewController" id="0Im-wF-5jX"/>
@@ -984,7 +984,7 @@ Kurozora 1.0.0 (1)</string>
         <!--Account-->
         <scene sceneID="bfV-sP-hPI">
             <objects>
-                <tableViewController storyboardIdentifier="Account" title="Account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fb1-oQ-tHa" customClass="AccountTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AccountTableViewController" title="Account" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fb1-oQ-tHa" customClass="AccountTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="nBh-sF-g9F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1181,12 +1181,12 @@ Kurozora 1.0.0 (1)</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVT-vU-Plr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3349" y="-269"/>
+            <point key="canvasLocation" x="-3252" y="-269"/>
         </scene>
         <!--Active Sessions-->
         <scene sceneID="kcW-tp-ujC">
             <objects>
-                <viewController storyboardIdentifier="ActiveSessions" title="Active Sessions" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9bp-OX-sDj" customClass="ManageActiveSessionsController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManageActiveSessionsController" title="Active Sessions" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9bp-OX-sDj" customClass="ManageActiveSessionsController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jgu-GW-WJC"/>
                         <viewControllerLayoutGuide type="bottom" id="qcK-7o-oVP"/>
@@ -1515,7 +1515,7 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4J-g8-zaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2691" y="-268"/>
+            <point key="canvasLocation" x="-2483" y="-269"/>
         </scene>
         <!--admin-->
         <scene sceneID="KHN-hJ-St3">
@@ -1523,7 +1523,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="admin" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2202" y="-982"/>
+            <point key="canvasLocation" x="-1989" y="-982"/>
         </scene>
         <!--about-->
         <scene sceneID="IwF-zp-Lsq">
@@ -1531,7 +1531,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="about" id="GAQ-MX-p4x" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2205" y="-949"/>
+            <point key="canvasLocation" x="-1992" y="-950"/>
         </scene>
         <!--theme-->
         <scene sceneID="snc-re-vTw">
@@ -1539,24 +1539,25 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2202" y="-1050"/>
+            <point key="canvasLocation" x="-1989" y="-1050"/>
         </scene>
-        <!--IconManagerNavigation-->
+        <!--ManageIconKNavigationController-->
         <scene sceneID="pCk-tB-aID">
             <objects>
-                <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="IconManagerNavigation" id="4UV-W6-1yL" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2128" y="-1016"/>
+            <point key="canvasLocation" x="-1867" y="-1017"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zmg-c6-Igs" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AccountKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zmg-c6-Igs" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ZA3-fv-L1X">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1580,7 +1581,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="notificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2142" y="-1083"/>
+            <point key="canvasLocation" x="-1929" y="-1084"/>
         </scene>
         <!--authenticationSettings-->
         <scene sceneID="EBP-ej-D5t">
@@ -1588,7 +1589,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="authenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2130" y="-915"/>
+            <point key="canvasLocation" x="-1918" y="-915"/>
         </scene>
     </scenes>
     <resources>
@@ -1608,7 +1609,7 @@ Kurozora 1.0.0 (1)</string>
         <image name="unlock_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gXD-Me-I3f"/>
+        <segue reference="0Im-wF-5jX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -90,7 +90,7 @@ class CalendarViewController: UIViewController {
 //    
 //    override func childViewControllersForPagerTabStripViewController(pagerTabStripViewController: PagerTabStripViewController!) -> [AnyObject]! {
 //        
-//        let storyboard = UIStoryboard(name: "Season", bundle: nil)
+//        let storyboard = UIStoryboard(name: "season", bundle: nil)
 //        
 //        // Set weekday strings
 //        let calendar = Calendar.current

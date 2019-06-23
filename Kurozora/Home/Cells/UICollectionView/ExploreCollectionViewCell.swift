@@ -130,7 +130,7 @@ extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		guard let collectionView = self.superview else { return nil }
 		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		let showTabBarController = storyboard.instantiateInitialViewController() as! ShowTabBarController
+		let showTabBarController = storyboard.instantiateInitialViewController() as! ShowDetailTabBarController
 		showTabBarController.exploreCollectionViewCell = self
 		showTabBarController.showID = showElement?.id
 

@@ -29,7 +29,7 @@
         <!--Genres-->
         <scene sceneID="cIO-Cu-Zkz">
             <objects>
-                <tableViewController storyboardIdentifier="Genres" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pey-ss-6J5" customClass="GenresTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GenresTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pey-ss-6J5" customClass="GenresTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wLF-aK-jIa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,12 +118,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBH-3e-ZKw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3503.1999999999998" y="-15.517241379310345"/>
+            <point key="canvasLocation" x="3345" y="-16"/>
         </scene>
         <!--Explore-->
         <scene sceneID="a6B-4p-nzZ">
             <objects>
-                <collectionViewController storyboardIdentifier="Home" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VMt-xO-Jzu" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="HomeCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VMt-xO-Jzu" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ywW-E4-xvn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -873,7 +873,7 @@
         <!--Navigation Controller-->
         <scene sceneID="KfH-cc-N2P">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="eeh-Yo-M66" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HomeKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eeh-Yo-M66" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Bui-bU-Slq">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -898,7 +898,7 @@
         <!--Navigation Controller-->
         <scene sceneID="WCy-mS-yuK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fiZ-zG-fwp" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GenresKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fiZ-zG-fwp" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="aaE-fl-5Pb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
