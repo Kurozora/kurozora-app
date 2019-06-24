@@ -30,7 +30,7 @@ class ShowCharacterCell: UITableViewCell {
 	@IBOutlet weak var actorJob: CopyableUILabel! {
 		didSet {
 			self.actorJob.theme_textColor = KThemePicker.textColor.rawValue
-			self.actorJob.theme_backgroundColor = KThemePicker.textColor.rawValue
+			self.actorJob.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var separatorView: UIView! {

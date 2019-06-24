@@ -23,7 +23,11 @@ class ProfileTableViewController: UITableViewController, EmptyDataSetSource, Emp
 			profileView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var usernameLabel: UILabel!
+	@IBOutlet weak var usernameLabel: UILabel! {
+		didSet {
+			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var userBanner: UIImageView!
 	@IBOutlet weak var bioTextView: UITextView! {
 		didSet {

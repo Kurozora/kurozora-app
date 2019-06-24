@@ -386,6 +386,9 @@
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hq0-Ny-PHp">
                                                                         <rect key="frame" x="0.0" y="10" width="88" height="128"/>
                                                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="hq0-Ny-PHp" secondAttribute="height" multiplier="11:16" id="CVh-4f-rjp"/>
+                                                                        </constraints>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                                 <real key="value" value="10"/>
@@ -412,10 +415,9 @@
                                                                 <constraints>
                                                                     <constraint firstItem="Toq-9Q-tqZ" firstAttribute="top" secondItem="hq0-Ny-PHp" secondAttribute="top" id="6hY-rd-LD9"/>
                                                                     <constraint firstItem="Toq-9Q-tqZ" firstAttribute="bottom" secondItem="hq0-Ny-PHp" secondAttribute="bottom" id="8cU-bF-oh0"/>
-                                                                    <constraint firstItem="hq0-Ny-PHp" firstAttribute="leading" secondItem="wcq-sK-TTW" secondAttribute="leading" id="Ku2-qu-fjM"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="hq0-Ny-PHp" secondAttribute="trailing" id="NSK-QK-Q5t"/>
                                                                     <constraint firstAttribute="bottom" secondItem="hq0-Ny-PHp" secondAttribute="bottom" id="RdD-4C-uss"/>
                                                                     <constraint firstItem="Are-vd-qwr" firstAttribute="top" secondItem="wcq-sK-TTW" secondAttribute="top" id="agM-QJ-aYb"/>
+                                                                    <constraint firstItem="hq0-Ny-PHp" firstAttribute="centerX" secondItem="wcq-sK-TTW" secondAttribute="centerX" id="br8-Qs-bp3"/>
                                                                     <constraint firstItem="Are-vd-qwr" firstAttribute="centerX" secondItem="wcq-sK-TTW" secondAttribute="centerX" id="hQ3-nw-dSA"/>
                                                                     <constraint firstItem="Toq-9Q-tqZ" firstAttribute="trailing" secondItem="hq0-Ny-PHp" secondAttribute="trailing" id="o1P-Y6-PSu"/>
                                                                     <constraint firstItem="hq0-Ny-PHp" firstAttribute="top" secondItem="Are-vd-qwr" secondAttribute="centerY" id="qas-0b-fdX"/>

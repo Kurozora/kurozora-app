@@ -600,18 +600,18 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-0B-pCA">
-                                                    <rect key="frame" x="49" y="28.5" width="17" height="22"/>
+                                                    <rect key="frame" x="49" y="28.5" width="16" height="22"/>
                                                     <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="heart"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-Ks-mhX">
-                                                    <rect key="frame" x="76" y="28.5" width="26" height="22"/>
+                                                    <rect key="frame" x="75" y="28.5" width="26" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-WS-dua">
-                                                    <rect key="frame" x="105" y="28.5" width="24" height="22"/>
+                                                    <rect key="frame" x="104" y="28.5" width="16" height="22"/>
                                                     <color key="tintColor" red="0.21568627450980393" green="0.82745098039215681" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="comment"/>
                                                 </button>
@@ -1366,9 +1366,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tee-hW-aJB">
-                                                    <rect key="frame" x="262" y="12.5" width="132" height="32"/>
+                                                    <rect key="frame" x="325" y="12.5" width="69" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <state key="normal" title="See more actors..."/>
+                                                    <state key="normal" title="See More"/>
                                                     <connections>
                                                         <segue destination="XGg-R0-bbf" kind="show" identifier="ActorsSegue" id="oKb-VU-PZs"/>
                                                     </connections>

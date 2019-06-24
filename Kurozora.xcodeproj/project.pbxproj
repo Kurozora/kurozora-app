@@ -1348,6 +1348,7 @@
 			isa = PBXGroup;
 			children = (
 				666C82572162898400C93A70 /* CastTableViewController.swift */,
+				66DE85B322C0E6B500FACDD2 /* Cells */,
 			);
 			path = Cast;
 			sourceTree = "<group>";
@@ -1763,7 +1764,6 @@
 				66CBFB6121217F60006A5E4F /* ShowDetailCell.swift */,
 				66058DBB212E97AD0084B79E /* ShowLinkCell.swift */,
 				66058DB9212E97670084B79E /* ShowReviewCell.swift */,
-				66058DBF212E97E90084B79E /* ShowCharacterCell.swift */,
 				66058DC1212E97FD0084B79E /* ShowTopicCell.swift */,
 			);
 			path = Cells;
@@ -1818,6 +1818,14 @@
 				66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		66DE85B322C0E6B500FACDD2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66058DBF212E97E90084B79E /* ShowCharacterCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		66DEB4A221D247750093725F /* Controllers */ = {
