@@ -29,6 +29,7 @@
 		660B5B5F21523612002D05F3 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B5E21523612002D05F3 /* Session.swift */; };
 		660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B652152F47A002D05F3 /* NoSessionsCell.swift */; };
 		660E9FC721455F3100F6813C /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E9FC621455F3100F6813C /* Cast.swift */; };
+		661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */; };
 		6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6611233C208E285600E6033A /* inapppurchase.storyboard */; };
 		6611233F208E287400E6033A /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611233E208E287400E6033A /* InAppPurchaseViewController.swift */; };
 		66112341208E28C200E6033A /* InAppTransactionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112340208E28C200E6033A /* InAppTransactionController.swift */; };
@@ -406,6 +407,7 @@
 		660B5B652152F47A002D05F3 /* NoSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSessionsCell.swift; sourceTree = "<group>"; };
 		660E9FC621455F3100F6813C /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		660E9FC8214BC6FB00F6813C /* Kurozora.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kurozora.entitlements; sourceTree = "<group>"; };
+		661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayTableViewController.swift; sourceTree = "<group>"; };
 		6611233C208E285600E6033A /* inapppurchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = inapppurchase.storyboard; sourceTree = "<group>"; };
 		6611233E208E287400E6033A /* InAppPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewController.swift; sourceTree = "<group>"; };
 		66112340208E28C200E6033A /* InAppTransactionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppTransactionController.swift; sourceTree = "<group>"; };
@@ -527,7 +529,7 @@
 		664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresTableViewController.swift; sourceTree = "<group>"; };
 		664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 		664B52D022C03C0900B988B3 /* display.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = display.storyboard; sourceTree = "<group>"; };
-		664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsCell.swift; sourceTree = "<group>"; };
+		664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplaySettingsCell.swift; path = ../DisplaySettingsCell.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
 		665F49C521F766CC00A7A659 /* ReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
@@ -870,9 +872,26 @@
 			isa = PBXGroup;
 			children = (
 				664B52D022C03C0900B988B3 /* display.storyboard */,
-				664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */,
+				661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */,
+				661049C122C0E54300A2A354 /* Cells */,
 			);
 			path = Display;
+			sourceTree = "<group>";
+		};
+		661049C122C0E54300A2A354 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		661049C222C0E55200A2A354 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		66112342208E28C800E6033A /* In-App Purchases */ = {
@@ -1120,8 +1139,8 @@
 			isa = PBXGroup;
 			children = (
 				6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */,
-				6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */,
 				6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */,
+				6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */,
 				6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */,
 				6640E19222ADD24400D0F575 /* Cells */,
 			);
@@ -1337,7 +1356,7 @@
 			isa = PBXGroup;
 			children = (
 				666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */,
-				666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */,
+				661049C222C0E55200A2A354 /* Models */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -2312,6 +2331,7 @@
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
+				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,

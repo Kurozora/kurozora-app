@@ -12,7 +12,7 @@
         <!--Display & Blindness-->
         <scene sceneID="ofI-Cu-SE0">
             <objects>
-                <tableViewController title="Display &amp; Blindness" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2K-Bn-OHN" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DisplayTableViewController" title="Display &amp; Blindness" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2K-Bn-OHN" customClass="DisplayTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aHe-u0-qgI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

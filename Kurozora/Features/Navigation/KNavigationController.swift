@@ -24,9 +24,14 @@ class KNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: updateNormalLargeTitlesNotification, object: nil)
 
 		toggleStyle(.normal)
     }
+
+	@objc func updateNormalStyle() {
+		toggleStyle(.normal)
+	}
 
 	func toggleStyle(_ style: KNavigationStyle) {
 		self.navigationBar.isTranslucent = true

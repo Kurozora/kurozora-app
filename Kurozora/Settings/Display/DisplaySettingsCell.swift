@@ -19,5 +19,6 @@ class DisplaySettingsCell: SettingsCell {
 	// MARK: IBActions
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .largeTitles)
+		NotificationCenter.default.post(name: updateNormalLargeTitlesNotification, object: nil)
 	}
 }
