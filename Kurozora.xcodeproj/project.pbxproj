@@ -225,6 +225,8 @@
 		66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */; };
 		669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669C8D552107B7D80014EB7A /* BounceAnimation.swift */; };
 		669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */; };
+		669EA9A022C1490A00784181 /* PurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669EA99F22C1490A00784181 /* PurchasesViewController.swift */; };
+		669EA9A222C1491600784181 /* purchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669EA9A122C1491600784181 /* purchase.storyboard */; };
 		66A2517A224EC9D400815A78 /* ExploreSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A25179224EC9D400815A78 /* ExploreSectionHeaderCell.swift */; };
 		66A254C622AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */; };
 		66A254C722AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */; };
@@ -595,6 +597,8 @@
 		66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailViewController.swift; sourceTree = "<group>"; };
 		669C8D552107B7D80014EB7A /* BounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimation.swift; sourceTree = "<group>"; };
 		669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTabBarItemContentView.swift; sourceTree = "<group>"; };
+		669EA99F22C1490A00784181 /* PurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesViewController.swift; sourceTree = "<group>"; };
+		669EA9A122C1491600784181 /* purchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = purchase.storyboard; sourceTree = "<group>"; };
 		66A25179224EC9D400815A78 /* ExploreSectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreSectionHeaderCell.swift; path = UICollectionView/ExploreSectionHeaderCell.swift; sourceTree = "<group>"; };
 		66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED@2x.png"; sourceTree = "<group>"; };
 		66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Product-RED@3x.png"; sourceTree = "<group>"; };
@@ -1501,6 +1505,15 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		669EA99E22C148D300784181 /* In-App Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				669EA9A122C1491600784181 /* purchase.storyboard */,
+				669EA99F22C1490A00784181 /* PurchasesViewController.swift */,
+			);
+			path = "In-App Purchases";
+			sourceTree = "<group>";
+		};
 		66A254D622AABC3B002A0E34 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1571,6 +1584,7 @@
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				669EA99E22C148D300784181 /* In-App Purchases */,
 				6640E18722AD631F00D0F575 /* Authentication */,
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				66B4F1D3223BC906007C5048 /* Networking */,
@@ -2102,6 +2116,7 @@
 				66C5797D22A864CB001B8F51 /* about.storyboard in Resources */,
 				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6641D6F4222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange.png in Resources */,
+				669EA9A222C1491600784181 /* purchase.storyboard in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				664801C6222DE76A0063143A /* App-Icon-iPad-Green@2x.png in Resources */,
@@ -2495,6 +2510,7 @@
 				66A2517A224EC9D400815A78 /* ExploreSectionHeaderCell.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
 				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,
+				669EA9A022C1490A00784181 /* PurchasesViewController.swift in Sources */,
 				66DEB4AA21D26FBC0093725F /* Search.swift in Sources */,
 				66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */,
 				66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */,
