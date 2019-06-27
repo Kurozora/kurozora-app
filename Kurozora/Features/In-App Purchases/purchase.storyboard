@@ -35,7 +35,7 @@
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="contentEdgeInsets" minX="7" minY="6" maxX="7" maxY="4"/>
-                                            <state key="normal" image="back_chevron">
+                                            <state key="normal" image="chevron_down">
                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
@@ -244,7 +244,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_chevron" width="22" height="12"/>
+        <image name="chevron_down" width="24" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IRo-wA-59k"/>

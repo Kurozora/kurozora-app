@@ -173,6 +173,26 @@ public class ForumsCell: UITableViewCell {
 		})
 	}
 
+	// Share the current thread
+	func shareThread() {
+		guard let threadID = forumThreadsElement?.id else { return }
+		guard let forumsChildViewController = forumsChildViewController else { return }
+		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
+
+		if let title = self.titleLabel.text {
+			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
+		}
+
+		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+
+		if let popoverController = activityVC.popoverPresentationController {
+			popoverController.sourceView = forumsChildViewController.view
+			popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+		forumsChildViewController.present(activityVC, animated: true, completion: nil)
+	}
+
 	// Populate action list
 	fileprivate func actionList() {
 		guard let forumsChildViewController = self.forumsChildViewController else { return }
@@ -190,57 +210,70 @@ public class ForumsCell: UITableViewCell {
 					lockTitle = "Lock"
 				}
 
-				action.addAction(UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
 					Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 						self.isLocked(locked)
 					})
-				}))
+				})
+				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+				if locked {
+					lockAction.setValue(#imageLiteral(resourceName: "locked"), forKey: "image")
+				} else {
+					lockAction.setValue(#imageLiteral(resourceName: "unlocked"), forKey: "image")
+				}
+
+				action.addAction(lockAction)
 			}
 		}
 
 		// Upvote, downvote and reply actions
 		if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 && !locked {
-			action.addAction(UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
+			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 1)
-			}))
-			action.addAction(UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
+			})
+			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 0)
-			}))
-			action.addAction(UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
-			}))
+			})
+			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+			})
+
+			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")
+			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			downvoteAction.setValue(#imageLiteral(resourceName: "arrow_down"), forKey: "image")
+			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			replyAction.setValue(#imageLiteral(resourceName: "comment"), forKey: "image")
+			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+			action.addAction(upvoteAction)
+			action.addAction(downvoteAction)
+			action.addAction(replyAction)
 		}
 
 		// Username action
 		if let username = forumThreadsElement.posterUsername, username != "" {
-			action.addAction(UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
+			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
-			}))
+			})
+			userAction.setValue(#imageLiteral(resourceName: "profile"), forKey: "image")
+			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(userAction)
 		}
 
 		// Share thread action
-		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			var shareText: String!
-			guard let threadID = forumThreadsElement.id else { return }
-
-			if let title = self.titleLabel.text {
-				shareText = "https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"
-			} else {
-				shareText = "https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"
-			}
-
-			let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-			if let popoverController = activityVC.popoverPresentationController {
-				popoverController.sourceView = forumsChildViewController.view
-				popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
-				popoverController.permittedArrowDirections = []
-			}
-			forumsChildViewController.present(activityVC, animated: true, completion: nil)
-		}))
+		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
+			self.shareThread()
+		})
+		shareAction.setValue(#imageLiteral(resourceName: "share"), forKey: "image")
+		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(shareAction)
 
 		// Report thread action
-		action.addAction(UIAlertAction.init(title: "Report", style: .default, handler: { (_) in
-		}))
+		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+		})
+		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
+		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(reportAction)
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 

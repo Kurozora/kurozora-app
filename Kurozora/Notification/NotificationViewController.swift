@@ -56,7 +56,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No notifications to show."))
-				.image(UIImage(named: "notification_icon"))
+				.image(UIImage(named: "notification"))
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
@@ -244,7 +244,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 
 		deleteAction.backgroundColor = .clear
 		deleteAction.image = #imageLiteral(resourceName: "trash_circle")
-		deleteAction.textColor = #colorLiteral(red: 1, green: 0.2352941176, blue: 0.1882352941, alpha: 1)
+		deleteAction.textColor = #colorLiteral(red: 0.8156862745, green: 0.007843137255, blue: 0.1058823529, alpha: 1)
 		deleteAction.font = .systemFont(ofSize: 13)
 		deleteAction.transitionDelegate = ScaleTransition.default
 

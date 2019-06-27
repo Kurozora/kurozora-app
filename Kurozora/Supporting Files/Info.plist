@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8959</string>
+	<string>8963</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -427,7 +427,7 @@
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>
-			<string>user_male</string>
+			<string>profile</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Profile</string>
 			<key>UIApplicationShortcutItemType</key>

@@ -62,7 +62,7 @@
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="iNr-Xf-WLb">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="iNr-Xf-WLb">
                                                             <rect key="frame" x="354" y="37" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -138,7 +138,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="az4-C9-HBM">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="az4-C9-HBM">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -216,7 +216,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="JEA-Le-BNg">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="JEA-Le-BNg">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -299,7 +299,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="FG2-66-fKC">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="FG2-66-fKC">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -368,7 +368,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="FWh-8H-rNb">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="FWh-8H-rNb">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -442,7 +442,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-js-w8F">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="Elk-js-w8F">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -517,7 +517,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="XKy-Ps-7eq">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="XKy-Ps-7eq">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -1146,7 +1146,7 @@ Kurozora 1.0.0 (1)</string>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="VXb-PC-ZNZ">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_forward" translatesAutoresizingMaskIntoConstraints="NO" id="VXb-PC-ZNZ">
                                                             <rect key="frame" x="354" y="17" width="12" height="16"/>
                                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -1679,7 +1679,7 @@ Kurozora 1.0.0 (1)</string>
         <image name="clear_cache_icon" width="128" height="128"/>
         <image name="display_icon" width="128" height="128"/>
         <image name="face_id_icon" width="128" height="128"/>
-        <image name="forward_chevron" width="12" height="22"/>
+        <image name="chevron_forward" width="12" height="22"/>
         <image name="kdefaults_icon" width="128" height="128"/>
         <image name="medium_icon" width="128" height="128"/>
         <image name="notifications_icon" width="128" height="128"/>

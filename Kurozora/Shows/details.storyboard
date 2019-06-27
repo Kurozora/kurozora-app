@@ -100,7 +100,6 @@
                                                 <constraint firstAttribute="height" constant="34" id="Rg7-XF-YWJ"/>
                                             </constraints>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
-                                            <inset key="contentEdgeInsets" minX="5" minY="13" maxX="5" maxY="13"/>
                                             <state key="normal" image="more"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -270,7 +269,6 @@
                                         <constraint firstAttribute="width" constant="34" id="bZh-P0-Nuq"/>
                                     </constraints>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <inset key="contentEdgeInsets" minX="5" minY="13" maxX="5" maxY="13"/>
                                     <state key="normal" image="more"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -302,8 +300,8 @@
                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
-                                    <rect key="frame" x="62.333333333333343" y="214" width="95" height="16"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
+                                    <rect key="frame" x="62.5" y="214" width="95" height="16"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
@@ -581,7 +579,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
                                             <subviews>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re:Zero kara Hajimeru Break Time Episode 1 Discussion" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezT-gY-JOt" customClass="CopyableUILabel" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="18.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" red="1" green="0.62352941179999999" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -594,29 +592,29 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47w-su-K62">
-                                                    <rect key="frame" x="20" y="28.5" width="26" height="22"/>
+                                                    <rect key="frame" x="20" y="27" width="26" height="23.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-0B-pCA">
-                                                    <rect key="frame" x="49" y="28.5" width="17" height="22"/>
+                                                    <rect key="frame" x="49" y="27" width="26" height="23.5"/>
                                                     <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="heart"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-Ks-mhX">
-                                                    <rect key="frame" x="76" y="28.5" width="26" height="22"/>
+                                                    <rect key="frame" x="85" y="27" width="26" height="23.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-WS-dua">
-                                                    <rect key="frame" x="105" y="28.5" width="24" height="22"/>
+                                                    <rect key="frame" x="114" y="27" width="24" height="23.5"/>
                                                     <color key="tintColor" red="0.21568627450980393" green="0.82745098039215681" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="comment"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02-26-19, 5:13 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9l-nY-U3L">
-                                                    <rect key="frame" x="272" y="28.5" width="122" height="22"/>
+                                                    <rect key="frame" x="272" y="27" width="122" height="23.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -960,8 +958,7 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="contentEdgeInsets" minX="7" minY="6" maxX="7" maxY="4"/>
-                                            <state key="normal" image="back_chevron">
+                                            <state key="normal" image="chevron_down">
                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
@@ -985,7 +982,6 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="contentEdgeInsets" minX="5" minY="13" maxX="5" maxY="13"/>
                                             <state key="normal" image="more">
                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
@@ -1110,6 +1106,7 @@
                                                         <constraint firstAttribute="width" constant="30" id="pS3-xA-5gi"/>
                                                     </constraints>
                                                     <color key="tintColor" red="1" green="0.80000000000000004" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <inset key="contentEdgeInsets" minX="5" minY="4" maxX="5" maxY="4"/>
                                                     <state key="normal" image="bell">
                                                         <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -1130,7 +1127,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="moj-zg-YT4"/>
                                                     </constraints>
                                                     <color key="tintColor" red="1" green="0.25490196078431371" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="contentEdgeInsets" minX="4" minY="5" maxX="4" maxY="5"/>
                                                     <state key="normal" image="heart">
                                                         <color key="titleColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -2213,7 +2210,7 @@
         <scene sceneID="IUu-WN-Ci1">
             <objects>
                 <navigationController restorationIdentifier="ShowDetailKNavigationController" storyboardIdentifier="ShowDetailKNavigationController" navigationBarHidden="YES" id="EQg-9Z-biW" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="DETAILS" id="az2-Vv-y6P"/>
+                    <tabBarItem key="tabBarItem" title="DETAILS" image="details_icon" id="az2-Vv-y6P"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="UQM-gz-tZM">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2244,7 +2241,7 @@
         <scene sceneID="i63-Sf-2Sp">
             <objects>
                 <navigationController storyboardIdentifier="SeasonsKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ppU-JL-lwl" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="SEASONS" id="lwc-Ob-bCp"/>
+                    <tabBarItem key="tabBarItem" title="SEASONS" image="list" id="lwc-Ob-bCp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="IDm-4n-3Sb">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -2268,19 +2265,21 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_chevron" width="22" height="12"/>
-        <image name="bell" width="15" height="18"/>
+        <image name="bell" width="22" height="24"/>
         <image name="check" width="44" height="34"/>
+        <image name="chevron_down" width="24" height="13"/>
         <image name="comment" width="24" height="20"/>
-        <image name="heart" width="17" height="17"/>
-        <image name="more" width="26" height="8"/>
+        <image name="details_icon" width="24" height="24"/>
+        <image name="heart" width="26" height="24"/>
+        <image name="list" width="23" height="24"/>
+        <image name="more" width="24" height="24"/>
         <image name="placeholder_episode" width="1920" height="1080"/>
         <image name="placeholder_poster" width="680" height="1000"/>
-        <image name="play" width="16" height="22"/>
+        <image name="play" width="22" height="24"/>
         <image name="shadow_right" width="30" height="6"/>
         <image name="shadow_template" width="6" height="30"/>
-        <image name="star_empty" width="44" height="44"/>
-        <image name="star_filled" width="44" height="44"/>
+        <image name="star_empty" width="48" height="46"/>
+        <image name="star_filled" width="48" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KbB-XQ-1lu"/>

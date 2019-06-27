@@ -49,9 +49,9 @@ class KurozoraTabBarController: ESTabBarController {
         // Setup animation, title and image
 		homeCollectionViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Explore", image: #imageLiteral(resourceName: "home"), selectedImage: #imageLiteral(resourceName: "home"))
         libraryViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Library", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
-        forumsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "note"), selectedImage: #imageLiteral(resourceName: "note"))
+        forumsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "forums"), selectedImage: #imageLiteral(resourceName: "forums"))
         notificationsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "notification"), selectedImage: #imageLiteral(resourceName: "notification"))
-        feedTabsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Feed", image: #imageLiteral(resourceName: "user_male"), selectedImage: #imageLiteral(resourceName: "user_male"))
+        feedTabsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Feed", image: #imageLiteral(resourceName: "profile"), selectedImage: #imageLiteral(resourceName: "profile"))
 
         // Setup navigation and title
         let n1 = KNavigationController.init(rootViewController: homeCollectionViewController)

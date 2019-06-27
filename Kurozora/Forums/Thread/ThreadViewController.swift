@@ -358,7 +358,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
-			userAction.setValue(#imageLiteral(resourceName: "user_male"), forKey: "image")
+			userAction.setValue(#imageLiteral(resourceName: "profile"), forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(userAction)
 		}

@@ -136,7 +136,7 @@ class ForumsViewController: TabmanViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: [("↑ Top", "top"),("◕ Recent","recent")], currentSelection: threadSorting, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")),("Recent","recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsChildViewController
 			currentSection?.threadOrder = value
 			currentSection?.pageNumber = 0
