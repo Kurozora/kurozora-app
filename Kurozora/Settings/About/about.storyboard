@@ -95,6 +95,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="lastUpdatedLabel" destination="1MX-Ez-3X2" id="1XE-k7-nc3"/>
+                        <outlet property="navigationTitleLabel" destination="nZM-Ij-ukz" id="ntW-TG-6yO"/>
                         <outlet property="navigationTitleView" destination="5jw-l1-xrw" id="gIJ-J5-jyb"/>
                         <outlet property="privacyPolicyTextView" destination="WsW-zq-hQ7" id="iWI-8S-cQv"/>
                         <outlet property="scrollView" destination="u9X-vF-wkR" id="3Fw-FR-F3A"/>

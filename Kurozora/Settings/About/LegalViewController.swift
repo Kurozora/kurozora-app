@@ -7,10 +7,15 @@
 //
 
 import UIKit
-import SCLAlertView
 
 class LegalViewController: UIViewController {
 	@IBOutlet weak var navigationTitleView: UIView!
+	@IBOutlet weak var navigationTitleLabel: UILabel! {
+		didSet {
+			navigationTitleLabel.theme_textColor = KThemePicker.barTitleTextColor.rawValue
+		}
+	}
+
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
