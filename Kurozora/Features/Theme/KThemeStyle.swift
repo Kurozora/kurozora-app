@@ -28,9 +28,7 @@ enum KThemeStyle: Int {
 	static let tron = TRON(baseURL: "", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 	static let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 	static let calendar = Calendar.current
-	static let automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
-		KThemeStyle.checkAutomaticSchedule()
-	}
+	private static var automaticDarkThemeSchedule: Timer?
 
 	/// Return a string value for a given KThemeStyle
 	var stringValue: String {
@@ -57,6 +55,14 @@ enum KThemeStyle: Int {
 			return .night
 		default: // a.k.a "Other"
 			return .other
+		}
+	}
+
+	static func startAutomaticDarkThemeSchedule() {
+		if automaticDarkThemeSchedule == nil {
+			automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
+				KThemeStyle.checkAutomaticSchedule()
+			}
 		}
 	}
 }

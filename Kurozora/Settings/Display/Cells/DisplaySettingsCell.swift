@@ -147,6 +147,8 @@ class DisplaySettingsCell: SettingsCell {
 	@IBAction func enableAutomaticDarkThemeSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .automaticDarkTheme)
 
+		KThemeStyle.startAutomaticDarkThemeSchedule()
+
 		if let tableView = self.superview as? UITableView {
 			tableView.reloadData()
 		}

@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
 		if UserSettings.automaticDarkTheme {
-			_ = KThemeStyle.automaticDarkThemeSchedule
+			KThemeStyle.startAutomaticDarkThemeSchedule()
 		} else if let themeIDString = UserSettings.currentTheme, themeIDString != "" {
 			// If themeID is an integer
 			if let themeID = Int(themeIDString) {
