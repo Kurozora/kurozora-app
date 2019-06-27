@@ -50,7 +50,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		}
 
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		refreshControl.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		fetchThreads()
@@ -76,7 +76,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		pageNumber = 0
 		fetchThreads()
 	}
@@ -103,7 +103,7 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 					self.pageNumber += 1
 				}
 
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 			}
 		})
 

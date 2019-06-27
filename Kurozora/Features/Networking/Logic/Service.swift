@@ -13,7 +13,6 @@ import SCLAlertView
 
 struct Service {
 	let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
-	let newTron = TRON(baseURL: "https://api.jsonbin.io/b/5cb59f560367e61b21b9d531", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
 	fileprivate let headers = [
 		"Content-Type": "application/x-www-form-urlencoded"
@@ -448,13 +447,8 @@ struct Service {
 		- Parameter successHandler: Returns an object of type Explore.
 	**/
 	func getExplore(withSuccess successHandler: @escaping (Explore?) -> Void) {
-		let request: APIRequest<Explore,JSONError> = newTron.swiftyJSON.request("")
-//			tron.swiftyJSON.request("anime")
-//		request.headers = headers
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-			"secret-key": "$2a$10$9KXu20j5ZrnRlDtIxMWr1.u4XaWA8AHeBid8wjrbWeXV5JcyVZYkq"
-		]
+		let request: APIRequest<Explore,JSONError> = tron.swiftyJSON.request("explore")
+		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { explore in
 			if let success = explore.success {

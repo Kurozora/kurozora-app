@@ -446,7 +446,7 @@ extension ProfileTableViewController {
 			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
 			feedPostCell.profileImageView?.kf.indicatorType = .activity
 			feedPostCell.profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
-		}else {
+		} else {
 			feedPostCell.profileImageView?.image = #imageLiteral(resourceName: "default_avatar")
 		}
 

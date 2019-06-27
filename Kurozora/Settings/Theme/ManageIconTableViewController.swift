@@ -127,16 +127,16 @@ extension ManageIconTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let iconTableViewCell = tableView.cellForRow(at: indexPath) as! IconTableViewCell
-		iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-
-		iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
+			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let iconTableViewCell = tableView.cellForRow(at: indexPath) as! IconTableViewCell
-		iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-
-		iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
+			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
 	}
 }

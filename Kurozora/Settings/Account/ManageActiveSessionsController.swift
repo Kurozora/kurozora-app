@@ -115,7 +115,7 @@ class ManageActiveSessionsController: UIViewController {
 		}
 
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
-		locationManager.requestAlwaysAuthorization()
+		locationManager.requestWhenInUseAuthorization()
 		locationManager.startUpdatingLocation()
 	}
 

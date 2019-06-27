@@ -27,12 +27,13 @@ enum KThemeStyle: Int {
 	static var before: KThemeStyle = .default
 	static let tron = TRON(baseURL: "", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 	static let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
-	static let automaticNightTimeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
-		KThemeStyle.checkSunSchedule()
+	static let calendar = Calendar.current
+	static let automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
+		KThemeStyle.checkAutomaticSchedule()
 	}
 
 	/// Return a string value for a given KThemeStyle
-	func stringValue() -> String {
+	var stringValue: String {
 		switch self {
 		case .default:
 			return "Default"
@@ -64,7 +65,7 @@ enum KThemeStyle: Int {
 extension KThemeStyle {
 	/// Switch theme to one of the default styles
 	static func switchTo(_ style: KThemeStyle) {
-		before  = current
+		before = current
 		current = style
 
 		switch style {
@@ -75,8 +76,13 @@ extension KThemeStyle {
 			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
 			UserSettings.set("Day", forKey: .currentTheme)
 		case .night:
-			ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
-			UserSettings.set("Night", forKey: .currentTheme)
+			if UserSettings.trueBlackEnabled {
+				ThemeManager.setTheme(plistName: "Black", path: .mainBundle)
+				UserSettings.set("Black", forKey: .currentTheme)
+			} else {
+				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
+				UserSettings.set("Night", forKey: .currentTheme)
+			}
 		case .other: break
 		}
 	}
@@ -208,6 +214,34 @@ extension KThemeStyle {
 
 // MARK: - Night theme
 extension KThemeStyle {
+	/// Whether the specified custom `start` and `end` time is in daytime on `date`
+	static var isCustomDaytime: Bool {
+		let startTime = UserSettings.darkThemeOptionStart
+		let startHour = calendar.component(.hour, from: startTime)
+		let startMinute = calendar.component(.minute, from: startTime)
+
+		let endTime = UserSettings.darkThemeOptionEnd
+		let endHour = calendar.component(.hour, from: endTime)
+		let endMinute = calendar.component(.minute, from: endTime)
+
+		guard let calendarStartTime = calendar.date(bySettingHour: startHour, minute: startMinute, second: 0, of: Date()) else { return false }
+		guard let calendarEndTime = calendar.date(bySettingHour: endHour, minute: endMinute, second: 0, of: Date()) else { return false }
+
+		let beginningOfDay = calendarStartTime.timeIntervalSince1970
+		let endOfDay = calendarEndTime.timeIntervalSince1970
+		let currentTime = Date().timeIntervalSince1970
+
+		let isStartOrLater = currentTime >= beginningOfDay
+		let isBeforeEnd = currentTime < endOfDay
+
+		return isStartOrLater && isBeforeEnd
+	}
+
+	/// Whether the specified custom `start` and `end` time is in nighttime on `date`
+	static var isCustomNighttime: Bool {
+		return !isCustomDaytime
+	}
+
 	/// Switch between Night them and the theme before
 	static func switchNight(_ isToNight: Bool) {
 		if before == .night && current == .night {
@@ -218,26 +252,30 @@ extension KThemeStyle {
 	}
 
 	/// Return a boolean indicating if current theme is the Night theme
-	static func isNight() -> Bool {
+	static func isNightTheme() -> Bool {
 		return current == .night
 	}
 
-	/// Switch between Day and Night theme according to sunrise and sunset
-	static func checkSunSchedule() {
-		before  = current
-		let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: User.latitude, longitude: User.longitude))
-		guard let isNighttime = solar?.isNighttime else {
-			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
-			current = .day
-			return
-		}
+	/// Wheather the specified
+	static var isSolarNighttime: Bool {
+		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: User.latitude, longitude: User.longitude)) else { return false }
+		let isNighttime = solar.isNighttime
 
-		if isNighttime {
-			ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
-			current = .night
-		} else {
-			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
-			current = .day
+		return isNighttime
+	}
+
+	/// Switch between Light and Dark theme according to `sunrise` and `sunset` or custom `start` and `end` time
+	static func checkAutomaticSchedule() {
+		if UserSettings.automaticDarkTheme, let darkThemeOption = DarkThemeOption(rawValue: UserSettings.darkThemeOption) {
+			before = current
+
+			if isSolarNighttime && darkThemeOption == .automatic || isCustomNighttime && darkThemeOption == .custom {
+				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
+				current = .night
+			} else {
+				ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
+				current = .day
+			}
 		}
 	}
 }

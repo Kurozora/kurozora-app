@@ -20,7 +20,7 @@ enum NotificationGroupStyle: Int {
 	case byType
 	case off
 
-	func stringValue() -> String {
+	var stringValue: String {
 		switch self {
 		case .automatic:
 			return "Automatic"

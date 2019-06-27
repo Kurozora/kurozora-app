@@ -18,7 +18,7 @@ enum NotificationBannerStyle: Int {
 	case temporary = 0
 	case persistent
 
-	func stringValue() -> String {
+	var stringValue: String {
 		switch self {
 		case .temporary:
 			return "Temporary"

@@ -71,13 +71,13 @@ class ExploreElement: JSONDecodable {
 
 class ExploreCategory: JSONDecodable {
 	let title: String?
-	let type: String?
+	let size: String?
 	let shows: [ExploreElement]?
 	let genres: [GenreElement]?
 
 	required init(json: JSON) throws {
 		self.title = json["title"].stringValue
-		self.type = json["type"].stringValue
+		self.size = json["size"].stringValue
 		var shows = [ExploreElement]()
 		var genres = [GenreElement]()
 

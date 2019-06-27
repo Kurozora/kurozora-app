@@ -61,16 +61,18 @@ extension AuthenticationTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as! AuthenticationSettingsCell
-		authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-		authenticationSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		authenticationSettingsCell.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
+			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			authenticationSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			authenticationSettingsCell.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as! AuthenticationSettingsCell
-		authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		authenticationSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		authenticationSettingsCell.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
+			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			authenticationSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			authenticationSettingsCell.authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
 	}
 }

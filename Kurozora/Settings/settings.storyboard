@@ -261,15 +261,89 @@
                             </tableViewSection>
                             <tableViewSection id="OLi-fI-Ga7" userLabel="General">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="52R-F4-sBi" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="V4w-Wh-vtl" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="333" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="52R-F4-sBi" id="roo-Xj-Efg">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V4w-Wh-vtl" id="1TU-vl-YkF">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ym9-sd-ece">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2mB-N1-bBJ">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                                    <subviews>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qcn-FB-eDN">
+                                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ZhG-tn-04I">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="Cja-Q7-A3P"/>
+                                                                <constraint firstAttribute="width" constant="30" id="OTR-Ob-ex8"/>
+                                                                <constraint firstItem="ZhG-tn-04I" firstAttribute="leading" secondItem="Qcn-FB-eDN" secondAttribute="leading" id="bEZ-Fh-ptq"/>
+                                                                <constraint firstItem="ZhG-tn-04I" firstAttribute="top" secondItem="Qcn-FB-eDN" secondAttribute="top" id="cOB-CD-zkm"/>
+                                                                <constraint firstAttribute="trailing" secondItem="ZhG-tn-04I" secondAttribute="trailing" id="m2q-d8-N69"/>
+                                                                <constraint firstAttribute="bottom" secondItem="ZhG-tn-04I" secondAttribute="bottom" id="rLI-H6-u28"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <integer key="value" value="6"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display &amp; Blindness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bek-oe-kEN">
+                                                            <rect key="frame" x="46" y="14.5" width="150" height="21"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="FG2-66-fKC">
+                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="1pf-Lr-rWV"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="top" secondItem="2mB-N1-bBJ" secondAttribute="top" constant="10" id="3cZ-15-VLT"/>
+                                                        <constraint firstItem="bek-oe-kEN" firstAttribute="centerY" secondItem="Qcn-FB-eDN" secondAttribute="centerY" id="4cB-Zv-JcN"/>
+                                                        <constraint firstItem="FG2-66-fKC" firstAttribute="centerY" secondItem="2mB-N1-bBJ" secondAttribute="centerY" id="78U-k7-EJJ"/>
+                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="leading" secondItem="2mB-N1-bBJ" secondAttribute="leadingMargin" id="AFU-v3-dE3"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="FG2-66-fKC" secondAttribute="trailing" id="AuB-ma-iaL"/>
+                                                        <constraint firstItem="bek-oe-kEN" firstAttribute="leading" secondItem="Qcn-FB-eDN" secondAttribute="trailing" constant="8" symbolic="YES" id="Cd4-cs-nFC"/>
+                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="centerY" secondItem="2mB-N1-bBJ" secondAttribute="centerY" id="H6R-x8-mRH"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Qcn-FB-eDN" secondAttribute="bottom" constant="10" id="gsP-2E-vzQ"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="2mB-N1-bBJ" secondAttribute="leading" id="5PA-ph-l25"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="2mB-N1-bBJ" secondAttribute="trailing" id="q8E-6J-oIe"/>
+                                                <constraint firstItem="2mB-N1-bBJ" firstAttribute="top" secondItem="1TU-vl-YkF" secondAttribute="top" id="s0h-o5-Cck"/>
+                                                <constraint firstAttribute="bottom" secondItem="2mB-N1-bBJ" secondAttribute="bottom" id="xPp-9P-tob"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="cellTitle" destination="bek-oe-kEN" id="Z2i-og-z6E"/>
+                                            <outlet property="chevronImageView" destination="FG2-66-fKC" id="aBg-ND-SYa"/>
+                                            <outlet property="selectedView" destination="2mB-N1-bBJ" id="82a-HY-k6m"/>
+                                            <segue destination="urf-Ka-1Pe" kind="showDetail" id="WZ4-7E-rdt"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="52R-F4-sBi" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="383" width="414" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="52R-F4-sBi" id="roo-Xj-Efg">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ym9-sd-ece">
+                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mug-uQ-IMY">
                                                             <rect key="frame" x="8" y="10" width="30" height="30"/>
@@ -319,7 +393,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="ym9-sd-ece" secondAttribute="trailing" id="6Eq-5E-DGS"/>
                                                 <constraint firstAttribute="bottom" secondItem="ym9-sd-ece" secondAttribute="bottom" id="Ugn-iH-HU8"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="ym9-sd-ece" secondAttribute="leading" id="sgU-1X-zPD"/>
-                                                <constraint firstItem="ym9-sd-ece" firstAttribute="top" secondItem="roo-Xj-Efg" secondAttribute="top" id="ukC-Lm-5Uc"/>
+                                                <constraint firstItem="ym9-sd-ece" firstAttribute="top" secondItem="roo-Xj-Efg" secondAttribute="top" constant="5" id="ukC-Lm-5Uc"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -331,7 +405,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="E92-bu-kwc" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="383" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="438" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="E92-bu-kwc" id="9CJ-5f-PjN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -403,80 +477,6 @@
                                             <outlet property="chevronImageView" destination="Elk-js-w8F" id="rvR-bV-vn2"/>
                                             <outlet property="selectedView" destination="jjL-Oe-PNI" id="Kdd-Tu-MEy"/>
                                             <segue destination="4UV-W6-1yL" kind="showDetail" id="djV-vT-6Uk"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="V4w-Wh-vtl" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="438" width="414" height="55"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V4w-Wh-vtl" id="1TU-vl-YkF">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2mB-N1-bBJ">
-                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
-                                                    <subviews>
-                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qcn-FB-eDN">
-                                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ZhG-tn-04I">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                                                </imageView>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="Cja-Q7-A3P"/>
-                                                                <constraint firstAttribute="width" constant="30" id="OTR-Ob-ex8"/>
-                                                                <constraint firstItem="ZhG-tn-04I" firstAttribute="leading" secondItem="Qcn-FB-eDN" secondAttribute="leading" id="bEZ-Fh-ptq"/>
-                                                                <constraint firstItem="ZhG-tn-04I" firstAttribute="top" secondItem="Qcn-FB-eDN" secondAttribute="top" id="cOB-CD-zkm"/>
-                                                                <constraint firstAttribute="trailing" secondItem="ZhG-tn-04I" secondAttribute="trailing" id="m2q-d8-N69"/>
-                                                                <constraint firstAttribute="bottom" secondItem="ZhG-tn-04I" secondAttribute="bottom" id="rLI-H6-u28"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <integer key="value" value="6"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
-                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display &amp; Blindness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bek-oe-kEN">
-                                                            <rect key="frame" x="46" y="14.5" width="150" height="21"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward_chevron" translatesAutoresizingMaskIntoConstraints="NO" id="FG2-66-fKC">
-                                                            <rect key="frame" x="354" y="17" width="12" height="16"/>
-                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="16" id="1pf-Lr-rWV"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="top" secondItem="2mB-N1-bBJ" secondAttribute="top" constant="10" id="3cZ-15-VLT"/>
-                                                        <constraint firstItem="bek-oe-kEN" firstAttribute="centerY" secondItem="Qcn-FB-eDN" secondAttribute="centerY" id="4cB-Zv-JcN"/>
-                                                        <constraint firstItem="FG2-66-fKC" firstAttribute="centerY" secondItem="2mB-N1-bBJ" secondAttribute="centerY" id="78U-k7-EJJ"/>
-                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="leading" secondItem="2mB-N1-bBJ" secondAttribute="leadingMargin" id="AFU-v3-dE3"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="FG2-66-fKC" secondAttribute="trailing" id="AuB-ma-iaL"/>
-                                                        <constraint firstItem="bek-oe-kEN" firstAttribute="leading" secondItem="Qcn-FB-eDN" secondAttribute="trailing" constant="8" symbolic="YES" id="Cd4-cs-nFC"/>
-                                                        <constraint firstItem="Qcn-FB-eDN" firstAttribute="centerY" secondItem="2mB-N1-bBJ" secondAttribute="centerY" id="H6R-x8-mRH"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Qcn-FB-eDN" secondAttribute="bottom" constant="10" id="gsP-2E-vzQ"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="leadingMargin" secondItem="2mB-N1-bBJ" secondAttribute="leading" id="5PA-ph-l25"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="2mB-N1-bBJ" secondAttribute="trailing" id="q8E-6J-oIe"/>
-                                                <constraint firstItem="2mB-N1-bBJ" firstAttribute="top" secondItem="1TU-vl-YkF" secondAttribute="top" constant="5" id="s0h-o5-Cck"/>
-                                                <constraint firstAttribute="bottom" secondItem="2mB-N1-bBJ" secondAttribute="bottom" id="xPp-9P-tob"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="cellTitle" destination="bek-oe-kEN" id="Z2i-og-z6E"/>
-                                            <outlet property="chevronImageView" destination="FG2-66-fKC" id="aBg-ND-SYa"/>
-                                            <outlet property="selectedView" destination="2mB-N1-bBJ" id="82a-HY-k6m"/>
-                                            <segue destination="urf-Ka-1Pe" kind="showDetail" id="WZ4-7E-rdt"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="sEn-DY-Qgr" customClass="AuthenticationSettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -1613,7 +1613,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1989" y="-1067"/>
+            <point key="canvasLocation" x="-1989" y="-932"/>
         </scene>
         <!--ManageIconKNavigationController-->
         <scene sceneID="pCk-tB-aID">
@@ -1663,7 +1663,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="authenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1918" y="-895"/>
+            <point key="canvasLocation" x="-1918" y="-899"/>
         </scene>
         <!--display-->
         <scene sceneID="RdJ-ak-oTj">
@@ -1671,7 +1671,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="display" id="urf-Ka-1Pe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y62-rG-dh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1986" y="-934"/>
+            <point key="canvasLocation" x="-1990" y="-1065"/>
         </scene>
     </scenes>
     <resources>

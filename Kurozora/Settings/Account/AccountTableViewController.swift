@@ -79,18 +79,20 @@ extension AccountTableViewController {
 // MARK: - UITableViewDelegate
 extension AccountTableViewController {
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-		settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-		settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
 	}
 }

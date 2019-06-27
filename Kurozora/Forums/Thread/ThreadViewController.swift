@@ -191,7 +191,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 
 		// Set thread content
 		if let threadContent = forumThreadElement?.content {
-			self.richTextView.update(input: threadContent, textColor: KThemePicker.tableViewCellSubTextColor.colorValue(), completion: nil)
+			self.richTextView.update(input: threadContent, textColor: KThemePicker.tableViewCellSubTextColor.colorValue, completion: nil)
 		}
 
 		// Set locked state

@@ -21,7 +21,7 @@ class KDefaultsCell: UITableViewCell {
 		didSet {
 			valueTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
 			valueTextField.theme_textColor = KThemePicker.textColor.rawValue
-			valueTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.separatorColor.stringValue()) { value -> [NSAttributedString.Key : AnyObject]? in
+			valueTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.separatorColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]

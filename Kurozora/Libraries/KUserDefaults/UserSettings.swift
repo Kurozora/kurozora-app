@@ -11,19 +11,17 @@ import KCommonKit
 class UserSettings: NSObject {
 	/// Notificartions key used to get notifications settings
 	enum UserSettingsKey: String {
-		// Global notification keys
+		// Settings keys
 		case collapsedSections = "collapsedSections"
-		case automaticNightTheme = "automaticNightTheme"
-		case largeTitles = "largeTitles"
 
 		// Library keys
 		case libraryPage = "libraryPage"
 		case libraryLayouts = "libraryLayouts"
 
-		// Forum keys
+		// Forums keys
 		case forumsPage = "forumsPage"
 
-		// Notification keys
+		// Notification settings keys
 		case notificationsAllowed = "notificationsAllowed"
 		case notificationsGrouping = "notificationsGrouping"
 		case notificationsPersistent = "notificationsPersistent"
@@ -31,6 +29,15 @@ class UserSettings: NSObject {
 		case notificationsVibration = "notificationsVibration"
 		case notificationsBadge = "notificationsBadge"
 		case alertType = "alertType"
+
+		// Appearence settings keys
+		case appearanceOption = "appearanceOption"
+		case automaticDarkTheme = "automaticDarkTheme"
+		case darkThemeOption = "darkThemeOption"
+		case darkThemeOptionStart = "darkThemeOptionStart"
+		case darkThemeOptionEnd = "darkThemeOptionEnd"
+		case trueBlackEnabled = "trueBlackEnabled"
+		case largeTitlesEnabled = "largeTitlesEnabled"
 
 		// App customization keys
 		case currentTheme = "currentTheme"
@@ -41,31 +48,67 @@ class UserSettings: NSObject {
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
 		GlobalVariables().KUserDefaults?.set(value, forKey: key.rawValue)
 	}
+}
 
+// MARK: - Settings
+extension UserSettings {
 	/// Return the array of collapsed sections in settings
 	static var collapsedSections: [Int] {
 		guard let collapsedSections = GlobalVariables().KUserDefaults?.array(forKey: "collapsedSections") as? [Int] else { return [3] }
 		return collapsedSections
 	}
+}
 
-	/// Returns a boolean indicating if automatic night theme is on
-	static var automaticNightTheme: Bool {
-		guard let automaticNightTheme = GlobalVariables().KUserDefaults?.bool(forKey: "automaticNightTheme") else { return false }
-		return automaticNightTheme
+// MARK: - Appearence settings
+extension UserSettings {
+	/// Returns a boolean indicating if automatic dark theme is on
+	static var appearanceOption: Int {
+		guard let appearanceOption = GlobalVariables().KUserDefaults?.integer(forKey: "appearanceOption") else { return 0 }
+		return appearanceOption
+	}
+
+	/// Returns a boolean indicating if automatic dark theme is on
+	static var automaticDarkTheme: Bool {
+		guard let automaticDarkTheme = GlobalVariables().KUserDefaults?.bool(forKey: "automaticDarkTheme") else { return false }
+		return automaticDarkTheme
+	}
+
+	/// Returns a string indicating the preferred dark theme option
+	static var darkThemeOption: Int {
+		guard let darkThemeOption = GlobalVariables().KUserDefaults?.integer(forKey: "darkThemeOption") else { return 0 }
+		return darkThemeOption
+	}
+
+	/// Returns a string indicating the preferred custom dark theme start time
+	static var darkThemeOptionStart: Date {
+		guard let darkThemeOptionStart = GlobalVariables().KUserDefaults?.date(forKey: "darkThemeOptionStart") else { return Date() }
+		return darkThemeOptionStart
+	}
+
+	/// Returns a string indicating the preferred custom dark theme end time
+	static var darkThemeOptionEnd: Date {
+		guard let darkThemeOptionEnd = GlobalVariables().KUserDefaults?.date(forKey: "darkThemeOptionEnd") else {
+			guard let nextHour = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) else { return Date() }
+			return nextHour
+		}
+		return darkThemeOptionEnd
+	}
+
+	/// Returns a boolean indicating if true black theme is on
+	static var trueBlackEnabled: Bool {
+		guard let trueBlackEnabled = GlobalVariables().KUserDefaults?.bool(forKey: "trueBlackEnabled") else { return false }
+		return trueBlackEnabled
 	}
 
 	/// Returns a boolean indicating if large titles is on
-	static var largeTitles: Bool {
-		guard let largeTitles = GlobalVariables().KUserDefaults?.bool(forKey: "largeTitles") else { return false }
+	static var largeTitlesEnabled: Bool {
+		guard let largeTitles = GlobalVariables().KUserDefaults?.bool(forKey: "largeTitlesEnabled") else { return true }
 		return largeTitles
 	}
+}
 
-	/// Returns a boolean indicating if notifications are allowed
-	static var notificationsAllowed: Bool {
-		guard let notificationsAllowed = GlobalVariables().KUserDefaults?.bool(forKey: "notificationsAllowed") else { return true }
-		return notificationsAllowed
-	}
-
+// MARK: - Library
+extension UserSettings {
 	/// Returns an integer indication the library page the user was on last
 	static var libraryPage: Int {
 		guard let libraryPage = GlobalVariables().KUserDefaults?.integer(forKey: "libraryPage") else { return 0 }
@@ -77,11 +120,23 @@ class UserSettings: NSObject {
 		guard let libraryLayouts = GlobalVariables().KUserDefaults?.dictionary(forKey: "libraryLayouts") else { return [:] }
 		return libraryLayouts
 	}
+}
 
+// MARK: - Forums
+extension UserSettings {
 	/// Returns an integer indication the forum page the user was on last
 	static var forumsPage: Int {
 		guard let forumsPage = GlobalVariables().KUserDefaults?.integer(forKey: "forumsPage") else { return 0 }
 		return forumsPage
+	}
+}
+
+// MARK: - Notification settings
+extension UserSettings {
+	/// Returns a boolean indicating if notifications are allowed
+	static var notificationsAllowed: Bool {
+		guard let notificationsAllowed = GlobalVariables().KUserDefaults?.bool(forKey: "notificationsAllowed") else { return true }
+		return notificationsAllowed
 	}
 
 	/// Returns an integer indicating the notifications persistency type
@@ -119,7 +174,10 @@ class UserSettings: NSObject {
 		guard let alertType = GlobalVariables().KUserDefaults?.integer(forKey: "alertType") else { return 0 }
 		return alertType
 	}
+}
 
+// MARK: - App customization
+extension UserSettings {
 	/// Returns a string indicating the currently used theme
 	static var currentTheme: String? {
 		guard let currentTheme = GlobalVariables().KUserDefaults?.string(forKey: "currentTheme") else { return "" }

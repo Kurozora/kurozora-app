@@ -109,7 +109,7 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
 				guard let type = userNotificationsElement.type else { return }
 				guard let notificationType = NotificationType(rawValue: type) else { return }
-				let timeKey = notificationType.stringValue()
+				let timeKey = notificationType.stringValue
 
 				result[timeKey, default: []].append(userNotificationsElement)
 			})

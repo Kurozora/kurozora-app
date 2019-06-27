@@ -64,39 +64,6 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 			}
 		}
 	}
-
-	@IBAction func nightThemeButtonPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		action.addAction(UIAlertAction(title: "Toggle Night Mode", style: .default, handler: { (alert) in
-			UserSettings.set(false, forKey: .automaticNightTheme)
-			KThemeStyle.switchNight(true)
-			_ = KThemeStyle.automaticNightTimeSchedule.invalidate()
-		}))
-
-		action.addAction(UIAlertAction(title: "Automatic (Sunrise/Sunset)", style: .default, handler: { (alert) in
-			UserSettings.set(true, forKey: .automaticNightTheme)
-			KThemeStyle.checkSunSchedule()
-			_ = KThemeStyle.automaticNightTimeSchedule
-		}))
-
-		action.addAction(UIAlertAction(title: "Turn Off Night Mode", style: .destructive, handler: { (_) in
-			UserSettings.set(false, forKey: .automaticNightTheme)
-			KThemeStyle.switchNight(false)
-			_ = KThemeStyle.automaticNightTimeSchedule.invalidate()
-		}))
-
-		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		
-		//Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
-		}
-
-		self.present(action, animated: true, completion: nil)
-	}
 }
 
 // MARK: - UIAlertViewDelegate

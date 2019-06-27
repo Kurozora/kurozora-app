@@ -44,7 +44,7 @@ extension NotificationsOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
+		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "SelectableSettingsCell", for: indexPath) as! SelectableSettingsCell
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
 			let grouping = NotificationGroupStyle(rawValue: indexPath.item)!
@@ -97,16 +97,16 @@ extension NotificationsOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
-
-		notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-		notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
+			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "NotificationsGroupingCell", for: indexPath) as! NotificationsGroupingCell
-
-		notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
+			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
 	}
 }

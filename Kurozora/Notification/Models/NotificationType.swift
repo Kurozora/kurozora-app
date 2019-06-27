@@ -20,7 +20,7 @@ enum NotificationType: String {
 	case session 	= "TYPE_NEW_SESSION"
 	case follower 	= "TYPE_NEW_FOLLOWER"
 
-	func stringValue() -> String {
+	var stringValue: String {
 		switch self {
 		case .unknown:
 			return ""

@@ -85,7 +85,7 @@ class SettingsCell: UITableViewCell {
 	}
 
 	@objc func updateNotificationValueLabels() {
-		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue()
-		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue()
+		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
+		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
 	}
 }

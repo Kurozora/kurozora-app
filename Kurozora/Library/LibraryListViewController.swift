@@ -49,7 +49,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 		}
 
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
 
 		// Observe NotificationCenter for update notification
@@ -78,7 +78,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 	@objc private func refreshLibraryData(_ sender: Any) {
 		// Fetch library data
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchLibrary()
 	}
 
@@ -90,7 +90,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 				self.library = library
 				self.collectionView.reloadData()
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 	}

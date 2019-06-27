@@ -39,14 +39,16 @@ extension AuthenticationOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: "AuthenticationOptionsCell", for: indexPath) as! AuthenticationOptionsCell
-		authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-		authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
+			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: "AuthenticationOptionsCell", for: indexPath) as! AuthenticationOptionsCell
-		authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
+			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+		}
 	}
 }

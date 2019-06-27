@@ -31,7 +31,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		guard let sectionTitle = sectionTitle else { return }
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		refreshControl?.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		fetchFeedPosts()
@@ -57,7 +57,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
-		refreshControl?.attributedTitle = NSAttributedString(string: "Reloading your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Reloading your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		pageNumber = 0
 		fetchFeedPosts()
 	}
@@ -83,7 +83,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 					self.pageNumber += 1
 				}
 
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue()])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 			}
 		})
 

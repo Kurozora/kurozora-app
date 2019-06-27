@@ -38,7 +38,7 @@ enum KThemePicker: ThemeColorPicker {
 	// Notifications
 	case accentColor = "Notifications.accentColor"
 
-	func stringValue() -> String {
+	var stringValue: String {
 		switch self {
 		// Global
 		case .statusBarStyle:
@@ -90,17 +90,17 @@ enum KThemePicker: ThemeColorPicker {
 		}
 	}
 
-	func colorValue() -> UIColor {
+	var colorValue: UIColor {
 		switch self {
 		case .statusBarStyle:
-			switch UIStatusBarStyle.fromString(self.stringValue()) {
+			switch UIStatusBarStyle.fromString(self.stringValue) {
 			case .lightContent:
 				return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 			default:
 				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 			}
 		default:
-			return ThemeManager.color(for: self.stringValue()) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			return ThemeManager.color(for: self.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
 		}
 	}
 }

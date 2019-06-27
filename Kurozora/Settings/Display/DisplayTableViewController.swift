@@ -6,12 +6,37 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
+import KCommonKit
 
 class DisplayTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension DisplayTableViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			if UserSettings.automaticDarkTheme {
+				return 3
+			} else {
+				return 2
+			}
+		default:
+			return super.tableView(tableView, numberOfRowsInSection: section)
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section == 0, let displaySettingsCell = super.tableView(tableView, cellForRowAt: indexPath) as? DisplaySettingsCell {
+			displaySettingsCell.updateAppAppearance(with: UserSettings.appearanceOption)
+			return displaySettingsCell
+		}
+
+		return super.tableView(tableView, cellForRowAt: indexPath)
 	}
 }
 

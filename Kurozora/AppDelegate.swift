@@ -15,11 +15,18 @@ import SwiftTheme
 import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
+
 let updateAppIconNotification = Notification.Name("updateAppIconNotification")
+
 let updateNotificationSettingsValueLabelsNotification = Notification.Name("updateNotificationSettingsValueLabelsNotification")
+
 let updateAuthenticationRequireValueLabelNotification = Notification.Name("updateAuthenticationRequireValueLabelNotification")
+
+let updateAutomaticDarkThemeOptionValueLabelNotification = Notification.Name("updateAutomaticDarkThemeOptionValueLabelNotification")
+
 let updateNormalLargeTitlesNotification = Notification.Name("updateNormalLargeTitlesNotification")
-let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue()) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
+
+let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,9 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Initialize theme
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
-		if UserSettings.automaticNightTheme {
-			KThemeStyle.checkSunSchedule()
-			_ = KThemeStyle.automaticNightTimeSchedule
+		if UserSettings.automaticDarkTheme {
+			_ = KThemeStyle.automaticDarkThemeSchedule
 		} else if let themeIDString = UserSettings.currentTheme, themeIDString != "" {
 			// If themeID is an integer
 			if let themeID = Int(themeIDString) {
@@ -136,8 +142,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.authenticated = Kurozora.validateSession(window: self.window)
 		}
 
-		if UserSettings.automaticNightTheme {
-			KThemeStyle.checkSunSchedule()
+		if UserSettings.automaticDarkTheme {
+			KThemeStyle.checkAutomaticSchedule()
 		}
     }
 

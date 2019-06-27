@@ -32,8 +32,8 @@ class LibraryViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())
-			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue())?.withAlphaComponent(0.4)
+			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
+			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
 		}
 		bar.buttons.transitionStyle = .progressive
 

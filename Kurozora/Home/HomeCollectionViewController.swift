@@ -129,7 +129,7 @@ extension HomeCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if indexPath.section < (exploreCategories?.count)! {
-			if let categoryType = exploreCategories?[indexPath.section].type {
+			if let categoryType = exploreCategories?[indexPath.section].size {
 				let exploreCellStyle = ExploreCellStyle(rawValue: categoryType)
 				var horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 
@@ -176,8 +176,7 @@ extension HomeCollectionViewController {
 extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 		if section < (exploreCategories?.count)! {
-			let title = exploreCategories?[section].title
-			return (title != "") ? CGSize(width: collectionView.width, height: 48) : .zero
+			return (section != 0) ? CGSize(width: collectionView.width, height: 48) : .zero
 		} else if section == (exploreCategories?.count)! {
 			return CGSize(width: collectionView.width, height: 48)
 		}
@@ -187,7 +186,7 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if indexPath.section < (exploreCategories?.count)! {
-			if let categoryType = exploreCategories?[indexPath.section].type, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
+			if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
 
 				switch exploreCellStyle {
 				case .large:

@@ -10,6 +10,7 @@ import KCommonKit
 import TRON
 import SwiftyJSON
 import Kingfisher
+import CoreLocation
 
 class User: JSONDecodable {
     let success: Bool?
@@ -154,42 +155,52 @@ extension User {
 
 	/// Returns the username saved in KDefaults
 	static var username: String? {
-		if let username = GlobalVariables().KDefaults["username"], username != "" {
-			return username
-		}
-		return nil
+		guard let username = GlobalVariables().KDefaults["username"], username != "" else { return nil }
+		return username
 	}
 
 	/// Returns the current User ID saved in KDefaults
 	static var currentID: Int? {
-		if let userID = GlobalVariables().KDefaults["user_id"], userID != "" {
-			return Int(userID)
-		}
-		return nil
+		guard let userID = GlobalVariables().KDefaults["user_id"], userID != "" else { return nil }
+		return Int(userID)
 	}
 
 	/// Returns the Auth Token saved in KDefaults
 	static var authToken: String {
-		if let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" {
-			return authToken
+		guard let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" else { return "" }
+		return authToken
+	}
+
+	fileprivate static var currentUserLocation: CLLocationCoordinate2D {
+		let locationManager = CLLocationManager()
+		locationManager.requestWhenInUseAuthorization()
+
+		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+			CLLocationManager.authorizationStatus() ==  .authorizedAlways {
+			if let currentLocation: CLLocation = locationManager.location {
+				try? GlobalVariables().KDefaults.set("\(currentLocation.coordinate.latitude)", key: "latitude")
+				try? GlobalVariables().KDefaults.set("\(currentLocation.coordinate.longitude)", key: "longitude")
+				return currentLocation.coordinate
+			}
 		}
-		return ""
+
+		return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 	}
 
 	/// Returns the user's latitude saved in KDefaults
 	static var latitude: Double {
-		if let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "", let latitude = Double(latitudeString) {
-			return latitude
-		}
-		return 0.0
+//		guard let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "",
+//			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
+//		return latitude
+		return currentUserLocation.latitude
 	}
 
 	/// Returns the user's longitude saved in KDefaults
 	static var longitude: Double {
-		if let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "", let longitude = Double(longitudeString) {
-			return longitude
-		}
-		return 0.0
+//		guard let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "",
+//			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
+//		return longitude
+		return currentUserLocation.longitude
 	}
 
 	/// Returns the current user avatar from cache if available, otherwise returns default avatar
@@ -217,10 +228,8 @@ extension User {
 
 	/// Returns the current Session ID saved in KDefaults
 	static func currentSessionID() -> Int? {
-		if let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" {
-			return Int(sessionID)
-		}
-		return nil
+		guard let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" else { return nil }
+		return Int(sessionID)
 	}
 
 	/// Returns the current device name
@@ -228,17 +237,17 @@ extension User {
 		return UIDevice.modelName
 	}
 
-	/// Returns true if current user is logged in
+	/// Returns a boolean indicating if the current user is logged in
 	static var isLoggedIn: Bool {
 		return User.username != nil
 	}
 
-	/// Returns true is the current user is PRO
+	/// Returns a boolean indicating if the current user has purchased PRO
 	static var isPro: Bool {
 		return true
 	}
 
-	/// Returns true if the current user is an admin
+	/// Returns a boolean indicating if the current user is an admin
 	static var isAdmin: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
@@ -254,7 +263,7 @@ extension User {
 		return false
 	}
 
-	/// Returns true if the current user is a mod
+	/// Returns a boolean if the current user is a mod
 	static var isMod: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
