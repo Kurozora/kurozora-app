@@ -17,7 +17,11 @@
 		<key>textColor</key>
 		<string>#000000</string>
 		<key>textFieldBackgroundColor</key>
-		<string>#929292</string>
+		<string>#DCDCDC</string>
+		<key>textFieldTextColor</key>
+		<string>#000000</string>
+		<key>textFieldPlaceholderTextColor</key>
+		<string>#9B9B9B</string>
 		<key>tintColor</key>
 		<string>#FF9300</string>
 		<key>tintedButtonTextColor</key>

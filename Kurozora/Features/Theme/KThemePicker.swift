@@ -18,6 +18,8 @@ enum KThemePicker: ThemeColorPicker {
 	case barTitleTextColor = "Global.barTitleTextColor"
 	case textColor = "Global.textColor"
 	case textFieldBackgroundColor = "Global.textFieldBackgroundColor"
+	case textFieldTextColor = "Global.textFieldTextColor"
+	case textFieldPlaceholderTextColor = "Global.textFieldPlaceholderTextColor"
 	case tintColor = "Global.tintColor"
 	case tintedButtonTextColor = "Global.tintedButtonTextColor"
 	case separatorColor = "Global.separatorColor"
@@ -55,6 +57,10 @@ enum KThemePicker: ThemeColorPicker {
 			return "Global.textColor"
 		case .textFieldBackgroundColor:
 			return "Global.textFieldBackgroundColor"
+		case .textFieldTextColor:
+			return "Global.textFieldTextColor"
+		case .textFieldPlaceholderTextColor:
+			return "Global.textFieldPlaceholderTextColor"
 		case .tintColor:
 			return "Global.tintColor"
 		case .tintedButtonTextColor:

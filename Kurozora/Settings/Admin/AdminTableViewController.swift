@@ -74,8 +74,8 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 extension AdminTableViewController {
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
-			let KDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
-			guard let key = KDefaultsTableViewCell.keyLabel.text else {return}
+			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
+			guard let key = kDefaultsTableViewCell.cellTitle?.text else {return}
 
 			self.tableView.beginUpdates()
 			try? GlobalVariables().KDefaults.remove(key)
@@ -97,7 +97,7 @@ extension AdminTableViewController {
 		let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
 
 		if let key = kDefaultItems[indexPath.row]["key"] as? String, key != "" {
-			kDefaultsCell.keyLabel.text = key
+			kDefaultsCell.cellTitle?.text = key
 		}
 		if let value = kDefaultItems[indexPath.row]["value"] as? String, value != "" {
 			kDefaultsCell.valueTextField.text = value

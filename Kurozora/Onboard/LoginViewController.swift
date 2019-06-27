@@ -7,20 +7,35 @@
 //
 
 import KCommonKit
+import SwiftTheme
 
 class LoginViewController: UIViewController {
     var window: UIWindow?
 
 	@IBOutlet weak var usernameTextField: UITextField! {
 		didSet {
-			usernameTextField.theme_textColor = KThemePicker.textColor.rawValue
+			usernameTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			usernameTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+			usernameTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+				return titleTextAttributes
+			}
 		}
 	}
 	@IBOutlet weak var passwordTextField: UITextField! {
 		didSet {
-			passwordTextField.theme_textColor = KThemePicker.textColor.rawValue
+			passwordTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			passwordTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+			passwordTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+				return titleTextAttributes
+			}
 		}
 	}
 	@IBOutlet weak var loginButton: TKTransitionSubmitButton! {

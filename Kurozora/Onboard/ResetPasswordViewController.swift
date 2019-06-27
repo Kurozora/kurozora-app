@@ -8,12 +8,20 @@
 
 import KCommonKit
 import SCLAlertView
+import SwiftTheme
 
 class ResetPasswordViewController: UIViewController {
 	@IBOutlet weak var userEmailTextField: UITextField! {
 		didSet {
-			userEmailTextField.theme_textColor = KThemePicker.textColor.rawValue
+			userEmailTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			userEmailTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+			userEmailTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+				return titleTextAttributes
+			}
 		}
 	}
 	@IBOutlet weak var resetButton: UIButton! {

@@ -281,10 +281,7 @@
                                             <outlet property="chevronImageView" destination="HLr-i6-xdk" id="YE3-uT-69q"/>
                                             <outlet property="optionsValueLabel" destination="9gr-0c-sbs" id="u8e-Zu-Ay3"/>
                                             <outlet property="selectedView" destination="3un-IH-7HZ" id="AA3-as-ckr"/>
-                                            <segue destination="r72-Ak-wXE" kind="show" id="kns-HJ-9w9">
-                                                <segue key="commit" inheritsFrom="parent" id="9L4-c0-5jj"/>
-                                                <segue key="preview" inheritsFrom="commit" id="xit-dF-sze"/>
-                                            </segue>
+                                            <segue destination="r72-Ak-wXE" kind="show" id="kns-HJ-9w9"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -612,8 +609,5 @@
         <image name="check_circle" width="30" height="30"/>
         <image name="forward_chevron" width="12" height="22"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="kns-HJ-9w9"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

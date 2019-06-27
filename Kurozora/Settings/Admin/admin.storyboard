@@ -13,7 +13,7 @@
         <scene sceneID="B2T-e1-T86">
             <objects>
                 <tableViewController storyboardIdentifier="AdminTableViewController" title="KDefaults Manager" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WH9-p1-zZB" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="TsW-1U-qHf">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="TsW-1U-qHf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -25,7 +25,6 @@
                             <subviews>
                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Modifying these values may break your app!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzF-JK-WhA">
                                     <rect key="frame" x="59.5" y="40" width="295" height="14.5"/>
-                                    <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -38,24 +37,23 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="KDefaultsCell" id="O9i-sO-KZG" customClass="KDefaultsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="105.5" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="105.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O9i-sO-KZG" id="e5Z-nK-fm3">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZ1-WR-OSj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="50"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="session_secret" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHW-Ig-3nQ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="session_secret" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHW-Ig-3nQ">
                                                     <rect key="frame" x="8" y="10" width="89.5" height="30"/>
-                                                    <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="13" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZRr-aw-Eoa">
-                                                    <rect key="frame" x="117.5" y="10" width="288.5" height="30"/>
+                                                    <rect key="frame" x="117.5" y="10" width="248.5" height="30"/>
                                                     <color key="backgroundColor" red="0.24819627399999999" green="0.27330610160000002" blue="0.3490291834" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="chA-13-h95"/>
@@ -68,6 +66,7 @@
                                                     </connections>
                                                 </textField>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="EHW-Ig-3nQ" secondAttribute="bottom" constant="10" id="Dxd-OC-yrs"/>
                                                 <constraint firstItem="ZRr-aw-Eoa" firstAttribute="top" secondItem="aZ1-WR-OSj" secondAttribute="top" constant="10" id="NX9-XS-jRo"/>
@@ -82,15 +81,15 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="aZ1-WR-OSj" firstAttribute="top" secondItem="e5Z-nK-fm3" secondAttribute="top" id="1fr-h4-E5g"/>
-                                        <constraint firstAttribute="trailing" secondItem="aZ1-WR-OSj" secondAttribute="trailing" id="HAg-8w-EZ1"/>
-                                        <constraint firstAttribute="bottom" secondItem="aZ1-WR-OSj" secondAttribute="bottom" id="Ln4-9b-b30"/>
-                                        <constraint firstAttribute="leading" secondItem="aZ1-WR-OSj" secondAttribute="leading" id="aDH-f5-9yM"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="aZ1-WR-OSj" secondAttribute="trailing" id="HAg-8w-EZ1"/>
+                                        <constraint firstAttribute="bottom" secondItem="aZ1-WR-OSj" secondAttribute="bottom" constant="5" id="Ln4-9b-b30"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="aZ1-WR-OSj" secondAttribute="leading" id="aDH-f5-9yM"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="cornerView" destination="aZ1-WR-OSj" id="DkU-di-4Vc"/>
-                                    <outlet property="keyLabel" destination="EHW-Ig-3nQ" id="Em9-Vf-0rE"/>
+                                    <outlet property="bubbleView" destination="aZ1-WR-OSj" id="ghe-Jr-khE"/>
+                                    <outlet property="cellTitle" destination="EHW-Ig-3nQ" id="dku-He-dlD"/>
                                     <outlet property="valueTextField" destination="ZRr-aw-Eoa" id="2o2-YA-lNo"/>
                                 </connections>
                             </tableViewCell>
