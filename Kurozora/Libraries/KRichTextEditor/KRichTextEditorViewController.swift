@@ -11,6 +11,7 @@ import ColorSlider
 import RichEditorView
 import SCLAlertView
 import SwiftyJSON
+import SwiftTheme
 
 protocol KRichTextEditorViewDelegate: class {
 	func updateThreadsList(with thread: ForumThreadsElement)
@@ -19,7 +20,19 @@ protocol KRichTextEditorViewDelegate: class {
 
 class KRichTextEditorViewController: UIViewController, RichEditorDelegate, RichEditorToolbarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate {
 	@IBOutlet weak var richEditorView: RichEditorView?
-	@IBOutlet weak var titleTextField: UITextField!
+	@IBOutlet weak var titleTextField: UITextField! {
+		didSet {
+			titleTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
+			titleTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
+			titleTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+
+				return titleTextAttributes
+			}
+		}
+	}
 
 	enum TextElement: String {
 		case fontColor = "fontColor"
@@ -43,13 +56,18 @@ class KRichTextEditorViewController: UIViewController, RichEditorDelegate, RichE
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		richEditorView?.delegate = self
 		richEditorView?.inputAccessoryView = toolbar
 		richEditorView?.placeholder = "What's on your mind?"
+		richEditorView?.setEditorFontColor(KThemePicker.textColor.colorValue)
+		richEditorView?.theme_tintColor = KThemePicker.tintColor.rawValue
+		richEditorView?.setEditorBackgroundColor(KThemePicker.tableViewCellBackgroundColor.colorValue)
 
 		toolbar.delegate = self
 		toolbar.editor = richEditorView
+		toolbar.editor?.theme_tintColor = KThemePicker.tintColor.rawValue
 	}
 
 	// MARK: - Functions

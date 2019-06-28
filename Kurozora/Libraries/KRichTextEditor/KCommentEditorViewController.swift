@@ -15,14 +15,50 @@ protocol KCommentEditorViewDelegate: class {
 }
 
 class KCommentEditorViewController: UIViewController {
-	@IBOutlet weak var replyToTextLabel: UILabel!
-	@IBOutlet weak var replyToUsernameLabel: UILabel!
+	@IBOutlet weak var replyToTextLabel: UILabel! {
+		didSet {
+			replyToTextLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var replyToUsernameLabel: UILabel! {
+		didSet {
+			replyToUsernameLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
 
-	@IBOutlet weak var userAvatarImageView: UIImageView!
-	@IBOutlet weak var currentUsernameLabel: UILabel!
+	@IBOutlet weak var userAvatarImageView: UIImageView! {
+		didSet {
+			userAvatarImageView.theme_borderColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var currentUsernameLabel: UILabel! {
+		didSet {
+			currentUsernameLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
 
-	@IBOutlet weak var characterCountLabel: UILabel!
-	@IBOutlet weak var commentTextView: UITextView!
+	@IBOutlet weak var characterCountLabel: UILabel! {
+		didSet {
+			characterCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var commentTextView: UITextView! {
+		didSet {
+			commentTextView.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+
+
+	@IBOutlet weak var replyToUserContainer: UIView! {
+		didSet {
+			replyToUserContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+	}
+	@IBOutlet weak var commentPreviewContainer: UIView! {
+		didSet {
+			commentPreviewContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+		}
+	}
 
 	let charLimit = 240
 
@@ -35,6 +71,7 @@ class KCommentEditorViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 0
 		IQKeyboardManager.shared.shouldResignOnTouchOutside = false
