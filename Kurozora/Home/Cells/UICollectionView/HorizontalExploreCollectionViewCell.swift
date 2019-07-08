@@ -29,6 +29,7 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var homeCollectionViewController: HomeCollectionViewController?
+	var section: Int?
 }
 
 // MARK: - UICollectionViewDataSource
@@ -105,6 +106,13 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 
 		if let cellStyle = cellStyle, cellCount > 0 {
 			let gaps = CGFloat(10 * cellCount)
+
+			if self.section == 0 {
+				if UIDevice.isLandscape() {
+					return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
+				}
+				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
+			}
 			
 			switch cellStyle {
 			case .large:

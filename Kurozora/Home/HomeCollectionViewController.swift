@@ -130,14 +130,18 @@ extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if indexPath.section < (exploreCategories?.count)! {
 			if let categoryType = exploreCategories?[indexPath.section].size {
-				let exploreCellStyle = ExploreCellStyle(rawValue: categoryType)
+				var exploreCellStyle = ExploreCellStyle(rawValue: categoryType)
 				var horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 
 				if indexPath.section == 0 {
 					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 					horizontalCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
+					exploreCellStyle = .large
+				} else if exploreCellStyle == .large {
+					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 				}
 
+				horizontalCell.section = indexPath.section
 				horizontalCell.homeCollectionViewController = self
 				horizontalCell.cellStyle = exploreCellStyle
 
@@ -187,6 +191,13 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if indexPath.section < (exploreCategories?.count)! {
 			if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
+
+				if indexPath.section == 0 {
+					if UIDevice.isLandscape() {
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
+					}
+					return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+				}
 
 				switch exploreCellStyle {
 				case .large:
