@@ -21,7 +21,7 @@ import UIKit
 import MarqueeLabel
 
 @objcMembers
-public class StatusBarNotificationBanner: BaseNotificationBanner {
+open class StatusBarNotificationBanner: BaseNotificationBanner {
 
     public override var bannerHeight: CGFloat {
         get {
@@ -73,7 +73,9 @@ public class StatusBarNotificationBanner: BaseNotificationBanner {
     }
 
     public init(customView: UIView) {
-        super.init(style: .none)
+        super.init(style: .customView)
+        self.customView = customView
+        
         contentView.addSubview(customView)
         customView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)

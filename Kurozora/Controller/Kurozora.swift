@@ -45,7 +45,7 @@ class Kurozora: NSObject {
 			} else {
 				revealingSplashView.heartAttack = true
 				let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-				let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController
+				let vc = storyboard.instantiateInitialViewController()
 				window?.rootViewController = vc
 			}
 
@@ -82,7 +82,7 @@ class Kurozora: NSObject {
 			if !success {
 				if window?.rootViewController as? WelcomeViewController == nil {
 					let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-					let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
+					let vc = storyboard.instantiateInitialViewController()
 					window?.rootViewController = vc
 					self.success = success
 				}

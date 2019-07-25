@@ -6,6 +6,10 @@
 //  Copyright © 2018 Top Hat. All rights reserved.
 //
 
+extension NSAttributedString.Key {
+    static let customLink = NSAttributedString.Key(rawValue: "customLink")
+}
+
 extension NSMutableAttributedString {
     func replaceFont(with newFont: UIFont) {
         self.beginEditing()
@@ -19,6 +23,17 @@ extension NSMutableAttributedString {
             let mergedFont = UIFont(descriptor: newFontDescriptor, size: mergedSize)
             self.removeAttribute(.font, range: range)
             self.addAttribute(.font, value: mergedFont, range: range)
+        }
+        self.endEditing()
+    }
+
+    func replaceColor(with newColor: UIColor) {
+        self.beginEditing()
+        let defaultColor = UIColor.black
+        self.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: self.length)) { (value, range, _) in
+            if let oldColor = value as? UIColor, oldColor == defaultColor {
+                self.addAttribute(.foregroundColor, value: newColor, range: range)
+            }
         }
         self.endEditing()
     }

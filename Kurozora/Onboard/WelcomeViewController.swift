@@ -13,7 +13,7 @@ import WhatsNew
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
 	
-	var logoutReason: String? = ""
+	var logoutReason = ""
 	var isKiller: Bool?
 	var statusBarShouldBeHidden = true
 
@@ -27,6 +27,7 @@ class WelcomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: animated)
 
 		// Show the status bar
 		statusBarShouldBeHidden = true
@@ -57,10 +58,15 @@ class WelcomeViewController: UIViewController {
 			present(whatsNew, animated: true, completion: nil)
 		}
 
-		if let logoutReason = logoutReason, logoutReason != "", let isKiller = isKiller, !isKiller {
+		if logoutReason != "", let isKiller = isKiller, !isKiller {
 			SCLAlertView().showInfo("You have been logged out", subTitle: logoutReason)
 			self.logoutReason = ""
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		navigationController?.setNavigationBarHidden(false, animated: animated)
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0DD2C86AE4714F771AA2EE20 /* Pods_KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */; };
 		6601F1AC2118488D0074C1DD /* MessageNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* MessageNotificationCell.swift */; };
+		6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6603F5E922E9BB7A0064BE62 /* KModalTransition.swift */; };
 		66058DB6212E95AB0084B79E /* details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66058DB5212E95AB0084B79E /* details.storyboard */; };
 		66058DBA212E97670084B79E /* ShowReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DB9212E97670084B79E /* ShowReviewCell.swift */; };
 		66058DBC212E97AD0084B79E /* ShowLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66058DBB212E97AD0084B79E /* ShowLinkCell.swift */; };
@@ -393,6 +394,7 @@
 /* Begin PBXFileReference section */
 		268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
 		6601F1AB2118488D0074C1DD /* MessageNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNotificationCell.swift; sourceTree = "<group>"; };
+		6603F5E922E9BB7A0064BE62 /* KModalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KModalTransition.swift; sourceTree = "<group>"; };
 		66058DB5212E95AB0084B79E /* details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = details.storyboard; sourceTree = "<group>"; };
 		66058DB9212E97670084B79E /* ShowReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowReviewCell.swift; sourceTree = "<group>"; };
 		66058DBB212E97AD0084B79E /* ShowLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLinkCell.swift; sourceTree = "<group>"; };
@@ -800,6 +802,14 @@
 				6648ED7122A4749500E1BE18 /* Models */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		6603F5E822E9BB7A0064BE62 /* Segue */ = {
+			isa = PBXGroup;
+			children = (
+				6603F5E922E9BB7A0064BE62 /* KModalTransition.swift */,
+			);
+			path = Segue;
 			sourceTree = "<group>";
 		};
 		66058DB2212E915D0084B79E /* Shows */ = {
@@ -1601,6 +1611,7 @@
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				66B4F1D3223BC906007C5048 /* Networking */,
 				66B4F1D2223BC901007C5048 /* Search */,
+				6603F5E822E9BB7A0064BE62 /* Segue */,
 				66B4F1D5223D141A007C5048 /* Theme */,
 			);
 			path = Features;
@@ -2254,6 +2265,7 @@
 				"${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
@@ -2296,6 +2308,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichEditorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
@@ -2436,6 +2449,7 @@
 				66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */,
 				666938B021B1D4D800BA9620 /* PostCell.swift in Sources */,
 				666938AF21B1D4D200BA9620 /* TimelinePostCell.swift in Sources */,
+				6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
 				66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */,
 				66DEB4B221D419420093725F /* SearchController.swift in Sources */,

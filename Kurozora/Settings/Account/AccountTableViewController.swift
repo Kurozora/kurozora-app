@@ -57,16 +57,16 @@ extension AccountTableViewController {
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isLoggedIn {
 					Service.shared.logout(withSuccess: { (success) in
-						let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-						let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
-
-						self.present(vc, animated: true, completion: nil)
+						let storyboard = UIStoryboard(name: "login", bundle: nil)
+						if let vc = storyboard.instantiateInitialViewController() {
+							self.show(vc, sender: nil)
+						}
 					})
 				} else {
-					let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-					let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
-
-					self.present(vc, animated: true, completion: nil)
+					let storyboard = UIStoryboard(name: "login", bundle: nil)
+					if let vc = storyboard.instantiateInitialViewController() {
+						self.show(vc, sender: true)
+					}
 				}
 			})
 

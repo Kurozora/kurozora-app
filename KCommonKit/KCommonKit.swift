@@ -34,24 +34,28 @@ public class KCommonKit {
     public var showID: Int?
 }
 
+/**
+	- parameter baseUrlString: The base url of the Kurozora API
+	- parameter KDefaults: The base keychain service of the Kurozora App
+	- parameter KUserDefaults: The base UserDefaults suit of the Kurozora Apps
+*/
 public struct GlobalVariables {
-    public init() {}
-
-    public let baseUrlString = "https://kurozora.app/api/v1/"
+	public init() {}
+	public let baseUrlString = "https://kurozora.app/api/v1/"
     public let KDefaults = Keychain(service: "app.kurozora.anime")
 	public let KUserDefaults = UserDefaults(suiteName: "group.settings.app.kurozora.anime")
 }
 
-public enum FontAwesome: String {
-    case angleDown = ""
-    case timesCircle = ""
-    case ranking = ""
-    case members = ""
-    case watched = ""
-    case favorite = ""
-    case rated = ""
-}
+/**
+	List of anime types
 
+	- case tv: "TV"
+	- case movie: "Movie"
+	- case special: "Special"
+	- case ova: "OVA"
+	- case ona: "ONA"
+	- case music: "Music"
+*/
 public enum AnimeType: String {
     case tv = "TV"
     case movie = "Movie"
@@ -59,46 +63,57 @@ public enum AnimeType: String {
     case ova = "OVA"
     case ona = "ONA"
     case music = "Music"
-    
-    static public func count() -> Int {
-        return 6
-    }
-    
-    static public func allRawValues() -> [String] {
-        return [AnimeType.tv.rawValue, AnimeType.movie.rawValue, AnimeType.special.rawValue, AnimeType.ova.rawValue, AnimeType.ona.rawValue, AnimeType.music.rawValue]
-    }
+
+	static public let allRawValues: [String] = [AnimeType.tv.rawValue, AnimeType.movie.rawValue, AnimeType.special.rawValue, AnimeType.ova.rawValue, AnimeType.ona.rawValue, AnimeType.music.rawValue]
+	static public let count: Int = allRawValues.count
 }
 
+/**
+	List of anime classifications
+
+	- case g: "G - All Ages"
+	- case pg: "PG - Children"
+	- case pg13: "PG-13 - Teens 13 or older"
+	- case r17: "R - 17+ (violence & profanity)"
+	- case rPlus: "R+ - Mild Nudity"
+*/
 public enum AnimeClassification: String {
     case g = "G - All Ages"
     case pg = "PG - Children"
     case pg13 = "PG-13 - Teens 13 or older"
     case r17 = "R - 17+ (violence & profanity)"
     case rPlus = "R+ - Mild Nudity"
-    
-    static public func count() -> Int {
-        return 5
-    }
-    
-    static public func allRawValues() -> [String] {
-        return [AnimeClassification.g.rawValue, AnimeClassification.pg.rawValue, AnimeClassification.pg13.rawValue, AnimeClassification.r17.rawValue, AnimeClassification.rPlus.rawValue]
-    }
+
+	static public let allRawValues: [String] = [AnimeClassification.g.rawValue, AnimeClassification.pg.rawValue, AnimeClassification.pg13.rawValue, AnimeClassification.r17.rawValue, AnimeClassification.rPlus.rawValue]
+	static public let count: Int = allRawValues.count
 }
 
+/**
+	List of anime status
+
+	- case finishedAiring: "finished airing"
+	- case currentlyAiring: "currently airing"
+	- case notYetAired: "not yet aired"
+*/
 public enum AnimeStatus: String {
     case finishedAiring = "finished airing"
     case currentlyAiring = "currently airing"
     case notYetAired = "not yet aired"
-    
-    static public func count() -> Int {
-        return 3
-    }
-    
-    static public func allRawValues() -> [String] {
-        return [AnimeStatus.finishedAiring.rawValue, AnimeStatus.currentlyAiring.rawValue, AnimeStatus.notYetAired.rawValue]
-    }
+
+	static public let allRawValues: [String] = [AnimeStatus.finishedAiring.rawValue, AnimeStatus.currentlyAiring.rawValue, AnimeStatus.notYetAired.rawValue]
+	static public let count: Int = allRawValues.count
 }
 
+/**
+	List of anime genres
+
+	- case action = "Action"
+	- case adventure = "Adventure"
+	- case cars = "Cars"
+	- case comedy = "Comedy"
+	- case dementia = "Dementia"
+	- etc.
+*/
 public enum AnimeGenre: String {
     case action = "Action"
     case adventure = "Adventure"
@@ -142,16 +157,18 @@ public enum AnimeGenre: String {
     case vampire = "Vampire"
     case yaoi = "Yaoi"
     case yuri = "Yuri"
-    
-    static public func count() -> Int {
-        return 43
-    }
-    
-    static public func allRawValues() -> [String] {
-        return [AnimeGenre.action.rawValue, AnimeGenre.adventure.rawValue, AnimeGenre.cars.rawValue, AnimeGenre.comedy.rawValue, AnimeGenre.dementia.rawValue, AnimeGenre.demons.rawValue, AnimeGenre.drama.rawValue, AnimeGenre.ecchi.rawValue, AnimeGenre.fantasy.rawValue, AnimeGenre.game.rawValue, AnimeGenre.harem.rawValue, AnimeGenre.historical.rawValue, AnimeGenre.horror.rawValue, AnimeGenre.josei.rawValue, AnimeGenre.kids.rawValue, AnimeGenre.magic.rawValue, AnimeGenre.martialArts.rawValue, AnimeGenre.mecha.rawValue, AnimeGenre.military.rawValue, AnimeGenre.music.rawValue, AnimeGenre.mystery.rawValue, AnimeGenre.parody.rawValue, AnimeGenre.police.rawValue, AnimeGenre.psychological.rawValue, AnimeGenre.romance.rawValue, AnimeGenre.samurai.rawValue, AnimeGenre.school.rawValue, AnimeGenre.sciFi.rawValue, AnimeGenre.seinen.rawValue, AnimeGenre.shoujo.rawValue, AnimeGenre.shoujoAi.rawValue, AnimeGenre.shounen.rawValue, AnimeGenre.shounenAi.rawValue, AnimeGenre.sliceOfLife.rawValue, AnimeGenre.space.rawValue, AnimeGenre.sports.rawValue, AnimeGenre.superPower.rawValue, AnimeGenre.supernatural.rawValue, AnimeGenre.thriller.rawValue, AnimeGenre.vampire.rawValue, AnimeGenre.yaoi.rawValue, AnimeGenre.yuri.rawValue]
-    }
+
+	static public let allRawValues: [String] = [AnimeGenre.action.rawValue, AnimeGenre.adventure.rawValue, AnimeGenre.cars.rawValue, AnimeGenre.comedy.rawValue, AnimeGenre.dementia.rawValue, AnimeGenre.demons.rawValue, AnimeGenre.drama.rawValue, AnimeGenre.ecchi.rawValue, AnimeGenre.fantasy.rawValue, AnimeGenre.game.rawValue, AnimeGenre.harem.rawValue, AnimeGenre.historical.rawValue, AnimeGenre.horror.rawValue, AnimeGenre.josei.rawValue, AnimeGenre.kids.rawValue, AnimeGenre.magic.rawValue, AnimeGenre.martialArts.rawValue, AnimeGenre.mecha.rawValue, AnimeGenre.military.rawValue, AnimeGenre.music.rawValue, AnimeGenre.mystery.rawValue, AnimeGenre.parody.rawValue, AnimeGenre.police.rawValue, AnimeGenre.psychological.rawValue, AnimeGenre.romance.rawValue, AnimeGenre.samurai.rawValue, AnimeGenre.school.rawValue, AnimeGenre.sciFi.rawValue, AnimeGenre.seinen.rawValue, AnimeGenre.shoujo.rawValue, AnimeGenre.shoujoAi.rawValue, AnimeGenre.shounen.rawValue, AnimeGenre.shounenAi.rawValue, AnimeGenre.sliceOfLife.rawValue, AnimeGenre.space.rawValue, AnimeGenre.sports.rawValue, AnimeGenre.superPower.rawValue, AnimeGenre.supernatural.rawValue, AnimeGenre.thriller.rawValue, AnimeGenre.vampire.rawValue, AnimeGenre.yaoi.rawValue, AnimeGenre.yuri.rawValue]
+	static public let count: Int = allRawValues.count
 }
 
+/**
+	List of anime sorting
+
+	- case az: "A-Z"
+	- case popular: "Most Popular"
+	- case rating: "Highest Rated"
+*/
 public enum AnimeSort: String {
     case az = "A-Z"
     case popular = "Most Popular"

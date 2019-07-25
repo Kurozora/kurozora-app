@@ -214,7 +214,7 @@ class ReplyCell: UITableViewCell {
 
 		// Share thread action
 		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			var shareText: String!
+			var shareText = ""
 
 			if let title = self.replyLabel.text {
 				shareText = title

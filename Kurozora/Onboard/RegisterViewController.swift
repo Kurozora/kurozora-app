@@ -13,6 +13,7 @@ import SCLAlertView
 import SwiftTheme
 
 class RegisterViewController: UIViewController {
+	@IBOutlet weak var profileView: UIView!
 	@IBOutlet weak var usernameTextField: UITextField! {
 		didSet {
 			usernameTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
@@ -58,7 +59,11 @@ class RegisterViewController: UIViewController {
 			registerButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-    @IBOutlet weak var selectButton: UIButton!
+	@IBOutlet weak var selectButton: UIButton! {
+		didSet {
+			selectButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
     @IBOutlet weak var profileImage: UIImageView!
     
     var imagePicker = UIImagePickerController()
@@ -66,6 +71,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		profileView.applyShadow(cornerRadius: profileView.height / 2)
 
 		registerButton.isEnabled = false
 		registerButton.alpha = 0.5
@@ -242,7 +248,7 @@ extension RegisterViewController: UITextFieldDelegate {
 //MARK: - UIImagePickerControllerDelegate
 extension RegisterViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let editedImage = info[.editedImage] as? UIImage{
+        if let editedImage = info[.editedImage] as? UIImage {
             self.profileImage.image = editedImage
         }
         

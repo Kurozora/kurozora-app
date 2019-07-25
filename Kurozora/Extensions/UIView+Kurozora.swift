@@ -24,12 +24,12 @@ extension UIView {
 	}
 	
 	/// Give the view a nice shadow
-	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize, shouldRasterize: Bool = false) {
+	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = false, cornerRadius: CGFloat? = nil) {
 		layer.shadowColor = shadowColor.cgColor
 		layer.shadowOpacity = shadowOpacity
 		layer.shadowRadius = shadowRadius
 		layer.shadowOffset = shadowOffset
-		layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: shadowPathSize), cornerRadius: 10).cgPath
+		layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: shadowPathSize ?? CGSize(width: self.width, height: self.height)), cornerRadius: cornerRadius ?? self.cornerRadius).cgPath
 
 		if shouldRasterize {
 			layer.shouldRasterize = true

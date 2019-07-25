@@ -47,8 +47,9 @@ class HomeCollectionViewController: UICollectionViewController {
         Service.shared.validateSession(withSuccess: { (success) in
             if !success {
                 let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
-                self.present(vc, animated: true, completion: nil)
+				if let vc = storyboard.instantiateInitialViewController() {
+                	self.present(vc, animated: true, completion: nil)
+				}
             }
             NotificationCenter.default.post(name: heartAttackNotification, object: nil)
         })

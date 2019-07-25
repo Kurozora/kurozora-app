@@ -4,9 +4,8 @@
 <a href="https://github.com/Carthage/Carthage/"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 [![Platform](https://img.shields.io/cocoapods/p/NotificationBannerSwift.svg?style=flat)](http://cocoapods.org/pods/NotificationBannerSwift)
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift-5-4BC51D.svg?style=flat" alt="Language: Swift" /></a>
-[![Downloads](https://img.shields.io/cocoapods/dt/NotificationBannerSwift.svg)](http://cocoapods.org/pods/NotificationBannerSwift)
-[![Apps](https://img.shields.io/cocoapods/at/NotificationBannerSwift.svg)](http://cocoapods.org/pods/NotificationBannerSwift)
 [![License](https://img.shields.io/cocoapods/l/NotificationBannerSwift.svg?style=flat)](http://cocoapods.org/pods/NotificationBannerSwift)
+
 ## Written in Swift 5
 
 NotificationBanner is an extremely customizable and lightweight library that makes the task of displaying in app notification banners and drop down alerts an absolute breeze in iOS.
@@ -15,6 +14,9 @@ NotificationBanner is an extremely customizable and lightweight library that mak
 | ------------- | ------------- | ------------- |
 | ![Basic Banners](NotificationBanner/Assets/basic.gif)  | ![Banners with Side Views](NotificationBanner/Assets/side_views.gif)  | ![Status Bar Banners](NotificationBanner/Assets/status_bar.gif) |
 
+| Growing Banners | Floating Banners  |
+| ------------- | ------------- | 
+| ![Growing Banners](NotificationBanner/Assets/growing.gif)  | ![Floating Banners](NotificationBanner/Assets/floating.gif)
 ## Features
 - Highly customizable ✅
 - `NSAttributedString` support ✅
@@ -289,12 +291,13 @@ I'd love to know anything that you think NotificationBanner is missing. Open an 
 
 ## Apps that Use NotificationBanner
 [![Q - Talk About Music](AppIcons/q_talk_about_music.jpg)](https://itunes.apple.com/us/app/q-talk-about-music/id1071551321?mt=8) 
-[![VH Dispatch](AppIcons/vh_dispatch.png)](https://itunes.apple.com/us/app/vh-dispatch/id1249569084?mt=8)
-[![Stikkr](AppIcons/stikkr.png)](https://itunes.apple.com/us/app/stikkr/id851375015?ls=1&mt=8)
-[![CardCast](AppIcons/cardcast.png)](https://itunes.apple.com/us/app/cardcast-business-cards/id1269278947?mt=8)
-[![Happy Scale](AppIcons/happy_scale.png)](https://itunes.apple.com/us/app/happy-scale/id532430574?mt=8)
-[![Wanderings](AppIcons/wanderings.png)](https://itunes.apple.com/us/app/wanderings-travel-tracking/id1292503352?mt=8)
-[![Modern Magic 8 Ball](AppIcons/modernmagic8ball.png)](https://itunes.apple.com/us/app/modern-magic-8-ball/id1381145384?mt=8)
+[![VH Dispatch](AppIcons/vh_dispatch.png)](https://apps.apple.com/app/vh-dispatch/id1249569084)
+[![Stikkr](AppIcons/stikkr.png)](https://apps.apple.com/app/stikkr/id851375015)
+[![CardCast](AppIcons/cardcast.png)](https://apps.apple.com/app/cardcast-business-cards/id1269278947)
+[![Happy Scale](AppIcons/happy_scale.png)](https://apps.apple.com/app/happy-scale/id532430574)
+[![Wanderings](AppIcons/wanderings.png)](https://apps.apple.com/app/wanderings-travel-tracking/id1292503352)
+[![Modern Magic 8 Ball](AppIcons/modernmagic8ball.png)](https://apps.apple.com/app/modern-magic-8-ball/id1381145384)
+[![Envision: Habits Tracker](AppIcons/envision.png)](https://apps.apple.com/app/envision-habits-tracker/id1423771095)
  
 #### Feel free to add yours!
 

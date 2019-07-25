@@ -38,22 +38,22 @@ class LoginViewController: UIViewController {
 			}
 		}
 	}
+	@IBOutlet weak var forgotPasswordButton: UIButton! {
+		didSet {
+			forgotPasswordButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+		}
+	}
 	@IBOutlet weak var loginButton: TKTransitionSubmitButton! {
 		didSet {
 			loginButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			loginButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var forgotPasswordButton: UIButton! {
-		didSet {
-			forgotPasswordButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
-		}
-	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
- 
+
         loginButton.isEnabled = false
 		loginButton.alpha = 0.5
     }
@@ -70,10 +70,6 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - IBActions
-    @IBAction func dismissPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func loginPressed(sender: AnyObject) {
 		loginButton.startLoadingAnimation()
 		view.endEditing(true)
@@ -89,6 +85,7 @@ class LoginViewController: UIViewController {
 					self.loginButton.startFinishAnimation(1) {
 						let customTabBar = KurozoraTabBarController()
 						customTabBar.transitioningDelegate = self
+						customTabBar.modalPresentationStyle = .fullScreen
 						self.present(customTabBar, animated: true, completion: nil)
 					}
 				}
@@ -113,7 +110,6 @@ extension LoginViewController: UIViewControllerTransitioningDelegate {
 	}
 }
 
-
 // MARK: - UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
     @objc func editingChanged(_ textField: UITextField) {
@@ -123,8 +119,7 @@ extension LoginViewController: UITextFieldDelegate {
                 return
             }
         }
-        guard
-            let username = usernameTextField.text, !username.isEmpty,
+        guard let username = usernameTextField.text, !username.isEmpty,
             let password = passwordTextField.text, !password.isEmpty
             else {
                 loginButton.isEnabled = false

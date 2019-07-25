@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.8.2)
-  - AutoInsetter (1.7.1)
+  - AutoInsetter (1.7.2)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
   - AXPhotoViewer/Core (1.7.1):
@@ -12,7 +12,7 @@ PODS:
   - ColorSlider (4.4)
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
-  - Down (0.8.5)
+  - Down (0.8.6)
   - EmptyDataSet-Swift (4.2.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
@@ -21,10 +21,10 @@ PODS:
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.4.0)
   - KeychainAccess (3.2.0)
-  - Kingfisher (5.6.0)
+  - Kingfisher (5.7.0)
   - MarqueeLabel (4.0.0)
   - MBProgressHUD (1.1.0)
-  - NotificationBannerSwift (2.3.0):
+  - NotificationBannerSwift (2.5.1):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - NVActivityIndicatorView (4.7.0):
@@ -38,13 +38,14 @@ PODS:
   - ReachabilitySwift (4.3.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
-  - RichTextView (2.1.1):
+  - RichTextView (2.2.3):
     - Down
     - iosMath
     - SnapKit
   - SCLAlertView (0.8.1)
   - SnapKit (5.0.0)
   - Solar (2.1.0)
+  - SPStorkController (1.7.6)
   - Starscream (3.0.6)
   - SwifterSwift (5.0.0):
     - SwifterSwift/AppKit (= 5.0.0)
@@ -68,9 +69,9 @@ PODS:
   - SwiftTheme (0.4.4)
   - SwiftyJSON (4.3.0)
   - SwipeCellKit (2.6.0)
-  - Tabman (2.4.2):
-    - AutoInsetter (~> 1.7)
-    - Pageboy (~> 3.2)
+  - Tabman (2.4.3):
+    - AutoInsetter (~> 1.7.2)
+    - Pageboy (~> 3.2.3)
   - TRON (4.2.2):
     - Alamofire (~> 4.5)
     - TRON/SwiftyJSON (= 4.2.2)
@@ -103,6 +104,7 @@ DEPENDENCIES:
   - RichTextView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - Solar
+  - SPStorkController
   - SwifterSwift
   - SwiftTheme
   - SwipeCellKit
@@ -141,6 +143,7 @@ SPEC REPOS:
     - RichTextView
     - SnapKit
     - Solar
+    - SPStorkController
     - Starscream
     - SwifterSwift
     - SwiftTheme
@@ -168,14 +171,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  AutoInsetter: 0c40f6505369c7b75cf7ac27e3cce2170293ac27
+  AutoInsetter: 176c5c069b40bf6afa51bf7081be346ab70ca315
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   BottomPopup: d487f2fd398805f07e4563a29cf79233f531cbe7
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
-  Down: d2554b5006cf45bdb2bc6f19d91ca4fec6a45b31
+  Down: 3c758f2388fa739663023f400e742a988fa1e21d
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -184,29 +187,30 @@ SPEC CHECKSUMS:
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Kingfisher: 1a50df6880a60bae26f3e21a0df3d17b892f5e0b
+  Kingfisher: c7d211b54f1f30d8060aadab177d52b4349c825b
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  NotificationBannerSwift: fdc44b934be7a8175f7a7170a75a11c672990e70
+  NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   Pageboy: 347c49b3a7f15aa78ddb6bf5c6c3b113e382fe52
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
-  RichTextView: 7e7d874a6222d173f0a39a558ed3ccb87331a9f6
+  RichTextView: 30ab89558109c29d1916db0388f508e81ed60127
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
+  SPStorkController: 6d0d0716a4e9e8245aa80715ffc57491b428569e
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
-  Tabman: 6e0888c9b9227d9da03e51a90f1f91f53454bfa1
+  Tabman: c2c83ebfcbec3e5be67e27a1dd6689a4e3efccd3
   TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 2ef064af51544282f8ac6465e578775a38d5e2e1
+PODFILE CHECKSUM: fab8941229cc074b9c559df2f94047ffd3c27ba7
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.7.5

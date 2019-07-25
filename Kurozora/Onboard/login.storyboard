@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="z99-fr-eSh">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
-                                <rect key="frame" x="0.0" y="-80" width="414" height="1024"/>
+                                <rect key="frame" x="0.0" y="16" width="414" height="928"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="812" id="YzP-QX-n8O"/>
                                     <constraint firstAttribute="width" constant="1212" id="duG-2g-wgp"/>
@@ -34,76 +32,57 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="49" y="732" width="316.5" height="52"/>
-                                <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="60E-Br-h3d"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <state key="normal" title="✉️ Register with email">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="26"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                        <color key="value" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="FAW-mw-c86" kind="presentation" id="08N-QR-gB4">
-                                        <segue key="commit" inheritsFrom="parent" id="q07-Tz-nSR"/>
-                                        <segue key="preview" inheritsFrom="commit" id="6ij-iv-38l"/>
-                                    </segue>
-                                </connections>
-                            </button>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVe-1O-Ujq" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="49" y="792" width="316.5" height="52"/>
-                                <color key="backgroundColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="wDd-PZ-6tH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <state key="normal" title="Have a Kurozora account? Log in">
-                                    <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="26"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                        <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="oGH-lg-KeC" kind="presentation" id="lez-Kx-Iwb">
-                                        <segue key="commit" inheritsFrom="parent" id="7YJ-oH-aD1"/>
-                                        <segue key="preview" inheritsFrom="commit" id="XlJ-1H-elx"/>
-                                    </segue>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ll8-Ce-fo6">
+                                <rect key="frame" x="49" y="728" width="316.5" height="114"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaM-Zl-uea" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="316.5" height="52"/>
+                                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="60E-Br-h3d"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="✉️ Register with email">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="26"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                                <color key="value" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="VSj-jZ-zJW" kind="show" id="njg-Q4-0BT"/>
+                                        </connections>
+                                    </button>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVe-1O-Ujq" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="62" width="316.5" height="52"/>
+                                        <color key="backgroundColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="wDd-PZ-6tH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="Have a Kurozora account? Log in">
+                                            <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="26"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                                <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="z1G-pN-YZx" kind="show" id="POb-i9-vGG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B">
-                                <rect key="frame" x="118.5" y="120" width="177.5" height="75"/>
+                                <rect key="frame" x="118.5" y="219.5" width="177.5" height="75"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -169,7 +148,7 @@ Kurozora</string>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1n-dr-1eA">
-                                <rect key="frame" x="49" y="205" width="316.5" height="38.5"/>
+                                <rect key="frame" x="49" y="304.5" width="316.5" height="38.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The largest mobile app for ">
                                         <attributes>
@@ -407,12 +386,12 @@ Kurozora</string>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
-                                <rect key="frame" x="118.5" y="104" width="177.5" height="16"/>
+                                <rect key="frame" x="118.5" y="200" width="177.5" height="19.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="黒空">
                                         <attributes>
                                             <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="17" name=".PingFangSC-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -435,7 +414,7 @@ Kurozora</string>
                                         <fragment content="黒空">
                                             <attributes>
                                                 <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="14" name=".PingFangSC-Regular"/>
+                                                <font key="NSFont" metaFont="menu" size="14"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -446,7 +425,7 @@ Kurozora</string>
                                         <fragment content="黒空">
                                             <attributes>
                                                 <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="16" name=".PingFangSC-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="16"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -457,7 +436,7 @@ Kurozora</string>
                                         <fragment content="黒空">
                                             <attributes>
                                                 <color key="NSColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="24" name=".PingFangSC-Regular"/>
+                                                <font key="NSFont" metaFont="system" size="24"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -467,22 +446,19 @@ Kurozora</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eaM-Zl-uea" firstAttribute="trailing" secondItem="x1n-dr-1eA" secondAttribute="trailing" id="58w-BA-4mi"/>
                             <constraint firstAttribute="centerY" secondItem="liW-fg-TRx" secondAttribute="centerY" id="5yk-Sr-zIX"/>
-                            <constraint firstItem="eaM-Zl-uea" firstAttribute="leading" secondItem="x1n-dr-1eA" secondAttribute="leading" id="O6b-Rq-eIW"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="top" secondItem="eaM-Zl-uea" secondAttribute="bottom" constant="8" id="Q2b-qA-hdz"/>
+                            <constraint firstItem="ll8-Ce-fo6" firstAttribute="trailing" secondItem="x1n-dr-1eA" secondAttribute="trailing" id="QK4-y9-mq6"/>
+                            <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="ll8-Ce-fo6" secondAttribute="bottom" constant="20" id="Ur1-6F-cVQ"/>
                             <constraint firstAttribute="centerX" secondItem="liW-fg-TRx" secondAttribute="centerX" id="XKT-86-sT1"/>
                             <constraint firstItem="liW-fg-TRx" firstAttribute="leading" secondItem="UBc-FX-H7t" secondAttribute="leading" id="YJI-d0-ds3"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="trailing" secondItem="eaM-Zl-uea" secondAttribute="trailing" id="Z5f-kZ-rHN"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="trailing" secondItem="UC5-fz-v9B" secondAttribute="trailing" id="a8U-hb-adt"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="60" id="aDG-c8-twq"/>
+                            <constraint firstItem="ll8-Ce-fo6" firstAttribute="leading" secondItem="x1n-dr-1eA" secondAttribute="leading" id="aG9-dc-kub"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="leading" secondItem="UC5-fz-v9B" secondAttribute="leading" id="dbi-Rg-Lh3"/>
-                            <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="KVe-1O-Ujq" secondAttribute="bottom" constant="18" id="g1k-Ff-R9y"/>
                             <constraint firstItem="liW-fg-TRx" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="-124" id="kUC-bh-MY8"/>
                             <constraint firstItem="UC5-fz-v9B" firstAttribute="top" secondItem="U6d-22-UCL" secondAttribute="bottom" id="mF1-37-joS"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="top" secondItem="UC5-fz-v9B" secondAttribute="bottom" constant="10" id="oBl-8E-Le7"/>
                             <constraint firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="rFw-Sx-euo"/>
-                            <constraint firstItem="KVe-1O-Ujq" firstAttribute="leading" secondItem="eaM-Zl-uea" secondAttribute="leading" id="tos-im-wRu"/>
                             <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="liW-fg-TRx" secondAttribute="bottom" constant="-82" id="wlb-j3-uwU"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="xRL-4i-8Xv"/>
                         </constraints>
@@ -492,13 +468,14 @@ Kurozora</string>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="uXh-lz-CdI"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="liW-fg-TRx" id="4Ej-cN-D6d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Klu-0O-Ed8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-421.60000000000002" y="137.4384236453202"/>
+            <point key="canvasLocation" x="488.40579710144931" y="137.27678571428569"/>
         </scene>
         <!--Log in-->
         <scene sceneID="Ett-nk-rYv">
@@ -512,12 +489,15 @@ Kurozora</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3q-ja-fL6">
-                                <rect key="frame" x="20" y="162" width="374" height="52"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="ktp-fs-UwO">
+                                <rect key="frame" x="20" y="162" width="374" height="122"/>
                                 <subviews>
                                     <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="The cool username you claimed 🙌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Vj-t3-jHE" customClass="AnimatableTextField" customModule="IBAnimatable">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="Rcg-Zs-iwV"/>
+                                        </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
@@ -536,21 +516,12 @@ Kurozora</string>
                                             <outlet property="delegate" destination="z1G-pN-YZx" id="jtD-Dh-8qi"/>
                                         </connections>
                                     </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="9Vj-t3-jHE" firstAttribute="top" secondItem="d3q-ja-fL6" secondAttribute="top" id="2Q2-hd-nk0"/>
-                                    <constraint firstAttribute="height" constant="52" id="79U-j5-Yfv"/>
-                                    <constraint firstAttribute="trailing" secondItem="9Vj-t3-jHE" secondAttribute="trailing" id="AX5-ph-ijz"/>
-                                    <constraint firstAttribute="bottom" secondItem="9Vj-t3-jHE" secondAttribute="bottom" id="jJG-2a-k5e"/>
-                                    <constraint firstItem="9Vj-t3-jHE" firstAttribute="leading" secondItem="d3q-ja-fL6" secondAttribute="leading" id="tiq-0u-a9G"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CrY-bi-MKu">
-                                <rect key="frame" x="20" y="232" width="374" height="52"/>
-                                <subviews>
                                     <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your super secret password 👀" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xXb-po-gdH" customClass="AnimatableTextField" customModule="IBAnimatable">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
+                                        <rect key="frame" x="0.0" y="70" width="374" height="52"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="MLL-bY-2Tg"/>
+                                        </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
@@ -570,14 +541,7 @@ Kurozora</string>
                                         </connections>
                                     </textField>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="xXb-po-gdH" secondAttribute="trailing" id="0rZ-3p-0el"/>
-                                    <constraint firstAttribute="bottom" secondItem="xXb-po-gdH" secondAttribute="bottom" id="1k5-Vg-c5o"/>
-                                    <constraint firstItem="xXb-po-gdH" firstAttribute="leading" secondItem="CrY-bi-MKu" secondAttribute="leading" id="ELE-Hl-Jm4"/>
-                                    <constraint firstAttribute="height" constant="52" id="XaE-JC-J2W"/>
-                                    <constraint firstItem="xXb-po-gdH" firstAttribute="top" secondItem="CrY-bi-MKu" secondAttribute="top" id="q0Z-JB-Zgj"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-fQ-5lk">
                                 <rect key="frame" x="20" y="292" width="374" height="40"/>
                                 <constraints>
@@ -586,10 +550,7 @@ Kurozora</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Forgot your password? Time to use your email 📧"/>
                                 <connections>
-                                    <segue destination="H2e-ia-XEL" kind="show" id="Mx1-IL-98E">
-                                        <segue key="commit" inheritsFrom="parent" id="FPX-Jz-lvQ"/>
-                                        <segue key="preview" inheritsFrom="commit" id="leY-tC-jlA"/>
-                                    </segue>
+                                    <segue destination="94x-Fc-KWc" kind="presentation" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="EiO-PD-P7n"/>
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHc-2e-Lgl" customClass="TKTransitionSubmitButton" customModule="Kurozora" customModuleProvider="target">
@@ -603,20 +564,11 @@ Kurozora</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="26"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
                                         <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -630,24 +582,15 @@ Kurozora</string>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="top" secondItem="KkB-fQ-5lk" secondAttribute="bottom" constant="18" id="5jH-jX-6QK"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="leading" secondItem="KkB-fQ-5lk" secondAttribute="leading" id="AAu-CF-VJV"/>
                             <constraint firstItem="uHc-2e-Lgl" firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" id="Flm-1e-1Pk"/>
-                            <constraint firstItem="CrY-bi-MKu" firstAttribute="top" secondItem="d3q-ja-fL6" secondAttribute="bottom" constant="18" id="S0a-sY-rhA"/>
-                            <constraint firstItem="CrY-bi-MKu" firstAttribute="leading" secondItem="d3q-ja-fL6" secondAttribute="leading" id="TRk-pQ-bsJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="d3q-ja-fL6" secondAttribute="trailing" id="W4f-RL-7cz"/>
-                            <constraint firstItem="CrY-bi-MKu" firstAttribute="trailing" secondItem="d3q-ja-fL6" secondAttribute="trailing" id="XeH-fV-7nK"/>
-                            <constraint firstItem="CrY-bi-MKu" firstAttribute="leading" secondItem="KkB-fQ-5lk" secondAttribute="leading" id="fdl-Vf-eqg"/>
-                            <constraint firstItem="CrY-bi-MKu" firstAttribute="trailing" secondItem="KkB-fQ-5lk" secondAttribute="trailing" id="lJD-22-Ams"/>
-                            <constraint firstItem="d3q-ja-fL6" firstAttribute="leading" secondItem="Fbe-E7-8m7" secondAttribute="leadingMargin" id="mmR-ij-9LF"/>
-                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="top" secondItem="CrY-bi-MKu" secondAttribute="bottom" constant="8" id="msc-Zi-vst"/>
-                            <constraint firstItem="d3q-ja-fL6" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="22" id="o4c-0f-k8v"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="ktp-fs-UwO" secondAttribute="leading" id="LCh-eS-una"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="leading" secondItem="ktp-fs-UwO" secondAttribute="leading" id="P31-3B-Uuy"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="trailing" secondItem="ktp-fs-UwO" secondAttribute="trailing" id="PD3-Xr-uVo"/>
+                            <constraint firstItem="ktp-fs-UwO" firstAttribute="top" secondItem="6pn-V5-rQq" secondAttribute="bottom" constant="22" id="YMd-R0-QuG"/>
+                            <constraint firstItem="KkB-fQ-5lk" firstAttribute="top" secondItem="ktp-fs-UwO" secondAttribute="bottom" constant="8" id="ey3-O9-rdw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ktp-fs-UwO" secondAttribute="trailing" id="kA6-st-vbO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Log in" id="6Um-CX-X07">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Vq3-5y-yfu">
-                            <connections>
-                                <action selector="dismissPressed:" destination="z1G-pN-YZx" id="Wr3-TK-4OD"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Log in" id="6Um-CX-X07"/>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="KkB-fQ-5lk" id="qIQ-wX-m2C"/>
                         <outlet property="loginButton" destination="uHc-2e-Lgl" id="Zbv-Z5-PFw"/>
@@ -661,7 +604,7 @@ Kurozora</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </objects>
-            <point key="canvasLocation" x="1275.3623188405797" y="-202.23214285714286"/>
+            <point key="canvasLocation" x="1390" y="465"/>
         </scene>
         <!--Register-->
         <scene sceneID="G87-hy-JAc">
@@ -696,17 +639,6 @@ Kurozora</string>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uq8-RS-mVd">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <state key="normal" title="Select"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <real key="value" value="7"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.40000000000000002"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                                <point key="value" x="0.0" y="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="btnChooseImageOnClick:" destination="VSj-jZ-zJW" eventType="touchUpInside" id="cCA-mU-ePf"/>
                                         </connections>
@@ -724,17 +656,6 @@ Kurozora</string>
                                     <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerX" secondItem="1Y3-d1-RaH" secondAttribute="centerX" id="eeo-fH-jvY"/>
                                     <constraint firstItem="Uq8-RS-mVd" firstAttribute="centerY" secondItem="1Y3-d1-RaH" secondAttribute="centerY" id="jcR-6d-nL6"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeC-Wl-Zoj">
                                 <rect key="frame" x="20" y="260" width="374" height="52"/>
@@ -849,15 +770,6 @@ Kurozora</string>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
                                         <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
@@ -886,17 +798,12 @@ Kurozora</string>
                             <constraint firstItem="qeC-Wl-Zoj" firstAttribute="top" secondItem="4fv-qw-04R" secondAttribute="bottom" constant="18" id="zVR-qe-7J1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Register" id="0VO-jm-vjU">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="ru4-mY-ep5">
-                            <connections>
-                                <action selector="dismissPressed:" destination="VSj-jZ-zJW" id="Apk-pM-aQa"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Register" id="0VO-jm-vjU"/>
                     <connections>
                         <outlet property="emailTextField" destination="mxT-kb-wjP" id="6R0-AW-y1x"/>
                         <outlet property="passwordTextField" destination="WhX-QR-jOO" id="F3h-EP-emF"/>
                         <outlet property="profileImage" destination="1Y3-d1-RaH" id="mzd-hO-Ahh"/>
+                        <outlet property="profileView" destination="4fv-qw-04R" id="Ztm-9m-k4w"/>
                         <outlet property="registerButton" destination="xwY-OW-6rP" id="6DW-jj-TKD"/>
                         <outlet property="selectButton" destination="Uq8-RS-mVd" id="Kkk-3f-T9f"/>
                         <outlet property="usernameTextField" destination="F4k-8e-thL" id="7Ce-3x-iRq"/>
@@ -904,7 +811,7 @@ Kurozora</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTP-XS-ViW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1275.3623188405797" y="540.40178571428567"/>
+            <point key="canvasLocation" x="1390" y="-197"/>
         </scene>
         <!--Reset password-->
         <scene sceneID="8DN-6Q-tcr">
@@ -915,44 +822,35 @@ Kurozora</string>
                         <viewControllerLayoutGuide type="bottom" id="azt-3l-ZyK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yzU-Lb-xOA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tw1-AW-xJv">
-                                <rect key="frame" x="20" y="162" width="374" height="52"/>
-                                <subviews>
-                                    <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="AnimatableTextField" customModule="IBAnimatable">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
-                                        <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
-                                                <real key="value" value="18"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
-                                                <real key="value" value="18"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outlet property="delegate" destination="H2e-ia-XEL" id="edu-ur-CP8"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
+                            <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BEp-na-6qS" customClass="AnimatableTextField" customModule="IBAnimatable">
+                                <rect key="frame" x="20" y="130" width="374" height="52"/>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="BEp-na-6qS" secondAttribute="bottom" id="7r0-9W-nrZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" id="RQR-DX-z68"/>
-                                    <constraint firstItem="BEp-na-6qS" firstAttribute="leading" secondItem="tw1-AW-xJv" secondAttribute="leading" id="YVN-b4-Dhd"/>
-                                    <constraint firstAttribute="height" constant="52" id="faX-yw-RHh"/>
-                                    <constraint firstItem="BEp-na-6qS" firstAttribute="top" secondItem="tw1-AW-xJv" secondAttribute="top" id="pUs-o8-YvD"/>
+                                    <constraint firstAttribute="height" constant="52" id="SnL-1d-npN"/>
                                 </constraints>
-                            </view>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="H2e-ia-XEL" id="edu-ur-CP8"/>
+                                </connections>
+                            </textField>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4u-TJ-OFg" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20" y="244" width="374" height="52"/>
+                                <rect key="frame" x="20" y="212" width="374" height="52"/>
                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="0M8-Qa-8zM"/>
@@ -964,15 +862,6 @@ Kurozora</string>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="26"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                        <real key="value" value="0.29999999999999999"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                        <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
                                         <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -986,12 +875,12 @@ Kurozora</string>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="tw1-AW-xJv" firstAttribute="trailing" secondItem="t4u-TJ-OFg" secondAttribute="trailing" id="3Ja-El-Z1V"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="tw1-AW-xJv" secondAttribute="leading" id="3QK-g3-Dn1"/>
-                            <constraint firstItem="tw1-AW-xJv" firstAttribute="top" secondItem="w3P-GZ-aU7" secondAttribute="bottom" constant="22" id="5Mx-0N-Hyj"/>
-                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="tw1-AW-xJv" secondAttribute="bottom" constant="30" id="Jyb-ku-gPc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tw1-AW-xJv" secondAttribute="trailing" id="ewU-1B-Zon"/>
-                            <constraint firstItem="tw1-AW-xJv" firstAttribute="leading" secondItem="t4u-TJ-OFg" secondAttribute="leading" id="xhK-BE-4gg"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="trailing" secondItem="BEp-na-6qS" secondAttribute="trailing" id="1WM-WS-C4g"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BEp-na-6qS" secondAttribute="trailing" id="4xi-AD-4c4"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BEp-na-6qS" secondAttribute="leading" id="AWK-r8-zDa"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="leading" secondItem="BEp-na-6qS" secondAttribute="leading" id="ILC-CS-tDF"/>
+                            <constraint firstItem="BEp-na-6qS" firstAttribute="top" secondItem="w3P-GZ-aU7" secondAttribute="bottom" constant="22" id="LyO-IS-Yia"/>
+                            <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="BEp-na-6qS" secondAttribute="bottom" constant="30" id="XWg-gq-AZl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS"/>
@@ -1002,13 +891,14 @@ Kurozora</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edG-lm-8X7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2024.6376811594205" y="-202.23214285714286"/>
+            <point key="canvasLocation" x="2841" y="465"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UHM-Wc-4qv">
             <objects>
-                <navigationController storyboardIdentifier="LoginKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGH-lg-KeC" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="WelcomeKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGH-lg-KeC" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="KA1-VO-uLW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="2sx-91-4W8">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1016,40 +906,36 @@ Kurozora</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="z1G-pN-YZx" kind="relationship" relationship="rootViewController" id="XKD-o0-Izc"/>
+                        <segue destination="z99-fr-eSh" kind="relationship" relationship="rootViewController" id="jMU-At-7fx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTC-rL-D2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="542" y="-202"/>
+            <point key="canvasLocation" x="-265" y="137"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="0qL-2n-vup">
+        <scene sceneID="ceb-IL-WsW">
             <objects>
-                <navigationController storyboardIdentifier="RegisterKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FAW-mw-c86" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ResetPasswordKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="94x-Fc-KWc" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="4zv-b6-S1d">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationItem key="navigationItem" id="OcO-Oq-fIq"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="AP1-bO-oEZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="VSj-jZ-zJW" kind="relationship" relationship="rootViewController" id="9XB-Hw-sFN"/>
+                        <segue destination="H2e-ia-XEL" kind="relationship" relationship="rootViewController" id="LlB-e1-zHB"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Aqq-2z-JDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hF4-Bg-P3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="541.60000000000002" y="540.88669950738915"/>
+            <point key="canvasLocation" x="2122" y="465"/>
         </scene>
     </scenes>
     <resources>
         <image name="login_wallpaper" width="1920" height="1080"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="08N-QR-gB4"/>
-        <segue reference="lez-Kx-Iwb"/>
-        <segue reference="Mx1-IL-98E"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

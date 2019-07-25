@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			authenticated = false
             revealingSplashView.heartAttack = true
             let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController
+            let vc = storyboard.instantiateInitialViewController()
             self.window?.rootViewController = vc
         }
 
