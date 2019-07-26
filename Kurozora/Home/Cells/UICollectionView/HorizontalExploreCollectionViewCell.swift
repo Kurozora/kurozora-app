@@ -47,6 +47,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreCollectionViewCell
 		exploreCell.homeCollectionViewController = homeCollectionViewController
+		exploreCell.section = section
 
 		if shows != nil {
 			exploreCell.showElement = shows?[indexPath.row]

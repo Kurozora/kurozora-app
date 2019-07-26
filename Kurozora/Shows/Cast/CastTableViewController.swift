@@ -7,15 +7,9 @@
 //
 
 import UIKit
-import BottomPopup
 import EmptyDataSet_Swift
 
-class CastCollectionViewController: BottomPopupViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-	@IBOutlet var grabberView: UIView! {
-		didSet {
-			grabberView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+class CastCollectionViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     @IBOutlet var collectionView: UICollectionView!
 
     var actors: [ActorsElement]?
@@ -40,11 +34,10 @@ class CastCollectionViewController: BottomPopupViewController, EmptyDataSetDeleg
         }
     }
 
-    // Bottom popup delegate methods
-    override func getPopupHeight() -> CGFloat {
-        let height: CGFloat = UIScreen.main.bounds.size.height / 1.5
-        return height
-    }
+	// MARK: - IBActions
+	@IBAction func dismissPressed(_ sender: AnyObject) {
+		self.dismiss(animated: true, completion: nil)
+	}
 }
 
 // MARK: - UICollectionViewDataSource

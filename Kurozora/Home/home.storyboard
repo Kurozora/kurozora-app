@@ -528,6 +528,7 @@
                                                         <outlet property="genreLabel" destination="Dze-XF-Ch9" id="cke-bK-Un5"/>
                                                         <outlet property="shadowView" destination="D8a-If-8sA" id="unA-8k-cIm"/>
                                                         <outlet property="titleLabel" destination="pgX-Ti-5lW" id="Qt7-in-2ft"/>
+                                                        <segue destination="8H2-pT-d2L" kind="presentation" identifier="ShowDetailsSegue" modalPresentationStyle="overFullScreen" id="YPS-Og-lrN"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -1005,7 +1006,7 @@
         <image name="shadow" width="7" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2JV-Mi-ewq"/>
+        <segue reference="pcc-UF-odB"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

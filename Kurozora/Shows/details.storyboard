@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="iOS 13.0 system colors" minToolsVersion="11.0"/>
     </dependencies>
     <scenes>
         <!--Episodes-->
@@ -131,7 +130,7 @@
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-oK-fyX" customClass="CosmosView" customModule="Cosmos">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-oK-fyX" customClass="CosmosView" customModule="Cosmos">
                                             <rect key="frame" x="84.5" y="208" width="95" height="16"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
@@ -395,7 +394,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="EpisodeDetailCell" id="Whq-5Q-aUU" customClass="InformationTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="495.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="495.5" width="414" height="39.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Whq-5Q-aUU" id="14X-5C-BgX">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -441,7 +440,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowCastCell" rowHeight="148" id="tak-DH-PqJ" customClass="ShowCharacterCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="539.5" width="414" height="148"/>
+                                <rect key="frame" x="0.0" y="535" width="414" height="148"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tak-DH-PqJ" id="yFZ-iy-kvg">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
@@ -569,7 +568,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="DiscussionsCell" rowHeight="61" id="t1u-tF-MMs" customClass="DiscussionsCell">
-                                <rect key="frame" x="0.0" y="687.5" width="414" height="61"/>
+                                <rect key="frame" x="0.0" y="683" width="414" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t1u-tF-MMs" id="ctT-td-nQG">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
@@ -1367,7 +1366,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <state key="normal" title="See More"/>
                                                     <connections>
-                                                        <segue destination="XGg-R0-bbf" kind="show" identifier="ActorsSegue" id="oKb-VU-PZs"/>
+                                                        <segue destination="eBs-gP-1sB" kind="presentation" identifier="ActorsSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="Lht-Vs-YCd"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1390,7 +1389,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowDetailCell" id="gcl-BR-Gjw" customClass="InformationTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="493.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="493.5" width="414" height="39.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gcl-BR-Gjw" id="u1g-QN-Sa9">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1436,7 +1435,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowSynopsisCell" rowHeight="200" id="byQ-7d-1fB" customClass="SynopsisCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="537.5" width="414" height="200"/>
+                                        <rect key="frame" x="0.0" y="533" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="byQ-7d-1fB" id="lkr-Xp-aAC">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
@@ -1464,7 +1463,7 @@
                                                                 <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <segue destination="59o-K2-my5" kind="show" identifier="SynopsisSegue" id="CV0-hf-ehS"/>
+                                                                <segue destination="Vrm-9V-gE8" kind="presentation" identifier="SynopsisSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="t9N-qX-Sfy"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -1498,7 +1497,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowCastCell" rowHeight="148" id="VUy-sa-0Bc" customClass="ShowCharacterCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="737.5" width="414" height="148"/>
+                                        <rect key="frame" x="0.0" y="733" width="414" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUy-sa-0Bc" id="rfT-Oc-x79">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
@@ -1627,7 +1626,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowRelatedCell" rowHeight="148" id="fTx-GC-bIf" customClass="ShowRelatedCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="885.5" width="414" height="148"/>
+                                        <rect key="frame" x="0.0" y="881" width="414" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fTx-GC-bIf" id="uea-wc-h2W">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="147.5"/>
@@ -1918,17 +1917,17 @@
                         <outlet property="trailerButton" destination="3od-pz-xva" id="oxj-qy-dyT"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nSa-fM-PkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="gQT-2a-ChO" userLabel="BannerTap">
-                    <connections>
-                        <action selector="showBanner:" destination="vfx-ya-sYW" id="JO0-Ae-bSB"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <tapGestureRecognizer id="GdL-32-9xW" userLabel="PosterTap">
                     <connections>
                         <action selector="showPoster:" destination="vfx-ya-sYW" id="apN-ot-twP"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="gQT-2a-ChO" userLabel="BannerTap">
+                    <connections>
+                        <action selector="showBanner:" destination="vfx-ya-sYW" id="JO0-Ae-bSB"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSa-fM-PkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="B5O-fV-Ocn" userLabel="RatingTap">
                     <connections>
                         <action selector="showRating:" destination="vfx-ya-sYW" id="GUa-1g-Ezn"/>
@@ -1946,24 +1945,11 @@
                         <viewControllerLayoutGuide type="bottom" id="woa-CY-87a"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="BeT-fH-yoF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ona-E5-8GM">
-                                <rect key="frame" x="157" y="49" width="100" height="5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="Ffg-t9-uw5"/>
-                                    <constraint firstAttribute="height" constant="5" id="eup-Gv-Fo0"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="2.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G6N-xh-qwX">
-                                <rect key="frame" x="0.0" y="74" width="414" height="788"/>
+                                <rect key="frame" x="0.0" y="66" width="414" height="742"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cr1-c8-Tad">
                                     <size key="itemSize" width="412" height="148"/>
@@ -2004,7 +1990,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="EDR-XH-KkD" secondAttribute="trailing" id="h2P-NV-VEm"/>
                                                             </constraints>
                                                         </view>
-                                                        <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Yūsuke Kobayashi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHF-gy-Y3b" customClass="CopyableUILabel" customModule="Kurozora" customModuleProvider="target">
+                                                        <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yūsuke Kobayashi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHF-gy-Y3b" customClass="CopyableUILabel" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="98" y="0.0" width="133" height="18"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <gestureRecognizers/>
@@ -2012,7 +1998,7 @@
                                                             <color key="textColor" red="1" green="0.69411764710000001" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label contentMode="left" ambiguous="YES" text="Voice actor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tA7-Gz-KZt" customClass="CopyableUILabel" customModule="Kurozora" customModuleProvider="target">
+                                                        <label contentMode="left" text="Voice actor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tA7-Gz-KZt" customClass="CopyableUILabel" customModule="Kurozora" customModuleProvider="target">
                                                             <rect key="frame" x="98" y="18" width="133" height="14.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -2087,7 +2073,6 @@
                                             <constraint firstAttribute="bottom" secondItem="8B0-j7-C4P" secondAttribute="bottom" constant="10" id="Q7T-mr-syY"/>
                                             <constraint firstItem="8B0-j7-C4P" firstAttribute="leading" secondItem="cK8-rh-7sQ" secondAttribute="leading" id="UsH-mm-gGv"/>
                                             <constraint firstAttribute="bottom" secondItem="cK8-rh-7sQ" secondAttribute="bottom" id="dyn-Yf-pHT"/>
-                                            <constraint firstItem="4gd-eK-w9C" firstAttribute="top" secondItem="tA7-Gz-KZt" secondAttribute="bottom" constant="-32.333333333333336" id="fFZ-1F-e4E"/>
                                             <constraint firstItem="cK8-rh-7sQ" firstAttribute="leading" secondItem="lpL-af-BMA" secondAttribute="leadingMargin" constant="12" id="jdk-au-Dub"/>
                                             <constraint firstItem="JcV-X2-LfQ" firstAttribute="top" secondItem="tA7-Gz-KZt" secondAttribute="bottom" id="jym-Sr-OEN"/>
                                             <constraint firstItem="8B0-j7-C4P" firstAttribute="top" secondItem="lpL-af-BMA" secondAttribute="top" constant="10" id="rfB-m7-HM4"/>
@@ -2108,25 +2093,26 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ona-E5-8GM" firstAttribute="top" secondItem="2qP-Uj-u1g" secondAttribute="bottom" constant="5" id="BqM-eC-3wI"/>
-                            <constraint firstItem="G6N-xh-qwX" firstAttribute="top" secondItem="ona-E5-8GM" secondAttribute="bottom" constant="20" id="Gst-yV-LGi"/>
+                            <constraint firstItem="G6N-xh-qwX" firstAttribute="top" secondItem="2qP-Uj-u1g" secondAttribute="bottom" constant="10" id="6Wy-UY-nW1"/>
                             <constraint firstItem="G6N-xh-qwX" firstAttribute="leading" secondItem="BeT-fH-yoF" secondAttribute="leading" id="OKC-eL-unK"/>
-                            <constraint firstItem="ona-E5-8GM" firstAttribute="centerX" secondItem="BeT-fH-yoF" secondAttribute="centerX" id="TaL-2z-tbb"/>
                             <constraint firstItem="woa-CY-87a" firstAttribute="top" secondItem="G6N-xh-qwX" secondAttribute="bottom" id="dCu-Kw-jSs"/>
                             <constraint firstAttribute="trailing" secondItem="G6N-xh-qwX" secondAttribute="trailing" id="vEy-W3-zXh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Actors" leftItemsSupplementBackButton="YES" id="EyN-H3-TGO"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Actors" leftItemsSupplementBackButton="YES" id="EyN-H3-TGO">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="GAh-md-p9Q">
+                            <connections>
+                                <action selector="dismissPressed:" destination="XGg-R0-bbf" id="ZIB-Ht-hgK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="G6N-xh-qwX" id="Bwm-AK-7a5"/>
-                        <outlet property="grabberView" destination="ona-E5-8GM" id="wCn-0s-rVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u8Z-DE-ZcW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1559" y="-1647"/>
+            <point key="canvasLocation" x="2338" y="-1647"/>
         </scene>
         <!--Synopsis-->
         <scene sceneID="cwA-zA-4vy">
@@ -2147,42 +2133,30 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DbE-zR-jpM">
-                                <rect key="frame" x="157" y="49" width="100" height="5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="5" id="2gk-LT-aph"/>
-                                    <constraint firstAttribute="width" constant="100" id="wYh-qd-1ch"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="2.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="DbE-zR-jpM" firstAttribute="top" secondItem="Csu-5t-2so" secondAttribute="bottom" constant="5" id="JOW-8D-VgF"/>
+                            <constraint firstItem="grs-Fk-ra4" firstAttribute="top" secondItem="Csu-5t-2so" secondAttribute="bottom" constant="10" id="Cuc-jB-HN5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="grs-Fk-ra4" secondAttribute="trailing" id="eEm-NT-v0g"/>
                             <constraint firstItem="grs-Fk-ra4" firstAttribute="leading" secondItem="TUf-O4-NKP" secondAttribute="leadingMargin" id="knA-Ok-cPg"/>
-                            <constraint firstItem="DbE-zR-jpM" firstAttribute="centerX" secondItem="TUf-O4-NKP" secondAttribute="centerX" id="mtJ-gA-LFX"/>
                             <constraint firstItem="Lzk-Tp-AqB" firstAttribute="top" secondItem="grs-Fk-ra4" secondAttribute="bottom" id="nsE-bY-QMq"/>
-                            <constraint firstItem="grs-Fk-ra4" firstAttribute="top" secondItem="DbE-zR-jpM" secondAttribute="bottom" constant="20" id="oqu-wg-Ije"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Actors" leftItemsSupplementBackButton="YES" id="qEc-j7-oYf"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Synopsis" leftItemsSupplementBackButton="YES" id="F05-8X-75B">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="kYP-sE-9Jz">
+                            <connections>
+                                <action selector="dismissPressed:" destination="59o-K2-my5" id="TVd-5h-oX6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="grabberView" destination="DbE-zR-jpM" id="bZn-hd-Fny"/>
                         <outlet property="synopsisTextView" destination="grs-Fk-ra4" id="yJL-21-eSF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXc-1I-mSr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1559" y="-974"/>
+            <point key="canvasLocation" x="2338" y="-974"/>
         </scene>
         <!--Show Detail Tab Bar Controller-->
         <scene sceneID="zcs-hc-2CY">
@@ -2209,7 +2183,7 @@
         <!--DETAILS-->
         <scene sceneID="IUu-WN-Ci1">
             <objects>
-                <navigationController restorationIdentifier="ShowDetailKNavigationController" storyboardIdentifier="ShowDetailKNavigationController" navigationBarHidden="YES" id="EQg-9Z-biW" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ShowDetailKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="EQg-9Z-biW" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="DETAILS" image="details_icon" id="az2-Vv-y6P"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="UQM-gz-tZM">
@@ -2223,9 +2197,6 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kMd-3n-UTm">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
@@ -2262,6 +2233,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugI-du-b1C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-82" y="-290"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8lh-LG-sto">
+            <objects>
+                <navigationController storyboardIdentifier="ActorsKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eBs-gP-1sB" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="dZi-BZ-bcY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="XGg-R0-bbf" kind="relationship" relationship="rootViewController" id="qTm-WJ-zIm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwv-Za-SnI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1558" y="-1647"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="arc-RG-hz4">
+            <objects>
+                <navigationController storyboardIdentifier="SynopsisKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vrm-9V-gE8" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="wYG-K5-EYZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="59o-K2-my5" kind="relationship" relationship="rootViewController" id="UE0-PZ-5dG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yJp-rR-IWP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1558" y="-974"/>
         </scene>
     </scenes>
     <resources>

@@ -8,7 +8,6 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - BottomPopup (0.5.0)
   - ColorSlider (4.4)
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
@@ -27,9 +26,6 @@ PODS:
   - NotificationBannerSwift (2.5.1):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
-  - NVActivityIndicatorView (4.7.0):
-    - NVActivityIndicatorView/Presenter (= 4.7.0)
-  - NVActivityIndicatorView/Presenter (4.7.0)
   - Pageboy (3.2.3)
   - PusherSwift (7.0.0):
     - CryptoSwift (~> 0.9)
@@ -85,7 +81,6 @@ PODS:
 
 DEPENDENCIES:
   - AXPhotoViewer
-  - BottomPopup
   - ColorSlider
   - Cosmos
   - EmptyDataSet-Swift
@@ -97,7 +92,6 @@ DEPENDENCIES:
   - Kingfisher
   - MBProgressHUD
   - NotificationBannerSwift
-  - NVActivityIndicatorView
   - PusherSwift
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichEditorView
@@ -118,7 +112,6 @@ SPEC REPOS:
     - AutoInsetter
     - AXPhotoViewer
     - AXStateButton
-    - BottomPopup
     - ColorSlider
     - Cosmos
     - CryptoSwift
@@ -135,7 +128,6 @@ SPEC REPOS:
     - MarqueeLabel
     - MBProgressHUD
     - NotificationBannerSwift
-    - NVActivityIndicatorView
     - Pageboy
     - PusherSwift
     - ReachabilitySwift
@@ -174,7 +166,6 @@ SPEC CHECKSUMS:
   AutoInsetter: 176c5c069b40bf6afa51bf7081be346ab70ca315
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  BottomPopup: d487f2fd398805f07e4563a29cf79233f531cbe7
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
@@ -191,7 +182,6 @@ SPEC CHECKSUMS:
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
-  NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   Pageboy: 347c49b3a7f15aa78ddb6bf5c6c3b113e382fe52
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
@@ -211,6 +201,6 @@ SPEC CHECKSUMS:
   TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: fab8941229cc074b9c559df2f94047ffd3c27ba7
+PODFILE CHECKSUM: 0ed7f6fe0c3e2ff81e4e15f0804db0f0d8b50774
 
 COCOAPODS: 1.7.5

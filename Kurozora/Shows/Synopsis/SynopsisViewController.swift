@@ -7,20 +7,14 @@
 //
 
 import UIKit
-import BottomPopup
 
-class SynopsisViewController: BottomPopupViewController {
+class SynopsisViewController: UIViewController {
 	@IBOutlet weak var synopsisTextView: UITextView! {
 		didSet {
 			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var grabberView: UIView! {
-		didSet {
-			grabberView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-
+	
 	var synopsis: String?
 
 	override func viewDidLoad() {
@@ -30,9 +24,8 @@ class SynopsisViewController: BottomPopupViewController {
 		synopsisTextView.text = synopsis
 	}
 
-	// Bottom popup delegate methods
-	override func getPopupHeight() -> CGFloat {
-		let height: CGFloat = UIScreen.main.bounds.size.height * 0.9
-		return height
+	// MARK: - IBActions
+	@IBAction func dismissPressed(_ sender: AnyObject) {
+		self.dismiss(animated: true, completion: nil)
 	}
 }

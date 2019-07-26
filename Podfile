@@ -8,14 +8,12 @@ use_frameworks!
 
 # MARK: - Defs
 def common_pods
-	pod 'BottomPopup'
 	pod 'AXPhotoViewer'
 	pod 'EmptyDataSet-Swift'
 	pod 'ESTabBarController-swift'
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 #	pod 'Lightbox', '2.1.2'
-	pod 'NVActivityIndicatorView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 #	pod 'Shimmer', '1.0.2'
 #	pod 'SnowGlobe'
@@ -56,6 +54,7 @@ target 'KCommonKit' do
 	common_pods
 end
 
+# MARK: - Post install scripts
 post_install do |installer|
 	installer.pods_project.targets.each do |target|
 		target.build_configurations.each do |config|

@@ -98,8 +98,8 @@ class HomeCollectionViewController: UICollectionViewController {
 			if let currentCell = sender as? ExploreCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
 				showTabBarController.exploreCollectionViewCell = currentCell
 				showTabBarController.showID = currentCell.showElement?.id
-				if let showTitle = currentCell.showElement?.title {
-					showTabBarController.heroID = "explore_\(showTitle)"
+				if let showTitle = currentCell.showElement?.title, let section = currentCell.section {
+					showTabBarController.heroID = "explore_\(showTitle)_\(section)"
 				}
 			}
         }
@@ -139,9 +139,6 @@ extension HomeCollectionViewController {
 					horizontalCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
 					exploreCellStyle = .large
 				}
-//				else if exploreCellStyle == .large {
-//					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
-//				}
 
 				horizontalCell.section = indexPath.section
 				horizontalCell.homeCollectionViewController = self

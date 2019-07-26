@@ -37,6 +37,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			setupCell()
 		}
 	}
+	var section: Int?
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -47,9 +48,10 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		if showElement != nil {
 			guard let showElement = showElement else { return }
 			guard let showTitle = showElement.title else { return }
+			guard let section = section else { return }
 
-			self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_poster" : "explore_\(showTitle)_banner"
-			titleLabel?.hero.id = (titleLabel != nil) ? "explore_\(showTitle)_title" : nil
+			self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
+			titleLabel?.hero.id = (titleLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
 			titleLabel?.text = showElement.title
 
 			if let genres = showElement.genres, genres.count != 0 {
@@ -130,8 +132,8 @@ extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 		showTabBarController.exploreCollectionViewCell = self
 		showTabBarController.showID = showElement?.id
 
-		if let showTitle = showElement?.title {
-			showTabBarController.heroID = "explore_\(showTitle)"
+		if let showTitle = showElement?.title, let section = section {
+			showTabBarController.heroID = "explore_\(showTitle)_\(section)"
 		}
 
 		previewingContext.sourceRect = collectionView.convert(self.frame, to: collectionView.superview)

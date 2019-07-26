@@ -8,9 +8,7 @@
 
 import KCommonKit
 import Kingfisher
-import BottomPopup
 import Cosmos
-import NVActivityIndicatorView
 import Intents
 import IntentsUI
 
@@ -18,7 +16,7 @@ protocol ShowDetailViewControllerDelegate: class {
 	func updateShowInLibrary(for cell: LibraryCollectionViewCell?)
 }
 
-class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
+class ShowDetailViewController: UIViewController {
 	// MARK: - IBoutlet
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var bannerImageView: UIImageView!
@@ -552,13 +550,15 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "SynopsisSegue" {
-			if let synopsisViewController = segue.destination as? SynopsisViewController {
-				synopsisViewController.synopsis = showDetails?.showDetailsElement?.synopsis
-			}
-		} else if segue.identifier == "ActorsSegue" {
-			if let castTableViewController = segue.destination as? CastCollectionViewController {
-				castTableViewController.actors = actors
+		if let kNavigationController = segue.destination as? KNavigationController {
+			if segue.identifier == "SynopsisSegue" {
+				if let synopsisViewController = kNavigationController.viewControllers.first as? SynopsisViewController {
+					synopsisViewController.synopsis = showDetails?.showDetailsElement?.synopsis
+				}
+			} else if segue.identifier == "ActorsSegue" {
+				if let castTableViewController = kNavigationController.viewControllers.first as? CastCollectionViewController {
+					castTableViewController.actors = actors
+				}
 			}
 		}
 	}
