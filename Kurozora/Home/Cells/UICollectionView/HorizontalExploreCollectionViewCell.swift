@@ -105,7 +105,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 		}
 
 		if let cellStyle = cellStyle, cellCount > 0 {
-			let gaps = CGFloat(10 * cellCount)
+			let gaps = (cellCount == 1) ? 20 : CGFloat(10 * cellCount)
 
 			if self.section == 0 {
 				if UIDevice.isLandscape() {

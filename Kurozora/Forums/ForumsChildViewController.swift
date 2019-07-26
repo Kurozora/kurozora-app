@@ -110,19 +110,6 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 		self.refreshControl.endRefreshing()
 	}
 
-//	// Show cell options
-//	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
-//		let pointInTable = longPress.location(in: self.tableView)
-//
-//		if let indexPath = self.tableView.indexPathForRow(at: pointInTable) {
-//			if (self.tableView.cellForRow(at: indexPath) as? ForumCell) != nil {
-//				let threadCell = longPress.view as? ForumCell
-//				let thread = forumThreads?[indexPath.row]
-//				actionList(forCell: threadCell, thread)
-//			}
-//		}
-//	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ThreadSegue" {
@@ -179,7 +166,6 @@ extension ForumsChildViewController: KRichTextEditorViewDelegate {
 			} else {
 				self.forumThreads?.prepend(thread)
 			}
-//			self.tableView.reloadData()
 		}
 	}
 }

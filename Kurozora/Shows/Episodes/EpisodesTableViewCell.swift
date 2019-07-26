@@ -37,36 +37,36 @@ class EpisodesTableViewCell: SwipeTableViewCell {
     fileprivate func configureCellWithEpisode(watchStatus: WatchStatus) {
         switch watchStatus {
         case .disabled:
-            episodeWatchedButton.isEnabled = false
-			episodeWatchedButton.isHidden = true
+            self.episodeWatchedButton.isEnabled = false
+			self.episodeWatchedButton.isHidden = true
         case .watched:
-            episodeWatchedButton.isEnabled = true
-			episodeWatchedButton.isHidden = false
-			episodeWatchedButton.tag = 1
-			episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.episodeWatchedButton.isEnabled = true
+			self.episodeWatchedButton.isHidden = false
+			self.episodeWatchedButton.tag = 1
+			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         case .notWatched:
-            episodeWatchedButton.isEnabled = true
-			episodeWatchedButton.isHidden = false
-			episodeWatchedButton.tag = 0
-            episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
-			episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
+            self.episodeWatchedButton.isEnabled = true
+			self.episodeWatchedButton.isHidden = false
+			self.episodeWatchedButton.tag = 0
+            self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
+			self.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
         }
     }
 
 	func configureCell(with watchStatus: Bool, shouldUpdate: Bool = false, withValue: Bool = false) {
 		if watchStatus {
-			episodeWatchedButton.tag = 1
-			episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-			episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+			self.episodeWatchedButton.tag = 1
+			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		} else {
-			episodeWatchedButton.tag = 0
-			episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
-			episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
+			self.episodeWatchedButton.tag = 0
+			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.1568627451, alpha: 1).withAlphaComponent(0.80)
+			self.episodeWatchedButton.tintColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1).withAlphaComponent(0.80)
 		}
 
 		if shouldUpdate {
-			episodesElement?.userDetails?.watched = withValue
+			self.episodesElement?.userDetails?.watched = withValue
 		}
 	}
 
@@ -77,19 +77,19 @@ class EpisodesTableViewCell: SwipeTableViewCell {
 			let episodeScreenshotUrl = URL(string: episodeScreenshot)
 			let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
 
-			episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))])
+			self.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))])
 		} else {
-			episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode")
+			self.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode")
 		}
 
 		if let episodeNumber = episodesElement.number {
-			episodeNumberLabel.text = "Episode \(episodeNumber)"
+			self.episodeNumberLabel.text = "Episode \(episodeNumber)"
 		}
 
-		episodeTitleLabel.text = episodesElement.name
-		episodeFirstAiredLabel.text = episodesElement.firstAired
+		self.episodeTitleLabel.text = episodesElement.name
+		self.episodeFirstAiredLabel.text = episodesElement.firstAired
 
-		shadowView.applyShadow(shadowPathSize: CGSize(width: episodeImageView.width, height: episodeImageView.height))
+		self.shadowView.applyShadow()
 		if let episodeWatched = episodesElement.userDetails?.watched {
 			configureCell(with: episodeWatched)
 		}

@@ -246,6 +246,25 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 		})
 	}
 
+	// Reply to the current thread
+	func replyThread() {
+		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController") as? KCommentEditorViewController
+		vc?.delegate = self
+		vc?.forumThread = forumThreadElement
+
+		let kurozoraNavigationController = KNavigationController.init(rootViewController: vc!)
+		if #available(iOS 11.0, *) {
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+		}
+
+		if #available(iOS 13.0, *) {
+			self.present(kurozoraNavigationController, animated: true, completion: nil)
+		} else {
+			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+		}
+	}
+
 	// Share the current thread
 	func shareThread() {
 		guard let threadID = forumThreadID else { return }
@@ -290,7 +309,11 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
-			self.present(kurozoraNavigationController, animated: true, completion: nil)
+			if #available(iOS 13.0, *) {
+				self.present(kurozoraNavigationController, animated: true, completion: nil)
+			} else {
+				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+			}
 		}
 	}
 
@@ -339,6 +362,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 				self.voteForThread(with: 0)
 			})
 			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+				self.replyThread()
 			})
 
 			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")
@@ -403,7 +427,11 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
-			self.present(kurozoraNavigationController, animated: true, completion: nil)
+			if #available(iOS 13.0, *) {
+				self.present(kurozoraNavigationController, animated: true, completion: nil)
+			} else {
+				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+			}
 		}
 	}
 
@@ -418,17 +446,8 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	}
 
 	@IBAction func replyButtonPressed(_ sender: UIButton) {
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController") as? KCommentEditorViewController
-		vc?.delegate = self
-		vc?.forumThread = forumThreadElement
-
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: vc!)
-		if #available(iOS 11.0, *) {
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		}
-
-		self.present(kurozoraNavigationController, animated: true, completion: nil)
+		replyThread()
+		sender.animateBounce()
 	}
 
 	@IBAction func shareThreadButton(_ sender: UIButton) {

@@ -25,15 +25,25 @@ extension UIView {
 	
 	/// Give the view a nice shadow
 	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = false, cornerRadius: CGFloat? = nil) {
-		layer.shadowColor = shadowColor.cgColor
-		layer.shadowOpacity = shadowOpacity
-		layer.shadowRadius = shadowRadius
-		layer.shadowOffset = shadowOffset
-		layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: shadowPathSize ?? CGSize(width: self.width, height: self.height)), cornerRadius: cornerRadius ?? self.cornerRadius).cgPath
+
+		let shadowWidth = self.width * 0.77
+		let shadowHeight = self.height * 0.5
+
+		let xTranslate = (self.width - shadowWidth) / 2
+		let yTranslate = (self.height - shadowHeight) + 4
+
+		let shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: xTranslate, y: yTranslate), size: shadowPathSize ?? CGSize(width: shadowWidth, height: shadowHeight)), cornerRadius: cornerRadius ?? self.layer.cornerRadius)
+
+		self.layer.shadowColor = shadowColor.cgColor
+		self.layer.shadowOpacity = shadowOpacity
+		self.layer.shadowRadius = shadowRadius
+		self.layer.shadowOffset = shadowOffset
+		self.layer.masksToBounds = false
+		self.layer.shadowPath = shadowPath.cgPath
 
 		if shouldRasterize {
-			layer.shouldRasterize = true
-			layer.rasterizationScale = UIScreen.main.scale
+			self.layer.shouldRasterize = true
+			self.layer.rasterizationScale = UIScreen.main.scale
 		}
 	}
 

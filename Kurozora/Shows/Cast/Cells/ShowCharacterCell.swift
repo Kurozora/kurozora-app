@@ -70,13 +70,13 @@ class ShowCharacterCell: UITableViewCell {
 		}
 
 		// Actor shadow view
-		actorShadowView.applyShadow(shadowPathSize: CGSize(width: actorImageView.width, height: actorImageView.height))
+		self.actorShadowView.applyShadow()
 
 		// Add gesture to actors image view
-		if actorImageView.gestureRecognizers?.count ?? 0 == 0 {
+		if self.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
 			// if the image currently has no gestureRecognizer
-			actorImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showCast(_:))))
-			actorImageView.isUserInteractionEnabled = true
+			self.actorImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showCast(_:))))
+			self.actorImageView.isUserInteractionEnabled = true
 		}
 	}
 
@@ -144,13 +144,13 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 		}
 
 		// Actor shadow view
-		actorShadowView.applyShadow(shadowPathSize: CGSize(width: actorImageView.width, height: actorImageView.height))
+		self.actorShadowView.applyShadow()
 
 		// Add gesture to actors image view
-		if actorImageView.gestureRecognizers?.count ?? 0 == 0 {
+		if self.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
 			// if the image currently has no gestureRecognizer
-			actorImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showCast(_:))))
-			actorImageView.isUserInteractionEnabled = true
+			self.actorImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showCast(_:))))
+			self.actorImageView.isUserInteractionEnabled = true
 		}
 	}
 

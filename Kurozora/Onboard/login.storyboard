@@ -82,7 +82,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-fz-v9B">
-                                <rect key="frame" x="118.5" y="219.5" width="177.5" height="75"/>
+                                <rect key="frame" x="122.5" y="219.5" width="169.5" height="75"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Welcome to
@@ -386,7 +386,7 @@ Kurozora</string>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6d-22-UCL">
-                                <rect key="frame" x="118.5" y="200" width="177.5" height="19.5"/>
+                                <rect key="frame" x="122.5" y="200" width="169.5" height="19.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="黒空">
                                         <attributes>
@@ -883,7 +883,13 @@ Kurozora</string>
                             <constraint firstItem="t4u-TJ-OFg" firstAttribute="top" secondItem="BEp-na-6qS" secondAttribute="bottom" constant="30" id="XWg-gq-AZl"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS"/>
+                    <navigationItem key="navigationItem" title="Reset password" id="hR4-GB-SVS">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="oFg-0f-T1B">
+                            <connections>
+                                <action selector="dismissPressedWithSender:" destination="H2e-ia-XEL" id="pdY-X4-jUD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="resetButton" destination="t4u-TJ-OFg" id="Rcy-8d-z6p"/>
                         <outlet property="userEmailTextField" destination="BEp-na-6qS" id="TfI-JH-xKC"/>

@@ -74,6 +74,10 @@ class ResetPasswordViewController: UIViewController {
 			SCLAlertView().showError("Errr...", subTitle: "Please type your email address 😣")
 		}
     }
+
+	@IBAction func dismissPressed(sender: AnyObject) {
+		self.dismiss(animated: true, completion: nil)
+	}
 }
 
 // MARK: - UITextFieldDelegate

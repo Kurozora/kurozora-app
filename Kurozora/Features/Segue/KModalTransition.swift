@@ -13,11 +13,15 @@ class KModalTransition: UIStoryboardSegue {
 	public var transitioningDelegate: SPStorkTransitioningDelegate?
 
 	override func perform() {
-		transitioningDelegate = transitioningDelegate ?? SPStorkTransitioningDelegate()
-		transitioningDelegate?.showIndicator = false
-		destination.transitioningDelegate = transitioningDelegate
-		destination.modalPresentationStyle = .custom
-		//	super.perform()
-		source.present(destination, animated: true, completion: nil)
+		if #available(iOS 13.0, *) {
+			super.perform()
+		} else {
+			transitioningDelegate = transitioningDelegate ?? SPStorkTransitioningDelegate()
+			transitioningDelegate?.showIndicator = false
+			destination.transitioningDelegate = transitioningDelegate
+			destination.modalPresentationStyle = .custom
+			//	super.perform()
+			source.present(destination, animated: true, completion: nil)
+		}
 	}
 }

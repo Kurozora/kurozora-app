@@ -35,7 +35,6 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		contentView.applyShadow(shadowPathSize: CGSize(width: self.width, height: self.height))
 	}
 
 	fileprivate func setup() {
@@ -45,33 +44,35 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 		guard let showTitle = libraryElement.title else { return }
 
 		if titleLabel != nil, userProgressLabel != nil, episodeImageView != nil {
-			titleLabel.hero.id = "library_\(showTitle)_title"
-			titleLabel.text = libraryElement.title
-			userProgressLabel.hero.id = "library_\(showTitle)_progress"
-			userProgressLabel.text = "TV ·  \(libraryElement.episodeCount ?? 0) ·  \(libraryElement.averageRating ?? 0)"
+			self.titleLabel.hero.id = "library_\(showTitle)_title"
+			self.titleLabel.text = libraryElement.title
+			self.userProgressLabel.hero.id = "library_\(showTitle)_progress"
+			self.userProgressLabel.text = "TV ·  \(libraryElement.episodeCount ?? 0) ·  \(libraryElement.averageRating ?? 0)"
 
-			episodeImageView?.hero.id = "library_\(showTitle)_banner"
+			self.episodeImageView?.hero.id = "library_\(showTitle)_banner"
 			if let backgroundThumbnail = libraryElement.backgroundThumbnail, backgroundThumbnail != "" {
 				let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
 				let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
-				episodeImageView?.kf.indicatorType = .activity
-				episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+				self.episodeImageView?.kf.indicatorType = .activity
+				self.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
 			} else {
-				episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
+				self.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
-			posterShadowView?.applyShadow(shadowPathSize: CGSize(width: posterView.width, height: posterView.height))
+			self.posterShadowView?.applyShadow()
 		}
 
-		posterView.hero.id = "library_\(showTitle)_poster"
+		self.posterView.hero.id = "library_\(showTitle)_poster"
 		if let posterThumbnail = libraryElement.posterThumbnail, posterThumbnail != "" {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-			posterView.kf.indicatorType = .activity
-			posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			self.posterView.kf.indicatorType = .activity
+			self.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 		} else {
-			posterView.image = #imageLiteral(resourceName: "placeholder_poster")
+			self.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
 		}
+
+		self.contentView.applyShadow()
 	}
 //    @IBAction func watchedPressed(sender: AnyObject) {
 //

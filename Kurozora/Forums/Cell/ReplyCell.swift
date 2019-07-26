@@ -161,7 +161,11 @@ class ReplyCell: UITableViewCell {
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
-			threadViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+			if #available(iOS 13.0, *) {
+				threadViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+			} else {
+				threadViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+			}
 		}
 	}
 

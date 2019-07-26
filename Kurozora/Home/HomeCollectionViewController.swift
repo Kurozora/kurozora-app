@@ -138,9 +138,10 @@ extension HomeCollectionViewController {
 					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 					horizontalCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
 					exploreCellStyle = .large
-				} else if exploreCellStyle == .large {
-					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 				}
+//				else if exploreCellStyle == .large {
+//					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
+//				}
 
 				horizontalCell.section = indexPath.section
 				horizontalCell.homeCollectionViewController = self

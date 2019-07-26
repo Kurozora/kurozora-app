@@ -17,13 +17,11 @@ class LegalExploreCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var termsConditionsLabel: UILabel! {
 		didSet {
 			termsConditionsLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-			termsConditionsLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var chevronButtonView: UIButton! {
 		didSet {
 			chevronButtonView.theme_tintColor = KThemePicker.subTextColor.rawValue
-			chevronButtonView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 }

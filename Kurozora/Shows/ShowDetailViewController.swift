@@ -251,11 +251,9 @@ class ShowDetailViewController: UIViewController, NVActivityIndicatorViewable {
 		}
 
 		// Setup shadows
-		shadowView.applyShadow(shadowPathSize: CGSize(width: posterImageView.width, height: posterImageView.height))
-		reminderButton.applyShadow(shadowPathSize: CGSize(width: reminderButton.width, height: reminderButton.height))
-		reminderButton.clipsToBounds = false
-		favoriteButton.applyShadow(shadowPathSize: CGSize(width: favoriteButton.width, height: favoriteButton.height))
-		favoriteButton.clipsToBounds = false
+		shadowView.applyShadow()
+		reminderButton.applyShadow()
+		favoriteButton.applyShadow()
 	}
 
 	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell) {

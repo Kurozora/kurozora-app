@@ -19,7 +19,7 @@ class KurozoraReachabilityViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		shadowView.applyShadow(shadowPathSize: CGSize(width: noSignalImageView.width, height: noSignalImageView.height))
+		self.shadowView.applyShadow()
 
 		// Hide the navigation bar
 		navigationController?.setNavigationBarHidden(true, animated: animated)

@@ -12,7 +12,6 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-			titleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var seeAllButton: UIButton!
@@ -44,7 +43,6 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 
 		// See All button
 		seeAllButton.isHidden = (titleLabel.text == "Top Genres") ? false : true
-		seeAllButton.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
 

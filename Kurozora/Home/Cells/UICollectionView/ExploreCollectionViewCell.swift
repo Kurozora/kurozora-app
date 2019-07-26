@@ -117,11 +117,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			}
 		}
 
-		if bannerImageView != nil {
-			shadowView?.applyShadow(shadowPathSize: CGSize(width: bannerImageView!.width + 5, height: bannerImageView!.height + 5))
-		} else {
-			shadowView?.applyShadow(shadowPathSize: CGSize(width: posterImageView!.width + 5, height: posterImageView!.height + 5))
-		}
+		self.applyShadow()
 	}
 }
 

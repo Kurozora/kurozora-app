@@ -125,7 +125,11 @@ public class ForumsCell: UITableViewCell {
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
-			forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+			if #available(iOS 13.0, *) {
+				forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+			} else {
+				forumsChildViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+			}
 		}
 	}
 
@@ -171,6 +175,11 @@ public class ForumsCell: UITableViewCell {
 				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
 			}
 		})
+	}
+
+	// Reply to the current thread
+	func replyThread() {
+		// TODO: Add reply function here
 	}
 
 	// Share the current thread
@@ -236,6 +245,7 @@ public class ForumsCell: UITableViewCell {
 				self.voteForThread(with: 0)
 			})
 			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+				self.replyThread()
 			})
 
 			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")

@@ -53,7 +53,7 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 	}
 
 	// MARK: - IBActions
-	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
 	}
 }

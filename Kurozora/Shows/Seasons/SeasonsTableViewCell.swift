@@ -71,8 +71,6 @@ class SeasonsTableViewCell: UITableViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-
-		shadowView.applyShadow(shadowPathSize: CGSize(width: posterImageView.width, height: posterImageView.height))
 	}
 
 	fileprivate func configureCell() {
@@ -82,34 +80,37 @@ class SeasonsTableViewCell: UITableViewCell {
 			let posterImageUrl = URL(string: seasonPosterImage)
 			let resource = ImageResource(downloadURL: posterImageUrl!)
 
-			posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			self.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 		} else {
-			posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+			self.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
 		}
 
 		// Season number
 		if let seasonNumber = seasonsElement.number, seasonNumber != 0 {
-			countLabel.text = "Season \(seasonNumber)"
+			self.countLabel.text = "Season \(seasonNumber)"
 		} else {
-			countLabel.text = "Season ?"
+			self.countLabel.text = "Season ?"
 		}
 
 		// Season title
 		if let seasonTitle = seasonsElement.title, seasonTitle != "" {
-			titleLabel.text = seasonTitle
+			self.titleLabel.text = seasonTitle
 		} else {
-			titleLabel.text = "Unknown"
+			self.titleLabel.text = "Unknown"
 		}
 
 		// Season date
-		startDateLabel.text = "TBA"
+		self.startDateLabel.text = "TBA"
 
 		// Season episode count
 		if let episodesCount = seasonsElement.episodesCount {
-			episodesCountLabel.text = "\(episodesCount)"
+			self.episodesCountLabel.text = "\(episodesCount)"
 		}
 
 		// Season rating
-		ratingLabel.text = "0.00"
+		self.ratingLabel.text = "0.00"
+
+		// Apply shadow to shadow view
+		self.shadowView.applyShadow()
 	}
 }
