@@ -21,7 +21,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			collectionView.reloadData()
 		}
 	}
-    var showID:Int?
+    var showID: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -216,9 +216,9 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 					return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 				case .video:
 					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.height, height: view.frame.height)
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.92)
 					}
-					return CGSize(width: view.frame.width, height: view.frame.width)
+					return CGSize(width: view.frame.width, height: view.frame.width * 0.92)
 				}
 			}
 		}

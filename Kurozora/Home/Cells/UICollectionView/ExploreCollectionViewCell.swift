@@ -26,7 +26,11 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
-	@IBOutlet weak var shadowView: UIView?
+	@IBOutlet weak var shadowView: UIView? {
+		didSet {
+			shadowView?.applyShadow()
+		}
+	}
 	@IBOutlet weak var colorOverlayView: UIView?
 	@IBOutlet weak var backgroundColorView: UIView?
 	@IBOutlet weak var listButton: UIButton?
@@ -46,10 +50,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	}
 	var section: Int?
 	var libraryStatus: String?
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
-	}
 
 	// MARK: - Functions
 	@IBAction func chooseStatusButtonPressed(_ sender: AnyObject) {
@@ -110,8 +110,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 
 			libraryStatus = showElement.userProfile?.libraryStatus
 
-			if taglineLabel != nil {
-				guard let videoWebView = videoWebView else { return }
+			if shadowView != nil {
 				self.titleLabel?.theme_textColor = KThemePicker.textColor.rawValue
 				self.genreLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 
@@ -123,19 +122,22 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 					mutableAttributedTitle.append(attributedTitleString)
 					mutableAttributedTitle.append(attributedIconString)
 
-					listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+					self.listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
 				} else {
-					listButton?.setTitle("ADD", for: .normal)
+					self.listButton?.setTitle("ADD", for: .normal)
 				}
 
-				if let videoRequest = URLRequest(urlString: "https://www.youtube-nocookie.com/embed/l_98K4_6UQ0?&playsinline=1") {
-					videoWebView.loadRequest(videoRequest)
+				DispatchQueue.global(qos: .background).async {
+					if let videoRequest = URLRequest(urlString: "https://www.youtube-nocookie.com/embed/l_98K4_6UQ0?&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3&playlist=l_98K4_6UQ0") {
+
+						DispatchQueue.main.async {
+							self.videoWebView?.loadRequest(videoRequest)
+						}
+					}
 				}
 
-				videoWebView.scrollView.isScrollEnabled = false
-				videoWebView.scrollView.bounces = false
-
-				shadowView?.applyShadow()
+				self.videoWebView?.scrollView.isScrollEnabled = false
+				self.videoWebView?.scrollView.bounces = false
 			}
 
 			self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
@@ -162,19 +164,19 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			if let bannerThumbnail = showElement.banner, bannerThumbnail != "" {
 				let bannerThumbnailUrl = URL(string: bannerThumbnail)
 				let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
-				bannerImageView?.kf.indicatorType = .activity
-				bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+				self.bannerImageView?.kf.indicatorType = .activity
+				self.bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
 			} else {
-				bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
+				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
 			if let posterThumbnail = showElement.posterThumbnail, posterThumbnail != "" {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-				posterImageView?.kf.indicatorType = .activity
-				posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+				self.posterImageView?.kf.indicatorType = .activity
+				self.posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
 			} else {
-				posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
+				self.posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
 			if let score = showElement.averageRating, score != 0 {
@@ -207,7 +209,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			}
 		}
 
-		if taglineLabel == nil {
+		if shadowView == nil {
 			self.applyShadow()
 		}
 	}

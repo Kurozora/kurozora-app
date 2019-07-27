@@ -24,7 +24,7 @@ extension UIView {
 	}
 	
 	/// Give the view a nice shadow
-	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = false, cornerRadius: CGFloat? = nil) {
+	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
 
 		let shadowWidth = self.width * 0.77
 		let shadowHeight = self.height * 0.5
