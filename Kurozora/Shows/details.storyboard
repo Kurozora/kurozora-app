@@ -130,7 +130,7 @@
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-oK-fyX" customClass="CosmosView" customModule="Cosmos">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8hz-oK-fyX" customClass="CosmosView" customModule="Cosmos">
                                             <rect key="frame" x="84.5" y="208" width="95" height="16"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
@@ -216,7 +216,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tom-TO-k3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1559" y="-291"/>
+            <point key="canvasLocation" x="1557.9710144927537" y="-291.29464285714283"/>
         </scene>
         <!--Episode 1-->
         <scene sceneID="hH8-k2-Rzd">
@@ -2100,7 +2100,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Actors" leftItemsSupplementBackButton="YES" id="EyN-H3-TGO">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="GAh-md-p9Q">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="GAh-md-p9Q">
                             <connections>
                                 <action selector="dismissPressed:" destination="XGg-R0-bbf" id="ZIB-Ht-hgK"/>
                             </connections>
@@ -2144,7 +2144,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Synopsis" leftItemsSupplementBackButton="YES" id="F05-8X-75B">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="kYP-sE-9Jz">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="kYP-sE-9Jz">
                             <connections>
                                 <action selector="dismissPressed:" destination="59o-K2-my5" id="TVd-5h-oX6"/>
                             </connections>

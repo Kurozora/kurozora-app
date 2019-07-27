@@ -241,10 +241,10 @@ class ShowDetailViewController: UIViewController {
 		} else {
 			posterImageView.image = cell.posterImageView?.image
 
-			var decimalScore = cell.scoreLabel?.text
+			var decimalScore = cell.scoreButton?.titleForNormal
 			decimalScore?.removeFirst()
 
-			ratingScoreLabel.text = "\(cell.scoreLabel?.text?.first ?? "0")"
+			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal?.first ?? "0")"
 			ratingScoreDecimalLabel.text = (decimalScore != "") ? decimalScore : "0"
 		}
 
@@ -266,7 +266,7 @@ class ShowDetailViewController: UIViewController {
 		guard let userProfile = showDetails?.userProfile else { return }
 
 		// Configure library status
-		if let libraryStatus = userProfile.libraryStatus, libraryStatus != "" {
+		if let libraryStatus = userProfile.libraryStatus, !libraryStatus.isEmpty {
 			let mutableAttributedTitle = NSMutableAttributedString()
 			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
 			let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
@@ -489,19 +489,21 @@ class ShowDetailViewController: UIViewController {
 			})
 		})
 
-		action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-			Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
-				if success {
-					self.libraryStatus = ""
-					self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+		if let libraryStatus = libraryStatus, !libraryStatus.isEmpty {
+			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+				Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
+					if success {
+						self.libraryStatus = ""
+						self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
 
-					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
-					mutableAttributedTitle.append(attributedTitleString)
-					self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
-				}
-			})
-		}))
+						let mutableAttributedTitle = NSMutableAttributedString()
+						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+						mutableAttributedTitle.append(attributedTitleString)
+						self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
+					}
+				})
+			}))
+		}
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller

@@ -131,8 +131,11 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 					return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
 				}
 				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
-//			case .video:
-//				return .zero
+			case .video:
+				if UIDevice.isLandscape() {
+					return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
+				}
+				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
 			}
 		}
 

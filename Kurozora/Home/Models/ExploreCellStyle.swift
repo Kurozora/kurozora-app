@@ -14,13 +14,13 @@ import Foundation
 	- case large
 	- case medium
 	- case small
-	- case video (unused)
+	- case video
 */
 enum ExploreCellStyle: String {
 	case large
 	case medium
 	case small
-	//	case video = "video"
+	case video
 
 	var reuseIdentifier: String {
 		switch self {
@@ -30,8 +30,8 @@ enum ExploreCellStyle: String {
 			return "MediumExploreCollectionViewCell"
 		case .small:
 			return "SmallExploreCollectionViewCell"
-//		case .video:
-//			return "VideoExploreCollectionViewCell"
+		case .video:
+			return "VideoExploreCollectionViewCell"
 		}
 	}
 }

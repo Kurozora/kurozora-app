@@ -214,6 +214,11 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 					}
 					return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
+				case .video:
+					if UIDevice.isLandscape() {
+						return CGSize(width: view.frame.height, height: view.frame.height)
+					}
+					return CGSize(width: view.frame.width, height: view.frame.width)
 				}
 			}
 		}

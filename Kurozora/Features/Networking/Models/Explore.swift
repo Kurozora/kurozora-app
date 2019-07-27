@@ -46,7 +46,9 @@ class ExploreElement: JSONDecodable {
 	let posterThumbnail: String?
 	let banner: String?
 	let bannerThumbnail: String?
+	let videoUrl: String?
 	let genres: [GenreElement]?
+	var userProfile: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
@@ -56,7 +58,9 @@ class ExploreElement: JSONDecodable {
 		self.posterThumbnail = json["poster_thumbnail"].stringValue
 		self.banner = json["background"].stringValue
 		self.bannerThumbnail = json["background_thumbnail"].stringValue
+		self.videoUrl = json["video_url"].stringValue
 		var genres = [GenreElement]()
+		let userProfileJson = json["user"]
 
 		let genresArray = json["genres"].arrayValue
 		for genreItem in genresArray {
@@ -64,8 +68,10 @@ class ExploreElement: JSONDecodable {
 				genres.append(genresElement)
 			}
 		}
+		let userProfile = try? UserProfile(json: userProfileJson)
 
 		self.genres = genres
+		self.userProfile = userProfile
 	}
 }
 

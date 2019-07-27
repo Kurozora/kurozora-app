@@ -54,7 +54,7 @@ class UserProfile: JSONDecodable {
 	let active: Bool?
 
 	let currentRating: Double?
-	let libraryStatus: String?
+	var libraryStatus: String?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
