@@ -106,36 +106,54 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 		}
 
 		if let cellStyle = cellStyle, cellCount > 0 {
-			let gaps = (cellCount == 1) ? 20 : CGFloat(10 * cellCount)
+			let interItemGap = (UIDevice.isPad()) ? 40 : 20
+			let gaps = (cellCount == 1) ? CGFloat(interItemGap) : CGFloat(interItemGap * cellCount)
 
-			if self.section == 0 {
-				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
+			if self.section == 4 {
+				if UIDevice.isPad() {
+					if UIDevice.isLandscape() {
+						return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+					}
+					return CGSize(width: (collectionView.frame.width - gaps) / 2.3, height: collectionView.frame.height)
 				}
-				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
-			}
-			
-			switch cellStyle {
-			case .large:
-				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
-				}
-				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
-			case .medium:
-				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 2.5, height: collectionView.frame.height)
-				}
-				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
-			case .small:
-				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
-				}
-				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
-			case .video:
+
 				if UIDevice.isLandscape() {
 					return CGSize(width: (collectionView.frame.height - gaps), height: collectionView.frame.height)
 				}
 				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
+			}
+
+			switch cellStyle {
+			case .large:
+				return collectionView.frame.size
+			case .medium:
+				return collectionView.frame.size
+			case .small:
+				return collectionView.frame.size
+//				if UIDevice.isPad() {
+//					if UIDevice.isLandscape() {
+//						return CGSize(width: (collectionView.frame.width - gaps) / 18, height: collectionView.frame.height)
+//					}
+//					return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
+//				}
+//
+//				if UIDevice.isLandscape() {
+//					return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
+//				}
+//				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+			case .video:
+				return collectionView.frame.size
+//				if UIDevice.isPad() {
+//					if UIDevice.isLandscape() {
+//						return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+//					}
+//					return CGSize(width: (collectionView.frame.width - gaps) / 2.3, height: collectionView.frame.height)
+//				}
+//
+//				if UIDevice.isLandscape() {
+//					return CGSize(width: (collectionView.frame.height - gaps), height: collectionView.frame.height)
+//				}
+//				return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
 			}
 		}
 
@@ -143,6 +161,6 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 20
+		return (UIDevice.isPad()) ? 40 : 20
 	}
 }

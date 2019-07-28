@@ -92,7 +92,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = action.popoverPresentationController, let homeCollectionViewController = self.homeCollectionViewController {
 			popoverController.sourceView = homeCollectionViewController.view
 			popoverController.sourceRect = CGRect(x: homeCollectionViewController.view.bounds.midX, y: homeCollectionViewController.view.bounds.midY, width: 0, height: 0)
@@ -114,6 +114,9 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				self.titleLabel?.theme_textColor = KThemePicker.textColor.rawValue
 				self.genreLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 
+				// Configure tagline
+				self.taglineLabel?.text = showElement.tagline
+
 				// Configure library status
 				if let libraryStatus = showElement.userProfile?.libraryStatus, !libraryStatus.isEmpty {
 					let mutableAttributedTitle = NSMutableAttributedString()
@@ -127,12 +130,10 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 					self.listButton?.setTitle("ADD", for: .normal)
 				}
 
-				DispatchQueue.global(qos: .background).async {
-					if let videoRequest = URLRequest(urlString: "https://www.youtube-nocookie.com/embed/l_98K4_6UQ0?&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3&playlist=l_98K4_6UQ0") {
+				if let videoRequest = URLRequest(urlString: "https://www.youtube-nocookie.com/embed/l_98K4_6UQ0?&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3&playlist=l_98K4_6UQ0") {
 
-						DispatchQueue.main.async {
-							self.videoWebView?.loadRequest(videoRequest)
-						}
+					DispatchQueue.main.async {
+						self.videoWebView?.loadRequest(videoRequest)
 					}
 				}
 

@@ -1,14 +1,18 @@
 //
-//  BannerCollectionViewFlowLayout.swift
+//  HorizontalExploreMediumCollectionViewFlowLayout.swift
 //  Kurozora
 //
-//  Created by Khoren Katklian on 24/12/2018.
-//  Copyright © 2018 Kurozora. All rights reserved.
+//  Created by Khoren Katklian on 28/07/2019.
+//  Copyright © 2019 Kurozora. All rights reserved.
 //
 
 import UIKit
 
-class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
+class HorizontalExploreMediumCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
+	override var spacingWhenFocused: CGFloat {
+		return spacing
+	}
+
 	// MARK: - Public Properties
 	override var collectionViewContentSize: CGSize {
 		let leftmostEdge = cachedItemsAttributes.values.map { $0.frame.minX }.min() ?? 0
@@ -25,18 +29,18 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	private var _itemSize: CGSize {
 		get {
 			guard let collectionView = self.collectionView else { return .zero }
-			let interItemGap = (UIDevice.isPad()) ? 40 : 20
+			let interItemGap = (UIDevice.isPad()) ? 20 : 10
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
 
 			if UIDevice.isPad() {
 				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 1.5, height: collectionView.frame.height)
+					return CGSize(width: (collectionView.frame.width - gaps) / 4, height: collectionView.frame.height)
 				}
-				return CGSize(width: (collectionView.frame.width - gaps) / 1.2, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
 			}
 
 			if UIDevice.isLandscape() {
-				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 2.5, height: collectionView.frame.height)
 			}
 			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
 		}
@@ -55,7 +59,6 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 		guard let collectionView = self.collectionView else { return }
 		updateInsets()
 		guard cachedItemsAttributes.isEmpty else { return }
-		collectionView.decelerationRate = .fast
 		scrollDirection = .horizontal
 		let itemsCount = collectionView.numberOfItems(inSection: 0)
 		for item in 0..<itemsCount {
@@ -69,14 +72,6 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 			.map { $0.value }
 			.filter { $0.frame.intersects(rect) }
 			.map { self.shiftedAttributes(from: $0) }
-	}
-
-	override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-		guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset) }
-		let collectionViewMidX: CGFloat = collectionView.bounds.size.width / 2
-		guard let closestAttribute = findClosestAttributes(toXPosition: proposedContentOffset.x + collectionViewMidX) else {
-			return super.targetContentOffset(forProposedContentOffset: proposedContentOffset) }
-		return CGPoint(x: closestAttribute.center.x - collectionViewMidX, y: proposedContentOffset.y)
 	}
 
 	// MARK: - Invalidate layout
@@ -134,7 +129,7 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 
 	private func updateInsets() {
 		guard let collectionView = collectionView else { return }
-		collectionView.contentInset.left = (collectionView.bounds.size.width - itemSize.width) / 2
-		collectionView.contentInset.right = (collectionView.bounds.size.width - itemSize.width) / 2
+		collectionView.contentInset.left = 20
+		collectionView.contentInset.right = 20
 	}
 }

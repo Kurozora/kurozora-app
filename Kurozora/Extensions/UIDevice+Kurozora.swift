@@ -88,7 +88,7 @@ public extension UIDevice {
 	static let hasTopNotch: Bool = {
 		let platform = UIDevice.modelName
 
-		return platform == "iPhone X" || platform == "iPhone XS" ||	platform == "iPhone XS Max" || platform == "iPhone XR" || platform == "Simulator"
+		return platform == "iPhone X" || platform == "iPhone XS" ||	platform == "iPhone XS Max" || platform == "iPhone XR" || platform.contains(" X")
 	}()
 
 	/// Check what type of biometric the current device supports

@@ -41,6 +41,7 @@ class Explore: JSONDecodable {
 class ExploreElement: JSONDecodable {
 	let id: Int?
 	let title: String?
+	let tagline: String?
 	let averageRating: Double?
 	let poster: String?
 	let posterThumbnail: String?
@@ -53,6 +54,7 @@ class ExploreElement: JSONDecodable {
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.title = json["title"].stringValue
+		self.tagline = json["tagline"].stringValue
 		self.averageRating = json["average_rating"].doubleValue
 		self.poster = json["poster"].stringValue
 		self.posterThumbnail = json["poster_thumbnail"].stringValue
