@@ -14,7 +14,9 @@ class HomeCollectionViewController: UICollectionViewController {
 	// Search bar controller
 	var searchResultsViewController: SearchResultsTableViewController?
 	var placeholderTimer: Timer?
-	let placeholderArray = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Playing Game", "Vampires"]
+	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Playing Game", "Vampires"]
+	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/api/v1"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
+	let actionButtonList = [["title": "Redeem", "segueId": "IAPSegue"], ["title": "Become a Pro User", "segueId": "IAPSegue"]]
 
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
@@ -102,7 +104,7 @@ class HomeCollectionViewController: UICollectionViewController {
 					showTabBarController.heroID = "explore_\(showTitle)_\(section)"
 				}
 			}
-        }
+		}
     }
 }
 
@@ -114,14 +116,27 @@ extension HomeCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if section < (exploreCategories?.count)! {
-			let categorySection = exploreCategories?[section]
-			if categorySection?.shows?.count != 0 {
-				return 1
-			} else if categorySection?.genres?.count != 0 {
-				return 1
-			} else {
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if section < exploreCategoriesCount {
+				let categorySection = exploreCategories?[section]
+				if categorySection?.shows?.count != 0 {
+					return 1
+				} else if categorySection?.genres?.count != 0 {
+					return 1
+				}
 				return 0
+			}
+
+			if section == exploreCategoriesCount {
+				if actionUrlList.count != 0 {
+					return actionUrlList.count
+				}
+			}
+
+			if section == exploreCategoriesCount + 1 {
+				if actionButtonList.count != 0 {
+					return actionButtonList.count
+				}
 			}
 		}
 
@@ -129,47 +144,57 @@ extension HomeCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if indexPath.section < (exploreCategories?.count)! {
-			if let categoryType = exploreCategories?[indexPath.section].size, var exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
-				var horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if indexPath.section < exploreCategoriesCount {
+				if let categoryType = exploreCategories?[indexPath.section].size, var exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
+					var horizontalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
 
-				if indexPath.section == 0 {
-					horizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalBannerExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
-					horizontalCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
-					exploreCellStyle = .large
-				}
-
-				horizontalCell.section = indexPath.section
-				horizontalCell.homeCollectionViewController = self
-				horizontalCell.cellStyle = exploreCellStyle
-
-				if indexPath.section != 0 {
-					switch exploreCellStyle {
-					case .large:
-						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreLargeCollectionViewFlowLayout()
-					case .medium:
-						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreMediumCollectionViewFlowLayout()
-					case .small:
-						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreSmallCollectionViewFlowLayout()
-					case .video:
-						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreVideoCollectionViewFlowLayout()
+					if indexPath.section == 0 {
+						horizontalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExploreBannerCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
+						horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
+						exploreCellStyle = .large
 					}
-				}
 
-				if exploreCategories?[indexPath.section].shows?.count != 0 {
-					horizontalCell.shows = exploreCategories?[indexPath.section].shows
-				} else {
-					horizontalCell.genres = exploreCategories?[indexPath.section].genres
-				}
+					horizontalExploreCollectionViewCell.section = indexPath.section
+					horizontalExploreCollectionViewCell.homeCollectionViewController = self
+					horizontalExploreCollectionViewCell.cellStyle = exploreCellStyle
 
-				return horizontalCell
+					if indexPath.section != 0 {
+						switch exploreCellStyle {
+						case .large:
+							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreLargeCollectionViewFlowLayout()
+						case .medium:
+							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreMediumCollectionViewFlowLayout()
+						case .small:
+							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreSmallCollectionViewFlowLayout()
+						case .video:
+							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreVideoCollectionViewFlowLayout()
+						}
+					}
+
+					if exploreCategories?[indexPath.section].shows?.count != 0 {
+						horizontalExploreCollectionViewCell.shows = exploreCategories?[indexPath.section].shows
+					} else {
+						horizontalExploreCollectionViewCell.genres = exploreCategories?[indexPath.section].genres
+					}
+
+					return horizontalExploreCollectionViewCell
+				}
 			}
-		}
 
-		if indexPath.section == (exploreCategories?.count)! {
-			let actionExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActionExploreCollectionViewCell", for: indexPath) as! ActionExploreCollectionViewCell
+			if indexPath.section == exploreCategoriesCount {
+				let actionListExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActionListExploreCollectionViewCell", for: indexPath) as! ActionListExploreCollectionViewCell
+				actionListExploreCollectionViewCell.actionUrlItem = actionUrlList[indexPath.item]
+				actionListExploreCollectionViewCell.homeCollectionViewController = self
+				return actionListExploreCollectionViewCell
+			}
 
-			return actionExploreCollectionViewCell
+			if indexPath.section == exploreCategoriesCount + 1 {
+				let actionButtonExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActionButtonExploreCollectionViewCell", for: indexPath) as! ActionButtonExploreCollectionViewCell
+				actionButtonExploreCollectionViewCell.actionButtonItem = actionButtonList[indexPath.item]
+				actionButtonExploreCollectionViewCell.homeCollectionViewController = self
+				return actionButtonExploreCollectionViewCell
+			}
 		}
 
 		let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LegalExploreCollectionViewCell", for: indexPath) as! LegalExploreCollectionViewCell
@@ -281,7 +306,17 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 		}
 
 		if indexPath.section == (exploreCategories?.count)! {
-			return CGSize(width: view.frame.width, height: 172)
+			if UIDevice.isPad() {
+				if UIDevice.isLandscape() {
+					return CGSize(width: view.frame.width / 3, height: 44.5)
+				}
+				return CGSize(width: view.frame.width / 2, height: 44.5)
+			}
+
+			if UIDevice.isLandscape() {
+				return CGSize(width: view.frame.width / 2, height: 44.5)
+			}
+			return CGSize(width: view.frame.width, height: 44.5)
 		}
 
 		return CGSize(width: view.frame.width, height: 44)
@@ -313,12 +348,11 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 			}
 		}
 
-		if section == 0 || section == collectionView.lastSection {
+		if section == 0 || section == exploreCategories?.count {
 			return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
 		}
 
 		return .zero
-//		return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
 	}
 }
 

@@ -17,13 +17,21 @@
             </objects>
             <point key="canvasLocation" x="2318" y="396"/>
         </scene>
+        <!--purchase-->
+        <scene sceneID="ADX-YZ-3zP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1434" y="594"/>
+        </scene>
         <!--about-->
         <scene sceneID="TgQ-yC-U46">
             <objects>
                 <viewControllerPlaceholder storyboardName="about" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1588" y="594"/>
+            <point key="canvasLocation" x="1749" y="594"/>
         </scene>
         <!--Genres-->
         <scene sceneID="cIO-Cu-Zkz">
@@ -134,7 +142,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HorizontalBannerExploreCollectionViewCell" id="mhd-al-yen" customClass="HorizontalExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreBannerCollectionViewCell" id="mhd-al-yen" customClass="HorizontalExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="20.5" y="50" width="373" height="236"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -482,23 +490,23 @@
                                                 <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoExploreCollectionViewCell" id="flx-F7-yGl" customClass="ExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="618" y="0.0" width="335" height="345"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5dc-RS-cAp">
+                                                    <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="5dc-RS-cAp">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="345"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I'm gonna be the Pirate King!" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NE2-4g-SgF">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="I'm gonna be the Pirate King!" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NE2-4g-SgF">
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9i-0Z-8wc">
+                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b9i-0Z-8wc">
                                                                 <rect key="frame" x="0.0" y="26" width="335" height="188.5"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D8h-Wp-jdK">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D8h-Wp-jdK">
                                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="188.5"/>
                                                                     </imageView>
-                                                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-LZ-kh7" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                                    <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-LZ-kh7" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                                         <rect key="frame" x="138.5" y="65" width="58" height="58"/>
                                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
@@ -538,10 +546,10 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oeT-Fo-7Nf">
+                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oeT-Fo-7Nf">
                                                                 <rect key="frame" x="0.0" y="224.5" width="83" height="120.5"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-Fk-Pi7">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-Fk-Pi7">
                                                                         <rect key="frame" x="0.0" y="0.0" width="83" height="120.5"/>
                                                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <userDefinedRuntimeAttributes>
@@ -560,19 +568,19 @@
                                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="83" id="z5F-iT-TTb"/>
                                                                 </constraints>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="One Piece" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xn1-vf-aU2">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="One Piece" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xn1-vf-aU2">
                                                                 <rect key="frame" x="93" y="224.5" width="78" height="20.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Adventure" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2U-F9-Imu">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Adventure" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2U-F9-Imu">
                                                                 <rect key="frame" x="93" y="245" width="62" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGC-4K-8hv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                            <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGC-4K-8hv" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                                 <rect key="frame" x="283" y="224.5" width="52" height="30"/>
                                                                 <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
@@ -644,111 +652,94 @@
                                     <outlet property="collectionView" destination="4X9-Dj-Ngx" id="vJz-hl-KgY"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActionExploreCollectionViewCell" id="1ct-e6-Hty" customClass="ActionExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20.5" y="671" width="373" height="172"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActionListExploreCollectionViewCell" id="1ct-e6-Hty" customClass="ActionListExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20.5" y="671" width="373" height="44.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="172"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qIN-QI-aoe">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="44.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEx-xx-eeB" userLabel="Content View">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="172"/>
-                                            <subviews>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SyM-Ss-gba">
-                                                    <rect key="frame" x="20" y="0.0" width="333" height="41"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="41" id="C50-7s-nX5"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
-                                                    <state key="normal" title="About In-App Purchases"/>
-                                                </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ap-dW-Iy8" userLabel="Separator View">
-                                                    <rect key="frame" x="20" y="41" width="333" height="0.5"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="2hk-YN-s7P"/>
-                                                    </constraints>
-                                                </view>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAz-aX-rk7">
-                                                    <rect key="frame" x="20" y="41.5" width="333" height="41"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="41" id="1iJ-ra-IJ9"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
-                                                    <state key="normal" title="About Personalization"/>
-                                                </button>
-                                                <stackView opaque="NO" contentMode="redraw" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nZ3-Sb-c0D">
-                                                    <rect key="frame" x="20" y="92.5" width="333" height="79"/>
-                                                    <subviews>
-                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OX-0B-wui" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="333" height="34.5"/>
-                                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                            <inset key="titleEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
-                                                            <state key="normal" title="Redeem">
-                                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            </state>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="8"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                                                    <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </button>
-                                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKX-sj-Kgo" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="44.5" width="333" height="34.5"/>
-                                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                            <inset key="titleEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
-                                                            <state key="normal" title="Become a Pro user">
-                                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            </state>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="8"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                                                    <color key="value" red="1" green="0.68627450980000004" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QWI-IA-BdL">
+                                            <rect key="frame" x="8" y="0.0" width="357" height="33.5"/>
                                             <constraints>
-                                                <constraint firstItem="zAz-aX-rk7" firstAttribute="trailing" secondItem="7Ap-dW-Iy8" secondAttribute="trailing" id="0QM-s7-Ghe"/>
-                                                <constraint firstItem="SyM-Ss-gba" firstAttribute="leading" secondItem="gEx-xx-eeB" secondAttribute="leadingMargin" constant="12" id="4fE-3K-wpR"/>
-                                                <constraint firstItem="7Ap-dW-Iy8" firstAttribute="top" secondItem="SyM-Ss-gba" secondAttribute="bottom" id="Btb-yL-sAh"/>
-                                                <constraint firstItem="nZ3-Sb-c0D" firstAttribute="leading" secondItem="zAz-aX-rk7" secondAttribute="leading" id="Iyj-mS-MIO"/>
-                                                <constraint firstItem="SyM-Ss-gba" firstAttribute="top" secondItem="gEx-xx-eeB" secondAttribute="top" id="QkL-Ko-o32"/>
-                                                <constraint firstItem="nZ3-Sb-c0D" firstAttribute="top" secondItem="zAz-aX-rk7" secondAttribute="bottom" constant="10" id="UDq-nL-SSl"/>
-                                                <constraint firstAttribute="bottom" secondItem="nZ3-Sb-c0D" secondAttribute="bottom" constant="0.33333333333331439" id="ba0-Dp-qGw"/>
-                                                <constraint firstItem="7Ap-dW-Iy8" firstAttribute="trailing" secondItem="SyM-Ss-gba" secondAttribute="trailing" id="cKA-oa-fUh"/>
-                                                <constraint firstItem="nZ3-Sb-c0D" firstAttribute="trailing" secondItem="zAz-aX-rk7" secondAttribute="trailing" id="hRC-rS-Yw1"/>
-                                                <constraint firstItem="7Ap-dW-Iy8" firstAttribute="leading" secondItem="SyM-Ss-gba" secondAttribute="leading" id="kNE-KF-uS4"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="SyM-Ss-gba" secondAttribute="trailing" constant="12" id="p7p-EJ-V84"/>
-                                                <constraint firstItem="zAz-aX-rk7" firstAttribute="leading" secondItem="7Ap-dW-Iy8" secondAttribute="leading" id="pMn-RE-dCi"/>
-                                                <constraint firstItem="zAz-aX-rk7" firstAttribute="top" secondItem="7Ap-dW-Iy8" secondAttribute="bottom" id="pOI-i3-j07"/>
+                                                <constraint firstAttribute="height" constant="34" id="frP-5D-LLW"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <state key="normal" title="About In-App Purchases"/>
+                                            <connections>
+                                                <action selector="urlButtonPressed:" destination="1ct-e6-Hty" eventType="touchUpInside" id="WEV-rs-NNS"/>
+                                            </connections>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dx6-H5-IKm" userLabel="Separator View">
+                                            <rect key="frame" x="8" y="43.5" width="357" height="0.5"/>
+                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="xzf-9y-Sbt"/>
                                             </constraints>
                                         </view>
                                     </subviews>
-                                </view>
+                                    <constraints>
+                                        <constraint firstItem="QWI-IA-BdL" firstAttribute="top" secondItem="qIN-QI-aoe" secondAttribute="top" id="3aa-Ly-ozu"/>
+                                        <constraint firstItem="QWI-IA-BdL" firstAttribute="trailing" secondItem="Dx6-H5-IKm" secondAttribute="trailing" id="JjA-jh-yal"/>
+                                        <constraint firstAttribute="bottom" secondItem="Dx6-H5-IKm" secondAttribute="bottom" id="Mkc-ka-5DP"/>
+                                        <constraint firstItem="Dx6-H5-IKm" firstAttribute="leading" secondItem="qIN-QI-aoe" secondAttribute="leadingMargin" constant="12" id="bWU-vK-tbC"/>
+                                        <constraint firstItem="Dx6-H5-IKm" firstAttribute="top" secondItem="QWI-IA-BdL" secondAttribute="bottom" constant="10" id="jnl-Vg-xKF"/>
+                                        <constraint firstItem="QWI-IA-BdL" firstAttribute="leading" secondItem="Dx6-H5-IKm" secondAttribute="leading" id="kwT-nK-vgD"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Dx6-H5-IKm" secondAttribute="trailing" constant="12" id="z5J-nh-w8o"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
                                 <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="gEx-xx-eeB" secondAttribute="trailing" id="0Yu-j6-nX4"/>
-                                    <constraint firstItem="gEx-xx-eeB" firstAttribute="leading" secondItem="1ct-e6-Hty" secondAttribute="leading" id="6kV-YT-wmd"/>
-                                    <constraint firstItem="gEx-xx-eeB" firstAttribute="top" secondItem="1ct-e6-Hty" secondAttribute="top" id="Bp4-F5-iUJ"/>
-                                    <constraint firstItem="Cmc-K6-XgI" firstAttribute="bottom" secondItem="gEx-xx-eeB" secondAttribute="bottom" id="qj4-OI-1bX"/>
-                                </constraints>
-                                <viewLayoutGuide key="safeArea" id="Cmc-K6-XgI"/>
-                                <size key="customSize" width="373" height="172"/>
+                                <size key="customSize" width="373" height="44.5"/>
+                                <connections>
+                                    <outlet property="separatorView" destination="Dx6-H5-IKm" id="Lov-g0-ys0"/>
+                                    <outlet property="urlButton" destination="QWI-IA-BdL" id="LPe-iu-Ewe"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActionButtonExploreCollectionViewCell" id="nIz-Si-JMw" customClass="ActionButtonExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20.5" y="735.5" width="373" height="44.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PGk-8i-Bxv">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="44.5"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8H-x6-Ijj" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="-1" width="357" height="36"/>
+                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="34" id="UH6-Kz-IAR"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                            <state key="normal" title="Redeem">
+                                                <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                                    <color key="value" red="1" green="0.62352941179999999" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="actionButtonPressed:" destination="nIz-Si-JMw" eventType="touchUpInside" id="geF-yp-Ggg"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="J8H-x6-Ijj" secondAttribute="trailing" id="2Ue-Rb-dsp"/>
+                                        <constraint firstItem="J8H-x6-Ijj" firstAttribute="top" secondItem="PGk-8i-Bxv" secondAttribute="top" id="EJZ-1z-baz"/>
+                                        <constraint firstAttribute="bottom" secondItem="J8H-x6-Ijj" secondAttribute="bottom" id="QK5-ne-czA"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="J8H-x6-Ijj" secondAttribute="leading" id="TSn-EW-3qZ"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="customSize" width="373" height="44.5"/>
+                                <connections>
+                                    <outlet property="actionButton" destination="J8H-x6-Ijj" id="3CZ-Mv-Dj9"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LegalExploreCollectionViewCell" id="9ZO-N2-qBd" customClass="LegalExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="20.5" y="863" width="373" height="44"/>
+                                <rect key="frame" x="20.5" y="800" width="373" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
@@ -869,6 +860,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="xX5-6j-hfy"/>
+                    <connections>
+                        <segue destination="0a7-9G-Fd6" kind="presentation" identifier="IAPSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="RsP-AQ-HCo"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEf-UQ-MwJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoExploreCollectionViewCell" id="jhd-Lh-eG1" customClass="ExploreCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
@@ -1152,7 +1146,7 @@
         <image name="shadow" width="7" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pcc-UF-odB"/>
+        <segue reference="2JV-Mi-ewq"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

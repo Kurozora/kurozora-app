@@ -1,5 +1,5 @@
 //
-//  HorizontalExploreVideoCollectionViewFlowLayout.swift
+//  ExploreSmallCollectionViewFlowLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/07/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HorizontalExploreVideoCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
+class ExploreSmallCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	override var spacingWhenFocused: CGFloat {
 		return spacing
 	}
@@ -34,15 +34,16 @@ class HorizontalExploreVideoCollectionViewFlowLayout: KBaseCollectionViewFlowLay
 
 			if UIDevice.isPad() {
 				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+					return CGSize(width: (collectionView.frame.width - gaps) / 6, height: collectionView.frame.height)
 				}
-				return CGSize(width: (collectionView.frame.width - gaps) / 2.3, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
 			}
 
 			if UIDevice.isLandscape() {
-				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
 			}
-			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
+
+			return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
 		}
 		set { itemSize = newValue }
 	}

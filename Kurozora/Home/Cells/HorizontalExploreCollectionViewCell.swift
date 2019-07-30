@@ -52,10 +52,6 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 		exploreCell.delegate = self
 		exploreCell.shouldPlay = self.currentlyPlayingIndexPath == indexPath
 
-//		if self.currentlyPlayingIndexPath == indexPath {
-//			exploreCell.shouldPlayVideo()
-//		}
-
 		if shows != nil {
 			exploreCell.showElement = shows?[indexPath.row]
 		} else {

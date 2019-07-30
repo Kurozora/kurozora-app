@@ -1,5 +1,5 @@
 //
-//  HorizontalExploreMediumCollectionViewFlowLayout.swift
+//  ExploreMediumCollectionViewFlowLayout.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/07/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HorizontalExploreMediumCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
+class ExploreMediumCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	override var spacingWhenFocused: CGFloat {
 		return spacing
 	}
