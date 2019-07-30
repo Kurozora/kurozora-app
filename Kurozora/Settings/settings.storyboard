@@ -1005,7 +1005,7 @@ Kurozora 1.0.0 (1)</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="OmD-Y2-ukj">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="p3T-pf-tMV">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="p3T-pf-tMV">
                             <connections>
                                 <action selector="dismissPressed:" destination="YOh-JN-Nev" id="Tam-dR-ZJg"/>
                             </connections>
@@ -1623,7 +1623,6 @@ Kurozora 1.0.0 (1)</string>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-zC-V9X" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="AccountKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zmg-c6-Igs" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ZA3-fv-L1X">
@@ -1643,6 +1642,7 @@ Kurozora 1.0.0 (1)</string>
                         <segue destination="fb1-oQ-tHa" kind="relationship" relationship="rootViewController" id="rNV-ia-Msq"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-zC-V9X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4012" y="-269"/>
         </scene>

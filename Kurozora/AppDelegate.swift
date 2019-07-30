@@ -39,11 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
 
-//		try? GlobalVariables().KDefaults.set("kirito", key: "username")
-//		try? GlobalVariables().KDefaults.set("2", key: "user_id")
-//		try? GlobalVariables().KDefaults.set("2", key: "user_role")
-//		try? GlobalVariables().KDefaults.set("Mjp3N29JeVNiZUNGenhtR0lPQXM0TW02TjFOQjdEUGpuTWZNcTF2Sm12OGw4SlFKTU9VYmJCWk1BU2NkZUVyN2FGdTRRSWxpRlN5a0tmZVRsUUU3YWhxRmVackhHWDU0ekdTa2RENmRKYWRHTWNjNTJ0Y1NQNnFpZUFSRExOMEladg==", key: "auth_token")
-//		try? GlobalVariables().KDefaults.set("1", key: "session_id")
+		try? GlobalVariables().KDefaults.set("kirito", key: "username")
+		try? GlobalVariables().KDefaults.set("2", key: "user_id")
+		try? GlobalVariables().KDefaults.set("2", key: "user_role")
+		try? GlobalVariables().KDefaults.set("Mjppb21ncmJ3Z2FXY3NwTXJsMUFiZlQxdGw1ZFR1RkpLNjNjdTZhN3VGaUtsMUtERzEzQW5CZ0NiU1FkZHFlYnFXRkpZQ1pMTlJ4c1RLaFhEUnpXUzJWY05RcW5hVE5qeWdPQmtnM2RpdVZoSGNLUmRndDdQTHFOUVM1TGl2T2hOdw==", key: "auth_token")
+		try? GlobalVariables().KDefaults.set("4", key: "session_id")
 
 		// Initialize theme
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")

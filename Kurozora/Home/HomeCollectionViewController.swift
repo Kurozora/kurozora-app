@@ -98,7 +98,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			if let currentCell = sender as? ExploreCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
 				showTabBarController.exploreCollectionViewCell = currentCell
 				showTabBarController.showID = currentCell.showElement?.id
-				if let showTitle = currentCell.showElement?.title, let section = currentCell.section {
+				if let showTitle = currentCell.showElement?.title, let section = currentCell.indexPath?.section {
 					showTabBarController.heroID = "explore_\(showTitle)_\(section)"
 				}
 			}
@@ -116,9 +116,9 @@ extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section < (exploreCategories?.count)! {
 			let categorySection = exploreCategories?[section]
-			if let categoryShows = categorySection?.shows?.count, categoryShows != 0 {
+			if categorySection?.shows?.count != 0 {
 				return 1
-			} else if let categoryGenres = categorySection?.genres?.count, categoryGenres != 0 {
+			} else if categorySection?.genres?.count != 0 {
 				return 1
 			} else {
 				return 0
@@ -139,10 +139,6 @@ extension HomeCollectionViewController {
 					exploreCellStyle = .large
 				}
 
-				if indexPath.section == 4 {
-					exploreCellStyle = .video
-				}
-
 				horizontalCell.section = indexPath.section
 				horizontalCell.homeCollectionViewController = self
 				horizontalCell.cellStyle = exploreCellStyle
@@ -156,7 +152,7 @@ extension HomeCollectionViewController {
 					case .small:
 						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreSmallCollectionViewFlowLayout()
 					case .video:
-						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreSmallCollectionViewFlowLayout()
+						horizontalCell.collectionView.collectionViewLayout = HorizontalExploreVideoCollectionViewFlowLayout()
 					}
 				}
 
@@ -194,10 +190,15 @@ extension HomeCollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		if section < (exploreCategories?.count)! {
-			return (section != 0) ? CGSize(width: collectionView.width, height: 48) : .zero
-		} else if section == (exploreCategories?.count)! {
-			return CGSize(width: collectionView.width, height: 48)
+
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if section < exploreCategoriesCount {
+				if section != 0 {
+					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? CGSize(width: collectionView.width, height: 48) : .zero
+				}
+			} else if section == exploreCategoriesCount {
+				return CGSize(width: collectionView.width, height: 48)
+			}
 		}
 
 		return .zero
@@ -219,20 +220,6 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 					}
 					return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-				}
-
-				if indexPath.section == 4 {
-					if UIDevice.isPad() {
-						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height / 2.5)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.width / 2.5)
-					}
-
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.92)
-					}
-					return CGSize(width: view.frame.width, height: view.frame.width * 0.92)
 				}
 
 				switch exploreCellStyle {
@@ -280,15 +267,15 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 				case .video:
 					if UIDevice.isPad() {
 						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.5)
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.39)
 						}
-						return CGSize(width: view.frame.width, height: view.frame.width / 2.5)
+						return CGSize(width: view.frame.width, height: view.frame.width * 0.38)
 					}
 
 					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.92)
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.8)
 					}
-					return CGSize(width: view.frame.width, height: view.frame.width * 0.92)
+					return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
 				}
 			}
 		}
@@ -316,11 +303,22 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if section < exploreCategoriesCount {
+				if section != 0 {
+					if section != 0 {
+						return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0) : .zero
+					}
+				}
+			}
+		}
+
 		if section == 0 || section == collectionView.lastSection {
 			return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
 		}
-		
-		return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
+
+		return .zero
+//		return UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
 	}
 }
 

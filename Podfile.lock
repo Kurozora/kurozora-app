@@ -34,7 +34,7 @@ PODS:
   - ReachabilitySwift (4.3.0)
   - RevealingSplashView (0.6.0)
   - RichEditorView (5.0.0)
-  - RichTextView (2.2.3):
+  - RichTextView (2.2.4):
     - Down
     - iosMath
     - SnapKit
@@ -187,7 +187,7 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
-  RichTextView: 30ab89558109c29d1916db0388f508e81ed60127
+  RichTextView: a8aeabdc23d3eb1688e90fc576aa01cdb4abdf18
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24

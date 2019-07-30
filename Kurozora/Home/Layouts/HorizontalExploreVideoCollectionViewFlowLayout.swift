@@ -34,13 +34,13 @@ class HorizontalExploreVideoCollectionViewFlowLayout: KBaseCollectionViewFlowLay
 
 			if UIDevice.isPad() {
 				if UIDevice.isLandscape() {
-					return CGSize(width: (collectionView.frame.width - gaps) / 1, height: collectionView.frame.height)
+					return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
 				}
 				return CGSize(width: (collectionView.frame.width - gaps) / 2.3, height: collectionView.frame.height)
 			}
 
 			if UIDevice.isLandscape() {
-				return CGSize(width: (collectionView.frame.height - gaps), height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
 			}
 			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
 		}
@@ -118,15 +118,6 @@ class HorizontalExploreVideoCollectionViewFlowLayout: KBaseCollectionViewFlowLay
 	}
 
 	// MARK: - Private Methods
-	private func findClosestAttributes(toXPosition xPosition: CGFloat) -> UICollectionViewLayoutAttributes? {
-		guard let collectionView = collectionView else { return nil }
-		let searchRect = CGRect(
-			x: xPosition - collectionView.bounds.width, y: collectionView.bounds.minY,
-			width: collectionView.bounds.width * 2, height: collectionView.bounds.height
-		)
-		return layoutAttributesForElements(in: searchRect)?.min(by: { abs($0.center.x - xPosition) < abs($1.center.x - xPosition) })
-	}
-
 	private func updateInsets() {
 		guard let collectionView = collectionView else { return }
 		collectionView.contentInset.left = 20

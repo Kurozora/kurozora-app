@@ -1137,12 +1137,12 @@
 		662F706B22A4521E00C3599D /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
-				6674DBE922EDB88B006455C1 /* HorizontalExploreSmallCollectionViewFlowLayout.swift */,
-				6674DBEB22EDB8C4006455C1 /* KBaseCollectionViewFlowLayout.swift */,
-				6674DBED22EDB941006455C1 /* HorizontalExploreMediumCollectionViewFlowLayout.swift */,
-				6674DBEF22EDBFEA006455C1 /* HorizontalExploreLargeCollectionViewFlowLayout.swift */,
-				6674DBF122EDC5E8006455C1 /* HorizontalExploreVideoCollectionViewFlowLayout.swift */,
 				660A642921D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift */,
+				6674DBEF22EDBFEA006455C1 /* HorizontalExploreLargeCollectionViewFlowLayout.swift */,
+				6674DBED22EDB941006455C1 /* HorizontalExploreMediumCollectionViewFlowLayout.swift */,
+				6674DBE922EDB88B006455C1 /* HorizontalExploreSmallCollectionViewFlowLayout.swift */,
+				6674DBF122EDC5E8006455C1 /* HorizontalExploreVideoCollectionViewFlowLayout.swift */,
+				6674DBEB22EDB8C4006455C1 /* KBaseCollectionViewFlowLayout.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";

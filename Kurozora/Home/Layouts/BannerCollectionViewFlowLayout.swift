@@ -9,6 +9,8 @@
 import UIKit
 
 class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
+	let interItemGap = (UIDevice.isPad()) ? 40 : 20
+
 	// MARK: - Public Properties
 	override var collectionViewContentSize: CGSize {
 		let leftmostEdge = cachedItemsAttributes.values.map { $0.frame.minX }.min() ?? 0
@@ -25,9 +27,7 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	private var _itemSize: CGSize {
 		get {
 			guard let collectionView = self.collectionView else { return .zero }
-			let interItemGap = (UIDevice.isPad()) ? 40 : 20
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
-
 			if UIDevice.isPad() {
 				if UIDevice.isLandscape() {
 					return CGSize(width: (collectionView.frame.width - gaps) / 1.5, height: collectionView.frame.height)
@@ -109,7 +109,7 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 		return attributes
 	}
 
-	private func shiftedAttributes(from attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+	private func shiftedAttributes(from attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes { // gets called
 		guard let attributes = attributes.copy() as? UICollectionViewLayoutAttributes else { fatalError("Couldn't copy attributes") }
 		let roundedFocusedIndex = round(continuousFocusedIndex)
 		guard attributes.indexPath.item != Int(roundedFocusedIndex) else { return attributes }
@@ -132,7 +132,7 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 		return layoutAttributesForElements(in: searchRect)?.min(by: { abs($0.center.x - xPosition) < abs($1.center.x - xPosition) })
 	}
 
-	private func updateInsets() {
+	private func updateInsets() { // gets called
 		guard let collectionView = collectionView else { return }
 		collectionView.contentInset.left = (collectionView.bounds.size.width - itemSize.width) / 2
 		collectionView.contentInset.right = (collectionView.bounds.size.width - itemSize.width) / 2
