@@ -112,7 +112,7 @@ class HomeCollectionViewController: UICollectionViewController {
 extension HomeCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		guard let categoriesCount = exploreCategories?.count else { return 0 }
-		return categoriesCount + 2
+		return categoriesCount + 3
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -230,93 +230,95 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if indexPath.section < (exploreCategories?.count)! {
-			if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if indexPath.section < exploreCategoriesCount {
+				if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
 
-				if indexPath.section == 0 {
-					if UIDevice.isPad() {
+					if indexPath.section == 0 {
+						if UIDevice.isPad() {
+							if UIDevice.isLandscape() {
+								return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
+							}
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+						}
+
 						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
 					}
 
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-					}
-					return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-				}
-
-				switch exploreCellStyle {
-				case .large:
-					if UIDevice.isPad() {
-						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-					}
-
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-					}
-					return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-				case .medium:
-					if UIDevice.isPad() {
-						if UIDevice.isLandscape() {
+					switch exploreCellStyle {
+					case .large:
+						if UIDevice.isPad() {
+							if UIDevice.isLandscape() {
+								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+							}
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.15)
-					}
 
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
-					}
-					return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-				case .small:
-					if UIDevice.isPad() {
 						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
+						}
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+					case .medium:
+						if UIDevice.isPad() {
+							if UIDevice.isLandscape() {
+								return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
+							}
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.15)
+						}
+
+						if UIDevice.isLandscape() {
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-					}
-
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-					}
-
-					if UIDevice.hasTopNotch {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-					}
-
-					return CGSize(width: view.frame.width, height: view.frame.height * 0.24)
-				case .video:
-					if UIDevice.isPad() {
-						if UIDevice.isLandscape() {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.39)
+					case .small:
+						if UIDevice.isPad() {
+							if UIDevice.isLandscape() {
+								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+							}
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 						}
-						return CGSize(width: view.frame.width, height: view.frame.width * 0.38)
-					}
 
-					if UIDevice.isLandscape() {
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.8)
+						if UIDevice.isLandscape() {
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
+						}
+
+						if UIDevice.hasTopNotch {
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
+						}
+
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.24)
+					case .video:
+						if UIDevice.isPad() {
+							if UIDevice.isLandscape() {
+								return CGSize(width: view.frame.width, height: view.frame.height * 0.39)
+							}
+							return CGSize(width: view.frame.width, height: view.frame.width * 0.38)
+						}
+
+						if UIDevice.isLandscape() {
+							return CGSize(width: view.frame.width, height: view.frame.height * 0.8)
+						}
+						return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
 					}
-					return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
 				}
 			}
-		}
 
-		if indexPath.section == (exploreCategories?.count)! {
-			if UIDevice.isPad() {
+			if indexPath.section == exploreCategoriesCount || indexPath.section == exploreCategoriesCount + 1 {
+				if UIDevice.isPad() {
+					if UIDevice.isLandscape() {
+						return CGSize(width: view.frame.width / 3, height: 44.5)
+					}
+					return CGSize(width: view.frame.width / 2, height: 44.5)
+				}
+
 				if UIDevice.isLandscape() {
-					return CGSize(width: view.frame.width / 3, height: 44.5)
+					return CGSize(width: view.frame.width / 2, height: 44.5)
 				}
-				return CGSize(width: view.frame.width / 2, height: 44.5)
+				return CGSize(width: view.frame.width, height: 44.5)
 			}
-
-			if UIDevice.isLandscape() {
-				return CGSize(width: view.frame.width / 2, height: 44.5)
-			}
-			return CGSize(width: view.frame.width, height: 44.5)
 		}
 
 		return CGSize(width: view.frame.width, height: 44)
@@ -327,7 +329,7 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 			return UICollectionReusableView()
 		}
 
-		if indexPath.section == (exploreCategories?.count)! {
+		if let exploreCategoriesCount = exploreCategories?.count, indexPath.section == exploreCategoriesCount {
 			sectionHeader.title = "Quick Links"
 		} else {
 			sectionHeader.category = exploreCategories?[indexPath.section]
@@ -346,12 +348,11 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 					}
 				}
 			}
-		}
 
-		if section == 0 || section == exploreCategories?.count {
-			return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+			if section == 0 || section >= exploreCategoriesCount {
+				return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+			}
 		}
-
 		return .zero
 	}
 }
