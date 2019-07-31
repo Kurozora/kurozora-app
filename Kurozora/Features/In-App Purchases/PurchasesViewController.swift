@@ -9,7 +9,7 @@
 import UIKit
 
 class PurchaseViewController: UITableViewController {
-	var data = [["title": "$3,88 / Month", "subtext": ""], ["title": "$11,94 / 6 Months", "subtext": "(6 months at $1,99/mo. Save 50%)"], ["title": "$18,94 / 12 Months", "subtext": "(12 months at $1,58/mo. Save 60%)"]]
+	var subscriptionItems = [["title": "$3,88 / Month", "subtext": ""], ["title": "$11,94 / 6 Months", "subtext": "(6 months at $1,99/mo. Save 50%)"], ["title": "$18,94 / 12 Months", "subtext": "(12 months at $1,58/mo. Save 60%)"]]
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -33,7 +33,7 @@ extension PurchaseViewController {
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 1 {
-			return data.count
+			return subscriptionItems.count
 		}
 
 		return 1
@@ -45,7 +45,7 @@ extension PurchaseViewController {
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
 			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SubscriptionButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
-			subscriptionButtonTableViewCell.subscriptionItem = data[indexPath.row]
+			subscriptionButtonTableViewCell.subscriptionItem = subscriptionItems[indexPath.row]
 			return subscriptionButtonTableViewCell
 		}
 

@@ -78,13 +78,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="1024" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="NEW-jY-Gjc" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="344.5" y="0.0" width="335" height="45.5"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="NEW-jY-Gjc" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="344.5" y="0.0" width="335" height="44"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="0iB-oA-yDn"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="335" id="Far-0a-9A3"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                             <state key="normal" title="$18,94 / 12 Months">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
@@ -98,7 +99,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(12 months at $1.58/mo. Save 60%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-ge-HNx">
-                                            <rect key="frame" x="411.5" y="50.5" width="201" height="14.5"/>
+                                            <rect key="frame" x="411.5" y="49" width="201" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="mz8-fY-NaJ"/>
                                             </constraints>
