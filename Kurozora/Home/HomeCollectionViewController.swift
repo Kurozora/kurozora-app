@@ -14,7 +14,7 @@ class HomeCollectionViewController: UICollectionViewController {
 	// Search bar controller
 	var searchResultsViewController: SearchResultsTableViewController?
 	var placeholderTimer: Timer?
-	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "Massively Multiplayer Online Role-Playing Game", "Vampires"]
+	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
 	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/api/v1"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
 	let actionButtonList = [["title": "Redeem", "segueId": "IAPSegue"], ["title": "Become a Pro User", "segueId": "IAPSegue"]]
 

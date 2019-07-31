@@ -69,6 +69,10 @@
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
 		663C65D9226AA60100825F89 /* EpisodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesTableViewController.swift */; };
+		663F8C4922F1882F00F1EACB /* SubscriptionInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4622F1882E00F1EACB /* SubscriptionInfoCell.swift */; };
+		663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */; };
+		663F8C4B22F1882F00F1EACB /* SubscriptionPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4822F1882F00F1EACB /* SubscriptionPreviewTableViewCell.swift */; };
+		663F8C4F22F199A400F1EACB /* SubscriptionPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4E22F199A300F1EACB /* SubscriptionPreviewCollectionViewCell.swift */; };
 		6640E18922AD633500D0F575 /* authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E18822AD633500D0F575 /* authentication.storyboard */; };
 		6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */; };
 		6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E18C22ADD0A500D0F575 /* BiometricType.swift */; };
@@ -465,6 +469,10 @@
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		663C65D8226AA60100825F89 /* EpisodesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewController.swift; sourceTree = "<group>"; };
+		663F8C4622F1882E00F1EACB /* SubscriptionInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoCell.swift; sourceTree = "<group>"; };
+		663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionButtonTableViewCell.swift; sourceTree = "<group>"; };
+		663F8C4822F1882F00F1EACB /* SubscriptionPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		663F8C4E22F199A300F1EACB /* SubscriptionPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		6640E18822AD633500D0F575 /* authentication.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = authentication.storyboard; sourceTree = "<group>"; };
 		6640E18A22AD634600D0F575 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		6640E18C22ADD0A500D0F575 /* BiometricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricType.swift; sourceTree = "<group>"; };
@@ -1163,6 +1171,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		663F8C4522F1881000F1EACB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				663F8C4E22F199A300F1EACB /* SubscriptionPreviewCollectionViewCell.swift */,
+				663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */,
+				663F8C4622F1882E00F1EACB /* SubscriptionInfoCell.swift */,
+				663F8C4822F1882F00F1EACB /* SubscriptionPreviewTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		6640E18722AD631F00D0F575 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -1553,6 +1572,7 @@
 			children = (
 				669EA9A122C1491600784181 /* purchase.storyboard */,
 				669EA99F22C1490A00784181 /* PurchasesViewController.swift */,
+				663F8C4522F1881000F1EACB /* Cells */,
 			);
 			path = "In-App Purchases";
 			sourceTree = "<group>";
@@ -2495,6 +2515,7 @@
 				66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */,
 				66058DC0212E97E90084B79E /* ShowCharacterCell.swift in Sources */,
 				6674A0BD20A45E2300AAB527 /* InformationCell.swift in Sources */,
+				663F8C4B22F1882F00F1EACB /* SubscriptionPreviewTableViewCell.swift in Sources */,
 				66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
@@ -2526,6 +2547,7 @@
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */,
 				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
+				663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
 				66D4735021AB332000A894B7 /* Library.swift in Sources */,
@@ -2551,6 +2573,7 @@
 				66F944AD22F0C08E009F1FE2 /* HorizontalExploreCollectionViewCell.swift in Sources */,
 				669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */,
 				6669387021AF39A000BA9620 /* ForumThreads.swift in Sources */,
+				663F8C4F22F199A400F1EACB /* SubscriptionPreviewCollectionViewCell.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
 				662A5FE7223913AB00F3B61D /* CGRectEx.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
@@ -2578,6 +2601,7 @@
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
 				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,
 				669EA9A022C1490A00784181 /* PurchasesViewController.swift in Sources */,
+				663F8C4922F1882F00F1EACB /* SubscriptionInfoCell.swift in Sources */,
 				66DEB4AA21D26FBC0093725F /* Search.swift in Sources */,
 				66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */,
 				66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */,

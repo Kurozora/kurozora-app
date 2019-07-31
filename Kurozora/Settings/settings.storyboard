@@ -744,6 +744,7 @@
                                         <connections>
                                             <outlet property="cellTitle" destination="w3V-Lh-yFf" id="BkN-Wg-ERK"/>
                                             <outlet property="selectedView" destination="Yvz-SD-0AD" id="EK6-mr-3TN"/>
+                                            <segue destination="9mD-qe-ThA" kind="presentation" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="RYl-sC-5yK"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="9Vh-tu-z7Z" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -1586,7 +1587,7 @@ Kurozora 1.0.0 (1)</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4J-g8-zaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2483" y="-269"/>
+            <point key="canvasLocation" x="-2481" y="-269"/>
         </scene>
         <!--admin-->
         <scene sceneID="KHN-hJ-St3">
@@ -1594,7 +1595,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="admin" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1992" y="-998"/>
+            <point key="canvasLocation" x="-1992" y="-1115"/>
         </scene>
         <!--about-->
         <scene sceneID="IwF-zp-Lsq">
@@ -1602,7 +1603,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="about" id="GAQ-MX-p4x" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1992" y="-966"/>
+            <point key="canvasLocation" x="-1993" y="-915"/>
         </scene>
         <!--theme-->
         <scene sceneID="snc-re-vTw">
@@ -1610,7 +1611,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1989" y="-932"/>
+            <point key="canvasLocation" x="-1991" y="-1015"/>
         </scene>
         <!--ManageIconKNavigationController-->
         <scene sceneID="pCk-tB-aID">
@@ -1618,7 +1619,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1868" y="-1031"/>
+            <point key="canvasLocation" x="-1868" y="-982"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
@@ -1644,7 +1645,7 @@ Kurozora 1.0.0 (1)</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-zC-V9X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4012" y="-269"/>
+            <point key="canvasLocation" x="-4014" y="-269"/>
         </scene>
         <!--notificationSettings-->
         <scene sceneID="cL2-5n-9vs">
@@ -1652,7 +1653,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="notificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1930" y="-1099"/>
+            <point key="canvasLocation" x="-1932" y="-1082"/>
         </scene>
         <!--authenticationSettings-->
         <scene sceneID="EBP-ej-D5t">
@@ -1660,7 +1661,7 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="authenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1918" y="-899"/>
+            <point key="canvasLocation" x="-1918" y="-948"/>
         </scene>
         <!--display-->
         <scene sceneID="RdJ-ak-oTj">
@@ -1668,7 +1669,15 @@ Kurozora 1.0.0 (1)</string>
                 <viewControllerPlaceholder storyboardName="display" id="urf-Ka-1Pe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y62-rG-dh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1990" y="-1065"/>
+            <point key="canvasLocation" x="-1986" y="-1049"/>
+        </scene>
+        <!--purchase-->
+        <scene sceneID="yi4-pG-GFi">
+            <objects>
+                <viewControllerPlaceholder storyboardName="purchase" id="9mD-qe-ThA" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-5h-YRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1978" y="-881"/>
         </scene>
     </scenes>
     <resources>
