@@ -682,10 +682,10 @@
         <scene sceneID="d2r-ir-dsc">
             <objects>
                 <collectionViewController storyboardIdentifier="SeasonsCollectionViewController" title="Seasons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KsV-v8-siS" customClass="SeasonsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="63Q-nE-Gzj">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="63Q-nE-Gzj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="h2v-AE-4Ir">
                             <size key="itemSize" width="405" height="170"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -693,10 +693,10 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeasonsCollectionViewCell" id="K98-ks-xm3" customClass="SeasonsCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeasonsCollectionViewCell" id="K98-ks-xm3" customClass="SeasonsCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="4.5" y="0.0" width="405" height="170"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hQl-MM-Cpm">
+                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hQl-MM-Cpm">
                                     <rect key="frame" x="0.0" y="0.0" width="405" height="170"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
