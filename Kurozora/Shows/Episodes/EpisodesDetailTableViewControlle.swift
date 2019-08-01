@@ -27,7 +27,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 	@IBOutlet weak var episodeMoreButton: UIButton!
 	@IBOutlet weak var cosmosView: CosmosView!
 
-	var episodeCell: EpisodesTableViewCell?
+	var episodeCell: EpisodesCollectionViewCell?
 	var episodeElement: EpisodesElement?
 	var delegate: EpisodesDetailTableViewControlleDelegate?
 
@@ -58,7 +58,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 		}
 	}
 
-	fileprivate func configureEpisodeDetails(from cell: EpisodesTableViewCell?) {
+	fileprivate func configureEpisodeDetails(from cell: EpisodesCollectionViewCell?) {
 		guard let cell = episodeCell else { return }
 		// Episode Misc
 		title = cell.episodeNumberLabel.text

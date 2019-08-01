@@ -1,5 +1,5 @@
 //
-//  EpisodesTableViewController.swift
+//  EpisodesCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/10/2018.
@@ -10,11 +10,11 @@ import KCommonKit
 import EmptyDataSet_Swift
 import SwipeCellKit
 
-class EpisodesTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
     var seasonID: Int?
 	var episodes: [EpisodesElement]? {
 		didSet {
-			self.tableView?.reloadData()
+			self.collectionView?.reloadData()
 		}
 	}
 
@@ -22,9 +22,9 @@ class EpisodesTableViewController: UITableViewController, EmptyDataSetSource, Em
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-        tableView?.emptyDataSetSource = self
-        tableView?.emptyDataSetDelegate = self
-        tableView?.emptyDataSetView { view in
+        collectionView?.emptyDataSetSource = self
+        collectionView?.emptyDataSetDelegate = self
+        collectionView?.emptyDataSetView { view in
             view.titleLabelString(NSAttributedString(string: "No episodes found!"))
                 .image(UIImage(named: ""))
                 .shouldDisplay(true)
@@ -32,8 +32,6 @@ class EpisodesTableViewController: UITableViewController, EmptyDataSetSource, Em
                 .isTouchAllowed(true)
                 .isScrollAllowed(true)
         }
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 
         fetchEpisodes()
     }
@@ -47,7 +45,7 @@ class EpisodesTableViewController: UITableViewController, EmptyDataSetSource, Em
 		})
 	}
 
-	func populateActionSheet(for episode: EpisodesElement, at cell: EpisodesTableViewCell) {
+	func populateActionSheet(for episode: EpisodesElement, at cell: EpisodesCollectionViewCell) {
 		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = cell.episodeWatchedButton.tag
 		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (action) in
@@ -60,46 +58,43 @@ class EpisodesTableViewController: UITableViewController, EmptyDataSetSource, Em
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesTableViewCell {
-			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = tableView.indexPath(for: episodeCell) {
+		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
+			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
 				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
 				episodeDetailViewController.episodeCell = episodeCell
 				episodeDetailViewController.delegate = episodeCell
 			}
 		}
 	}
+
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		collectionView.collectionViewLayout.invalidateLayout()
+	}
 }
 
-// MARK: - UITableViewDataSource
-extension EpisodesTableViewController {
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+// MARK: - UICollectionViewDataSource
+extension EpisodesCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard let episodesCount = episodes?.count else { return 0 }
 		return episodesCount
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let episodeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "EpisodesTableViewCell", for: indexPath) as! EpisodesTableViewCell
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "EpisodesCollectionViewCell", for: indexPath) as! EpisodesCollectionViewCell
+		episodesCollectionViewCell.episodesDelegate = self
+		episodesCollectionViewCell.delegate = self
+		episodesCollectionViewCell.episodesElement = episodes?[indexPath.row]
 
-		episodeTableViewCell.episodesDelegate = self
-		episodeTableViewCell.delegate = self
-		episodeTableViewCell.episodesElement = episodes?[indexPath.row]
-
-		return episodeTableViewCell
+		return episodesCollectionViewCell
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension EpisodesTableViewController {
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
-	}
-}
-
-// MARK: - SwipeTableViewCellDelegate
-extension EpisodesTableViewController: SwipeTableViewCellDelegate {
-	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+// MARK: - SwipeCollectionViewCellDelegate
+extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
+	func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
 		guard let episode = episodes?[indexPath.item] else { return nil }
-		guard let cell = tableView.cellForRow(at: indexPath) as? EpisodesTableViewCell else { return nil}
+		guard let cell = collectionView.cellForItem(at: indexPath) as? EpisodesCollectionViewCell else { return nil}
 
 		switch orientation {
 		case .right:
@@ -138,19 +133,19 @@ extension EpisodesTableViewController: SwipeTableViewCellDelegate {
 		}
 	}
 
-	func visibleRect(for tableView: UITableView) -> CGRect? {
+	func visibleRect(for collectionView: UICollectionView) -> CGRect? {
 		if #available(iOS 11.0, *) {
-			return tableView.safeAreaLayoutGuide.layoutFrame
+			return collectionView.safeAreaLayoutGuide.layoutFrame
 		} else {
 			let topInset = navigationController?.navigationBar.frame.height ?? 0
 			let bottomInset = navigationController?.toolbar?.frame.height ?? 0
-			let bounds = tableView.bounds
+			let bounds = collectionView.bounds
 
 			return CGRect(x: bounds.origin.x, y: bounds.origin.y + topInset, width: bounds.width, height: bounds.height - bottomInset)
 		}
 	}
 
-	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+	func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
 		var options = SwipeOptions()
 		options.expansionStyle = .selection
 		options.transitionStyle = .reveal
@@ -163,17 +158,36 @@ extension EpisodesTableViewController: SwipeTableViewCellDelegate {
 	}
 }
 
-// MARK: - EpisodeTableViewCellDelegate
-extension EpisodesTableViewController: EpisodesTableViewCellDelegate {
-	func episodesCellMoreButtonPressed(for cell: EpisodesTableViewCell) {
-		if let indexPath = tableView.indexPath(for: cell) {
+// MARK: - UICollectionViewDelegateFlowLayout
+extension EpisodesCollectionViewController: UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let interItemGap: CGFloat = (UIDevice.isPad()) ? 20 : 10
+
+		if UIDevice.isPad() {
+			if UIDevice.isLandscape() {
+				return CGSize(width: (view.frame.width - interItemGap) / 3, height: view.frame.height * 0.3)
+			}
+			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.2)
+		}
+
+		if UIDevice.isLandscape() {
+			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.6)
+		}
+		return CGSize(width: (view.frame.width - interItemGap), height: view.frame.height * 0.3)
+	}
+}
+
+// MARK: - EpisodesCollectionViewCellDelegate
+extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
+	func episodesCellMoreButtonPressed(for cell: EpisodesCollectionViewCell) {
+		if let indexPath = collectionView.indexPath(for: cell) {
 			guard let episode = episodes?[indexPath.row] else { return }
 			populateActionSheet(for: episode, at: cell)
 		}
 	}
 
-    func episodesCellWatchedButtonPressed(for cell: EpisodesTableViewCell) {
-        if let indexPath = tableView.indexPath(for: cell) {
+    func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
 			guard let episodeID = episodes?[indexPath.row].id else { return }
 			var watched = 0
 

@@ -37,7 +37,7 @@ class ShowDetailTabBarController: ESTabBarController {
 		showDetail.heroID = heroID
 		showDetail.delegate = showDetailViewControllerDelegate
         
-        let seasons = storyboard.instantiateViewController(withIdentifier: "SeasonsTableViewController") as! SeasonsTableViewController
+        let seasons = storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController") as! SeasonsCollectionViewController
 		seasons.modalPresentationCapturesStatusBarAppearance = true
 		if let heroID = heroID {
 			if libraryCollectionViewCell?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {

@@ -1,5 +1,5 @@
 //
-//  EpisodeTableViewCell.swift
+//  EpisodesCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/10/2018.
@@ -11,12 +11,12 @@ import Cosmos
 import Kingfisher
 import SwipeCellKit
 
-protocol EpisodesTableViewCellDelegate: class {
-    func episodesCellWatchedButtonPressed(for cell: EpisodesTableViewCell)
-	func episodesCellMoreButtonPressed(for cell: EpisodesTableViewCell)
+protocol EpisodesCollectionViewCellDelegate: class {
+    func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell)
+	func episodesCellMoreButtonPressed(for cell: EpisodesCollectionViewCell)
 }
 
-class EpisodesTableViewCell: SwipeTableViewCell {
+class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var episodeNumberLabel: UILabel!
@@ -26,7 +26,7 @@ class EpisodesTableViewCell: SwipeTableViewCell {
 	@IBOutlet weak var episodeMoreButton: UIButton!
 	@IBOutlet weak var cosmosView: CosmosView!
 
-	weak var episodesDelegate: EpisodesTableViewCellDelegate?
+	weak var episodesDelegate: EpisodesCollectionViewCellDelegate?
 	var episodesElement: EpisodesElement? = nil {
 		didSet {
 			configureCell()
@@ -105,7 +105,8 @@ class EpisodesTableViewCell: SwipeTableViewCell {
 	}
 }
 
-extension EpisodesTableViewCell: EpisodesDetailTableViewControlleDelegate {
+// MARK: - EpisodesDetailTableViewControlleDelegate
+extension EpisodesCollectionViewCell: EpisodesDetailTableViewControlleDelegate {
 	func updateWatchedStatus(with watchStatus: Bool) {
 		episodesDelegate?.episodesCellWatchedButtonPressed(for: self)
 	}

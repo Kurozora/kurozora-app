@@ -1,5 +1,5 @@
 //
-//  SeasonsTableViewCell.swift
+//  SeasonsCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/10/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class SeasonsTableViewCell: UITableViewCell {
+class SeasonsCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var countLabel: UILabel! {
@@ -67,10 +67,6 @@ class SeasonsTableViewCell: UITableViewCell {
 		didSet {
 			configureCell()
 		}
-	}
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
 	}
 
 	fileprivate func configureCell() {
