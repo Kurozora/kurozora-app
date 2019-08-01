@@ -73,9 +73,10 @@ extension UserSettings {
 		return automaticDarkTheme
 	}
 
-	/// Returns a string indicating the preferred dark theme option
+	/// Returns a string indicating the preferred dark theme option.
+	/// Default value is 2, neither automatic nor scheduled.
 	static var darkThemeOption: Int {
-		guard let darkThemeOption = GlobalVariables().KUserDefaults?.integer(forKey: "darkThemeOption") else { return 0 }
+		guard let darkThemeOption = GlobalVariables().KUserDefaults?.integer(forKey: "darkThemeOption") else { return 2 }
 		return darkThemeOption
 	}
 

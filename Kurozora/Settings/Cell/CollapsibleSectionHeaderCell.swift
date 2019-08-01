@@ -12,7 +12,6 @@ class CollapsibleSectionHeaderCell: UITableViewCell {
 	@IBOutlet weak var sectionTitleLabel: UILabel! {
 		didSet {
 			self.sectionTitleLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			self.sectionTitleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var sectionButton: UIButton?

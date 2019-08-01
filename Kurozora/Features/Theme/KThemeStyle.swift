@@ -262,7 +262,7 @@ extension KThemeStyle {
 		return current == .night
 	}
 
-	/// Wheather the specified
+	/// Wheather it's currently night time
 	static var isSolarNighttime: Bool {
 		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: User.latitude, longitude: User.longitude)) else { return false }
 		let isNighttime = solar.isNighttime
@@ -276,11 +276,15 @@ extension KThemeStyle {
 			before = current
 
 			if isSolarNighttime && darkThemeOption == .automatic || isCustomNighttime && darkThemeOption == .custom {
-				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
+				KThemeStyle.switchTo(.night)
 				current = .night
+				UserSettings.set(1, forKey: .appearanceOption)
+				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 1])
 			} else {
-				ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
+				KThemeStyle.switchTo(.day)
 				current = .day
+				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 0])
+				UserSettings.set(0, forKey: .appearanceOption)
 			}
 		}
 	}

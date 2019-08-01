@@ -171,8 +171,8 @@ extension User {
 		return authToken
 	}
 
+	static let locationManager = CLLocationManager()
 	fileprivate static var currentUserLocation: CLLocationCoordinate2D {
-		let locationManager = CLLocationManager()
 		locationManager.requestWhenInUseAuthorization()
 
 		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
@@ -189,18 +189,16 @@ extension User {
 
 	/// Returns the user's latitude saved in KDefaults
 	static var latitude: Double {
-//		guard let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "",
-//			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
-//		return latitude
-		return currentUserLocation.latitude
+		guard let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "",
+			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
+		return latitude
 	}
 
 	/// Returns the user's longitude saved in KDefaults
 	static var longitude: Double {
-//		guard let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "",
-//			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
-//		return longitude
-		return currentUserLocation.longitude
+		guard let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "",
+			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
+		return longitude
 	}
 
 	/// Returns the current user avatar from cache if available, otherwise returns default avatar

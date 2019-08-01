@@ -22,6 +22,7 @@ let updateNotificationSettingsValueLabelsNotification = Notification.Name("updat
 
 let updateAuthenticationRequireValueLabelNotification = Notification.Name("updateAuthenticationRequireValueLabelNotification")
 
+let updateAppAppearanceOptionNotification = Notification.Name("updateAppAppearanceOptionNotification")
 let updateAutomaticDarkThemeOptionValueLabelNotification = Notification.Name("updateAutomaticDarkThemeOptionValueLabelNotification")
 
 let updateNormalLargeTitlesNotification = Notification.Name("updateNormalLargeTitlesNotification")
@@ -43,9 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		if UserSettings.automaticDarkTheme {
 			KThemeStyle.startAutomaticDarkThemeSchedule()
-		} else if let themeIDString = UserSettings.currentTheme, themeIDString != "" {
+		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {
 			// If themeID is an integer
-			if let themeID = Int(themeIDString) {
+			if let themeID = Int(currentThemeID) {
 				// Use a non default theme if it exists
 				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
 					KThemeStyle.switchTo(theme: themeID)
@@ -55,11 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				}
 			} else {
 				// Use one of the chosen default themes
-				KThemeStyle.switchTo(theme: themeIDString)
+				KThemeStyle.switchTo(theme: currentThemeID)
 			}
 		} else {
 			// Fallback to default if no theme is chosen
-			KThemeStyle.switchTo(.day)
+			KThemeStyle.switchTo(.default)
 		}
 
 		// Initialize UIWindow

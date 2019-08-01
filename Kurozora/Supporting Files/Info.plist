@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9542</string>
+	<string>9580</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -384,13 +384,13 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses Face ID or your device's passcode so only you can access the app.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

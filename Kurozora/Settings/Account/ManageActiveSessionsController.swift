@@ -53,7 +53,6 @@ class ManageActiveSessionsController: UIViewController {
 			if CLLocationManager.authorizationStatus() == .restricted ||
 				CLLocationManager.authorizationStatus() == .denied ||
 				CLLocationManager.authorizationStatus() == .notDetermined {
-
 				locationManager.requestWhenInUseAuthorization()
 			}
 

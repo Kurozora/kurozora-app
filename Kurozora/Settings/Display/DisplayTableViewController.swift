@@ -32,7 +32,9 @@ extension DisplayTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0, let displaySettingsCell = super.tableView(tableView, cellForRowAt: indexPath) as? DisplaySettingsCell {
-			displaySettingsCell.updateAppAppearance(with: UserSettings.appearanceOption)
+			if let appAppearanceOption = AppAppearanceOption(rawValue: UserSettings.appearanceOption) {
+				displaySettingsCell.updateAppAppearanceOptions(with: appAppearanceOption)
+			}
 			return displaySettingsCell
 		}
 
