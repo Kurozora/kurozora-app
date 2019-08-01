@@ -40,7 +40,7 @@
 		6611235A2090907200E6033A /* Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661123592090907200E6033A /* Kurozora.swift */; };
 		6611F195213313AA009BF736 /* ShowDetailTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F194213313AA009BF736 /* ShowDetailTabBarController.swift */; };
 		6614408F21DA387800E54915 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6614408E21DA387800E54915 /* Settings.bundle */; };
-		6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */; };
+		6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614ABE3215F65D100A3A0C9 /* KLabel.swift */; };
 		6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; };
 		6614DF4E2088D1C600B0BC69 /* KCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6614DF382088D1C600B0BC69 /* KCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6614DF652089380E00B0BC69 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF642089380D00B0BC69 /* CustomTextField.swift */; };
@@ -336,7 +336,7 @@
 		66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */; };
 		66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationViewController.swift */; };
 		66CF6D7120A9934F00F98375 /* profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* profile.storyboard */; };
-		66D1358D228087920079438C /* UIKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* UIKit+Kurozora.swift */; };
+		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
 		66D4735021AB332000A894B7 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4734F21AB332000A894B7 /* Library.swift */; };
 		66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */; };
 		66D6236C20A09E5400304914 /* ChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6236B20A09E5400304914 /* ChartController.swift */; };
@@ -440,7 +440,7 @@
 		6611F194213313AA009BF736 /* ShowDetailTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailTabBarController.swift; sourceTree = "<group>"; };
 		6613F02320F6423000071CAE /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		6614408E21DA387800E54915 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
+		6614ABE3215F65D100A3A0C9 /* KLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KLabel.swift; sourceTree = "<group>"; };
 		6614DF382088D1C600B0BC69 /* KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614DF642089380D00B0BC69 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6614DF682089384100B0BC69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -736,7 +736,7 @@
 		66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		66CF6D6E20A9921000F98375 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		66CF6D7020A9934F00F98375 /* profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profile.storyboard; sourceTree = "<group>"; };
-		66D1358C228087920079438C /* UIKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Kurozora.swift"; sourceTree = "<group>"; };
+		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
 		66D4734F21AB332000A894B7 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		66D6236B20A09E5400304914 /* ChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
@@ -977,7 +977,6 @@
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
 				662C308022A28B9F00AAD69B /* UIView+Theme.swift */,
 				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
-				66D1358C228087920079438C /* UIKit+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1707,7 +1706,8 @@
 		66B4F1D9223D1F70007C5048 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6614ABE3215F65D100A3A0C9 /* CopyableUILabel.swift */,
+				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
+				66D1358C228087920079438C /* KButton.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2440,7 +2440,7 @@
 				6674A0BF20A45E4700AAB527 /* AnimeSynopsisCell.swift in Sources */,
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
-				6614ABE4215F65D100A3A0C9 /* CopyableUILabel.swift in Sources */,
+				6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */,
 				66B4F1E0223D3853007C5048 /* SearchList.swift in Sources */,
 				66752636222820E0007C1617 /* TestThemeCell.swift in Sources */,
 				660E9FC721455F3100F6813C /* Cast.swift in Sources */,
@@ -2463,7 +2463,7 @@
 				66A5250B21E2626A00173FEB /* CollapsibleSectionHeaderCell.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* MessageNotificationCell.swift in Sources */,
 				6609FAD721D8D237008DF5E4 /* Kurozora.swift in Sources */,
-				66D1358D228087920079438C /* UIKit+Kurozora.swift in Sources */,
+				66D1358D228087920079438C /* KButton.swift in Sources */,
 				664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */,
 				66058DBE212E97CA0084B79E /* ShowTitleCell.swift in Sources */,
 				6611F195213313AA009BF736 /* ShowDetailTabBarController.swift in Sources */,

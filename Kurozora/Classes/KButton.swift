@@ -8,12 +8,14 @@
 
 import UIKit
 
-open class KButton: UIButton {
+class KButton: UIButton {
 	private lazy var animator = UIViewPropertyAnimator()
 	private lazy var selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 	var normalBackgroundColor: UIColor?
+	var _highlightBackgroundColor: UIColor?
 
 	// MARK: - IBInspectables
+	@IBInspectable var highlightBackgroundColorEnabled: Bool = false
 	@IBInspectable var highlightBackgroundColor: UIColor?
 
 	override init(frame: CGRect) {
@@ -27,22 +29,23 @@ open class KButton: UIButton {
 
 	// MARK: - Functions
 	private func sharedInit() {
+		_highlightBackgroundColor = (backgroundColor != .white) ? backgroundColor?.lighten(by: 0.1) : backgroundColor?.darken(by: 0.15)
 		addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
 		addTarget(self, action: #selector(touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
 	}
 
 	@objc private func touchDown() {
-		if highlightBackgroundColor != nil {
+		if highlightBackgroundColorEnabled || highlightBackgroundColor != nil {
 			normalBackgroundColor = backgroundColor
 			UIViewPropertyAnimator().stopAnimation(true)
 			animator.stopAnimation(true)
-			backgroundColor = highlightBackgroundColor
+			backgroundColor = highlightBackgroundColor ?? _highlightBackgroundColor
 		}
 		selectionFeedbackGenerator.selectionChanged()
 	}
 
 	@objc private func touchUp() {
-		if highlightBackgroundColor != nil {
+		if highlightBackgroundColorEnabled || highlightBackgroundColor != nil {
 			animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut, animations: {
 				self.backgroundColor = self.normalBackgroundColor
 			})

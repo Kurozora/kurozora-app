@@ -2,26 +2,26 @@ import Foundation
 import UIKit
 
 @IBDesignable
-open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
+class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
 	lazy var spiner: SpinerLayer! = {
 		let s = SpinerLayer(frame: self.frame)
 		self.layer.addSublayer(s)
 		return s
 	}()
 
-	@IBInspectable open var spinnerColor: UIColor = UIColor.white {
+	@IBInspectable var spinnerColor: UIColor = UIColor.white {
 		didSet {
 			spiner.spinnerColor = spinnerColor
 		}
 	}
 
-	open var didEndFinishAnimation : (()->())? = nil
+	var didEndFinishAnimation : (()->())? = nil
 
 	let springGoEase = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
 	let shrinkCurve = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
 	let expandCurve = CAMediaTimingFunction(controlPoints: 0.95, 0.02, 1, 0.05)
 	let shrinkDuration: CFTimeInterval  = 0.1
-	@IBInspectable open var normalCornerRadius: CGFloat = 0.0 {
+	@IBInspectable var normalCornerRadius: CGFloat = 0.0 {
 		didSet {
 			self.layer.cornerRadius = normalCornerRadius
 		}
@@ -44,7 +44,7 @@ open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDeleg
 		spiner.spinnerColor = spinnerColor
 	}
 
-	open func startLoadingAnimation() {
+	func startLoadingAnimation() {
 		self.cachedTitle = title(for: UIControl.State())
 		self.setTitle("", for: UIControl.State())
 		UIView.animate(withDuration: 0.1, animations: { () -> Void in
@@ -58,7 +58,7 @@ open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDeleg
 
 	}
 
-	open func startFinishAnimation(_ delay: TimeInterval, completion:(()->())?) {
+	func startFinishAnimation(_ delay: TimeInterval, completion:(()->())?) {
 		Timer.schedule(delay: delay) { timer in
 			self.didEndFinishAnimation = completion
 			self.expand()
@@ -66,12 +66,12 @@ open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDeleg
 		}
 	}
 
-	open func animate(_ duration: TimeInterval, completion:(()->())?) {
+	func animate(_ duration: TimeInterval, completion:(()->())?) {
 		startLoadingAnimation()
 		startFinishAnimation(duration, completion: completion)
 	}
 
-	open func setOriginalState() {
+	func setOriginalState() {
 		self.returnToOriginalState()
 		self.spiner.stopAnimation()
 	}
@@ -86,7 +86,7 @@ open class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDeleg
 		}
 	}
 
-	open func returnToOriginalState() {
+	func returnToOriginalState() {
 
 		self.layer.removeAllAnimations()
 		self.setTitle(self.cachedTitle, for: UIControl.State())

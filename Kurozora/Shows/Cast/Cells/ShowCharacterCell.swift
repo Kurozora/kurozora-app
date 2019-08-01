@@ -21,13 +21,13 @@ class ShowCharacterCell: UITableViewCell {
     
     @IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
-	@IBOutlet weak var actorName: CopyableUILabel! {
+	@IBOutlet weak var actorName: KLabel! {
 		didSet {
 			self.actorName.theme_textColor = KThemePicker.tintColor.rawValue
 			self.actorName.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var actorJob: CopyableUILabel! {
+	@IBOutlet weak var actorJob: KLabel! {
 		didSet {
 			self.actorJob.theme_textColor = KThemePicker.textColor.rawValue
 			self.actorJob.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -98,13 +98,13 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
-	@IBOutlet weak var actorName: CopyableUILabel! {
+	@IBOutlet weak var actorName: KLabel! {
 		didSet {
 			self.actorName.theme_textColor = KThemePicker.tintColor.rawValue
 			self.actorName.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var actorJob: CopyableUILabel! {
+	@IBOutlet weak var actorJob: KLabel! {
 		didSet {
 			self.actorJob.theme_textColor = KThemePicker.textColor.rawValue
 			self.actorJob.theme_backgroundColor = KThemePicker.backgroundColor.rawValue

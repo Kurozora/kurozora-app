@@ -1,5 +1,5 @@
 //
-//  CopyableUILabel.swift
+//  KLabel.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CopyableUILabel: UILabel {
+class KLabel: UILabel {
     override var canBecomeFirstResponder: Bool {
         return true
     }
