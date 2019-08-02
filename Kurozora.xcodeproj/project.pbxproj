@@ -213,6 +213,7 @@
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
 		66752636222820E0007C1617 /* TestThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752635222820E0007C1617 /* TestThemeCell.swift */; };
 		6675263822282B06007C1617 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675263722282B06007C1617 /* Themes.swift */; };
+		66752DBE22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */; };
 		66754BC42101020800268355 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613F02320F6423000071CAE /* Service.swift */; };
 		66754BC621011D1000268355 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCFE20AD8C1D00792B1B /* User.swift */; };
 		6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */; };
@@ -256,7 +257,6 @@
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A48FDD21A3098100F34085 /* TopicCells.swift */; };
 		66A48FE021A411A900F34085 /* notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* notification.storyboard */; };
-		66A5250B21E2626A00173FEB /* CollapsibleSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5250921E2626900173FEB /* CollapsibleSectionHeaderCell.swift */; };
 		66A5250C21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */; };
 		66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552D320A2D24F00E515DB /* ForumsViewController.swift */; };
 		66A552D620A2D40100E515DB /* forums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A552D520A2D40100E515DB /* forums.storyboard */; };
@@ -345,14 +345,10 @@
 		66D6237220A18E4200304914 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237120A18E4200304914 /* CalendarViewController.swift */; };
 		66D6237420A1A8B000304914 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237320A1A8B000304914 /* DayViewController.swift */; };
 		66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237620A1BB6600304914 /* LibraryViewController.swift */; };
-		66D6237920A1BEAC00304914 /* LibraryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237820A1BEAC00304914 /* LibraryListViewController.swift */; };
+		66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */; };
 		66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* PublicListController.swift */; };
-		66D6237D20A1CB9C00304914 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237C20A1CB9C00304914 /* LibraryCell.swift */; };
+		66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */; };
 		66D6237F20A1CC1D00304914 /* library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D6237E20A1CC1D00304914 /* library.storyboard */; };
-		66D75CE221E37D1300C20B12 /* CollapsedIconCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D75CE021E37D1300C20B12 /* CollapsedIconCollectionCell.swift */; };
-		66D75CE321E37D1300C20B12 /* CollapsedIconCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D75CE121E37D1300C20B12 /* CollapsedIconCollectionCell.xib */; };
-		66D75CE621E37D2C00C20B12 /* CollapsedIconTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D75CE421E37D2C00C20B12 /* CollapsedIconTableCell.swift */; };
-		66D75CE721E37D2C00C20B12 /* CollapsedIconTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D75CE521E37D2C00C20B12 /* CollapsedIconTableCell.xib */; };
 		66DEB4A821D248710093725F /* search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* search.storyboard */; };
 		66DEB4AA21D26FBC0093725F /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A921D26FBC0093725F /* Search.swift */; };
 		66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsViewController.swift */; };
@@ -604,6 +600,7 @@
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
 		66752635222820E0007C1617 /* TestThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestThemeCell.swift; sourceTree = "<group>"; };
 		6675263722282B06007C1617 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleSectionHeaderCell.swift; sourceTree = "<group>"; };
 		6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* SynopsisCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesDetailTableViewControlle.swift; sourceTree = "<group>"; };
@@ -646,7 +643,6 @@
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDD21A3098100F34085 /* TopicCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCells.swift; sourceTree = "<group>"; };
 		66A48FDF21A411A900F34085 /* notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = notification.storyboard; sourceTree = "<group>"; };
-		66A5250921E2626900173FEB /* CollapsibleSectionHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSectionHeaderCell.swift; sourceTree = "<group>"; };
 		66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollapsibleSectionHeaderCell.xib; sourceTree = "<group>"; };
 		66A552D320A2D24F00E515DB /* ForumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
 		66A552D520A2D40100E515DB /* forums.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forums.storyboard; sourceTree = "<group>"; };
@@ -745,14 +741,10 @@
 		66D6237120A18E4200304914 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		66D6237320A1A8B000304914 /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		66D6237620A1BB6600304914 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
-		66D6237820A1BEAC00304914 /* LibraryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListViewController.swift; sourceTree = "<group>"; };
+		66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListCollectionViewController.swift; sourceTree = "<group>"; };
 		66D6237A20A1BFD300304914 /* PublicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicListController.swift; sourceTree = "<group>"; };
-		66D6237C20A1CB9C00304914 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
+		66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		66D6237E20A1CC1D00304914 /* library.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = library.storyboard; sourceTree = "<group>"; };
-		66D75CE021E37D1300C20B12 /* CollapsedIconCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsedIconCollectionCell.swift; sourceTree = "<group>"; };
-		66D75CE121E37D1300C20B12 /* CollapsedIconCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollapsedIconCollectionCell.xib; sourceTree = "<group>"; };
-		66D75CE421E37D2C00C20B12 /* CollapsedIconTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsedIconTableCell.swift; sourceTree = "<group>"; };
-		66D75CE521E37D2C00C20B12 /* CollapsedIconTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollapsedIconTableCell.xib; sourceTree = "<group>"; };
 		66DEB4A321D247810093725F /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		66DEB4A421D247810093725F /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		66DEB4A621D247820093725F /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
@@ -1733,7 +1725,7 @@
 		66BA740C223DB29E00AEB8ED /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				66D6237C20A1CB9C00304914 /* LibraryCell.swift */,
+				66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1877,7 +1869,7 @@
 			isa = PBXGroup;
 			children = (
 				66D6237E20A1CC1D00304914 /* library.storyboard */,
-				66D6237820A1BEAC00304914 /* LibraryListViewController.swift */,
+				66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */,
 				66D6237620A1BB6600304914 /* LibraryViewController.swift */,
 				66D6237A20A1BFD300304914 /* PublicListController.swift */,
 				66BA740C223DB29E00AEB8ED /* Cells */,
@@ -1889,16 +1881,12 @@
 		66D75CDF21E2B2C400C20B12 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */,
+				665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */,
 				665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */,
 				665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */,
 				66348C7922AB17710019AB84 /* SettingsCell.swift */,
-				66D75CE021E37D1300C20B12 /* CollapsedIconCollectionCell.swift */,
-				66D75CE121E37D1300C20B12 /* CollapsedIconCollectionCell.xib */,
-				66D75CE421E37D2C00C20B12 /* CollapsedIconTableCell.swift */,
-				66D75CE521E37D2C00C20B12 /* CollapsedIconTableCell.xib */,
-				66A5250921E2626900173FEB /* CollapsibleSectionHeaderCell.swift */,
 				66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */,
-				665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2104,7 +2092,6 @@
 				66480198222D16C50063143A /* App-Icon-iPad-Night@2x.png in Resources */,
 				6641D6E7222EA3DF0067BD3A /* App-Icon-iPhone-Dutch-Orange@2x.png in Resources */,
 				6641D6EE222EA3DF0067BD3A /* App-Icon-iPhone-Orange@2x.png in Resources */,
-				66D75CE721E37D2C00C20B12 /* CollapsedIconTableCell.xib in Resources */,
 				668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */,
 				66ED9D8722ABD60400C7A45C /* notificationSettings.storyboard in Resources */,
 				664801A0222D17800063143A /* App-Icon-iPhone-Night@2x.png in Resources */,
@@ -2162,7 +2149,6 @@
 				664801D2222DE76A0063143A /* App-Icon-iPhone-Green@2x.png in Resources */,
 				66480199222D16C50063143A /* App-Icon-iPad-Night.png in Resources */,
 				6648019D222D17110063143A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
-				66D75CE321E37D1300C20B12 /* CollapsedIconCollectionCell.xib in Resources */,
 				668F639120986851003B1C1D /* Aller_It.ttf in Resources */,
 				66A254C722AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png in Resources */,
 				664801CA222DE76A0063143A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */,
@@ -2414,6 +2400,7 @@
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
 				666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */,
+				66752DBE22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift in Sources */,
 				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
 				667943672273A46700E2D0D0 /* WatchStatus.swift in Sources */,
 				66754BC621011D1000268355 /* User.swift in Sources */,
@@ -2460,7 +2447,6 @@
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				667C0F13224CC50200A8CB56 /* ExploreCellStyle.swift in Sources */,
 				66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */,
-				66A5250B21E2626A00173FEB /* CollapsibleSectionHeaderCell.swift in Sources */,
 				6601F1AC2118488D0074C1DD /* MessageNotificationCell.swift in Sources */,
 				6609FAD721D8D237008DF5E4 /* Kurozora.swift in Sources */,
 				66D1358D228087920079438C /* KButton.swift in Sources */,
@@ -2511,7 +2497,6 @@
 				66058DBA212E97670084B79E /* ShowReviewCell.swift in Sources */,
 				66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */,
 				66AEABF122994F4600949FD8 /* EpisodeSection.swift in Sources */,
-				66D75CE221E37D1300C20B12 /* CollapsedIconCollectionCell.swift in Sources */,
 				66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */,
 				66058DC0212E97E90084B79E /* ShowCharacterCell.swift in Sources */,
 				6674A0BD20A45E2300AAB527 /* InformationCell.swift in Sources */,
@@ -2533,7 +2518,7 @@
 				6674DBF022EDBFEA006455C1 /* ExploreLargeCollectionViewFlowLayout.swift in Sources */,
 				66FE5CFF215B665200E2844A /* AdminTableViewController.swift in Sources */,
 				6674A0C120A45E5700AAB527 /* ReviewCell.swift in Sources */,
-				66D6237D20A1CB9C00304914 /* LibraryCell.swift in Sources */,
+				66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */,
 				6611233F208E287400E6033A /* InAppPurchaseViewController.swift in Sources */,
 				66C2C5262107ACA10020E21F /* KurozoraTabBarController.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
@@ -2543,7 +2528,6 @@
 				66D6236C20A09E5400304914 /* ChartController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowSections.swift in Sources */,
-				66D75CE621E37D2C00C20B12 /* CollapsedIconTableCell.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */,
 				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
@@ -2551,7 +2535,7 @@
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
 				66D4735021AB332000A894B7 /* Library.swift in Sources */,
-				66D6237920A1BEAC00304914 /* LibraryListViewController.swift in Sources */,
+				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66938FD6211CD3A800ADA5D6 /* Explore.swift in Sources */,
 				662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */,
 				66E1B86E20911F7500D7AC1A /* BrowseViewController.swift in Sources */,

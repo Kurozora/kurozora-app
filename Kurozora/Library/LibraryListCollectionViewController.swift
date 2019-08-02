@@ -1,5 +1,5 @@
 //
-//  LibraryListViewController.swift
+//  LibraryListCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
@@ -17,9 +17,7 @@ protocol LibraryListViewControllerDelegate: class {
 	func updateLayoutChangeButton(current layout: LibraryListStyle)
 }
 
-class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-    @IBOutlet var collectionView: UICollectionView!
-	
+class LibraryListCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	private let refreshControl = UIRefreshControl()
 
 	var library: [LibraryElement]?
@@ -59,8 +57,8 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 		fetchLibrary()
 
         // Setup collection view
-		collectionView.delegate = self
-        collectionView.dataSource = self
+//		collectionView.delegate = self
+//        collectionView.dataSource = self
         
         // Setup empty collection view
         collectionView.emptyDataSetDelegate = self
@@ -75,6 +73,12 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
         }
     }
 
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		collectionView.collectionViewLayout.invalidateLayout()
+	}
+
+	// MARK: - Functions
 	@objc private func refreshLibraryData(_ sender: Any) {
 		// Fetch library data
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
@@ -95,6 +99,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 		})
 	}
 
+	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
 			showTabBarController.libraryCollectionViewCell = currentCell
@@ -108,7 +113,7 @@ class LibraryListViewController: UIViewController, EmptyDataSetSource, EmptyData
 }
 
 // MARK: - ShowDetailViewControllerDelegate
-extension LibraryListViewController: ShowDetailViewControllerDelegate {
+extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate {
 	func updateShowInLibrary(for libraryCell: LibraryCollectionViewCell?) {
 		guard let libraryCell = libraryCell else { return }
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
@@ -123,15 +128,15 @@ extension LibraryListViewController: ShowDetailViewControllerDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
-extension LibraryListViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension LibraryListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if let libraryCount = library?.count, libraryCount != 0 {
 			return libraryCount
 		}
 		return 0
 	}
 
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryLayout.rawValue, for: indexPath) as! LibraryCollectionViewCell
 
 		libraryCell.libraryElement = library?[indexPath.item]
@@ -141,8 +146,8 @@ extension LibraryListViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-extension LibraryListViewController: UICollectionViewDelegate {
-	func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+extension LibraryListCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
 		let cell = collectionView.cellForItem(at: indexPath)
 		UIView.animate(withDuration: 0.5,
 					   delay: 0.0,
@@ -154,7 +159,7 @@ extension LibraryListViewController: UICollectionViewDelegate {
 		}, completion: nil)
 	}
 
-	func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+	override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
 		let cell = collectionView.cellForItem(at: indexPath)
 		UIView.animate(withDuration: 0.5,
 					   delay: 0.0,
@@ -168,16 +173,52 @@ extension LibraryListViewController: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension LibraryListViewController: UICollectionViewDelegateFlowLayout {
+extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayout {
+	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if libraryLayout == .detailed {
-			let collectionViewWidth = collectionView.frame.size.width - 32
-			return CGSize(width: collectionViewWidth, height: 200)
+			if UIDevice.isPad() {
+				if UIDevice.isLandscape() {
+					return CGSize(width: (collectionView.frame.width - 80) / 3, height: collectionView.frame.height * 0.26)
+				}
+				return CGSize(width: (collectionView.frame.width - 60) / 2, height: collectionView.frame.height * 0.2)
+			}
+
+			if UIDevice.isLandscape() {
+				return CGSize(width: (collectionView.frame.width - 120) / 2, height: collectionView.frame.height * 0.5)
+			}
+			return CGSize(width: (collectionView.frame.width - 20), height: collectionView.frame.height * 0.25)
 		} else if libraryLayout == .compact {
-			return CGSize(width: 80, height: 118)
+			if UIDevice.isPad() {
+				if UIDevice.isLandscape() {
+					return CGSize(width: (collectionView.frame.width - 160) / 8, height: collectionView.frame.height  * 0.2)
+				}
+				return CGSize(width: (collectionView.frame.width - 60) / 6, height: collectionView.frame.height  * 0.16)
+			}
+
+			if UIDevice.isLandscape() {
+				return CGSize(width: (collectionView.frame.width - 40) / 6, height: collectionView.frame.height  * 0.5)
+			}
+
+			return CGSize(width: (collectionView.frame.width - 40) / 3, height: collectionView.frame.height * 0.2)
 		}
 
 		return CGSize.zero
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		if UIDevice.isPad() {
+			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+		}
+		return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return (UIDevice.isPad()) ? 20 : 10
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return (UIDevice.isPad()) ? 20 : 10
 	}
 }
 //    weak var delegate: AnimeListControllerDelegate?

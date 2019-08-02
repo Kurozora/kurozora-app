@@ -18,7 +18,7 @@ PODS:
   - Hero (1.4.0)
   - IBAnimatable (6.0.0)
   - iosMath (0.9.4)
-  - IQKeyboardManagerSwift (6.4.0)
+  - IQKeyboardManagerSwift (6.4.1)
   - KeychainAccess (3.2.0)
   - Kingfisher (5.7.0)
   - MarqueeLabel (4.0.0)
@@ -176,7 +176,7 @@ SPEC CHECKSUMS:
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   IBAnimatable: d49f9fee0c401b5b08d31b77256b77fb067e0e92
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
-  IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
+  IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Kingfisher: c7d211b54f1f30d8060aadab177d52b4349c825b
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4

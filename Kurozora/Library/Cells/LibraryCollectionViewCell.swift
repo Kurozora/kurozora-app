@@ -23,9 +23,14 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton?
 //	@IBOutlet weak var cellShadowView: UIView!
-	@IBOutlet weak var posterShadowView: UIView?
+	@IBOutlet weak var posterShadowView: UIView? {
+		didSet {
+			posterShadowView?.applyShadow()
+		}
+	}
 	@IBOutlet weak var posterView: UIImageView!
     @IBOutlet weak var episodeImageView: UIImageView?
+	@IBOutlet weak var shadowView: UIView?
 
 	var libraryElement: LibraryElement? {
 		didSet {
@@ -35,6 +40,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
+		shadowView?.applyShadow()
 	}
 
 	fileprivate func setup() {
@@ -58,8 +64,6 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 			} else {
 				self.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
-
-			self.posterShadowView?.applyShadow()
 		}
 
 		self.posterView.hero.id = "library_\(showTitle)_poster"

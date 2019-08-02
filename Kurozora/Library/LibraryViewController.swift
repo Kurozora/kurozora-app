@@ -56,7 +56,7 @@ class LibraryViewController: TabmanViewController {
         var viewControllers = [UIViewController]()
 
         for index in 0 ..< count {
-            let viewController = storyboard.instantiateViewController(withIdentifier: "LibraryList") as! LibraryListViewController
+            let viewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
             guard var sectionTitle = librarySections?[index].rawValue else { return }
 			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
 
@@ -90,7 +90,7 @@ class LibraryViewController: TabmanViewController {
 	// Change layout between compact and detailed cells
 	private func changeLayout() {
 		guard let buttonTitle = changeLayoutButton.title else { return }
-		guard let currentSection = self.currentViewController as? LibraryListViewController else { return }
+		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
 		guard let sectionTitle = currentSection.sectionTitle else { return }
 
 		var libraryLayout: LibraryListStyle = .detailed
@@ -114,7 +114,6 @@ class LibraryViewController: TabmanViewController {
 
 		// Update library list
 		currentSection.libraryLayout = libraryLayout
-		currentSection.collectionView.performBatchUpdates({})
 		currentSection.collectionView.reloadData()
 	}
 
