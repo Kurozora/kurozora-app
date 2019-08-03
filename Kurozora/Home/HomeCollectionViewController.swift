@@ -42,7 +42,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			searchControllerBar.delegate = searchResultsViewController
 
 			navigationItem.searchController = searchController
-			searchController.homeCollectionViewController = self
+			searchController.viewController = self
         }
 
         // Validate session

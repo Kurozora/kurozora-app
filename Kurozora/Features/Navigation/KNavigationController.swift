@@ -17,6 +17,7 @@ class KNavigationController: UINavigationController {
 		return statusBarStyle
 	}
 	private var shadowImageView: UIImageView?
+	var searchResultsViewController: SearchResultsTableViewController?
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return statusBarStyle
@@ -69,4 +70,8 @@ class KNavigationController: UINavigationController {
 			self.navigationBar.barTintColor = nil
 		}
 	}
+}
+
+extension KNavigationController: UISearchBarDelegate {
+
 }

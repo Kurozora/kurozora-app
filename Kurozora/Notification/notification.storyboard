@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Notifications-->
         <scene sceneID="nfm-rO-qME">
             <objects>
-                <viewController storyboardIdentifier="Notification" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bv8-P8-hT2" customClass="NotificationsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Notification" extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bv8-P8-hT2" customClass="NotificationsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KHe-UJ-lLL"/>
                         <viewControllerLayoutGuide type="bottom" id="B8p-Mt-EoO"/>
@@ -281,9 +279,7 @@
                             <constraint firstItem="inb-5P-rLZ" firstAttribute="leading" secondItem="piP-hU-wzG" secondAttribute="leading" id="tvR-jo-HWE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Notifications" id="yKf-dw-o6p">
-                        <barButtonItem key="rightBarButtonItem" title="Search" image="search" id="IQh-eU-OV2" userLabel="Serach"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Notifications" id="yKf-dw-o6p"/>
                     <connections>
                         <outlet property="tableView" destination="inb-5P-rLZ" id="Fje-XJ-OZk"/>
                     </connections>
@@ -320,7 +316,6 @@
     </scenes>
     <resources>
         <image name="message_icon" width="128" height="128"/>
-        <image name="search" width="30" height="30"/>
         <image name="session_icon" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

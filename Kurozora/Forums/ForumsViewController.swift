@@ -42,6 +42,7 @@ class ForumsViewController: TabmanViewController {
 	var kRichTextEditorViewController: KRichTextEditorViewController?
 	private var shadowImageView: UIImageView?
 	lazy var viewControllers = [UIViewController]()
+	var searchResultsViewController: SearchResultsTableViewController?
 
 	let bar = TMBar.ButtonBar()
 
@@ -57,6 +58,24 @@ class ForumsViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Search bar
+		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
+		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+
+		if #available(iOS 11.0, *) {
+			let searchController = SearchController(searchResultsController: searchResultsViewController)
+			searchController.delegate = self
+			searchController.searchBar.selectedScopeButtonIndex = SearchScope.thread.rawValue
+			searchController.searchResultsUpdater = searchResultsViewController
+
+			let searchControllerBar = searchController.searchBar
+			searchControllerBar.delegate = searchResultsViewController
+
+			navigationItem.searchController = searchController
+			navigationItem.hidesSearchBarWhenScrolling = false
+			searchController.viewController = self
+		}
 
 		Service.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
@@ -91,8 +110,8 @@ class ForumsViewController: TabmanViewController {
 		addBar(bar, dataSource: self, at: .top)
 		bar.isHidden = false
 
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
+		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
+		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
     }
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -198,5 +217,26 @@ extension ForumsViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
+	}
+}
+
+// MARK: - UISearchControllerDelegate
+extension ForumsViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
+	}
+
+	func willDismissSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
 	}
 }

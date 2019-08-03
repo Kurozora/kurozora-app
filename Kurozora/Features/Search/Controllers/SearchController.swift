@@ -9,15 +9,15 @@
 import UIKit
 
 class SearchController: UISearchController, UISearchBarDelegate {
-	let scopeButtonTitles = ["Anime", "My Library", "Thread", "User"]
-	var homeCollectionViewController: HomeCollectionViewController?
+	let scopeButtonTitles = SearchScope.allString
+	var viewController: UIViewController?
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.searchBar.placeholder = "I'm searching for..."
 		self.searchResultsController?.view.isHidden = false
 
-		guard let navigationController = homeCollectionViewController?.navigationController as? KNavigationController else { return }
+		guard let navigationController = viewController?.navigationController as? KNavigationController else { return }
 		navigationController.toggleStyle(.blurred)
 	}
 
@@ -38,7 +38,10 @@ class SearchController: UISearchController, UISearchBarDelegate {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		guard let navigationController = homeCollectionViewController?.navigationController as? KNavigationController else { return }
+		guard let navigationController = viewController?.navigationController as? KNavigationController else { return }
+		if #available(iOS 11.0, *) {
+			navigationController.navigationItem.searchController?.searchBar.isHidden = true
+		}
 		navigationController.toggleStyle(.normal)
 	}
 }

@@ -21,9 +21,9 @@ protocol NotificationsViewControllerDelegate: class {
 class NotificationsViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     @IBOutlet var tableView: UITableView!
 
+	var searchResultsViewController: SearchResultsTableViewController!
 	var grouping: GroupingType = .off
 	var oldGrouping: Int?
-
 	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
 
@@ -44,7 +44,25 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
+		// Search bar
+		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
+		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+
+		if #available(iOS 11.0, *) {
+			let searchController = SearchController(searchResultsController: searchResultsViewController)
+			searchController.delegate = self
+			searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
+			searchController.searchResultsUpdater = searchResultsViewController
+
+			let searchControllerBar = searchController.searchBar
+			searchControllerBar.delegate = searchResultsViewController
+
+			navigationItem.searchController = searchController
+//			navigationItem.hidesSearchBarWhenScrolling = false
+			searchController.viewController = self
+		}
+
 		// Setup table view
 		tableView.dataSource = self
 		tableView.delegate = self
@@ -273,5 +291,26 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 		options.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
 
 		return options
+	}
+}
+
+// MARK: - UISearchControllerDelegate
+extension NotificationsViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
+	}
+
+	func willDismissSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.frame = tabBarFrame
+			})
+		}
 	}
 }

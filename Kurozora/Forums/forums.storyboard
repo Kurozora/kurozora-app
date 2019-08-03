@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bni-5S-KjO">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bni-5S-KjO">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -17,7 +15,7 @@
         <!--Forums View Controller-->
         <scene sceneID="JUs-vM-oWg">
             <objects>
-                <viewController storyboardIdentifier="Forums" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mFM-Oj-KuP" userLabel="Forums View Controller" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Forums" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mFM-Oj-KuP" userLabel="Forums View Controller" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2sA-jp-LG5"/>
                         <viewControllerLayoutGuide type="bottom" id="Jvv-IQ-Yid"/>
@@ -54,14 +52,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Wrm-wq-S2a">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Search" image="search" id="PFW-e3-Chy"/>
-                            <barButtonItem title="Top" image="sort_top" id="PAY-O1-jaB">
-                                <connections>
-                                    <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Top" image="sort_top" id="PAY-O1-jaB">
+                            <connections>
+                                <action selector="sortingButtonPressed:" destination="mFM-Oj-KuP" id="1hW-WX-Z1M"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="createThreadButton" destination="zCZ-KF-7Xm" id="4t6-rb-EX4"/>
@@ -164,10 +159,10 @@
                                                             </state>
                                                         </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lx6-Fq-58E">
-                                                            <rect key="frame" x="276" y="108.5" width="82" height="18"/>
+                                                            <rect key="frame" x="278" y="108.5" width="80" height="18"/>
                                                             <subviews>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCQ-lG-Kjt" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <state key="normal" image="more"/>
@@ -176,7 +171,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tpj-Ie-nDp" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="36" y="0.0" width="18" height="18"/>
+                                                                    <rect key="frame" x="34" y="0.0" width="18" height="18"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="18" id="DuY-1E-hYc"/>
                                                                         <constraint firstAttribute="width" constant="18" id="TVH-3N-QD6"/>
@@ -189,7 +184,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUl-Zs-bXf" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                                    <rect key="frame" x="64" y="0.0" width="18" height="18"/>
+                                                                    <rect key="frame" x="62" y="0.0" width="18" height="18"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="18" id="eyX-qA-KGK"/>
                                                                         <constraint firstAttribute="width" constant="18" id="jhC-da-Dqp"/>
@@ -409,7 +404,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1G5-la-NXr">
-                                                    <rect key="frame" x="346" y="10.5" width="28" height="28"/>
+                                                    <rect key="frame" x="345" y="10" width="29" height="29"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <inset key="contentEdgeInsets" minX="5" minY="2" maxX="5" maxY="3"/>
                                                     <state key="normal" image="share">
@@ -553,7 +548,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otY-jl-dy2">
-                                                            <rect key="frame" x="320" y="119" width="26" height="22"/>
+                                                            <rect key="frame" x="322" y="118" width="24" height="24"/>
                                                             <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                                                             <state key="normal" image="more"/>
@@ -714,11 +709,10 @@
         <image name="clock_small" width="10" height="10"/>
         <image name="comment" width="24" height="20"/>
         <image name="comment_small" width="18" height="14"/>
-        <image name="create_new" width="30" height="30"/>
-        <image name="more" width="26" height="8"/>
-        <image name="search" width="30" height="30"/>
-        <image name="share" width="18" height="23"/>
-        <image name="sort_top" width="28" height="28"/>
+        <image name="create_new" width="23" height="24"/>
+        <image name="more" width="24" height="24"/>
+        <image name="share" width="19" height="24"/>
+        <image name="sort_top" width="24" height="24"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
