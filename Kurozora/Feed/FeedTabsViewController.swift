@@ -12,9 +12,9 @@ import Pageboy
 import SwiftTheme
 
 class FeedTabsViewController: TabmanViewController {
-	@IBOutlet var tableView: UITableView!
 	@IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var navigationProfileButton: UIButton!
+	@IBOutlet weak var scrollView: UIScrollView!
 
 	var sections: [FeedSectionsElement]? {
 		didSet {
@@ -37,12 +37,12 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 
-//		Service.shared.getFeedSections(withSuccess: { (sections) in
-//			DispatchQueue.main.async {
-//				self.sectionsCount = sections?.count
-//				self.sections = sections
-//			}
-//		})
+		Service.shared.getFeedSections(withSuccess: { (sections) in
+			DispatchQueue.main.async {
+				self.sectionsCount = sections?.count
+				self.sections = sections
+			}
+		})
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -75,6 +75,8 @@ class FeedTabsViewController: TabmanViewController {
 			bar.isHidden = barItemsCount <= 1
 		}
 
+		view.sendSubviewToBack(scrollView)
+
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
@@ -85,9 +87,10 @@ class FeedTabsViewController: TabmanViewController {
 		var viewControllers = [UITableViewController]()
 
 		for index in 0 ..< count {
-			let viewController = storyboard.instantiateViewController(withIdentifier: "Feed") as! FeedTableViewController
-			guard let sectionTitle = sections?[index].name else { return }
-			viewController.sectionTitle = sectionTitle
+			let viewController = storyboard.instantiateViewController(withIdentifier: "FeedTableViewController") as! FeedTableViewController
+//			guard let sectionTitle = sections?[index].name else { return }
+//			viewController.sectionTitle = sectionTitle
+			viewController.sectionTitle = "Section \(index)"
 
 			if let sectionID = sections?[index].id, sectionID != 0 {
 				viewController.sectionID = sectionID
@@ -124,7 +127,8 @@ extension FeedTabsViewController: PageboyViewControllerDataSource {
 			initializeViewControllers(with: sectionsCount)
 			return sectionsCount
 		}
-		return 0
+		initializeViewControllers(with: 3)
+		return 3
 	}
 
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {

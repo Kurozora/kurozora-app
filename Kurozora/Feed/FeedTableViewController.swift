@@ -54,6 +54,16 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		}
 	}
 
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if #available(iOS 11.0, *) {
+			let offset = scrollView.contentOffset
+			if let tabmanVC = tabmanParent as? FeedTabsViewController {
+				tabmanVC.scrollView.contentOffset = offset
+				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
+			}
+		}
+	}
+
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
@@ -103,8 +113,9 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let threadsCount = feedPosts?.count else { return 0 }
-		return threadsCount
+		return 10
+//		guard let threadsCount = feedPosts?.count else { return 0 }
+//		return threadsCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
