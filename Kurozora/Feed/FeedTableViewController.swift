@@ -40,7 +40,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedSectionHeaderHeight = 0
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
 		tableView.emptyDataSetDelegate = self

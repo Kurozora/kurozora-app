@@ -14,6 +14,7 @@ import SwiftTheme
 
 class LibraryViewController: TabmanViewController {
 	@IBOutlet weak var changeLayoutButton: UIBarButtonItem!
+	@IBOutlet weak var scrollView: UIScrollView!
 
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
@@ -40,7 +41,6 @@ class LibraryViewController: TabmanViewController {
 			searchControllerBar.delegate = searchResultsViewController
 
 			navigationItem.searchController = searchController
-			navigationItem.hidesSearchBarWhenScrolling = false
 			searchController.viewController = self
 		}
 
@@ -55,19 +55,26 @@ class LibraryViewController: TabmanViewController {
 			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
 			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
 		}
-		bar.buttons.transitionStyle = .progressive
 
 		// Layout
 		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
+		if UIDevice.isPad() {
+			bar.layout.contentMode = .fit
+		}
 
 		// Style
-		bar.backgroundView.style = .blur(style: .regular)
 		bar.fadesContentEdges = true
 
 		// configure the bar
-		addBar(bar, dataSource: self, at: .top)
-		bar.isHidden = (bar.items?.count)! <= 1
+		let systemBar = bar.systemBar()
+		systemBar.backgroundStyle = .blur(style: .regular)
+		addBar(systemBar, dataSource: self, at: .top)
+
+		if let barItemsCount = bar.items?.count {
+			bar.isHidden = barItemsCount <= 1
+		}
+		view.sendSubviewToBack(scrollView)
     }
 
 	// MARK: - Functions

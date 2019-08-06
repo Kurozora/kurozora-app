@@ -159,7 +159,7 @@ class Kurozora: NSObject {
 			let forumThreadID = url.lastPathComponent
 			if forumThreadID != "" {
 				let storyboard = UIStoryboard(name: "forums", bundle: nil)
-				if let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as? ThreadViewController {
+				if let threadViewController = storyboard.instantiateViewController(withIdentifier: "ThreadViewController") as? ThreadViewController {
 					threadViewController.forumThreadID = Int(forumThreadID)
 
 					UIApplication.topViewController?.present(threadViewController, animated: true)

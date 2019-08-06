@@ -1,5 +1,5 @@
 //
-//  ForumsChildViewController.swift
+//  ForumsListViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/10/2018.
@@ -12,10 +12,8 @@ import SCLAlertView
 import EmptyDataSet_Swift
 import SwiftTheme
 
-class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-    @IBOutlet var tableView: UITableView!
-
-	private let refreshControl = UIRefreshControl()
+class ForumsListViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+	var refresh = UIRefreshControl()
 
     var sectionTitle: String?
 	var sectionID: Int?
@@ -44,22 +42,20 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 
 		// Add Refresh Control to Table View
 		if #available(iOS 10.0, *) {
-			tableView.refreshControl = refreshControl
+			tableView.refreshControl = refresh
 		} else {
-			tableView.addSubview(refreshControl)
+			tableView.addSubview(refresh)
 		}
 
-		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
-		refreshControl.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
+		refresh.theme_tintColor = KThemePicker.tintColor.rawValue
+		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+		refresh.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		fetchThreads()
         
         // Setup table view
-        tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedSectionHeaderHeight = 0
+		tableView.estimatedRowHeight = UITableView.automaticDimension
         
         // Setup empty table view
         tableView.emptyDataSetDelegate = self
@@ -73,10 +69,20 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
         }
     }
 
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if #available(iOS 11.0, *) {
+			let offset = scrollView.contentOffset
+			if let tabmanVC = tabmanParent as? ForumsViewController {
+				tabmanVC.scrollView.contentOffset = offset
+				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
+			}
+		}
+	}
+
 	// MARK: - Functions
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+		refresh.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		pageNumber = 0
 		fetchThreads()
 	}
@@ -103,11 +109,11 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 					self.pageNumber += 1
 				}
 
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 			}
 		})
 
-		self.refreshControl.endRefreshing()
+		self.refresh.endRefreshing()
 	}
 
 	// MARK: - Segue
@@ -121,13 +127,13 @@ class ForumsChildViewController: UIViewController, EmptyDataSetSource, EmptyData
 }
 
 // MARK: - UITableViewDataSource
-extension ForumsChildViewController: UITableViewDataSource {
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ForumsListViewController {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let threadsCount = forumThreads?.count else { return 0 }
 		return threadsCount
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let forumsCell = tableView.dequeueReusableCell(withIdentifier: "ForumsCell") as! ForumsCell
 		forumsCell.forumThreadsElement = forumThreads?[indexPath.row]
 		forumsCell.forumsChildViewController = self
@@ -136,14 +142,14 @@ extension ForumsChildViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension ForumsChildViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension ForumsListViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if let forumThreadID = forumThreads?[indexPath.row].id {
 			performSegue(withIdentifier: "ThreadSegue", sender: forumThreadID)
 		}
 	}
 
-	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
 		if indexPath.row == numberOfRows - 1 {
@@ -152,10 +158,12 @@ extension ForumsChildViewController: UITableViewDelegate {
 			}
 		}
 	}
+
+	
 }
 
 // MARK: - KRichTextEditorViewDelegate
-extension ForumsChildViewController: KRichTextEditorViewDelegate {
+extension ForumsListViewController: KRichTextEditorViewDelegate {
 	func updateFeedPosts(with thread: FeedPostsElement) {
 	}
 

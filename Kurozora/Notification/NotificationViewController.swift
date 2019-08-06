@@ -59,7 +59,6 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 			searchControllerBar.delegate = searchResultsViewController
 
 			navigationItem.searchController = searchController
-//			navigationItem.hidesSearchBarWhenScrolling = false
 			searchController.viewController = self
 		}
 

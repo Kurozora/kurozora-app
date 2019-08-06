@@ -40,6 +40,7 @@ class FeedTabsViewController: TabmanViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		dataSource = self
 
 		navigationProfileButton.setImage(User.currentUserAvatar, for: .normal)
 		navigationProfileButton.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
@@ -52,8 +53,6 @@ class FeedTabsViewController: TabmanViewController {
 //				self.sections = sections
 //			}
 //		})
-
-		dataSource = self
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -70,24 +69,25 @@ class FeedTabsViewController: TabmanViewController {
 		// Layout
 		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
+		if UIDevice.isPad() {
+			bar.layout.contentMode = .fit
+		}
 
 		// Style
-		bar.backgroundView.style = .blur(style: .regular)
 		bar.fadesContentEdges = true
 
 		// configure the bar
-		addBar(bar, dataSource: self, at: .top)
-		bar.isHidden = false
+		let systemBar = bar.systemBar()
+		systemBar.backgroundStyle = .blur(style: .regular)
+		addBar(systemBar, dataSource: self, at: .top)
+
+		if let barItemsCount = bar.items?.count {
+			bar.isHidden = barItemsCount <= 1
+		}
 
 		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
-
-//	override func viewWillDisappear(_ animated: Bool) {
-//		super.viewWillAppear(animated)
-//
-//		shadowImageView?.isHidden = false
-//	}
 
 	// MARK: - Functions
 	private func initializeViewControllers(with count: Int) {

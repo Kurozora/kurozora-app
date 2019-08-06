@@ -152,7 +152,7 @@ class SearchResultsTableViewController: UITableViewController {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					let storyboard = UIStoryboard(name: "forums", bundle: nil)
-					if let threadViewController = storyboard.instantiateViewController(withIdentifier: "Thread") as? ThreadViewController {
+					if let threadViewController = storyboard.instantiateViewController(withIdentifier: "ThreadViewController") as? ThreadViewController {
 						threadViewController.isDismissEnabled = true
 						threadViewController.forumThreadID = currentCell.searchElement?.id
 

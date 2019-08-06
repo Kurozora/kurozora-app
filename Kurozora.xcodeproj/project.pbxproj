@@ -50,7 +50,7 @@
 		66160C40215C2DEB00D0D722 /* reachability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66160C3F215C2DEB00D0D722 /* reachability.storyboard */; };
 		6617D536222C9CC0001FD649 /* ShowRelatedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6617D535222C9CC0001FD649 /* ShowRelatedCell.swift */; };
 		6619EE70216F86C500655B99 /* ForumSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE6F216F86C500655B99 /* ForumSections.swift */; };
-		6619EE74216F969B00655B99 /* ForumsChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsChildViewController.swift */; };
+		6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsListViewController.swift */; };
 		6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE77216FDD3E00655B99 /* Seasons.swift */; };
 		6619EE7A216FF31D00655B99 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE79216FF31D00655B99 /* Episodes.swift */; };
 		661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */; };
@@ -446,7 +446,7 @@
 		66160C3F215C2DEB00D0D722 /* reachability.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = reachability.storyboard; sourceTree = "<group>"; };
 		6617D535222C9CC0001FD649 /* ShowRelatedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRelatedCell.swift; sourceTree = "<group>"; };
 		6619EE6F216F86C500655B99 /* ForumSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumSections.swift; sourceTree = "<group>"; };
-		6619EE73216F969B00655B99 /* ForumsChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsChildViewController.swift; sourceTree = "<group>"; };
+		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
 		6619EE77216FDD3E00655B99 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
 		6619EE79216FF31D00655B99 /* Episodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episodes.swift; sourceTree = "<group>"; };
 		661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -1581,7 +1581,7 @@
 			children = (
 				66A552D520A2D40100E515DB /* forums.storyboard */,
 				6674A0C820A45EB700AAB527 /* ForumsCell.swift */,
-				6619EE73216F969B00655B99 /* ForumsChildViewController.swift */,
+				6619EE73216F969B00655B99 /* ForumsListViewController.swift */,
 				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
 				665F49C421F766A400A7A659 /* Cell */,
 				6674A0D220A5848100AAB527 /* Thread */,
@@ -2523,7 +2523,7 @@
 				66C2C5262107ACA10020E21F /* KurozoraTabBarController.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
-				6619EE74216F969B00655B99 /* ForumsChildViewController.swift in Sources */,
+				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				662A5FE6223913AB00F3B61D /* TimerEx.swift in Sources */,
 				66D6236C20A09E5400304914 /* ChartController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */,

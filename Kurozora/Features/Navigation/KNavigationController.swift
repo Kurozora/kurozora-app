@@ -71,7 +71,3 @@ class KNavigationController: UINavigationController {
 		}
 	}
 }
-
-extension KNavigationController: UISearchBarDelegate {
-
-}

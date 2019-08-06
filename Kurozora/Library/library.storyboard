@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,57 +17,26 @@
         <!--Navigation Controller-->
         <scene sceneID="Au8-Ad-oj1">
             <objects>
-                <navigationController definesPresentationContext="YES" id="38B-e3-pz3" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LibraryKNavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="38B-e3-pz3" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="trA-Wa-Z9y">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="textShadowColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="textShadowColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="rJi-TH-V33" kind="relationship" relationship="rootViewController" id="Ngq-fL-dwM"/>
+                        <segue destination="B4w-wJ-4Cf" kind="relationship" relationship="rootViewController" id="jOB-5f-7Mn"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vL-CK-tr0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1199" y="865"/>
-        </scene>
-        <!--Library-->
-        <scene sceneID="pHk-vl-DjH">
-            <objects>
-                <viewController storyboardIdentifier="Library" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rJi-TH-V33" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hdx-DS-rCP"/>
-                        <viewControllerLayoutGuide type="bottom" id="1XQ-we-1Xk"/>
-                    </layoutGuides>
-                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="oEQ-Na-RA3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Library" id="xaJ-c4-8NW">
-                        <barButtonItem key="leftBarButtonItem" title="Detailed" image="detailed_view_icon" id="K6M-4k-hEU">
-                            <connections>
-                                <action selector="changeLayoutButtonPressed:" destination="rJi-TH-V33" id="t9w-WB-9cp"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="changeLayoutButton" destination="K6M-4k-hEU" id="6dX-nh-SaJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e7e-7Y-IcV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-476" y="865"/>
         </scene>
         <!--details-->
         <scene sceneID="IYW-xZ-q6d">
@@ -80,7 +50,7 @@
         <scene sceneID="NBJ-mP-QVs">
             <objects>
                 <collectionViewController storyboardIdentifier="LibraryListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YkS-DU-LSm" customClass="LibraryListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="Chm-ki-pCF">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="Chm-ki-pCF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -354,6 +324,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bas-Lq-jp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-100" y="152.47376311844079"/>
+        </scene>
+        <!--Library-->
+        <scene sceneID="HTe-q8-fSw">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="LibraryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B4w-wJ-4Cf" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mUg-UP-NVd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67J-F2-FBk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAQ-G6-b7e">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="OAQ-G6-b7e" firstAttribute="top" secondItem="67J-F2-FBk" secondAttribute="top" id="HDk-er-EQj"/>
+                                    <constraint firstAttribute="bottom" secondItem="OAQ-G6-b7e" secondAttribute="bottom" id="Xff-q2-Gsm"/>
+                                    <constraint firstAttribute="trailing" secondItem="OAQ-G6-b7e" secondAttribute="trailing" id="Z2M-4d-Z8w"/>
+                                    <constraint firstItem="OAQ-G6-b7e" firstAttribute="leading" secondItem="67J-F2-FBk" secondAttribute="leading" id="cGV-yg-TyF"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="OAQ-G6-b7e" firstAttribute="height" secondItem="mUg-UP-NVd" secondAttribute="height" id="3Ux-Y8-vtc"/>
+                            <constraint firstItem="OAQ-G6-b7e" firstAttribute="width" secondItem="mUg-UP-NVd" secondAttribute="width" id="8Vt-ED-YcM"/>
+                            <constraint firstItem="67J-F2-FBk" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="DFy-Gv-JtN"/>
+                            <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="67J-F2-FBk" secondAttribute="trailing" id="G3A-4j-376"/>
+                            <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="67J-F2-FBk" secondAttribute="bottom" id="OLO-tJ-yHw"/>
+                            <constraint firstItem="67J-F2-FBk" firstAttribute="top" secondItem="mUg-UP-NVd" secondAttribute="top" id="qKw-IG-dC1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="66t-RL-IQm"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Library" id="Aja-xv-l4D">
+                        <barButtonItem key="leftBarButtonItem" title="Detailed" image="detailed_view_icon" id="Dnc-bs-5ES">
+                            <connections>
+                                <action selector="changeLayoutButtonPressed:" destination="B4w-wJ-4Cf" id="DgA-88-vmZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="changeLayoutButton" destination="Dnc-bs-5ES" id="VvY-Rh-WNJ"/>
+                        <outlet property="scrollView" destination="67J-F2-FBk" id="1Ee-gf-dh5"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-477" y="865"/>
         </scene>
     </scenes>
     <resources>

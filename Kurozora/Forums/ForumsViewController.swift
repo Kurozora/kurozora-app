@@ -28,9 +28,9 @@ enum ForumSortingStyle: String {
 }
 
 class ForumsViewController: TabmanViewController {
-    @IBOutlet var tableView: UITableView!
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var scrollView: UIScrollView!
 
 	var sections: [ForumSectionsElement]? {
 		didSet {
@@ -58,6 +58,7 @@ class ForumsViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		dataSource = self
 
 		// Search bar
 		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
@@ -73,7 +74,6 @@ class ForumsViewController: TabmanViewController {
 			searchControllerBar.delegate = searchResultsViewController
 
 			navigationItem.searchController = searchController
-			navigationItem.hidesSearchBarWhenScrolling = false
 			searchController.viewController = self
 		}
 
@@ -83,8 +83,6 @@ class ForumsViewController: TabmanViewController {
 				self.sections = sections
 			}
 		})
-
-		dataSource = self
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -101,14 +99,23 @@ class ForumsViewController: TabmanViewController {
 		// Layout
 		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
+		if UIDevice.isPad() {
+			bar.layout.contentMode = .fit
+		}
 
 		// Style
-		bar.backgroundView.style = .blur(style: .regular)
 		bar.fadesContentEdges = true
 
 		// configure the bar
-		addBar(bar, dataSource: self, at: .top)
-		bar.isHidden = false
+		let systemBar = bar.systemBar()
+		systemBar.backgroundStyle = .blur(style: .regular)
+		addBar(systemBar, dataSource: self, at: .top)
+
+		if let barItemsCount = bar.items?.count {
+			bar.isHidden = barItemsCount <= 1
+		}
+
+		view.sendSubviewToBack(scrollView)
 
 		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
 		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
@@ -126,7 +133,7 @@ class ForumsViewController: TabmanViewController {
         var viewControllers = [UIViewController]()
 
         for index in 0 ..< count {
-            let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsChild") as! ForumsChildViewController
+            let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsListViewController") as! ForumsListViewController
 			guard let sectionTitle = sections?[index].name else { return }
 			viewController.sectionTitle = sectionTitle
 
@@ -156,7 +163,7 @@ class ForumsViewController: TabmanViewController {
 	// MARK: - IBActions
 	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
 		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")),("Recent","recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
-			let currentSection = self.currentViewController as? ForumsChildViewController
+			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
 			currentSection?.pageNumber = 0
 			self.sortingBarButtonItem.title = value
@@ -177,7 +184,7 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsChildViewController
+		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
 		kRichTextEditorViewController?.sectionID = currentIndex! + 1
 
 		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)

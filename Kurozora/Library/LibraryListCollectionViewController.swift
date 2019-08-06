@@ -56,10 +56,6 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 
 		fetchLibrary()
 
-        // Setup collection view
-//		collectionView.delegate = self
-//        collectionView.dataSource = self
-        
         // Setup empty collection view
         collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetSource = self
@@ -76,6 +72,16 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		collectionView.collectionViewLayout.invalidateLayout()
+	}
+
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if #available(iOS 11.0, *) {
+			let offset = scrollView.contentOffset
+			if let tabmanVC = tabmanParent as? LibraryViewController {
+				tabmanVC.scrollView.contentOffset = offset
+				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
+			}
+		}
 	}
 
 	// MARK: - Functions

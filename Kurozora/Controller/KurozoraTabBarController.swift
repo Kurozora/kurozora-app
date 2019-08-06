@@ -35,10 +35,10 @@ class KurozoraTabBarController: ESTabBarController {
         let homeCollectionViewController = homeStoryboard.instantiateViewController(withIdentifier: "HomeCollectionViewController") as! HomeCollectionViewController
         
         let libraryStoryboard = UIStoryboard(name: "library", bundle: nil)
-        let libraryViewController = libraryStoryboard.instantiateViewController(withIdentifier: "Library") as! LibraryViewController
+        let libraryViewController = libraryStoryboard.instantiateViewController(withIdentifier: "LibraryViewController") as! LibraryViewController
         
         let forumsStoryboard = UIStoryboard(name: "forums", bundle: nil)
-        let forumsViewController = forumsStoryboard.instantiateViewController(withIdentifier: "Forums") as! ForumsViewController
+        let forumsViewController = forumsStoryboard.instantiateViewController(withIdentifier: "ForumsViewController") as! ForumsViewController
         
         let notificationStoryboard = UIStoryboard(name: "notification", bundle: nil)
         let notificationsViewController = notificationStoryboard.instantiateViewController(withIdentifier: "Notification") as! NotificationsViewController

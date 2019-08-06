@@ -72,7 +72,7 @@ public class ForumsCell: UITableViewCell {
 		}
 	}
 
-	var forumsChildViewController: ForumsChildViewController?
+	var forumsChildViewController: ForumsListViewController?
 	var forumThreadsElement: ForumThreadsElement? {
 		didSet {
 			setup()
