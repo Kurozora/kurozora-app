@@ -16,7 +16,6 @@ class KNavigationController: UINavigationController {
 
 		return statusBarStyle
 	}
-	private var shadowImageView: UIImageView?
 	var searchResultsViewController: SearchResultsTableViewController?
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {

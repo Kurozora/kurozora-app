@@ -14,7 +14,7 @@
                 <viewControllerPlaceholder storyboardName="settings" id="HFC-YJ-V83" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQW-6e-gkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1741" y="-83"/>
+            <point key="canvasLocation" x="1741" y="-88"/>
         </scene>
         <!--Feed-->
         <scene sceneID="3EW-to-g3U">
@@ -233,7 +233,7 @@
                 <viewControllerPlaceholder storyboardName="profile" id="VLC-DP-TbE" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyM-SS-gy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1733" y="-57"/>
+            <point key="canvasLocation" x="1733" y="-52"/>
         </scene>
         <!--Feed-->
         <scene sceneID="DOo-Gz-lII">
@@ -263,6 +263,9 @@
                                         <real key="value" value="22"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createThreadButton:" destination="MFH-k3-4hf" eventType="touchUpInside" id="WYE-eU-jgr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -291,7 +294,7 @@
                                         </constraints>
                                         <state key="normal" title="Profile"/>
                                         <connections>
-                                            <segue destination="VLC-DP-TbE" kind="show" id="uMh-zg-MfD"/>
+                                            <action selector="profileButtonPressed:" destination="MFH-k3-4hf" eventType="touchUpInside" id="vgf-wB-ONV"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -302,10 +305,14 @@
                                     <constraint firstItem="mwz-11-3ZD" firstAttribute="top" secondItem="HRm-fF-9Qf" secondAttribute="top" id="Zxs-ex-Ggt"/>
                                 </constraints>
                             </view>
+                            <connections>
+                                <segue destination="VLC-DP-TbE" kind="show" identifier="ProfileSegue" id="dfZ-kc-C9g"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="navigationProfileButton" destination="mwz-11-3ZD" id="ISI-oE-hKq"/>
+                        <outlet property="createThreadButton" destination="9Eq-0e-Bkx" id="jhp-ac-ipr"/>
+                        <outlet property="navigationProfileButton" destination="mwz-11-3ZD" id="vqb-Y9-qEX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyp-AW-MKf" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -23,19 +23,9 @@ class FeedTabsViewController: TabmanViewController {
 	}
 	var sectionsCount: Int?
 	var kRichTextEditorViewController: KRichTextEditorViewController?
-//	private var shadowImageView: UIImageView?
 	lazy var viewControllers = [UITableViewController]()
 
 	let bar = TMBar.ButtonBar()
-
-	//	override func viewWillAppear(_ animated: Bool) {
-	//		super.viewWillAppear(animated)
-	//
-	//		if shadowImageView == nil {
-	//			shadowImageView = findShadowImage(under: navigationController!.navigationBar)
-	//		}
-	//		shadowImageView?.isHidden = true
-	//	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -109,19 +99,6 @@ class FeedTabsViewController: TabmanViewController {
 		self.viewControllers = viewControllers
 	}
 
-//	private func findShadowImage(under view: UIView) -> UIImageView? {
-//		if view is UIImageView && view.bounds.size.height <= 1 {
-//			return (view as! UIImageView)
-//		}
-//
-//		for subview in view.subviews {
-//			if let imageView = findShadowImage(under: subview) {
-//				return imageView
-//			}
-//		}
-//		return nil
-//	}
-
 	// MARK: - IBActions
 	@IBAction func createThreadButton(_ sender: Any) {
 		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! FeedTableViewController
@@ -133,6 +110,10 @@ class FeedTabsViewController: TabmanViewController {
 		}
 
 		present(kurozoraNavigationController, animated: true, completion: nil)
+	}
+
+	@IBAction func profileButtonPressed(_ sender: UIButton) {
+		performSegue(withIdentifier: "ProfileSegue", sender: nil)
 	}
 }
 

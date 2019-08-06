@@ -40,20 +40,10 @@ class ForumsViewController: TabmanViewController {
 	var sectionsCount: Int?
 	var threadSorting: String?
 	var kRichTextEditorViewController: KRichTextEditorViewController?
-	private var shadowImageView: UIImageView?
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
 
 	let bar = TMBar.ButtonBar()
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		if shadowImageView == nil {
-			shadowImageView = findShadowImage(under: navigationController!.navigationBar)
-		}
-		shadowImageView?.isHidden = true
-	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,12 +111,6 @@ class ForumsViewController: TabmanViewController {
 		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
     }
 
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		shadowImageView?.isHidden = false
-	}
-
 	// MARK: - Functions
     private func initializeViewControllers(with count: Int) {
         let storyboard = UIStoryboard(name: "forums", bundle: nil)
@@ -146,19 +130,6 @@ class ForumsViewController: TabmanViewController {
 
         self.viewControllers = viewControllers
     }
-
-	private func findShadowImage(under view: UIView) -> UIImageView? {
-		if view is UIImageView && view.bounds.size.height <= 1 {
-			return (view as! UIImageView)
-		}
-
-		for subview in view.subviews {
-			if let imageView = findShadowImage(under: subview) {
-				return imageView
-			}
-		}
-		return nil
-	}
 
 	// MARK: - IBActions
 	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
