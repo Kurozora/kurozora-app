@@ -29,7 +29,6 @@ class ExploreSmallCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	private var _itemSize: CGSize {
 		get {
 			guard let collectionView = self.collectionView else { return .zero }
-			let interItemGap = (UIDevice.isPad()) ? 20 : 10
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
 
 			if UIDevice.isPad() {

@@ -196,7 +196,7 @@
                             <outlet property="delegate" destination="AtO-CH-0OW" id="ztE-tZ-rjT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Feed" id="4JV-Bj-kpv"/>
+                    <navigationItem key="navigationItem" id="4JV-Bj-kpv"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="csp-1V-Ymv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -235,7 +235,7 @@
             </objects>
             <point key="canvasLocation" x="1733" y="-57"/>
         </scene>
-        <!--Feed Tabs View Controller-->
+        <!--Feed-->
         <scene sceneID="DOo-Gz-lII">
             <objects>
                 <viewController storyboardIdentifier="FeedTabsViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MFH-k3-4hf" customClass="FeedTabsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
@@ -272,7 +272,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="g8P-rJ-GDX"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GlU-Bk-lnt">
+                    <navigationItem key="navigationItem" title="Feed" id="GlU-Bk-lnt">
                         <barButtonItem key="leftBarButtonItem" title="Settings" image="settings" id="ZIG-Sf-Dti">
                             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>

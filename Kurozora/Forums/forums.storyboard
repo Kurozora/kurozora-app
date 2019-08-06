@@ -635,7 +635,7 @@
             </objects>
             <point key="canvasLocation" x="-526" y="483"/>
         </scene>
-        <!--Library-->
+        <!--Forums-->
         <scene sceneID="ojo-nC-5dI">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfp-Yv-lzg" sceneMemberID="firstResponder"/>
@@ -692,7 +692,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fVr-X1-qp9"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Library" id="km1-34-9KJ">
+                    <navigationItem key="navigationItem" title="Forums" id="km1-34-9KJ">
                         <barButtonItem key="rightBarButtonItem" title="Top" image="sort_top" id="3nN-Eo-w2O">
                             <connections>
                                 <action selector="sortingButtonPressed:" destination="Haj-ko-0LW" id="lHJ-IU-joo"/>

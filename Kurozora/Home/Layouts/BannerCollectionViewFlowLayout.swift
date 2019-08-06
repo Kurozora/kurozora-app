@@ -9,7 +9,9 @@
 import UIKit
 
 class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
-	let interItemGap = (UIDevice.isPad()) ? 40 : 20
+	override var interItemGap: Int {
+		return (UIDevice.isPad()) ? 40 : 10
+	}
 
 	// MARK: - Public Properties
 	override var collectionViewContentSize: CGSize {
