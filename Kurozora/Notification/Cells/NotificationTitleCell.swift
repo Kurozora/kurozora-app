@@ -14,4 +14,9 @@ class NotificationTitleCell: UITableViewCell {
 			notificationTitleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
+	@IBOutlet weak var notificationMarkButton: UIButton! {
+		didSet {
+			notificationMarkButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+		}
+	}
 }

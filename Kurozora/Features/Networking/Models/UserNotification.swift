@@ -34,7 +34,7 @@ class UserNotificationsElement: JSONDecodable {
 	let id: Int?
 	let userID: Int?
 	let type: String?
-	let read: Bool?
+	var read: Bool?
 	let data: UserNotificationData?
 	let message: String?
 	let creationDate: String?

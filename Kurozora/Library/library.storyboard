@@ -54,8 +54,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="contentLayoutGuide" id="0YB-aS-2gx"/>
-                        <viewLayoutGuide key="frameLayoutGuide" id="cPx-Cf-4wO"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="sDb-fa-ZBQ">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -328,7 +326,6 @@
         <!--Library-->
         <scene sceneID="HTe-q8-fSw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LibraryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B4w-wJ-4Cf" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mUg-UP-NVd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -372,6 +369,7 @@
                         <outlet property="scrollView" destination="67J-F2-FBk" id="1Ee-gf-dh5"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-477" y="865"/>
         </scene>

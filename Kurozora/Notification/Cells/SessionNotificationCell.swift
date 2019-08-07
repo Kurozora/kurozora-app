@@ -22,6 +22,11 @@ class SessionNotificationCell: SwipeTableViewCell {
 		}
 	}
 	@IBOutlet weak var notificationIconImageView: UIImageView!
+	@IBOutlet weak var notificationMark: UIPageControl! {
+		didSet {
+			notificationMark.theme_currentPageIndicatorTintColor = KThemePicker.tintColor.rawValue
+		}
+	}
 
 	// Body
 	@IBOutlet weak var notificationTextLabel: UILabel!
@@ -33,7 +38,6 @@ class SessionNotificationCell: SwipeTableViewCell {
 	}
 
 	// MARK: - Functions
-
 	fileprivate func setup() {
 		guard let notificationsElement = notificationsElement else { return }
 		if let creationDate = notificationsElement.creationDate {
@@ -44,5 +48,8 @@ class SessionNotificationCell: SwipeTableViewCell {
 			notificationTextLabel.text = notificationContent
 		}
 
+		if let notificationIsRead = notificationsElement.read {
+			notificationMark.numberOfPages = notificationIsRead ? 0 : 1
+		}
 	}
 }

@@ -439,6 +439,42 @@ struct Service {
 		})
 	}
 
+	/**
+		Update a notification
+
+		- Parameter notificationID: ID of the notification to be deleted. Accepts array of id's or `all`.
+		- Parameter status: Mark notification as `read` or `unread`.
+		- Parameter successHandler: Returns true if the request finishes with no errors.
+	**/
+	func updateNotification(for notificationID: String?, withStatus read: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+		guard let notificationID = notificationID else { return }
+		guard let read = read else { return }
+
+		let request : APIRequest<UserNotificationsElement,JSONError> = tron.swiftyJSON.request("user-notifications/update")
+
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.authorizationRequirement = .required
+		request.method = .post
+		request.parameters = [
+			"notification": notificationID,
+			"read": read
+		]
+		request.perform(withSuccess: { notification in
+			if let read = notification.read {
+				successHandler(read)
+			}
+		}, failure: { error in
+			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't update notification 😔", subTitle: responseMessage)
+			}
+
+			print("Received update notification error: \(error)")
+		})
+	}
+
 // MARK: - Show
 // All show related endpoints
 	/**

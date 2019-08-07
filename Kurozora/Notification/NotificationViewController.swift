@@ -18,9 +18,7 @@ protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerClearedAllNotifications()
 }
 
-class NotificationsViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-    @IBOutlet var tableView: UITableView!
-
+class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
 	var searchResultsViewController: SearchResultsTableViewController!
 	var grouping: GroupingType = .off
 	var oldGrouping: Int?
@@ -63,8 +61,6 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 		}
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
@@ -143,11 +139,93 @@ class NotificationsViewController: UIViewController, EmptyDataSetDelegate, Empty
 			self.groupedNotifications = []
 		}
 	}
+
+	func updateNotification(for cells: [UITableViewCell], with notificationID: String, status: Int) {
+		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
+			for cell in cells {
+				if let cell = cell as? SessionNotificationCell {
+					cell.notificationMark.numberOfPages = read ? 0 : 1
+					cell.notificationsElement?.read = read
+				}
+			}
+		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
+		let numberOfSections = tableView.numberOfSections
+		var status = 0
+		var cells = [UITableViewCell]()
+
+		for section in 0..<numberOfSections {
+			let numberOfRows = tableView.numberOfRows(inSection: section)
+			for row in 0..<numberOfRows {
+				if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? SessionNotificationCell {
+					if cell.notificationMark.numberOfPages == 1, status == 0 {
+						status = 1
+					}
+					cells.append(cell)
+				}
+			}
+		}
+
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let markActionTitle = (status == 0) ? "Mark All as Unread" : "Mark All as Read"
+
+		// Mark action
+		let markAction = UIAlertAction.init(title: markActionTitle, style: .default, handler: { (_) in
+			self.updateNotification(for: cells, with: "all", status: status)
+		})
+		markAction.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
+		markAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(markAction)
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = view
+			popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+
+		if !(navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
+			present(action, animated: true, completion: nil)
+		}
+	}
+
+	@objc func notificationMarkButtonPressed(_ sender: UIButton) {
+		let section = sender.tag
+		let numberOfRows = tableView.numberOfRows(inSection: section)
+		var status = 0
+
+		// Iterate over all the rows of a section
+		var notificationIDs = ""
+		var cells = [UITableViewCell]()
+		for row in 0...numberOfRows {
+			if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? SessionNotificationCell {
+				if cell.notificationMark.numberOfPages == 1, status == 0 {
+					status = 1
+				}
+				if row == numberOfRows - 1 {
+					if let notificationID = cell.notificationsElement?.id {
+						notificationIDs += ("\(notificationID)")
+					}
+				} else if let notificationID = cell.notificationsElement?.id {
+					notificationIDs += ("\(notificationID), ")
+				}
+				cells.append(cell)
+			}
+		}
+
+		updateNotification(for: cells, with: notificationIDs, status: status)
+	}
 }
 
 // MARK: - UITableViewDataSource
-extension NotificationsViewController: UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
+extension NotificationsViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		switch self.grouping {
 		case .automatic, .byType:
 			return groupedNotifications.count
@@ -156,29 +234,32 @@ extension NotificationsViewController: UITableViewDataSource {
 		}
 	}
 
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch self.grouping {
 		case .automatic, .byType:
 			return groupedNotifications[section].sectionTitle
 		case .off: break
 		}
 
-		return ""
+		return nil
 	}
 
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let notificationTitleCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationTitleCell") as! NotificationTitleCell
+		notificationTitleCell.notificationMarkButton.tag = section
+		notificationTitleCell.notificationMarkButton.addTarget(self, action: #selector(notificationMarkButtonPressed(_:)), for: .touchUpInside)
 
 		switch self.grouping {
 		case .automatic, .byType:
 			notificationTitleCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			return notificationTitleCell.contentView
 		case .off: break
 		}
 
-		return notificationTitleCell.contentView
+		return nil
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch self.grouping {
 		case .automatic, .byType:
 			return groupedNotifications[section].sectionNotifications.count
@@ -187,7 +268,7 @@ extension NotificationsViewController: UITableViewDataSource {
 		}
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let messageNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "MessageNotificationCell", for: indexPath) as! MessageNotificationCell
 		let sessionNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "SessionNotificationCell", for: indexPath) as! SessionNotificationCell
 
@@ -201,6 +282,7 @@ extension NotificationsViewController: UITableViewDataSource {
 			if let type = notifications.type, type != "", let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
+					sessionNotificationCell.notificationsElement = notifications
 					return sessionNotificationCell
 				case .follower:
 					messageNotificationCell.notificationsElement = notifications
@@ -212,6 +294,7 @@ extension NotificationsViewController: UITableViewDataSource {
 			if let type = notifications?.type, type != "", let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
+					sessionNotificationCell.notificationsElement = notifications
 					return sessionNotificationCell
 				case .follower:
 					messageNotificationCell.notificationsElement = notifications
@@ -224,48 +307,77 @@ extension NotificationsViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension NotificationsViewController: UITableViewDelegate {
+extension NotificationsViewController {
 }
 
 // MARK: - SwipeTableViewCellDelegate
 extension NotificationsViewController: SwipeTableViewCellDelegate {
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-		guard orientation == .right else { return nil }
+		switch orientation {
+		case .right:
+			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+				switch self.grouping {
+				case .automatic, .byType:
+					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
+					Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
+						DispatchQueue.main.async {
+							if success {
+								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
+								tableView.deleteRows(at: [indexPath], with: .left)
 
-		let deleteAction = SwipeAction(style: .default, title: "Delete") { action, indexPath in
-			switch self.grouping {
-			case .automatic, .byType:
-				let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-				Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
-					DispatchQueue.main.async {
+								if self.groupedNotifications[indexPath.section].sectionNotifications.count == 0 {
+									self.groupedNotifications.remove(at: indexPath.section)
+									tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .left)
+								}
+								tableView.endUpdates()
+							}
+						}
+					})
+				case .off:
+					let notificationID = self.userNotificationsElement?[indexPath.row].id
+					Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
 						if success {
-							self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
+							self.userNotificationsElement?.remove(at: indexPath.row)
 							tableView.beginUpdates()
 							tableView.deleteRows(at: [indexPath], with: .left)
 							tableView.endUpdates()
 						}
-					}
-				})
-			case .off:
-				let notificationID = self.userNotificationsElement?[indexPath.row].id
-				Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
-					if success {
-						self.userNotificationsElement?.remove(at: indexPath.row)
-						tableView.beginUpdates()
-						tableView.deleteRows(at: [indexPath], with: .left)
-						tableView.endUpdates()
-					}
-				})
+					})
+				}
 			}
+			deleteAction.backgroundColor = .clear
+			deleteAction.image = #imageLiteral(resourceName: "trash_circle")
+			deleteAction.textColor = #colorLiteral(red: 0.8156862745, green: 0.007843137255, blue: 0.1058823529, alpha: 1)
+			deleteAction.font = .systemFont(ofSize: 13)
+			deleteAction.transitionDelegate = ScaleTransition.default
+			return [deleteAction]
+		case .left:
+			guard let cell = tableView.cellForRow(at: indexPath) as? SessionNotificationCell else { return nil }
+			let isRead = (cell.notificationMark.numberOfPages == 0)
+			let markedAction = SwipeAction(style: .default, title: "") { action, indexPath in
+				var notificationID = 0
+
+				switch self.grouping {
+				case .automatic, .byType:
+					if let id = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
+						notificationID = id
+					}
+				case .off:
+					if let id = self.userNotificationsElement?[indexPath.row].id {
+						notificationID = id
+					}
+				}
+
+				self.updateNotification(for: [cell], with: "\(notificationID)", status: isRead ? 0 : 1)
+			}
+			markedAction.backgroundColor = .clear
+			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
+			markedAction.image = isRead ? #imageLiteral(resourceName: "watched_circle") : #imageLiteral(resourceName: "unwatched_circle")
+			markedAction.textColor = isRead ? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
+			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
+			markedAction.transitionDelegate = ScaleTransition.default
+			return [markedAction]
 		}
-
-		deleteAction.backgroundColor = .clear
-		deleteAction.image = #imageLiteral(resourceName: "trash_circle")
-		deleteAction.textColor = #colorLiteral(red: 0.8156862745, green: 0.007843137255, blue: 0.1058823529, alpha: 1)
-		deleteAction.font = .systemFont(ofSize: 13)
-		deleteAction.transitionDelegate = ScaleTransition.default
-
-		return [deleteAction]
 	}
 
 	func visibleRect(for tableView: UITableView) -> CGRect? {
@@ -282,13 +394,18 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 
 	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
 		var options = SwipeOptions()
-		options.expansionStyle = .destructive(automaticallyDelete: false)
+
+		switch orientation {
+		case .right:
+			options.expansionStyle = .destructive(automaticallyDelete: false)
+		case .left:
+			options.expansionStyle = .selection
+		}
+
 		options.transitionStyle = .reveal
 		options.expansionDelegate = ScaleAndAlphaExpansion.default
-
 		options.buttonSpacing = 4
 		options.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
-
 		return options
 	}
 }
