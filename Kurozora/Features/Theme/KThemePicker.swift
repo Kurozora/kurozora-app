@@ -9,6 +9,17 @@
 import Foundation
 import SwiftTheme
 
+/**
+	List of theme picker attributes
+
+	```
+	case statusBarStyle = "UIStatusBarStyle"
+	case backgroundColor = "Global.backgroundColor"
+	case tintedBackgroundColor = "Global.tintedBackgroundColor"
+	case barTintColor = "Global.barTintColor"
+	```
+	etc.
+*/
 enum KThemePicker: ThemeColorPicker {
 	// Global
 	case statusBarStyle = "UIStatusBarStyle"
@@ -40,6 +51,7 @@ enum KThemePicker: ThemeColorPicker {
 	// Notifications
 	case accentColor = "Notifications.accentColor"
 
+	/// The string value of a theme picker attribute.
 	var stringValue: String {
 		switch self {
 		// Global
@@ -96,12 +108,15 @@ enum KThemePicker: ThemeColorPicker {
 		}
 	}
 
+	/// The color value of a theme picker attribute.
 	var colorValue: UIColor {
 		switch self {
 		case .statusBarStyle:
 			switch UIStatusBarStyle.fromString(self.stringValue) {
 			case .lightContent:
 				return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+			case .darkContent:
+				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 			default:
 				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 			}

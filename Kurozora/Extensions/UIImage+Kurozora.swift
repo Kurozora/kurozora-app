@@ -8,32 +8,35 @@
 
 import UIKit
 
+/**
+	A list of image formats.
+
+	```
+	case png
+	case jpeg(CGFloat)
+	```
+*/
 public enum ImageFormat {
 	case png
 	case jpeg(CGFloat)
 }
 
 extension UIImage {
-	/// Convert UIImage to Base64
+	/**
+		Convert UIImage to Base-64.
+
+		- Parameter format: The format of the image.
+
+		- Returns: the Base-64 encoded string.
+	*/
 	public func toBase64(format: ImageFormat) -> String? {
 		var imageData: Data?
 		switch format {
-		case .png: imageData = self.pngData()
-		case .jpeg(let compression): imageData = self.jpegData(compressionQuality: compression)
+		case .png:
+			imageData = self.pngData()
+		case .jpeg(let compression):
+			imageData = self.jpegData(compressionQuality: compression)
 		}
 		return imageData?.base64EncodedString()
-	}
-
-	public func withColor(_ color: UIColor) -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(size, false, scale)
-		guard let ctx = UIGraphicsGetCurrentContext(), let cgImage = cgImage else { return self }
-		color.setFill()
-		ctx.translateBy(x: 0, y: size.height)
-		ctx.scaleBy(x: 1.0, y: -1.0)
-		ctx.clip(to: CGRect(x: 0, y: 0, width: size.width, height: size.height), mask: cgImage)
-		ctx.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
-		guard let colored = UIGraphicsGetImageFromCurrentImageContext() else { return self }
-		UIGraphicsEndImageContext()
-		return colored
 	}
 }

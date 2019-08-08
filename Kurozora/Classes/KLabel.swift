@@ -16,15 +16,16 @@ class KLabel: UILabel {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        sharedInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        sharedInit()
     }
-    
-    private func commonInit() {
+
+	// MARK: - Functions
+    private func sharedInit() {
         isUserInteractionEnabled = true
         addGestureRecognizer(
             UILongPressGestureRecognizer(
@@ -33,8 +34,7 @@ class KLabel: UILabel {
             )
         )
     }
-    
-    // MARK: - Actions
+
     @objc internal func handleLongPressed(_ gesture: UILongPressGestureRecognizer) {
         guard let gestureView = gesture.view, let superView = gestureView.superview else {
             return

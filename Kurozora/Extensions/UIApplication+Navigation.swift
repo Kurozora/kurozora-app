@@ -9,7 +9,15 @@
 import UIKit
 
 extension UIApplication {
-	/// Present a view controller on top of the root view controller
+	/**
+		Return the top (root) view controller of a given view controller.
+
+		If no base view controller is specified then this function returms the application root view controller.
+
+		- Parameter base: The base view controller that a view controller will be presented on top of.
+
+		- Returns: the top (root) view controller of a given view controller.
+	*/
 	private class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
 		if let nav = base as? UINavigationController {
 			let top = topViewController(nav.visibleViewController)
@@ -31,7 +39,7 @@ extension UIApplication {
 		return base
 	}
 
-	/// Present a view controller on top of the root view controller
+	/// The root view controller of the application.
 	static var topViewController: UIViewController? {
 		return UIApplication.topViewController()
 	}

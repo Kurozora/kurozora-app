@@ -19,7 +19,6 @@ let optionsWithEndpoint = PusherClientOptions(
 let pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
 
 public class WorkflowController {
-
 	/// Initialise Pusher and connect to subsequent channels
 	class func pusherInit() {
 		if let currentID = User.currentID, currentID != 0 {
@@ -31,7 +30,7 @@ public class WorkflowController {
 				if let data = data as? [String : AnyObject] {
 					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
 						if sessionID != User.currentSessionID() {
-							notificationsHandler(sessionID, device, ip, lastValidated)
+							notificationsHandler(device)
 
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
@@ -71,7 +70,7 @@ public class WorkflowController {
 		}
 	}
 
-	/// Logout the current user by emptying KDefaults
+	/// Logout the current user by emptying KDefaults.
 	class func logoutUser() {
 		try? GlobalVariables().KDefaults.removeAll()
 
@@ -80,6 +79,7 @@ public class WorkflowController {
 		UIApplication.topViewController?.present(vc, animated: true)
 	}
 
+	/// Open the sessions view.
 	class func showSessions() {
 		if UIApplication.topViewController as? ManageActiveSessionsController != nil {
 		} else {
@@ -92,10 +92,14 @@ public class WorkflowController {
 		}
 	}
 
-		class func notificationsHandler(_ sessionID: Int, _ device: String, _ ip: String, _ lastValidated: String) {
+	/**
+		Handles which type of notification to show according to the user's notification settings.
+
+		- Parameter device: The name of the device a new session was created on.
+	*/
+	class func notificationsHandler(_ device: String) {
 		// If notifications enabled
 		if UserSettings.notificationsAllowed {
-
 			let alertType = UserSettings.alertType
 
 			if alertType == 0 || alertType == 1 {
@@ -104,18 +108,13 @@ public class WorkflowController {
 				if alertType == 0 {
 					banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
 				}
+
 				// Notification haptic feedback and vibration
-				if UserSettings.notificationsVibration {
-					banner.haptic = .heavy
-				} else {
-					banner.haptic = .none
-				}
+				banner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
+
 				// Notification sound feedback
-//				if UserSettings.notificationsSound() {
-//					banner.sound = .success
-//				} else {
-//					banner.sound = .none
-//				}
+//				banner.sound = (UserSettings.notificationsSound) ? .success : .none
+
 				// Notification persistency
 				if UserSettings.notificationsPersistent == 0 {
 					banner.autoDismiss = true
@@ -131,18 +130,13 @@ public class WorkflowController {
 				}
 			} else if alertType == 2 {
 				let statusBanner = StatusBarNotificationBanner(title: "New login detected from " + device, style: .info)
+
 				// Notification haptic feedback and vibration
-				if UserSettings.notificationsVibration {
-					statusBanner.haptic = .heavy
-				} else {
-					statusBanner.haptic = .none
-				}
+				statusBanner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
+
 				// Notification sound feedback
-//				if UserSettings.notificationsSound() {
-//					statusBanner.sound = .success
-//				} else {
-//					statusBanner.sound = .none
-//				}
+//				statusBanner.sound = (UserSettings.notificationsSound) ? .success : .none
+
 				// Notification persistency
 				if UserSettings.notificationsPersistent == 0 {
 					statusBanner.autoDismiss = true

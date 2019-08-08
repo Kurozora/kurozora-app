@@ -228,15 +228,17 @@ extension SearchResultsTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if results != nil {
-			let searchScope = SearchScope(rawValue: currentScope)
-			let identifier = SearchList.fromScope(searchScope!)
-			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
+			var searchResultsCell = SearchResultsCell()
 
-			switch searchScope {
-			case .show?, .thread?, .user?:
-				searchResultsCell.searchElement = results?[indexPath.row]
-			case .myLibrary?: break
-			default: break
+			if let searchScope = SearchScope(rawValue: currentScope) {
+				let identifier = searchScope.identifierString
+				searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
+
+				switch searchScope {
+				case .show, .thread, .user:
+					searchResultsCell.searchElement = results?[indexPath.row]
+				case .myLibrary: break
+				}
 			}
 
 			if tableView.numberOfRows() == 1 {

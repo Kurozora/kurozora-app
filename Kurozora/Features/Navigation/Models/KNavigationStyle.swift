@@ -11,10 +11,15 @@ import Foundation
 /**
 	List of Kurozora navigation styles
 
-	- case normal = 0
-	- case blurred = 1
+	```
+	case normal = 0
+	case blurred = 1
+	```
 */
 enum KNavigationStyle: Int {
+	/// A translucent navigation bar, intended for use on all views.
 	case normal = 0
+
+	/// A blurred navigation bar, intended for use on search view only.
 	case blurred
 }

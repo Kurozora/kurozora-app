@@ -9,7 +9,12 @@
 import UIKit
 
 extension UIView {
-	/// Add rounded corners for each specified corner.
+	/**
+		Add rounded corners for each specified corner.
+
+		- Parameter corners: The corner which should be rounded.
+		- Parameter radius: The amount by which the corner should be rounded.
+	*/
 	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
 		if #available(iOS 11.0, *) {
 			clipsToBounds = true
@@ -23,7 +28,17 @@ extension UIView {
 		}
 	}
 	
-	/// Give the view a nice shadow
+	/**
+		Give the view a nice shadow.
+
+		- Parameter shadowColor: The color of the shadow. Default is `.black`.
+		- Parameter shadowOpacity: The opacity of the shadow. Default is `0.2`.
+		- Parameter shadowRadius: The radius of the shadow. Default is `8`.
+		- Parameter shadowOffset: The offset of the shadow. Default is `.zero`.
+		- Parameter shadowPathSize: The path size of the shadow. Default is `nil`.
+		- Parameter shouldRasterize: Whether the shadow should be rasterized for better performance. Default is `true`.
+		- Parameter cornerRadius: The corner radius of the path size. Default is `nil`.
+	*/
 	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
 
 		let shadowWidth = self.width * 0.77
@@ -47,10 +62,12 @@ extension UIView {
 		}
 	}
 
-	/// Adds parallax effect to view. Default amount is 50.
-	func addParallax(with amount: Int = 50) {
-		let amount = amount
+	/**
+		Adds parallax effect to the view.
 
+		- Parameter amount: The amount by which the view moves around. Default amount is 50.
+	*/
+	func addParallax(with amount: Int = 50) {
 		let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
 		horizontal.minimumRelativeValue = -amount
 		horizontal.maximumRelativeValue = amount
@@ -64,7 +81,11 @@ extension UIView {
 		self.addMotionEffect(group)
 	}
 
-	/// Create a snapshot of current view.
+	/**
+		Create a snapshot of current view.
+
+		- Returns: an image of the created snapshot of the view.
+	*/
 	func createSnapshot() -> UIImage? {
 		UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
 		drawHierarchy(in: frame, afterScreenUpdates: true)

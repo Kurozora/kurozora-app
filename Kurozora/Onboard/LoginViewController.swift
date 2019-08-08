@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
 					WorkflowController.pusherInit()
 
 					self.loginButton.startFinishAnimation(1) {
-						let customTabBar = KurozoraTabBarController()
+						let customTabBar = KTabBarController()
 						customTabBar.transitioningDelegate = self
 						customTabBar.modalPresentationStyle = .fullScreen
 						self.present(customTabBar, animated: true, completion: nil)

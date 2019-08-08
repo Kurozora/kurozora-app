@@ -9,12 +9,23 @@
 import UIKit
 
 extension UIAlertController {
-	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A)], currentSelection: A? = nil, action: @escaping (String, A) -> Void) -> UIAlertController {
+	/**
+		Return a selectable action sheet from given items.
+
+		- Parameter items: The array of items  that includes `title` and `value`  from which the action sheet should be created.
+		- Parameter currentSelection: The item that is currently selected.
+		- Parameter action: The action bound to an item.
+		- Parameter title: The title of an action.
+		- Parameter value: The value of an action.
+
+		- Returns: a selectable action sheet from given items.
+	*/
+	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A)], currentSelection: A? = nil, action: @escaping (_ title: String, _ value: A) -> Void) -> UIAlertController {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		for (var title, value) in items {
 			if let selection = currentSelection, value == selection {
-				// NOTE: that checkmark and space have a neutral text flow direction so this is correct for RTL
+				// NOTE: - Checkmark and space have a neutral text flow direction so this is correct for RTL
 				title = title + " ✔︎"
 			}
 
@@ -28,12 +39,23 @@ extension UIAlertController {
 		return alertController
 	}
 
-	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A, images: UIImage)], currentSelection: A? = nil, action: @escaping (String, A) -> Void) -> UIAlertController {
+	/**
+		Return a selectable action sheet from given items with an icon.
+
+		- Parameter items: The array of items that includes `title`, `value` and `image` from which the action sheet should be created.
+		- Parameter currentSelection: The item that is currently selected.
+		- Parameter action: The action bound to an item.
+		- Parameter title: The title of an action.
+		- Parameter value: The value of an action.
+
+		- Returns: a selectable action sheet from given items with an icon.
+	*/
+	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A, image: UIImage)], currentSelection: A? = nil, action: @escaping (_ title: String, _ value: A) -> Void) -> UIAlertController {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		for (var title, value, image) in items {
 			if let selection = currentSelection, value == selection {
-				// NOTE: that checkmark and space have a neutral text flow direction so this is correct for RTL
+				// NOTE: - Checkmark and space have a neutral text flow direction so this is correct for RTL
 				title = title + " ✔︎"
 			}
 

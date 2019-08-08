@@ -9,8 +9,8 @@
 import UIKit
 import LocalAuthentication
 
-public extension UIDevice {
-	/// Get current device model name in a readable form
+extension UIDevice {
+	/// The device's model name in a readable form.
 	static let modelName: String = {
 		var systemInfo = utsname()
 		uname(&systemInfo)
@@ -79,19 +79,21 @@ public extension UIDevice {
 		return mapToDevice(identifier: identifier)
 	}()
 
+	/// A boolean indicating if the device has a `Taptic Engine`™.
 	static let hasTapticEngine: Bool = {
 		let platform = UIDevice.modelName
 
 		return platform == "iPhone 5" || platform == "iPhone 5c" ||	platform == "iPhone 5s" || platform == "iPhone 6" || platform == "iPhone 6 Plus"
 	}()
 
+	/// A boolean indicating if the device has a `Top Notch`™.
 	static let hasTopNotch: Bool = {
 		let platform = UIDevice.modelName
 
 		return platform == "iPhone X" || platform == "iPhone XS" ||	platform == "iPhone XS Max" || platform == "iPhone XR" || platform.contains(" X")
 	}()
 
-	/// Check what type of biometric the current device supports
+	/// The type of biometric the current device supports.
 	static var supportedBiomtetric: BiometricType {
 		let context = LAContext.init()
 		var error: NSError?

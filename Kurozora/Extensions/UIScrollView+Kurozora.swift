@@ -9,19 +9,23 @@
 import UIKit
 
 extension UITableView {
+	/// A boolean indicating if the scrollview is at the top
 	var isAtTop: Bool {
 		return contentOffset.y <= verticalOffsetForTop
 	}
 
+	/// A boolean indicating if the scrollview is at the bottom
 	var isAtBottom: Bool {
 		return contentOffset.y >= verticalOffsetForBottom
 	}
 
+	/// The top vertical offset for the scrollview
 	var verticalOffsetForTop: CGFloat {
 		let topInset = contentInset.top
 		return -topInset
 	}
 
+	/// The bottom vertical offset for the scrollview
 	var verticalOffsetForBottom: CGFloat {
 		let scrollViewHeight = bounds.height
 		let scrollContentSizeHeight = contentSize.height

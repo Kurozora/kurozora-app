@@ -11,12 +11,19 @@ import Foundation
 /**
 	List of biometric types compatible with iOS 10
 
-	- case faceID
-	- case touchID
-	- case none
-*/
-public enum BiometricType {
+	```
 	case faceID
 	case touchID
+	case none
+	```
+*/
+enum BiometricType {
+	/// Device has `Face ID` as a biometric option.
+	case faceID
+
+	/// Device has `Touch ID` as a biometric option.
+	case touchID
+
+	/// Device has neither `Face ID` or `Touch ID` as a biometric option.
 	case none
 }

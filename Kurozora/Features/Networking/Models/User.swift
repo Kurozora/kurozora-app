@@ -147,12 +147,6 @@ class UserProfile: JSONDecodable {
 //    }
 
 extension User {
-	enum UserType: Int {
-		case normal = 0
-		case mod
-		case admin
-	}
-
 	/// Returns the username saved in KDefaults
 	static var username: String? {
 		guard let username = GlobalVariables().KDefaults["username"], username != "" else { return nil }
@@ -249,7 +243,7 @@ extension User {
 	static var isAdmin: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
-			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
+			guard let type: UserType = UserType(rawValue: userType) else { return false }
 
 			switch type {
 			case .admin:
@@ -265,7 +259,7 @@ extension User {
 	static var isMod: Bool {
 		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
 			guard let userType = Int(userType) else { return false }
-			guard let type: UserType = User.UserType(rawValue: userType) else { return false }
+			guard let type: UserType = UserType(rawValue: userType) else { return false }
 
 			switch type {
 			case .mod:

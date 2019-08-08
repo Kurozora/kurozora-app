@@ -51,12 +51,14 @@ class SearchResultsCell: UITableViewCell {
 		}
 	}
 
-	func configureCell() {
+	// MARK: - Functions
+	fileprivate func configureCell() {
 		guard let searchElement = searchElement else { return }
-		let cellType = SearchList(rawValue: self.reuseIdentifier!)
+		guard let reuseIdentifier = self.reuseIdentifier else { return }
+		let cellType = SearchScope.scope(from: reuseIdentifier)
 
 		switch cellType {
-		case .show?:
+		case .show:
 			titleLabel?.text = searchElement.title
 
 			if let posterThumbnail = searchElement.posterThumbnail, posterThumbnail != "" {
@@ -100,15 +102,15 @@ class SearchResultsCell: UITableViewCell {
 				scoreLabel?.isHidden = true
 				scoreDecimalLabel?.isHidden = true
 			}
-		case .myLibrary?: break
-		case .thread?:
+		case .myLibrary: break
+		case .thread:
 			titleLabel?.text = searchElement.title
 			contentTeaserLabel?.text = searchElement.contentTeaser
 
 			if let locked = searchElement.locked {
 				lockLabel?.isHidden = locked
 			}
-		case .user?:
+		case .user:
 			usernameLabel?.text = searchElement.username
 
 			if let avatar = searchElement.avatar, avatar != "" {
@@ -130,7 +132,6 @@ class SearchResultsCell: UITableViewCell {
 					followerCountLabel?.text = "\(followerCount.kFormatted) Followers"
 				}
 			}
-		default: break
 		}
 	}
 }
@@ -156,33 +157,9 @@ extension SearchResultsCell: UICollectionViewDelegate {
 
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension SearchResultsCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: 88, height: 124)
-	}
-}
-
-class SuggestionResultCell: UICollectionViewCell {
-	@IBOutlet weak var titleLabel: UILabel?
-	@IBOutlet weak var posterImageView: UIImageView?
-
-	var searchElement: SearchElement? {
-		didSet {
-			configureCell()
-		}
-	}
-
-	fileprivate func configureCell() {
-		guard let searchElement = searchElement else { return }
-		titleLabel?.text = searchElement.title
-
-		if let posterThumbnail = searchElement.posterThumbnail, posterThumbnail != "" {
-			let posterThumbnailUrl = URL(string: posterThumbnail)
-			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-			posterImageView?.kf.indicatorType = .activity
-			posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
-		} else {
-			posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
-		}
 	}
 }

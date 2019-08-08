@@ -16,6 +16,8 @@ import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 
+let updateNotificationsBadgeValueNotification = Notification.Name("updateNotificationsBadgeValueNotification")
+
 let updateAppIconNotification = Notification.Name("updateAppIconNotification")
 
 let updateNotificationSettingsValueLabelsNotification = Notification.Name("updateNotificationSettingsValueLabelsNotification")
@@ -100,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// User login status
 		if User.username != nil {
 			authenticated = true
-            let customTabBar = KurozoraTabBarController()
+            let customTabBar = KTabBarController()
             self.window?.rootViewController = customTabBar
         } else {
 			authenticated = false

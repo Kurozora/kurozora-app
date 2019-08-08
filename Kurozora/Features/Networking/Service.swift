@@ -23,15 +23,16 @@ struct Service {
 // MARK: - User
 // All user related endpoints
 	/**
-		Register a new account
+		Register a new account.
 
 		- Parameter username: The new user's username.
 		- Parameter password: The new user's password.
-		- Parameter email: the new user's email.
+		- Parameter email: The new user's email.
 		- Parameter profileImage: The new user's avatar image.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
-	**/
-	func register(withUsername username: String?, email: String?, password: String?, withSuccess successHandler:@escaping (Bool) -> Void)  {
+		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
+		- Parameter isSuccess: A boolean value indicating whether registration is successful.
+	*/
+	func register(withUsername username: String?, email: String?, password: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void)  {
 		guard let username = username else { return }
 		guard let email = email else { return }
 		guard let password = password else { return }
@@ -62,11 +63,13 @@ struct Service {
 	}
 
 	/**
-		Reset password request
+		Request a password reset link.
 
-		- Parameter successHandler: Returns true if the request finishes with no errors.
-	**/
-    func resetPassword(_ email: String?, withSuccess successHandler:@escaping (Bool) -> Void)  {
+		- Parameter email: The email address to which the reset link should be sent.
+		- Parameter successHandler: A closure returning a boolean indicating whether reset password request is successful.
+		- Parameter isSuccess: A boolean value indicating whether reset password request is successful.
+	*/
+	func resetPassword(_ email: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void)  {
 		guard let email = email else { return }
 
 		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/reset-password")
@@ -93,13 +96,14 @@ struct Service {
     }
 
 	/**
-		Update a user's information
+		Update the user's information.
 
 		- Parameter bio: The new biography to set.
 		- Parameter profileImage: The new user's avatar image.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
+		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	**/
-	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (Bool) -> Void)  {
+	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void)  {
 		guard let bio = bio else { return }
 		guard let profileImage = profileImage else { return }
 		guard let userID = User.currentID else { return }
@@ -140,11 +144,12 @@ struct Service {
 	}
 
 	/**
-		Get a list of sessions for the current user
+		Get a list of sessions for the current user.
 
-		- Parameter successHandler: Returns an object of type UserSessions.
+		- Parameter successHandler: A closure returning a UserSessions object.
+		- Parameter userSessions: A UserSessions object.
 	**/
-	func getSessions(withSuccess successHandler:@escaping (UserSessions?) -> Void){
+	func getSessions(withSuccess successHandler:@escaping (_ userSessions: UserSessions?) -> Void){
 		guard let userID = User.currentID else { return }
 
 		let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
@@ -170,12 +175,13 @@ struct Service {
 	}
 
 	/**
-		Get a list of items for the current user's library
+		Get a list of items for the current user's library.
 
 		- Parameter status: The status to retrieve the library items for.
-		- Parameter successHandler: Returns an array of type LibraryElement.
+		- Parameter successHandler: A closure returning an array of LibraryElement.
+		- Parameter library: An array of  LibraryElement.
 	**/
-	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping ([LibraryElement]?) -> Void) {
+	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping (_ library: [LibraryElement]?) -> Void) {
 		guard let status = status else { return }
 		guard let userID = User.currentID else { return }
 
@@ -205,13 +211,14 @@ struct Service {
 	}
 
 	/**
-		Add an item to the current user's library
+		Add an item to the current user's library.
 
 		- Parameter status: The watch status to assign to the Anime.
-		- Parameter showID: The ID of the Anime to add.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter showID: The ID of the show to add.
+		- Parameter successHandler: A closure returning a boolean indicating whether adding show to library is successful.
+		- Parameter isSuccess: A boolean value indicating whether adding show to library is successful.
 	**/
-	func addToLibrary(withStatus status: String?, showID: Int?,withSuccess successHandler:@escaping (Bool) -> Void) {
+	func addToLibrary(withStatus status: String?, showID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let status = status else { return }
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
@@ -243,12 +250,13 @@ struct Service {
 	}
 
 	/**
-		Remove an item from the current user's library
+		Remove an item from the current user's library.
 
-		- Parameter showID: ID of the user.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter showID: The ID of the show to delete.
+		- Parameter successHandler: A closure returning a boolean indicating whether removing show from library is successful.
+		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	**/
-	func removeFromLibrary(withID showID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func removeFromLibrary(withID showID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
@@ -278,11 +286,13 @@ struct Service {
 	}
 
 	/**
-		Get a user's profile details
+		Get a user's profile details.
 
 		- Parameter successHandler: Returns an object of type User.
+		- Parameter successHandler: A closure returning a User object.
+		- Parameter user: A User object.
 	**/
-    func getUserProfile(_ userID:Int?, withSuccess successHandler:@escaping (User?) -> Void)  {
+	func getUserProfile(_ userID: Int?, withSuccess successHandler:@escaping (_ user: User?) -> Void)  {
 		guard let userID = userID else { return }
 
         let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/\(userID)/profile")
@@ -308,11 +318,12 @@ struct Service {
     }
 
 	/**
-		Get a list of notifications for the current user
+		Get the list of notifications for the current user.
 
-		- Parameter successHandler: Returns an array of type UserNotificationsElement.
+		- Parameter successHandler: A closure returning a UserNotificationsElement array.
+		- Parameter userNotifications: A UserNotificationsElement array.
 	**/
-	func getNotifications(withSuccess successHandler:@escaping ([UserNotificationsElement]?) -> Void){
+	func getNotifications(withSuccess successHandler:@escaping (_ userNotifications: [UserNotificationsElement]?) -> Void){
 		guard let userID = User.currentID else { return }
 
 		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
@@ -338,12 +349,13 @@ struct Service {
 	}
 
 	/**
-		Search for a user
+		Search for a user.
 
 		- Parameter user: The search query.
-		- Parameter successHandler: Returns an object of type SearchElement.
+		- Parameter successHandler: A closure returning a SearchElement object.
+		- Parameter search: A SearchElement object..
 	**/
-	func search(forUser user: String?, withSuccess successHandler:@escaping ([SearchElement]?) -> Void) {
+	func search(forUser user: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
 		guard let user = user else { return }
 
 		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("users/search")
@@ -369,10 +381,12 @@ struct Service {
 	}
 
 	/**
-		Follow or unfollow a user
+		Follow or unfollow a user.
 
-		- Parameter userID: ID of the user.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter follow: The integer indicating whether to follow or unfollow.
+		- Parameter userID: The ID of the user to follow/unfollow.
+		- Parameter successHandler: A closure returning a boolean indicating whether follow/unfollow is successful.
+		- Parameter isSuccess: A boolean value indicating whether follow/unfollow is successful.
 	**/
 	func follow(_ follow: Int?, user userID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let follow = follow else { return }
@@ -407,12 +421,13 @@ struct Service {
 // MARK: - Notifications
 // All notifications related endpoints
 	/**
-		Delete a notification
+		Delete a notification for a given notification ID.
 
-		- Parameter notificationID: ID of the notification to be deleted.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter notificationID: The ID of the notification to be deleted.
+		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
+		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	**/
-	func deleteNotification(with notificationID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func deleteNotification(with notificationID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 
 		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
@@ -440,11 +455,12 @@ struct Service {
 	}
 
 	/**
-		Update a notification
+		Update a notification's read status.
 
-		- Parameter notificationID: ID of the notification to be deleted. Accepts array of id's or `all`.
-		- Parameter status: Mark notification as `read` or `unread`.
-		- Parameter successHandler: Returns true if the request finishes with no errors.
+		- Parameter notificationID: The ID of the notification to be updated. Accepts array of id's or `all`.
+		- Parameter read: Mark notification as `read` or `unread`.
+		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
+		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	**/
 	func updateNotification(for notificationID: String?, withStatus read: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
@@ -478,7 +494,7 @@ struct Service {
 // MARK: - Show
 // All show related endpoints
 	/**
-		Get explore page content
+		Get explore page content.
 
 		- Parameter successHandler: Returns an object of type Explore.
 	**/

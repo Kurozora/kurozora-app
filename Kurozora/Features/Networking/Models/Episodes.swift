@@ -68,13 +68,6 @@ class EpisodesSeason: JSONDecodable {
 	let title: String?
 	let episodeCount: Int?
 
-	enum CodingKeys: String, CodingKey {
-		case id
-		case animeid = "anime_id"
-		case title
-		case episodeCount = "episode_count"
-	}
-
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.showID = json["anime_id"].intValue

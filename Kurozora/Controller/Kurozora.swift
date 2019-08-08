@@ -15,11 +15,19 @@ import LocalAuthentication
 import SCLAlertView
 
 class Kurozora: NSObject {
-	static var success = false
-	static let shared = Kurozora()
+	fileprivate static var success = false
 	var authenticationEnabled = false
 	var authenticationInterval = 0
 
+	static let shared = Kurozora()
+
+	// MARK: - Functions
+	/**
+		Dismiss the current view controller and show the main view controller.
+
+		- Parameter window: The window on which the offline view will be shown.
+		- Parameter viewController: The view controller that should be dismissed.
+	*/
 	static func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
 			// Initialize Pusher
@@ -39,8 +47,7 @@ class Kurozora: NSObject {
 
 			// User login status
 			if User.username != nil {
-//				authenticated = true
-				let customTabBar = KurozoraTabBarController()
+				let customTabBar = KTabBarController()
 				window?.rootViewController = customTabBar
 			} else {
 				revealingSplashView.heartAttack = true
@@ -58,6 +65,11 @@ class Kurozora: NSObject {
 		}
 	}
 
+	/**
+		Show the offline page when wifi and data is out.
+
+		- Parameter window: The window on which the offline view will be shown.
+	*/
 	static func showOfflinePage(for window: UIWindow?) {
 		if window != nil {
 			let storyboard = UIStoryboard(name: "reachability", bundle: nil)
@@ -77,6 +89,13 @@ class Kurozora: NSObject {
 		}
 	}
 
+	/**
+		Return a boolean value indicating if the current session is valid.
+
+		- Parameter window: The window on which the login view will be presented in case the session isn't valid.
+
+		- Returns: a boolean value indicating if the current session is valid.
+	*/
 	static func validateSession(window: UIWindow?) -> Bool {
 		Service.shared.validateSession(withSuccess: { (success) in
 			if !success {
@@ -94,6 +113,12 @@ class Kurozora: NSObject {
 		return success
 	}
 
+	/**
+		Handle the selected app shortcut.
+
+		- Parameter app: The app's centralized point of control and coordination.
+		- Parameter shortcutItem: The application's shortcut item.
+	*/
 	func shortcutHandler(_ app: UIApplication, _ shortcutItem: UIApplicationShortcutItem) {
 		if shortcutItem.type == "HomeShortcut" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
@@ -110,6 +135,13 @@ class Kurozora: NSObject {
 		}
 	}
 
+	/**
+		Handle the scheme passed to the app.
+
+		- Parameter app: The app's centralized point of control and coordination.
+		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
+		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
+	*/
 	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
 		let urlScheme = url.host?.removingPercentEncoding
 
@@ -178,7 +210,7 @@ class Kurozora: NSObject {
 		}
 	}
 
-	// Stop splash view animation
+	/// Stop the splash view animation
 	@objc func handleHeartAttackNotification() {
 		revealingSplashView.heartAttack = true
 	}
@@ -186,7 +218,7 @@ class Kurozora: NSObject {
 
 // MARK: - Authentication
 extension Kurozora {
-	/// Asks the app if the user should authenticate
+	/// Asks the app if the user should authenticate so the app prepares for it.
 	func userShouldAuthenticate() {
 		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
@@ -197,6 +229,7 @@ extension Kurozora {
 		}
 	}
 
+	/// Tells the app that the user has to authenticate so the app prepares for it.
 	func userHasToAuthenticate() {
 		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
@@ -205,7 +238,7 @@ extension Kurozora {
 		}
 	}
 
-	/// Prepares view to prepare the app for authentication
+	/// Prepare the view to prepare the app for authentication.
 	func prepareView() {
 		let blurEffect = UIBlurEffect(style: .dark)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -218,7 +251,7 @@ extension Kurozora {
 		}
 	}
 
-	/// Prepares timer to prepare the app for authentication
+	/// Prepare timer to prepare the app for authentication.
 	func prepareTimer() {
 		let requireAuthentication = try? GlobalVariables().KDefaults.get("requireAuthentication")
 		var interval = 0
@@ -242,7 +275,7 @@ extension Kurozora {
 		authenticationInterval = Date.uptime() + interval
 	}
 
-	/// Prepares the app for authentication
+	/// Prepare the app for authentication.
 	@objc func prepareForAuthentication() {
 		let topViewController = UIApplication.topViewController
 
@@ -270,7 +303,14 @@ extension Kurozora {
 		})
 	}
 
-	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler:@escaping (Bool) -> Void) {
+	/**
+		Start local authentication.
+
+		- Parameter viewController: The view controller on which the authentication is taking place.
+		- Parameter successHandler: A closure returning a boolean indicating whether authentication is successful.
+		- Parameter isSuccess: A boolean value indicating whether authentication is successful.
+	*/
+	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		let localAuthenticationContext = LAContext()
 		var authError: NSError?
 		let reasonString = "Welcome back! Please authenticate to continue."
@@ -278,14 +318,14 @@ extension Kurozora {
 		if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
 			localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, evaluateError in
 				if success {
-					//TODO: User authenticated successfully, take appropriate action
+					// User authenticated successfully.
 					successHandler(success)
 				} else {
-					//TODO: User did not authenticate successfully, look at error and take appropriate action
+					// User did not authenticate successfully.
 					DispatchQueue.main.async {
 						guard let error = evaluateError else { return }
 
-						//TODO: If you have choosen the 'Fallback authentication mechanism selected' (LAError.userFallback). Handle gracefully
+						// If user has chosen the 'Fallback authentication mechanism selected' (LAError.userFallback). Handle gracefully.
 						switch error._code {
 						case LAError.userFallback.rawValue:
 							print("fallback chosen")
@@ -298,11 +338,18 @@ extension Kurozora {
 			}
 		} else {
 			guard let error = authError else { return }
-			// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled
+			// Show appropriate alert if biometry/TouchID/FaceID is locked out or not enrolled.
 			SCLAlertView().showError("Error Authenticating", subTitle: self.evaluateAuthenticationPolicyMessageForLA(errorCode: error.code))
 		}
 	}
 
+	/**
+		Return a string describing the evaluated Policy Fail Error error code.
+
+		- Parameter errorCode: The error code to evaluate.
+
+		- Returns: a string describing the evaluated error code.
+	*/
 	fileprivate func evaluatePolicyFailErrorMessageForLA(errorCode: Int) -> String {
 		var message = ""
 
@@ -330,9 +377,16 @@ extension Kurozora {
 			}
 		}
 
-		return message;
+		return message
 	}
 
+	/**
+		Return a string describing the evaluated Authentication Policy error code.
+
+		- Parameter errorCode: The error code to evaluate.
+
+		- Returns: a string describing the evaluated error code.
+	*/
 	fileprivate func evaluateAuthenticationPolicyMessageForLA(errorCode: Int) -> String {
 		var message = ""
 

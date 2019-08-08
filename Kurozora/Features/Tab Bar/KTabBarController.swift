@@ -1,5 +1,5 @@
 //
-//  KurozoraTabBarController.swift
+//  KTabBarController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/07/2018.
@@ -9,8 +9,8 @@
 import UIKit
 import ESTabBarController_swift
 
-class KurozoraTabBarController: ESTabBarController {
-	var once: Bool = false
+class KTabBarController: ESTabBarController {
+	fileprivate var once: Bool = false
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -20,8 +20,6 @@ class KurozoraTabBarController: ESTabBarController {
 			self.tabBar.itemPositioning = .centered
 			self.tabBar.backgroundColor = .clear
 			self.tabBar.barStyle = .default
-			self.tabBar.theme_tintColor = KThemePicker.tintColor.rawValue
-			self.tabBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 
 			once = true
 		}
@@ -55,5 +53,17 @@ class KurozoraTabBarController: ESTabBarController {
 
         // Initialize views
 		viewControllers = [homeCollectionViewController, libraryViewController, forumsViewController, notificationsViewController, feedViewController]
+
+		setupBadgeValue()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateBadgeValue(_:)), name: updateNotificationsBadgeValueNotification, object: nil)
     }
+
+	// MARK: - Functions
+	fileprivate func setupBadgeValue() {
+		self.tabBar.items?[3].badgeValue = "69"
+	}
+
+	@objc func updateBadgeValue(_ notification: Notification) {
+		self.tabBar.items?[3].badgeValue = "69"
+	}
 }

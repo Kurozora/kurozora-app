@@ -9,7 +9,11 @@
 import UIKit
 
 extension Date {
-	/// Get system uptime
+	/**
+		Return device's system uptime.
+
+		- Returns: device's system uptime.
+	*/
 	static func uptime() -> time_t {
 		var boottime = timeval()
 		var mib: [Int32] = [CTL_KERN, KERN_BOOTTIME]
@@ -25,42 +29,42 @@ extension Date {
 		return uptime
 	}
 
-	/// Retunrs string representing how much time has passed since given date
+	/**
+		Retunrs string representing how much time has passed since given date.
+
+		- Parameter time: The time to be compared with in string format.
+
+		- Returns: a string representing how much time has passed since given date.
+	*/
 	static func timeAgo(_ time: String?) -> String {
 		guard let time = time else { return "" }
-		let formatter = DateFormatter()
-		formatter.locale = Locale(identifier: "US_en")
-		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-
-		guard let date = formatter.date(from: time) else { return "" }
-
+		let date = stringToDateTime(string: time)
 		let timeInterval = Int(-date.timeIntervalSince(Date()))
 
 		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
 			return "\(yearsAgo)Y ago"
-//				+ (yearsAgo == 1 ? "year" : "years")
 		} else if let monthsAgo = timeInterval / (4*7*24*60*60) as Int?, monthsAgo > 0 {
 			return "\(monthsAgo)M ago"
-//				+ (monthsAgo == 1 ? "month" : "months")
 		} else if let weeksAgo = timeInterval / (7*24*60*60) as Int?, weeksAgo > 0 {
 			return "\(weeksAgo)w ago"
-//				+ (weeksAgo == 1 ? "week" : "weeks")
 		} else if let daysAgo = timeInterval / (24*60*60) as Int?, daysAgo > 0 {
-//			return weekDay + ": " + time
 			return "\(daysAgo)d ago"
-//				+ (daysAgo == 1 ? "day" : "days")
 		} else if let hoursAgo = timeInterval / (60*60) as Int?, hoursAgo > 0 {
 			return "\(hoursAgo)h ago"
-//				+ (hoursAgo == 1 ? "h ago" : "hrs")
 		} else if let minutesAgo = timeInterval / 60 as Int?, minutesAgo > 0 {
 			return "\(minutesAgo)m ago"
-//				+ (minutesAgo == 1 ? "min" : "mins")
 		} else {
 			return "Just now"
 		}
 	}
 
-	/// Returns a string indicating the group a given date falls in (i.e. Last Week, Last Month, etc.)
+	/**
+		Returns a string indicating the group a given date falls in.
+
+		- Parameter date: The string of the date by which the grouping will be determined.
+
+		- Returns: a string indicating the group a given date falls in (i.e. Last Week, Last Month, etc.).
+	*/
 	static func groupTime(by date: String) -> String {
 		let formatter = DateFormatter()
 		formatter.locale = Locale(identifier: "US_en")
@@ -88,7 +92,13 @@ extension Date {
 		}
 	}
 
-	/// Returns a date object for given string
+	/**
+		Returns a date object for given string.
+
+		- Parameter string: The string that needs to be converted to a date object.
+
+		- Returns: a date object for given string.
+	*/
 	static func stringToDateTime(string: String?) -> Date {
 		guard let string = string else { return Date() }
 		let dateFormatter = DateFormatter()
