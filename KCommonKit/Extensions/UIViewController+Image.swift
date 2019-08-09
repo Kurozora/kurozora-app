@@ -13,9 +13,10 @@ import AVFoundation
 
 extension UIViewController {
 	/**
-		Present image in a lightbox
+		Present an image in a lightbox.
 
-		- Parameter image: The url to pass onto the view
+		- Parameter image: The url of the image to pass onto the view.
+		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
 	*/
 	public func presentPhotoViewControllerWith(url image: String?, from startingImageView: UIImageView) {
 		guard let image = image else { return }
@@ -40,9 +41,10 @@ extension UIViewController {
     }
 
 	/**
-		Present image in a lightbox
+		Present an image in a lightbox.
 
-		- Parameter image: The string to pass onto the view
+		- Parameter image: The string of the image to pass onto the view.
+		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
 	*/
 	public func presentPhotoViewControllerWith(string image: String?, from startingImageView: UIImageView) {
         guard let image = image else { return }
@@ -65,6 +67,11 @@ extension UIViewController {
         present(photosViewController, animated: true, completion: nil)
     }
 
+	/**
+		Present a YouTube video in a view controller.
+
+		- Parameter youtubeID: The id of the YouTube video that should be presented.
+	*/
 	public func presentVideoViewControllerWith(string youtubeID: String) {
 		guard var youtubeUrl = URL(string: "youtube://\(youtubeID)") else { return }
 

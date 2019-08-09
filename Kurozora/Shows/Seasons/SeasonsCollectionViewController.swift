@@ -47,7 +47,7 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 
 	// MARK: - Functions
     fileprivate func fetchSeasons() {
-        Service.shared.getSeasonFor(showID, withSuccess: { (seasons) in
+        Service.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {
 				self.seasons = seasons
 			}

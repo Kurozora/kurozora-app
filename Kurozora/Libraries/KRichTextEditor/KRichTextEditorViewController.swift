@@ -100,11 +100,11 @@ class KRichTextEditorViewController: UIViewController, RichEditorDelegate, RichE
 	}
 
 	@IBAction func postButtonPressed(_ sender: UIBarButtonItem) {
+		guard let sectionID = sectionID else { return }
 		guard let title = titleTextField.text?.trimmed else { return }
 		guard let content = richEditorView?.contentHTML else { return }
-		guard let sectionID = sectionID else { return }
 
-		Service.shared.postThread(withTitle: title, content: content, forSection: sectionID, withSuccess: { (threadID) in
+		Service.shared.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
 			DispatchQueue.main.async {
 				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 				let contentTeaser = self.richEditorView?.text

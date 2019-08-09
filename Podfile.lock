@@ -39,9 +39,9 @@ PODS:
     - iosMath
     - SnapKit
   - SCLAlertView (0.8.1)
-  - SnapKit (5.0.0)
+  - SnapKit (5.0.1)
   - Solar (2.1.0)
-  - SPStorkController (1.7.6)
+  - SPStorkController (1.7.7)
   - Starscream (3.0.6)
   - SwifterSwift (5.0.0):
     - SwifterSwift/AppKit (= 5.0.0)
@@ -158,7 +158,7 @@ CHECKOUT OPTIONS:
     :commit: master
     :git: https://github.com/PiXeL16/RevealingSplashView.git
   SCLAlertView:
-    :commit: b424dc77ab8e1fcc4c999b074c592e90de6e482e
+    :commit: f76bb0306b4c73523ca64100b0e3f2ad6896cee2
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
@@ -189,9 +189,9 @@ SPEC CHECKSUMS:
   RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
   RichTextView: a8aeabdc23d3eb1688e90fc576aa01cdb4abdf18
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
-  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
-  SPStorkController: 6d0d0716a4e9e8245aa80715ffc57491b428569e
+  SPStorkController: 864d63ba3a689778a3739e0627d0711c72ef7965
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614

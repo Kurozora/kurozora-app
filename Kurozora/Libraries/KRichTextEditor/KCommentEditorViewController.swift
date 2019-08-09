@@ -110,9 +110,10 @@ class KCommentEditorViewController: UIViewController {
 
 	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
-			guard let comment = commentTextView.text, comment != "" else { return }
 			guard let threadID = forumThread?.id else { return }
-			Service.shared.postReply(withComment: comment, forThread: threadID) { (replyID) in
+			guard let comment = commentTextView.text, comment != "" else { return }
+			
+			Service.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {
 					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 					let replyJSON: JSON = [

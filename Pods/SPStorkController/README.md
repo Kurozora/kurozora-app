@@ -17,20 +17,24 @@ If you like the project, do not forget to `put star ★` and follow me on GitHub
 
 - [Requirements](#requirements)
 - [Installation](#installation)
+    - [CocoaPods](#cocoapods)
+    - [Carthage](#carthage)
+    - [Swift Package Manager](#swift-package-manager)
+    - [Manually](#manually)
 - [Quick Start](#quick-start)
 - [Usage](#usage)
     - [Light StatusBar](#light-statusbar)
     - [Custom Height](#custom-height)
     - [Close Button](#close-button)
-    - [Indicator](#indicator)
+    - [Arrow Indicator](#arrow-indicator)
     - [Dismissing](#dismissing)
     - [Corner Radius](#corner-radius)
     - [Haptic](#haptic)
     - [Snapshots](#snapshots)
-    - [Add Navigation Bar](#add-navigation-bar)
+    - [Navigation Bar](#navigation-bar)
     - [Working with UIScrollView](#working-with-uiscrollview)
     - [UITableView & UICollectionView](#working-with-uitableview--uicollectionview)
-    - [Confirm](#confirm)
+    - [Confirm before dismiss](#confirm-before-dismiss)
     - [Delegate](#delegate)
     - [Storyboard](#storyboard)
 - [Sheets in iOS 13](#sheets-in-ios-13)
@@ -148,7 +152,7 @@ Property `showCloseButton` added circle button with dismiss action. Default is `
 transitionDelegate.showCloseButton = false
 ```
 
-### Indicator
+### Arrow Indicator
 
 On the top of controller you can add arrow indicator with animatable states. It simple configure.
 Property `showIndicator` shows or hides top arrow indicator. Default is `true`:
@@ -216,7 +220,13 @@ SPStorkController.updatePresentingController(modal: controller)
 
 and pass the controller, which is modal and uses `SPStorkTransitioningDelegate`.
 
-### Add Navigation Bar
+If the parent controller scrollings and you try to show `SPStorkController`, you will see how it froze, and in a second its final position is updated. I recommend before present `SPStorkController`  stop scrolling force:
+
+```swift 
+scrollView.setContentOffset(self.contentOffset, animated: false)
+```
+
+### Navigation Bar
 
 You may want to add a navigation bar to your modal controller. Since it became impossible to change or customize the native controller in swift 4 (I couldn’t even find a way to change the height of the bar), I had to recreate navigation bar from the ground up. Visually it looks real, but it doesn’t execute the necessary functions:
 
@@ -275,7 +285,7 @@ tableView.scrollIndicatorInsets.top = self.navBar.height
 
 Please, also use `SPStorkController.scrollViewDidScroll` function in scroll delegate for more interactiveness with your collection or table view.
 
-### Confirm
+### Confirm before dismiss
 
 For confirm closing by swipe, tap around, close button and indicator use `SPStorkControllerConfirmDelegate`. Implenet protocol:
 
@@ -348,14 +358,6 @@ controller.modalPresentationStyle = .custom
 ```
 
 It’s needed for correct presentation and dismissal of all modal controllers.
-
-### Stop scroll
-
-`SPStorkController` use snapshots. If the parent controller scrollings and you try to show `SPStorkController`, you will see how it froze, and in a second its final position is updated. I recommend to stop scrolling force:
-
-```swift 
-scrollView.setContentOffset(self.contentOffset, animated: false)
-```
 
 ## Sheets in iOS 13
 

@@ -123,7 +123,7 @@ class ManageActiveSessionsController: UIViewController {
 		alertView.addButton("Yes!", action: {
 			let sessionSecret = otherSessionsCell.sessions?.id
 
-			Service.shared.deleteSession(sessionSecret, withSuccess: { (success) in
+			Service.shared.deleteSession(with: sessionSecret, withSuccess: { (success) in
 				if success {
 					// Get index path for cell
 					if let indexPath = self.tableView.indexPath(for: otherSessionsCell) {
