@@ -19,9 +19,10 @@ def common_pods
 #	pod 'SnowGlobe'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
+	pod 'SwiftyJSON'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
-	pod 'TRON'
+	pod 'TRON', '~> 5.0.0-beta.5'
 #	pod 'UIImageColors'
 end
 

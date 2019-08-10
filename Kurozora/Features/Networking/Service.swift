@@ -7,14 +7,15 @@
 //
 
 import KCommonKit
-import TRON
+import Alamofire
 import SwiftyJSON
 import SCLAlertView
+import TRON
 
 struct Service {
 	let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
-	fileprivate let headers = [
+	fileprivate let headers: HTTPHeaders = [
 		"Content-Type": "application/x-www-form-urlencoded"
 	]
 
@@ -32,14 +33,17 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
-	func register(withUsername username: String?, email: String?, password: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func register(withUsername username: String?, email: String?, password: String?, profileImage image: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let username = username else { return }
 		guard let email = email else { return }
 		guard let password = password else { return }
 
-		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users")
+		let request: UploadAPIRequest<User,APIError> = tron.swiftyJSON.uploadMultipart("users") { (formData) in
+			if let profileImage = image?.jpegData(compressionQuality: 0.1) {
+				formData.append(profileImage, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
+			}
+		}
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"username": username,
@@ -53,10 +57,10 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
+//			if let responseMessage = error.description {
 				UIView().endEditing(true)
-				SCLAlertView().showError("Can't register account 😔", subTitle: responseMessage)
-			}
+				SCLAlertView().showError("Can't register account 😔", subTitle: error.description)
+//			}
 
 			print("Received reset password error: \(error)")
 		})
@@ -72,9 +76,8 @@ struct Service {
 	func resetPassword(_ email: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let email = email else { return }
 
-		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/reset-password")
+		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/reset-password")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"email": email,
@@ -86,10 +89,10 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
+//			if let responseMessage = error.errorModel?.message {
 				UIView().endEditing(true)
-				SCLAlertView().showError("Can't send reset link 😔", subTitle: responseMessage)
-			}
+				SCLAlertView().showError("Can't send reset link 😔", subTitle: error.description)
+//			}
 
 			print("Received reset password error: \(error)")
 		})
@@ -99,17 +102,16 @@ struct Service {
 		Update the current user's profile information.
 
 		- Parameter bio: The new biography to set.
-		- Parameter profileImage: The new user's avatar image.
+		- Parameter image: The new user's avatar image.
 		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
-	func updateInformation(withBio bio: String?, profileImage: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let bio = bio else { return }
-		guard let profileImage = profileImage else { return }
+	func updateInformation(withBio bio: String?, profileImage image: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let userID = User.currentID else { return }
+		guard let bio = bio else { return }
 
-		let request : UploadAPIRequest<User,JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
-			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
+		let request: UploadAPIRequest<User,APIError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
+			if let profileImage = image?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
 			}
 		}
@@ -118,13 +120,12 @@ struct Service {
 			"Content-Type": "multipart/form-data",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"biography": bio
 		]
 
-		request.performMultipart(withSuccess: { (update) in
+		request.perform(withSuccess: { (update) in
 			if let success = update.success {
 				if success {
 					successHandler(success)
@@ -134,10 +135,10 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
+//			if let responseMessage = error.errorModel?.message {
 				UIView().endEditing(true)
-				SCLAlertView().showError("Can't update information 😔", subTitle: responseMessage)
-			}
+				SCLAlertView().showError("Can't update information 😔", subTitle: error.description)
+//			}
 
 			print("Received update information error: \(error)")
 		})
@@ -152,12 +153,11 @@ struct Service {
 	func getSessions(withSuccess successHandler:@escaping (_ userSessions: UserSessions?) -> Void){
 		guard let userID = User.currentID else { return }
 
-		let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
+		let request: APIRequest<UserSessions,APIError> = tron.swiftyJSON.request("users/\(userID)/sessions")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { session in
 			if let success = session.success {
@@ -166,9 +166,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get session 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get session 😔", subTitle: error.description)
+//			}
 
 			print("Received get session error: \(error)")
 		})
@@ -185,12 +185,11 @@ struct Service {
 		guard let status = status else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<Library,APIError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"status": status
@@ -202,9 +201,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get your library 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get your library 😔", subTitle: error.description)
+//			}
 
 			print("Received get library error: \(error)")
 		})
@@ -223,12 +222,11 @@ struct Service {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<Library,APIError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"status": status,
@@ -241,9 +239,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't add to your library 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't add to your library 😔", subTitle: error.description)
+//			}
 
 			print("Received add library error: \(error)")
 		})
@@ -260,12 +258,11 @@ struct Service {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library,JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
+		let request: APIRequest<Library,APIError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"anime_id": showID
@@ -277,9 +274,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't remove from your library 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.description)
+//			}
 
 			print("Received remove library error: \(error)")
 		})
@@ -295,12 +292,11 @@ struct Service {
 	func getUserProfile(_ userID: Int?, withSuccess successHandler:@escaping (_ user: User?) -> Void) {
 		guard let userID = userID else { return }
 
-		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("users/\(userID)/profile")
+		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/\(userID)/profile")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { userProfile in
 			if let success = userProfile.success {
@@ -309,9 +305,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-				if let responseMessage = error.errorModel?.message {
-					SCLAlertView().showError("Can't get user details 😔", subTitle: responseMessage)
-				}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get user details 😔", subTitle: error.description)
+//			}
 
 			print("Received user profile error: \(error)")
 		})
@@ -326,12 +322,11 @@ struct Service {
 	func getNotifications(withSuccess successHandler:@escaping (_ userNotifications: [UserNotificationsElement]?) -> Void){
 		guard let userID = User.currentID else { return }
 
-		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
+		let request: APIRequest<UserNotification,APIError> = tron.swiftyJSON.request("users/\(userID)/notifications")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { userNotifications in
 			if let success = userNotifications.success {
@@ -340,9 +335,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get your notifications 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get your notifications 😔", subTitle: error.description)
+//			}
 
 			print("Received get notifications error: \(error)")
 		})
@@ -358,9 +353,8 @@ struct Service {
 	func search(forUser user: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
 		guard let user = user else { return }
 
-		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("users/search")
+		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("users/search")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"query": user
@@ -372,9 +366,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: error.description)
+//			}
 
 			print("Received user search error: \(error)")
 		})
@@ -392,12 +386,11 @@ struct Service {
 		guard let follow = follow else { return }
 		guard let userID = userID else { return }
 
-		let request : APIRequest<UserFollow,JSONError> = tron.swiftyJSON.request("users/\(userID)/follow")
+		let request: APIRequest<UserFollow,APIError> = tron.swiftyJSON.request("users/\(userID)/follow")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"follow": follow
@@ -409,9 +402,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't follow user 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't follow user 😔", subTitle: error.description)
+//			}
 
 			print("Received follow user error: \(error)")
 		})
@@ -430,13 +423,12 @@ struct Service {
 	func deleteNotification(with notificationID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 
-		let request : APIRequest<UserNotification,JSONError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
+		let request: APIRequest<UserNotification,APIError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 
 		request.perform(withSuccess: { notification in
@@ -446,9 +438,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't delete notification 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't delete notification 😔", subTitle: error.description)
+//			}
 
 			print("Received delete notification error: \(error)")
 		})
@@ -466,13 +458,12 @@ struct Service {
 		guard let notificationID = notificationID else { return }
 		guard let read = read else { return }
 
-		let request : APIRequest<UserNotificationsElement,JSONError> = tron.swiftyJSON.request("user-notifications/update")
+		let request: APIRequest<UserNotificationsElement,APIError> = tron.swiftyJSON.request("user-notifications/update")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"notification": notificationID,
@@ -483,9 +474,9 @@ struct Service {
 				successHandler(read)
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't update notification 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't update notification 😔", subTitle: error.description)
+//			}
 
 			print("Received update notification error: \(error)")
 		})
@@ -500,7 +491,7 @@ struct Service {
 		- Parameter explore: The returned Explore object.
 	*/
 	func getExplore(withSuccess successHandler: @escaping (_ explore: Explore?) -> Void) {
-		let request: APIRequest<Explore,JSONError> = tron.swiftyJSON.request("explore")
+		let request: APIRequest<Explore,APIError> = tron.swiftyJSON.request("explore")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { explore in
@@ -510,9 +501,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get explore page 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get explore page 😔", subTitle: error.description)
+//			}
 
 			print("Received explore error: \(error)")
 		})
@@ -528,21 +519,20 @@ struct Service {
 	func getDetails(forShow showID: Int?, withSuccess successHandler: @escaping (_ showDetails: ShowDetails) -> Void) {
 		guard let showID = showID else { return }
 
-		let request : APIRequest<ShowDetails,JSONError> = tron.swiftyJSON.request("anime/\(showID)")
+		let request: APIRequest<ShowDetails,APIError> = tron.swiftyJSON.request("anime/\(showID)")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
 			DispatchQueue.main.async {
 				successHandler(showDetails)
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get show details 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get show details 😔", subTitle: error.description)
+//			}
 
 			print("Received get details error: \(error)")
 		})
@@ -558,7 +548,7 @@ struct Service {
 	func getCastFor(_ showID: Int?, withSuccess successHandler:@escaping (_ actors: [ActorsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
-		let request: APIRequest<Actors,JSONError> = tron.swiftyJSON.request("anime/\(showID)/actors")
+		let request: APIRequest<Actors,APIError> = tron.swiftyJSON.request("anime/\(showID)/actors")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { actors in
@@ -568,9 +558,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get casts list 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get casts list 😔", subTitle: error.description)
+//			}
 
 			print("Received get cast error: \(error)")
 		})
@@ -586,9 +576,8 @@ struct Service {
 	func getSeasonsFor(_ showID: Int?, withSuccess successHandler:@escaping (_ seasons: [SeasonsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
-		let request : APIRequest<Seasons,JSONError> = tron.swiftyJSON.request("anime/\(showID)/seasons")
+		let request: APIRequest<Seasons,APIError> = tron.swiftyJSON.request("anime/\(showID)/seasons")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { seasons in
 			if let success = seasons.success {
@@ -597,9 +586,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get seasons list 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get seasons list 😔", subTitle: error.description)
+//			}
 
 			print("Received get show seasons error: \(error)")
 		})
@@ -617,12 +606,11 @@ struct Service {
 		guard let rating = score else { return }
 		guard let showID = showID else { return }
 
-		let request: APIRequest<User,JSONError> = tron.swiftyJSON.request("anime/\(showID)/rate")
+		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("anime/\(showID)/rate")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"rating": rating
@@ -634,9 +622,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't rate this show 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't rate this show 😔", subTitle: error.description)
+//			}
 
 			print("Received rating error: \(error)")
 		})
@@ -652,9 +640,8 @@ struct Service {
 	func search(forShow show: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
 		guard let show = show else { return }
 
-		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("anime/search")
+		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("anime/search")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"query": show
@@ -666,9 +653,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: error.description)
+//			}
 
 			print("Received show search error: \(error)")
 		})
@@ -686,12 +673,11 @@ struct Service {
 	func getEpisodes(forSeason seasonID: Int?, withSuccess successHandler:@escaping (_ episodes: Episodes?) -> Void) {
 		guard let seasonID = seasonID else { return }
 
-		let request : APIRequest<Episodes,JSONError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
+		let request: APIRequest<Episodes,APIError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { episodes in
 			if let success = episodes.success {
@@ -700,9 +686,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get episodes list 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get episodes list 😔", subTitle: error.description)
+//			}
 
 			print("Received get show episodes error: \(error)")
 		})
@@ -722,12 +708,11 @@ struct Service {
 		guard let episodeID = episodeID else { return }
 		guard let watched = watched else { return }
 
-		let request : APIRequest<EpisodesUserDetails,JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
+		let request: APIRequest<EpisodesUserDetails,APIError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"watched": watched
@@ -737,9 +722,9 @@ struct Service {
 				successHandler(watchedStatus)
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't update episode 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't update episode 😔", subTitle: error.description)
+//			}
 
 			print("Received mark episode error: \(error)")
 		})
@@ -754,9 +739,8 @@ struct Service {
 		- Parameter genres: The returned GenreElement array.
 	*/
 	func getGenres(withSuccess successHandler:@escaping (_ genres: [GenreElement]?) -> Void) {
-		let request : APIRequest<Genres,JSONError> = tron.swiftyJSON.request("genres")
+		let request: APIRequest<Genres,APIError> = tron.swiftyJSON.request("genres")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { genres in
 			if let success = genres.success {
@@ -765,9 +749,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get genres list 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get genres list 😔", subTitle: error.description)
+//			}
 
 			print("Received get genres error: \(error)")
 		})
@@ -782,9 +766,8 @@ struct Service {
 		- Parameter feedSections: The returned FeedSectionsElement array.
 	*/
 	func getFeedSections(withSuccess successHandler:@escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
-		let request : APIRequest<FeedSections,JSONError> = tron.swiftyJSON.request("feed-sections")
+		let request: APIRequest<FeedSections,APIError> = tron.swiftyJSON.request("feed-sections")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { sections in
 			if let success = sections.success {
@@ -793,9 +776,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get feed sections 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get feed sections 😔", subTitle: error.description)
+//			}
 
 			print("Received get feed sections error: \(error)")
 		})
@@ -813,9 +796,8 @@ struct Service {
 		guard let sectionID = sectionID else { return }
 		guard let page = page else { return }
 
-		let request : APIRequest<FeedPosts,JSONError> = tron.swiftyJSON.request("feed-sections/\(sectionID)/posts")
+		let request: APIRequest<FeedPosts,APIError> = tron.swiftyJSON.request("feed-sections/\(sectionID)/posts")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"page": page
@@ -827,9 +809,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get feed posts 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get feed posts 😔", subTitle: error.description)
+//			}
 
 			print("Received get feed posts error: \(error)")
 		})
@@ -844,9 +826,8 @@ struct Service {
 		- Parameter forumSections: The returned ForumSectionElement array.
 	*/
 	func getForumSections(withSuccess successHandler:@escaping (_ forumSections: [ForumSectionsElement]?) -> Void) {
-		let request : APIRequest<ForumSections,JSONError> = tron.swiftyJSON.request("forum-sections")
+		let request: APIRequest<ForumSections,APIError> = tron.swiftyJSON.request("forum-sections")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { sections in
 			if let success = sections.success {
@@ -855,9 +836,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get forum sections 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.description)
+//			}
 
 			print("Received get forum sections error: \(error)")
 		})
@@ -877,9 +858,8 @@ struct Service {
 		guard let order = order else { return }
 		guard let page = page else { return }
 
-		let request : APIRequest<ForumThreads,JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
+		let request: APIRequest<ForumThreads,APIError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"order": order,
@@ -892,9 +872,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get forum thread 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.description)
+//			}
 
 			print("Received get forum threads error: \(error)")
 		})
@@ -914,12 +894,11 @@ struct Service {
 		guard let content = content else { return }
 		guard let sectionID = sectionID else { return }
 
-		let request : APIRequest<ThreadPost,JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
+		let request: APIRequest<ThreadPost,APIError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"title": title,
@@ -932,9 +911,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't submit your thread 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.description)
+//			}
 
 			print("Received post thread error: \(error)")
 		})
@@ -952,9 +931,8 @@ struct Service {
 	func getDetails(forThread threadID: Int?, withSuccess successHandler:@escaping (_ thread: ForumThreadElement?) -> Void){
 		guard let threadID = threadID else { return }
 
-		let request : APIRequest<ForumThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
+		let request: APIRequest<ForumThread,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.perform(withSuccess: { thread in
 			if let success = thread.success {
@@ -963,9 +941,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get thread details 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get thread details 😔", subTitle: error.description)
+//			}
 
 			print("Received get thread error: \(error)")
 		})
@@ -983,12 +961,11 @@ struct Service {
 		guard let threadID = threadID else { return }
 		guard let vote = vote else { return }
 
-		let request : APIRequest<VoteThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/vote")
+		let request: APIRequest<VoteThread,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"vote": vote
@@ -1000,9 +977,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't vote on this thread 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't vote on this thread 😔", subTitle: error.description)
+//			}
 
 			print("Received vote thread error: \(error)")
 		})
@@ -1022,12 +999,11 @@ struct Service {
 		guard let order = order else { return }
 		guard let page = page else { return }
 
-		let request : APIRequest<ThreadReplies,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
+		let request: APIRequest<ThreadReplies,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"order": order,
@@ -1040,9 +1016,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get replies 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get replies 😔", subTitle: error.description)
+//			}
 
 			print("Received get replies error: \(error)")
 		})
@@ -1060,12 +1036,11 @@ struct Service {
 		guard let threadID = threadID else { return }
 		guard let comment = comment else { return }
 
-		let request : APIRequest<ThreadReply,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
+		let request: APIRequest<ThreadReply,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"content": comment
@@ -1077,9 +1052,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't reply 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't reply 😔", subTitle: error.description)
+//			}
 
 			print("Received post reply error: \(error)")
 		})
@@ -1095,9 +1070,8 @@ struct Service {
 	func search(forThread thread: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
 		guard let thread = thread else { return }
 
-		let request: APIRequest<Search,JSONError> = tron.swiftyJSON.request("forum-threads/search")
+		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("forum-threads/search")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .get
 		request.parameters = [
 			"query": thread
@@ -1109,9 +1083,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get search results 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get search results 😔", subTitle: error.description)
+//			}
 
 			print("Received thread search error: \(error)")
 		})
@@ -1129,12 +1103,11 @@ struct Service {
 		guard let threadID = threadID else { return }
 		guard let lock = lock else { return }
 
-		let request: APIRequest<ForumThread,JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
+		let request: APIRequest<ForumThread,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"lock": lock
@@ -1146,9 +1119,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't lock thread 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't lock thread 😔", subTitle: error.description)
+//			}
 
 			print("Received thread lock error: \(error)")
 		})
@@ -1168,12 +1141,11 @@ struct Service {
 		guard let replyID = replyID else { return }
 		guard let vote = vote else { return }
 
-		let request : APIRequest<VoteThread,JSONError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
+		let request: APIRequest<VoteThread,APIError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"vote": vote
@@ -1185,9 +1157,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't vote on this reply 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.description)
+//			}
 
 			print("Received vote reply error: \(error)")
 		})
@@ -1209,9 +1181,8 @@ struct Service {
 		guard let password = password else { return }
 		guard let device = device else { return }
 
-		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("sessions")
+		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("sessions")
 		request.headers = headers
-		request.authorizationRequirement = .required
 		request.method = .post
 		request.parameters = [
 			"username": username,
@@ -1242,10 +1213,10 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't login 😔", subTitle: responseMessage)
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't login 😔", subTitle: error.description)
 				successHandler(false)
-			}
+//			}
 
 			print("Received login error: \(error)")
 		})
@@ -1260,23 +1231,23 @@ struct Service {
 	func validateSession(withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		if User.authToken != "" && User.currentID != nil {
 			guard let sessionID = User.currentSessionID() else { return }
-			let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
+			let request: APIRequest<User,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [
 				"Content-Type": "application/x-www-form-urlencoded",
 				"kuro-auth": User.authToken
 			]
-			request.authorizationRequirement = .required
+//			request.authorizationRequirement = .required
 			request.method = .post
 			request.perform(withSuccess: { user in
 				if let success = user.success {
 					successHandler(success)
 				}
 			}, failure: { error in
-				if let responseMessage = error.errorModel?.message {
+//				if let responseMessage = error.errorModel?.message {
 					WorkflowController.logoutUser()
-					SCLAlertView().showError("Can't validate session 😔", subTitle: responseMessage)
+					SCLAlertView().showError("Can't validate session 😔", subTitle: error.description)
 					NotificationCenter.default.post(name: heartAttackNotification, object: nil)
-				}
+//				}
 
 				print("Received validate session error: \(error)")
 			})
@@ -1295,13 +1266,12 @@ struct Service {
 	func deleteSession(with sessionID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let sessionID = sessionID else { return }
 
-		let request : APIRequest<UserSessions,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
+		let request: APIRequest<UserSessions,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 
 		request.perform(withSuccess: { session in
@@ -1311,9 +1281,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't delete session 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't delete session 😔", subTitle: error.description)
+//			}
 
 			print("Received delete session error: \(error)")
 		})
@@ -1328,13 +1298,12 @@ struct Service {
 	func logout(withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let sessionID = User.currentSessionID() else { return }
 
-		let request : APIRequest<User,JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
+		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
 		]
-		request.authorizationRequirement = .required
 		request.method = .post
 
 		request.perform(withSuccess: { user in
@@ -1345,9 +1314,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't logout 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't logout 😔", subTitle: error.description)
+//			}
 
 			print("Received logout error: \(error)")
 		})
@@ -1362,7 +1331,7 @@ struct Service {
 		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
 	*/
 	func getPrivacyPolicy(withSuccess successHandler:@escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
-		let request: APIRequest<PrivacyPolicy,JSONError> = tron.swiftyJSON.request("privacy-policy")
+		let request: APIRequest<PrivacyPolicy,APIError> = tron.swiftyJSON.request("privacy-policy")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { privacyPolicy in
@@ -1372,9 +1341,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.description)
+//			}
 
 			print("Received privacy policy error: \(error)")
 		})
@@ -1388,7 +1357,7 @@ struct Service {
 		- Parameter themes: The returned ThemesElement array.
 	*/
 	func getThemes(withSuccess successHandler:@escaping (_ themes: [ThemesElement]?) -> Void){
-		let request: APIRequest<Themes,JSONError> = tron.swiftyJSON.request("themes")
+		let request: APIRequest<Themes,APIError> = tron.swiftyJSON.request("themes")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { themes in
@@ -1398,9 +1367,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			if let responseMessage = error.errorModel?.message {
-				SCLAlertView().showError("Can't get themes 😔", subTitle: responseMessage)
-			}
+//			if let responseMessage = error.errorModel?.message {
+				SCLAlertView().showError("Can't get themes 😔", subTitle: error.description)
+//			}
 
 			print("Received get themes error: \(error)")
 		})

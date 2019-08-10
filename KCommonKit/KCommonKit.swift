@@ -34,15 +34,15 @@ public class KCommonKit {
     public var showID: Int?
 }
 
-/**
-	- parameter baseUrlString: The base url of the Kurozora API
-	- parameter KDefaults: The base keychain service of the Kurozora App
-	- parameter KUserDefaults: The base UserDefaults suit of the Kurozora Apps
-*/
 public struct GlobalVariables {
 	public init() {}
+	/// The base url of the Kurozora API.
 	public let baseUrlString = "https://kurozora.app/api/v1/"
+
+	/// The base keychain service of the Kurozora App.
     public let KDefaults = Keychain(service: "app.kurozora.anime")
+
+	/// The base UserDefaults suit of the Kurozora Apps.
 	public let KUserDefaults = UserDefaults(suiteName: "group.settings.app.kurozora.anime")
 }
 

@@ -71,7 +71,7 @@ class ResetPasswordViewController: UIViewController {
 				alertView.showSuccess("Success!", subTitle: "If an account exists with this email address, you should receive an email with your reset link shortly.")
 			})
 		} else {
-			SCLAlertView().showError("Errr...", subTitle: "Please type your email address 😣")
+			SCLAlertView().showError("Errr...", subTitle: "Please type a valid email address 😣")
 		}
     }
 

@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.2)
+  - Alamofire (5.0.0-beta.7)
   - AutoInsetter (1.7.2)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
@@ -63,20 +63,16 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftTheme (0.4.4)
-  - SwiftyJSON (4.3.0)
+  - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.6.0)
   - Tabman (2.4.3):
     - AutoInsetter (~> 1.7.2)
     - Pageboy (~> 3.2.3)
-  - TRON (4.2.2):
-    - Alamofire (~> 4.5)
-    - TRON/SwiftyJSON (= 4.2.2)
-  - TRON/Core (4.2.2):
-    - Alamofire (~> 4.5)
-  - TRON/SwiftyJSON (4.2.2):
-    - Alamofire (~> 4.5)
-    - SwiftyJSON (~> 4.0)
-    - TRON/Core
+  - TRON (5.0.0-beta.5):
+    - Alamofire (~> 5.0.0-beta.6)
+    - TRON/Core (= 5.0.0-beta.5)
+  - TRON/Core (5.0.0-beta.5):
+    - Alamofire (~> 5.0.0-beta.6)
   - WhatsNew (0.4.6)
 
 DEPENDENCIES:
@@ -101,13 +97,14 @@ DEPENDENCIES:
   - SPStorkController
   - SwifterSwift
   - SwiftTheme
+  - SwiftyJSON
   - SwipeCellKit
   - Tabman
-  - TRON
+  - TRON (~> 5.0.0-beta.5)
   - WhatsNew
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AutoInsetter
     - AXPhotoViewer
@@ -162,7 +159,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: bd07938ceecad59d2492aeecb1f785a8f2721160
   AutoInsetter: 176c5c069b40bf6afa51bf7081be346ab70ca315
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
@@ -195,12 +192,12 @@ SPEC CHECKSUMS:
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
-  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
   Tabman: c2c83ebfcbec3e5be67e27a1dd6689a4e3efccd3
-  TRON: 7df36a56e7c122b6d11c39e56bba7cf5ea11bbb8
+  TRON: 38ac8e2c64a466343bb0c364da895488b6a6f123
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 0ed7f6fe0c3e2ff81e4e15f0804db0f0d8b50774
+PODFILE CHECKSUM: 6108f97276d96729bd3d369109f32d1c5af18454
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.0.beta.1

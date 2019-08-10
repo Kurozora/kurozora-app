@@ -7,8 +7,6 @@
 //
 
 import KCommonKit
-import Alamofire
-import SwiftyJSON
 import SCLAlertView
 import SwiftTheme
 
@@ -85,11 +83,28 @@ class RegisterViewController: UIViewController {
 		passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 	}
 
-    //MARK: - IBActions
-    @IBAction func dismissPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+	// MARK: - Functions
+    /// Open the camera if the device has one, otherwise show a warning.
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+            imagePicker.allowsEditing = true
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+			SCLAlertView().showWarning("Well, this is awkward.", subTitle: "You don't seem to have a camera 😓")
+        }
     }
-    
+
+    /// Open the Photo Library so the user can choose an image.
+    func openPhotoLibrary() {
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+
+    //MARK: - IBActions
     @IBAction func registerPressed(sender: AnyObject) {
         registerButton.isEnabled = false
 		registerButton.alpha = 0.5
@@ -98,62 +113,19 @@ class RegisterViewController: UIViewController {
         let email = emailTextField.trimmedText!
         let password = passwordTextField.text!
         let image = profileImage.image
-        
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        
-        let parameters:Parameters = [
-            "username": username,
-            "email": email,
-            "password": password
-        ]
-        
-        let endpoint = GlobalVariables().baseUrlString + "users"
-        
-        Alamofire.upload(multipartFormData: { multipartFormData in
-            if image != nil {
-                if let imageData = image?.jpegData(compressionQuality: 0.1) {
-                    multipartFormData.append(imageData, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
-                }
-            }
-            
-            for (key, value) in parameters {
-                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
-            }
-        }, to: endpoint, method: .post, headers: headers) { response in
-            switch response {
-            case .success(let upload, _,  _):
-            upload.responseJSON { response in
-                switch response.result {
-                case .success:
-                if response.result.value != nil {
-                    let swiftyJsonVar = JSON(response.result.value!)
 
-                    let responseSuccess = swiftyJsonVar["success"]
-                    let errorMessage = swiftyJsonVar["error_message"].stringValue
-
-                    if responseSuccess.boolValue {
-                        let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-						alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
-						alertController.addButton("Done", action: {
-							self.dismiss(animated: true, completion: nil)
-						})
-                    }else{
-						self.view.endEditing(true)
-                        SCLAlertView().showError("Error registering", subTitle: errorMessage)
-                    }
-                }
-                case .failure:
-					self.view.endEditing(true)
-                    SCLAlertView().showError("Error registering", subTitle: "There was an error while creating your account. If this error persists, check out our Twitter account @KurozoraApp for more information!" )
-                }
-            }
-            case .failure:
-				self.view.endEditing(true)
-				 SCLAlertView().showError("Error registering", subTitle: "There was an error while creating your account. If this error persists, check out our Twitter account @KurozoraApp for more information!" )
-            }
-        }
+		Service.shared.register(withUsername: username, email: email, password: password, profileImage: image) { (success) in
+			if success {
+				if success {
+					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
+					alertController.addButton("Done", action: {
+						self.navigationController?.popViewController(animated: true)
+						self.dismiss(animated: true, completion: nil)
+					})
+				}
+			}
+		}
     }
 
 	// Image picker
@@ -180,32 +152,6 @@ class RegisterViewController: UIViewController {
         }
         
         self.present(alert, animated: true, completion: nil)
-    }
-
-	// MARK: - Functions
-    // Open the camera
-    func openCamera() {
-        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
-            imagePicker.sourceType = .camera
-            imagePicker.allowsEditing = true
-            imagePicker.delegate = self
-            
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else{
-            let alert  = UIAlertController(title: "⚠️ Warning ⚠️", message: "You don't seem to have a camera 😢", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    // Choose image from camera roll
-    func openPhotoLibrary() {
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-        
-        self.present(imagePicker, animated: true, completion: nil)
     }
 }
 
