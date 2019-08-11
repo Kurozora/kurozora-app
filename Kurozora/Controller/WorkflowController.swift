@@ -29,7 +29,7 @@ public class WorkflowController {
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject] {
 					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
-						if sessionID != User.currentSessionID() {
+						if sessionID != User.currentSessionID {
 							notificationsHandler(device)
 
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
@@ -43,9 +43,9 @@ public class WorkflowController {
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
 					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let reason = data["reason"] as? String {
-						let isKiller = User.currentSessionID() == sessionKillerId
+						let isKiller = User.currentSessionID == sessionKillerId
 
-						if sessionID == User.currentSessionID(), !isKiller {
+						if sessionID == User.currentSessionID, !isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
 							logoutUser()
@@ -56,7 +56,7 @@ public class WorkflowController {
 							vc.isKiller = isKiller
 
 							UIApplication.topViewController?.present(vc, animated: true)
-						} else if sessionID == User.currentSessionID(), isKiller {
+						} else if sessionID == User.currentSessionID, isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
 						} else {

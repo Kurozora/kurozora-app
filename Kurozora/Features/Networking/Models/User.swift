@@ -146,7 +146,11 @@ class UserProfile: JSONDecodable {
 //        return true
 //    }
 
+// MARK: - User variables
 extension User {
+	/// The object used to start and stop the delivery of location-related events to the app.
+	fileprivate static let locationManager = CLLocationManager()
+
 	/// Returns the username saved in KDefaults
 	static var username: String? {
 		guard let username = GlobalVariables().KDefaults["username"], username != "" else { return nil }
@@ -165,7 +169,7 @@ extension User {
 		return authToken
 	}
 
-	static let locationManager = CLLocationManager()
+	/// The coordinates of the current location of the user.
 	fileprivate static var currentUserLocation: CLLocationCoordinate2D {
 		locationManager.requestWhenInUseAuthorization()
 
@@ -219,13 +223,13 @@ extension User {
 	}
 
 	/// Returns the current Session ID saved in KDefaults
-	static func currentSessionID() -> Int? {
+	static var currentSessionID: Int? {
 		guard let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" else { return nil }
 		return Int(sessionID)
 	}
 
 	/// Returns the current device name
-	static func currentDevice() -> String {
+	static var currentDevice: String {
 		return UIDevice.modelName
 	}
 

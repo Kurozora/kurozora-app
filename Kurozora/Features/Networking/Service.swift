@@ -33,7 +33,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
-	func register(withUsername username: String?, email: String?, password: String?, profileImage image: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func register(withUsername username: String?, email: String?, password: String?, profileImage image: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let username = username else { return }
 		guard let email = email else { return }
 		guard let password = password else { return }
@@ -73,7 +73,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether reset password request is successful.
 		- Parameter isSuccess: A boolean value indicating whether reset password request is successful.
 	*/
-	func resetPassword(_ email: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func resetPassword(_ email: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let email = email else { return }
 
 		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/reset-password")
@@ -106,7 +106,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
-	func updateInformation(withBio bio: String?, profileImage image: UIImage?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func updateInformation(withBio bio: String?, profileImage image: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let userID = User.currentID else { return }
 		guard let bio = bio else { return }
 
@@ -150,7 +150,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a UserSessions object.
 		- Parameter userSessions: The returned UserSessions object.
 	*/
-	func getSessions(withSuccess successHandler:@escaping (_ userSessions: UserSessions?) -> Void){
+	func getSessions(withSuccess successHandler: @escaping (_ userSessions: UserSessions?) -> Void){
 		guard let userID = User.currentID else { return }
 
 		let request: APIRequest<UserSessions,APIError> = tron.swiftyJSON.request("users/\(userID)/sessions")
@@ -181,7 +181,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a LibraryElement array.
 		- Parameter library: The returned LibraryElement array.
 	*/
-	func getLibrary(withStatus status: String?, withSuccess successHandler:@escaping (_ library: [LibraryElement]?) -> Void) {
+	func getLibrary(withStatus status: String?, withSuccess successHandler: @escaping (_ library: [LibraryElement]?) -> Void) {
 		guard let status = status else { return }
 		guard let userID = User.currentID else { return }
 
@@ -217,7 +217,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether adding show to library is successful.
 		- Parameter isSuccess: A boolean value indicating whether adding show to library is successful.
 	*/
-	func addToLibrary(withStatus status: String?, showID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func addToLibrary(withStatus status: String?, showID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let status = status else { return }
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
@@ -254,7 +254,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether removing show from library is successful.
 		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	*/
-	func removeFromLibrary(withID showID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func removeFromLibrary(withID showID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
@@ -289,7 +289,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a User object.
 		- Parameter user: The returned User object.
 	*/
-	func getUserProfile(_ userID: Int?, withSuccess successHandler:@escaping (_ user: User?) -> Void) {
+	func getUserProfile(_ userID: Int?, withSuccess successHandler: @escaping (_ user: User?) -> Void) {
 		guard let userID = userID else { return }
 
 		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/\(userID)/profile")
@@ -319,7 +319,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a UserNotificationsElement array.
 		- Parameter userNotifications: The returned UserNotificationsElement array.
 	*/
-	func getNotifications(withSuccess successHandler:@escaping (_ userNotifications: [UserNotificationsElement]?) -> Void){
+	func getNotifications(withSuccess successHandler: @escaping (_ userNotifications: [UserNotificationsElement]?) -> Void){
 		guard let userID = User.currentID else { return }
 
 		let request: APIRequest<UserNotification,APIError> = tron.swiftyJSON.request("users/\(userID)/notifications")
@@ -350,7 +350,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forUser user: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forUser user: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
 		guard let user = user else { return }
 
 		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("users/search")
@@ -382,7 +382,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether follow/unfollow is successful.
 		- Parameter isSuccess: A boolean value indicating whether follow/unfollow is successful.
 	*/
-	func follow(_ follow: Int?, user userID: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func follow(_ follow: Int?, user userID: Int?, withSuccess successHandler: @escaping (Bool) -> Void) {
 		guard let follow = follow else { return }
 		guard let userID = userID else { return }
 
@@ -420,7 +420,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func deleteNotification(with notificationID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func deleteNotification(with notificationID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 
 		let request: APIRequest<UserNotification,APIError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
@@ -454,7 +454,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func updateNotification(for notificationID: String?, withStatus read: Int?, withSuccess successHandler:@escaping (Bool) -> Void) {
+	func updateNotification(for notificationID: String?, withStatus read: Int?, withSuccess successHandler: @escaping (Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 		guard let read = read else { return }
 
@@ -545,7 +545,7 @@ struct Service {
 		- Parameter successHandler: A closure returning an ActorsElement array.
 		- Parameter actors: The returned ActorsElement array.
 	*/
-	func getCastFor(_ showID: Int?, withSuccess successHandler:@escaping (_ actors: [ActorsElement]?) -> Void) {
+	func getCastFor(_ showID: Int?, withSuccess successHandler: @escaping (_ actors: [ActorsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
 		let request: APIRequest<Actors,APIError> = tron.swiftyJSON.request("anime/\(showID)/actors")
@@ -573,7 +573,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SeasonsElement array.
 		- Parameter seasons: The returned SeasonsElement array.
 	*/
-	func getSeasonsFor(_ showID: Int?, withSuccess successHandler:@escaping (_ seasons: [SeasonsElement]?) -> Void) {
+	func getSeasonsFor(_ showID: Int?, withSuccess successHandler: @escaping (_ seasons: [SeasonsElement]?) -> Void) {
 		guard let showID = showID else { return }
 
 		let request: APIRequest<Seasons,APIError> = tron.swiftyJSON.request("anime/\(showID)/seasons")
@@ -602,7 +602,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether rating is successful.
 		- Parameter isSuccess: A boolean value indicating whether rating is successful.
 	*/
-	func rate(showID: Int?, score: Double?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func rate(showID: Int?, score: Double?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let rating = score else { return }
 		guard let showID = showID else { return }
 
@@ -637,7 +637,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forShow show: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forShow show: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
 		guard let show = show else { return }
 
 		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("anime/search")
@@ -670,7 +670,7 @@ struct Service {
 		- Parameter successHandler: A closure returning an Episodes object.
 		- Parameter episodes: The returned Episodes object.
 	*/
-	func getEpisodes(forSeason seasonID: Int?, withSuccess successHandler:@escaping (_ episodes: Episodes?) -> Void) {
+	func getEpisodes(forSeason seasonID: Int?, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
 		guard let seasonID = seasonID else { return }
 
 		let request: APIRequest<Episodes,APIError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
@@ -704,7 +704,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether watch/unwatch is successful.
 		- Parameter isSuccess: A boolean value indicating whether watch/unwatch is successful.
 	*/
-	func mark(asWatched watched: Int?, forEpisode episodeID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func mark(asWatched watched: Int?, forEpisode episodeID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let episodeID = episodeID else { return }
 		guard let watched = watched else { return }
 
@@ -738,7 +738,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a GenreElement array.
 		- Parameter genres: The returned GenreElement array.
 	*/
-	func getGenres(withSuccess successHandler:@escaping (_ genres: [GenreElement]?) -> Void) {
+	func getGenres(withSuccess successHandler: @escaping (_ genres: [GenreElement]?) -> Void) {
 		let request: APIRequest<Genres,APIError> = tron.swiftyJSON.request("genres")
 		request.headers = headers
 		request.method = .get
@@ -765,7 +765,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a FeedSectionsElement array.
 		- Parameter feedSections: The returned FeedSectionsElement array.
 	*/
-	func getFeedSections(withSuccess successHandler:@escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
+	func getFeedSections(withSuccess successHandler: @escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
 		let request: APIRequest<FeedSections,APIError> = tron.swiftyJSON.request("feed-sections")
 		request.headers = headers
 		request.method = .get
@@ -792,7 +792,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a FeedPosts array.
 		- Parameter feedPosts: The returned FeedPosts array.
 	*/
-	func getFeedPosts(for sectionID: Int?, page: Int?, withSuccess successHandler:@escaping (_ feedPosts: FeedPosts?) -> Void) {
+	func getFeedPosts(for sectionID: Int?, page: Int?, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let page = page else { return }
 
@@ -825,7 +825,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ForumSectionsElement array.
 		- Parameter forumSections: The returned ForumSectionElement array.
 	*/
-	func getForumSections(withSuccess successHandler:@escaping (_ forumSections: [ForumSectionsElement]?) -> Void) {
+	func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumSectionsElement]?) -> Void) {
 		let request: APIRequest<ForumSections,APIError> = tron.swiftyJSON.request("forum-sections")
 		request.headers = headers
 		request.method = .get
@@ -853,7 +853,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ForumThreads array.
 		- Parameter forumThreads: The returned ForumThreads array.
 	*/
-	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping (_ forumThreads: ForumThreads?) -> Void) {
+	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler: @escaping (_ forumThreads: ForumThreads?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
@@ -889,7 +889,7 @@ struct Service {
 		- Parameter successHandler: A closure returning the newly created thread id.
 		- Parameter threadID: The id of the newly created thread.
 	*/
-	func postThread(inSection sectionID: Int?, withTitle title: String?, content: String?, withSuccess successHandler:@escaping (_ threadID: Int) -> Void){
+	func postThread(inSection sectionID: Int?, withTitle title: String?, content: String?, withSuccess successHandler: @escaping (_ threadID: Int) -> Void){
 		guard let title = title else { return }
 		guard let content = content else { return }
 		guard let sectionID = sectionID else { return }
@@ -928,7 +928,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ForumThreadElement object.
 		- Parameter thread: The returned ForumTheadElement object.
 	*/
-	func getDetails(forThread threadID: Int?, withSuccess successHandler:@escaping (_ thread: ForumThreadElement?) -> Void){
+	func getDetails(forThread threadID: Int?, withSuccess successHandler: @escaping (_ thread: ForumThreadElement?) -> Void){
 		guard let threadID = threadID else { return }
 
 		let request: APIRequest<ForumThread,APIError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
@@ -957,7 +957,7 @@ struct Service {
 		- Parameter successHandler: A closure returning an intiger indicating whether the thread is upvoted or downvoted.
 		- Parameter action: The integer indicating whether the thead is upvoted or downvoted.
 	*/
-	func vote(forThread threadID: Int?, vote: Int?, withSuccess successHandler:@escaping (_ action: Int) -> Void) {
+	func vote(forThread threadID: Int?, vote: Int?, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let vote = vote else { return }
 
@@ -994,7 +994,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ThreadReplies object.
 		- Parameter threadReplies: The returned ThreadReplies object.
 	*/
-	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler:@escaping (_ threadReplies: ThreadReplies) -> Void) {
+	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
@@ -1032,7 +1032,7 @@ struct Service {
 		- Parameter successHandler: A closure returning the newly created reply id.
 		- Parameter replyID: The id of the newly created reply.
 	*/
-	func postReply(inThread threadID: Int?, withComment comment: String?, withSuccess successHandler:@escaping (_ replyID: Int) -> Void){
+	func postReply(inThread threadID: Int?, withComment comment: String?, withSuccess successHandler: @escaping (_ replyID: Int) -> Void){
 		guard let threadID = threadID else { return }
 		guard let comment = comment else { return }
 
@@ -1067,7 +1067,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forThread thread: String?, withSuccess successHandler:@escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forThread thread: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
 		guard let thread = thread else { return }
 
 		let request: APIRequest<Search,APIError> = tron.swiftyJSON.request("forum-threads/search")
@@ -1099,7 +1099,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether thread lock/unlock is successful.
 		- Parameter isSuccess: A boolean value indicating whether thread lock/unlock is successful.
 	*/
-	func lockThread(withID threadID: Int?, lock: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func lockThread(withID threadID: Int?, lock: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let lock = lock else { return }
 
@@ -1137,7 +1137,7 @@ struct Service {
 		- Parameter successHandler: A closure returning an integer indicating whether the reply is upvoted or downvoted.
 		- Parameter action: The integer indicating whether the reply is upvoted or downvoted.
 	*/
-	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler:@escaping (_ action: Int) -> Void) {
+	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
 		guard let replyID = replyID else { return }
 		guard let vote = vote else { return }
 
@@ -1176,7 +1176,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether login is successful.
 		- Parameter isSuccess: A boolean value indicating whether login is successful.
 	*/
-	func login(_ username: String?, _ password: String?, _ device: String?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func login(_ username: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let username = username else { return }
 		guard let password = password else { return }
 		guard let device = device else { return }
@@ -1228,9 +1228,9 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
-	func validateSession(withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		if User.authToken != "" && User.currentID != nil {
-			guard let sessionID = User.currentSessionID() else { return }
+			guard let sessionID = User.currentSessionID else { return }
 			let request: APIRequest<User,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [
 				"Content-Type": "application/x-www-form-urlencoded",
@@ -1263,7 +1263,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether session delete is successful.
 		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
 	*/
-	func deleteSession(with sessionID: Int?, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	func deleteSession(with sessionID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let sessionID = sessionID else { return }
 
 		let request: APIRequest<UserSessions,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
@@ -1295,11 +1295,10 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether logout is successful.
 		- Parameter isSuccess: A boolean value indicating whether logout is successful.
 	*/
-	func logout(withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let sessionID = User.currentSessionID() else { return }
+	func logout(withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
+		guard let sessionID = User.currentSessionID else { return }
 
 		let request: APIRequest<User,APIError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
-
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -1310,7 +1309,7 @@ struct Service {
 			if let success = user.success {
 				if success {
 					WorkflowController.logoutUser()
-					successHandler(success)
+					successHandler?(success)
 				}
 			}
 		}, failure: { error in
@@ -1330,7 +1329,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a PrivacyPolicyElement object.
 		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
 	*/
-	func getPrivacyPolicy(withSuccess successHandler:@escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
+	func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
 		let request: APIRequest<PrivacyPolicy,APIError> = tron.swiftyJSON.request("privacy-policy")
 		request.headers = headers
 		request.method = .get
@@ -1356,7 +1355,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ThemesElement array.
 		- Parameter themes: The returned ThemesElement array.
 	*/
-	func getThemes(withSuccess successHandler:@escaping (_ themes: [ThemesElement]?) -> Void){
+	func getThemes(withSuccess successHandler: @escaping (_ themes: [ThemesElement]?) -> Void){
 		let request: APIRequest<Themes,APIError> = tron.swiftyJSON.request("themes")
 		request.headers = headers
 		request.method = .get

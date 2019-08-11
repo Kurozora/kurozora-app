@@ -116,14 +116,12 @@ class RegisterViewController: UIViewController {
 
 		Service.shared.register(withUsername: username, email: email, password: password, profileImage: image) { (success) in
 			if success {
-				if success {
-					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
-					alertController.addButton("Done", action: {
-						self.navigationController?.popViewController(animated: true)
-						self.dismiss(animated: true, completion: nil)
-					})
-				}
+				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+				alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
+				alertController.addButton("Done", action: {
+					self.navigationController?.popViewController(animated: true)
+					self.dismiss(animated: true, completion: nil)
+				})
 			}
 		}
     }

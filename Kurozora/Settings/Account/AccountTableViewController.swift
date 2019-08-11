@@ -56,8 +56,7 @@ extension AccountTableViewController {
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isLoggedIn {
-					Service.shared.logout(withSuccess: { (success) in
-					})
+					Service.shared.logout(withSuccess: nil)
 				} else {
 					let storyboard = UIStoryboard(name: "login", bundle: nil)
 					if let welcomeViewController = storyboard.instantiateInitialViewController() {
