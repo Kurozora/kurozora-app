@@ -52,8 +52,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	var delegate: ExploreCollectionViewCellDelegate?
 	var shouldPlay = false
 
-	var videos = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"]
-
 	var homeCollectionViewController: HomeCollectionViewController?
 	var showElement: ExploreElement? = nil {
 		didSet {
@@ -67,12 +65,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var libraryStatus: String?
-
-	override func prepareForReuse() {
-		super.prepareForReuse()
-//		self.avPlayerViewController?.player?.pause()
-//		self.avPlayerViewController?.player = nil
-	}
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -195,8 +187,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	}
 
 	func configureVideoPlayer() {
-		guard let item = indexPath?.item else { return }
-		let videoUrl = URL(string: videos[item])
+		guard let videoUrlString = showElement?.videoUrl else { return }
+		let videoUrl = URL(string: videoUrlString)
 		let avPlayerItem = AVPlayerItem(url: videoUrl!)
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)

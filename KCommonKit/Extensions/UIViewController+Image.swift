@@ -72,13 +72,13 @@ extension UIViewController {
 
 		- Parameter youtubeID: The id of the YouTube video that should be presented.
 	*/
-	public func presentVideoViewControllerWith(string youtubeID: String) {
-		guard var youtubeUrl = URL(string: "youtube://\(youtubeID)") else { return }
-
-		if !UIApplication.shared.canOpenURL(youtubeUrl)  {
-			youtubeUrl = URL(string:"http://www.youtube.com/watch?v=\(youtubeID)")!
+	public func presentVideoViewControllerWith(string videoUrl: String) {
+		let videoURL = URL(string: videoUrl)
+		let player = AVPlayer(url: videoURL!)
+		let playerViewController = AVPlayerViewController()
+		playerViewController.player = player
+		present(playerViewController, animated: true) {
+			playerViewController.player!.play()
 		}
-
-		UIApplication.shared.open(youtubeUrl, options: [:], completionHandler: nil)
 	}
 }

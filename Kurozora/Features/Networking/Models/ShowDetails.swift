@@ -65,7 +65,7 @@ class ShowDetailsElement: JSONDecodable {
     let japaneseTitles: String?
     let synonyms: String?
     let externalLinks: String?
-    let youtubeID: String?
+    let videoUrl: String?
 
     required init(json: JSON) throws {
         // Anime
@@ -107,7 +107,7 @@ class ShowDetailsElement: JSONDecodable {
         japaneseTitles = json["japanese_titles"].stringValue
         synonyms = json["synonyms"].stringValue
         externalLinks = json["external_links"].stringValue
-        youtubeID = json["youtube_id"].stringValue
+        videoUrl = json["video_url"].stringValue
     }
     
     public func informationString() -> String {

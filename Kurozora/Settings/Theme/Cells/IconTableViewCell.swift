@@ -23,11 +23,12 @@ class IconTableViewCell: UITableViewCell {
 
 	var alternativeIconsElement: AlternativeIconsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
-	fileprivate func setup() {
+	// MARK: - Functions
+	fileprivate func configureCell() {
 		guard let alternativeIconsElement = alternativeIconsElement else { return }
 
 		iconTitleLabel.text = alternativeIconsElement.name

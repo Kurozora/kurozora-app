@@ -369,12 +369,11 @@ class ShowDetailViewController: UIViewController {
 			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
 		}
 
-//		if let youtubeID = showDetailsElement.youtubeID, youtubeID != "" {
-//			trailerButton.isHidden = false
-//		} else {
-//			trailerButton.isHidden = true
-//		}
-		trailerButton.isHidden = false
+		if let videoUrl = showDetailsElement.videoUrl, videoUrl != "" {
+			trailerButton.isHidden = false
+		} else {
+			trailerButton.isHidden = true
+		}
 
 		// Display details
 		quickDetailsView.isHidden = false
@@ -543,10 +542,8 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func playTrailerPressed(_ sender: UIButton) {
-		if let youtubeID = showDetails?.showDetailsElement?.youtubeID, youtubeID != "" {
-			presentVideoViewControllerWith(string: youtubeID)
-		} else {
-			presentVideoViewControllerWith(string: "-QpuPy9EPhk")
+		if let videoUrl = showDetails?.showDetailsElement?.videoUrl, videoUrl != "" {
+			presentVideoViewControllerWith(string: videoUrl)
 		}
 	}
 
