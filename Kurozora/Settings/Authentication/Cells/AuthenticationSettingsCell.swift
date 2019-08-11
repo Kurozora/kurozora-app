@@ -40,7 +40,7 @@ class AuthenticationSettingsCell: SettingsCell {
 	@IBOutlet weak var authenticationDescriptionLabel: UILabel? {
 		didSet {
 			var title = "Lock with Passcode"
-			authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			authenticationDescriptionLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 
 			switch UIDevice.supportedBiomtetric {
 			case .faceID:
@@ -49,7 +49,7 @@ class AuthenticationSettingsCell: SettingsCell {
 				title = "Lock with Touch ID & Passcode"
 			case .none: break
 			}
-			authenticationTitleLabel?.text = title
+			authenticationDescriptionLabel?.text = title
 		}
 	}
 	@IBOutlet weak var enabledSwitch: UISwitch? {
