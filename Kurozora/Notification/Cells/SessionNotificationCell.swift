@@ -33,12 +33,12 @@ class SessionNotificationCell: SwipeTableViewCell {
 
 	var notificationsElement: UserNotificationsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
 	// MARK: - Functions
-	fileprivate func setup() {
+	fileprivate func configureCell() {
 		guard let notificationsElement = notificationsElement else { return }
 		if let creationDate = notificationsElement.creationDate {
 			notificationDateLabel.text = Date.timeAgo(creationDate)
@@ -48,8 +48,22 @@ class SessionNotificationCell: SwipeTableViewCell {
 			notificationTextLabel.text = notificationContent
 		}
 
+		updateReadStatus()
+	}
+
+	/**
+		Update the read status of the notification.
+
+		- Parameter animation: A boolean value indicating whether the update should be animated.
+	*/
+	func updateReadStatus(animated: Bool = false) {
+		guard let notificationsElement = notificationsElement else { return }
 		if let notificationIsRead = notificationsElement.read {
 			notificationMark.numberOfPages = notificationIsRead ? 0 : 1
+
+			if animated {
+				notificationMark.animateBounce()
+			}
 		}
 	}
 }

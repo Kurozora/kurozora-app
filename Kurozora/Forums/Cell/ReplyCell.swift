@@ -77,13 +77,13 @@ class ReplyCell: UITableViewCell {
 	var forumThreadElement: ForumThreadElement?
 	var threadRepliesElement: ThreadRepliesElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	var previousVote = 0
 
 	// MARK: - Functions
-	fileprivate func setup() {
+	fileprivate func configureCell() {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
 		if let avatar = threadRepliesElement.user?.avatar, avatar != "" {
@@ -119,12 +119,16 @@ class ReplyCell: UITableViewCell {
 		isUserInteractionEnabled = true
 	}
 
-	// Upvote/Downvote a thread
+	/**
+		Upvote or downvote a thread according to the given integer.
+
+		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
+	*/
 	fileprivate func voteForReply(with vote: Int) {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 		guard var replyScore = threadRepliesElement.score else { return }
 
-		Service.shared.vote(forReply: threadRepliesElement.id, vote: vote) { (action) in
+		Service.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
 			DispatchQueue.main.async {
 				if action == 1 { // upvote
 					replyScore += 1

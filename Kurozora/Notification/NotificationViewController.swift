@@ -140,12 +140,36 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		}
 	}
 
-	func updateNotification(for cells: [UITableViewCell], with notificationID: String, status: Int) {
+	/**
+		Update the read/unread status for the given notification id.
+
+		- Parameter indexPath: The IndexPath of the notifications in the tableView.
+		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
+		- Parameter status: The integer indicating whether to mark the notification as read or unread.
+		- Parameter shouldReload: Indicates whether the tableView should reload its data.
+	*/
+	func updateNotification(at indexPaths: [IndexPath], for notificationID: String, with status: Int, shouldReload: Bool) {
 		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
-			for cell in cells {
-				if let cell = cell as? SessionNotificationCell {
-					cell.notificationMark.numberOfPages = read ? 0 : 1
-					cell.notificationsElement?.read = read
+			for indexPath in indexPaths {
+				if notificationID == "all" {
+					self.userNotificationsElement?[indexPath.row].read = read
+				} else {
+					switch self.grouping {
+					case .automatic, .byType:
+						self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
+					case .off:
+						self.userNotificationsElement?[indexPath.row].read = read
+					}
+				}
+
+				if indexPaths.count == 1, let indexPath = indexPaths.first {
+					if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
+						sessionNotificationCell.updateReadStatus(animated: true)
+					}
+				} else {
+					if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
+						sessionNotificationCell.updateReadStatus(animated: false)
+					}
 				}
 			}
 		}
@@ -153,20 +177,15 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 	// MARK: - IBActions
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		let numberOfSections = tableView.numberOfSections
 		var status = 0
-		var cells = [UITableViewCell]()
+		var indexPaths = [IndexPath]()
 
-		for section in 0..<numberOfSections {
-			let numberOfRows = tableView.numberOfRows(inSection: section)
-			for row in 0..<numberOfRows {
-				if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? SessionNotificationCell {
-					if cell.notificationMark.numberOfPages == 1, status == 0 {
-						status = 1
-					}
-					cells.append(cell)
-				}
+		let numberOfRows = tableView.numberOfRows()
+		for row in 0..<numberOfRows {
+			if let read = userNotificationsElement?[row].read, !read && status == 0 {
+				status = 1
 			}
+			indexPaths.append(IndexPath(row: row, section: 0))
 		}
 
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -174,7 +193,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Mark action
 		let markAction = UIAlertAction.init(title: markActionTitle, style: .default, handler: { (_) in
-			self.updateNotification(for: cells, with: "all", status: status)
+			self.updateNotification(at: indexPaths, for: "all", with: status, shouldReload: true)
 		})
 		markAction.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
 		markAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -183,7 +202,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
-		//Present the controller
+		// Present the controller
 		if let popoverController = action.popoverPresentationController {
 			popoverController.sourceView = view
 			popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
@@ -202,24 +221,37 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Iterate over all the rows of a section
 		var notificationIDs = ""
-		var cells = [UITableViewCell]()
-		for row in 0...numberOfRows {
-			if let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? SessionNotificationCell {
-				if cell.notificationMark.numberOfPages == 1, status == 0 {
+		var indexPaths = [IndexPath]()
+		for row in 0..<numberOfRows {
+			switch self.grouping {
+			case .automatic, .byType:
+				if let read = groupedNotifications[section].sectionNotifications[row].read, !read && status == 0 {
 					status = 1
 				}
-				if row == numberOfRows - 1 {
-					if let notificationID = cell.notificationsElement?.id {
+				if row == groupedNotifications[section].sectionNotifications.count - 1 {
+					if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
 						notificationIDs += ("\(notificationID)")
 					}
-				} else if let notificationID = cell.notificationsElement?.id {
+				} else if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
 					notificationIDs += ("\(notificationID), ")
 				}
-				cells.append(cell)
+			case .off:
+				if let notificationStatus = userNotificationsElement?[row].read, notificationStatus {
+					status = 0
+				}
+				if let userNotificationsElementCount = userNotificationsElement?.count, row == userNotificationsElementCount - 1 {
+					if let notificationID = userNotificationsElement?[row].id {
+						notificationIDs += ("\(notificationID)")
+					}
+				} else if let notificationID = userNotificationsElement?[row].id {
+					notificationIDs += ("\(notificationID), ")
+				}
 			}
+
+			indexPaths.append(IndexPath(row: row, section: section))
 		}
 
-		updateNotification(for: cells, with: notificationIDs, status: status)
+		updateNotification(at: indexPaths, for: notificationIDs, with: status, shouldReload: true)
 	}
 }
 
@@ -307,8 +339,7 @@ extension NotificationsViewController {
 }
 
 // MARK: - UITableViewDelegate
-extension NotificationsViewController {
-}
+extension NotificationsViewController {}
 
 // MARK: - SwipeTableViewCellDelegate
 extension NotificationsViewController: SwipeTableViewCellDelegate {
@@ -352,8 +383,18 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			deleteAction.transitionDelegate = ScaleTransition.default
 			return [deleteAction]
 		case .left:
-			guard let cell = tableView.cellForRow(at: indexPath) as? SessionNotificationCell else { return nil }
-			let isRead = (cell.notificationMark.numberOfPages == 0)
+			var isRead = false
+			switch self.grouping {
+			case .automatic, .byType:
+				if let read = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read {
+					isRead = read
+				}
+			case .off:
+				if let read = self.userNotificationsElement?[indexPath.row].read {
+					isRead = read
+				}
+			}
+
 			let markedAction = SwipeAction(style: .default, title: "") { action, indexPath in
 				var notificationID = 0
 
@@ -368,7 +409,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 					}
 				}
 
-				self.updateNotification(for: [cell], with: "\(notificationID)", status: isRead ? 0 : 1)
+				self.updateNotification(at: [indexPath], for: "\(notificationID)", with: isRead ? 0 : 1, shouldReload: false)
 			}
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
