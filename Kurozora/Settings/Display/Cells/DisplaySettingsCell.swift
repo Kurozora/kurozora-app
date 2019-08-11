@@ -188,6 +188,10 @@ class DisplaySettingsCell: SettingsCell {
 
 	@IBAction func enableTrueBlackSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .trueBlackEnabled)
+
+		if UserSettings.currentTheme == "Night" || UserSettings.currentTheme == "Black" {
+			KThemeStyle.switchTo(.night)
+		}
 	}
 
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {

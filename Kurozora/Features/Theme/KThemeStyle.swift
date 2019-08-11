@@ -353,14 +353,16 @@ extension KThemeStyle {
 	/// Switch between Light and Dark theme according to `sunrise` and `sunset` or custom `start` and `end` time.
 	static func checkAutomaticSchedule() {
 		if UserSettings.automaticDarkTheme, let darkThemeOption = DarkThemeOption(rawValue: UserSettings.darkThemeOption) {
-			before = current
+			if isSolarNighttime && darkThemeOption == .automatic && current != .night || isCustomNighttime && darkThemeOption == .custom  && current != .night {
+				before = current
 
-			if isSolarNighttime && darkThemeOption == .automatic || isCustomNighttime && darkThemeOption == .custom {
 				KThemeStyle.switchTo(.night)
 				current = .night
 				UserSettings.set(1, forKey: .appearanceOption)
 				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 1])
-			} else {
+			} else if !isSolarNighttime && darkThemeOption == .automatic && current != .day || !isCustomNighttime && darkThemeOption == .custom  && current != .day {
+				before = current
+
 				KThemeStyle.switchTo(.day)
 				current = .day
 				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 0])
