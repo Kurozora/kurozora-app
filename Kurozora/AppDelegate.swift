@@ -12,7 +12,6 @@ import RevealingSplashView
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
-import TRON
 
 let heartAttackNotification = Notification.Name("heartAttackNotification")
 
@@ -108,8 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			authenticated = false
             revealingSplashView.heartAttack = true
             let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let vc = storyboard.instantiateInitialViewController()
-            self.window?.rootViewController = vc
+            let welcomeViewController = storyboard.instantiateInitialViewController()
+            self.window?.rootViewController = welcomeViewController
         }
 
 		// Check if user should authenticate

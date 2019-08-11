@@ -75,8 +75,9 @@ public class WorkflowController {
 		try? GlobalVariables().KDefaults.removeAll()
 
 		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
-		UIApplication.topViewController?.present(vc, animated: true)
+		if let vc = storyboard.instantiateInitialViewController() {
+			UIApplication.topViewController?.present(vc, animated: true)
+		}
 	}
 
 	/// Open the sessions view.
