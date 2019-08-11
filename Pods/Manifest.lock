@@ -20,7 +20,7 @@ PODS:
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.4.1)
   - KeychainAccess (3.2.0)
-  - Kingfisher (5.7.0)
+  - Kingfisher (5.7.1)
   - MarqueeLabel (4.0.0)
   - MBProgressHUD (1.1.0)
   - NotificationBannerSwift (2.5.1):
@@ -175,7 +175,7 @@ SPEC CHECKSUMS:
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Kingfisher: c7d211b54f1f30d8060aadab177d52b4349c825b
+  Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3

@@ -80,16 +80,14 @@ public class WorkflowController {
 		}
 	}
 
-	/// Open the sessions view.
+	/// Open the sessions view if the current view is not the sessions view.
 	class func showSessions() {
-		if UIApplication.topViewController as? ManageActiveSessionsController != nil {
-		} else {
+		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
 			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
 			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ManageActiveSessionsController") as? ManageActiveSessionsController
 			manageActiveSessionsController?.dismissEnabled = true
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: manageActiveSessionsController!)
-
-			UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
+			let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController!)
+			UIApplication.topViewController?.present(kurozoraNavigationController)
 		}
 	}
 

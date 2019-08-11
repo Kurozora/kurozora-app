@@ -32,8 +32,8 @@ class ManageActiveSessionsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 		if dismissEnabled {
-			let closeButton = UIBarButtonItem(title: "close", style: .plain, target: self, action: #selector(dismiss(_:)))
-			self.navigationItem.leftBarButtonItem  = closeButton
+			let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismiss(_:)))
+			self.navigationItem.leftBarButtonItem = closeButton
 		}
     }
     

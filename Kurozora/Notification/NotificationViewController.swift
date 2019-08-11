@@ -146,9 +146,8 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		- Parameter indexPath: The IndexPath of the notifications in the tableView.
 		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
-		- Parameter shouldReload: Indicates whether the tableView should reload its data.
 	*/
-	func updateNotification(at indexPaths: [IndexPath], for notificationID: String, with status: Int, shouldReload: Bool) {
+	func updateNotification(at indexPaths: [IndexPath], for notificationID: String, with status: Int) {
 		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
 			for indexPath in indexPaths {
 				if notificationID == "all" {
@@ -193,7 +192,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Mark action
 		let markAction = UIAlertAction.init(title: markActionTitle, style: .default, handler: { (_) in
-			self.updateNotification(at: indexPaths, for: "all", with: status, shouldReload: true)
+			self.updateNotification(at: indexPaths, for: "all", with: status)
 		})
 		markAction.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
 		markAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -251,7 +250,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			indexPaths.append(IndexPath(row: row, section: section))
 		}
 
-		updateNotification(at: indexPaths, for: notificationIDs, with: status, shouldReload: true)
+		updateNotification(at: indexPaths, for: notificationIDs, with: status)
 	}
 }
 
@@ -339,7 +338,29 @@ extension NotificationsViewController {
 }
 
 // MARK: - UITableViewDelegate
-extension NotificationsViewController {}
+extension NotificationsViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if tableView.cellForRow(at: indexPath) as? SessionNotificationCell != nil {
+			// Change notification status to read
+			var notificationID = 0
+			switch self.grouping {
+			case .automatic, .byType:
+				if let id = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
+					notificationID = id
+				}
+			case .off:
+				if let id = self.userNotificationsElement?[indexPath.row].id {
+					notificationID = id
+				}
+			}
+
+			self.updateNotification(at: [indexPath], for: "\(notificationID)", with: 1)
+
+			// Show sessions view
+			WorkflowController.showSessions()
+		}
+	}
+}
 
 // MARK: - SwipeTableViewCellDelegate
 extension NotificationsViewController: SwipeTableViewCellDelegate {
@@ -409,7 +430,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 					}
 				}
 
-				self.updateNotification(at: [indexPath], for: "\(notificationID)", with: isRead ? 0 : 1, shouldReload: false)
+				self.updateNotification(at: [indexPath], for: "\(notificationID)", with: isRead ? 0 : 1)
 			}
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
