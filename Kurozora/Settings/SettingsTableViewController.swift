@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import KCommonKit
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
 class SettingsTableViewController: UITableViewController {
-    //    let FacebookPageDeepLink = "fb://profile/713541968752502"
-    //    let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
+//	let FacebookPageDeepLink = "fb://profile/713541968752502"
+//	let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
     let TwitterPageDeepLink = "twitter://user?id=991929359052177409"
     let TwitterPageURL = "https://www.twitter.com/KurozoraApp"
     let MediumPageDeepLink = "medium://@kurozora"
@@ -29,7 +28,13 @@ class SettingsTableViewController: UITableViewController {
 	}
 
     // MARK: - Functions
-	func calculateCache(withSuccess successHandler:@escaping (String) -> Void) {
+	/**
+		Calculate the amount of data that is cached by the app.
+
+		- Parameter successHandler: A closure that returns a string representing the amount of data that is cached by the app.
+		- Parameter cacheString: The string representing the amount of data that is cached by the app.
+	*/
+	func calculateCache(withSuccess successHandler:@escaping (_ cacheString: String) -> Void) {
 		ImageCache.default.calculateDiskStorageSize { (result) in
 			switch result {
 			case .success(let size):
@@ -43,7 +48,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     // MARK: - IBActions
-    @IBAction func dismissPressed(_ sender: AnyObject) {
+    @IBAction func dismissPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -74,33 +79,39 @@ extension SettingsTableViewController {
 			return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
 		}
 
+		if settingsCell.cacheSizeLabel != nil {
+			self.calculateCache(withSuccess: { (cacheSize) in
+				settingsCell.cacheSizeLabel?.text = cacheSize
+			})
+		}
+
 		return settingsCell
 	}
 
-	//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-	//        switch section {
-	//        case 0:
-	//            return nil
-	//        case 1:
-	//            var message = ""
-	//            if let user = User.currentUser(),
-	//                user.hasTrial() &&
-	//                    InAppController.purchasedPro() == nil &&
-	//                    InAppController.purchasedProPlus() == nil {
-	//                message = "** You're on a 15 day PRO trial **\n"
-	//            }
-	//            message += "Going PRO unlocks all features and help us keep improving the app"
-	//            return message
-	//        case 2:
-	//            return "If you're looking for support drop us a message on Facebook or Twitter"
-	//        case 3:
-	//            let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-	//            let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-	//            return "Created by Anime fans for Anime fans, enjoy!\nKurozora \(version) (\(build))"
-	//        default:
-	//            return nil
-	//        }
-	//    }
+//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+//        switch section {
+//        case 0:
+//            return nil
+//        case 1:
+//            var message = ""
+//            if let user = User.currentUser(),
+//                user.hasTrial() &&
+//                    InAppController.purchasedPro() == nil &&
+//                    InAppController.purchasedProPlus() == nil {
+//                message = "** You're on a 15 day PRO trial **\n"
+//            }
+//            message += "Going PRO unlocks all features and help us keep improving the app"
+//            return message
+//        case 2:
+//            return "If you're looking for support drop us a message on Facebook or Twitter"
+//        case 3:
+//            let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+//            let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+//            return "Created by Anime fans for Anime fans, enjoy!\nKurozora \(version) (\(build))"
+//        default:
+//            return nil
+//        }
+//    }
 }
 
 // MARK: - UITableViewDelegate
