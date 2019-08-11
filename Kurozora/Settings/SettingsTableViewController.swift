@@ -12,8 +12,6 @@ import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
-let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
-
 class SettingsTableViewController: UITableViewController {
     //    let FacebookPageDeepLink = "fb://profile/713541968752502"
     //    let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
@@ -24,23 +22,10 @@ class SettingsTableViewController: UITableViewController {
 
 	// Section vars
 	let sectionTitles = ["Account", "Admin", "Alerts", "General", "In-App Purchases", "Rate", "Social", "About"]
-	var numberOfCollapsedCells = 0
-	var icons = [UIImage]()
-	var firstTime = true
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
-		tableView.register(UINib(nibName: "CollapsibleSectionHeaderCell", bundle: nil), forCellReuseIdentifier: "SectionHeaderCell")
-//		tableView.register(UINib(nibName: "CollapsedIconTableCell", bundle: nil), forCellReuseIdentifier: "CollapsedIconTableCell")
-
-		UserSettings.set([], forKey: .collapsedSections)
-
-		if firstTime {
-			firstTime = false
-			tableView.reloadData()
-		}
 	}
 
     // MARK: - Functions
@@ -57,172 +42,39 @@ class SettingsTableViewController: UITableViewController {
 		}
     }
 
-	func getIcons(for section: Int) {
-		numberOfCollapsedCells = tableView.numberOfRows(inSection: section)
-		icons = []
-		for rowIndex in 1...numberOfCollapsedCells {
-			guard let cell = tableView.cellForRow(at: IndexPath(row: rowIndex-1, section: section)) else { return }
-			for subview in cell.contentView.subviews {
-				for subview in subview.subviews {
-					if let icon = subview as? UIImageView, let iconImage = icon.image {
-						icons.append(iconImage)
-					}
-				}
-			}
-		}
-	}
-
-	@objc func collapse(_ sender: UIButton) {
-		var collapsedSections = UserSettings.collapsedSections
-
-		getIcons(for: sender.tag)
-
-		if let sectionIndex = collapsedSections.firstIndex(of: sender.tag) {
-			collapsedSections.remove(at: sectionIndex)
-		} else {
-			collapsedSections.append(sender.tag)
-		}
-
-		UserSettings.set(collapsedSections, forKey: .collapsedSections)
-		tableView.reloadSections([sender.tag], with: .fade)
-	}
-    
     // MARK: - IBActions
     @IBAction func dismissPressed(_ sender: AnyObject) {
-		firstTime = true
         self.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - UITableViewDataSource
 extension SettingsTableViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return (section != sectionTitles.count - 1) ? 33 : 1
-	}
-
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//		let numberOfRows: Int = tableView.numberOfRows(inSection: section)
-
-		let sectionCell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell") as! CollapsibleSectionHeaderCell
-		sectionCell.sectionTitleLabel.text = (section != sectionTitles.count - 1) ? sectionTitles[section].uppercased() : ""
-//		sectionCell.sectionButton.tag = section
-//		sectionCell.sectionButton.addTarget(self, action: #selector(collapse(_:)), for: .touchUpInside)
-//
-//		let collapsedSections = UserSettings.collapsedSections()
-//		if collapsedSections.contains(section) {
-//			sectionCell.sectionButton.setTitle("Show More", for: .normal)
-//		} else {
-//			sectionCell.sectionButton.setTitle("Show Less", for: .normal)
-//		}
-//
-//		if numberOfRows == 1 && sectionCell.sectionButton.title(for: .normal) == "Show Less" {
-//			sectionCell.sectionButton.isEnabled = false
-//			sectionCell.sectionButton.isHidden = true
-//		}
-
-		return sectionCell.contentView
-	}
-
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let count = super.tableView(tableView, numberOfRowsInSection: section)
+		let numberOfRows = super.tableView(tableView, numberOfRowsInSection: section)
 		if !User.isAdmin && section == 1 {
-			return count - 1
+			return numberOfRows - 1
 		}
 
-		let collapsedSections = UserSettings.collapsedSections
-		if collapsedSections.contains(section) && !firstTime {
-			return 1
+		return numberOfRows
+	}
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		if !User.isAdmin && section == 1 {
+			return	nil
 		}
 
-		return count
+		return (section != sectionTitles.count - 1) ? sectionTitles[section] : nil
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		let collapsedSections = UserSettings.collapsedSections()
 		let settingsCell = super.tableView(tableView, cellForRowAt: indexPath) as! SettingsCell
 
 		if !User.isAdmin && indexPath.section == 1 {
 			return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
 		}
 
-//		if collapsedSections.contains(indexPath.section) && !firstTime {
-//			let collapsedIconTableCell = tableView.dequeueReusableCell(withIdentifier: "CollapsedIconTableCell", for: indexPath) as! CollapsedIconTableCell
-//			collapsedIconTableCell.numberOfCollapsedItems = numberOfCollapsedCells
-//			collapsedIconTableCell.icons = icons
-//
-//			return collapsedIconTableCell
-//		}
-
 		return settingsCell
-	}
-
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
-
-		switch (indexPath.section, indexPath.row) {
-//		case (0,0): break
-//		case (1,0): break
-//		case (2,0): break
-//		case (3,0): break
-		case (3,4): // Clear cache
-			let alertView = SCLAlertView()
-			alertView.addButton("Clear 🗑", action: {
-				// Clear memory cache right away.
-				KingfisherManager.shared.cache.clearMemoryCache()
-
-				// Clear disk cache. This is an async operation.
-				KingfisherManager.shared.cache.clearDiskCache()
-
-				// Clean expired or size exceeded disk cache. This is an async operation.
-				KingfisherManager.shared.cache.cleanExpiredDiskCache()
-
-				// Refresh cacheSizeLabel
-				self.calculateCache(withSuccess: { (cacheSize) in
-					settingsCell.cacheSizeLabel?.text = cacheSize
-				})
-			})
-
-			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
-//		case (4,0): // Unlock features
-//			let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
-//			navigationController?.pushViewController(controller, animated: true)
-//		case (4,1): // Restore purchases
-//			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
-//				if let _ = task.result {
-//					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-//					alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//
-//					self.presentViewController(alert, animated: true, completion: nil)
-//				}
-//
-//				return nil
-//			})
-//		case (5,0): // Rate app
-//			iRate.sharedInstance().openRatingsPageInAppStore()
-		case (6,0): // Open Twitter
-			var url: URL?
-			let twitterScheme = URL(string: "twitter://")!
-
-			if UIApplication.shared.canOpenURL(twitterScheme) {
-				url = URL(string: TwitterPageDeepLink)
-			} else {
-				url = URL(string: TwitterPageURL)
-			}
-			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-		case (6,1): // Open Medium
-			var url: URL?
-			let mediumScheme = URL(string: "medium://")!
-
-			if UIApplication.shared.canOpenURL(mediumScheme) {
-				url = URL(string: MediumPageDeepLink)
-			} else {
-				url = URL(string: MediumPageURL)
-			}
-			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-		default: break
-//			SCLAlertView().showInfo(String(indexPath.section), subTitle: String(indexPath.row))
-		}
 	}
 
 	//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -253,6 +105,33 @@ extension SettingsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension SettingsTableViewController {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if !User.isAdmin && section == 1 {
+			return	CGFloat.leastNormalMagnitude
+		}
+		return (section != sectionTitles.count - 1) ? 33 : CGFloat.leastNormalMagnitude
+	}
+
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		if !User.isAdmin, indexPath.section == 1 {
+			return CGFloat.leastNormalMagnitude
+		}
+		return super.tableView(tableView, heightForRowAt: indexPath)
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let headerView = view as? UITableViewHeaderFooterView {
+			headerView.textLabel?.font = UIFont.systemFont(ofSize: 15)
+			headerView.textLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+		if let footerView = view as? UITableViewHeaderFooterView {
+			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
 			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
@@ -287,9 +166,69 @@ extension SettingsTableViewController {
 		}
 	}
 
-	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-		if let footerView = view as? UITableViewHeaderFooterView {
-			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//		tableView.deselectRow(at: indexPath, animated: true)
+		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+
+		switch (indexPath.section, indexPath.row) {
+//		case (0,0): break
+//		case (1,0): break
+//		case (2,0): break
+//		case (3,0): break
+		case (3,4): // Clear cache
+			let alertView = SCLAlertView()
+			alertView.addButton("Clear 🗑", action: {
+				// Clear memory cache right away.
+				KingfisherManager.shared.cache.clearMemoryCache()
+
+				// Clear disk cache. This is an async operation.
+				KingfisherManager.shared.cache.clearDiskCache()
+
+				// Clean expired or size exceeded disk cache. This is an async operation.
+				KingfisherManager.shared.cache.cleanExpiredDiskCache()
+
+				// Refresh cacheSizeLabel
+				self.calculateCache(withSuccess: { (cacheSize) in
+					settingsCell.cacheSizeLabel?.text = cacheSize
+				})
+			})
+
+			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
+//		case (4,0): // Unlock features
+//		case (4,1): // Restore purchases
+//			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
+//				if let _ = task.result {
+//					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+//					alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+//
+//					self.presentViewController(alert, animated: true, completion: nil)
+//				}
+//
+//				return nil
+//			})
+//		case (5,0): // Rate app
+//			iRate.sharedInstance().openRatingsPageInAppStore()
+		case (6,0): // Open Twitter
+			var url: URL?
+			let twitterScheme = URL(string: "twitter://")!
+
+			if UIApplication.shared.canOpenURL(twitterScheme) {
+				url = URL(string: TwitterPageDeepLink)
+			} else {
+				url = URL(string: TwitterPageURL)
+			}
+			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+		case (6,1): // Open Medium
+			var url: URL?
+			let mediumScheme = URL(string: "medium://")!
+
+			if UIApplication.shared.canOpenURL(mediumScheme) {
+				url = URL(string: MediumPageDeepLink)
+			} else {
+				url = URL(string: MediumPageURL)
+			}
+			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+		default: break
 		}
 	}
 }

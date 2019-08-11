@@ -213,7 +213,6 @@
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
 		66752636222820E0007C1617 /* TestThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752635222820E0007C1617 /* TestThemeCell.swift */; };
 		6675263822282B06007C1617 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675263722282B06007C1617 /* Themes.swift */; };
-		66752DBE22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */; };
 		66754BC42101020800268355 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613F02320F6423000071CAE /* Service.swift */; };
 		66754BC621011D1000268355 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCFE20AD8C1D00792B1B /* User.swift */; };
 		6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */; };
@@ -257,7 +256,6 @@
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A48FDD21A3098100F34085 /* TopicCells.swift */; };
 		66A48FE021A411A900F34085 /* notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* notification.storyboard */; };
-		66A5250C21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */; };
 		66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552D320A2D24F00E515DB /* ForumsViewController.swift */; };
 		66A552D620A2D40100E515DB /* forums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A552D520A2D40100E515DB /* forums.storyboard */; };
 		66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */; };
@@ -600,7 +598,6 @@
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
 		66752635222820E0007C1617 /* TestThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestThemeCell.swift; sourceTree = "<group>"; };
 		6675263722282B06007C1617 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
-		66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleSectionHeaderCell.swift; sourceTree = "<group>"; };
 		6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* SynopsisCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesDetailTableViewControlle.swift; sourceTree = "<group>"; };
@@ -643,7 +640,6 @@
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDD21A3098100F34085 /* TopicCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCells.swift; sourceTree = "<group>"; };
 		66A48FDF21A411A900F34085 /* notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = notification.storyboard; sourceTree = "<group>"; };
-		66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollapsibleSectionHeaderCell.xib; sourceTree = "<group>"; };
 		66A552D320A2D24F00E515DB /* ForumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
 		66A552D520A2D40100E515DB /* forums.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forums.storyboard; sourceTree = "<group>"; };
 		66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeInformationViewController.swift; sourceTree = "<group>"; };
@@ -1885,12 +1881,10 @@
 		66D75CDF21E2B2C400C20B12 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				66752DBD22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift */,
 				665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */,
 				665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */,
 				665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */,
 				66348C7922AB17710019AB84 /* SettingsCell.swift */,
-				66A5250A21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2157,7 +2151,6 @@
 				664801C9222DE76A0063143A /* App-Icon-iPhone-Yellow@3x.png in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
 				6641D6F5222EA3DF0067BD3A /* App-Icon-iPhone-Emerald@2x.png in Resources */,
-				66A5250C21E2626A00173FEB /* CollapsibleSectionHeaderCell.xib in Resources */,
 				664801C5222DE76A0063143A /* App-Icon-iPad-Pro-Blue@2x.png in Resources */,
 				66C5797922A83726001B8F51 /* theme.storyboard in Resources */,
 				66A254DA22AAE55B002A0E34 /* app-icons.json in Resources */,
@@ -2392,7 +2385,6 @@
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
 				666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */,
-				66752DBE22F461C400B94A73 /* CollapsibleSectionHeaderCell.swift in Sources */,
 				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
 				667943672273A46700E2D0D0 /* WatchStatus.swift in Sources */,
 				66754BC621011D1000268355 /* User.swift in Sources */,

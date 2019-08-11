@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jkm-sX-7PU">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,9 +31,11 @@
                                             <color key="textColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaF-Rp-xsW">
-                                            <rect key="frame" x="338" y="5" width="56" height="30"/>
-                                            <state key="normal" title="Mark All"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaF-Rp-xsW">
+                                            <rect key="frame" x="360" y="3" width="34" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                            <state key="normal" image="more"/>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -62,7 +64,7 @@
                                             <rect key="frame" x="8" y="36" width="398" height="64"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-tc-hKo">
-                                                    <rect key="frame" x="8" y="10" width="44" height="44"/>
+                                                    <rect key="frame" x="16" y="10" width="44" height="44"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-iu-Zxu" userLabel="Profile Image">
                                                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
@@ -90,13 +92,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBA-Cy-hoI" userLabel="Username Label">
-                                                    <rect key="frame" x="60" y="10" width="47" height="18"/>
+                                                    <rect key="frame" x="68" y="10" width="47" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uj8-UI-F9c">
-                                                    <rect key="frame" x="60" y="28" width="330" height="31.5"/>
+                                                    <rect key="frame" x="68" y="28" width="322" height="31.5"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,7 +113,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="uj8-UI-F9c" secondAttribute="trailing" id="F7q-fr-ltX"/>
                                                 <constraint firstItem="HBA-Cy-hoI" firstAttribute="leading" secondItem="GDo-tc-hKo" secondAttribute="trailing" constant="8" id="JKL-uF-K4v"/>
                                                 <constraint firstAttribute="bottom" secondItem="GDo-tc-hKo" secondAttribute="bottom" constant="10" id="MTe-bT-3Nf"/>
-                                                <constraint firstItem="GDo-tc-hKo" firstAttribute="leading" secondItem="rnB-cz-QfD" secondAttribute="leadingMargin" id="T23-ch-eeH"/>
+                                                <constraint firstItem="GDo-tc-hKo" firstAttribute="leading" secondItem="rnB-cz-QfD" secondAttribute="leadingMargin" constant="8" id="T23-ch-eeH"/>
                                                 <constraint firstAttribute="height" constant="64" id="adU-0t-jMX"/>
                                                 <constraint firstItem="GDo-tc-hKo" firstAttribute="top" secondItem="rnB-cz-QfD" secondAttribute="top" constant="10" id="b5U-gz-63N"/>
                                                 <constraint firstItem="uj8-UI-F9c" firstAttribute="leading" secondItem="HBA-Cy-hoI" secondAttribute="leading" id="n0i-XH-Zzs"/>
@@ -132,20 +134,20 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MESSAGE" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvR-b1-6iW" userLabel="Notification Title">
-                                                    <rect key="frame" x="55" y="9" width="60" height="16"/>
+                                                    <rect key="frame" x="63" y="9" width="60" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_icon" translatesAutoresizingMaskIntoConstraints="NO" id="YKm-sf-d9B" userLabel="Notification Image">
-                                                    <rect key="frame" x="13" y="0.0" width="34" height="34"/>
+                                                    <rect key="frame" x="21" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="ICX-4i-Gbe"/>
                                                         <constraint firstAttribute="width" constant="34" id="vt3-bN-G4V"/>
                                                     </constraints>
                                                 </imageView>
                                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="5yi-U6-q3P">
-                                                    <rect key="frame" x="0.0" y="0.0" width="13" height="34"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="21" height="34"/>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -198,7 +200,7 @@
                                             <rect key="frame" x="8" y="36" width="398" height="58"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqu-xF-Uzd">
-                                                    <rect key="frame" x="17" y="8" width="373" height="42"/>
+                                                    <rect key="frame" x="16" y="8" width="374" height="42"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -208,7 +210,7 @@
                                             <color key="backgroundColor" red="0.1137254902" green="0.45345672749999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="58" id="DmG-zS-KgB"/>
-                                                <constraint firstItem="vqu-xF-Uzd" firstAttribute="leading" secondItem="PLQ-Lf-kPM" secondAttribute="leadingMargin" constant="9" id="WW1-k3-ex6"/>
+                                                <constraint firstItem="vqu-xF-Uzd" firstAttribute="leading" secondItem="PLQ-Lf-kPM" secondAttribute="leadingMargin" constant="8" id="WW1-k3-ex6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="vqu-xF-Uzd" secondAttribute="trailing" id="dqf-kQ-HWv"/>
                                                 <constraint firstItem="vqu-xF-Uzd" firstAttribute="top" secondItem="PLQ-Lf-kPM" secondAttribute="topMargin" id="luH-wz-gwB"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="vqu-xF-Uzd" secondAttribute="bottom" id="nTg-lA-pXY"/>
@@ -229,20 +231,20 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW SESSION" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGV-Ej-uJB" userLabel="Notification Title">
-                                                    <rect key="frame" x="59" y="9" width="87" height="16"/>
+                                                    <rect key="frame" x="58" y="9" width="87" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="v7I-mK-kbO" userLabel="Notification Image">
-                                                    <rect key="frame" x="17" y="0.0" width="34" height="34"/>
+                                                    <rect key="frame" x="16" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="V7X-a6-Cn7"/>
                                                         <constraint firstAttribute="height" constant="34" id="ukd-ez-aBV"/>
                                                     </constraints>
                                                 </imageView>
                                                 <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="VjR-jp-bBK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="17" height="34"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -290,7 +292,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Notifications" id="jEb-Mz-VPh">
-                        <barButtonItem key="rightBarButtonItem" title="Options" image="more" id="CAB-Vb-FGD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="CAB-Vb-FGD">
                             <connections>
                                 <action selector="moreOptionsButtonPressed:" destination="Ax0-Yt-phx" id="c1Y-up-ZXE"/>
                             </connections>

@@ -78,6 +78,9 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	}
 
 	// MARK: - Functions
+	/**
+		Fetch the notifications for the current user.
+	*/
 	func fetchNotifications() {
 		Service.shared.getNotifications(withSuccess: { (notifications) in
 			self.userNotificationsElement = []
@@ -95,6 +98,11 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		})
 	}
 
+	/**
+		Group the fetched notifications according to the user's notification preferences.
+
+		- Parameter userNotificationsElement: The array of the fetched notifications.
+	*/
 	func groupNotifications(_ userNotificationsElement: [UserNotificationsElement]?) {
 		switch self.grouping {
 		case .automatic:
@@ -175,6 +183,11 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	}
 
 	// MARK: - IBActions
+	/**
+		Show options for editing notifications in batch.
+
+		- Parameter sender: The object containing a reference to the button that initiated this action.
+	*/
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
 		var status = 0
 		var indexPaths = [IndexPath]()
@@ -203,9 +216,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = view
-			popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.barButtonItem = sender
 		}
 
 		if !(navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
@@ -213,6 +224,11 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		}
 	}
 
+	/**
+		Update notifications status withtin a specific section.
+
+		- Parameter sender: The object containing a reference to the button that initiated this action.
+	*/
 	@objc func notificationMarkButtonPressed(_ sender: UIButton) {
 		let section = sender.tag
 		let numberOfRows = tableView.numberOfRows(inSection: section)

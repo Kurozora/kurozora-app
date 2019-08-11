@@ -69,6 +69,7 @@ class ManageActiveSessionsController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
     }
 
 	// MARK: - Functions
