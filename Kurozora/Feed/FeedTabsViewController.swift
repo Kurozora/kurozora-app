@@ -37,12 +37,12 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 
-		Service.shared.getFeedSections(withSuccess: { (sections) in
-			DispatchQueue.main.async {
-				self.sectionsCount = sections?.count
-				self.sections = sections
-			}
-		})
+//		Service.shared.getFeedSections(withSuccess: { (sections) in
+//			DispatchQueue.main.async {
+//				self.sectionsCount = sections?.count
+//				self.sections = sections
+//			}
+//		})
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -127,8 +127,8 @@ extension FeedTabsViewController: PageboyViewControllerDataSource {
 			initializeViewControllers(with: sectionsCount)
 			return sectionsCount
 		}
-		initializeViewControllers(with: 3)
-		return 3
+//		initializeViewControllers(with: 3)
+		return 0
 	}
 
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {

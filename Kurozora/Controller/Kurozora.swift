@@ -157,7 +157,7 @@ class Kurozora: NSObject {
 			}
 		}
 
-		if urlScheme == "profile" || urlScheme == "feed" || urlScheme == "timeline" {
+		if urlScheme == "profile" || urlScheme == "user" {
 			let userID = url.lastPathComponent
 			if userID != "" {
 				let storyboard = UIStoryboard(name: "profile", bundle: nil)
@@ -166,11 +166,7 @@ class Kurozora: NSObject {
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 
-					UIApplication.topViewController?.present(kurozoraNavigationController, animated: true)
-				}
-			} else {
-				if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 4
+					UIApplication.topViewController?.present(kurozoraNavigationController)
 				}
 			}
 		}
@@ -181,9 +177,9 @@ class Kurozora: NSObject {
 			}
 		}
 
-		if urlScheme == "notification" || urlScheme == "notifications" {
+		if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
+				tabBarController.selectedIndex = 1
 			}
 		}
 
@@ -203,9 +199,15 @@ class Kurozora: NSObject {
 			}
 		}
 
-		if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
+		if urlScheme == "notification" || urlScheme == "notifications" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 1
+				tabBarController.selectedIndex = 3
+			}
+		}
+
+		if urlScheme == "feed" || urlScheme == "timeline" {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 4
 			}
 		}
 	}

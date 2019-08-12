@@ -294,6 +294,9 @@
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
 		66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD721454618007154BD /* PrivacyPolicy.swift */; };
+		66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */; };
+		66BA3B722301897F00C2B11C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B712301897F00C2B11C /* StoreKit.framework */; };
+		66BA3B74230189A300C2B11C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B73230189A300C2B11C /* CloudKit.framework */; };
 		66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */; };
 		66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */; };
 		66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA33421BDD01E00BEA42E /* VoteThread.swift */; };
@@ -674,6 +677,9 @@
 		66B4F1DC223D334D007C5048 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
 		66B69BD721454618007154BD /* PrivacyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PrivacyPolicy.swift; path = Kurozora/Features/Networking/Models/PrivacyPolicy.swift; sourceTree = SOURCE_ROOT; };
+		66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		66BA3B712301897F00C2B11C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		66BA3B73230189A300C2B11C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySectionList.swift; sourceTree = "<group>"; };
 		66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
 		66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorViewController.swift; sourceTree = "<group>"; };
@@ -784,7 +790,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */,
 				6614DF4D2088D1C600B0BC69 /* KCommonKit.framework in Frameworks */,
+				66BA3B722301897F00C2B11C /* StoreKit.framework in Frameworks */,
+				66BA3B74230189A300C2B11C /* CloudKit.framework in Frameworks */,
 				66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */,
 				73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */,
 			);
@@ -796,6 +805,9 @@
 		08E5591EE4C9B9016ACCB5C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66BA3B73230189A300C2B11C /* CloudKit.framework */,
+				66BA3B712301897F00C2B11C /* StoreKit.framework */,
+				66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */,
 				66A254DD22AAEF5D002A0E34 /* MapKit.framework */,
 				E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */,
 				EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */,
