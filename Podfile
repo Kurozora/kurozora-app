@@ -19,10 +19,11 @@ def common_pods
 #	pod 'SnowGlobe'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
-	pod 'SwiftyJSON'
+#	pod 'SwiftyJSON'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
 	pod 'TRON', '~> 5.0.0-beta.5'
+	pod 'TRON/SwiftyJSON'
 #	pod 'UIImageColors'
 end
 
@@ -38,7 +39,6 @@ def kurozora_pods
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'RichEditorView'
 	pod 'RichTextView'
-#	pod 'Siren' for app update notifications
 	pod 'Solar'
 	pod 'SPStorkController'
 	pod 'WhatsNew'

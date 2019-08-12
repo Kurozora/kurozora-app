@@ -73,6 +73,10 @@ PODS:
     - TRON/Core (= 5.0.0-beta.5)
   - TRON/Core (5.0.0-beta.5):
     - Alamofire (~> 5.0.0-beta.6)
+  - TRON/SwiftyJSON (5.0.0-beta.5):
+    - Alamofire (~> 5.0.0-beta.6)
+    - SwiftyJSON (~> 5.0)
+    - TRON/Core
   - WhatsNew (0.4.6)
 
 DEPENDENCIES:
@@ -97,10 +101,10 @@ DEPENDENCIES:
   - SPStorkController
   - SwifterSwift
   - SwiftTheme
-  - SwiftyJSON
   - SwipeCellKit
   - Tabman
   - TRON (~> 5.0.0-beta.5)
+  - TRON/SwiftyJSON
   - WhatsNew
 
 SPEC REPOS:
@@ -198,6 +202,6 @@ SPEC CHECKSUMS:
   TRON: 38ac8e2c64a466343bb0c364da895488b6a6f123
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 6108f97276d96729bd3d369109f32d1c5af18454
+PODFILE CHECKSUM: 9d60fc67f38425b2529d747d33edb8014a7a3f13
 
 COCOAPODS: 1.8.0.beta.1

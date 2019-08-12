@@ -10,20 +10,20 @@ import SwiftyJSON
 import TRON
 
 // Throw json error
-//class JSONError: APIError, JSONDecodable {
-//	let success: Bool?
-//	let message: String?
-//
-//	required init(json: JSON) throws {
-//		self.success = json["success"].boolValue
-//		self.message = json["error_message"].stringValue
-//	}
-//
-//	required init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
-//		super.init(request: request, response: response, data: data, error: error)
-//	}
-//
-//	required init(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
-//		super.init(request: request, response: response, fileURL: fileURL, error: error)
-//	}
-//}
+class JSONError: ErrorSerializable {
+	var success: Bool?
+	var message: String?
+
+	required init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+		if let data = data {
+			if let jsonFromData = try? JSON(data: data) {
+				self.success = jsonFromData["success"].boolValue
+				self.message = jsonFromData["error_message"].stringValue
+				return
+			}
+		}
+
+		self.success = false
+		self.message = "There was an error while connecting to the server. If this error persists, check out our Twitter account @KurozoraApp for more information!"
+	}
+}

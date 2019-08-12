@@ -93,9 +93,9 @@ open class JSONDecodableSerializer {
 
     /**
      Creates APIRequest with specified relative path and type RequestType.Default.
-
+     
      - parameter path: Path, that will be appended to current `baseURL`.
-
+     
      - returns: APIRequest instance.
      */
     open func request<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String) -> APIRequest<Model, ErrorModel> {
@@ -104,11 +104,11 @@ open class JSONDecodableSerializer {
 
     /**
      Creates APIRequest with specified relative path and type RequestType.UploadFromFile.
-
+     
      - parameter path: Path, that will be appended to current `baseURL`.
-
+     
      - parameter fileURL: File url to upload from.
-
+     
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel> {
@@ -117,11 +117,11 @@ open class JSONDecodableSerializer {
 
     /**
      Creates APIRequest with specified relative path and type RequestType.UploadData.
-
+     
      - parameter path: Path, that will be appended to current `baseURL`.
-
+     
      - parameter data: Data to upload.
-
+     
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel> {
@@ -130,11 +130,11 @@ open class JSONDecodableSerializer {
 
     /**
      Creates APIRequest with specified relative path and type RequestType.UploadStream.
-
+     
      - parameter path: Path, that will be appended to current `baseURL`.
-
+     
      - parameter stream: Stream to upload from.
-
+     
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel> {
@@ -143,11 +143,11 @@ open class JSONDecodableSerializer {
 
     /**
      Creates MultipartAPIRequest with specified relative path.
-
+     
      - parameter path: Path, that will be appended to current `baseURL`.
-
+     
      - parameter formData: Multipart form data creation block.
-
+     
      - returns: MultipartAPIRequest instance.
      */
     open func uploadMultipart<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String,
