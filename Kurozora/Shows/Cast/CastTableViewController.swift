@@ -9,18 +9,12 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class CastCollectionViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-    @IBOutlet var collectionView: UICollectionView!
-
+class CastCollectionViewController: UICollectionViewController, EmptyDataSetDelegate, EmptyDataSetSource {
     var actors: [ActorsElement]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
-		// Setup collection view
-        collectionView.dataSource = self
-        collectionView.delegate = self
 
 		// Setup empty collection view
         collectionView.emptyDataSetSource = self
@@ -34,6 +28,14 @@ class CastCollectionViewController: UIViewController, EmptyDataSetDelegate, Empt
         }
     }
 
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+			return
+		}
+		flowLayout.invalidateLayout()
+	}
+
 	// MARK: - IBActions
 	@IBAction func dismissPressed(_ sender: AnyObject) {
 		self.dismiss(animated: true, completion: nil)
@@ -41,13 +43,13 @@ class CastCollectionViewController: UIViewController, EmptyDataSetDelegate, Empt
 }
 
 // MARK: - UICollectionViewDataSource
-extension CastCollectionViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension CastCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard let actorsCount = actors?.count else { return 0 }
 		return actorsCount
 	}
 
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
 		castCell.actorElement = actors?[indexPath.row]
 		castCell.delegate = self
@@ -56,8 +58,35 @@ extension CastCollectionViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-extension CastCollectionViewController: UICollectionViewDelegate {
+extension CastCollectionViewController {
 
+}
+
+extension CastCollectionViewController: UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let gap: CGFloat = UIDevice.isPad() ? 40 : 20
+		if UIDevice.isPad() {
+			if UIDevice.isLandscape() {
+				return CGSize(width: (collectionView.width - gap) / 4, height: (collectionView.height - gap) / 6)
+			}
+
+			return CGSize(width: (collectionView.width - gap) / 3, height: (collectionView.height - gap) / 8)
+		}
+
+		if UIDevice.hasTopNotch {
+			if UIDevice.isLandscape() {
+				return CGSize(width: (collectionView.width - gap) / 2, height: (collectionView.height - gap) / 2)
+			}
+
+			return CGSize(width: collectionView.width, height: (collectionView.height - gap) / 5)
+		}
+
+		if UIDevice.isLandscape() {
+			return CGSize(width: (collectionView.width - gap) / 2, height: (collectionView.height - gap) / 1.8)
+		}
+
+		return CGSize(width: collectionView.width, height: (collectionView.height - gap) / 3.6)
+	}
 }
 
 // MARK: - ShowCharacterCellDelegate

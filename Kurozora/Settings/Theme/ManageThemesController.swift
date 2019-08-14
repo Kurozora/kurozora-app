@@ -52,12 +52,14 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 	fileprivate func downloadStart(for theme: ThemesElement?) {
 		guard let themeName = theme?.name else { return }
 		guard let themeID = theme?.id else { return }
-		let HUD = navigationController!.showHUD("Downloading \(themeName)...")
+		let sclAlertView = SCLAlertView().showWait("Downloading \(themeName)...")
 
 		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
-			HUD.label.text = isSuccess ? "Done!" : "Download failed :("
-			HUD.mode = .text
-			HUD.hide(animated: true, afterDelay: 1)
+			sclAlertView.setTitle(isSuccess ? "Done!" : "Download failed :(")
+
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+				sclAlertView.close()
+			}
 
 			if isSuccess {
 				KThemeStyle.switchTo(theme: themeID)
@@ -71,22 +73,11 @@ extension ManageThemesController: UIAlertViewDelegate {
 	fileprivate func tapDownload(for theme: ThemesElement?) {
 		guard let themeID = theme?.id else { return }
 		guard KThemeStyle.themeExist(for: themeID) else {
-			let title   = "Not Downloaded"
-			let message = "Download the theme right now?"
-
-			if #available(iOS 8.0, *) {
-				let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-				alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-				alert.addAction(UIAlertAction(title: "Sure", style: .default, handler: { [unowned self] _ in
-					self.downloadStart(for: theme)
-				})
-				)
-
-				present(alert, animated: true, completion: nil)
-			} else {
-				UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Sure").show()
+			let alert = SCLAlertView()
+			alert.addButton("Sure") {
+				self.downloadStart(for: theme)
 			}
+			alert.showInfo("Not Downloaded", subTitle: "Download the theme right now?", closeButtonTitle: "Cancel")
 			return
 		}
 

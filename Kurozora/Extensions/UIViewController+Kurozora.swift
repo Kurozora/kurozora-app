@@ -7,25 +7,10 @@
 //
 
 import KCommonKit
-import MBProgressHUD
 import SPStorkController
 //import JTSImageViewController
 
 extension UIViewController {
-	/**
-		Return a HUD with the given text.
-
-		- Parameter text: The text to be shown on the HUD.
-
-		- Returns: a HUD with the given text.
-	*/
-	func showHUD(_ text: String) -> MBProgressHUD {
-		let HUD = MBProgressHUD.showAdded(to: view, animated: true)
-		HUD.label.text = text
-		HUD.removeFromSuperViewOnHide = true
-		return HUD
-	}
-
 	/**
 		Modally present the given view controller.
 

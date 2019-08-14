@@ -22,7 +22,6 @@ PODS:
   - KeychainAccess (3.2.0)
   - Kingfisher (5.7.1)
   - MarqueeLabel (4.0.0)
-  - MBProgressHUD (1.1.0)
   - NotificationBannerSwift (2.5.1):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
@@ -90,7 +89,6 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher
-  - MBProgressHUD
   - NotificationBannerSwift
   - PusherSwift
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
@@ -127,7 +125,6 @@ SPEC REPOS:
     - KeychainAccess
     - Kingfisher
     - MarqueeLabel
-    - MBProgressHUD
     - NotificationBannerSwift
     - Pageboy
     - PusherSwift
@@ -181,7 +178,6 @@ SPEC CHECKSUMS:
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
   Pageboy: 347c49b3a7f15aa78ddb6bf5c6c3b113e382fe52
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
@@ -202,6 +198,6 @@ SPEC CHECKSUMS:
   TRON: 38ac8e2c64a466343bb0c364da895488b6a6f123
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 9d60fc67f38425b2529d747d33edb8014a7a3f13
+PODFILE CHECKSUM: 29598ffa48ccad8e5446163ce48a6e65e8b3ac59
 
 COCOAPODS: 1.8.0.beta.1

@@ -20,7 +20,15 @@ protocol LibraryListViewControllerDelegate: class {
 class LibraryListCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	private let refreshControl = UIRefreshControl()
 
-	var library: [LibraryElement]?
+	var library: [LibraryElement]? {
+		didSet {
+			collectionView.reloadData {
+				if self.collectionView.numberOfItems() != 0 {
+					self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+				}
+			}
+		}
+	}
     var sectionTitle: String?
 	var sectionIndex: Int?
 	var libraryLayout: LibraryListStyle = .detailed
@@ -98,7 +106,6 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (library) in
 			DispatchQueue.main.async {
 				self.library = library
-				self.collectionView.reloadData()
 				self.refreshControl.endRefreshing()
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}

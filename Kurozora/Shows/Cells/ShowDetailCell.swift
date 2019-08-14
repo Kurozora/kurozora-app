@@ -50,14 +50,14 @@ class InformationTableViewCell: UITableViewCell {
 			}
 		case 1:
 			titleLabel.text = "IMDB ID"
-			if let imdbId = showDetail.imdbId, imdbId != "" {
+			if let imdbId = showDetail.imdbId, !imdbId.isEmpty {
 				detailLabel.text = imdbId
 			} else {
 				detailLabel.text = "No IMDB ID found"
 			}
 		case 2:
 			titleLabel.text = "Type"
-			if let type = showDetail.type, type != "" {
+			if let type = showDetail.type, !type.isEmpty {
 				detailLabel.text = type
 			} else {
 				detailLabel.text = "-"
@@ -85,7 +85,7 @@ class InformationTableViewCell: UITableViewCell {
 			}
 		case 6:
 			titleLabel.text = "Network"
-			if let network = showDetail.network, network != "" {
+			if let network = showDetail.network, !network.isEmpty {
 				detailLabel.text = network
 			} else {
 				detailLabel.text = "-"
@@ -99,47 +99,57 @@ class InformationTableViewCell: UITableViewCell {
 			}
 		case 8:
 			titleLabel.text = "Rating"
-			if let watchRating = showDetail.watchRating, watchRating != "" {
+			if let watchRating = showDetail.watchRating, !watchRating.isEmpty {
 				detailLabel.text = watchRating
 			} else {
 				detailLabel.text = "-"
 			}
 		case 9:
 			titleLabel.text = "Languages"
-			if let languages = showDetail.languages, languages != "" {
+			if let languages = showDetail.languages, !languages.isEmpty {
 				detailLabel.text = languages
 			} else {
 				detailLabel.text = "Japanese"
 			}
 		case 10:
 			titleLabel.text = "Genres"
-			if let genre = showDetail.genre, genre != "" {
-				detailLabel.text = genre
+			if let genres = showDetail.genres, !genres.isEmpty {
+				var genreText = ""
+				for (index, genre) in genres.enumerated() {
+					if let genreName = genre.name {
+						if index == genres.count - 1 {
+							genreText += "\(genreName)"
+							continue
+						}
+						genreText += "\(genreName), "
+					}
+				}
+				detailLabel.text = genreText
 			} else {
 				detailLabel.text = "-"
 			}
 			separatorView.isHidden = true
-			//            case 9:
-			//                cell.titleLabel.text = "English Titles"
-			//                if let englishTitle = showDetailsElement?.englishTitles, englishTitle != "" {
-			//         er           cell.detailLabel.text = englishTitle
-			//                } else {
-			//                    cell.detailLabel.text = "-"
-			//                }
-			//            case 10:
-			//                cell.titleLabel.text = "Japanese Titles"
-			//                if let japaneseTitle = showDetailsElement?.japaneseTitles, japaneseTitle != "" {
-			//                    cell.detailLabel.text = japaneseTitle
-			//                } else {
-			//                    cell.detailLabel.text = "-"
-			//                }
-			//            case 11:
-			//                cell.titleLabel.text = "Synonyms"
-			//                if let synonyms = showDetailsElement?.synonyms, synonyms != "" {
-			//                    cell.detailLabel.text = synonyms
-			//                } else {
-			//                    cell.detailLabel.text = "-"
-			//                }
+//            case 9:
+//                cell.titleLabel.text = "English Titles"
+//                if let englishTitle = showDetailsElement?.englishTitles, englishTitle != "" {
+//         er           cell.detailLabel.text = englishTitle
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
+//            case 10:
+//                cell.titleLabel.text = "Japanese Titles"
+//                if let japaneseTitle = showDetailsElement?.japaneseTitles, japaneseTitle != "" {
+//                    cell.detailLabel.text = japaneseTitle
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
+//            case 11:
+//                cell.titleLabel.text = "Synonyms"
+//                if let synonyms = showDetailsElement?.synonyms, synonyms != "" {
+//                    cell.detailLabel.text = synonyms
+//                } else {
+//                    cell.detailLabel.text = "-"
+//                }
 		default: break
 		}
 	}

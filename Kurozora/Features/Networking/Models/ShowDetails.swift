@@ -30,7 +30,7 @@ class ShowDetailsElement: JSONDecodable {
     let id: Int?
 	let imdbId: String?
     let title: String?
-    let genre: String?
+    let genres: [GenreElement]?
     let poster: String?
     let posterThumbnail: String?
     let banner: String?
@@ -72,7 +72,16 @@ class ShowDetailsElement: JSONDecodable {
         id = json["id"].intValue
 		imdbId = json["imdb_id"].stringValue
         title = json["title"].stringValue
-        genre = json["genre"].stringValue
+		var genres = [GenreElement]()
+
+		let genresArray = json["genres"].arrayValue
+		for genreItem in genresArray {
+			if let genreElement = try? GenreElement(json: genreItem) {
+				genres.append(genreElement)
+			}
+		}
+
+		self.genres = genres
         poster = json["poster"].stringValue
         posterThumbnail = json["poster_thumbnail"].stringValue
         banner = json["background"].stringValue
