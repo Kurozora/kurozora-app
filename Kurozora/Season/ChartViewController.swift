@@ -297,7 +297,7 @@ class ChartViewController: UIViewController {
 //            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 //            layout.minimumLineSpacing = CGFloat(lineSpacing)
 //
-//            if UIDevice.isPad() {
+//            if UIDevice.isPad {
 //                cellWidth = viewSize.width / columns - columns * lineSpacing
 //            } else {
 //                cellWidth = viewSize.width

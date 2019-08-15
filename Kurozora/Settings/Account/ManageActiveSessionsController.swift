@@ -177,7 +177,7 @@ class ManageActiveSessionsController: UIViewController {
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 
-		if UIDevice.isLandscape() {
+		if UIDevice.isLandscape {
 			self.tableView.tableHeaderView?.height = self.view.frame.height / 3
 		} else {
 			DispatchQueue.main.async() {

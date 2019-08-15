@@ -190,26 +190,26 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if libraryLayout == .detailed {
-			if UIDevice.isPad() {
-				if UIDevice.isLandscape() {
+			if UIDevice.isPad {
+				if UIDevice.isLandscape {
 					return CGSize(width: (collectionView.frame.width - 80) / 3, height: collectionView.frame.height * 0.26)
 				}
 				return CGSize(width: (collectionView.frame.width - 60) / 2, height: collectionView.frame.height * 0.2)
 			}
 
-			if UIDevice.isLandscape() {
+			if UIDevice.isLandscape {
 				return CGSize(width: (collectionView.frame.width - 120) / 2, height: collectionView.frame.height * 0.5)
 			}
 			return CGSize(width: (collectionView.frame.width - 20), height: collectionView.frame.height * 0.25)
 		} else if libraryLayout == .compact {
-			if UIDevice.isPad() {
-				if UIDevice.isLandscape() {
+			if UIDevice.isPad {
+				if UIDevice.isLandscape {
 					return CGSize(width: (collectionView.frame.width - 160) / 8, height: collectionView.frame.height  * 0.2)
 				}
 				return CGSize(width: (collectionView.frame.width - 60) / 6, height: collectionView.frame.height  * 0.16)
 			}
 
-			if UIDevice.isLandscape() {
+			if UIDevice.isLandscape {
 				return CGSize(width: (collectionView.frame.width - 40) / 6, height: collectionView.frame.height  * 0.5)
 			}
 
@@ -220,18 +220,18 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		if UIDevice.isPad() {
+		if UIDevice.isPad {
 			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 		}
 		return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return (UIDevice.isPad()) ? 20 : 10
+		return (UIDevice.isPad) ? 20 : 10
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return (UIDevice.isPad()) ? 20 : 10
+		return (UIDevice.isPad) ? 20 : 10
 	}
 }
 //    weak var delegate: AnimeListControllerDelegate?

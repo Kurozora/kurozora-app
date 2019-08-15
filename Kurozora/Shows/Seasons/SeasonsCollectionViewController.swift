@@ -85,16 +85,16 @@ extension SeasonsCollectionViewController {
 // MARK: - UITableViewDelegate
 extension SeasonsCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let interItemGap: CGFloat = (UIDevice.isPad()) ? 20 : 10
+		let interItemGap: CGFloat = (UIDevice.isPad) ? 20 : 10
 
-		if UIDevice.isPad() {
-			if UIDevice.isLandscape() {
+		if UIDevice.isPad {
+			if UIDevice.isLandscape {
 				return CGSize(width: (collectionView.frame.width - interItemGap) / 3, height: 170)
 			}
 			return CGSize(width: (collectionView.frame.width - interItemGap) / 2, height: 170)
 		}
 
-		if UIDevice.isLandscape() {
+		if UIDevice.isLandscape {
 			return CGSize(width: (collectionView.frame.width - interItemGap) / 2, height: 170)
 		}
 		return CGSize(width: (collectionView.frame.width - interItemGap), height: 170)

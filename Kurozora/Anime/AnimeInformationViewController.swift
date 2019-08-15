@@ -63,14 +63,14 @@
 //    override public func viewDidLoad() {
 //        super.viewDidLoad()
 //
-//        HeaderViewHeight = UIDevice.isPad() ? 400 : 274
+//        HeaderViewHeight = UIDevice.isPad ? 400 : 274
 //
 //        shimeringView.contentView = animeTitle
 //        shimeringView.shimmering = true
 //
 //        tableView.estimatedRowHeight = 44.0
 //        tableView.rowHeight = UITableViewAutomaticDimension
-//        if UIDevice.isPad() {
+//        if UIDevice.isPad {
 //            let header = tableView.tableHeaderView!
 //            var frame = header.frame
 //            frame.size.height = 500 - 44 - 30

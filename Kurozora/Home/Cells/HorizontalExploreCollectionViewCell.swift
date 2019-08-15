@@ -125,7 +125,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayou
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return (UIDevice.isPad()) ? 40 : 20
+		return (UIDevice.isPad) ? 40 : 20
 	}
 }
 

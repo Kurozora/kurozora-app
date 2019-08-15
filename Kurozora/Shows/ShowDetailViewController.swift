@@ -181,7 +181,7 @@ class ShowDetailViewController: UIViewController {
 		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
 		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
 
-		if UIDevice.isPad() {
+		if UIDevice.isPad {
 			var frame = headerView.frame
 			frame.size.height = 500 - 44 - 30
 			tableView.tableHeaderView?.frame = frame

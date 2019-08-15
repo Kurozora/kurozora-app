@@ -161,16 +161,16 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension EpisodesCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let interItemGap: CGFloat = (UIDevice.isPad()) ? 20 : 10
+		let interItemGap: CGFloat = (UIDevice.isPad) ? 20 : 10
 
-		if UIDevice.isPad() {
-			if UIDevice.isLandscape() {
+		if UIDevice.isPad {
+			if UIDevice.isLandscape {
 				return CGSize(width: (view.frame.width - interItemGap) / 3, height: view.frame.height * 0.3)
 			}
 			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.2)
 		}
 
-		if UIDevice.isLandscape() {
+		if UIDevice.isLandscape {
 			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.6)
 		}
 		return CGSize(width: (view.frame.width - interItemGap), height: view.frame.height * 0.3)

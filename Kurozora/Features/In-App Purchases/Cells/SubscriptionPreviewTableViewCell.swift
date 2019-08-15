@@ -43,14 +43,14 @@ extension SubscriptionPreviewTableViewCell: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SubscriptionPreviewTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if UIDevice.isPad() {
-			if UIDevice.isLandscape() {
+		if UIDevice.isPad {
+			if UIDevice.isLandscape {
 				return CGSize(width: collectionView.width / 3, height: collectionView.height)
 			}
 			return CGSize(width: collectionView.width / 2, height: collectionView.height)
 		}
 
-		if UIDevice.isLandscape() {
+		if UIDevice.isLandscape {
 			return CGSize(width: collectionView.width / 2, height: collectionView.height)
 		}
 		return CGSize(width: collectionView.width, height: collectionView.height)

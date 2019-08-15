@@ -10,7 +10,7 @@ import UIKit
 
 class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 	override var interItemGap: Int {
-		return (UIDevice.isPad()) ? 40 : 10
+		return (UIDevice.isPad) ? 40 : 10
 	}
 
 	// MARK: - Public Properties
@@ -30,14 +30,14 @@ class BannerCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 		get {
 			guard let collectionView = self.collectionView else { return .zero }
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
-			if UIDevice.isPad() {
-				if UIDevice.isLandscape() {
+			if UIDevice.isPad {
+				if UIDevice.isLandscape {
 					return CGSize(width: (collectionView.frame.width - gaps) / 1.5, height: collectionView.frame.height)
 				}
 				return CGSize(width: (collectionView.frame.width - gaps) / 1.2, height: collectionView.frame.height)
 			}
 
-			if UIDevice.isLandscape() {
+			if UIDevice.isLandscape {
 				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
 			}
 			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)

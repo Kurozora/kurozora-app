@@ -10,13 +10,13 @@ import UIKit
 
 class KBaseCollectionViewFlowLayout: UICollectionViewFlowLayout {
 	var spacing: CGFloat {
-		return (UIDevice.isPad()) ? 15 : 5
+		return (UIDevice.isPad) ? 15 : 5
 	}
 	var spacingWhenFocused: CGFloat {
-		return (UIDevice.isPad()) ? 25 : 15
+		return (UIDevice.isPad) ? 25 : 15
 	}
 	var interItemGap: Int {
-		return (UIDevice.isPad()) ? 20 : 10
+		return (UIDevice.isPad) ? 20 : 10
 	}
 }
 

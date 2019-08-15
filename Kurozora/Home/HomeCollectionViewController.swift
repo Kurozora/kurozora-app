@@ -235,14 +235,14 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 				if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
 
 					if indexPath.section == 0 {
-						if UIDevice.isPad() {
-							if UIDevice.isLandscape() {
+						if UIDevice.isPad {
+							if UIDevice.isLandscape {
 								return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
 							}
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
 						}
 
-						if UIDevice.isLandscape() {
+						if UIDevice.isLandscape {
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
@@ -250,38 +250,38 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 					switch exploreCellStyle {
 					case .large:
-						if UIDevice.isPad() {
-							if UIDevice.isLandscape() {
+						if UIDevice.isPad {
+							if UIDevice.isLandscape {
 								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
 							}
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 						}
 
-						if UIDevice.isLandscape() {
+						if UIDevice.isLandscape {
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
 					case .medium:
-						if UIDevice.isPad() {
-							if UIDevice.isLandscape() {
+						if UIDevice.isPad {
+							if UIDevice.isLandscape {
 								return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 							}
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.15)
 						}
 
-						if UIDevice.isLandscape() {
+						if UIDevice.isLandscape {
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 					case .small:
-						if UIDevice.isPad() {
-							if UIDevice.isLandscape() {
+						if UIDevice.isPad {
+							if UIDevice.isLandscape {
 								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
 							}
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
 						}
 
-						if UIDevice.isLandscape() {
+						if UIDevice.isLandscape {
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
 						}
 
@@ -291,14 +291,14 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.24)
 					case .video:
-						if UIDevice.isPad() {
-							if UIDevice.isLandscape() {
+						if UIDevice.isPad {
+							if UIDevice.isLandscape {
 								return CGSize(width: view.frame.width, height: view.frame.height * 0.39)
 							}
 							return CGSize(width: view.frame.width, height: view.frame.width * 0.38)
 						}
 
-						if UIDevice.isLandscape() {
+						if UIDevice.isLandscape {
 							return CGSize(width: view.frame.width, height: view.frame.height * 0.8)
 						}
 						return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
@@ -307,14 +307,14 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 			}
 
 			if indexPath.section == exploreCategoriesCount || indexPath.section == exploreCategoriesCount + 1 {
-				if UIDevice.isPad() {
-					if UIDevice.isLandscape() {
+				if UIDevice.isPad {
+					if UIDevice.isLandscape {
 						return CGSize(width: view.frame.width / 3, height: 44.5)
 					}
 					return CGSize(width: view.frame.width / 2, height: 44.5)
 				}
 
-				if UIDevice.isLandscape() {
+				if UIDevice.isLandscape {
 					return CGSize(width: view.frame.width / 2, height: 44.5)
 				}
 				return CGSize(width: view.frame.width, height: 44.5)

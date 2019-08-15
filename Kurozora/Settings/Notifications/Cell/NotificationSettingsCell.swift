@@ -12,7 +12,7 @@ class NotificationSettingsCell: SettingsCell {
 	// Device image views
 	@IBOutlet weak var basicNotificationDeviceImageView: UIImageView! {
 		didSet {
-			if UIDevice.isPad() {
+			if UIDevice.isPad {
 				basicNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_basic_ipad")
 			} else {
 				basicNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_basic_iphone")
@@ -21,7 +21,7 @@ class NotificationSettingsCell: SettingsCell {
 	}
 	@IBOutlet weak var iconNotificationDeviceImageView: UIImageView! {
 		didSet {
-			if UIDevice.isPad() {
+			if UIDevice.isPad {
 				iconNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_icon_ipad")
 			} else {
 				iconNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_icon_iphone")
@@ -30,7 +30,7 @@ class NotificationSettingsCell: SettingsCell {
 	}
 	@IBOutlet weak var statusBarNotificationDeviceImageView: UIImageView! {
 		didSet {
-			if UIDevice.isPad() {
+			if UIDevice.isPad {
 				statusBarNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_statusbar_ipad")
 			} else {
 				statusBarNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_statusbar_iphone")

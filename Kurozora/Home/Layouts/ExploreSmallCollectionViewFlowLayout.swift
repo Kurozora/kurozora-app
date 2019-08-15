@@ -31,14 +31,14 @@ class ExploreSmallCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 			guard let collectionView = self.collectionView else { return .zero }
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
 
-			if UIDevice.isPad() {
-				if UIDevice.isLandscape() {
+			if UIDevice.isPad {
+				if UIDevice.isLandscape {
 					return CGSize(width: (collectionView.frame.width - gaps) / 6, height: collectionView.frame.height)
 				}
 				return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
 			}
 
-			if UIDevice.isLandscape() {
+			if UIDevice.isLandscape {
 				return CGSize(width: (collectionView.frame.width - gaps) / 5, height: collectionView.frame.height)
 			}
 

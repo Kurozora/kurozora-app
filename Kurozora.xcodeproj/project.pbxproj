@@ -261,7 +261,6 @@
 		66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */; };
 		66A8AF22209991310011A342 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF20209991310011A342 /* AnimeCell.swift */; };
 		66A8AF23209991310011A342 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A8AF21209991310011A342 /* AnimeCell.xib */; };
-		66A8AF252099A4950011A342 /* UIDevice+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF242099A4950011A342 /* UIDevice+Utils.swift */; };
 		66A8AF272099A4C30011A342 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF262099A4C30011A342 /* String+Date.swift */; };
 		66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF282099A52D0011A342 /* UIView+Animation.swift */; };
 		66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */; };
@@ -294,7 +293,7 @@
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
 		66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD721454618007154BD /* PrivacyPolicy.swift */; };
-		66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */; };
+		66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		66BA3B722301897F00C2B11C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B712301897F00C2B11C /* StoreKit.framework */; };
 		66BA3B74230189A300C2B11C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B73230189A300C2B11C /* CloudKit.framework */; };
 		66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */; };
@@ -647,7 +646,6 @@
 		66A552DA20A2E54200E515DB /* AnimeInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeInformationViewController.swift; sourceTree = "<group>"; };
 		66A8AF20209991310011A342 /* AnimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
 		66A8AF21209991310011A342 /* AnimeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimeCell.xib; sourceTree = "<group>"; };
-		66A8AF242099A4950011A342 /* UIDevice+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Utils.swift"; sourceTree = "<group>"; };
 		66A8AF262099A4C30011A342 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		66A8AF282099A52D0011A342 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1093,7 +1091,6 @@
 		6614DF6D2089397500B0BC69 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66A8AF242099A4950011A342 /* UIDevice+Utils.swift */,
 				66A8AF262099A4C30011A342 /* String+Date.swift */,
 				66A8AF282099A52D0011A342 /* UIView+Animation.swift */,
 				66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */,
@@ -2361,7 +2358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */,
-				66A8AF252099A4950011A342 /* UIDevice+Utils.swift in Sources */,
 				66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */,
 				66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */,
 				6611235A2090907200E6033A /* Kurozora.swift in Sources */,

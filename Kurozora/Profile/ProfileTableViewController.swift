@@ -533,7 +533,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		// If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
-		if UIDevice.isPad() {
+		if UIDevice.isPad {
 			alert.popoverPresentationController?.sourceView = sender
 			alert.popoverPresentationController?.sourceRect = sender.bounds
 			alert.popoverPresentationController?.permittedArrowDirections = .up
@@ -746,7 +746,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //        popoverMenuViewController?.sourceView = sender.superview
 //        popoverMenuViewController?.sourceRect = sender.frame
 //
-//        if UIDevice.isPad() {
+//        if UIDevice.isPad {
 //            navigationController?.present(viewController, animated: true, completion: nil)
 //        } else {
 //            navigationController?.pushViewController(viewController, animated: true)
@@ -789,7 +789,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //            alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
 //                let editProfileController =  UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "EditProfile") as! EditProfileViewController
 //                editProfileController.delegate = self
-//                if UIDevice.isPad() {
+//                if UIDevice.isPad {
 //                    self.presentSmallViewController(viewController: editProfileController, sender: sender)
 //                } else {
 //                    self.present(editProfileController, animated: true, completion: nil)
@@ -798,7 +798,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 //
 //            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
 //                let settings = UIStoryboard(name: "settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-//                if UIDevice.isPad() {
+//                if UIDevice.isPad {
 //                    self.presentSmallViewController(viewController: settings, sender: sender)
 //                } else {
 //                    self.animator = self.presentViewControllerModal(controller: settings)
