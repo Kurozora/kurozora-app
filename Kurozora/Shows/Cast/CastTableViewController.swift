@@ -135,8 +135,9 @@ extension CastCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		#if DEBUG
 		return CGSize(width: (collectionView.width - gap) / _numberOfItems.forWidth, height: (collectionView.height - gap) / _numberOfItems.forHeight)
-		#endif
+		#else
 		return CGSize(width: (collectionView.width - gap) / numberOfItems.forWidth, height: (collectionView.height - gap) / numberOfItems.forHeight)
+		#endif
 	}
 }
 
