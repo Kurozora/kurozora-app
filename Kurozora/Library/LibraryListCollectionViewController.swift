@@ -33,6 +33,52 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	var sectionIndex: Int?
 	var libraryLayout: LibraryListStyle = .detailed
 	var delegate: LibraryListViewControllerDelegate?
+	var gap: CGFloat {
+		return UIDevice.isPad ? 40 : 20
+	}
+	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
+		get {
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (2, 1.8) : (6, 2.4) // NOTE: 1.8 since the poster overlaps with the check mark button. You're welcome you dummy dum dum for always forgetting
+				case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (2, 2.0) : (6, 2.4)
+				case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (2, 2.0) : (6, 2.4)
+				case .iPhone_Xr:			return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
+				case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
+				case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
+
+				case .iPad:					return (libraryLayout == .detailed) ? (3, 3.8) : (8, 4.2)
+				case .iPadAir3:				return (libraryLayout == .detailed) ? (3, 3.8) : (8, 4.4)
+				case .iPadPro11:			return (libraryLayout == .detailed) ? (3, 3.6) : (8, 4.2)
+				case .iPadPro12:			return (libraryLayout == .detailed) ? (3, 4.0) : (8, 4.4)
+				}
+			}
+
+			switch UIDevice.type {
+			case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
+			case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
+			case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
+			case .iPhone_Xr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
+			case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
+			case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
+
+			case .iPad:					return (libraryLayout == .detailed) ? (2, 4.6) : (5, 5.2)
+			case .iPadAir3:				return (libraryLayout == .detailed) ? (2, 4.8) : (5, 5.2)
+			case .iPadPro11:			return (libraryLayout == .detailed) ? (2, 5.0) : (5, 5.4)
+			case .iPadPro12:			return (libraryLayout == .detailed) ? (2, 4.8) : (5, 4.8)
+			}
+		}
+	}
+
+	#if DEBUG
+	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
+	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
+		get {
+			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
+			return newNumberOfItems
+		}
+	}
+	#endif
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -77,11 +123,27 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
         }
     }
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		collectionView.collectionViewLayout.invalidateLayout()
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+			return
+		}
+		flowLayout.invalidateLayout()
 	}
 
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
+			showTabBarController.libraryCollectionViewCell = currentCell
+			showTabBarController.showID = currentCell.libraryElement?.id
+			if let showTitle = currentCell.libraryElement?.title {
+				showTabBarController.heroID = "library_\(showTitle)"
+				showTabBarController.showDetailViewControllerDelegate = self
+			}
+		}
+	}
+
+	// MARK: - ScrollView
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		if #available(iOS 11.0, *) {
 			let offset = scrollView.contentOffset
@@ -110,18 +172,6 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
-	}
-
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
-			showTabBarController.libraryCollectionViewCell = currentCell
-			showTabBarController.showID = currentCell.libraryElement?.id
-			if let showTitle = currentCell.libraryElement?.title {
-				showTabBarController.heroID = "library_\(showTitle)"
-				showTabBarController.showDetailViewControllerDelegate = self
-			}
-		}
 	}
 }
 
@@ -189,50 +239,55 @@ extension LibraryListCollectionViewController {
 extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if libraryLayout == .detailed {
-			if UIDevice.isPad {
-				if UIDevice.isLandscape {
-					return CGSize(width: (collectionView.frame.width - 80) / 3, height: collectionView.frame.height * 0.26)
-				}
-				return CGSize(width: (collectionView.frame.width - 60) / 2, height: collectionView.frame.height * 0.2)
-			}
-
-			if UIDevice.isLandscape {
-				return CGSize(width: (collectionView.frame.width - 120) / 2, height: collectionView.frame.height * 0.5)
-			}
-			return CGSize(width: (collectionView.frame.width - 20), height: collectionView.frame.height * 0.25)
-		} else if libraryLayout == .compact {
-			if UIDevice.isPad {
-				if UIDevice.isLandscape {
-					return CGSize(width: (collectionView.frame.width - 160) / 8, height: collectionView.frame.height  * 0.2)
-				}
-				return CGSize(width: (collectionView.frame.width - 60) / 6, height: collectionView.frame.height  * 0.16)
-			}
-
-			if UIDevice.isLandscape {
-				return CGSize(width: (collectionView.frame.width - 40) / 6, height: collectionView.frame.height  * 0.5)
-			}
-
-			return CGSize(width: (collectionView.frame.width - 40) / 3, height: collectionView.frame.height * 0.2)
-		}
-
-		return CGSize.zero
+		#if DEBUG
+		return CGSize(width: (collectionView.width - gap) / _numberOfItems.forWidth, height: (collectionView.height - gap) / _numberOfItems.forHeight)
+		#else
+		return CGSize(width: (collectionView.width - gap) / numberOfItems.forWidth, height: (collectionView.height - gap) / numberOfItems.forHeight)
+		#endif
+//		if libraryLayout == .detailed {
+//			if UIDevice.isPad {
+//				if UIDevice.isLandscape {
+//					return CGSize(width: (collectionView.frame.width - 80) / 3, height: collectionView.frame.height * 0.26)
+//				}
+//				return CGSize(width: (collectionView.frame.width - 60) / 2, height: collectionView.frame.height * 0.2)
+//			}
+//
+//			if UIDevice.isLandscape {
+//				return CGSize(width: (collectionView.frame.width - 120) / 2, height: collectionView.frame.height * 0.5)
+//			}
+//			return CGSize(width: (collectionView.frame.width - 20), height: collectionView.frame.height * 0.25)
+//		} else if libraryLayout == .compact {
+//			if UIDevice.isPad {
+//				if UIDevice.isLandscape {
+//					return CGSize(width: (collectionView.frame.width - 160) / 8, height: collectionView.frame.height  * 0.2)
+//				}
+//				return CGSize(width: (collectionView.frame.width - 60) / 6, height: collectionView.frame.height  * 0.16)
+//			}
+//
+//			if UIDevice.isLandscape {
+//				return CGSize(width: (collectionView.frame.width - 40) / 6, height: collectionView.frame.height  * 0.5)
+//			}
+//
+//			return CGSize(width: (collectionView.frame.width - 40) / 3, height: collectionView.frame.height * 0.2)
+//		}
+//
+//		return CGSize.zero
 	}
 
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		if UIDevice.isPad {
-			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-		}
-		return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-	}
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return (UIDevice.isPad) ? 20 : 10
-	}
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return (UIDevice.isPad) ? 20 : 10
-	}
+//	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//		if UIDevice.isPad {
+//			return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+//		}
+//		return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+//	}
+//
+//	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//		return gap
+//	}
+//
+//	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//		return gap
+//	}
 }
 //    weak var delegate: AnimeListControllerDelegate?
 //

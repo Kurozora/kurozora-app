@@ -22,6 +22,34 @@ class LibraryViewController: TabmanViewController {
 	let librarySections: [LibrarySectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
 	let bar = TMBar.ButtonBar()
 
+	#if DEBUG
+	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = {
+		return LibraryListCollectionViewController().numberOfItems
+	}()
+	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 20)))
+
+	@objc func updateLayout(_ textField: UITextField) {
+		guard let textFieldText = numberOfItemsTextField.text else { return }
+		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
+
+		if textFieldText.isEmpty {
+			currentSection.newNumberOfItems = nil
+		} else {
+			currentSection.newNumberOfItems = getNumbers(textFieldText)
+		}
+
+		currentSection.collectionView.reloadData()
+	}
+
+	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
+		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
+		let width = Double(stringArray[0])
+		let height = Double(stringArray[1])
+		return (width?.cgFloat ?? numberOfItems.forWidth, height?.cgFloat ?? numberOfItems.forHeight)
+	}
+	#endif
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -75,6 +103,16 @@ class LibraryViewController: TabmanViewController {
 			bar.isHidden = barItemsCount <= 1
 		}
 		view.sendSubviewToBack(scrollView)
+
+		#if DEBUG
+		numberOfItemsTextField.placeholder = "# items for: width, height"
+		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
+		numberOfItemsTextField.textAlignment = .center
+		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
+		navigationItem.title = nil
+		navigationItem.titleView = numberOfItemsTextField
+		numberOfItemsTextField.becomeFirstResponder()
+		#endif
     }
 
 	// MARK: - Functions

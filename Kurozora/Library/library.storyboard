@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -62,21 +62,21 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailedCell" id="d2U-M3-0Ca" userLabel="CheckIn" customClass="LibraryCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="19.5" y="0.0" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="o9V-AR-H9i">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BMx-lf-Gcm">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                            <rect key="frame" x="10" y="10" width="394" height="224"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_banner" translatesAutoresizingMaskIntoConstraints="NO" id="11A-h0-OAy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="394" height="224"/>
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="YZY-nq-9sE">
-                                                    <rect key="frame" x="0.0" y="100" width="375" height="100"/>
+                                                    <rect key="frame" x="0.0" y="112" width="394" height="112"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -97,7 +97,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O19-L6-mnx" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="9.5" y="10" width="34" height="34"/>
+                                            <rect key="frame" x="19.5" y="20" width="34" height="34"/>
                                             <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="34" id="AtU-38-gJu"/>
@@ -117,7 +117,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-3G-CsC">
-                                            <rect key="frame" x="10" y="102" width="60" height="88"/>
+                                            <rect key="frame" x="20" y="136" width="60" height="88"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="rbB-Ss-rPx">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="88"/>
@@ -139,29 +139,29 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Kajimeru Isekai Seikatu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbC-kq-eg9">
-                                            <rect key="frame" x="80" y="158.5" width="285" height="18"/>
+                                            <rect key="frame" x="90" y="192.5" width="304" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV ·  10/24    5" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNd-Po-fJX">
-                                            <rect key="frame" x="80" y="176.5" width="285" height="13.5"/>
+                                            <rect key="frame" x="90" y="210.5" width="304" height="13.5"/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
                                             <color key="textColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="BMx-lf-Gcm" secondAttribute="trailing" id="9la-lx-6en"/>
+                                        <constraint firstAttribute="trailing" secondItem="BMx-lf-Gcm" secondAttribute="trailing" constant="10" id="9la-lx-6en"/>
                                         <constraint firstItem="wNd-Po-fJX" firstAttribute="bottom" secondItem="GpU-3G-CsC" secondAttribute="bottom" id="AKt-zS-bJT"/>
                                         <constraint firstItem="O19-L6-mnx" firstAttribute="leading" secondItem="BMx-lf-Gcm" secondAttribute="leading" constant="9.5" id="AMg-BI-Te9"/>
-                                        <constraint firstItem="BMx-lf-Gcm" firstAttribute="top" secondItem="o9V-AR-H9i" secondAttribute="top" id="Bpo-Y7-jwz"/>
+                                        <constraint firstItem="BMx-lf-Gcm" firstAttribute="top" secondItem="o9V-AR-H9i" secondAttribute="top" constant="10" id="Bpo-Y7-jwz"/>
                                         <constraint firstItem="BMx-lf-Gcm" firstAttribute="bottom" secondItem="GpU-3G-CsC" secondAttribute="bottom" constant="10" id="LEZ-5G-Qbe"/>
                                         <constraint firstItem="cbC-kq-eg9" firstAttribute="leading" secondItem="wNd-Po-fJX" secondAttribute="leading" id="M85-RD-dXg"/>
                                         <constraint firstItem="O19-L6-mnx" firstAttribute="top" secondItem="BMx-lf-Gcm" secondAttribute="top" constant="10" id="QTN-gY-ORF"/>
-                                        <constraint firstItem="BMx-lf-Gcm" firstAttribute="leading" secondItem="o9V-AR-H9i" secondAttribute="leading" id="RSi-uY-Wn8"/>
+                                        <constraint firstItem="BMx-lf-Gcm" firstAttribute="leading" secondItem="o9V-AR-H9i" secondAttribute="leading" constant="10" id="RSi-uY-Wn8"/>
                                         <constraint firstItem="wNd-Po-fJX" firstAttribute="top" secondItem="cbC-kq-eg9" secondAttribute="bottom" id="UX9-00-7PB"/>
-                                        <constraint firstAttribute="bottom" secondItem="BMx-lf-Gcm" secondAttribute="bottom" id="dBD-Cb-2QI"/>
+                                        <constraint firstAttribute="bottom" secondItem="BMx-lf-Gcm" secondAttribute="bottom" constant="10" id="dBD-Cb-2QI"/>
                                         <constraint firstItem="GpU-3G-CsC" firstAttribute="leading" secondItem="BMx-lf-Gcm" secondAttribute="leading" constant="10" id="f59-Qs-gGy"/>
                                         <constraint firstItem="wNd-Po-fJX" firstAttribute="leading" secondItem="GpU-3G-CsC" secondAttribute="trailing" constant="10" id="pgS-pH-B1Z"/>
                                         <constraint firstItem="cbC-kq-eg9" firstAttribute="trailing" secondItem="wNd-Po-fJX" secondAttribute="trailing" id="qxh-4O-RPN"/>
@@ -169,7 +169,7 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <size key="customSize" width="375" height="200"/>
+                                <size key="customSize" width="414" height="244"/>
                                 <connections>
                                     <outlet property="episodeImageView" destination="11A-h0-OAy" id="bbk-u1-Wyz"/>
                                     <outlet property="posterShadowView" destination="GpU-3G-CsC" id="vbT-zJ-WXO"/>
@@ -184,15 +184,18 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CompactCell" id="iU8-MQ-YER" userLabel="Compact" customClass="LibraryCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="167" y="210" width="80" height="118"/>
+                                <rect key="frame" x="157" y="254" width="100" height="138"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NYS-B0-wGk">
-                                    <rect key="frame" x="0.0" y="0.0" width="80" height="118"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="138"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="SX5-JO-WGv" userLabel="Titleimage View">
-                                            <rect key="frame" x="0.0" y="0.0" width="80" height="118"/>
+                                            <rect key="frame" x="10" y="10" width="80" height="118"/>
                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="SX5-JO-WGv" secondAttribute="height" multiplier="16:9" id="SWM-Bf-fzu"/>
+                                            </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="10"/>
@@ -201,14 +204,14 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SX5-JO-WGv" firstAttribute="top" secondItem="NYS-B0-wGk" secondAttribute="top" id="Ot6-rW-UQu"/>
-                                        <constraint firstItem="SX5-JO-WGv" firstAttribute="leading" secondItem="NYS-B0-wGk" secondAttribute="leading" id="RUI-uZ-OTO"/>
-                                        <constraint firstAttribute="trailing" secondItem="SX5-JO-WGv" secondAttribute="trailing" id="esa-Sx-wdz"/>
-                                        <constraint firstAttribute="bottom" secondItem="SX5-JO-WGv" secondAttribute="bottom" id="trz-Mw-FuU"/>
+                                        <constraint firstItem="SX5-JO-WGv" firstAttribute="top" secondItem="NYS-B0-wGk" secondAttribute="top" constant="10" id="Ot6-rW-UQu"/>
+                                        <constraint firstItem="SX5-JO-WGv" firstAttribute="leading" secondItem="NYS-B0-wGk" secondAttribute="leading" constant="10" id="RUI-uZ-OTO"/>
+                                        <constraint firstAttribute="trailing" secondItem="SX5-JO-WGv" secondAttribute="trailing" constant="10" id="esa-Sx-wdz"/>
+                                        <constraint firstAttribute="bottom" secondItem="SX5-JO-WGv" secondAttribute="bottom" constant="10" id="trz-Mw-FuU"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <size key="customSize" width="80" height="118"/>
+                                <size key="customSize" width="100" height="138"/>
                                 <connections>
                                     <outlet property="posterView" destination="SX5-JO-WGv" id="rXH-aA-3xc"/>
                                     <segue destination="sOR-Y4-DCs" kind="presentation" modalPresentationStyle="overFullScreen" id="I3g-8e-Hov">
