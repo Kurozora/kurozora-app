@@ -88,6 +88,7 @@ class CastCollectionViewController: UICollectionViewController, EmptyDataSetDele
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
+		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
 		numberOfItemsTextField.textAlignment = .center
 		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
 		navigationItem.title = nil

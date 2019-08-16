@@ -17,6 +17,65 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 			self.collectionView?.reloadData()
 		}
 	}
+	var gap: CGFloat = UIDevice.isPad ? 40 : 20
+	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
+		get {
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	return (2, 1.8)
+				case .iPhone_6_6S_7_8:		return (2, 1.8)
+				case .iPhone_6_6S_7_8_PLUS:	return (2, 1.8)
+				case .iPhone_Xr:			return (2, 1.6)
+				case .iPhone_X_Xs:			return (2, 1.6)
+				case .iPhone_Xs_Max:		return (2, 1.6)
+
+				case .iPad:					return (2, 3.6)
+				case .iPadAir3:				return (3, 3.6)
+				case .iPadPro11:			return (3, 3.4)
+				case .iPadPro12:			return (3, 3.4)
+				}
+			}
+
+			switch UIDevice.type {
+			case .iPhone_5_5S_5C_SE:	return (1, 3)
+			case .iPhone_6_6S_7_8:		return (1, 3)
+			case .iPhone_6_6S_7_8_PLUS:	return (1, 3)
+			case .iPhone_Xr:			return (1, 3.8)
+			case .iPhone_X_Xs:			return (1, 3.8)
+			case .iPhone_Xs_Max:		return (1, 3.8)
+
+			case .iPad:					return (2, 4.4)
+			case .iPadAir3:				return (2, 4.4)
+			case .iPadPro11:			return (2, 4.6)
+			case .iPadPro12:			return (2, 4.6)
+			}
+		}
+	}
+
+	#if DEBUG
+	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
+	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
+		get {
+			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
+			return newNumberOfItems
+		}
+	}
+
+	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 20)))
+
+	@objc func updateLayout(_ textField: UITextField) {
+		guard let textFieldText = numberOfItemsTextField.text, !textFieldText.isEmpty else { return }
+		newNumberOfItems = getNumbers(textFieldText)
+		collectionView.reloadData()
+	}
+
+	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
+		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
+		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
+		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
+		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
+	}
+	#endif
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +93,36 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
         }
 
         fetchEpisodes()
+
+		#if DEBUG
+		numberOfItemsTextField.placeholder = "# items for: width, height"
+		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
+		numberOfItemsTextField.textAlignment = .center
+		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
+		navigationItem.title = nil
+		navigationItem.titleView = numberOfItemsTextField
+		numberOfItemsTextField.becomeFirstResponder()
+		#endif
     }
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+			return
+		}
+		flowLayout.invalidateLayout()
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
+			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
+				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
+				episodeDetailViewController.episodeCell = episodeCell
+				episodeDetailViewController.delegate = episodeCell
+			}
+		}
+	}
 
 	// MARK: - Functions
 	func fetchEpisodes() {
@@ -54,22 +142,6 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		controller.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
 		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		self.present(controller, animated: true, completion: nil)
-	}
-
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
-			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
-				episodeDetailViewController.episodeCell = episodeCell
-				episodeDetailViewController.delegate = episodeCell
-			}
-		}
-	}
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		collectionView.collectionViewLayout.invalidateLayout()
 	}
 }
 
@@ -161,19 +233,23 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension EpisodesCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let interItemGap: CGFloat = (UIDevice.isPad) ? 20 : 10
-
-		if UIDevice.isPad {
-			if UIDevice.isLandscape {
-				return CGSize(width: (view.frame.width - interItemGap) / 3, height: view.frame.height * 0.3)
-			}
-			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.2)
-		}
-
-		if UIDevice.isLandscape {
-			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.6)
-		}
-		return CGSize(width: (view.frame.width - interItemGap), height: view.frame.height * 0.3)
+//		let interItemGap: CGFloat = (UIDevice.isPad) ? 20 : 10
+		#if DEBUG
+		return CGSize(width: (collectionView.width - gap) / _numberOfItems.forWidth, height: (collectionView.height - gap) / _numberOfItems.forHeight)
+		#else
+		return CGSize(width: (collectionView.width - gap) / numberOfItems.forWidth, height: (collectionView.height - gap) / numberOfItems.forHeight)
+		#endif
+//		if UIDevice.isPad {
+//			if UIDevice.isLandscape {
+//				return CGSize(width: (view.frame.width - interItemGap) / 3, height: view.frame.height * 0.3)
+//			}
+//			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.2)
+//		}
+//
+//		if UIDevice.isLandscape {
+//			return CGSize(width: (view.frame.width - interItemGap) / 2, height: view.frame.height * 0.6)
+//		}
+//		return CGSize(width: (view.frame.width - interItemGap), height: view.frame.height * 0.3)
 	}
 }
 
