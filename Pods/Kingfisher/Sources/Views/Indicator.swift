@@ -24,7 +24,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#if canImport(AppKit)
+#if !os(watchOS)
+
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 public typealias IndicatorView = NSView
 #else
@@ -120,6 +122,8 @@ final class ActivityIndicator: Indicator {
         #else
             #if os(tvOS)
                 let indicatorStyle = UIActivityIndicatorView.Style.white
+            #elseif targetEnvironment(macCatalyst)
+                let indicatorStyle = UIActivityIndicatorView.Style.medium
             #else
                 let indicatorStyle = UIActivityIndicatorView.Style.gray
             #endif
@@ -186,3 +190,5 @@ final class ImageIndicator: Indicator {
         animatedImageIndicatorView.isHidden = true
     }
 }
+
+#endif

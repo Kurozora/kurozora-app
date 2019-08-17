@@ -359,7 +359,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10056</string>
+	<string>10060</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.lifestyle</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>medium</string>

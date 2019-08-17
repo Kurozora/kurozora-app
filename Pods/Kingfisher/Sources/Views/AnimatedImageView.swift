@@ -31,6 +31,9 @@
 //  The name and characters used in the demo of this software are property of their
 //  respective owners.
 
+#if !os(watchOS)
+
+#if canImport(UIKit)
 import UIKit
 import ImageIO
 
@@ -128,7 +131,7 @@ open class AnimatedImageView: UIImageView {
     /// Set this property to `RunLoop.Mode.default` will make the animation pause during UIScrollView scrolling.
     public var runLoopMode = KFRunLoopModeCommon {
         willSet {
-            guard runLoopMode != newValue else { return }
+            guard runLoopMode == newValue else { return }
             stopAnimating()
             displayLink.remove(from: .main, forMode: runLoopMode)
             displayLink.add(to: .main, forMode: newValue)
@@ -358,7 +361,7 @@ extension AnimatedImageView {
         private let maxRepeatCount: RepeatCount
 
         private let maxTimeStep: TimeInterval = 1.0
-        private let animatedFrames = SafeArray<AnimatedFrame>()
+        private var animatedFrames = [AnimatedFrame]()
         private var frameCount = 0
         private var timeSinceLastFrameChange: TimeInterval = 0.0
         private var currentRepeatCount: UInt = 0
@@ -447,11 +450,11 @@ extension AnimatedImageView {
         }
 
         func frame(at index: Int) -> Image? {
-            return animatedFrames[index]?.image
+            return animatedFrames[safe: index]?.image
         }
 
         func duration(at index: Int) -> TimeInterval {
-            return animatedFrames[index]?.duration  ?? .infinity
+            return animatedFrames[safe: index]?.duration  ?? .infinity
         }
 
         func prepareFramesAsynchronously() {
@@ -482,17 +485,17 @@ extension AnimatedImageView {
             (0..<frameCount).forEach { index in
                 let frameDuration = GIFAnimatedImage.getFrameDuration(from: imageSource, at: index)
                 duration += min(frameDuration, maxTimeStep)
-                animatedFrames.append(AnimatedFrame(image: nil, duration: frameDuration))
+                animatedFrames += [AnimatedFrame(image: nil, duration: frameDuration)]
 
                 if index > maxFrameCount { return }
-                animatedFrames[index] = animatedFrames[index]?.makeAnimatedFrame(image: loadFrame(at: index))
+                animatedFrames[index] = animatedFrames[index].makeAnimatedFrame(image: loadFrame(at: index))
             }
 
             self.loopDuration = duration
         }
 
         private func resetAnimatedFrames() {
-            animatedFrames.removeAll()
+            animatedFrames = []
         }
 
         private func loadFrame(at index: Int) -> UIImage? {
@@ -519,10 +522,10 @@ extension AnimatedImageView {
                 return
             }
 
-            animatedFrames[previousFrameIndex] = animatedFrames[previousFrameIndex]?.placeholderFrame
+            animatedFrames[previousFrameIndex] = animatedFrames[previousFrameIndex].placeholderFrame
 
             preloadIndexes(start: currentFrameIndex).forEach { index in
-                guard let currentAnimatedFrame = animatedFrames[index] else { return }
+                let currentAnimatedFrame = animatedFrames[index]
                 if !currentAnimatedFrame.isPlaceholder { return }
                 animatedFrames[index] = currentAnimatedFrame.makeAnimatedFrame(image: loadFrame(at: index))
             }
@@ -563,51 +566,11 @@ extension AnimatedImageView {
     }
 }
 
-class SafeArray<Element> {
-    private var array: Array<Element> = []
-    private let lock = NSLock()
-    
-    subscript(index: Int) -> Element? {
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            if index >= 0 && index < array.count {
-                return array[index]
-            } else {
-                return nil
-            }
-        }
-        
-        set(newValue) {
-            lock.lock()
-            defer { lock.unlock() }
-            if let newValue = newValue, index >= 0 && index < array.count {
-                array[index] = newValue
-            }
-        }
-    }
-    
-    var count : Int {
-        lock.lock()
-        defer { lock.unlock() }
-        return array.count
-    }
-    
-    func reserveCapacity(_ count: Int) {
-        lock.lock()
-        defer { lock.unlock() }
-        array.reserveCapacity(count)
-    }
-    
-    func append(_ element: Element) {
-        lock.lock()
-        defer { lock.unlock() }
-        array += [element]
-    }
-    
-    func removeAll() {
-        lock.lock()
-        defer { lock.unlock() }
-        array = []
+extension Array {
+    subscript(safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
     }
 }
+#endif
+
+#endif

@@ -39,7 +39,7 @@ class ForumsViewController: TabmanViewController {
 	}
 	var sectionsCount: Int?
 	var threadSorting: String?
-	var kRichTextEditorViewController: KRichTextEditorViewController?
+//	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
 
@@ -107,8 +107,8 @@ class ForumsViewController: TabmanViewController {
 
 		view.sendSubviewToBack(scrollView)
 
-		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
-		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
+//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
+//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
     }
 
 	// MARK: - Functions
@@ -155,19 +155,19 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
-		kRichTextEditorViewController?.sectionID = currentIndex! + 1
-
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-		if #available(iOS 11.0, *) {
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		}
-
-		if #available(iOS 13.0, *) {
-			self.present(kurozoraNavigationController, animated: true, completion: nil)
-		} else {
-			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-		}
+//		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
+//		kRichTextEditorViewController?.sectionID = currentIndex! + 1
+//
+//		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
+//		if #available(iOS 11.0, *) {
+//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+//		}
+//
+//		if #available(iOS 13.0, *) {
+//			self.present(kurozoraNavigationController, animated: true, completion: nil)
+//		} else {
+//			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+//		}
 	}
 }
 

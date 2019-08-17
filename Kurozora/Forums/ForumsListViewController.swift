@@ -163,17 +163,17 @@ extension ForumsListViewController {
 }
 
 // MARK: - KRichTextEditorViewDelegate
-extension ForumsListViewController: KRichTextEditorViewDelegate {
-	func updateFeedPosts(with thread: FeedPostsElement) {
-	}
-
-	func updateThreadsList(with thread: ForumThreadsElement) {
-		DispatchQueue.main.async {
-			if self.forumThreads == nil {
-				self.forumThreads = [thread]
-			} else {
-				self.forumThreads?.prepend(thread)
-			}
-		}
-	}
-}
+//extension ForumsListViewController: KRichTextEditorViewDelegate {
+//	func updateFeedPosts(with thread: FeedPostsElement) {
+//	}
+//
+//	func updateThreadsList(with thread: ForumThreadsElement) {
+//		DispatchQueue.main.async {
+//			if self.forumThreads == nil {
+//				self.forumThreads = [thread]
+//			} else {
+//				self.forumThreads?.prepend(thread)
+//			}
+//		}
+//	}
+//}

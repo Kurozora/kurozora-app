@@ -438,6 +438,7 @@ public extension UIView {
         CATransaction.commit()
     }
 
+	#if !targetEnvironment(macCatalyst)
     /// SwifterSwift: Add Visual Format constraints.
     ///
     /// - Parameters:
@@ -453,6 +454,7 @@ public extension UIView {
         }
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: withFormat, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
+	#endif
 
     /// SwifterSwift: Anchor all sides of the view into it's superview.
     @available(iOS 9, *)
@@ -468,6 +470,7 @@ public extension UIView {
         }
     }
 
+	#if !targetEnvironment(macCatalyst)
     /// SwifterSwift: Add anchors from any side of the current view into the specified anchors and returns the newly added constraints.
     ///
     /// - Parameters:
@@ -528,6 +531,7 @@ public extension UIView {
 
         return anchors
     }
+	#endif
 
     /// SwifterSwift: Anchor center X into current view's superview with a constant margin value.
     ///

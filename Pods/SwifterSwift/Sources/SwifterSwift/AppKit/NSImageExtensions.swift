@@ -1,5 +1,5 @@
 //
-//  NSImageExtensions.swift
+//  UIImageExtensions.swift
 //  SwifterSwift-macOS
 //
 //  Created by BUDDAx2 on 20.10.2017.
@@ -10,13 +10,13 @@
 import Cocoa
 
 // MARK: - Methods
-extension NSImage {
+extension UIImage {
 
-    /// SwifterSwift: NSImage scaled to maximum size with respect to aspect ratio
+    /// SwifterSwift: UIImage scaled to maximum size with respect to aspect ratio
     ///
     /// - Parameter toMaxSize: maximum size
-    /// - Returns: scaled NSImage
-    func scaled(toMaxSize: NSSize) -> NSImage {
+    /// - Returns: scaled UIImage
+    func scaled(toMaxSize: NSSize) -> UIImage {
         var ratio: Float = 0.0
         let imageWidth = Float(size.width)
         let imageHeight = Float(size.height)
@@ -37,20 +37,23 @@ extension NSImage {
         let newHeight = imageHeight * ratio
 
         // Create a new NSSize object with the newly calculated size
-        let newSize: NSSize = NSSize(width: Int(newWidth), height: Int(newHeight))
+        let newSize: CGSize = CGSize(width: Int(newWidth), height: Int(newHeight))
 
-        // Cast the NSImage to a CGImage
+        // Cast the UIImage to a CGImage
         var imageRect: CGRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        let imageRef = cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+		let imageRef = UIImage(color: .clear, size: newSize).cgImage?.cropping(to: imageRect)
+//		cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
 
-        // Create NSImage from the CGImage using the new size
-        let imageWithNewSize = NSImage(cgImage: imageRef!, size: newSize)
+        // Create UIImage from the CGImage using the new size
+		let imageWithNewSize = UIImage(cgImage: imageRef!)
+//			UIImage(cgImage: imageRef!, size: newSize)
 
         // Return the new image
         return imageWithNewSize
     }
 
-    /// SwifterSwift: Write NSImage to url.
+	#if !targetEnvironment(macCatalyst)
+    /// SwifterSwift: Write UIImage to url.
     ///
     /// - Parameters:
     ///   - url: Desired file URL.
@@ -65,6 +68,7 @@ extension NSImage {
         guard let imageData = imageRep.representation(using: type, properties: [.compressionFactor: compressionFactor]) else { return }
         try? imageData.write(to: url)
     }
+	#endif
 
 }
 

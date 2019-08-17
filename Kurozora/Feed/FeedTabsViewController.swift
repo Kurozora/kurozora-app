@@ -22,7 +22,7 @@ class FeedTabsViewController: TabmanViewController {
 		}
 	}
 	var sectionsCount: Int?
-	var kRichTextEditorViewController: KRichTextEditorViewController?
+//	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UITableViewController]()
 
 	let bar = TMBar.ButtonBar()
@@ -77,8 +77,8 @@ class FeedTabsViewController: TabmanViewController {
 
 		view.sendSubviewToBack(scrollView)
 
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
+//		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+//		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
 
 	// MARK: - Functions
@@ -104,15 +104,15 @@ class FeedTabsViewController: TabmanViewController {
 
 	// MARK: - IBActions
 	@IBAction func createThreadButton(_ sender: Any) {
-		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! FeedTableViewController
-		kRichTextEditorViewController?.sectionID = currentIndex! + 1
-
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-		if #available(iOS 11.0, *) {
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		}
-
-		present(kurozoraNavigationController, animated: true, completion: nil)
+//		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! FeedTableViewController
+//		kRichTextEditorViewController?.sectionID = currentIndex! + 1
+//
+//		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
+//		if #available(iOS 11.0, *) {
+//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+//		}
+//
+//		present(kurozoraNavigationController, animated: true, completion: nil)
 	}
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {

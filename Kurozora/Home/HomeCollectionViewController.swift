@@ -415,10 +415,10 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 		if let exploreCategoriesCount = exploreCategories?.count {
 			if section < exploreCategoriesCount {
 				if section != 0 {
-					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? CGSize(width: collectionView.width, height: 48) : .zero
+					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? CGSize(width: collectionView.bounds.width, height: 48) : .zero
 				}
 			} else if section == exploreCategoriesCount {
-				return CGSize(width: collectionView.width, height: 48)
+				return CGSize(width: collectionView.bounds.width, height: 48)
 			}
 		}
 

@@ -69,7 +69,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.profileView.applyShadow(cornerRadius: profileView.height / 2)
+		self.profileView.applyShadow(cornerRadius: profileView.bounds.height / 2)
 
 		registerButton.isEnabled = false
 		registerButton.alpha = 0.5

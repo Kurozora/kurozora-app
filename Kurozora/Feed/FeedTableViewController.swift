@@ -144,17 +144,17 @@ extension FeedTableViewController {
 }
 
 // MARK: - KRichTextEditorViewDelegate
-extension FeedTableViewController: KRichTextEditorViewDelegate {
-	func updateThreadsList(with thread: ForumThreadsElement) {
-	}
-
-	func updateFeedPosts(with posts: FeedPostsElement) {
-		DispatchQueue.main.async {
-			if self.feedPosts == nil {
-				self.feedPosts = [posts]
-			} else {
-				self.feedPosts?.prepend(posts)
-			}
-		}
-	}
-}
+//extension FeedTableViewController: KRichTextEditorViewDelegate {
+//	func updateThreadsList(with thread: ForumThreadsElement) {
+//	}
+//
+//	func updateFeedPosts(with posts: FeedPostsElement) {
+//		DispatchQueue.main.async {
+//			if self.feedPosts == nil {
+//				self.feedPosts = [posts]
+//			} else {
+//				self.feedPosts?.prepend(posts)
+//			}
+//		}
+//	}
+//}
