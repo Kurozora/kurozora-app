@@ -43,9 +43,9 @@ class LibraryViewController: TabmanViewController {
 
 	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
 		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
-		let width = Double(stringArray[0])
-		let height = Double(stringArray[1])
-		return (width?.cgFloat ?? numberOfItems.forWidth, height?.cgFloat ?? numberOfItems.forHeight)
+		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
+		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
+		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
 	}
 	#endif
 
@@ -111,7 +111,6 @@ class LibraryViewController: TabmanViewController {
 		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
 		navigationItem.title = nil
 		navigationItem.titleView = numberOfItemsTextField
-		numberOfItemsTextField.becomeFirstResponder()
 		#endif
     }
 

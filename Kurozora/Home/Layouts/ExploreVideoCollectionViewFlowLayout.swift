@@ -32,14 +32,11 @@ class ExploreVideoCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 			let gaps = CGFloat(interItemGap * collectionView.numberOfItems(inSection: 0))
 
 			if UIDevice.isPad {
-				if UIDevice.isLandscape {
-					return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
-				}
-				return CGSize(width: (collectionView.frame.width - gaps) / 2.3, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
 			}
 
 			if UIDevice.isLandscape {
-				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
 			}
 			return CGSize(width: (collectionView.frame.width - gaps), height: collectionView.frame.height)
 		}

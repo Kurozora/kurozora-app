@@ -101,7 +101,6 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
 		navigationItem.title = nil
 		navigationItem.titleView = numberOfItemsTextField
-		numberOfItemsTextField.becomeFirstResponder()
 		#endif
     }
 

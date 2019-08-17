@@ -24,6 +24,193 @@ class HomeCollectionViewController: UICollectionViewController {
 		}
 	}
     var showID: Int?
+	var gap: CGFloat = UIDevice.isPad ? 40 : 20
+	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = (1,1)
+
+	#if DEBUG
+	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
+	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
+		get {
+			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
+			return newNumberOfItems
+		}
+	}
+
+	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: CGPoint(x: 20, y: 0), size: CGSize(width: 100, height: 20)))
+
+	@objc func updateLayout(_ textField: UITextField) {
+		guard let textFieldText = numberOfItemsTextField.text, !textFieldText.isEmpty else { return }
+		newNumberOfItems = getNumbers(textFieldText)
+		collectionView.reloadData()
+	}
+
+	func getItems(forCell exploreCellStyle: ExploreCellStyle? = nil, forSection section: Int? = -1) {
+		guard let exploreCellStyle = exploreCellStyle else {
+			if section == 0 {
+				if UIDevice.isLandscape {
+					switch UIDevice.type {
+					case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 1.4)
+					case .iPhone_6_6S_7_8:		numberOfItems = (1, 1.4)
+					case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 1.4)
+					case .iPhone_Xr:			numberOfItems = (1, 1.4)
+					case .iPhone_X_Xs:			numberOfItems = (1, 1.4)
+					case .iPhone_Xs_Max:		numberOfItems = (1, 1.4)
+
+					case .iPad:					numberOfItems = (1, 2.0)
+					case .iPadAir3:				numberOfItems = (1, 2.0)
+					case .iPadPro11:			numberOfItems = (1, 2.0)
+					case .iPadPro12:			numberOfItems = (1, 2.0)
+					}
+				} else {
+					switch UIDevice.type {
+					case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.8)
+					case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.8)
+					case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.8)
+					case .iPhone_Xr:			numberOfItems = (1, 3.4)
+					case .iPhone_X_Xs:			numberOfItems = (1, 3.4)
+					case .iPhone_Xs_Max:		numberOfItems = (1, 3.4)
+
+					case .iPad:					numberOfItems = (1, 3.0)
+					case .iPadAir3:				numberOfItems = (1, 3.0)
+					case .iPadPro11:			numberOfItems = (1, 3.0)
+					case .iPadPro12:			numberOfItems = (1, 3.0)
+					}
+				}
+			}
+
+			return
+		}
+		switch exploreCellStyle {
+		case .large:
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
+				case .iPhone_Xr:			numberOfItems = (1, 1.8)
+				case .iPhone_X_Xs:			numberOfItems = (1, 1.8)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 1.8)
+
+				case .iPad:					numberOfItems = (1, 2.6)
+				case .iPadAir3:				numberOfItems = (1, 2.6)
+				case .iPadPro11:			numberOfItems = (1, 2.6)
+				case .iPadPro12:			numberOfItems = (1, 2.6)
+				}
+			} else {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 4.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 4.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 4.0)
+				case .iPhone_Xr:			numberOfItems = (1, 4.6)
+				case .iPhone_X_Xs:			numberOfItems = (1, 4.6)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 4.6)
+
+				case .iPad:					numberOfItems = (1, 4.8)
+				case .iPadAir3:				numberOfItems = (1, 4.8)
+				case .iPadPro11:			numberOfItems = (1, 5.0)
+				case .iPadPro12:			numberOfItems = (1, 5.0)
+				}
+			}
+		case .medium:
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 3.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 3.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 3.0)
+				case .iPhone_Xr:			numberOfItems = (1, 2.6)
+				case .iPhone_X_Xs:			numberOfItems = (1, 2.6)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 2.6)
+
+				case .iPad:					numberOfItems = (1, 5.0)
+				case .iPadAir3:				numberOfItems = (1, 5.0)
+				case .iPadPro11:			numberOfItems = (1, 5.0)
+				case .iPadPro12:			numberOfItems = (1, 5.0)
+				}
+			} else {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 5.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 5.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 5.0)
+				case .iPhone_Xr:			numberOfItems = (1, 6.0)
+				case .iPhone_X_Xs:			numberOfItems = (1, 6.0)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 6.0)
+
+				case .iPad:					numberOfItems = (1, 7.0)
+				case .iPadAir3:				numberOfItems = (1, 7.0)
+				case .iPadPro11:			numberOfItems = (1, 7.0)
+				case .iPadPro12:			numberOfItems = (1, 7.0)
+				}
+			}
+		case .small:
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
+				case .iPhone_Xr:			numberOfItems = (1, 1.6)
+				case .iPhone_X_Xs:			numberOfItems = (1, 1.6)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 1.6)
+
+				case .iPad:					numberOfItems = (1, 3.2)
+				case .iPadAir3:				numberOfItems = (1, 3.2)
+				case .iPadPro11:			numberOfItems = (1, 3.0)
+				case .iPadPro12:			numberOfItems = (1, 3.2)
+				}
+			} else {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 4.2)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 4.2)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 4.2)
+				case .iPhone_Xr:			numberOfItems = (1, 5.0)
+				case .iPhone_X_Xs:			numberOfItems = (1, 5.0)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 5.0)
+
+				case .iPad:					numberOfItems = (1, 5.2)
+				case .iPadAir3:				numberOfItems = (1, 5.2)
+				case .iPadPro11:			numberOfItems = (1, 5.2)
+				case .iPadPro12:			numberOfItems = (1, 5.2)
+				}
+			}
+		case .video:
+			if UIDevice.isLandscape {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 1.1)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 1.1)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 1.1)
+				case .iPhone_Xr:			numberOfItems = (1, 1.2)
+				case .iPhone_X_Xs:			numberOfItems = (1, 1.2)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 1.2)
+
+				case .iPad:					numberOfItems = (1, 1.79)
+				case .iPadAir3:				numberOfItems = (1, 1.79)
+				case .iPadPro11:			numberOfItems = (1, 1.7)
+				case .iPadPro12:			numberOfItems = (1, 1.9)
+				}
+			} else {
+				switch UIDevice.type {
+				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
+				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
+				case .iPhone_Xr:			numberOfItems = (1, 2.4)
+				case .iPhone_X_Xs:			numberOfItems = (1, 2.4)
+				case .iPhone_Xs_Max:		numberOfItems = (1, 2.4)
+
+				case .iPad:					numberOfItems = (1, 3.0)
+				case .iPadAir3:				numberOfItems = (1, 3.0)
+				case .iPadPro11:			numberOfItems = (1, 3.2)
+				case .iPadPro12:			numberOfItems = (1, 3.2)
+				}
+			}
+		}
+	}
+
+	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
+		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
+		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
+		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
+		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
+	}
+	#endif
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +248,15 @@ class HomeCollectionViewController: UICollectionViewController {
 				self.exploreCategories = explore?.categories
 			}
         })
+
+		#if DEBUG
+		numberOfItemsTextField.placeholder = "# items for: width, height"
+		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
+		numberOfItemsTextField.textAlignment = .center
+		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
+		navigationItem.title = nil
+		navigationItem.titleView = numberOfItemsTextField
+		#endif
     }
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -232,77 +428,18 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if let exploreCategoriesCount = exploreCategories?.count {
 			if indexPath.section < exploreCategoriesCount {
-				if let categoryType = exploreCategories?[indexPath.section].size, let exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
-
+				if let categoryType = exploreCategories?[indexPath.section].size {
 					if indexPath.section == 0 {
-						if UIDevice.isPad {
-							if UIDevice.isLandscape {
-								return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
-							}
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-						}
-
-						if UIDevice.isLandscape {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
+						getItems(forSection: indexPath.section)
+					} else {
+						getItems(forCell: ExploreCellStyle(rawValue: categoryType))
 					}
 
-					switch exploreCellStyle {
-					case .large:
-						if UIDevice.isPad {
-							if UIDevice.isLandscape {
-								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-							}
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-						}
-
-						if UIDevice.isLandscape {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-					case .medium:
-						if UIDevice.isPad {
-							if UIDevice.isLandscape {
-								return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-							}
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.15)
-						}
-
-						if UIDevice.isLandscape {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.4)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-					case .small:
-						if UIDevice.isPad {
-							if UIDevice.isLandscape {
-								return CGSize(width: view.frame.width, height: view.frame.height * 0.3)
-							}
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-						}
-
-						if UIDevice.isLandscape {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-						}
-
-						if UIDevice.hasTopNotch {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-						}
-
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.24)
-					case .video:
-						if UIDevice.isPad {
-							if UIDevice.isLandscape {
-								return CGSize(width: view.frame.width, height: view.frame.height * 0.39)
-							}
-							return CGSize(width: view.frame.width, height: view.frame.width * 0.38)
-						}
-
-						if UIDevice.isLandscape {
-							return CGSize(width: view.frame.width, height: view.frame.height * 0.8)
-						}
-						return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
-					}
+					#if DEBUG
+					return CGSize(width: (collectionView.bounds.width - gap) / _numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / _numberOfItems.forHeight)
+					#else
+					return CGSize(width: (collectionView.bounds.width - gap) / numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / numberOfItems.forHeight)
+					#endif
 				}
 			}
 

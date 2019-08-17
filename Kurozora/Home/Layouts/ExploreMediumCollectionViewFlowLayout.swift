@@ -35,7 +35,7 @@ class ExploreMediumCollectionViewFlowLayout: KBaseCollectionViewFlowLayout {
 				if UIDevice.isLandscape {
 					return CGSize(width: (collectionView.frame.width - gaps) / 4, height: collectionView.frame.height)
 				}
-				return CGSize(width: (collectionView.frame.width - gaps) / 3, height: collectionView.frame.height)
+				return CGSize(width: (collectionView.frame.width - gaps) / 2, height: collectionView.frame.height)
 			}
 
 			if UIDevice.isLandscape {

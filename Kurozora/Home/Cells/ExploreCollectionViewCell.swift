@@ -188,8 +188,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 
 	func configureVideoPlayer() {
 		guard let videoUrlString = showElement?.videoUrl else { return }
-		let videoUrl = URL(string: videoUrlString)
-		let avPlayerItem = AVPlayerItem(url: videoUrl!)
+		guard let videoUrl = URL(string: videoUrlString) else { return }
+		let avPlayerItem = AVPlayerItem(url: videoUrl)
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)
 		self.avPlayer?.actionAtItemEnd = .none
