@@ -178,7 +178,14 @@ class LibraryViewController: TabmanViewController {
 
 		// Update library list
 		currentSection.libraryLayout = libraryLayout
-		currentSection.collectionView.reloadData()
+		UIView.animate(withDuration: 0, animations: {
+			guard let flowLayout = currentSection.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+				return
+			}
+			flowLayout.invalidateLayout()
+		}, completion: { _ in
+			currentSection.collectionView.reloadData()
+		})
 	}
 
 	// MARK: - IBActions

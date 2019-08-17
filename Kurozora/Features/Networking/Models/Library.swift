@@ -44,4 +44,13 @@ class LibraryElement: JSONDecodable {
 		self.posterThumbnail = json["poster_thumbnail"].stringValue
 		self.backgroundThumbnail = json["background_thumbnail"].stringValue
 	}
+
+	var openDetailUserActivity: NSUserActivity? {
+        // Create an NSUserActivity from our photo model.
+		guard let id = id else { return nil }
+        let userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+        userActivity.title = "OpenShowDetail"
+        userActivity.userInfo = ["showID": id]
+        return userActivity
+    }
 }

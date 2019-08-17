@@ -110,6 +110,10 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 
 		fetchLibrary()
 
+		if #available(iOS 11.0, *) {
+			collectionView.dragDelegate = self
+		}
+
         // Setup empty collection view
         collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetSource = self
@@ -173,21 +177,10 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 			}
 		})
 	}
-}
 
-// MARK: - ShowDetailViewControllerDelegate
-extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate {
-	func updateShowInLibrary(for libraryCell: LibraryCollectionViewCell?) {
-		guard let libraryCell = libraryCell else { return }
-		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
-
-		collectionView.performBatchUpdates({
-			library?.remove(at: indexPath.item)
-			collectionView.deleteItems(at: [indexPath])
-		})
-
-		collectionView.reloadData()
-	}
+	func show(at indexPath: IndexPath) -> LibraryElement? {
+		return library?[indexPath.row]
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -245,6 +238,40 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 		#endif
 	}
 }
+
+// MARK: - UICollectionViewDragDelegate
+extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
+	@available(iOS 11.0, *)
+	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+		guard let libraryCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryCollectionViewCell else { return [UIDragItem]() }
+        let selectedShow = show(at: indexPath)
+
+		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
+		let itemProvider = NSItemProvider(object: libraryCollectionViewCell.episodeImageView?.image ?? libraryCollectionViewCell.posterView.image!)
+		itemProvider.registerObject(userActivity, visibility: .all)
+
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = selectedShow
+
+        return [dragItem]
+    }
+}
+
+// MARK: - ShowDetailViewControllerDelegate
+extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate {
+	func updateShowInLibrary(for libraryCell: LibraryCollectionViewCell?) {
+		guard let libraryCell = libraryCell else { return }
+		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
+
+		collectionView.performBatchUpdates({
+			library?.remove(at: indexPath.item)
+			collectionView.deleteItems(at: [indexPath])
+		})
+
+		collectionView.reloadData()
+	}
+}
+
 //    weak var delegate: AnimeListControllerDelegate?
 //
 //    var animator: ZFModalTransitionAnimator!

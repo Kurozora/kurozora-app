@@ -121,10 +121,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-    
-    @objc func handleHeartAttackNotification() {
-        revealingSplashView.heartAttack = true
-    }
+
+	// Here we tell iOS what scene configuration to use
+	@available(iOS 13.0, *)
+	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+	  connectingSceneSession.userInfo?["activity"] = options.userActivities.first?.activityType
+	  // Based on the name of the configuration iOS will initialize the correct SceneDelegate
+	  return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+	}
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -188,4 +192,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
 		Kurozora.shared.shortcutHandler(application, shortcutItem)
 	}
+
+	// MARK: - Functions
+    @objc func handleHeartAttackNotification() {
+        revealingSplashView.heartAttack = true
+    }
 }

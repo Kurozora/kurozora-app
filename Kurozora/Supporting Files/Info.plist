@@ -359,7 +359,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10052</string>
+	<string>10056</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>medium</string>
@@ -376,13 +376,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to your phone’s camera.</string>
+	<string>$(PRODUCT_NAME) requires access to your phone’s camera so you take pictures to use as your profile image or share in the app.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses Face ID or your device’s passcode so only you can access the app.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce yout battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce yout battery life.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -390,7 +390,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to your photo library.</string>
+	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile image or share your images in the app.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>AddAnimeIntent</string>
@@ -406,7 +406,19 @@
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
 	</dict>
 	<key>UIApplicationShortcutItems</key>
 	<array>
@@ -448,7 +460,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
-	<true/>
+	<false/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
