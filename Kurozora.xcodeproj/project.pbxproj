@@ -25,7 +25,6 @@
 		660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642921D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift */; };
 		660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642D21D175110032FDCF /* EpisodesWatched.swift */; };
 		660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42A621259E300051EF66 /* ManageThemesController.swift */; };
-		660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660B42A82125A07C0051EF66 /* ThemeCell.xib */; };
 		660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42AA2125AF830051EF66 /* ThemeCell.swift */; };
 		660B5B5F21523612002D05F3 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B5E21523612002D05F3 /* Session.swift */; };
 		660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B652152F47A002D05F3 /* NoSessionsCell.swift */; };
@@ -418,7 +417,6 @@
 		660A642921D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		660A642D21D175110032FDCF /* EpisodesWatched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesWatched.swift; sourceTree = "<group>"; };
 		660B42A621259E300051EF66 /* ManageThemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageThemesController.swift; sourceTree = "<group>"; };
-		660B42A82125A07C0051EF66 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
 		660B42AA2125AF830051EF66 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		660B5B5E21523612002D05F3 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		660B5B652152F47A002D05F3 /* NoSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSessionsCell.swift; sourceTree = "<group>"; };
@@ -910,7 +908,6 @@
 			children = (
 				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
 				66752635222820E0007C1617 /* TestThemeCell.swift */,
-				660B42A82125A07C0051EF66 /* ThemeCell.xib */,
 				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
 			);
 			path = Cells;
@@ -2103,7 +2100,6 @@
 				664801DC222DE76A0063143A /* App-Icon-iPad-Yellow@2x.png in Resources */,
 				66A254D322AAA014002A0E34 /* App-Icon-iPad-Pro-Red@2x.png in Resources */,
 				6641D6E5222EA3DF0067BD3A /* App-Icon-iPhone-Lime@2x.png in Resources */,
-				660B42A92125A07C0051EF66 /* ThemeCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				666938B921B1D50E00BA9620 /* WriteACommentCell.xib in Resources */,
 				66C5797B22A86435001B8F51 /* admin.storyboard in Resources */,

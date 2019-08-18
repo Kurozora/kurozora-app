@@ -14,8 +14,7 @@ import SwifterSwift
 import MapKit
 import CoreLocation
 
-class ManageActiveSessionsController: UIViewController {
-	@IBOutlet var tableView: UITableView!
+class ManageActiveSessionsController: UITableViewController {
 	@IBOutlet weak var mapView: MKMapView!
 
 	var dismissEnabled: Bool = false
@@ -188,8 +187,8 @@ class ManageActiveSessionsController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension ManageActiveSessionsController: UITableViewDataSource {
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+extension ManageActiveSessionsController {
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
 			return "Current Session"
 		} else {
@@ -197,11 +196,11 @@ extension ManageActiveSessionsController: UITableViewDataSource {
 		}
 	}
 
-	func numberOfSections(in tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 2
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
 			return 1
 		} else {
@@ -210,7 +209,7 @@ extension ManageActiveSessionsController: UITableViewDataSource {
 		}
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: "CurrentSessionCell", for: indexPath) as! CurrentSessionCell
 			currentSessionCell.session = sessions?.currentSessions
@@ -236,8 +235,8 @@ extension ManageActiveSessionsController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension ManageActiveSessionsController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+extension ManageActiveSessionsController {
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
 			headerView.textLabel?.font = UIFont.systemFont(ofSize: 15)
 			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue

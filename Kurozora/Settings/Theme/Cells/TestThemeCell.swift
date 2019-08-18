@@ -37,6 +37,8 @@ class TestThemeCell: UICollectionViewCell {
 			button.backgroundColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
 			button.setTitleColor(#colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1),for: .normal)
 			button.addTarget(self, action: #selector(tapNight(_:)), for: .touchUpInside)
+		} else {
+			button.backgroundColor = UIColor.random
 		}
 	}
 

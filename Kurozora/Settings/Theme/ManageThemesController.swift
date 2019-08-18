@@ -55,7 +55,7 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 		let sclAlertView = SCLAlertView().showWait("Downloading \(themeName)...")
 
 		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
-			sclAlertView.setTitle(isSuccess ? "Done!" : "Download failed :(")
+			sclAlertView.setTitle(isSuccess ? "Finished downloading!" : "Download failed :(")
 
 			DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 				sclAlertView.close()

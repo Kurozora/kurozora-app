@@ -10,13 +10,15 @@
         <!--App Icon-->
         <scene sceneID="0ij-Qx-K3l">
             <objects>
-                <tableViewController storyboardIdentifier="ManageIconTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XF9-Uc-m7K">
+                <tableViewController storyboardIdentifier="ManageIconTableViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1wL-21-iAr" customClass="ManageIconTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="XF9-Uc-m7K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IconTableViewCell" rowHeight="63" id="VmY-Ft-EV5" customClass="IconTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IconTableViewCell" rowHeight="63" id="VmY-Ft-EV5" customClass="IconTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="63"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VmY-Ft-EV5" id="V3W-Ng-aqU">
@@ -110,7 +112,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cta-hf-EVO">
-                                            <rect key="frame" x="0.0" y="100" width="160" height="144"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="294"/>
                                             <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                             <state key="normal" title="Default">
@@ -120,10 +122,10 @@
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="cta-hf-EVO" firstAttribute="top" secondItem="Sqf-JP-o7r" secondAttribute="top" constant="100" id="SDp-Na-hvq"/>
+                                    <constraint firstItem="cta-hf-EVO" firstAttribute="top" secondItem="Sqf-JP-o7r" secondAttribute="top" id="SDp-Na-hvq"/>
                                     <constraint firstAttribute="trailing" secondItem="cta-hf-EVO" secondAttribute="trailing" id="cAA-em-Mxi"/>
                                     <constraint firstItem="cta-hf-EVO" firstAttribute="leading" secondItem="Sqf-JP-o7r" secondAttribute="leading" id="ipc-hx-b6i"/>
-                                    <constraint firstAttribute="bottom" secondItem="cta-hf-EVO" secondAttribute="bottom" constant="100" id="wmg-HF-QPB"/>
+                                    <constraint firstAttribute="bottom" secondItem="cta-hf-EVO" secondAttribute="bottom" constant="50" id="wmg-HF-QPB"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
@@ -138,6 +140,70 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="button" destination="cta-hf-EVO" id="AlA-u9-Lky"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemeCellBackup" id="LQw-RA-Vgs" customClass="ThemeCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="234" y="0.0" width="160" height="344"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="344"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvK-7T-gjk" userLabel="Content View">
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="344"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M8r-MS-gaT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="285"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="285" id="A5f-QC-ZHz"/>
+                                                        <constraint firstAttribute="width" constant="160" id="KgP-u5-aXE"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="15"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Blue theme" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2">
+                                                    <rect key="frame" x="0.0" y="293" width="160" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Count: 923" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMR-PH-sic">
+                                                    <rect key="frame" x="0.0" y="312" width="160" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="0.86110805459999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="NMR-PH-sic" firstAttribute="trailing" secondItem="4Sp-VC-gg2" secondAttribute="trailing" id="GIm-lW-H2D"/>
+                                                <constraint firstItem="4Sp-VC-gg2" firstAttribute="trailing" secondItem="M8r-MS-gaT" secondAttribute="trailing" id="Pjk-eK-snL"/>
+                                                <constraint firstItem="4Sp-VC-gg2" firstAttribute="leading" secondItem="M8r-MS-gaT" secondAttribute="leading" id="VfO-bo-ooJ"/>
+                                                <constraint firstItem="M8r-MS-gaT" firstAttribute="top" secondItem="KvK-7T-gjk" secondAttribute="top" id="YEs-cp-dF8"/>
+                                                <constraint firstItem="4Sp-VC-gg2" firstAttribute="top" secondItem="M8r-MS-gaT" secondAttribute="bottom" constant="8" id="cxz-5c-NRL"/>
+                                                <constraint firstItem="NMR-PH-sic" firstAttribute="leading" secondItem="4Sp-VC-gg2" secondAttribute="leading" id="dqs-t7-7OU"/>
+                                                <constraint firstItem="M8r-MS-gaT" firstAttribute="leading" secondItem="KvK-7T-gjk" secondAttribute="leading" id="opn-mH-Wu9"/>
+                                                <constraint firstAttribute="trailing" secondItem="M8r-MS-gaT" secondAttribute="trailing" id="ppX-3c-4Ua"/>
+                                                <constraint firstItem="NMR-PH-sic" firstAttribute="top" secondItem="4Sp-VC-gg2" secondAttribute="bottom" constant="3" id="xLN-zb-dR2"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="KvK-7T-gjk" firstAttribute="leading" secondItem="LQw-RA-Vgs" secondAttribute="leading" id="3wx-ZS-cTx"/>
+                                    <constraint firstAttribute="bottom" secondItem="KvK-7T-gjk" secondAttribute="bottom" id="8b6-Fe-v6i"/>
+                                    <constraint firstAttribute="trailing" secondItem="KvK-7T-gjk" secondAttribute="trailing" id="O62-0D-R3f"/>
+                                    <constraint firstItem="KvK-7T-gjk" firstAttribute="top" secondItem="LQw-RA-Vgs" secondAttribute="top" id="V5D-KG-rkC"/>
+                                </constraints>
+                                <size key="customSize" width="160" height="344"/>
+                                <connections>
+                                    <outlet property="themeCount" destination="NMR-PH-sic" id="OKh-Ay-Ygr"/>
+                                    <outlet property="themeScreenshot" destination="M8r-MS-gaT" id="6as-qG-q9H"/>
+                                    <outlet property="themeTitle" destination="4Sp-VC-gg2" id="RT2-3p-lOb"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
