@@ -101,7 +101,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		}
 
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
 
 		// Observe NotificationCenter for update notification
@@ -159,13 +159,21 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	}
 
 	// MARK: - Functions
+	/**
+		Refresh the library data by fetching new items from the server.
+
+		- Parameter sender: The object requesting the refresh.
+	*/
 	@objc private func refreshLibraryData(_ sender: Any) {
 		// Fetch library data
 		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Reloading \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchLibrary()
 	}
 
+	/**
+		Fetch the library items for the current user.
+	*/
 	@objc private func fetchLibrary() {
 		guard let sectionTitle = sectionTitle else {return}
 
@@ -173,7 +181,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 			DispatchQueue.main.async {
 				self.library = library
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 	}

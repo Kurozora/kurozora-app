@@ -12,6 +12,7 @@ import SCLAlertView
 import Kingfisher
 import EmptyDataSet_Swift
 import SwipeCellKit
+import SwiftTheme
 
 protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerHasUnreadNotifications(count: Int)
@@ -60,6 +61,11 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			searchController.viewController = self
 		}
 
+		// Refresh controller
+		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.addTarget(self, action: #selector(refreshNotificationsData(_:)), for: .valueChanged)
+
 		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
@@ -79,6 +85,17 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 	// MARK: - Functions
 	/**
+		Refresh the notification data by fetching new notifications from the server.
+
+		- Parameter sender: The object requesting the refresh.
+	*/
+	@objc private func refreshNotificationsData(_ sender: Any) {
+		// Fetch library data
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		fetchNotifications()
+	}
+
+	/**
 		Fetch the notifications for the current user.
 	*/
 	func fetchNotifications() {
@@ -94,6 +111,8 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 				}
 
 				self.tableView.reloadData()
+				self.refreshControl?.endRefreshing()
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 	}

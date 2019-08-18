@@ -49,7 +49,6 @@ class LibraryViewController: TabmanViewController {
 	}
 	#endif
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue

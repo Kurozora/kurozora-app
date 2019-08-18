@@ -106,7 +106,7 @@ class ProfileTableViewController: UITableViewController, EmptyDataSetSource, Emp
 		}
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts!", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl?.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
 		// Fetch posts
@@ -137,7 +137,7 @@ class ProfileTableViewController: UITableViewController, EmptyDataSetSource, Emp
 	// MARK: - Functions
     @objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
-		refreshControl?.attributedTitle = NSAttributedString(string: "Reloading posts", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing posts...", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchPosts()
 	}
 
