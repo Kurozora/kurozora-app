@@ -177,7 +177,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
-		if visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
+		if !visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
 			// Go to first episode
 			let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default, handler: { (_) in
 				self.goToFirstEpisode()
