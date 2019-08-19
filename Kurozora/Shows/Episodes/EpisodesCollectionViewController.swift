@@ -11,6 +11,12 @@ import EmptyDataSet_Swift
 import SwipeCellKit
 
 class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+	@IBOutlet weak var goToButton: UIBarButtonItem! {
+		didSet {
+			goToButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
+	}
+
     var seasonID: Int?
 	var episodes: [EpisodesElement]? {
 		didSet {
@@ -22,17 +28,17 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	return (2, 1.8)
-				case .iPhone_6_6S_7_8:		return (2, 1.8)
-				case .iPhone_6_6S_7_8_PLUS:	return (2, 1.8)
-				case .iPhone_Xr:			return (2, 1.6)
-				case .iPhone_X_Xs:			return (2, 1.6)
-				case .iPhone_Xs_Max:		return (2, 1.6)
+				case .iPhone_5_5S_5C_SE:	return (2.08, 1.8)
+				case .iPhone_6_6S_7_8:		return (2.08, 1.8)
+				case .iPhone_6_6S_7_8_PLUS:	return (2.08, 1.8)
+				case .iPhone_Xr:			return (2.28, 1.8)
+				case .iPhone_X_Xs:			return (2.28, 1.8)
+				case .iPhone_Xs_Max:		return (2.28, 1.8)
 
-				case .iPad:					return (2, 3.6)
-				case .iPadAir3:				return (3, 3.6)
-				case .iPadPro11:			return (3, 3.4)
-				case .iPadPro12:			return (3, 3.4)
+				case .iPad:					return (3.08, 3.6)
+				case .iPadAir3:				return (3.08, 3.6)
+				case .iPadPro11:			return (3.08, 3.6)
+				case .iPadPro12:			return (3.08, 3.6)
 				}
 			}
 
@@ -142,6 +148,70 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		self.present(controller, animated: true, completion: nil)
 	}
+
+	/// Goes to the first item in the presented collection view.
+	fileprivate func goToFirstEpisode() {
+		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
+		goToButton.image = #imageLiteral(resourceName: "go_down")
+	}
+
+	/// Goes to the last item in the presented collection view.
+	fileprivate func goToLastEpisode() {
+		guard let episodes = episodes else { return }
+		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
+		goToButton.image = #imageLiteral(resourceName: "go_up")
+	}
+
+	/// Goes to the last watched episode in the presented collection view.
+	fileprivate func goToLastWatchedEpisode() {
+		guard let lastWatchedEpisode = episodes?.closestMatch(index: 0, predicate: {
+			if let watched = $0.userDetails?.watched {
+				return !watched
+			}
+			return false
+		}) else { return }
+		collectionView.scrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
+	}
+
+	fileprivate func actionList() {
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let visibleIndexPath = collectionView.indexPathsForVisibleItems
+
+		if visibleIndexPath.contains(IndexPath(item: 0, section: 0)) {
+			// Go to first episode
+			let goToFirstEpisode = UIAlertAction.init(title: "Go to first episode", style: .default, handler: { (_) in
+				self.goToFirstEpisode()
+			})
+			action.addAction(goToFirstEpisode)
+		} else {
+			// Go to last episode
+			let goToLastEpisode = UIAlertAction.init(title: "Go to last episode", style: .default, handler: { (_) in
+				self.goToLastEpisode()
+			})
+			action.addAction(goToLastEpisode)
+		}
+
+		// Go to last watched episode
+		let goToLastWatchedEpisode = UIAlertAction.init(title: "Go to last watched episode", style: .default, handler: { (_) in
+			self.goToLastWatchedEpisode()
+		})
+		action.addAction(goToLastWatchedEpisode)
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.barButtonItem = goToButton
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
+
+	// MARK: - IBActions
+	@IBAction func goToButtonPressed(_ sender: UIBarButtonItem) {
+		actionList()
+	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -223,7 +293,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 		options.expansionDelegate = ScaleAndAlphaExpansion.default
 
 		options.buttonSpacing = 5
-		options.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
+		options.backgroundColor = .clear
 
 		return options
 	}
@@ -263,6 +333,41 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 					cell.configureCell(with: watchStatus, shouldUpdate: true, withValue: watchStatus)
 				}
 			}
+        }
+    }
+}
+
+extension Array {
+	/**
+		Find the colsest match to the given predicate in an array with the given start index.
+
+		- Parameter index: The index where the search should start from.
+		- Parameter predicate: The logic which should be matched.
+		- Parameter element: The element that is being checked for a match.
+
+		- Returns: the index where a match has been found and the item that has matched the predicate.
+	*/
+	func closestMatch(index: Index, predicate: (_ element: Element) -> Bool) -> (Int, Element)? {
+        if predicate(self[index]) {
+            return (index, self[index])
+        }
+
+        var delta = 1
+
+        while(true) {
+            guard index + delta < count || index - delta >= 0 else {
+                return nil
+            }
+
+            if index + delta < count && predicate(self[index + delta]) {
+                return (index + delta, self[index + delta])
+            }
+
+            if index - delta >= 0 && predicate(self[index - delta]) {
+                return (index - delta, self[index - delta])
+            }
+
+            delta = delta + 1
         }
     }
 }
