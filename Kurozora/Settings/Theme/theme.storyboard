@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,6 +46,12 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="ie9-Ev-WYr">
+                                                    <rect key="frame" x="346" y="12" width="20" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="C1c-IC-xfa"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -53,8 +59,10 @@
                                                 <constraint firstItem="Zfx-5D-WtX" firstAttribute="leading" secondItem="di9-jP-HIL" secondAttribute="leadingMargin" id="TED-CN-W4M"/>
                                                 <constraint firstItem="qww-A6-RRK" firstAttribute="leading" secondItem="Zfx-5D-WtX" secondAttribute="trailing" constant="8" symbolic="YES" id="epx-lB-nrB"/>
                                                 <constraint firstItem="Zfx-5D-WtX" firstAttribute="top" secondItem="di9-jP-HIL" secondAttribute="top" constant="5" id="f1h-Rd-h4Q"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ie9-Ev-WYr" secondAttribute="trailing" id="pVi-Yi-GJn"/>
                                                 <constraint firstAttribute="bottom" secondItem="Zfx-5D-WtX" secondAttribute="bottom" constant="5" id="uFF-Zy-e4R"/>
                                                 <constraint firstItem="qww-A6-RRK" firstAttribute="centerY" secondItem="Zfx-5D-WtX" secondAttribute="centerY" id="wrE-J8-NTw"/>
+                                                <constraint firstItem="ie9-Ev-WYr" firstAttribute="centerY" secondItem="qww-A6-RRK" secondAttribute="centerY" id="xh4-OI-LAU"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -74,6 +82,7 @@
                                 <connections>
                                     <outlet property="iconImageView" destination="Zfx-5D-WtX" id="hBR-ZE-Jq8"/>
                                     <outlet property="iconTitleLabel" destination="qww-A6-RRK" id="5xJ-GS-DfS"/>
+                                    <outlet property="selectedImageView" destination="ie9-Ev-WYr" id="TOl-yo-p1j"/>
                                     <outlet property="selectedView" destination="di9-jP-HIL" id="REI-ea-E3r"/>
                                 </connections>
                             </tableViewCell>
@@ -268,5 +277,8 @@
             <point key="canvasLocation" x="-339" y="-948"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="check" width="44" height="34"/>
+    </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

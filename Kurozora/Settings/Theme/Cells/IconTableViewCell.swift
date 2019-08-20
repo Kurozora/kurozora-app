@@ -8,18 +8,13 @@
 
 import UIKit
 
-class IconTableViewCell: UITableViewCell {
+class IconTableViewCell: SelectableSettingsCell {
 	@IBOutlet weak var iconTitleLabel: UILabel! {
 		didSet {
 			iconTitleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 	@IBOutlet weak var iconImageView: UIImageView!
-	@IBOutlet weak var selectedView: UIView! {
-		didSet {
-			selectedView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
 
 	var alternativeIconsElement: AlternativeIconsElement? {
 		didSet {
@@ -30,10 +25,15 @@ class IconTableViewCell: UITableViewCell {
 	// MARK: - Functions
 	fileprivate func configureCell() {
 		guard let alternativeIconsElement = alternativeIconsElement else { return }
+		let selected = UserSettings.appIcon
 
 		iconTitleLabel.text = alternativeIconsElement.name
 		if let imageString = alternativeIconsElement.image {
 			iconImageView.image = UIImage(named: imageString)
+
+			if imageString == selected {
+				isSelected = true
+			}
 		}
 	}
 }

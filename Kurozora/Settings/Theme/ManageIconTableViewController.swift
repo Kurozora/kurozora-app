@@ -86,20 +86,18 @@ extension ManageIconTableViewController {
 			if alternativeIcons?.defaultIcons?.count != 0 {
 				return "DEFAULT"
 			}
-			return ""
 		case 1:
 			if alternativeIcons?.premiumIcons?.count != 0 {
 				return "PREMIUM"
 			}
-			return ""
 		case 2:
 			if alternativeIcons?.limitedIcons?.count != 0 {
 				return "LIMITED TIME"
 			}
-			return ""
-		default:
-			return ""
+		default: return nil
 		}
+
+		return nil
 	}
 }
 
@@ -117,6 +115,7 @@ extension ManageIconTableViewController {
 
 		UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
 		NotificationCenter.default.post(name: updateAppIconNotification, object: nil)
+		tableView.reloadData()
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
