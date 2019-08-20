@@ -40,32 +40,26 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (2, 1.8) : (6, 2.4) // NOTE: 1.8 since the poster overlaps with the check mark button. You're welcome you dummy dum dum for always forgetting
-				case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (2, 2.0) : (6, 2.4)
-				case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (2, 2.0) : (6, 2.4)
-				case .iPhone_Xr:			return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
-				case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
-				case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (2.22, 1.8) : (8, 2.8)
+				case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhone_Xr:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
 
-				case .iPad:					return (libraryLayout == .detailed) ? (3, 3.8) : (8, 4.2)
-				case .iPadAir3:				return (libraryLayout == .detailed) ? (3, 3.8) : (8, 4.4)
-				case .iPadPro11:			return (libraryLayout == .detailed) ? (3, 3.6) : (8, 4.2)
-				case .iPadPro12:			return (libraryLayout == .detailed) ? (3, 4.0) : (8, 4.4)
+				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (3.06, 3.8) : (8, 4.2)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
-			case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
-			case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3, 4.0)
-			case .iPhone_Xr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
-			case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
-			case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (1, 3.8) : (3, 5.0)
+			case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (1, 3.2) : (2.18, 2.8)
+			case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
+			case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
+			case .iPhone_Xr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
 
-			case .iPad:					return (libraryLayout == .detailed) ? (2, 4.6) : (5, 5.2)
-			case .iPadAir3:				return (libraryLayout == .detailed) ? (2, 4.8) : (5, 5.2)
-			case .iPadPro11:			return (libraryLayout == .detailed) ? (2, 5.0) : (5, 5.4)
-			case .iPadPro12:			return (libraryLayout == .detailed) ? (2, 4.8) : (5, 4.8)
+			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (2, 4.8) : (6, 6.0)
 			}
 		}
 	}
@@ -255,7 +249,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
         let selectedShow = show(at: indexPath)
 
 		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
-		let itemProvider = NSItemProvider(object: libraryCollectionViewCell.episodeImageView?.image ?? libraryCollectionViewCell.posterView.image!)
+		let itemProvider = NSItemProvider(object: (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image ?? libraryCollectionViewCell.posterView.image!)
 		itemProvider.registerObject(userActivity, visibility: .all)
 
         let dragItem = UIDragItem(itemProvider: itemProvider)

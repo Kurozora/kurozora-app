@@ -130,6 +130,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 	}
 
 	// MARK: - Functions
+	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
 		Service.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
 			DispatchQueue.main.async {
@@ -138,6 +139,12 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		})
 	}
 
+	/**
+		Populate an action sheet for the given episode.
+
+		- Parameter episode: The episode for which the action sheet should be populated
+		- Parameter cell: The cell that needs to be updated if actions are taken.
+	*/
 	func populateActionSheet(for episode: EpisodesElement, at cell: EpisodesCollectionViewCell) {
 		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = cell.episodeWatchedButton.tag
@@ -173,6 +180,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		collectionView.scrollToItem(at: IndexPath(row: lastWatchedEpisode.0, section: 0), at: .centeredVertically, animated: true)
 	}
 
+	/// Builds and presents an action sheet.
 	fileprivate func actionList() {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let visibleIndexPath = collectionView.indexPathsForVisibleItems

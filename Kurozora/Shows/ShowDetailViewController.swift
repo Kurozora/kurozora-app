@@ -256,7 +256,7 @@ class ShowDetailViewController: UIViewController {
 
 	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell) {
 		showTitleLabel.text = cell.titleLabel?.text
-		bannerImageView.image = cell.episodeImageView?.image
+		bannerImageView.image = (cell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image
 		posterImageView.image = cell.posterView?.image
 	}
 
@@ -387,7 +387,7 @@ class ShowDetailViewController: UIViewController {
 		posterImageView.hero.id = on ? "\(heroID)_poster" : nil
 		bannerContainerView.hero.id = on ? "\(heroID)_banner" : nil
 
-		if libraryCollectionViewCell?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
+		if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
 			snapshotView.hero.id = on ? nil : "\(heroID)_banner"
 		} else {
 			snapshotView.hero.id = on ? nil : "\(heroID)_poster"
