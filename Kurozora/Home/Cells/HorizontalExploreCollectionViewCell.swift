@@ -59,7 +59,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 		}
 
 		if traitCollection.forceTouchCapability == .available {
-			homeCollectionViewController?.registerForPreviewing(with: exploreCell, sourceView: exploreCell.contentView)
+			homeCollectionViewController?.registerForPreviewing(with: exploreCell, sourceView: exploreCell)
 		}
 
 		return exploreCell

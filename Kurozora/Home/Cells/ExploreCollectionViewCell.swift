@@ -65,6 +65,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var libraryStatus: String?
+	var showTabBarController: ShowDetailTabBarController?
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -305,22 +306,24 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 // MARK: - UIViewControllerPreviewingDelegate
 extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		guard let collectionView = self.superview else { return nil }
 		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		let showTabBarController = storyboard.instantiateInitialViewController() as! ShowDetailTabBarController
-		showTabBarController.exploreCollectionViewCell = self
-		showTabBarController.showID = showElement?.id
+		showTabBarController = storyboard.instantiateInitialViewController() as? ShowDetailTabBarController
+		showTabBarController?.exploreCollectionViewCell = self
+		showTabBarController?.showID = showElement?.id
+		showTabBarController?.modalPresentationStyle = .overFullScreen
 
 		if let showTitle = showElement?.title, let section = indexPath?.section {
-			showTabBarController.heroID = "explore_\(showTitle)_\(section)"
+			showTabBarController?.heroID = "explore_\(showTitle)_\(section)"
 		}
 
-		previewingContext.sourceRect = collectionView.convert(self.frame, to: collectionView.superview)
+		previewingContext.sourceRect = previewingContext.sourceView.bounds
 
 		return showTabBarController
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		homeCollectionViewController?.performSegue(withIdentifier: "ShowDetailsSegue", sender: self)
+		if let showTabBarController = showTabBarController {
+			homeCollectionViewController?.present(showTabBarController, animated: true, completion: nil)
+		}
 	}
 }
