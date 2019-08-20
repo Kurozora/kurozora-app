@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 	@IBOutlet weak var episodeImageView: UIImageView!

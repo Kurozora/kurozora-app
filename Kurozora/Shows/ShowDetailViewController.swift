@@ -68,6 +68,11 @@ class ShowDetailViewController: UIViewController {
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var trailerButton: UIButton!
+	@IBOutlet weak var trailerLabel: UILabel! {
+		didSet {
+			trailerLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var favoriteButton: UIButton!
 
 	// Analytics view
@@ -371,8 +376,10 @@ class ShowDetailViewController: UIViewController {
 
 		if let videoUrl = showDetailsElement.videoUrl, videoUrl != "" {
 			trailerButton.isHidden = false
+			trailerLabel.isHidden = false
 		} else {
 			trailerButton.isHidden = true
+			trailerLabel.isHidden = true
 		}
 
 		// Display details

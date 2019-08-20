@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1035,6 +1035,12 @@
                                                 <action selector="playTrailerPressed:" destination="vfx-ya-sYW" eventType="touchUpInside" id="hCs-kf-EFT"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW TRAILER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nT-Lx-s0D">
+                                            <rect key="frame" x="165" y="159" width="84" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Xf-6s-V2C" userLabel="Quikck Details View">
                                             <rect key="frame" x="0.0" y="211" width="414" height="179"/>
                                             <subviews>
@@ -1336,6 +1342,7 @@
                                         <constraint firstItem="6Xf-6s-V2C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3od-pz-xva" secondAttribute="bottom" constant="20" id="6D6-qZ-TYU"/>
                                         <constraint firstAttribute="trailing" secondItem="g1B-qe-rRb" secondAttribute="trailing" id="6iK-ta-75d"/>
                                         <constraint firstItem="3od-pz-xva" firstAttribute="centerX" secondItem="g1B-qe-rRb" secondAttribute="centerX" id="7P7-4u-DB0"/>
+                                        <constraint firstItem="6nT-Lx-s0D" firstAttribute="centerX" secondItem="3od-pz-xva" secondAttribute="centerX" id="8ZR-vO-TdX"/>
                                         <constraint firstItem="6Xf-6s-V2C" firstAttribute="leading" secondItem="xzv-Wg-d1q" secondAttribute="leading" id="J3q-9t-hgd"/>
                                         <constraint firstItem="mqj-Hw-JwI" firstAttribute="top" secondItem="g1B-qe-rRb" secondAttribute="top" constant="20" id="S25-LH-OHu"/>
                                         <constraint firstItem="g1B-qe-rRb" firstAttribute="bottom" secondItem="l6p-Q1-3my" secondAttribute="bottom" constant="5" id="Xjr-Ar-gdZ"/>
@@ -1345,6 +1352,7 @@
                                         <constraint firstItem="g1B-qe-rRb" firstAttribute="top" secondItem="xzv-Wg-d1q" secondAttribute="top" id="oWj-rQ-Jzn"/>
                                         <constraint firstItem="64J-9a-XaZ" firstAttribute="top" secondItem="g1B-qe-rRb" secondAttribute="top" constant="20" id="uUg-lo-WuL"/>
                                         <constraint firstItem="g1B-qe-rRb" firstAttribute="trailing" secondItem="mqj-Hw-JwI" secondAttribute="trailing" constant="20" id="vx5-VM-KL8"/>
+                                        <constraint firstItem="6nT-Lx-s0D" firstAttribute="top" secondItem="3od-pz-xva" secondAttribute="bottom" constant="5" id="y8v-Fj-fe4"/>
                                         <constraint firstAttribute="trailing" secondItem="6Xf-6s-V2C" secondAttribute="trailing" id="yOX-cb-bAp"/>
                                         <constraint firstAttribute="bottom" secondItem="6Xf-6s-V2C" secondAttribute="bottom" id="ye9-we-dIX"/>
                                         <constraint firstItem="g1B-qe-rRb" firstAttribute="leading" secondItem="xzv-Wg-d1q" secondAttribute="leading" id="zKl-Gh-HvJ"/>
@@ -1926,6 +1934,7 @@
                         <outlet property="tableView" destination="DiE-0V-qDj" id="z7l-oV-abG"/>
                         <outlet property="tagsLabel" destination="l6p-Q1-3my" id="d0D-8A-GHh"/>
                         <outlet property="trailerButton" destination="3od-pz-xva" id="oxj-qy-dyT"/>
+                        <outlet property="trailerLabel" destination="6nT-Lx-s0D" id="DE6-Hb-xP7"/>
                     </connections>
                 </viewController>
                 <tapGestureRecognizer id="GdL-32-9xW" userLabel="PosterTap">
@@ -2124,7 +2133,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="grs-Fk-ra4">
-                                <rect key="frame" x="20" y="118" width="374" height="690"/>
+                                <rect key="frame" x="20" y="66" width="374" height="742"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
