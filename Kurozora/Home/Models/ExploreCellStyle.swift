@@ -9,17 +9,26 @@
 import Foundation
 
 /**
-	List of Explore cell styles
+	List of Explore cell styles.
 
-	- case large
-	- case medium
-	- case small
-	- case video
+	```
+	case large = "LargeExploreCollectionViewCell"
+	case medium = "MediumExploreCollectionViewCell"
+	case small = "SmallExploreCollectionViewCell"
+	case video = "VideoExploreCollectionViewCell"
+	```
 */
 enum ExploreCellStyle: String {
+	/// Indicates that the cell has the `large` style.
 	case large
+
+	/// Indicates that the cell has the `medium` style.
 	case medium
+
+	/// Indicates that the cell has the `small` style.
 	case small
+
+	/// Indicates that the cell has the `video` style.
 	case video
 
 	var reuseIdentifier: String {

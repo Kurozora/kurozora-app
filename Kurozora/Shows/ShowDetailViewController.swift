@@ -471,7 +471,7 @@ class ShowDetailViewController: UIViewController {
 		present(activityVC, animated: true, completion: nil)
 	}
 
-	@IBAction func chooseStatusButtonPressed(_ sender: AnyObject) {
+	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"),("Watching","Watching"),("Completed","Completed"),("Dropped","Dropped"),("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showID else {return}
 

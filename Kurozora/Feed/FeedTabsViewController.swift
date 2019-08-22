@@ -116,7 +116,9 @@ class FeedTabsViewController: TabmanViewController {
 	}
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		performSegue(withIdentifier: "ProfileSegue", sender: nil)
+		if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
+			self.show(profileTableViewController, sender: nil)
+		}
 	}
 }
 

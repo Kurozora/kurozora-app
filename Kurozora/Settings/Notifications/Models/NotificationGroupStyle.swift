@@ -9,17 +9,25 @@
 import Foundation
 
 /**
-	List of notification group styles
+	List of notification group styles.
 
-	- case automatic = 0
-	- case byType = 1
-	- case off = 2
+	```
+	case automatic = 0
+	case byType = 1
+	case off = 2
+	```
 */
 enum NotificationGroupStyle: Int {
+	/// Groups the notifications in sections by their date and time.
 	case automatic = 0
+
+	/// Groups the notifications in sections by their notification type.
 	case byType
+
+	/// Groups the notifications in one section in by their date and time.
 	case off
 
+	/// The string value of a notification group style.
 	var stringValue: String {
 		switch self {
 		case .automatic:

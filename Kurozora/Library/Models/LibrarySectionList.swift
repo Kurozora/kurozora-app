@@ -9,13 +9,15 @@
 import Foundation
 
 /**
-	List of library sections
+	List of library sections.
 
-	- case planning = "Planning"
-	- case watching = "Watching"
-	- case completed = "Completed"
-	- case onHold = "On-Hold"
-	- case dropped = "Dropped"
+	```
+	case planning = "Planning"
+	case watching = "Watching"
+	case completed = "Completed"
+	case onHold = "On-Hold"
+	case dropped = "Dropped"
+	```
 */
 
 enum LibrarySectionList: String {

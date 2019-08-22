@@ -11,8 +11,10 @@ import Foundation
 /**
 	List of notification grouping
 
-	- var sectionTitle: String!
-	- var sectionNotifications: [UserNotificationsElement]!
+	```
+	var sectionTitle: String!
+	var sectionNotifications: [UserNotificationsElement]!
+	```
 */
 struct GroupedNotifications {
 	var sectionTitle: String!

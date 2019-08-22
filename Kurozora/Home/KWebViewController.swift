@@ -50,9 +50,7 @@ class KWebViewController: UIViewController {
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.barButtonItem = sender
 		}
 		self.present(activityVC, animated: true, completion: nil)
 	}

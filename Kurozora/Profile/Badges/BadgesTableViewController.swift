@@ -20,7 +20,9 @@ class BadgesTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		// Setup table view
 		tableView.dataSource = self
 		tableView.delegate = self
+
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
 		tableView.emptyDataSetSource = self

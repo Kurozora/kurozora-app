@@ -146,9 +146,7 @@ class ForumsViewController: TabmanViewController {
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.barButtonItem = sender
 		}
 
 		self.present(action, animated: true, completion: nil)

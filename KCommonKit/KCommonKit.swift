@@ -49,12 +49,14 @@ public struct GlobalVariables {
 /**
 	List of anime types
 
-	- case tv: "TV"
-	- case movie: "Movie"
-	- case special: "Special"
-	- case ova: "OVA"
-	- case ona: "ONA"
-	- case music: "Music"
+	```
+	case tv = "TV"
+	case movie = "Movie"
+	case special = "Special"
+	case ova = "OVA"
+	case ona = "ONA"
+	case music = "Music"
+	```
 */
 public enum AnimeType: String {
     case tv = "TV"
@@ -71,11 +73,13 @@ public enum AnimeType: String {
 /**
 	List of anime classifications
 
-	- case g: "G - All Ages"
-	- case pg: "PG - Children"
-	- case pg13: "PG-13 - Teens 13 or older"
-	- case r17: "R - 17+ (violence & profanity)"
-	- case rPlus: "R+ - Mild Nudity"
+	```
+	case g = "G - All Ages"
+	case pg = "PG - Children"
+	case pg13 = "PG-13 - Teens 13 or older"
+	case r17 = "R - 17+ (violence & profanity)"
+	case rPlus = "R+ - Mild Nudity"
+	```
 */
 public enum AnimeClassification: String {
     case g = "G - All Ages"
@@ -91,9 +95,11 @@ public enum AnimeClassification: String {
 /**
 	List of anime status
 
-	- case finishedAiring: "finished airing"
-	- case currentlyAiring: "currently airing"
-	- case notYetAired: "not yet aired"
+	```
+	case finishedAiring = "finished airing"
+	case currentlyAiring = "currently airing"
+	case notYetAired = "not yet aired"
+	```
 */
 public enum AnimeStatus: String {
     case finishedAiring = "finished airing"
@@ -107,12 +113,14 @@ public enum AnimeStatus: String {
 /**
 	List of anime genres
 
-	- case action = "Action"
-	- case adventure = "Adventure"
-	- case cars = "Cars"
-	- case comedy = "Comedy"
-	- case dementia = "Dementia"
-	- etc.
+	```
+	case action = "Action"
+	case adventure = "Adventure"
+	case cars = "Cars"
+	case comedy = "Comedy"
+	case dementia = "Dementia"
+	etc.
+	```
 */
 public enum AnimeGenre: String {
     case action = "Action"
@@ -165,9 +173,11 @@ public enum AnimeGenre: String {
 /**
 	List of anime sorting
 
-	- case az: "A-Z"
-	- case popular: "Most Popular"
-	- case rating: "Highest Rated"
+	```
+	case az = "A-Z"
+	case popular = "Most Popular"
+	case rating = "Highest Rated"
+	```
 */
 public enum AnimeSort: String {
     case az = "A-Z"

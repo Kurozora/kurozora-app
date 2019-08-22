@@ -9,15 +9,21 @@
 import Foundation
 
 /**
-	List of notification banner styles
+	List of notification banner styles.
 
-	- case temporary = 0
-	- case persistent = 1
+	```
+	case temporary = 0
+	case persistent = 1
+	```
 */
 enum NotificationBannerStyle: Int {
+	/// Indicates that the notifications shown should stay for a temporary amount of time before being dismissed.
 	case temporary = 0
+
+	/// Indicates that the notifications shown should stay until the user dismisses them manually.
 	case persistent
 
+	/// The string value of a notification banner style.
 	var stringValue: String {
 		switch self {
 		case .temporary:

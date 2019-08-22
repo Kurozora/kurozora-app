@@ -8,17 +8,6 @@
 
 import KCommonKit
 
-/**
-	List of app appearance options
-
-	- case light = 0
-	- case dark = 1
-*/
-enum AppAppearanceOption: Int {
-	case light = 0
-	case dark
-}
-
 class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var lightOptionContainerView: UIView?
 	@IBOutlet weak var lightOptionImageView: UIImageView? {

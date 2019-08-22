@@ -9,17 +9,25 @@
 import Foundation
 
 /**
-	List of notification types
+	List of notification types.
 
-	- case unknown = "TYPE_UNKNOWN"
-	- case session = "TYPE_NEW_SESSION"
-	- case follower = "TYPE_NEW_FOLLOWER"
+	```
+	case unknown = "TYPE_UNKNOWN"
+	case session = "TYPE_NEW_SESSION"
+	case follower = "TYPE_NEW_FOLLOWER"
+	```
 */
 enum NotificationType: String {
-	case unknown 	= "TYPE_UNKNOWN"
-	case session 	= "TYPE_NEW_SESSION"
-	case follower 	= "TYPE_NEW_FOLLOWER"
+	/// Indicates that the notification has no specific type and thus has the default style.
+	case unknown = "TYPE_UNKNOWN"
 
+	/// Indicates that the notification has a `session` type and thus has the sessions style.
+	case session = "TYPE_NEW_SESSION"
+
+	/// Indicates that the notification has a `follower` type and thus has the follower style.
+	case follower = "TYPE_NEW_FOLLOWER"
+
+	/// The string value of a notification type.
 	var stringValue: String {
 		switch self {
 		case .unknown:

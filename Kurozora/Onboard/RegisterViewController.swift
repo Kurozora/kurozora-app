@@ -128,7 +128,7 @@ class RegisterViewController: UIViewController {
 
 	// Image picker
     @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Profile Picture 🖼", message: "Choose an awesome picture 😉", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
             self.openCamera()
         }))
@@ -139,7 +139,6 @@ class RegisterViewController: UIViewController {
         
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         
-        // If you want work actionsheet on ipad then you have to use popoverPresentationController to present the actionsheet, otherwise app will crash in iPad
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             alert.popoverPresentationController?.sourceView = sender

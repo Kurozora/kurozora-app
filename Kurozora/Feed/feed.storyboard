@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +14,7 @@
                 <viewControllerPlaceholder storyboardName="settings" id="HFC-YJ-V83" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQW-6e-gkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1741" y="-88"/>
+            <point key="canvasLocation" x="1741" y="-70"/>
         </scene>
         <!--Feed-->
         <scene sceneID="3EW-to-g3U">
@@ -35,7 +35,7 @@
                                         <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jz0-qo-ltD">
                                             <rect key="frame" x="20" y="11" width="374" height="178"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5K-sf-Y3k">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C5K-sf-Y3k">
                                                     <rect key="frame" x="20" y="8" width="40" height="40"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -227,14 +227,6 @@
             </objects>
             <point key="canvasLocation" x="2394" y="-69"/>
         </scene>
-        <!--profile-->
-        <scene sceneID="Lsa-o5-7wS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="profile" id="VLC-DP-TbE" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nyM-SS-gy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1733" y="-52"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="SQJ-hQ-uTw">
             <objects>
@@ -325,7 +317,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="SNm-Ym-mOT">
                             <view key="customView" userInteractionEnabled="NO" contentMode="scaleToFill" id="SVg-ky-fMt">
-                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="350" y="0.0" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3h-cK-q29">
@@ -346,9 +338,6 @@
                                     <constraint firstAttribute="trailing" secondItem="u3h-cK-q29" secondAttribute="trailing" id="elS-jq-GZE"/>
                                 </constraints>
                             </view>
-                            <connections>
-                                <segue destination="VLC-DP-TbE" kind="show" identifier="ProfileSegue" id="C6M-ba-QKj"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

@@ -11,23 +11,42 @@ import Foundation
 /**
 	List of require authentication options
 
-	- case immediately = 0
-	- case thirtySeconds = 1
-	- case oneMinute = 2
-	- case twoMinutes = 3
-	- case threeMinutes = 4
-	- case fourMinutes = 5
-	- case fiveMinutes = 6
+	```
+	case immediately = 0
+	case thirtySeconds = 1
+	case oneMinute = 2
+	case twoMinutes = 3
+	case threeMinutes = 4
+	case fourMinutes = 5
+	case fiveMinutes = 6
+	```
 */
 enum RequireAuthentication: Int {
+	/// The app asks for authentication immediately.
 	case immediately
+
+	/// The app asks for authentication after thirty seconds of the app being in the background.
 	case thirtySeconds
+
+	/// The app asks for authentication after one minute of the app being in the background.
 	case oneMinute
+
+	/// The app asks for authentication after two minutes of the app being in the background.
 	case twoMinutes
+
+	/// The app asks for authentication after three minutes of the app being in the background.
 	case threeMinutes
+
+	/// The app asks for authentication after four minutes of the app being in the background.
 	case fourMinutes
+
+	/// The app asks for authentication after six minute of the app being in the background.
 	case fiveMinutes
 
+	/// An array of all RequireAuthentication attributes.
+	static var all: [RequireAuthentication] = [.immediately, .thirtySeconds, .oneMinute, .twoMinutes, .threeMinutes, .fourMinutes, .fiveMinutes]
+
+	/// The string value of an authentication timeout.
 	var stringValue: String {
 		switch self {
 		case .immediately:
@@ -47,6 +66,13 @@ enum RequireAuthentication: Int {
 		}
 	}
 
+	/**
+		Returns a RequireAuthentication object from the given string.
+
+		- Parameter string: The string from which a RequireAuthentication object is returned.
+
+		- Returns: a RequireAuthentication object from the given string.
+	*/
 	static func valueFrom(_ string: String?) -> RequireAuthentication {
 		guard let string = string else { return .immediately }
 		switch string {
@@ -69,6 +95,13 @@ enum RequireAuthentication: Int {
 		}
 	}
 
+	/**
+		Checks whether the given string is a match.
+
+		- Parameter string: The string which should be matched with.
+
+		- Returns: a boolean indicating whether the given string matches.
+	*/
 	func equals(_ string: String) -> Bool {
 		switch self.stringValue {
 		case string:
@@ -77,5 +110,4 @@ enum RequireAuthentication: Int {
 			return false
 		}
 	}
-	static var all: [RequireAuthentication] = [.immediately, .thirtySeconds, .oneMinute, .twoMinutes, .threeMinutes, .fourMinutes, .fiveMinutes]
 }

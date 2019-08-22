@@ -10,7 +10,7 @@ import Foundation
 import SwiftTheme
 
 /**
-	List of theme picker attributes
+	List of theme picker attributes.
 
 	```
 	case statusBarStyle = "UIStatusBarStyle"

@@ -17,7 +17,7 @@ class AuthenticationOptionsCell: SettingsCell {
 
 	var requireAuthentication: RequireAuthentication? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	
@@ -34,7 +34,7 @@ class AuthenticationOptionsCell: SettingsCell {
 	}
 
 	// MARK: - Functions
-	fileprivate func setup() {
+	fileprivate func configureCell() {
 		guard let requireAuthentication = requireAuthentication else { return }
 		cellTitle?.text = requireAuthentication.stringValue
 

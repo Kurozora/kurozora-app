@@ -21,7 +21,7 @@ protocol NotificationsViewControllerDelegate: class {
 
 class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
 	var searchResultsViewController: SearchResultsTableViewController!
-	var grouping: GroupingType = .off
+	var grouping: NotificationGroupStyle = .off
 	var oldGrouping: Int?
 	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
@@ -30,7 +30,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		super.viewWillAppear(animated)
 		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping {
 			let notificationsGrouping = UserSettings.notificationsGrouping
-			grouping = GroupingType(rawValue: notificationsGrouping)!
+			grouping = NotificationGroupStyle(rawValue: notificationsGrouping)!
 			fetchNotifications()
 		}
 	}

@@ -8,6 +8,15 @@
 
 import Foundation
 
+/**
+	Type of users which represents what level of access does each user have in the app.
+
+	```
+	case normal = 0
+	case mod = 1
+	case admin = 2
+	```
+*/
 enum UserType: Int {
 	/// Refers to normal users with no special permissions.
 	case normal = 0

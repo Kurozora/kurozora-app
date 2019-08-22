@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of biometric types compatible with iOS 10
+	List of biometric types compatible with iOS 10.
 
 	```
 	case faceID

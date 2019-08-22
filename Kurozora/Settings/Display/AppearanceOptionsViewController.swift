@@ -8,17 +8,6 @@
 
 import KCommonKit
 
-/**
-	List of dark theme options
-
-	- case automatic = 0
-	- case custom = 1
-*/
-enum DarkThemeOption: Int {
-	case automatic	= 0
-	case custom
-}
-
 class AppearanceOptionsViewController: UITableViewController {
 	var datePickerIndexPath: IndexPath?
 	var inputDates: [Date] = [UserSettings.darkThemeOptionStart, UserSettings.darkThemeOptionEnd]

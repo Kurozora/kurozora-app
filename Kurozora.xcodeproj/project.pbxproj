@@ -148,13 +148,15 @@
 		664801E1222DE76A0063143A /* App-Icon-iPhone-Yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 664801C2222DE7690063143A /* App-Icon-iPhone-Yellow@2x.png */; };
 		66488B8C212F7FF2001E8C82 /* KCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 66488B8B212F7FF2001E8C82 /* KCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6B22A4630200E1BE18 /* NotificationType.swift */; };
-		6648ED6E22A4633400E1BE18 /* GroupingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6D22A4633400E1BE18 /* GroupingType.swift */; };
 		6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */; };
 		664A065C21EA1187008CF4A6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065B21EA1187008CF4A6 /* Genres.swift */; };
 		664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */; };
 		664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */; };
 		664B52D122C03C0900B988B3 /* display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664B52D022C03C0900B988B3 /* display.storyboard */; };
 		664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */; };
+		664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D74230F3A3100F9C726 /* FeedType.swift */; };
+		664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D77230F45F400F9C726 /* DarkThemeOption.swift */; };
+		664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D79230F469900F9C726 /* AppAppearanceOption.swift */; };
 		665099D322FC22670053C2FD /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D222FC22670053C2FD /* UserType.swift */; };
 		665099D522FC2B6A0053C2FD /* SuggestionResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D422FC2B6A0053C2FD /* SuggestionResultCell.swift */; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
@@ -545,7 +547,6 @@
 		664801C2222DE7690063143A /* App-Icon-iPhone-Yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Yellow@2x.png"; sourceTree = "<group>"; };
 		66488B8B212F7FF2001E8C82 /* KCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCommonKit.h; sourceTree = "<group>"; };
 		6648ED6B22A4630200E1BE18 /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
-		6648ED6D22A4633400E1BE18 /* GroupingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupingType.swift; sourceTree = "<group>"; };
 		6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedNotifications.swift; sourceTree = "<group>"; };
 		664940992308B22E00C2565C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		664A065B21EA1187008CF4A6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
@@ -553,6 +554,9 @@
 		664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 		664B52D022C03C0900B988B3 /* display.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = display.storyboard; sourceTree = "<group>"; };
 		664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsCell.swift; sourceTree = "<group>"; };
+		664B6D74230F3A3100F9C726 /* FeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType.swift; sourceTree = "<group>"; };
+		664B6D77230F45F400F9C726 /* DarkThemeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkThemeOption.swift; sourceTree = "<group>"; };
+		664B6D79230F469900F9C726 /* AppAppearanceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceOption.swift; sourceTree = "<group>"; };
 		665099D222FC22670053C2FD /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		665099D422FC2B6A0053C2FD /* SuggestionResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionResultCell.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
@@ -924,6 +928,7 @@
 				66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */,
 				661049BF22C0E42B00A2A354 /* DisplayTableViewController.swift */,
 				661049C122C0E54300A2A354 /* Cells */,
+				664B6D76230F45D600F9C726 /* Models */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1328,7 +1333,6 @@
 			isa = PBXGroup;
 			children = (
 				6648ED6B22A4630200E1BE18 /* NotificationType.swift */,
-				6648ED6D22A4633400E1BE18 /* GroupingType.swift */,
 				6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */,
 			);
 			path = Models;
@@ -1341,6 +1345,23 @@
 				664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */,
 			);
 			path = Genres;
+			sourceTree = "<group>";
+		};
+		664B6D73230F3A2000F9C726 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				664B6D74230F3A3100F9C726 /* FeedType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		664B6D76230F45D600F9C726 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				664B6D77230F45F400F9C726 /* DarkThemeOption.swift */,
+				664B6D79230F469900F9C726 /* AppAppearanceOption.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		665099D122FC223A0053C2FD /* Models */ = {
@@ -1768,6 +1789,7 @@
 				66CBA53622BC454600FBEC13 /* feed.storyboard */,
 				66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */,
 				66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */,
+				664B6D73230F3A2000F9C726 /* Models */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -2229,7 +2251,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${INFOPLIST_FILE}\"\n";
+			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\n\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\")\n\nbuildNumber=${buildVersion//[^0-9]/}\nbuildNumber=$(($buildNumber + 1))\n\nbuildString=${buildVersion//[^a-z]/}\n\nbuildVersion=\"$buildNumber$buildString\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion\" \"${INFOPLIST_FILE}\"\n";
 		};
 		9F2E34C3EAB82D3DD3D34F4B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2509,6 +2531,7 @@
 				661F9F842087282500CF4153 /* WelcomeViewController.swift in Sources */,
 				66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */,
 				662A5FE5223913AB00F3B61D /* FadeTransition.swift in Sources */,
+				664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */,
 				664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */,
 				6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */,
 				6674DBF022EDBFEA006455C1 /* ExploreLargeCollectionViewFlowLayout.swift in Sources */,
@@ -2558,6 +2581,7 @@
 				662A5FE7223913AB00F3B61D /* CGRectEx.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
+				664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */,
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				664A065C21EA1187008CF4A6 /* Genres.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
@@ -2574,7 +2598,6 @@
 				66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */,
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */,
-				6648ED6E22A4633400E1BE18 /* GroupingType.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
 				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
@@ -2594,6 +2617,7 @@
 				66C86404216DFB850054EE16 /* SeasonsCollectionViewCell.swift in Sources */,
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
+				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
 				660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
 				66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */,

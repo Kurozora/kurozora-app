@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of search scopes
+	List of search scopes used to filter search results.
 
 	```
 	case show = 0

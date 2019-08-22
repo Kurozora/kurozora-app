@@ -17,7 +17,10 @@ import UIKit
 	```
 */
 public enum ImageFormat {
+	/// Indicates the image has a `png` format.
 	case png
+
+	/// Indicates the image has a `jpeg` format. This option also takes a compression value.
 	case jpeg(CGFloat)
 }
 

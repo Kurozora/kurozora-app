@@ -9,12 +9,14 @@
 import Foundation
 
 /**
-	List of episode view sections
+	List of episode view sections.
 
-	- case synopsis
-	- case information
-	- case cast
-	- case discussion
+	```
+	case synopsis = 0
+	case information = 1
+	case cast = 2
+	case discussion = 3
+	```
 */
 
 enum EpisodeSection: Int {
