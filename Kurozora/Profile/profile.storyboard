@@ -670,6 +670,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="badgesButton" destination="E2w-Ry-UIw" id="PQd-Wb-u8H"/>
+                        <outlet property="bannerImageView" destination="zl8-rJ-jxV" id="59M-1e-QfB"/>
                         <outlet property="bioTextView" destination="gIa-4A-kfT" id="Nn7-CY-HZA"/>
                         <outlet property="buttonsStackView" destination="LNz-X2-qla" id="QPq-oh-OOt"/>
                         <outlet property="editProfileButton" destination="EtH-JN-qoL" id="Bfr-gN-4ch"/>
@@ -677,14 +678,13 @@
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="0tj-jo-lQ8"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
                         <outlet property="proBadgeButton" destination="bKV-6f-pSz" id="HdW-4t-lxJ"/>
+                        <outlet property="profileBorderView" destination="wJX-ls-ZaG" id="hOw-07-B1J"/>
+                        <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
                         <outlet property="profileNavigationItem" destination="yJS-kC-jrS" id="V2w-eF-nJ2"/>
-                        <outlet property="profileView" destination="wJX-ls-ZaG" id="lgt-RD-SBR"/>
                         <outlet property="reputationButton" destination="Ldj-y1-nlK" id="LyN-rH-NYP"/>
                         <outlet property="selectBannerImageButton" destination="dG8-Sp-07m" id="Za7-fU-JNW"/>
                         <outlet property="selectProfileImageButton" destination="vBP-c7-LwV" id="f1e-b1-tsM"/>
                         <outlet property="tagBadgeButton" destination="acZ-hU-RmT" id="p1c-Zj-CB1"/>
-                        <outlet property="userAvatar" destination="NzS-ZZ-Ald" id="E3f-R1-HZa"/>
-                        <outlet property="userBanner" destination="zl8-rJ-jxV" id="p3V-Cl-m7k"/>
                         <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="D24-4f-G7c"/>
                     </connections>
                 </tableViewController>

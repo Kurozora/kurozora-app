@@ -16,14 +16,14 @@ import SwiftTheme
 class ProfileTableViewController: UITableViewController {
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
-	@IBOutlet weak var userAvatar: UIImageView!
-	@IBOutlet weak var profileView: UIView!
+	@IBOutlet weak var profileImageView: UIImageView!
+	@IBOutlet weak var profileBorderView: UIView!
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var userBanner: UIImageView!
+	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: UITextView! {
 		didSet {
 			bioTextView.theme_textColor = KThemePicker.subTextColor.rawValue
@@ -73,6 +73,7 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	var bannerImageViewHeightConstraint: NSLayoutConstraint?
+	var currentImageView: UIImageView?
 
 	var user: User? {
 		didSet {
@@ -82,19 +83,22 @@ class ProfileTableViewController: UITableViewController {
 	}
 	var otherUserID: Int? = nil
 	var feedPostElement: [FeedPostElement]? = nil
+	var editingMode: Bool = false
 
 	var imagePicker = UIImagePickerController()
 	var oldLeftBarItems: [UIBarButtonItem]?
 	var oldRightBarItems: [UIBarButtonItem]?
+
 	var bioTextCache: String?
 	var profileImageCache: UIImage?
+	var bannerImageCache: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup banner image height
-		self.bannerImageViewHeightConstraint = userBanner.heightAnchor.constraint(equalToConstant: view.height / 3)
+		self.bannerImageViewHeightConstraint = bannerImageView.heightAnchor.constraint(equalToConstant: view.height / 3)
 		self.bannerImageViewHeightConstraint?.isActive = true
 
 		// Setup biography text delegate
@@ -197,23 +201,23 @@ class ProfileTableViewController: UITableViewController {
 		if let avatar = user.profile?.avatar, !avatar.isEmpty {
             let avatar = URL(string: avatar)
             let resource = ImageResource(downloadURL: avatar!)
-            userAvatar.kf.indicatorType = .activity
-            userAvatar.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+            profileImageView.kf.indicatorType = .activity
+            profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 
 			let cache = ImageCache.default
-			cache.store(userAvatar.image!, forKey: "currentUserAvatar")
+			cache.store(profileImageView.image!, forKey: "currentprofileImageView")
         } else {
-            userAvatar.image = #imageLiteral(resourceName: "default_avatar")
+            profileImageView.image = #imageLiteral(resourceName: "default_avatar")
         }
 
         // Setup banner
 		if let banner = user.profile?.banner, !banner.isEmpty {
             let banner = URL(string: banner)
             let resource = ImageResource(downloadURL: banner!)
-            userBanner.kf.indicatorType = .activity
-			userBanner.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
+            bannerImageView.kf.indicatorType = .activity
+			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
         } else {
-            userBanner.image = #imageLiteral(resourceName: "default_banner")
+            bannerImageView.image = #imageLiteral(resourceName: "default_banner")
         }
 
         // Setup user bio
@@ -305,7 +309,7 @@ class ProfileTableViewController: UITableViewController {
 					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.textColor ?? "#00ABF1"), for: .normal)
 					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.backgroundColor ?? "#B6EAFF")
 					self.tagBadgeButton.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
-					self.profileView.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
+					self.profileBorderView.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
 					break
 				}
 			} else {
@@ -335,45 +339,95 @@ class ProfileTableViewController: UITableViewController {
 		self.tableView.updateHeaderViewFrame()
     }
 
+	/// Hides and unhides elements to prepare for starting and ending of the edit mode.
+	private func editMode(_ enabled: Bool) {
+		editingMode = enabled
+		if enabled {
+			UIView.animate(withDuration: 0.5) {
+				self.buttonsStackView.alpha = 0.5
+				self.buttonsStackView.isUserInteractionEnabled = false
+
+				// Hide edit button
+				self.editProfileButton.alpha = 0
+
+				// Save old actions
+				self.oldLeftBarItems = self.profileNavigationItem.leftBarButtonItems
+				self.oldRightBarItems = self.profileNavigationItem.rightBarButtonItems
+
+				// Remove old actions
+				self.profileNavigationItem.setLeftBarButton(nil, animated: true)
+				self.profileNavigationItem.setRightBarButton(nil, animated: true)
+
+				// Set new actions
+				let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelProfileEdit(_:)))
+				let rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
+				self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+				self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
+
+				// Enable other relevant actions
+				self.selectProfileImageButton.alpha = 1
+				self.selectBannerImageButton.alpha = 1
+
+				// Stop scrolling
+				self.tableView.isScrollEnabled = false
+				self.tableView.visibleCells.forEach { $0.alpha = 0.5; $0.isUserInteractionEnabled = false }
+
+				// Setup bio text if necessary
+				if self.bioTextView.text.isEmpty {
+					self.bioTextView.text = "Describe yourself!"
+				}
+			}
+
+			// Enable bio editing
+			self.bioTextView.isEditable = true
+		} else {
+			UIView.animate(withDuration: 1) {
+				self.buttonsStackView.alpha = 1
+				self.buttonsStackView.isUserInteractionEnabled = true
+
+				// Unhide edit button
+				self.editProfileButton.alpha = 1
+
+				// Hide select buttons
+				self.selectProfileImageButton.alpha = 0
+				self.selectBannerImageButton.alpha = 0
+
+				// Show relevant actions
+				self.profileNavigationItem.setLeftBarButton(nil, animated: true)
+				self.profileNavigationItem.setRightBarButton(nil, animated: true)
+
+				self.profileNavigationItem.setLeftBarButtonItems(self.oldLeftBarItems, animated: true)
+				self.profileNavigationItem.setRightBarButtonItems(self.oldRightBarItems, animated: true)
+
+				// Enable scrolling
+				self.tableView.isScrollEnabled = true
+				self.tableView.visibleCells.forEach { $0.alpha = 1; $0.isUserInteractionEnabled = true }
+
+				// Reset bio text if necessary
+				if self.bioTextView.text == "Describe yourself!" {
+					self.bioTextView.text = ""
+				}
+			}
+
+			// Disable bio editing
+			self.bioTextView.isEditable = false
+		}
+	}
+
 	/**
 		Cancel profile edit mode and return to view mode.
 
 		- Parameter sender: The object requesting the cancelation of the edit mode.
 	*/
 	@objc func cancelProfileEdit(_ sender: Any) {
-		if let sender = sender as? Bool, !sender {
-			// If user cacncels, pute everything back
-			self.bioTextView.text = self.bioTextCache
-			self.userAvatar.image = self.profileImageCache
-		}
+		// User doesn't want changes to be saved, pute everything back.
+		self.bioTextView.text = self.bioTextCache
+		self.profileImageView.image = self.profileImageCache
+		self.bannerImageView.image = self.bannerImageCache
 
-		UIView.animate(withDuration: 1) {
-			self.buttonsStackView.alpha = 1
-			self.buttonsStackView.isUserInteractionEnabled = true
-
-			// Hide edit view
-			self.selectProfileImageButton.alpha = 0
-			self.selectBannerImageButton.alpha = 0
-
-			// Unhide previously hidden items
-			self.editProfileButton.alpha = 1
-			self.tagBadgeButton.alpha = 1
-
-			// Show relevant actions
-			self.profileNavigationItem.setLeftBarButton(nil, animated: true)
-			self.profileNavigationItem.setRightBarButton(nil, animated: true)
-
-			self.profileNavigationItem.setLeftBarButtonItems(self.oldLeftBarItems, animated: true)
-			self.profileNavigationItem.setRightBarButtonItems(self.oldRightBarItems, animated: true)
-
-			// Enable scrolling
-			self.tableView.isScrollEnabled = true
-			self.tableView.visibleCells.forEach { $0.alpha = 1; $0.isUserInteractionEnabled = true }
-		}
-
-		// Disable bio editing
-		self.bioTextView.isEditable = false
-		self.bioTextView.theme_textColor = KThemePicker.textColor.rawValue
+		// Return to view mode
+		editMode(false)
+		self.tableView.updateHeaderViewFrame()
 	}
 
 	/**
@@ -383,30 +437,39 @@ class ProfileTableViewController: UITableViewController {
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
 		guard let bioText = bioTextView.text else { return }
-		guard let profileImage = userAvatar.image else { return }
+		guard let profileImage = profileImageView.image else { return }
+		guard let bannerImage = bannerImageView.image else { return }
 		var shouldUpdate = true
 
-		if self.bioTextCache == bioText && self.profileImageCache == profileImage {
+		if self.bioTextCache == bioText && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
 			shouldUpdate = false
-			self.cancelProfileEdit(shouldUpdate)
-		} else if self.bioTextCache == bioText || self.profileImageCache == profileImage {
-			shouldUpdate = true
+			self.editMode(shouldUpdate)
 		}
 
-		// If user applies changes clear the cache
+		// User wants to save changes, clear the cache.
 		self.bioTextCache = nil
 		self.profileImageCache = nil
+		self.bannerImageCache = nil
 
 		if shouldUpdate {
 			Service.shared.updateInformation(withBio: bioText, profileImage: profileImage) { (update) in
 				if update {
-					self.cancelProfileEdit(update)
+					self.editMode(!update)
 				}
 			}
 		}
 	}
 
     // MARK: - IBActions
+	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
+		// Cache current profile data
+		self.bioTextCache = self.bioTextView.text
+		self.profileImageCache = self.profileImageView.image
+		self.bannerImageCache = self.bannerImageView.image
+
+		editMode(true)
+	}
+
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		var follow = 1
 
@@ -428,64 +491,19 @@ class ProfileTableViewController: UITableViewController {
 		}
 	}
 
-	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
-		// Cache current profile data
-		self.bioTextCache = self.bioTextView.text
-		self.profileImageCache = self.userAvatar.image
-
-		UIView.animate(withDuration: 0.5) {
-			self.buttonsStackView.alpha = 0.5
-			self.buttonsStackView.isUserInteractionEnabled = false
-
-			// Hide distractions
-			self.editProfileButton.alpha = 0
-			self.tagBadgeButton.alpha = 0
-
-			// Add relevant actions
-			// Save old actions
-			self.oldLeftBarItems = self.profileNavigationItem.leftBarButtonItems
-			self.oldRightBarItems = self.profileNavigationItem.rightBarButtonItems
-
-			// Remove old actions
-			self.profileNavigationItem.setLeftBarButton(nil, animated: true)
-			self.profileNavigationItem.setRightBarButton(nil, animated: true)
-
-			// Set new actions
-			let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelProfileEdit(_:)))
-			let rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.applyProfileEdit(_:)))
-			self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
-			self.profileNavigationItem.setRightBarButton(rightBarButtonItem, animated: true)
-
-			// Enable other relevant actions
-			self.selectProfileImageButton.alpha = 1
-			self.selectBannerImageButton.alpha = 1
-
-			// Stop scrolling
-			self.tableView.isScrollEnabled = false
-			self.tableView.visibleCells.forEach { $0.alpha = 0.5; $0.isUserInteractionEnabled = false }
-		}
-
-		// Enable bio editing
-		self.bioTextView.isEditable = true
-		if self.bioTextView.text.isEmpty {
-			self.bioTextView.text = "Describe yourself!"
-			self.bioTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
-		}
-	}
-
 	@IBAction func showAvatar(_ sender: AnyObject) {
         if let avatar = user?.profile?.avatar, avatar != ""  {
-            presentPhotoViewControllerWith(url: avatar, from: userAvatar)
+            presentPhotoViewControllerWith(url: avatar, from: profileImageView)
         } else {
-            presentPhotoViewControllerWith(string: "default_avatar", from: userAvatar)
+            presentPhotoViewControllerWith(string: "default_avatar", from: profileImageView)
         }
     }
     
     @IBAction func showBanner(_ sender: AnyObject) {
         if let banner = user?.profile?.banner, banner != "" {
-			presentPhotoViewControllerWith(url: banner, from: userBanner)
+			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
         } else {
-            presentPhotoViewControllerWith(string: "default_banner", from: userBanner)
+            presentPhotoViewControllerWith(string: "default_banner", from: bannerImageView)
         }
     }
 }
@@ -521,8 +539,8 @@ extension ProfileTableViewController {
 // MARK: - UIImagePickerControllerDelegate
 extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-		if let editedImage = info[.editedImage] as? UIImage{
-			self.userAvatar.image = editedImage
+		if let editedImage = info[.editedImage] as? UIImage {
+			self.currentImageView?.image = editedImage
 		}
 
 		//Dismiss the UIImagePicker after selection
@@ -531,27 +549,6 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		picker.dismiss(animated: true, completion: nil)
-	}
-
-	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
-		let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
-			self.openCamera()
-		}))
-
-		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
-			self.openPhotoLibrary()
-		}))
-
-		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		if UIDevice.isPad {
-			alert.popoverPresentationController?.sourceView = sender
-			alert.popoverPresentationController?.sourceRect = sender.bounds
-			alert.popoverPresentationController?.permittedArrowDirections = .up
-		}
-
-		self.present(alert, animated: true, completion: nil)
 	}
 
 	// MARK: - Functions
@@ -578,7 +575,30 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 	}
 
 	// MARK: - IBActions
+	@IBAction func selectProfileImageButtonPressed(_ sender: UIButton) {
+		self.currentImageView = self.profileImageView
+		let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
+			self.openCamera()
+		}))
+
+		alert.addAction(UIAlertAction(title: "Choose from Photo Library 🏛", style: .default, handler: { _ in
+			self.openPhotoLibrary()
+		}))
+
+		alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		if UIDevice.isPad {
+			alert.popoverPresentationController?.sourceView = sender
+			alert.popoverPresentationController?.sourceRect = sender.bounds
+			alert.popoverPresentationController?.permittedArrowDirections = .up
+		}
+
+		self.present(alert, animated: true, completion: nil)
+	}
+	
 	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
+		self.currentImageView = self.bannerImageView
 		let alert = UIAlertController(title: "Banner Photo", message: "Choose a breathtaking photo 🌄", preferredStyle: .actionSheet)
 		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
 			self.openCamera()
@@ -603,9 +623,9 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 // MARK: - UITextViewDelegate
 extension ProfileTableViewController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		if textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue {
+		bioTextCache = textView.text
+		if textView.text == "Describe yourself!" && editingMode {
             textView.text = ""
-			textView.textColor = KThemePicker.textColor.colorValue
         }
     }
 
@@ -616,9 +636,8 @@ extension ProfileTableViewController: UITextViewDelegate {
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
+		if textView.text == "" && editingMode {
             textView.text = "Describe yourself!"
-			textView.textColor = KThemePicker.textFieldPlaceholderTextColor.colorValue
         }
     }
 }
