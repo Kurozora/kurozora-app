@@ -7,101 +7,66 @@
 //
 
 import UIKit
-
-class BaseFeedPostCell: UITableViewCell {
-	@IBOutlet weak var profileImageView: UIImageView? {
-		didSet {
-			profileImageView?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var usernameLabel: UILabel? {
-		didSet {
-			usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var userSeparatorLabel: UILabel? {
-		didSet {
-			userSeparatorLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var otherUserNameLabel: UILabel? {
-		didSet {
-			otherUserNameLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var dateTimeLabel: UILabel? {
-		didSet {
-			dateTimeLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var postTextView: UITextView? {
-		didSet {
-			postTextView?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			postTextView?.text = """
-			2019-08-06 19:09:45.764253+0200 Kurozora[24462:2644879] [UIWorkIntervalTiming] workIntervalStart: startTimestamp > targetTimestamp; rolling forward by 0.116667
-			2019-08-06 19:09:49.973019+0200 Kurozora[24462:2644879] [WindowServer] display_timer_callback: unexpected state (now:bade0c031633 < expected:bade0cf5fc05)
-			2019-08-06 19:09:50.156940+0200 Kurozora[24462:2644879] [WindowServer] display_timer_callback: unexpected state (now:bade16f97da4 < expected:bade17f24d0c)
-			2019-08-06 19:09:50.676423+0200 Kurozora[24462:2644879] [WindowServer] display_timer_callback: unexpected state (now:bade35f010c4 < expected:bade36e30a3b)
-			2019-08-06 19:09:51.595150+0200 Kurozora[24462:2644879] [WindowServer] display_timer_callback: unexpected state (now:bade6cb29afc < expected:bade6d8926c4)
-			2019-08-06 19:09:52.078944+0200 Kurozora[24462:2644879] [UIWorkIntervalTiming] workIntervalStart: startTimestamp > targetTimestamp; rolling forward by 0.550000
-			2019-08-06 19:09:53.407011+0200 Kurozora[24462:2644879] [WindowServer] display_timer_callback: unexpected state (now:baded8b12118 < expected:baded9a96ee6)
-			"""
-		}
-	}
-	@IBOutlet weak var heartButton: UIButton? {
-		didSet {
-			heartButton?.theme_setTitleColor(KThemePicker.tableViewCellSubTextColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var commentButton: UIButton? {
-		didSet {
-			commentButton?.theme_setTitleColor(KThemePicker.tableViewCellSubTextColor.rawValue, forState: .normal)
-			commentButton?.theme_tintColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var shareButton: UIButton? {
-		didSet {
-			shareButton?.theme_setTitleColor(KThemePicker.tableViewCellSubTextColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var moreButton: UIButton? {
-		didSet {
-			moreButton?.theme_tintColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
-	}
-
-	@IBOutlet weak var bubbleView: UIView? {
-		didSet {
-			bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-		}
-	}
-}
+import Kingfisher
 
 class FeedPostCell: BaseFeedPostCell {
-	var feedPostsElement: FeedPostsElement? {
+	var feedPostElement: FeedPostElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
 	// MARK: - Functions
-	fileprivate func setup() {
-		guard let feedPostsElement = feedPostsElement else { return }
+	fileprivate func configureCell() {
+		guard let feedPostElement = feedPostElement else { return }
 
-		usernameLabel?.text = feedPostsElement.posterUsername
-		postTextView?.text = feedPostsElement.content
-		dateTimeLabel?.text = Date.timeAgo(feedPostsElement.creationDate)
+		// Username
+		usernameLabel?.text = feedPostElement.posterUsername
 
-		if let heartsCount = feedPostsElement.heartsCount {
-			heartButton?.setTitle(String(heartsCount), for: .normal)
+		// Post content
+		postTextView?.text = feedPostElement.content
+
+		// Date time
+		dateTimeLabel?.text = Date.timeAgo(feedPostElement.creationDate)
+
+		// Post
+		if let postText = feedPostElement.content {
+			postTextView?.text = postText
 		}
 
-		if let replyCount = feedPostsElement.replyCount {
+		// Likes
+		if let heartsCount = feedPostElement.heartsCount {
+			heartButton?.setTitle(String(heartsCount), for: .normal)
+		}
+		// Comments
+		if let replyCount = feedPostElement.replyCount {
 			heartButton?.setTitle(String(replyCount), for: .normal)
 		}
 
-		if let shareCount = feedPostsElement.shareCount {
+		// ReShare
+		if let shareCount = feedPostElement.shareCount {
 			shareButton?.setTitle(String(shareCount), for: .normal)
 		}
+
+		// Profile Image
+		if let profileImage = feedPostElement.profileImage, !profileImage.isEmpty {
+			let profileImage = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
+			profileImageView?.kf.indicatorType = .activity
+			profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		} else {
+			profileImageView?.image = #imageLiteral(resourceName: "default_avatar")
+		}
+
+		// Other Username
+//		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
+//			otherUserNameLabel?.text = otherUsername
+//
+//			userSeparatorLabel?.isHidden = false
+//			otherUserNameLabel?.isHidden = false
+//		} else {
+			otherUserNameLabel?.isHidden = true
+			userSeparatorLabel?.isHidden = true
+//		}
 	}
 }

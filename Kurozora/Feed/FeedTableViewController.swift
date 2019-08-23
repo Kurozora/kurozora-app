@@ -14,7 +14,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 	var sectionTitle: String?
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var feedPosts: [FeedPostsElement]? {
+	var feedPostElement: [FeedPostElement]? {
 		didSet {
 			tableView.reloadData()
 		}
@@ -32,7 +32,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
-		refreshControl?.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
+		refreshControl?.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
 
 		fetchFeedPosts()
 
@@ -65,7 +65,12 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 	}
 
 	// MARK: - Functions
-	@objc private func refreshThreadsData(_ sender: Any) {
+	/**
+		Refresh the feeds data by fetching new items from the server.
+
+		- Parameter sender: The object requesting the refresh.
+	*/
+	@objc private func refreshFeedsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
 		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) feed...", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		pageNumber = 0
@@ -84,11 +89,11 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 				}
 
 				if self.pageNumber == 0 {
-					self.feedPosts = feed?.posts
+					self.feedPostElement = feed?.posts
 					self.pageNumber += 1
 				} else if self.pageNumber <= self.totalPages - 1 {
 					for feedPostsElement in (feed?.posts)! {
-						self.feedPosts?.append(feedPostsElement)
+						self.feedPostElement?.append(feedPostsElement)
 					}
 					self.pageNumber += 1
 				}
@@ -127,7 +132,7 @@ extension FeedTableViewController {
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let forumThreadID = feedPosts?[indexPath.row].id {
+		if let forumThreadID = feedPostElement?[indexPath.row].id {
 			performSegue(withIdentifier: "ThreadSegue", sender: forumThreadID)
 		}
 	}

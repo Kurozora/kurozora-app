@@ -85,7 +85,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 	// MARK: - Functions
 	/**
-		Refresh the notification data by fetching new notifications from the server.
+		Refresh the notifications data by fetching new notifications from the server.
 
 		- Parameter sender: The object requesting the refresh.
 	*/

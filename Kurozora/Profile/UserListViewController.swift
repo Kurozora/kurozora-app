@@ -12,10 +12,7 @@ import UIKit
 //import Parse
 //import KCommonKit
 
-class UserListViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-
+class UserListViewController: UITableViewController {
 //    var loadingView: LoaderView!
 //
 //    var dataSource: [User] = []

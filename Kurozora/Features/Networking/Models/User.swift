@@ -40,7 +40,7 @@ class UserProfile: JSONDecodable {
 	let avatar: String?
 	let banner: String?
 	let bio: String?
-	let badges: [JSON]?
+	let badges: [BadgeElement]?
 	let proBadge: Bool?
 	let joinDate: String?
 
@@ -66,7 +66,16 @@ class UserProfile: JSONDecodable {
 		self.avatar = json["avatar_url"].stringValue
 		self.banner = json["banner_url"].stringValue
 		self.bio = json["biography"].stringValue
-		self.badges = json["badges"].arrayValue
+		var badges = [BadgeElement]()
+
+		let badgesArray = json["badges"].arrayValue
+		for badgeItem in badgesArray {
+			if let badgeElement = try? BadgeElement(json: badgeItem) {
+				badges.append(badgeElement)
+			}
+		}
+
+		self.badges = badges
 		self.proBadge = json["pro_badge"].boolValue
 		self.joinDate = json["join_date"].stringValue
 

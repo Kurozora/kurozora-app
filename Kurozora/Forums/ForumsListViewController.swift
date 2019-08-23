@@ -80,6 +80,11 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	}
 
 	// MARK: - Functions
+	/**
+		Refresh the threads data by fetching new items from the server.
+
+		- Parameter sender: The object requesting the refresh.
+	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
 		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
