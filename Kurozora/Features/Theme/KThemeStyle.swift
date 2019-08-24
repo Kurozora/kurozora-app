@@ -359,13 +359,13 @@ extension KThemeStyle {
 				KThemeStyle.switchTo(.night)
 				current = .night
 				UserSettings.set(1, forKey: .appearanceOption)
-				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 1])
+				NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["option": 1])
 			} else if !isSolarNighttime && darkThemeOption == .automatic && current != .day || !isCustomNighttime && darkThemeOption == .custom  && current != .day {
 				before = current
 
 				KThemeStyle.switchTo(.day)
 				current = .day
-				NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["option": 0])
+				NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["option": 0])
 				UserSettings.set(0, forKey: .appearanceOption)
 			}
 		}

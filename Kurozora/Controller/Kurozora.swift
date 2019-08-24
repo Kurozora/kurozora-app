@@ -59,7 +59,7 @@ class Kurozora: NSObject {
 			// Play splash view animation
 			window?.addSubview(revealingSplashView)
 			revealingSplashView.playHeartBeatAnimation()
-			NotificationCenter.default.addObserver(self.shared, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+			NotificationCenter.default.addObserver(self.shared, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 		} else if viewController is KurozoraReachabilityViewController  {
 			viewController.dismiss(animated: true, completion: nil)
 		}

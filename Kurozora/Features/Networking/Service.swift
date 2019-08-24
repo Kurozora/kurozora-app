@@ -1171,7 +1171,7 @@ struct Service {
 			}, failure: { error in
 				WorkflowController.logoutUser()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
-				NotificationCenter.default.post(name: heartAttackNotification, object: nil)
+				NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
 
 				print("Received validate session error: \(error)")
 			})

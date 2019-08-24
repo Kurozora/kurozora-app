@@ -41,9 +41,6 @@ public struct GlobalVariables {
 
 	/// The base keychain service of the Kurozora App.
     public let KDefaults = Keychain(service: "app.kurozora.anime")
-
-	/// The base UserDefaults suit of the Kurozora Apps.
-	public let KUserDefaults = UserDefaults(suiteName: "group.settings.app.kurozora.anime")
 }
 
 /**

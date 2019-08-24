@@ -92,7 +92,7 @@ extension NotificationsOptionsViewController {
 			UserSettings.set(indexPath.item, forKey: .notificationsPersistent)
 		}
 
-		NotificationCenter.default.post(name: updateNotificationSettingsValueLabelsNotification, object: nil)
+		NotificationCenter.default.post(name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		tableView.reloadData()
 	}
 

@@ -99,7 +99,7 @@ extension AppearanceOptionsViewController {
 		if indexPath.section == 1 {
 			UserSettings.set(indexPath.item, forKey: .darkThemeOption)
 			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: updateAutomaticDarkThemeOptionValueLabelNotification, object: nil)
+				NotificationCenter.default.post(name: .KSAutomaticDarkThemeDidChange, object: nil)
 			}
 			tableView.reloadData()
 		} else if indexPath.section == 2 {
@@ -159,7 +159,7 @@ extension AppearanceOptionsViewController: DatePickerSettingsDelegate {
 			UserSettings.set(date, forKey: .darkThemeOptionEnd)
 		}
 
-		NotificationCenter.default.post(name: updateAutomaticDarkThemeOptionValueLabelNotification, object: nil)
+		NotificationCenter.default.post(name: .KSAutomaticDarkThemeDidChange, object: nil)
 
 		datePicker.setValue(KThemePicker.textColor.colorValue, forKeyPath: "textColor")
 		tableView.reloadRows(at: [indexPath], with: .none)

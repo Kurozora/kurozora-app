@@ -34,7 +34,7 @@ extension AuthenticationOptionsViewController {
 		let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as! AuthenticationOptionsCell
 		authenticationOptionsCell.isSelected = true
 		
-		NotificationCenter.default.post(name: updateAuthenticationRequireValueLabelNotification, object: nil)
+		NotificationCenter.default.post(name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		tableView.reloadData()
 	}
 

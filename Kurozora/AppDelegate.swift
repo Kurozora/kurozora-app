@@ -13,21 +13,6 @@ import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
-let heartAttackNotification = Notification.Name("heartAttackNotification")
-
-let updateNotificationsBadgeValueNotification = Notification.Name("updateNotificationsBadgeValueNotification")
-
-let updateAppIconNotification = Notification.Name("updateAppIconNotification")
-
-let updateNotificationSettingsValueLabelsNotification = Notification.Name("updateNotificationSettingsValueLabelsNotification")
-
-let updateAuthenticationRequireValueLabelNotification = Notification.Name("updateAuthenticationRequireValueLabelNotification")
-
-let updateAppAppearanceOptionNotification = Notification.Name("updateAppAppearanceOptionNotification")
-let updateAutomaticDarkThemeOptionValueLabelNotification = Notification.Name("updateAutomaticDarkThemeOptionValueLabelNotification")
-
-let updateNormalLargeTitlesNotification = Notification.Name("updateNormalLargeTitlesNotification")
-
 let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
 @UIApplicationMain
@@ -117,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.addSubview(revealingSplashView)
 		revealingSplashView.playHeartBeatAnimation()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 
         return true
     }

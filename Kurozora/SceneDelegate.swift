@@ -101,7 +101,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.addSubview(revealingSplashView)
 		revealingSplashView.playHeartBeatAnimation()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: heartAttackNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			 if !configure(window: window, with: userActivity) {

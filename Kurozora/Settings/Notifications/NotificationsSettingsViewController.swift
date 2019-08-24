@@ -71,6 +71,7 @@ class NotificationsSettingsViewController: UITableViewController {
 			UserSettings.set(isOn, forKey: .notificationsVibration)
 		case .badge:
 			UserSettings.set(isOn, forKey: .notificationsBadge)
+			NotificationCenter.default.post(name: .KSNotificationsBadgeIsOn, object: nil)
 		}
 	}
 

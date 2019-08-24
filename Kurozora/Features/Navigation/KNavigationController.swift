@@ -24,7 +24,7 @@ class KNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: updateNormalLargeTitlesNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: .KSNormalLargeTitlesDidChange, object: nil)
 
 		toggleStyle(.normal)
     }

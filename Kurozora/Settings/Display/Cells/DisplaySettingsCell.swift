@@ -14,7 +14,7 @@ class DisplaySettingsCell: SettingsCell {
 		didSet {
 			lightOptionImageView?.image = #imageLiteral(resourceName: "light_option")
 			toggleAppAppearanceOptions(!UserSettings.automaticDarkTheme)
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAppAppearance(_:)), name: updateAppAppearanceOptionNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAppAppearance(_:)), name: .KSAppAppearanceDidChange, object: nil)
 		}
 	}
 	@IBOutlet weak var lightOptionSelectedImageView: UIImageView? {
@@ -61,7 +61,7 @@ class DisplaySettingsCell: SettingsCell {
 		didSet {
 			updateOptionsValueLabel()
 			optionsValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateOptionsValueLabel), name: updateAutomaticDarkThemeOptionValueLabelNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateOptionsValueLabel), name: .KSAutomaticDarkThemeDidChange, object: nil)
 		}
 	}
 
@@ -166,7 +166,7 @@ class DisplaySettingsCell: SettingsCell {
 
 	@IBAction func enableAutomaticDarkThemeSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .automaticDarkTheme)
-		NotificationCenter.default.post(name: updateAppAppearanceOptionNotification, object: nil, userInfo: ["isOn": sender.isOn])
+		NotificationCenter.default.post(name: .KSAppAppearanceDidChange, object: nil, userInfo: ["isOn": sender.isOn])
 
 		KThemeStyle.startAutomaticDarkThemeSchedule()
 
@@ -185,6 +185,6 @@ class DisplaySettingsCell: SettingsCell {
 
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .largeTitlesEnabled)
-		NotificationCenter.default.post(name: updateNormalLargeTitlesNotification, object: nil)
+		NotificationCenter.default.post(name: .KSNormalLargeTitlesDidChange, object: nil)
 	}
 }

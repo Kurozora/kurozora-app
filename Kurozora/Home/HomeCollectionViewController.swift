@@ -240,7 +240,7 @@ class HomeCollectionViewController: UICollectionViewController {
                 	self.present(vc, animated: true, completion: nil)
 				}
             }
-            NotificationCenter.default.post(name: heartAttackNotification, object: nil)
+			NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
         })
 
         Service.shared.getExplore(withSuccess: { (explore) in

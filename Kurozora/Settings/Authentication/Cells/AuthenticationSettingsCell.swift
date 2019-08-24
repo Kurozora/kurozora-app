@@ -68,7 +68,7 @@ class AuthenticationSettingsCell: SettingsCell {
 		didSet {
 			authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 			authenticationRequireValueLabel?.text = try? GlobalVariables().KDefaults.get("requireAuthentication")
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: updateAuthenticationRequireValueLabelNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		}
 	}
 

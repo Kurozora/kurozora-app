@@ -114,7 +114,7 @@ extension ManageIconTableViewController {
 		}
 
 		UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
-		NotificationCenter.default.post(name: updateAppIconNotification, object: nil)
+		NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 		tableView.reloadData()
 	}
 

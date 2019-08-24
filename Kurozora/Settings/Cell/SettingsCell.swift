@@ -12,7 +12,7 @@ class SettingsCell: UITableViewCell {
 	@IBOutlet weak var appIconImageView: UIImageView? {
 		didSet {
 			updateAppIcon()
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: updateAppIconNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
 		}
 	}
 	@IBOutlet weak var cellTitle: UILabel? {
@@ -65,14 +65,14 @@ class SettingsCell: UITableViewCell {
 		didSet {
 			self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
 			self.notificationGroupingValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: updateNotificationSettingsValueLabelsNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
 	@IBOutlet weak var bannerStyleValueLabel: UILabel? {
 		didSet {
 			self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
 			self.bannerStyleValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: updateNotificationSettingsValueLabelsNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
 
