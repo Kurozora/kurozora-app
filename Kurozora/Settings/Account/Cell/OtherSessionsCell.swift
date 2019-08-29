@@ -35,8 +35,8 @@ class OtherSessionsCell: UITableViewCell {
 	}
 	@IBOutlet weak var removeSessionButton: UIButton! {
 		didSet {
-			removeSessionButton.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-			removeSessionButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
+			removeSessionButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			removeSessionButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var separatorView1: UIView! {

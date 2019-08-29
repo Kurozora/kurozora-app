@@ -58,7 +58,7 @@ class WelcomeViewController: UIViewController {
 			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
 			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
 			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
-			whatsNew.buttonBackgroundColor = KThemePicker.tintedBackgroundColor.colorValue
+			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
 			present(whatsNew, animated: true, completion: nil)
 		}
 
