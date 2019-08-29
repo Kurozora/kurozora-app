@@ -124,7 +124,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ThreadSegue" {
-			let threadViewController = segue.destination as? ThreadViewController
+			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
 			threadViewController?.forumThreadID = sender as? Int
 		}

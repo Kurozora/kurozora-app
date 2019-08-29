@@ -1,5 +1,5 @@
 //
-//  ThreadViewController.swift
+//  ThreadTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 04/12/2018.
@@ -13,9 +13,7 @@ import RichTextView
 import Kingfisher
 import EmptyDataSet_Swift
 
-class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-	@IBOutlet weak var tableView: UITableView!
-
+class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
 	@IBOutlet weak var lockLabel: UILabel!
 	@IBOutlet weak var discussionLabel: UILabel! {
 		didSet {
@@ -159,6 +157,16 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	}
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "forums", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "ThreadTableViewController")
+	}
+
 	@objc func dismissPressed(_ sender: AnyObject) {
 		self.dismiss(animated: true, completion: nil)
 	}
@@ -248,12 +256,11 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 
 	// Reply to the current thread
 	func replyThread() {
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		let vc = storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController") as? KCommentEditorViewController
-		vc?.delegate = self
-		vc?.forumThread = forumThreadElement
+		let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
+		kCommentEditorViewController?.delegate = self
+		kCommentEditorViewController?.forumThread = forumThreadElement
 
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: vc!)
+		let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
 		if #available(iOS 11.0, *) {
 			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 		}
@@ -304,8 +311,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	// Visit the poster's profile page
 	func visitPosterProfilePage() {
 		if let posterId = forumThreadElement?.user?.id, posterId != 0 {
-			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController
+			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
 			profileViewController?.otherUserID = posterId
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
 
@@ -421,8 +427,7 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
 		if let posterID = forumThreadElement?.user?.id, posterID != 0 {
-			let storyboard = UIStoryboard(name: "profile", bundle: nil)
-			let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController
+			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
 			profileViewController?.otherUserID = posterID
 
 			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
@@ -459,33 +464,20 @@ class ThreadViewController: UIViewController, EmptyDataSetDelegate, EmptyDataSet
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension ThreadViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let numberOfSections = tableView.numberOfSections
-
-		if indexPath.section == numberOfSections-1 {
-			if pageNumber <= totalPages-1 {
-				getThreadReplies()
-			}
-		}
-	}
-}
-
 // MARK: - UITableViewDataSource
-extension ThreadViewController: UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
+extension ThreadTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		if let repliesCount = replies?.count, repliesCount != 0 {
 			return repliesCount
 		}
 		return 0
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 1
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let replyCell = tableView.dequeueReusableCell(withIdentifier: "ReplyCell", for: indexPath) as! ReplyCell
 
 		replyCell.forumThreadElement = forumThreadElement
@@ -496,8 +488,21 @@ extension ThreadViewController: UITableViewDataSource {
 	}
 }
 
+// MARK: - UITableViewDelegate
+extension ThreadTableViewController {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let numberOfSections = tableView.numberOfSections
+
+		if indexPath.section == numberOfSections-1 {
+			if pageNumber <= totalPages-1 {
+				getThreadReplies()
+			}
+		}
+	}
+}
+
 // MARK: - KCommentEditorViewDelegate
-extension ThreadViewController: KCommentEditorViewDelegate {
+extension ThreadTableViewController: KCommentEditorViewDelegate {
 	func updateReplies(with threadRepliesElement: ThreadRepliesElement) {
 		DispatchQueue.main.async {
 			if self.replies == nil {

@@ -123,6 +123,16 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 	}
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "details", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController")
+	}
+
     fileprivate func fetchSeasons() {
         Service.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {

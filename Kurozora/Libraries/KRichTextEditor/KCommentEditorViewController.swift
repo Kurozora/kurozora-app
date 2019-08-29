@@ -100,6 +100,17 @@ class KCommentEditorViewController: UIViewController {
 		commentTextView.selectedTextRange = commentTextView.textRange(from: commentTextView.beginningOfDocument, to: commentTextView.beginningOfDocument)
 	}
 
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "editor", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController")
+	}
+
 	// MARK: - IBActions
 	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
@@ -137,6 +148,7 @@ class KCommentEditorViewController: UIViewController {
 	}
 }
 
+// MARK: - UITextViewDelegate
 extension KCommentEditorViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		characterCountLabel.text = "\(charLimit - commentTextView.text.count)"

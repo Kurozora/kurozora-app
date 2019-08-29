@@ -42,20 +42,13 @@ public class WorkflowController {
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
 				if let data = data as? [String : AnyObject], data.count != 0 {
-					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let reason = data["reason"] as? String {
+					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let logoutReason = data["reason"] as? String {
 						let isKiller = User.currentSessionID == sessionKillerId
 
 						if sessionID == User.currentSessionID, !isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
-							logoutUser()
-
-							let storyboard:UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-							let vc = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as! WelcomeViewController
-							vc.logoutReason = reason
-							vc.isKiller = isKiller
-
-							UIApplication.topViewController?.present(vc, animated: true)
+							logoutUser(with: logoutReason, whereUser: isKiller)
 						} else if sessionID == User.currentSessionID, isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
@@ -70,13 +63,21 @@ public class WorkflowController {
 		}
 	}
 
-	/// Logout the current user by emptying KDefaults.
-	class func logoutUser() {
+	/**
+		Logout the current user by emptying KDefaults. Also show a message with the reason of the logout if the user's session was terminated from a different device.
+
+		- Parameter logoutReason: The reason as to why the user has been logged out.
+		- Parameter isKiller: A boolean indicating whether the current user is the one who initiated the logout.
+	*/
+	class func logoutUser(with logoutReason: String? = nil, whereUser isKiller: Bool = false) {
 		try? GlobalVariables().KDefaults.removeAll()
 
-		let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-		if let vc = storyboard.instantiateInitialViewController() {
-			UIApplication.topViewController?.present(vc, animated: true)
+		if let kNavigationController = WelcomeViewController.instantiateFromStoryboard() as? KNavigationController {
+			if let welcomeViewController = kNavigationController.visibleViewController as? WelcomeViewController {
+				welcomeViewController.logoutReason = logoutReason
+				welcomeViewController.isKiller = isKiller
+			}
+			UIApplication.topViewController?.present(kNavigationController, animated: true)
 		}
 	}
 

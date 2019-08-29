@@ -13,6 +13,7 @@ import SwiftyJSON
 class HomeCollectionViewController: UICollectionViewController {
 	// Search bar controller
 	var searchResultsViewController: SearchResultsTableViewController?
+	var searchController: SearchController!
 	var placeholderTimer: Timer?
 	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
 	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/api/v1"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
@@ -216,28 +217,26 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
-        if #available(iOS 11.0, *) {
-			let searchController = SearchController(searchResultsController: searchResultsViewController)
-			searchController.delegate = self
-			searchController.searchResultsUpdater = searchResultsViewController
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController.delegate = self
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
 
-			let searchControllerBar = searchController.searchBar
-			startPlaceholderTimer(for: searchControllerBar)
-			searchControllerBar.delegate = searchResultsViewController
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
+		startPlaceholderTimer(for: searchControllerBar)
 
+		if #available(iOS 11.0, *) {
 			navigationItem.searchController = searchController
-			searchController.viewController = self
-        }
+		}
 
         // Validate session
         Service.shared.validateSession(withSuccess: { (success) in
             if !success {
-                let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-				if let vc = storyboard.instantiateInitialViewController() {
-                	self.present(vc, animated: true, completion: nil)
+				if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
+                	self.present(welcomeViewController, animated: true, completion: nil)
 				}
             }
 			NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
@@ -268,6 +267,16 @@ class HomeCollectionViewController: UICollectionViewController {
 	}
 
     // MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "home", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
+	}
+
 	@objc func updateSearchPlaceholder(_ timer: Timer) {
 		if let searchControllerBar = timer.userInfo as? UISearchBar {
 			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {

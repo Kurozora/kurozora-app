@@ -207,7 +207,7 @@
 		6674A0CC20A45F0C00AAB527 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0CB20A45F0C00AAB527 /* CustomTabBar.swift */; };
 		6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0CD20A571EA00AAB527 /* AnimeBaseViewController.swift */; };
 		6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D020A576D100AAB527 /* CustomThreadViewController.swift */; };
-		6674A0D420A5849D00AAB527 /* ThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D320A5849D00AAB527 /* ThreadViewController.swift */; };
+		6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */; };
 		6674A0D620A58AA300AAB527 /* NotificationThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674A0D520A58AA200AAB527 /* NotificationThreadViewController.swift */; };
 		6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6674A0D720A58E2700AAB527 /* thread.storyboard */; };
 		6674DBEA22EDB88B006455C1 /* ExploreSmallCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6674DBE922EDB88B006455C1 /* ExploreSmallCollectionViewFlowLayout.swift */; };
@@ -308,6 +308,7 @@
 		66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */; };
 		66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */; };
 		66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA33421BDD01E00BEA42E /* VoteThread.swift */; };
+		66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */; };
 		66BF02C1209F846A00BDAF41 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C0209F846A00BDAF41 /* LoaderView.swift */; };
 		66BF02C3209F97EC00BDAF41 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02C2209F97EC00BDAF41 /* HighlightButton.swift */; };
 		66BF02CC209F9BA900BDAF41 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BF02CB209F9BA900BDAF41 /* ActionListViewController.swift */; };
@@ -603,7 +604,7 @@
 		6674A0CB20A45F0C00AAB527 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		6674A0CD20A571EA00AAB527 /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		6674A0D020A576D100AAB527 /* CustomThreadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomThreadViewController.swift; sourceTree = "<group>"; };
-		6674A0D320A5849D00AAB527 /* ThreadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadViewController.swift; sourceTree = "<group>"; };
+		6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTableViewController.swift; sourceTree = "<group>"; };
 		6674A0D520A58AA200AAB527 /* NotificationThreadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationThreadViewController.swift; sourceTree = "<group>"; };
 		6674A0D720A58E2700AAB527 /* thread.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = thread.storyboard; sourceTree = "<group>"; };
 		6674DBE922EDB88B006455C1 /* ExploreSmallCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreSmallCollectionViewFlowLayout.swift; path = "../../../../../../../System/Volumes/Data/Users/kirito/Docs/kurozora-app/Kurozora/Home/Layouts/ExploreSmallCollectionViewFlowLayout.swift"; sourceTree = "<group>"; };
@@ -701,6 +702,7 @@
 		66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
 		66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorViewController.swift; sourceTree = "<group>"; };
 		66BEA33421BDD01E00BEA42E /* VoteThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteThread.swift; sourceTree = "<group>"; };
+		66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewViewController.swift; sourceTree = "<group>"; };
 		66BF02B3209C997F00BDAF41 /* CommentImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentImageCell.xib; sourceTree = "<group>"; };
 		66BF02B5209CAACD00BDAF41 /* PostLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkCell.swift; sourceTree = "<group>"; };
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
@@ -1555,7 +1557,7 @@
 		6674A0D220A5848100AAB527 /* Thread */ = {
 			isa = PBXGroup;
 			children = (
-				6674A0D320A5849D00AAB527 /* ThreadViewController.swift */,
+				6674A0D320A5849D00AAB527 /* ThreadTableViewController.swift */,
 			);
 			path = Thread;
 			sourceTree = "<group>";
@@ -1712,6 +1714,7 @@
 				66B4F1D5223D141A007C5048 /* Theme */,
 				664133E621DB827100CE823A /* UserDefaults */,
 				66D8AA7522F0DDFE00456E75 /* WebBrowser */,
+				66BEC131231711C40039D683 /* WhatsNew */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1792,6 +1795,14 @@
 				66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		66BEC131231711C40039D683 /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */,
+			);
+			path = WhatsNew;
 			sourceTree = "<group>";
 		};
 		66BF02CA209F9B7A00BDAF41 /* ViewControllers */ = {
@@ -2527,7 +2538,7 @@
 				660A642621CE90080032FDCF /* JSONError.swift in Sources */,
 				6674A0CC20A45F0C00AAB527 /* CustomTabBar.swift in Sources */,
 				66CF6D5E20A9782B00F98375 /* RateViewController.swift in Sources */,
-				6674A0D420A5849D00AAB527 /* ThreadViewController.swift in Sources */,
+				6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */,
 				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
 				66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */,
@@ -2651,6 +2662,7 @@
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				66C86404216DFB850054EE16 /* SeasonsCollectionViewCell.swift in Sources */,
+				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,

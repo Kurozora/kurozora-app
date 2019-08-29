@@ -8,12 +8,13 @@
 
 import UIKit
 import SCLAlertView
+import SwiftTheme
 import WhatsNew
 
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
 	
-	var logoutReason = ""
+	var logoutReason: String? = nil
 	var isKiller: Bool?
 	var statusBarShouldBeHidden = true
 
@@ -45,22 +46,25 @@ class WelcomeViewController: UIViewController {
 		super.viewDidAppear(animated)
 
 		if WhatsNew.shouldPresent() {
-			let whatsNew = WhatsNewViewController(items: [
+			let whatsNew = KWhatsNewViewController(items: [
 				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
 				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
 				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon")),
-				])
+			])
 			whatsNew.titleText = "What's New"
-			whatsNew.itemSubtitleColor = #colorLiteral(red: 0.3300000131, green: 0.3300000131, blue: 0.3300000131, alpha: 1)
 			whatsNew.buttonText = "Continue"
-			whatsNew.buttonTextColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			whatsNew.buttonBackgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			whatsNew.titleColor = KThemePicker.textColor.colorValue
+			whatsNew.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
+			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
+			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
+			whatsNew.buttonBackgroundColor = KThemePicker.tintedBackgroundColor.colorValue
 			present(whatsNew, animated: true, completion: nil)
 		}
 
-		if logoutReason != "", let isKiller = isKiller, !isKiller {
+		if let isKiller = isKiller, !isKiller && logoutReason != nil {
 			SCLAlertView().showInfo("You have been logged out", subTitle: logoutReason)
-			self.logoutReason = ""
+			self.logoutReason = nil
 		}
 	}
 
@@ -69,6 +73,18 @@ class WelcomeViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(false, animated: animated)
 	}
 
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "login", bundle: nil)
+		return storyboard.instantiateInitialViewController()
+	}
+
+	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// Hide the status bar
 		statusBarShouldBeHidden = false

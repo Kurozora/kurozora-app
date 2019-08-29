@@ -51,9 +51,8 @@ class Kurozora: NSObject {
 				window?.rootViewController = customTabBar
 			} else {
 				revealingSplashView.heartAttack = true
-				let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-				let vc = storyboard.instantiateInitialViewController()
-				window?.rootViewController = vc
+				let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
+				window?.rootViewController = welcomeViewController
 			}
 
 			// Play splash view animation
@@ -72,19 +71,17 @@ class Kurozora: NSObject {
 	*/
 	static func showOfflinePage(for window: UIWindow?) {
 		if window != nil {
-			let storyboard = UIStoryboard(name: "reachability", bundle: nil)
-			if let reachabilityViewController = storyboard.instantiateViewController(withIdentifier: "Reachability") as? KurozoraReachabilityViewController {
+			if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() as? KurozoraReachabilityViewController {
 				reachabilityViewController.window = window
 				window?.rootViewController = reachabilityViewController
 			}
 		} else {
 			DispatchQueue.main.async {
-				let storyboard = UIStoryboard(name: "reachability", bundle: nil)
-				let reachabilityViewController = storyboard.instantiateViewController(withIdentifier: "Reachability")
-
-				let topViewController = UIApplication.topViewController
-				topViewController?.modalPresentationStyle = .overFullScreen
-				topViewController?.present(reachabilityViewController, animated: false, completion: nil)
+				if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() {
+					let topViewController = UIApplication.topViewController
+					topViewController?.modalPresentationStyle = .overFullScreen
+					topViewController?.present(reachabilityViewController, animated: false, completion: nil)
+				}
 			}
 		}
 	}
@@ -100,9 +97,8 @@ class Kurozora: NSObject {
 		Service.shared.validateSession(withSuccess: { (success) in
 			if !success {
 				if window?.rootViewController as? WelcomeViewController == nil {
-					let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-					let vc = storyboard.instantiateInitialViewController()
-					window?.rootViewController = vc
+					let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
+					window?.rootViewController = welcomeViewController
 					self.success = success
 				}
 			} else {
@@ -148,8 +144,7 @@ class Kurozora: NSObject {
 		if urlScheme == "anime" {
 			let showID = url.lastPathComponent
 			if showID != "" {
-				let storyboard = UIStoryboard(name: "details", bundle: nil)
-				if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowDetailTabBarController") as? ShowDetailTabBarController {
+				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
 					showTabBarController.showID = Int(showID)
 
 					UIApplication.topViewController?.present(showTabBarController, animated: true)
@@ -160,8 +155,7 @@ class Kurozora: NSObject {
 		if urlScheme == "profile" || urlScheme == "user" {
 			let userID = url.lastPathComponent
 			if userID != "" {
-				let storyboard = UIStoryboard(name: "profile", bundle: nil)
-				if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController") as? ProfileTableViewController {
+				if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
 					profileViewController.otherUserID = Int(userID)
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
@@ -186,8 +180,7 @@ class Kurozora: NSObject {
 		if urlScheme == "forum" || urlScheme == "forums" || urlScheme == "forumThread" || urlScheme == "forumsThread" || urlScheme == "thread" {
 			let forumThreadID = url.lastPathComponent
 			if forumThreadID != "" {
-				let storyboard = UIStoryboard(name: "forums", bundle: nil)
-				if let threadViewController = storyboard.instantiateViewController(withIdentifier: "ThreadViewController") as? ThreadViewController {
+				if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
 					threadViewController.forumThreadID = Int(forumThreadID)
 
 					UIApplication.topViewController?.present(threadViewController, animated: true)
@@ -283,8 +276,7 @@ extension Kurozora {
 
 		// If user should authenticate but the top view controller isn't AuthenticationViewController
 		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
-			let storyboard = UIStoryboard(name: "authentication", bundle: nil)
-			if let authenticationViewController = storyboard.instantiateInitialViewController() as? AuthenticationViewController {
+			if let authenticationViewController = AuthenticationViewController.instantiateFromStoryboard() as? AuthenticationViewController {
 				UIApplication.topViewController?.present(authenticationViewController, animated: true, completion: nil)
 			}
 		}

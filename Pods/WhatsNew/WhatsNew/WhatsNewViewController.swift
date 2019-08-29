@@ -9,7 +9,7 @@
 import UIKit
 
 /// Shows new features added in this app update.
-public class WhatsNewViewController: UIViewController {
+open class WhatsNewViewController: UIViewController {
 
     /// Defines when to present the What's New view controller. Check the `PresentationOption` enum for more details.
     public var presentationOption: PresentationOption = .always

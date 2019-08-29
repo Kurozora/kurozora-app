@@ -9,7 +9,7 @@
 //import Parse
 import KCommonKit
 
-class NotificationThreadViewController: ThreadViewController {
+class NotificationThreadViewController: ThreadTableViewController {
 //
 //    @IBOutlet weak var viewMoreButton: UIButton!
 //    var timelinePost: TimelinePostable?

@@ -51,8 +51,7 @@ class ForumsViewController: TabmanViewController {
 		dataSource = self
 
 		// Search bar
-		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
 		if #available(iOS 11.0, *) {
 			let searchController = SearchController(searchResultsController: searchResultsViewController)

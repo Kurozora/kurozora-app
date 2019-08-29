@@ -84,6 +84,16 @@ class RegisterViewController: UIViewController {
 	}
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "login", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "RegisterViewController")
+	}
+
     /// Open the camera if the device has one, otherwise show a warning.
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {

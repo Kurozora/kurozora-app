@@ -37,6 +37,17 @@ class KWebViewController: UIViewController {
 		}
 	}
 
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "webbrowser", bundle: nil)
+		return storyboard.instantiateInitialViewController()
+	}
+
 	// MARK: - IBActions
 	@IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)

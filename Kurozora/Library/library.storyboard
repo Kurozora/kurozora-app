@@ -386,6 +386,11 @@
                                 <action selector="changeLayoutButtonPressed:" destination="B4w-wJ-4Cf" id="DgA-88-vmZ"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="6pL-pD-tnK">
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="B4w-wJ-4Cf" id="ipm-Je-RGq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="changeLayoutButton" destination="Dnc-bs-5ES" id="VvY-Rh-WNJ"/>

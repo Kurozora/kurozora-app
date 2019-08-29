@@ -9,7 +9,7 @@
 //import Parse
 import KCommonKit
 
-class CustomThreadViewController: ThreadViewController {
+class CustomThreadViewController: ThreadTableViewController {
 //
 //    @IBOutlet weak var imageContent: UIImageView!
 //    @IBOutlet weak var threadTitle: UILabel!

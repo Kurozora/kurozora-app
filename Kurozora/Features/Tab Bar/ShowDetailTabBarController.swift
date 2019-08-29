@@ -26,10 +26,8 @@ class ShowDetailTabBarController: ESTabBarController {
 		self.tabBar.theme_tintColor = KThemePicker.tintColor.rawValue
 		self.tabBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 
-        let storyboard = UIStoryboard(name: "details", bundle: nil)
-
         // Instantiate views
-        let showDetail = storyboard.instantiateViewController(withIdentifier: "ShowDetailViewController") as! ShowDetailViewController
+		let showDetail = ShowDetailViewController.instantiateFromStoryboard() as! ShowDetailViewController
 		showDetail.exploreCollectionViewCell = exploreCollectionViewCell
 		showDetail.libraryCollectionViewCell = libraryCollectionViewCell
 		showDetail.modalPresentationCapturesStatusBarAppearance = true
@@ -37,7 +35,7 @@ class ShowDetailTabBarController: ESTabBarController {
 		showDetail.heroID = heroID
 		showDetail.delegate = showDetailViewControllerDelegate
         
-        let seasons = storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController") as! SeasonsCollectionViewController
+        let seasons = SeasonsCollectionViewController.instantiateFromStoryboard() as! SeasonsCollectionViewController
 		seasons.modalPresentationCapturesStatusBarAppearance = true
 		if let heroID = heroID {
 			if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
@@ -59,4 +57,15 @@ class ShowDetailTabBarController: ESTabBarController {
         // Initialize views
         viewControllers = [showDetail, n1]
     }
+
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "details", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "ShowDetailTabBarController")
+	}
 }

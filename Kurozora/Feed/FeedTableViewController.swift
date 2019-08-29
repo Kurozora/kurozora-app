@@ -108,7 +108,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "FeedSegue" {
-			let threadViewController = segue.destination as? ThreadViewController
+			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
 			threadViewController?.forumThreadID = sender as? Int
 		}

@@ -58,8 +58,7 @@ extension AccountTableViewController {
 				if User.isLoggedIn {
 					Service.shared.logout(withSuccess: nil)
 				} else {
-					let storyboard = UIStoryboard(name: "login", bundle: nil)
-					if let welcomeViewController = storyboard.instantiateInitialViewController() {
+					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
 						UIApplication.topViewController?.present(welcomeViewController, animated: true, completion: nil)
 					}
 				}

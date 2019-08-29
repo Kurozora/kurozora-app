@@ -212,6 +212,16 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "details", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "ShowDetailViewController")
+	}
+
 	func fetchDetails() {
 		if let showID = showID {
 			KCommonKit.shared.showID = showID
@@ -523,8 +533,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showRating(_ sender: Any) {
-		let storyboard : UIStoryboard = UIStoryboard(name: "rate", bundle: nil)
-		let rateViewController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController
+		let rateViewController = RateViewController.instantiateFromStoryboard() as? RateViewController
 		rateViewController?.showDetailsElement = showDetails?.showDetailsElement
 		rateViewController?.showRatingdelegate = self
 		rateViewController?.modalTransitionStyle = .crossDissolve

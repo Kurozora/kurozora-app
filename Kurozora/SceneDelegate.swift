@@ -90,8 +90,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
 			authenticated = false
             revealingSplashView.heartAttack = true
-            let storyboard: UIStoryboard = UIStoryboard(name: "login", bundle: nil)
-            let welcomeViewController = storyboard.instantiateInitialViewController()
+			let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
             self.window?.rootViewController = welcomeViewController
         }
 
@@ -124,8 +123,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
-				let storyboard = UIStoryboard(name: "details", bundle: nil)
-				if let showTabBarController = storyboard.instantiateViewController(withIdentifier: "ShowDetailTabBarController") as? ShowDetailTabBarController {
+				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
 					showTabBarController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
 						tabBarController.present(showTabBarController)

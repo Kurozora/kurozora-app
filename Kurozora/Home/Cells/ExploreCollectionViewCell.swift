@@ -306,8 +306,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 // MARK: - UIViewControllerPreviewingDelegate
 extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		showTabBarController = storyboard.instantiateInitialViewController() as? ShowDetailTabBarController
+		showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
 		showTabBarController?.exploreCollectionViewCell = self
 		showTabBarController?.showID = showElement?.id
 		showTabBarController?.modalPresentationStyle = .overFullScreen

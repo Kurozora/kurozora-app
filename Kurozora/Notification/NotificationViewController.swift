@@ -21,6 +21,7 @@ protocol NotificationsViewControllerDelegate: class {
 
 class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
 	var searchResultsViewController: SearchResultsTableViewController!
+	var searchController: SearchController!
 	var grouping: NotificationGroupStyle = .off
 	var oldGrouping: Int?
 	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
@@ -45,20 +46,19 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Search bar
-		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController.delegate = self
+		searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
+
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
 
 		if #available(iOS 11.0, *) {
-			let searchController = SearchController(searchResultsController: searchResultsViewController)
-			searchController.delegate = self
-			searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
-			searchController.searchResultsUpdater = searchResultsViewController
-
-			let searchControllerBar = searchController.searchBar
-			searchControllerBar.delegate = searchResultsViewController
-
 			navigationItem.searchController = searchController
-			searchController.viewController = self
 		}
 
 		// Refresh controller
@@ -84,6 +84,16 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	}
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "notification", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
+	}
+
 	/**
 		Refresh the notifications data by fetching new notifications from the server.
 

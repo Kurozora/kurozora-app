@@ -37,8 +37,7 @@ class ActionListExploreCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func urlButtonPressed(_ sender: UIButton) {
-		let storyboard = UIStoryboard(name: "webbrowser", bundle: nil)
-		if let kNavigationController = storyboard.instantiateInitialViewController() as? KNavigationController {
+		if let kNavigationController = KWebViewController.instantiateFromStoryboard() as? KNavigationController {
 			if let kWebViewController = kNavigationController.viewControllers.first as? KWebViewController {
 				kWebViewController.url = actionUrlItem?["url"]
 				kWebViewController.title = actionUrlItem?["title"]

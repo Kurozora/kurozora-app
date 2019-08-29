@@ -26,7 +26,6 @@ class SearchController: UISearchController, UISearchBarDelegate {
 		searchBar.sizeToFit()
 
 		let searchControllerBar = self.searchBar
-		searchControllerBar.theme_barTintColor = KThemePicker.tintColor.rawValue
 		searchControllerBar.barStyle = .black
 		searchControllerBar.searchBarStyle = .default
 		searchControllerBar.isTranslucent = true

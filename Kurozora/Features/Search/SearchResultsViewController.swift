@@ -72,6 +72,16 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "search", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "SearchResultsTableViewController")
+	}
+
 	fileprivate func search(forText text: String, searchScope: Int) {
 		// Prepare view for search
 		currentScope = searchScope
@@ -151,8 +161,7 @@ class SearchResultsTableViewController: UITableViewController {
 			}  else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
-					let storyboard = UIStoryboard(name: "forums", bundle: nil)
-					if let threadViewController = storyboard.instantiateViewController(withIdentifier: "ThreadViewController") as? ThreadViewController {
+					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
 						threadViewController.isDismissEnabled = true
 						threadViewController.forumThreadID = currentCell.searchElement?.id
 

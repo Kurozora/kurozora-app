@@ -18,6 +18,7 @@ class LibraryViewController: TabmanViewController {
 
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
+	var searchController: SearchController!
 
 	let librarySections: [LibrarySectionList]? = [.watching, .planning, .completed, .onHold, .dropped]
 	let bar = TMBar.ButtonBar()
@@ -55,21 +56,19 @@ class LibraryViewController: TabmanViewController {
 		dataSource = self
 
 		// Search bar
-		let storyboard: UIStoryboard = UIStoryboard(name: "search", bundle: nil)
-		searchResultsViewController = storyboard.instantiateViewController(withIdentifier: "Search") as? SearchResultsTableViewController
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
-		if #available(iOS 11.0, *) {
-			let searchController = SearchController(searchResultsController: searchResultsViewController)
-			searchController.delegate = self
-			searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
-			searchController.searchResultsUpdater = searchResultsViewController
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+//		searchController.delegate = self
+		searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
 
-			let searchControllerBar = searchController.searchBar
-			searchControllerBar.delegate = searchResultsViewController
-
-			navigationItem.searchController = searchController
-			searchController.viewController = self
-		}
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
+//		if #available(iOS 11.0, *) {
+//			navigationItem.searchController = searchController
+//		}
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -190,6 +189,10 @@ class LibraryViewController: TabmanViewController {
 	// MARK: - IBActions
 	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
 		changeLayout()
+	}
+
+	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+		self.present(searchController, animated: true, completion: nil)
 	}
 }
 

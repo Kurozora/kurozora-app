@@ -52,6 +52,17 @@ class ResetPasswordViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "login", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "ResetPasswordViewController")
+	}
     
     //MARK: - IBActions
     @IBAction func resetPressed(sender: AnyObject) {

@@ -7,8 +7,8 @@
 //
 
 import KCommonKit
-import SCLAlertView
 import Cosmos
+import SCLAlertView
 
 protocol ShowRatingDelegate: class {
     func getRating(value: Double?)
@@ -71,6 +71,17 @@ class RateViewController: UIViewController {
             
         }
     }
+
+	// MARK:- Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "rate", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "RateViewController")
+	}
     
     // MARK: - IBActions
     @IBAction func dismissViewController(sender: AnyObject) {
