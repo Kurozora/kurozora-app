@@ -1368,7 +1368,7 @@ Kurozora 1.0.0 (1)</string>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Knj-Tx-NvK">
                                             <rect key="frame" x="20" y="11" width="374" height="126"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-Pe-2Kp" userLabel="Remove  Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-Pe-2Kp" userLabel="Remove  Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="330" y="51" width="24" height="24"/>
                                                     <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1381,9 +1381,7 @@ Kurozora 1.0.0 (1)</string>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                                            <color key="value" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="0.49165239729999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="removeSessionButtonPressed:" destination="gPN-V9-bto" eventType="touchUpInside" id="Vqh-ti-7GZ"/>

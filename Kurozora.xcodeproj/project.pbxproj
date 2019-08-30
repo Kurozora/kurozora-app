@@ -1963,6 +1963,7 @@
 			isa = PBXGroup;
 			children = (
 				66AC260522F0E58A0064541B /* webbrowser.storyboard */,
+				66F944B222F0D11B009F1FE2 /* KWebViewController.swift */,
 			);
 			path = WebBrowser;
 			sourceTree = "<group>";
@@ -2000,7 +2001,6 @@
 			children = (
 				666C82592168031B00C93A70 /* home.storyboard */,
 				666C825B2168063000C93A70 /* HomeCollectionViewController.swift */,
-				66F944B222F0D11B009F1FE2 /* KWebViewController.swift */,
 				66D16CA1212D52D200B6B882 /* Cells */,
 				664A066121EA23CA008CF4A6 /* Genres */,
 				662F706B22A4521E00C3599D /* Layouts */,

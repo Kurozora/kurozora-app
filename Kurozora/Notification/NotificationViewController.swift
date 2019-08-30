@@ -512,7 +512,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 		options.transitionStyle = .reveal
 		options.expansionDelegate = ScaleAndAlphaExpansion.default
 		options.buttonSpacing = 4
-		options.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)
+		options.backgroundColor = .clear
 		return options
 	}
 }

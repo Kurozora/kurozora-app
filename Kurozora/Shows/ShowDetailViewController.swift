@@ -184,13 +184,6 @@ class ShowDetailViewController: UIViewController {
 		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
 		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
 
-		if UIDevice.isPad {
-			var frame = headerView.frame
-			frame.size.height = 500 - 44 - 30
-			tableView.tableHeaderView?.frame = frame
-			view.insertSubview(tableView, belowSubview: bannerImageView)
-		}
-
 		// Setup table view
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -303,7 +296,7 @@ class ShowDetailViewController: UIViewController {
 		}
 
 		// Configure title label
-		if let title = showDetailsElement.title, title != "" {
+		if let title = showDetailsElement.title, !title.isEmpty {
 			showTitleLabel.text = title
 			compactShowTitleLabel.text = title
 		} else {
@@ -317,7 +310,7 @@ class ShowDetailViewController: UIViewController {
 		compactTagsLabel.text = showDetailsElement.informationString()
 
 		// Configure status label
-		if let status = showDetailsElement.status, status != "" {
+		if let status = showDetailsElement.status, !status.isEmpty {
 			statusButton.setTitle(status, for: .normal)
 			if status == "Ended" {
 				statusButton.backgroundColor = .dropped()
@@ -329,19 +322,19 @@ class ShowDetailViewController: UIViewController {
 			statusButton.backgroundColor = .onHold()
 		}
 
-		//            if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
-		//                switch status {
-		//                case .currentlyAiring:
-		//                    statusLabel.text = "Airing"
-		//                    statusLabel.backgroundColor = .watching()
-		//                case .finishedAiring:
-		//                    statusLabel.text = "Aired"
-		//                    statusLabel.backgroundColor = UIColor.completed()
-		//                case .notYetAired:
-		//                    statusLabel.text = "Not Aired"
-		//                    statusLabel.backgroundColor = UIColor.onHold()
-		//                }
-		//            }
+//		if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
+//			switch status {
+//			case .currentlyAiring:
+//				statusLabel.text = "Airing"
+//				statusLabel.backgroundColor = .watching()
+//			case .finishedAiring:
+//				statusLabel.text = "Aired"
+//				statusLabel.backgroundColor = UIColor.completed()
+//			case .notYetAired:
+//				statusLabel.text = "Not Aired"
+//				statusLabel.backgroundColor = UIColor.onHold()
+//			}
+//		}
 
 		// Configure rating
 		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {

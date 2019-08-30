@@ -81,7 +81,13 @@ class ProfileTableViewController: UITableViewController {
 			self.tableView.reloadData()
 		}
 	}
-	var otherUserID: Int? = nil
+	var otherUserID: Int? = nil {
+		didSet {
+			if otherUserID != nil {
+				enableDismissButton()
+			}
+		}
+	}
 	var feedPostElement: [FeedPostElement]? = nil
 	var editingMode: Bool = false
 
@@ -458,6 +464,24 @@ class ProfileTableViewController: UITableViewController {
 				}
 			}
 		}
+	}
+
+	/// Enable and show the dismiss button.
+	func enableDismissButton() {
+		// Save old actions
+		self.oldLeftBarItems = self.profileNavigationItem.leftBarButtonItems
+
+		// Remove old actions
+		self.profileNavigationItem.setLeftBarButton(nil, animated: true)
+
+		// Set new actions
+		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))
+		self.profileNavigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+	}
+
+	/// Dismiss the view. Used by the dismiss button when viewing other users' profile.
+	@objc fileprivate func dismissButtonPressed() {
+		dismiss(animated: true, completion: nil)
 	}
 
     // MARK: - IBActions
