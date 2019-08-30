@@ -14,6 +14,13 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 	@IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton!
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		self.applyShadow()
+		posterShadowView?.applyShadow()
+	}
+
 	override func configureCell() {
 		super.configureCell()
 		guard let libraryElement = libraryElement else { return }

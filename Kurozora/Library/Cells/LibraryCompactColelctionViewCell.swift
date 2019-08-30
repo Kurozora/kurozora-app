@@ -14,4 +14,10 @@ class LibraryCompactColelctionViewCell: LibraryCollectionViewCell {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		posterShadowView?.applyShadow()
+	}
 }

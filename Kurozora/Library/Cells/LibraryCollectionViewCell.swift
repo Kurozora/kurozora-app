@@ -11,21 +11,13 @@ import Kingfisher
 
 class LibraryCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var posterShadowView: UIView! {
-		didSet {
-			posterShadowView?.applyShadow()
-		}
-	}
+	@IBOutlet weak var posterShadowView: UIView!
 	@IBOutlet weak var posterView: UIImageView!
 
 	var libraryElement: LibraryElement? {
 		didSet {
 			configureCell()
 		}
-	}
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
 	}
 
 	func configureCell() {

@@ -32,11 +32,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
-	@IBOutlet weak var shadowView: UIView? {
-		didSet {
-			shadowView?.applyShadow()
-		}
-	}
+	@IBOutlet weak var shadowView: UIView?
 	@IBOutlet weak var colorOverlayView: UIView?
 	@IBOutlet weak var backgroundColorView: UIView?
 	@IBOutlet weak var listButton: UIButton?
@@ -70,6 +66,15 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		avPlayerViewController = AVPlayerViewController()
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		if shadowView == nil {
+			self.applyShadow()
+		} else {
+			shadowView?.applyShadow()
+		}
 	}
 
 	// MARK: - Functions
@@ -138,10 +143,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			}
 		} else if genreElement != nil {
 			configureGenreCell()
-		}
-
-		if shadowView == nil {
-			self.applyShadow()
 		}
 	}
 
