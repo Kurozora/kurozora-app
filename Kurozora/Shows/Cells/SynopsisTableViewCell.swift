@@ -1,5 +1,5 @@
 //
-//  SynopsisCell.swift
+//  SynopsisTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/08/2018.
@@ -7,10 +7,9 @@
 //
 
 import UIKit
-
 import SwiftTheme
 
-class SynopsisCell: UITableViewCell {
+class SynopsisTableViewCell: UITableViewCell {
 	@IBOutlet weak var synopsisTextView: UITextView! {
 		didSet {
 			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
@@ -48,17 +47,5 @@ class SynopsisCell: UITableViewCell {
 			moreSynopsisView?.isHidden = !(synopsisTextView.layoutManager.numberOfLines > 8)
 
 		}
-	}
-}
-
-extension NSLayoutManager {
-	var numberOfLines: Int {
-		guard textStorage != nil else { return 0 }
-
-		var count = 0
-		enumerateLineFragments(forGlyphRange: NSMakeRange(0, numberOfGlyphs)) { _, _, _, _, _ in
-			count += 1
-		}
-		return count
 	}
 }

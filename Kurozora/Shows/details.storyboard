@@ -380,7 +380,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="EpisodeSynopsisCell" rowHeight="200" id="iEu-07-Uq5" customClass="SynopsisCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="EpisodeSynopsisCell" rowHeight="200" id="iEu-07-Uq5" customClass="SynopsisTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="295.5" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iEu-07-Uq5" id="CPb-gq-vE7">
@@ -1202,13 +1202,14 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="178K Ratings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEj-VM-Hy4">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="178K Ratings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEj-VM-Hy4">
                                                                             <rect key="frame" x="0.0" y="20.5" width="124.5" height="19.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
+                                                                    <gestureRecognizers/>
                                                                     <constraints>
                                                                         <constraint firstItem="hYc-Dr-83c" firstAttribute="top" secondItem="Bn9-La-lu4" secondAttribute="top" id="0yq-az-U6K"/>
                                                                         <constraint firstItem="lB3-xl-k1Q" firstAttribute="top" secondItem="hYc-Dr-83c" secondAttribute="top" constant="2" id="J8g-cs-Yl0"/>
@@ -1231,6 +1232,9 @@
                                                                 <constraint firstAttribute="trailing" secondItem="Bn9-La-lu4" secondAttribute="trailing" id="hi7-xF-SE9"/>
                                                                 <constraint firstItem="Bn9-La-lu4" firstAttribute="leading" secondItem="SVL-Kb-xTA" secondAttribute="leading" id="nqv-zh-odO"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outletCollection property="gestureRecognizers" destination="B5O-fV-Ocn" appends="YES" id="hIO-1u-nLc"/>
+                                                            </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGu-pr-Vy9" userLabel="Rank View">
                                                             <rect key="frame" x="124.5" y="0.0" width="125" height="40"/>
@@ -1453,7 +1457,7 @@
                                             <outlet property="titleLabel" destination="dZg-GF-81P" id="fhn-UN-Q3u"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowSynopsisCell" rowHeight="200" id="byQ-7d-1fB" customClass="SynopsisCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowSynopsisCell" rowHeight="200" id="byQ-7d-1fB" customClass="SynopsisTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="533" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="byQ-7d-1fB" id="lkr-Xp-aAC">
@@ -1515,8 +1519,79 @@
                                             <outlet property="synopsisTextView" destination="clM-0b-Dkj" id="qUG-sb-qqF"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ShowRatingCell" rowHeight="88" id="NdP-d7-IV5" customClass="ShowRatingCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="733" width="414" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NdP-d7-IV5" id="meq-pj-Mor">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="E94-5s-do8" customClass="CosmosView" customModule="Cosmos">
+                                                    <rect key="frame" x="229" y="10" width="165" height="25"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="star_filled"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="star_empty"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                                            <integer key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                            <real key="value" value="25"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.000 Ratings" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQx-x0-aWN">
+                                                    <rect key="frame" x="229" y="40" width="165" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGq-eq-EOa">
+                                                    <rect key="frame" x="20" y="0.0" width="78.5" height="60"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="out of 5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNl-kf-pTT">
+                                                    <rect key="frame" x="20" y="60" width="78.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="PQx-x0-aWN" firstAttribute="top" secondItem="E94-5s-do8" secondAttribute="bottom" constant="5" id="7h1-Ns-shE"/>
+                                                <constraint firstItem="QNl-kf-pTT" firstAttribute="leading" secondItem="oGq-eq-EOa" secondAttribute="leading" id="8oE-Gw-nkx"/>
+                                                <constraint firstItem="QNl-kf-pTT" firstAttribute="trailing" secondItem="oGq-eq-EOa" secondAttribute="trailing" id="FWK-ak-RVn"/>
+                                                <constraint firstItem="E94-5s-do8" firstAttribute="trailing" secondItem="PQx-x0-aWN" secondAttribute="trailing" id="HL8-Rj-YsS"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="oGq-eq-EOa" secondAttribute="leading" id="RP9-h5-S4a"/>
+                                                <constraint firstItem="oGq-eq-EOa" firstAttribute="top" secondItem="meq-pj-Mor" secondAttribute="top" id="dRp-2K-frr"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="E94-5s-do8" secondAttribute="trailing" id="jmC-3i-JPG"/>
+                                                <constraint firstItem="E94-5s-do8" firstAttribute="top" secondItem="meq-pj-Mor" secondAttribute="top" constant="10" id="oWq-VR-AXo"/>
+                                                <constraint firstItem="QNl-kf-pTT" firstAttribute="top" secondItem="oGq-eq-EOa" secondAttribute="bottom" id="v3B-UP-LL2"/>
+                                                <constraint firstAttribute="bottom" secondItem="QNl-kf-pTT" secondAttribute="bottom" constant="10" id="vFK-Vo-JX4"/>
+                                                <constraint firstItem="PQx-x0-aWN" firstAttribute="leading" secondItem="E94-5s-do8" secondAttribute="leading" id="x23-s5-flz"/>
+                                                <constraint firstItem="E94-5s-do8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oGq-eq-EOa" secondAttribute="trailing" constant="10" id="yAq-r8-Za6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="cosmosDetailLabel" destination="PQx-x0-aWN" id="6hb-g5-blZ"/>
+                                            <outlet property="cosmosView" destination="E94-5s-do8" id="AEK-io-4zK"/>
+                                            <outlet property="ratingDetailLabel" destination="QNl-kf-pTT" id="gIJ-U9-R8d"/>
+                                            <outlet property="ratingLabel" destination="oGq-eq-EOa" id="HPM-0q-uiP"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowCastCell" rowHeight="148" id="VUy-sa-0Bc" customClass="ShowCharacterCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="733" width="414" height="148"/>
+                                        <rect key="frame" x="0.0" y="821" width="414" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VUy-sa-0Bc" id="rfT-Oc-x79">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
@@ -1645,7 +1720,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowRelatedCell" rowHeight="148" id="fTx-GC-bIf" customClass="ShowRelatedCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="881" width="414" height="148"/>
+                                        <rect key="frame" x="0.0" y="969" width="414" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fTx-GC-bIf" id="uea-wc-h2W">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
@@ -1947,12 +2022,12 @@
                         <action selector="showBanner:" destination="vfx-ya-sYW" id="JO0-Ae-bSB"/>
                     </connections>
                 </tapGestureRecognizer>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nSa-fM-PkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="B5O-fV-Ocn" userLabel="RatingTap">
                     <connections>
                         <action selector="showRating:" destination="vfx-ya-sYW" id="GUa-1g-Ezn"/>
                     </connections>
                 </tapGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSa-fM-PkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="744.92753623188412" y="-1276.3392857142856"/>
         </scene>

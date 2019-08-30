@@ -565,7 +565,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a boolean indicating whether rating is successful.
 		- Parameter isSuccess: A boolean value indicating whether rating is successful.
 	*/
-	func rate(showID: Int?, score: Double?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	func rateShow(_ showID: Int?, with score: Double?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let rating = score else { return }
 		guard let showID = showID else { return }
 

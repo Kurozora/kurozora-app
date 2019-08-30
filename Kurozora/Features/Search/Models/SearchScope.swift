@@ -61,7 +61,7 @@ enum SearchScope: Int {
 	}
 
 	/// An array containing all search scopes.
-	static var all: [SearchScope] = [.show, .myLibrary, .thread, .user]
+	static let all: [SearchScope] = [.show, .myLibrary, .thread, .user]
 
 	/// An array containing the string value of all search scopes.
 	static var allString: [String] {

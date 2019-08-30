@@ -96,7 +96,6 @@ class ShowDetailViewController: UIViewController {
 		didSet {
 			self.tableView.alpha = viewsAreHidden ? 0 : 1
 			self.tabBarController?.tabBar.alpha = viewsAreHidden ? 0 : 1
-			// self.compactDetailsView.alpha = 0 // Should always be hidden
 
 			if viewsAreHidden {
 				view.backgroundColor = .clear
@@ -127,7 +126,6 @@ class ShowDetailViewController: UIViewController {
 	}
 	var delegate: ShowDetailViewControllerDelegate?
 	var libraryStatus: String?
-	var showRating: Double?
 	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	var statusBarShouldBeHidden = false
@@ -193,12 +191,11 @@ class ShowDetailViewController: UIViewController {
 			view.insertSubview(tableView, belowSubview: bannerImageView)
 		}
 
-		// Fetch details
-//		fetchDetails()
-
+		// Setup table view
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -222,6 +219,7 @@ class ShowDetailViewController: UIViewController {
 		return storyboard.instantiateViewController(withIdentifier: "ShowDetailViewController")
 	}
 
+	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
 		if let showID = showID {
 			KCommonKit.shared.showID = showID
@@ -241,14 +239,25 @@ class ShowDetailViewController: UIViewController {
 		}
 	}
 
-	fileprivate func dismiss() {
+	/// Prepare the view to be dismissed.
+	fileprivate func willDismiss() {
 		viewsAreHidden = true
 		blurView?.isHidden = true
 		snapshotView.isHidden = false
 		toggleHeroID(on: false)
+	}
+
+	/// Dismisses the view after the view has been prepared for dismissal.
+	fileprivate func dismiss() {
+		willDismiss()
 		dismiss(animated: true, completion: nil)
 	}
 
+	/**
+		Configures the view from the given Explore cell if the details view was requested from the Explore page.
+
+		- Parameter cell: The explore cell from which the view should be configured.
+	*/
 	fileprivate func configureShowDetails(from cell: ExploreCollectionViewCell) {
 		if cell.bannerImageView != nil {
 			showTitleLabel.text = cell.titleLabel?.text
@@ -262,20 +271,20 @@ class ShowDetailViewController: UIViewController {
 			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal?.first ?? "0")"
 			ratingScoreDecimalLabel.text = (decimalScore != "") ? decimalScore : "0"
 		}
-
-		// Setup shadows
-		shadowView.applyShadow()
-		reminderButton.applyShadow()
-		favoriteButton.applyShadow()
 	}
 
+	/**
+		Configures the view from the given Library cell if the details view was requested from the Library page.
+
+		- Parameter cell: The library cell from which the view should be configured.
+	*/
 	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell) {
 		showTitleLabel.text = cell.titleLabel?.text
 		bannerImageView.image = (cell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image
 		posterImageView.image = cell.posterView?.image
 	}
 
-	// Update view with details
+	/// Update view with the details fetched from the server.
 	fileprivate func updateDetails() {
 		guard let showDetailsElement = showDetails?.showDetailsElement else { return }
 		guard let userProfile = showDetails?.userProfile else { return }
@@ -300,14 +309,6 @@ class ShowDetailViewController: UIViewController {
 		} else {
 			showTitleLabel.text = "Unknown"
 			compactShowTitleLabel.text = "Unknown"
-		}
-
-		// Configure rating button
-		if let rating = userProfile.currentRating, rating != 0 {
-			self.showRating = rating
-			self.cosmosView.rating = rating
-		} else {
-			self.cosmosView.rating = 0.0
 		}
 
 		// Configure tags label
@@ -342,8 +343,10 @@ class ShowDetailViewController: UIViewController {
 		//                }
 		//            }
 
-		// Configure ratings label
+		// Configure rating
 		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
+			cosmosView.rating = averageRating
+
 			var decimalScore = "\(modf(averageRating).1)"
 			decimalScore.removeFirst()
 
@@ -351,6 +354,7 @@ class ShowDetailViewController: UIViewController {
 			ratingScoreDecimalLabel.text = "." + decimalScore
 			ratingTitleLabel.text = "\(ratingCount) Ratings"
 		} else {
+			cosmosView.rating = 0.0
 			ratingScoreLabel.text = "0"
 			ratingScoreDecimalLabel.text = ".0"
 			ratingTitleLabel.text = "Not enough ratings"
@@ -392,11 +396,21 @@ class ShowDetailViewController: UIViewController {
 			trailerLabel.isHidden = true
 		}
 
+		// Configure shadows
+		shadowView.applyShadow()
+		reminderButton.applyShadow()
+		favoriteButton.applyShadow()
+
 		// Display details
 		quickDetailsView.isHidden = false
 		tableView.reloadData()
 	}
 
+	/**
+		Toggle HeroID to turn on and off the transition animation.
+
+		- Parameter on: A boolean value indicating whether the transition should be turned on or off.
+	*/
 	fileprivate func toggleHeroID(on: Bool) {
 		guard let heroID = heroID else { return }
 		showTitleLabel.hero.id = on ? "\(heroID)_title" : nil
@@ -411,6 +425,7 @@ class ShowDetailViewController: UIViewController {
 		}
 	}
 
+	/// Creates a snapshot of the current view and adds it as a subview.
 	fileprivate func createSnapshotOfView() {
 		if !UIAccessibility.isReduceTransparencyEnabled {
 			let blurEffect = UIBlurEffect(style: .extraLight)
@@ -440,6 +455,7 @@ class ShowDetailViewController: UIViewController {
 		snapshotView.isHidden = true
 	}
 
+	/// Updates the frame of the header view to fix layout issues.
 	fileprivate func updateHeaderView() {
 		var headerRect = CGRect(x: 0, y: -headerViewHeight, width: tableView.bounds.width, height: headerViewHeight)
 
@@ -457,9 +473,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func closeButtonPressed(_ sender: UIButton) {
-		if shouldSnapshot {
-			createSnapshotOfView()
-		}
+		createSnapshotOfView()
 		dismiss()
 	}
 
@@ -533,12 +547,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showRating(_ sender: Any) {
-		let rateViewController = RateViewController.instantiateFromStoryboard() as? RateViewController
-		rateViewController?.showDetailsElement = showDetails?.showDetailsElement
-		rateViewController?.showRatingdelegate = self
-		rateViewController?.modalTransitionStyle = .crossDissolve
-		rateViewController?.modalPresentationStyle = .overCurrentContext
-		self.present(rateViewController!, animated: true, completion: nil)
+		tableView.safeScrollToRow(at: IndexPath(row: 0, section: ShowSections.rating.rawValue), at: .top, animated: true)
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
@@ -582,25 +591,27 @@ class ShowDetailViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ShowDetailViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return showDetails?.showDetailsElement != nil ? ShowSections.allSections.count : 0
+		return showDetails?.showDetailsElement != nil ? ShowSections.all.count : 0
 	}
 
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let showSections = ShowSections(rawValue: section) else { return 0 }
 		var numberOfRows = 0
 
-		switch ShowSections(rawValue: section)! {
+		switch showSections {
 		case .synopsis:
-			numberOfRows = (showDetails?.showDetailsElement?.synopsis != "") ? 1 : 0
+			if let synopsis = showDetails?.showDetailsElement?.synopsis, !synopsis.isEmpty {
+				numberOfRows = 1
+			}
 		case .information:
-			numberOfRows = (User.isAdmin == true) ? 11 : 10
+			numberOfRows = User.isAdmin ? 11 : 10
+		case .rating:
+			numberOfRows = 1
 		case .cast:
 			if let actorsCount = actors?.count, actorsCount > 0 {
 				numberOfRows = 2
-			} else {
-				numberOfRows = 0
 			}
-		case .related:
-			numberOfRows = 0
+		case .related: break
 		}
 
 		return numberOfRows
@@ -611,28 +622,29 @@ extension ShowDetailViewController: UITableViewDataSource {
 
 		switch ShowSections(rawValue: indexPath.section)! {
 		case .synopsis:
-			let synopsisCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisCell
-			synopsisCell.showDetailsElement = showDetails?.showDetailsElement
-			synopsisCell.layoutIfNeeded()
-			return synopsisCell
+			let synopsisTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisTableViewCell
+			synopsisTableViewCell.showDetailsElement = showDetails?.showDetailsElement
+			return synopsisTableViewCell
 		case .information:
-			let informationCell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! InformationTableViewCell
-			informationCell.indexPathRow = indexPath.row
-			informationCell.showDetailsElement = showDetails?.showDetailsElement
-			informationCell.layoutIfNeeded()
-			return informationCell
+			let informationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! InformationTableViewCell
+			informationTableViewCell.indexPathRow = indexPath.row
+			informationTableViewCell.showDetailsElement = showDetails?.showDetailsElement
+			return informationTableViewCell
+		case .rating:
+			let showRatingCell = tableView.dequeueReusableCell(withIdentifier: "ShowRatingCell") as! ShowRatingCell
+			showRatingCell.showDetails = showDetails
+			return showRatingCell
 		case .cast:
-			let castCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
-			castCell.actorElement = actors?[indexPath.row]
-			castCell.delegate = self
+			let showCharacterCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
+			showCharacterCell.actorElement = actors?[indexPath.row]
+			showCharacterCell.delegate = self
 			if indexPath.row == 1 {
-				castCell.separatorView.isHidden = true
+				showCharacterCell.separatorView.isHidden = true
 			}
-			castCell.layoutIfNeeded()
-			return castCell
+			return showCharacterCell
 		case .related:
-			let relatedCell = tableView.dequeueReusableCell(withIdentifier: "ShowRelatedCell") as! ShowRelatedCell
-			return relatedCell
+			let showRelatedCell = tableView.dequeueReusableCell(withIdentifier: "ShowRelatedCell") as! ShowRelatedCell
+			return showRelatedCell
 		}
 	}
 
@@ -645,6 +657,8 @@ extension ShowDetailViewController: UITableViewDataSource {
 			title = (showDetails?.showDetailsElement?.synopsis != "") ? "Synopsis" : ""
 		case .information:
 			title = "Information"
+		case .rating:
+			title = "Ratings"
 		case .cast:
 			guard let castCount = actors?.count else { return showTitleCell.contentView }
 			title = (castCount != 0) ? "Actors" : ""
@@ -743,16 +757,6 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 			viewsAreHidden = false
 			snapshotView.isHidden = true
 			blurView?.isHidden = true
-		}
-	}
-}
-
-// MARK: - ShowRatingDelegate
-extension ShowDetailViewController: ShowRatingDelegate {
-	func getRating(value: Double?) {
-		if let rating = value {
-			self.cosmosView.rating = rating
-			self.cosmosView.update()
 		}
 	}
 }

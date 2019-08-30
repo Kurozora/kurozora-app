@@ -44,7 +44,7 @@ enum RequireAuthentication: Int {
 	case fiveMinutes
 
 	/// An array of all RequireAuthentication attributes.
-	static var all: [RequireAuthentication] = [.immediately, .thirtySeconds, .oneMinute, .twoMinutes, .threeMinutes, .fourMinutes, .fiveMinutes]
+	static let all: [RequireAuthentication] = [.immediately, .thirtySeconds, .oneMinute, .twoMinutes, .threeMinutes, .fourMinutes, .fiveMinutes]
 
 	/// The string value of an authentication timeout.
 	var stringValue: String {
