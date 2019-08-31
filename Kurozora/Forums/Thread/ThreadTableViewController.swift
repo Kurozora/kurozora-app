@@ -261,9 +261,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		kCommentEditorViewController?.forumThread = forumThreadElement
 
 		let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
-		if #available(iOS 11.0, *) {
-			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-		}
+		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 
 		if #available(iOS 13.0, *) {
 			self.present(kurozoraNavigationController, animated: true, completion: nil)

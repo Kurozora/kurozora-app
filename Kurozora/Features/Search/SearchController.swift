@@ -38,9 +38,7 @@ class SearchController: UISearchController, UISearchBarDelegate {
 		super.viewWillDisappear(animated)
 
 		guard let navigationController = viewController?.navigationController as? KNavigationController else { return }
-		if #available(iOS 11.0, *) {
-			navigationController.navigationItem.searchController?.searchBar.isHidden = true
-		}
+		navigationController.navigationItem.searchController?.searchBar.isHidden = true
 		navigationController.toggleStyle(.normal)
 	}
 }

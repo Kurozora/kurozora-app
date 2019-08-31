@@ -27,9 +27,7 @@ class KWebViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if #available(iOS 11.0, *) {
-			self.navigationController?.navigationBar.prefersLargeTitles = false
-		}
+		self.navigationController?.navigationBar.prefersLargeTitles = false
 
 		if let urlString = url, let url = URL(string: urlString) {
 			let request = URLRequest(url: url)

@@ -274,19 +274,17 @@ extension KThemeStyle {
 		- Parameter iconName: The name of the icon to switch to.
 	*/
 	static func changeIcon(to iconName: String?) {
-		if #available(iOS 10.3, *) {
-			// Check if app supports alternate icons
-			guard UIApplication.shared.supportsAlternateIcons else { return }
+		// Check if app supports alternate icons
+		guard UIApplication.shared.supportsAlternateIcons else { return }
 
-			// Set alternate icon
-			UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
-				if let error = error {
-					print("App icon failed to change due to \(error.localizedDescription)")
-				} else {
-					print("App icon changed successfully")
-				}
-			})
-		}
+		// Set alternate icon
+		UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
+			if let error = error {
+				print("App icon failed to change due to \(error.localizedDescription)")
+			} else {
+				print("App icon changed successfully")
+			}
+		})
 	}
 }
 

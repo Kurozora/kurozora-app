@@ -228,9 +228,7 @@ class HomeCollectionViewController: UICollectionViewController {
 		searchControllerBar.delegate = searchResultsViewController
 		startPlaceholderTimer(for: searchControllerBar)
 
-		if #available(iOS 11.0, *) {
-			navigationItem.searchController = searchController
-		}
+		navigationItem.searchController = searchController
 
         // Validate session
         Service.shared.validateSession(withSuccess: { (success) in
@@ -509,19 +507,21 @@ extension HomeCollectionViewController: UISearchControllerDelegate {
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-				self.stopPlacholderTimer()
+//				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.tabBarController?.tabBar.isHidden = true
 			})
 		}
+		self.stopPlacholderTimer()
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-				self.startPlaceholderTimer(for: searchController.searchBar)
+//				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.tabBarController?.tabBar.isHidden = false
 			})
 		}
+		self.startPlaceholderTimer(for: searchController.searchBar)
 	}
 }

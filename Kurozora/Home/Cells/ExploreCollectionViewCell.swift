@@ -203,9 +203,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			avPlayerViewController = AVPlayerViewController()
 		}
 		avPlayerViewController?.player = avPlayer
-		if #available(iOS 11.0, *) {
-			avPlayerViewController?.exitsFullScreenWhenPlaybackEnds = true
-		}
+		avPlayerViewController?.exitsFullScreenWhenPlaybackEnds = true
 
 		homeCollectionViewController?.addChild(avPlayerViewController!)
 		avPlayerViewController?.view.frame = videoPlayerContainer!.bounds

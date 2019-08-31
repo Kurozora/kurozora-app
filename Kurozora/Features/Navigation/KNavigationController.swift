@@ -51,15 +51,13 @@ class KNavigationController: UINavigationController {
 				return titleTextAttributes
 			}
 
-			if #available(iOS 11.0, *) {
-				self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
-				self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
-					guard let rgba = value as? String else { return nil }
-					let color = UIColor(rgba: rgba)
-					let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+			self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
+			self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+				guard let rgba = value as? String else { return nil }
+				let color = UIColor(rgba: rgba)
+				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
 
-					return titleTextAttributes
-				}
+				return titleTextAttributes
 			}
 		case .blurred:
 			// TODO: - Implement a better blurry navigation bar

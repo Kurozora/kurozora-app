@@ -150,10 +150,7 @@ extension UIDevice {
 extension UIDevice {
 	/// A boolean indicating if the device has a `Top Notch`™.
 	static let hasTopNotch: Bool = {
-		if #available(iOS 11.0,  *) {
-			return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
-		}
-		return false
+		return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
 	}()
 
 	/// The type of biometric the current device supports.
@@ -162,18 +159,13 @@ extension UIDevice {
 		var error: NSError?
 
 		if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-			if #available(iOS 11.0, *) {
-				switch context.biometryType {
-				case .faceID:
-					return .faceID
-				case .touchID:
-					return .touchID
-				default:
-					return .none
-				}
-			} else {
-				// Fallback on earlier versions
-				return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) ? .touchID : .none
+			switch context.biometryType {
+			case .faceID:
+				return .faceID
+			case .touchID:
+				return .touchID
+			default:
+				return .none
 			}
 		} else {
 			return .none

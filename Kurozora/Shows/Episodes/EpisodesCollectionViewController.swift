@@ -283,15 +283,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 	}
 
 	func visibleRect(for collectionView: UICollectionView) -> CGRect? {
-		if #available(iOS 11.0, *) {
-			return collectionView.safeAreaLayoutGuide.layoutFrame
-		} else {
-			let topInset = navigationController?.navigationBar.frame.height ?? 0
-			let bottomInset = navigationController?.toolbar?.frame.height ?? 0
-			let bounds = collectionView.bounds
-
-			return CGRect(x: bounds.origin.x, y: bounds.origin.y + topInset, width: bounds.width, height: bounds.height - bottomInset)
-		}
+		return collectionView.safeAreaLayoutGuide.layoutFrame
 	}
 
 	func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {

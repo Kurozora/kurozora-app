@@ -88,12 +88,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		let lowerdSectionTitle = sectionTitle.lowercased()
 
 		// Add Refresh Control to Collection View
-		if #available(iOS 10.0, *) {
-			collectionView.refreshControl = refreshControl
-		} else {
-			collectionView.addSubview(refreshControl)
-		}
-
+		collectionView.refreshControl = refreshControl
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
@@ -104,9 +99,8 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 
 		fetchLibrary()
 
-		if #available(iOS 11.0, *) {
-			collectionView.dragDelegate = self
-		}
+		// Setup collection view
+		collectionView.dragDelegate = self
 
         // Setup empty collection view
         collectionView.emptyDataSetDelegate = self
@@ -232,7 +226,6 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 
 // MARK: - UICollectionViewDragDelegate
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
-	@available(iOS 11.0, *)
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		guard let libraryCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryCollectionViewCell else { return [UIDragItem]() }
         let selectedShow = show(at: indexPath)

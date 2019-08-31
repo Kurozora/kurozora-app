@@ -260,20 +260,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOE-i1-EKl">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0V-CP-fg2">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="X0V-CP-fg2" firstAttribute="leading" secondItem="oOE-i1-EKl" secondAttribute="leading" id="Sq3-rY-yM3"/>
-                                    <constraint firstAttribute="bottom" secondItem="X0V-CP-fg2" secondAttribute="bottom" id="UsG-he-Mgx"/>
-                                    <constraint firstItem="X0V-CP-fg2" firstAttribute="top" secondItem="oOE-i1-EKl" secondAttribute="top" id="m7F-9Z-T3B"/>
-                                    <constraint firstAttribute="trailing" secondItem="X0V-CP-fg2" secondAttribute="trailing" id="vtu-LW-ec0"/>
-                                </constraints>
-                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba9-s8-qJl" userLabel="Create Thread Button">
                                 <rect key="frame" x="350" y="798" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -297,12 +283,6 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="dmG-tJ-44S" firstAttribute="bottom" secondItem="oOE-i1-EKl" secondAttribute="bottom" id="61q-qE-SCf"/>
-                            <constraint firstItem="dmG-tJ-44S" firstAttribute="trailing" secondItem="oOE-i1-EKl" secondAttribute="trailing" id="IPR-bZ-bxy"/>
-                            <constraint firstItem="X0V-CP-fg2" firstAttribute="width" secondItem="0ZA-DA-Zkg" secondAttribute="width" id="MF1-QZ-UPG"/>
-                            <constraint firstItem="oOE-i1-EKl" firstAttribute="leading" secondItem="dmG-tJ-44S" secondAttribute="leading" id="PBT-Je-u2K"/>
-                            <constraint firstItem="X0V-CP-fg2" firstAttribute="height" secondItem="0ZA-DA-Zkg" secondAttribute="height" id="fIj-tP-eGy"/>
-                            <constraint firstItem="oOE-i1-EKl" firstAttribute="top" secondItem="0ZA-DA-Zkg" secondAttribute="top" id="hy1-vw-SO7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ba9-s8-qJl" secondAttribute="trailing" id="ohN-qS-afG"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Ba9-s8-qJl" secondAttribute="bottom" constant="20" id="pkK-In-Xe3"/>
                         </constraints>
@@ -343,7 +323,6 @@
                     <connections>
                         <outlet property="createThreadButton" destination="Ba9-s8-qJl" id="MZa-NF-LTd"/>
                         <outlet property="navigationProfileButton" destination="u3h-cK-q29" id="8W4-VD-dzf"/>
-                        <outlet property="scrollView" destination="oOE-i1-EKl" id="Vem-Z7-vN2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eV0-29-rQI" sceneMemberID="firstResponder"/>

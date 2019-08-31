@@ -150,9 +150,7 @@ class ForumsViewController: TabmanViewController {
 //		kRichTextEditorViewController?.sectionID = currentIndex! + 1
 //
 //		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-//		if #available(iOS 11.0, *) {
-//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-//		}
+//		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 //
 //		if #available(iOS 13.0, *) {
 //			self.present(kurozoraNavigationController, animated: true, completion: nil)

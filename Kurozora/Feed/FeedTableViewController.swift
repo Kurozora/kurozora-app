@@ -54,16 +54,6 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		}
 	}
 
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if #available(iOS 11.0, *) {
-			let offset = scrollView.contentOffset
-			if let tabmanVC = tabmanParent as? FeedTabsViewController {
-				tabmanVC.scrollView.contentOffset = offset
-				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Refresh the feeds data by fetching new items from the server.

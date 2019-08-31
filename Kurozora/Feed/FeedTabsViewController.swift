@@ -14,7 +14,6 @@ import SwiftTheme
 class FeedTabsViewController: TabmanViewController {
 	@IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var navigationProfileButton: UIButton!
-	@IBOutlet weak var scrollView: UIScrollView!
 
 	var sections: [FeedSectionsElement]? {
 		didSet {
@@ -75,8 +74,6 @@ class FeedTabsViewController: TabmanViewController {
 			bar.isHidden = barItemsCount <= 1
 		}
 
-		view.sendSubviewToBack(scrollView)
-
 //		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 //		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
@@ -108,9 +105,7 @@ class FeedTabsViewController: TabmanViewController {
 //		kRichTextEditorViewController?.sectionID = currentIndex! + 1
 //
 //		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-//		if #available(iOS 11.0, *) {
-//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-//		}
+//		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 //
 //		present(kurozoraNavigationController, animated: true, completion: nil)
 	}

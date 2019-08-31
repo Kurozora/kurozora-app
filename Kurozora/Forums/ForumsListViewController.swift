@@ -41,12 +41,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		guard let sectionTitle = sectionTitle else { return }
 
 		// Add Refresh Control to Table View
-		if #available(iOS 10.0, *) {
-			tableView.refreshControl = refresh
-		} else {
-			tableView.addSubview(refresh)
-		}
-
+		tableView.refreshControl = refresh
 		refresh.theme_tintColor = KThemePicker.tintColor.rawValue
 		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
 		refresh.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)

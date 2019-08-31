@@ -700,7 +700,7 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 
 		// Logic for showing/hiding compact details view
 		if compactDetailsOffset > bannerHeight {
-			UIView.animate(withDuration: 0.75) {
+			UIView.animate(withDuration: 0.5) {
 				self.quickDetailsView.alpha = 1
 			}
 
@@ -712,14 +712,14 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 				self.quickDetailsView.alpha = 0
 			}
 
-			UIView.animate(withDuration: 0.75) {
+			UIView.animate(withDuration: 0.5) {
 				self.compactDetailsView.alpha = 1
 			}
 		}
 
 		let yPositionForDismissal: CGFloat = 30
 		let yContentOffset = tableView.contentOffset.y
-		let newHeaderViewHeight = headerViewHeight + topLayoutGuide.length
+		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
 
 		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
 			viewsAreHidden = true
@@ -744,7 +744,7 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		let yContentOffset = tableView.contentOffset.y
-		let newHeaderViewHeight = headerViewHeight + topLayoutGuide.length
+		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
 
 		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
 			viewsAreHidden = false

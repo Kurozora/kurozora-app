@@ -57,9 +57,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		let searchControllerBar = searchController.searchBar
 		searchControllerBar.delegate = searchResultsViewController
 
-		if #available(iOS 11.0, *) {
-			navigationItem.searchController = searchController
-		}
+		navigationItem.searchController = searchController
 
 		// Refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -488,15 +486,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 	}
 
 	func visibleRect(for tableView: UITableView) -> CGRect? {
-		if #available(iOS 11.0, *) {
-			return tableView.safeAreaLayoutGuide.layoutFrame
-		} else {
-			let topInset = navigationController?.navigationBar.frame.height ?? 0
-			let bottomInset = navigationController?.toolbar?.frame.height ?? 0
-			let bounds = tableView.bounds
-
-			return CGRect(x: bounds.origin.x, y: bounds.origin.y + topInset, width: bounds.width, height: bounds.height - bottomInset)
-		}
+		return tableView.safeAreaLayoutGuide.layoutFrame
 	}
 
 	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {

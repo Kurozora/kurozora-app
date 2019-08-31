@@ -253,8 +253,6 @@ extension ManageActiveSessionsController: OtherSessionsCellDelegate {
 
 extension ManageActiveSessionsController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//		guard !(annotation is MKPointAnnotation) else { return nil }
-
 		if annotation.isEqual(mapView.userLocation) {
 			return nil
 		}
@@ -267,62 +265,22 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 			return pinAnnotationView
 		}
 
-		if #available(iOS 11.0, *) {
-			var annotationView = MKMarkerAnnotationView()
-			if let markerAnnotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation") as? MKMarkerAnnotationView {
-				annotationView = markerAnnotationView
-			} else {
-				annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
-				let annotation = annotation as! ImageAnnotation
-				annotationView.glyphImage = annotation.image
-			}
-
-			annotationView.markerTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
-
-			return annotationView
+		var annotationView = MKMarkerAnnotationView()
+		if let markerAnnotationView: MKMarkerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation") as? MKMarkerAnnotationView {
+			annotationView = markerAnnotationView
+		} else {
+			annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
+			let annotation = annotation as! ImageAnnotation
+			annotationView.glyphImage = annotation.image
 		}
 
-		var imageAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "imageAnnotation")
-		imageAnnotationView = ImageAnnotationView(annotation: annotation, reuseIdentifier: "imageAnnotation")
+		annotationView.markerTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
 
-		let annotation = annotation as! ImageAnnotation
-		imageAnnotationView?.image = annotation.image
-		imageAnnotationView?.annotation = annotation
-		imageAnnotationView?.canShowCallout = true
-
-		return imageAnnotationView
-
-//		else {
-//			let annotationIdentifier = "pin"
-//			var annotationView: MKAnnotationView?
-//
-//			if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
-//				annotationView = dequeuedAnnotationView
-//				annotationView?.annotation = annotation
-//			} else {
-//				annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-//				annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//			}
-//
-//			if let annotationView = annotationView {
-//				annotationView.canShowCallout = true
-//				annotationView.image = #imageLiteral(resourceName: "default_avatar")
-//			}
-//
-//			return annotationView
-//		}
+		return annotationView
 	}
 }
 
 extension ManageActiveSessionsController: CLLocationManagerDelegate {
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//		if let location = locations.last {
-//			let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//			let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//			self.mapView.setRegion(region, animated: true)
-//		}
-	}
-
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Unable to access your current location")
 	}
