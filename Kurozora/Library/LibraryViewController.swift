@@ -14,7 +14,6 @@ import SwiftTheme
 
 class LibraryViewController: TabmanViewController {
 	@IBOutlet weak var changeLayoutButton: UIBarButtonItem!
-	@IBOutlet weak var scrollView: UIScrollView!
 
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
@@ -59,16 +58,12 @@ class LibraryViewController: TabmanViewController {
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
 		searchController = SearchController(searchResultsController: searchResultsViewController)
-//		searchController.delegate = self
 		searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
 		searchController.searchResultsUpdater = searchResultsViewController
 		searchController.viewController = self
 
 		let searchControllerBar = searchController.searchBar
 		searchControllerBar.delegate = searchResultsViewController
-//		if #available(iOS 11.0, *) {
-//			navigationItem.searchController = searchController
-//		}
 
 		// Indicator
 		bar.indicator.weight = .light
@@ -100,7 +95,6 @@ class LibraryViewController: TabmanViewController {
 		if let barItemsCount = bar.items?.count {
 			bar.isHidden = barItemsCount <= 1
 		}
-		view.sendSubviewToBack(scrollView)
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -225,27 +219,6 @@ extension LibraryViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = librarySections?[index].rawValue else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension LibraryViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-			})
-		}
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-			})
-		}
 	}
 }
 //    let SortTypeDefault = "Library.SortType."

@@ -141,17 +141,6 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		}
 	}
 
-	// MARK: - ScrollView
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if #available(iOS 11.0, *) {
-			let offset = scrollView.contentOffset
-			if let tabmanVC = tabmanParent as? LibraryViewController {
-				tabmanVC.scrollView.contentOffset = offset
-				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Refresh the library data by fetching new items from the server.

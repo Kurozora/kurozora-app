@@ -627,20 +627,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZQ-ed-3Cc">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Sk-H7-Ahb">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="7Sk-H7-Ahb" secondAttribute="trailing" id="6xj-lE-kHa"/>
-                                    <constraint firstItem="7Sk-H7-Ahb" firstAttribute="top" secondItem="iZQ-ed-3Cc" secondAttribute="top" id="FO3-pc-tws"/>
-                                    <constraint firstAttribute="bottom" secondItem="7Sk-H7-Ahb" secondAttribute="bottom" id="Q44-Fr-kfr"/>
-                                    <constraint firstItem="7Sk-H7-Ahb" firstAttribute="leading" secondItem="iZQ-ed-3Cc" secondAttribute="leading" id="Wgt-2o-TQj"/>
-                                </constraints>
-                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJ8-Uu-FsA" userLabel="Create Thread Button">
                                 <rect key="frame" x="350" y="798" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -664,27 +650,27 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="7Sk-H7-Ahb" firstAttribute="width" secondItem="BaG-JS-iS2" secondAttribute="width" id="5hK-WK-hKj"/>
-                            <constraint firstItem="fVr-X1-qp9" firstAttribute="trailing" secondItem="iZQ-ed-3Cc" secondAttribute="trailing" id="62X-tI-UCF"/>
-                            <constraint firstItem="iZQ-ed-3Cc" firstAttribute="leading" secondItem="fVr-X1-qp9" secondAttribute="leading" id="OY1-HD-aTc"/>
-                            <constraint firstItem="7Sk-H7-Ahb" firstAttribute="height" secondItem="BaG-JS-iS2" secondAttribute="height" id="bm0-71-4Sw"/>
-                            <constraint firstItem="iZQ-ed-3Cc" firstAttribute="top" secondItem="BaG-JS-iS2" secondAttribute="top" id="eez-6j-gzR"/>
-                            <constraint firstItem="fVr-X1-qp9" firstAttribute="bottom" secondItem="iZQ-ed-3Cc" secondAttribute="bottom" id="oB7-8Z-eUz"/>
                             <constraint firstAttribute="bottomMargin" secondItem="kJ8-Uu-FsA" secondAttribute="bottom" constant="20" id="p9v-1Y-Ggz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kJ8-Uu-FsA" secondAttribute="trailing" id="wSb-IG-2t6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fVr-X1-qp9"/>
                     </view>
                     <navigationItem key="navigationItem" title="Forums" id="km1-34-9KJ">
-                        <barButtonItem key="rightBarButtonItem" title="Top" image="sort_top" id="3nN-Eo-w2O">
-                            <connections>
-                                <action selector="sortingButtonPressed:" destination="Haj-ko-0LW" id="lHJ-IU-joo"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="9vH-y6-ZZs">
+                                <connections>
+                                    <action selector="searchButtonPressed:" destination="Haj-ko-0LW" id="5f9-u0-kSG"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Top" image="sort_top" id="3nN-Eo-w2O">
+                                <connections>
+                                    <action selector="sortingButtonPressed:" destination="Haj-ko-0LW" id="lHJ-IU-joo"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="createThreadButton" destination="kJ8-Uu-FsA" id="N3a-mB-l5s"/>
-                        <outlet property="scrollView" destination="iZQ-ed-3Cc" id="xWX-KD-SgM"/>
                         <outlet property="sortingBarButtonItem" destination="3nN-Eo-w2O" id="1D0-ip-ty8"/>
                     </connections>
                 </viewController>

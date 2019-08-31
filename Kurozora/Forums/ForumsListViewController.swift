@@ -69,16 +69,6 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
         }
     }
 
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if #available(iOS 11.0, *) {
-			let offset = scrollView.contentOffset
-			if let tabmanVC = tabmanParent as? ForumsViewController {
-				tabmanVC.scrollView.contentOffset = offset
-				tabmanVC.scrollView.panGestureRecognizer.state = scrollView.panGestureRecognizer.state
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Refresh the threads data by fetching new items from the server.

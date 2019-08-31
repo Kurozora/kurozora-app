@@ -139,13 +139,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Kajimeru Isekai Seikatu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbC-kq-eg9">
-                                            <rect key="frame" x="80" y="202.5" width="316" height="18"/>
+                                            <rect key="frame" x="80" y="200.5" width="316" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV ·  10/24    5" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNd-Po-fJX">
-                                            <rect key="frame" x="80" y="220.5" width="316" height="13.5"/>
+                                            <rect key="frame" x="80" y="218.5" width="316" height="15.5"/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
                                             <color key="textColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -353,31 +353,7 @@
                     <view key="view" contentMode="scaleToFill" id="mUg-UP-NVd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67J-F2-FBk">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OAQ-G6-b7e">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="OAQ-G6-b7e" firstAttribute="top" secondItem="67J-F2-FBk" secondAttribute="top" id="HDk-er-EQj"/>
-                                    <constraint firstAttribute="bottom" secondItem="OAQ-G6-b7e" secondAttribute="bottom" id="Xff-q2-Gsm"/>
-                                    <constraint firstAttribute="trailing" secondItem="OAQ-G6-b7e" secondAttribute="trailing" id="Z2M-4d-Z8w"/>
-                                    <constraint firstItem="OAQ-G6-b7e" firstAttribute="leading" secondItem="67J-F2-FBk" secondAttribute="leading" id="cGV-yg-TyF"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="OAQ-G6-b7e" firstAttribute="height" secondItem="mUg-UP-NVd" secondAttribute="height" id="3Ux-Y8-vtc"/>
-                            <constraint firstItem="OAQ-G6-b7e" firstAttribute="width" secondItem="mUg-UP-NVd" secondAttribute="width" id="8Vt-ED-YcM"/>
-                            <constraint firstItem="67J-F2-FBk" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="DFy-Gv-JtN"/>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="67J-F2-FBk" secondAttribute="trailing" id="G3A-4j-376"/>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="67J-F2-FBk" secondAttribute="bottom" id="OLO-tJ-yHw"/>
-                            <constraint firstItem="67J-F2-FBk" firstAttribute="top" secondItem="mUg-UP-NVd" secondAttribute="top" id="qKw-IG-dC1"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="66t-RL-IQm"/>
                     </view>
                     <navigationItem key="navigationItem" title="Library" id="Aja-xv-l4D">
@@ -394,7 +370,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="changeLayoutButton" destination="Dnc-bs-5ES" id="VvY-Rh-WNJ"/>
-                        <outlet property="scrollView" destination="67J-F2-FBk" id="1Ee-gf-dh5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>

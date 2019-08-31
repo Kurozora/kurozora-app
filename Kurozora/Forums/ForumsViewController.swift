@@ -30,7 +30,6 @@ enum ForumSortingStyle: String {
 class ForumsViewController: TabmanViewController {
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
-	@IBOutlet weak var scrollView: UIScrollView!
 
 	var sections: [ForumSectionsElement]? {
 		didSet {
@@ -42,6 +41,7 @@ class ForumsViewController: TabmanViewController {
 //	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsViewController: SearchResultsTableViewController?
+	var searchController: SearchController!
 
 	let bar = TMBar.ButtonBar()
 
@@ -53,19 +53,15 @@ class ForumsViewController: TabmanViewController {
 		// Search bar
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
-		if #available(iOS 11.0, *) {
-			let searchController = SearchController(searchResultsController: searchResultsViewController)
-			searchController.delegate = self
-			searchController.searchBar.selectedScopeButtonIndex = SearchScope.thread.rawValue
-			searchController.searchResultsUpdater = searchResultsViewController
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController.searchBar.selectedScopeButtonIndex = SearchScope.thread.rawValue
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
 
-			let searchControllerBar = searchController.searchBar
-			searchControllerBar.delegate = searchResultsViewController
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
 
-			navigationItem.searchController = searchController
-			searchController.viewController = self
-		}
-
+		// Fetch forum sections
 		Service.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
 				self.sectionsCount = sections?.count
@@ -103,8 +99,6 @@ class ForumsViewController: TabmanViewController {
 		if let barItemsCount = bar.items?.count {
 			bar.isHidden = barItemsCount <= 1
 		}
-
-		view.sendSubviewToBack(scrollView)
 
 //		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
 //		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
@@ -166,6 +160,10 @@ class ForumsViewController: TabmanViewController {
 //			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
 //		}
 	}
+
+	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+		self.present(searchController, animated: true, completion: nil)
+	}
 }
 
 // MARK: - PageboyViewControllerDataSource
@@ -192,26 +190,5 @@ extension ForumsViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension ForumsViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-			})
-		}
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
-			})
-		}
 	}
 }
