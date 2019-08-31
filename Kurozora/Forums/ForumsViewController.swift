@@ -82,7 +82,7 @@ class ForumsViewController: TabmanViewController {
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
 		if UIDevice.isPad {
 			bar.layout.contentMode = .fit
