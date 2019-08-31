@@ -20,7 +20,7 @@ class AuthenticationOptionsCell: SettingsCell {
 			configureCell()
 		}
 	}
-	
+
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {

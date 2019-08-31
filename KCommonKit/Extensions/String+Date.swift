@@ -9,16 +9,16 @@
 import Foundation
 
 extension String {
-    
-    // Does not include seconds
-    public func dateWithISO8601() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
-        return dateFormatter.date(from: self)! as Date
-    }
-    public func dateWithISO8601NoMinutes() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HHZZZZZ"
-        return dateFormatter.date(from: self)! as Date
-    }
+
+	// Does not include seconds
+	public func dateWithISO8601() -> Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
+		return dateFormatter.date(from: self)! as Date
+	}
+	public func dateWithISO8601NoMinutes() -> Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HHZZZZZ"
+		return dateFormatter.date(from: self)! as Date
+	}
 }

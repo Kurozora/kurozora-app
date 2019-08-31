@@ -33,7 +33,7 @@ extension AuthenticationOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as! AuthenticationOptionsCell
 		authenticationOptionsCell.isSelected = true
-		
+
 		NotificationCenter.default.post(name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		tableView.reloadData()
 	}

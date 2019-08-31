@@ -10,7 +10,5 @@ import UIKit
 import KCommonKit
 
 class TitleCell: UITableViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
-    
 }

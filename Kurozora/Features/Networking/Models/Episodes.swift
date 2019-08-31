@@ -10,14 +10,14 @@ import TRON
 import SwiftyJSON
 
 class Episodes: JSONDecodable {
-    let success: Bool?
+	let success: Bool?
 	let season: EpisodesSeason?
-    let episodes: [EpisodesElement]?
-    
-    required init(json: JSON) throws {
-        self.success = json["success"].boolValue
+	let episodes: [EpisodesElement]?
+
+	required init(json: JSON) throws {
+		self.success = json["success"].boolValue
 		self.season = try? EpisodesSeason(json: json["season"])
-        var episodes = [EpisodesElement]()
+		var episodes = [EpisodesElement]()
 
 		let episodesArray = json["episodes"].arrayValue
 		for episodeItem in episodesArray {
@@ -27,7 +27,7 @@ class Episodes: JSONDecodable {
 		}
 
 		self.episodes = episodes
-    }
+	}
 }
 
 class EpisodesElement: JSONDecodable {

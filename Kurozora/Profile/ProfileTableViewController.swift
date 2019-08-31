@@ -37,14 +37,13 @@ class ProfileTableViewController: UITableViewController {
 		}
 	}
 
-
 	@IBOutlet weak var buttonsStackView: UIStackView!
 	@IBOutlet weak var reputationButton: UIButton! {
 		didSet {
 			reputationButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var badgesButton: UIButton!  {
+	@IBOutlet weak var badgesButton: UIButton! {
 		didSet {
 			badgesButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
 		}
@@ -99,8 +98,8 @@ class ProfileTableViewController: UITableViewController {
 	var profileImageCache: UIImage?
 	var bannerImageCache: UIImage?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup banner image height
@@ -113,10 +112,10 @@ class ProfileTableViewController: UITableViewController {
 		// Fetch user details
 		if otherUserID != nil {
 			fetchUserDetails(for: otherUserID)
-//			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
+			//			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
 		} else {
 			fetchUserDetails(for: User.currentID)
-//			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
+			//			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
 		}
 
 		// Setup refresh controller
@@ -130,14 +129,14 @@ class ProfileTableViewController: UITableViewController {
 		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
-    }
+	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 
 		DispatchQueue.main.async {
-            self.tableView.updateHeaderViewFrame()
-        }
+			self.tableView.updateHeaderViewFrame()
+		}
 	}
 
 	// MARK: - Prepare for segue
@@ -150,9 +149,9 @@ class ProfileTableViewController: UITableViewController {
 
 	// MARK: - Functions
 	/**
-		Instantiates and returns a view controller from the relevant storyboard.
+	Instantiates and returns a view controller from the relevant storyboard.
 
-		- Returns: a view controller from the relevant storyboard.
+	- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "profile", bundle: nil)
@@ -160,79 +159,79 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-		Refresh the posts data by fetching new items from the server.
+	Refresh the posts data by fetching new items from the server.
 
-		- Parameter sender: The object requesting the refresh.
+	- Parameter sender: The object requesting the refresh.
 	*/
-    @objc private func refreshPostsData(_ sender: Any) {
+	@objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
 		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing posts...", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 		fetchPosts()
 	}
 
 	/// Fetches posts for the user whose page is being viewed.
-    private func fetchPosts() {
-        self.tableView.reloadData()
+	private func fetchPosts() {
+		self.tableView.reloadData()
 		self.refreshControl?.endRefreshing()
-    }
+	}
 
 	/**
-		Fetches user detail for the given user id.
+	Fetches user detail for the given user id.
 
-		- Parameter userID: The user id for which the details should be fetched.
+	- Parameter userID: The user id for which the details should be fetched.
 	*/
 	private func fetchUserDetails(for userID: Int?) {
 		guard let userID = userID else { return }
-        Service.shared.getUserProfile(userID, withSuccess: { user in
+		Service.shared.getUserProfile(userID, withSuccess: { user in
 			DispatchQueue.main.async {
-            	self.user = user
+				self.user = user
 			}
-        })
-    }
+		})
+	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
-    private func configureProfile() {
+	private func configureProfile() {
 		guard let user = user else { return }
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
 
-        // Setup username
+		// Setup username
 		if let username = user.profile?.username, !username.isEmpty {
-            usernameLabel.text = username
+			usernameLabel.text = username
 		} else {
 			usernameLabel.text = "Unknown"
 		}
-        
-        // Setup avatar
+
+		// Setup avatar
 		if let avatar = user.profile?.avatar, !avatar.isEmpty {
-            let avatar = URL(string: avatar)
-            let resource = ImageResource(downloadURL: avatar!)
-            profileImageView.kf.indicatorType = .activity
-            profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			let avatar = URL(string: avatar)
+			let resource = ImageResource(downloadURL: avatar!)
+			profileImageView.kf.indicatorType = .activity
+			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
 
 			let cache = ImageCache.default
 			cache.store(profileImageView.image!, forKey: "currentprofileImageView")
-        } else {
-            profileImageView.image = #imageLiteral(resourceName: "default_avatar")
-        }
-
-        // Setup banner
-		if let banner = user.profile?.banner, !banner.isEmpty {
-            let banner = URL(string: banner)
-            let resource = ImageResource(downloadURL: banner!)
-            bannerImageView.kf.indicatorType = .activity
-			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
-        } else {
-            bannerImageView.image = #imageLiteral(resourceName: "default_banner")
-        }
-
-        // Setup user bio
-		if let bio = user.profile?.bio, !bio.isEmpty {
-            self.bioTextView.text = bio
+		} else {
+			profileImageView.image = #imageLiteral(resourceName: "default_avatar")
 		}
-        
-        // Setup reputation count
-        if let reputationCount = user.profile?.reputationCount {
+
+		// Setup banner
+		if let banner = user.profile?.banner, !banner.isEmpty {
+			let banner = URL(string: banner)
+			let resource = ImageResource(downloadURL: banner!)
+			bannerImageView.kf.indicatorType = .activity
+			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
+		} else {
+			bannerImageView.image = #imageLiteral(resourceName: "default_banner")
+		}
+
+		// Setup user bio
+		if let bio = user.profile?.bio, !bio.isEmpty {
+			self.bioTextView.text = bio
+		}
+
+		// Setup reputation count
+		if let reputationCount = user.profile?.reputationCount {
 			let count = NSAttributedString(string: "\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -246,10 +245,10 @@ class ProfileTableViewController: UITableViewController {
 			reputationButtonTitle.append(title)
 
 			self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
-        }
-        
-        // Setup following & followers count
-        if let followingCount = user.profile?.followingCount {
+		}
+
+		// Setup following & followers count
+		if let followingCount = user.profile?.followingCount {
 			let count = NSAttributedString(string: "\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -263,9 +262,9 @@ class ProfileTableViewController: UITableViewController {
 			followingButtonTitle.append(title)
 
 			self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
-        }
-        
-        if let followerCount = user.profile?.followerCount {
+		}
+
+		if let followerCount = user.profile?.followerCount {
 			let count = NSAttributedString(string: "\((followerCount >= 10000) ? followerCount.kFormatted : "\(followerCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -279,31 +278,31 @@ class ProfileTableViewController: UITableViewController {
 			followersButtonTitle.append(title)
 
 			self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
-        }
-        
-        // Setup follow button
-        if otherUserID == User.currentID || otherUserID == nil {
-            followButton.isHidden = true
+		}
+
+		// Setup follow button
+		if otherUserID == User.currentID || otherUserID == nil {
+			followButton.isHidden = true
 			editProfileButton.isHidden = false
-        } else {
+		} else {
 			if let currentlyFollowing = user.currentlyFollowing, currentlyFollowing == true {
 				followButton.setTitle(" Following", for: .normal)
 			} else {
 				followButton.setTitle(" Follow", for: .normal)
 			}
 
-            followButton.isHidden = false
-            editProfileButton.isHidden = true
-        }
+			followButton.isHidden = false
+			editProfileButton.isHidden = true
+		}
 
-        // Setup pro badge
-        proBadgeButton.isHidden = true
+		// Setup pro badge
+		proBadgeButton.isHidden = true
 		if let proBadge = user.profile?.proBadge, !String(proBadge).isEmpty {
-            if proBadge {
-                self.proBadgeButton.isHidden = false
-                self.proBadgeButton.setTitle("PRO", for: .normal)
-            }
-        }
+			if proBadge {
+				self.proBadgeButton.isHidden = false
+				self.proBadgeButton.setTitle("PRO", for: .normal)
+			}
+		}
 
 		// Setup badge & badge button
 		if let badges = user.profile?.badges {
@@ -343,7 +342,7 @@ class ProfileTableViewController: UITableViewController {
 
 		// First layout update
 		self.tableView.updateHeaderViewFrame()
-    }
+	}
 
 	/// Hides and unhides elements to prepare for starting and ending of the edit mode.
 	private func editMode(_ enabled: Bool) {
@@ -421,9 +420,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-		Cancel profile edit mode and return to view mode.
+	Cancel profile edit mode and return to view mode.
 
-		- Parameter sender: The object requesting the cancelation of the edit mode.
+	- Parameter sender: The object requesting the cancelation of the edit mode.
 	*/
 	@objc func cancelProfileEdit(_ sender: Any) {
 		// User doesn't want changes to be saved, pute everything back.
@@ -437,9 +436,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-		Apply profile changes.
+	Apply profile changes.
 
-		- Parameter sender: The object requesting the changes to be applied.
+	- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
 		guard let bioText = bioTextView.text else { return }
@@ -484,7 +483,7 @@ class ProfileTableViewController: UITableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-    // MARK: - IBActions
+	// MARK: - IBActions
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
 		self.bioTextCache = self.bioTextView.text
@@ -516,20 +515,20 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
-        if let avatar = user?.profile?.avatar, avatar != ""  {
-            presentPhotoViewControllerWith(url: avatar, from: profileImageView)
-        } else {
-            presentPhotoViewControllerWith(string: "default_avatar", from: profileImageView)
-        }
-    }
-    
-    @IBAction func showBanner(_ sender: AnyObject) {
-        if let banner = user?.profile?.banner, banner != "" {
+		if let avatar = user?.profile?.avatar, avatar != "" {
+			presentPhotoViewControllerWith(url: avatar, from: profileImageView)
+		} else {
+			presentPhotoViewControllerWith(string: "default_avatar", from: profileImageView)
+		}
+	}
+
+	@IBAction func showBanner(_ sender: AnyObject) {
+		if let banner = user?.profile?.banner, banner != "" {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
-        } else {
-            presentPhotoViewControllerWith(string: "default_banner", from: bannerImageView)
-        }
-    }
+		} else {
+			presentPhotoViewControllerWith(string: "default_banner", from: bannerImageView)
+		}
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -562,7 +561,7 @@ extension ProfileTableViewController {
 
 // MARK: - UIImagePickerControllerDelegate
 extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
 			self.currentImageView?.image = editedImage
 		}
@@ -620,7 +619,7 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 
 		self.present(alert, animated: true, completion: nil)
 	}
-	
+
 	@IBAction func selectBannerImageButtonPressed(_ sender: UIButton) {
 		self.currentImageView = self.bannerImageView
 		let alert = UIAlertController(title: "Banner Photo", message: "Choose a breathtaking photo 🌄", preferredStyle: .actionSheet)
@@ -649,21 +648,21 @@ extension ProfileTableViewController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		bioTextCache = textView.text
 		if textView.text == "Describe yourself!" && editingMode {
-            textView.text = ""
-        }
-    }
+			textView.text = ""
+		}
+	}
 
 	func textViewDidChange(_ textView: UITextView) {
 		DispatchQueue.main.async {
-            self.tableView.updateHeaderViewFrame()
-        }
+			self.tableView.updateHeaderViewFrame()
+		}
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
 		if textView.text == "" && editingMode {
-            textView.text = "Describe yourself!"
-        }
-    }
+			textView.text = "Describe yourself!"
+		}
+	}
 }
 
 //    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
@@ -702,12 +701,12 @@ extension ProfileTableViewController: UITextViewDelegate {
 //
 //        let selectedFeed = SelectedFeedStyle(rawValue: segmentedControl.selectedSegmentIndex)!
 //        switch selectedFeed {
-//        case .Feed:
+//        case .feed:
 //            let followingQuery = userProfile!.following().query()
 //            followingQuery.orderByDescending("activeStart")
 //            followingQuery.limit = 1000
 //            innerQuery.whereKey("userTimeline", matchesKey: "objectId", inQuery: followingQuery)
-//        case .Popular:
+//        case .popular:
 //            innerQuery.whereKeyExists("likedBy")
 //        case .Me:
 //            innerQuery.whereKey("userTimeline", equalTo: userProfile!)

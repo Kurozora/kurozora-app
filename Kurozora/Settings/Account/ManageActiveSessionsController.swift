@@ -28,16 +28,16 @@ class ManageActiveSessionsController: UITableViewController {
 	var pinAnnotationView: MKPinAnnotationView!
 	let locationManager = CLLocationManager()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		if dismissEnabled {
 			let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismiss(_:)))
 			self.navigationItem.leftBarButtonItem = closeButton
 		}
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
@@ -63,18 +63,18 @@ class ManageActiveSessionsController: UITableViewController {
 			print("Please turn on location services or GPS")
 		}
 
-        // Setup table view
+		// Setup table view
 		tableView.tableHeaderView?.height = self.view.frame.height / 3
-        tableView.dataSource = self
-        tableView.delegate = self
+		tableView.dataSource = self
+		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
-    }
+	}
 
 	// MARK: - Functions
 	private func fetchSessions() {
 		Service.shared.getSessions( withSuccess: { (sessions) in
-			DispatchQueue.main.async() {
+			DispatchQueue.main.async {
 				self.sessions = sessions
 			}
 		})
@@ -163,7 +163,7 @@ class ManageActiveSessionsController: UITableViewController {
 									"ip": ip,
 									"last_validated": lastValidated
 			]
-			
+
 			if let newSessionElement = try? UserSessionsElement(json: newSession) {
 				self.tableView.beginUpdates()
 				self.sessions?.otherSessions?.append(newSessionElement)
@@ -179,7 +179,7 @@ class ManageActiveSessionsController: UITableViewController {
 		if UIDevice.isLandscape {
 			self.tableView.tableHeaderView?.height = self.view.frame.height / 3
 		} else {
-			DispatchQueue.main.async() {
+			DispatchQueue.main.async {
 				self.tableView.tableHeaderView?.height = self.view.frame.height / 3
 			}
 		}

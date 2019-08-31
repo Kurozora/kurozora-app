@@ -10,7 +10,7 @@ import UIKit
 import SPStorkController
 
 class KModalTransition: UIStoryboardSegue {
-	public var transitioningDelegate: SPStorkTransitioningDelegate?
+	public weak var transitioningDelegate: SPStorkTransitioningDelegate?
 
 	override func perform() {
 		if #available(iOS 13.0, *) {

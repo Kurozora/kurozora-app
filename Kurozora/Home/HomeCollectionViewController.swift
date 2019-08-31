@@ -26,7 +26,7 @@ class HomeCollectionViewController: UICollectionViewController {
 	}
     var showID: Int?
 	var gap: CGFloat = UIDevice.isPad ? 40 : 20
-	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = (1,1)
+	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = (1, 1)
 
 	#if DEBUG
 	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
@@ -50,12 +50,12 @@ class HomeCollectionViewController: UICollectionViewController {
 			if section == 0 {
 				if UIDevice.isLandscape {
 					switch UIDevice.type {
-					case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 1.4)
-					case .iPhone_6_6S_7_8:		numberOfItems = (1, 1.4)
-					case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 1.4)
-					case .iPhone_Xr:			numberOfItems = (1, 1.4)
-					case .iPhone_X_Xs:			numberOfItems = (1, 1.4)
-					case .iPhone_Xs_Max:		numberOfItems = (1, 1.4)
+					case .iPhone5SSE:	numberOfItems = (1, 1.4)
+					case .iPhone66S78:		numberOfItems = (1, 1.4)
+					case .iPhone66S78PLUS:	numberOfItems = (1, 1.4)
+					case .iPhoneXr:			numberOfItems = (1, 1.4)
+					case .iPhoneXXs:			numberOfItems = (1, 1.4)
+					case .iPhoneXsMax:		numberOfItems = (1, 1.4)
 
 					case .iPad:					numberOfItems = (1, 2.0)
 					case .iPadAir3:				numberOfItems = (1, 2.0)
@@ -64,12 +64,12 @@ class HomeCollectionViewController: UICollectionViewController {
 					}
 				} else {
 					switch UIDevice.type {
-					case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.8)
-					case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.8)
-					case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.8)
-					case .iPhone_Xr:			numberOfItems = (1, 3.4)
-					case .iPhone_X_Xs:			numberOfItems = (1, 3.4)
-					case .iPhone_Xs_Max:		numberOfItems = (1, 3.4)
+					case .iPhone5SSE:	numberOfItems = (1, 2.8)
+					case .iPhone66S78:		numberOfItems = (1, 2.8)
+					case .iPhone66S78PLUS:	numberOfItems = (1, 2.8)
+					case .iPhoneXr:			numberOfItems = (1, 3.4)
+					case .iPhoneXXs:			numberOfItems = (1, 3.4)
+					case .iPhoneXsMax:		numberOfItems = (1, 3.4)
 
 					case .iPad:					numberOfItems = (1, 3.0)
 					case .iPadAir3:				numberOfItems = (1, 3.0)
@@ -85,12 +85,12 @@ class HomeCollectionViewController: UICollectionViewController {
 		case .large:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
-				case .iPhone_Xr:			numberOfItems = (1, 1.8)
-				case .iPhone_X_Xs:			numberOfItems = (1, 1.8)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 1.8)
+				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone66S78:		numberOfItems = (1, 2.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
+				case .iPhoneXr:			numberOfItems = (1, 1.8)
+				case .iPhoneXXs:			numberOfItems = (1, 1.8)
+				case .iPhoneXsMax:		numberOfItems = (1, 1.8)
 
 				case .iPad:					numberOfItems = (1, 2.6)
 				case .iPadAir3:				numberOfItems = (1, 2.6)
@@ -99,12 +99,12 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 4.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 4.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 4.0)
-				case .iPhone_Xr:			numberOfItems = (1, 4.6)
-				case .iPhone_X_Xs:			numberOfItems = (1, 4.6)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 4.6)
+				case .iPhone5SSE:	numberOfItems = (1, 4.0)
+				case .iPhone66S78:		numberOfItems = (1, 4.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 4.0)
+				case .iPhoneXr:			numberOfItems = (1, 4.6)
+				case .iPhoneXXs:			numberOfItems = (1, 4.6)
+				case .iPhoneXsMax:		numberOfItems = (1, 4.6)
 
 				case .iPad:					numberOfItems = (1, 4.8)
 				case .iPadAir3:				numberOfItems = (1, 4.8)
@@ -115,12 +115,12 @@ class HomeCollectionViewController: UICollectionViewController {
 		case .medium:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 3.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 3.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 3.0)
-				case .iPhone_Xr:			numberOfItems = (1, 2.6)
-				case .iPhone_X_Xs:			numberOfItems = (1, 2.6)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 2.6)
+				case .iPhone5SSE:	numberOfItems = (1, 3.0)
+				case .iPhone66S78:		numberOfItems = (1, 3.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 3.0)
+				case .iPhoneXr:			numberOfItems = (1, 2.6)
+				case .iPhoneXXs:			numberOfItems = (1, 2.6)
+				case .iPhoneXsMax:		numberOfItems = (1, 2.6)
 
 				case .iPad:					numberOfItems = (1, 5.0)
 				case .iPadAir3:				numberOfItems = (1, 5.0)
@@ -129,12 +129,12 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 5.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 5.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 5.0)
-				case .iPhone_Xr:			numberOfItems = (1, 6.0)
-				case .iPhone_X_Xs:			numberOfItems = (1, 6.0)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 6.0)
+				case .iPhone5SSE:	numberOfItems = (1, 5.0)
+				case .iPhone66S78:		numberOfItems = (1, 5.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 5.0)
+				case .iPhoneXr:			numberOfItems = (1, 6.0)
+				case .iPhoneXXs:			numberOfItems = (1, 6.0)
+				case .iPhoneXsMax:		numberOfItems = (1, 6.0)
 
 				case .iPad:					numberOfItems = (1, 7.0)
 				case .iPadAir3:				numberOfItems = (1, 7.0)
@@ -145,12 +145,12 @@ class HomeCollectionViewController: UICollectionViewController {
 		case .small:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
-				case .iPhone_Xr:			numberOfItems = (1, 1.6)
-				case .iPhone_X_Xs:			numberOfItems = (1, 1.6)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 1.6)
+				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone66S78:		numberOfItems = (1, 2.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
+				case .iPhoneXr:			numberOfItems = (1, 1.6)
+				case .iPhoneXXs:			numberOfItems = (1, 1.6)
+				case .iPhoneXsMax:		numberOfItems = (1, 1.6)
 
 				case .iPad:					numberOfItems = (1, 3.2)
 				case .iPadAir3:				numberOfItems = (1, 3.2)
@@ -159,12 +159,12 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 4.2)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 4.2)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 4.2)
-				case .iPhone_Xr:			numberOfItems = (1, 5.0)
-				case .iPhone_X_Xs:			numberOfItems = (1, 5.0)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 5.0)
+				case .iPhone5SSE:	numberOfItems = (1, 4.2)
+				case .iPhone66S78:		numberOfItems = (1, 4.2)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 4.2)
+				case .iPhoneXr:			numberOfItems = (1, 5.0)
+				case .iPhoneXXs:			numberOfItems = (1, 5.0)
+				case .iPhoneXsMax:		numberOfItems = (1, 5.0)
 
 				case .iPad:					numberOfItems = (1, 5.2)
 				case .iPadAir3:				numberOfItems = (1, 5.2)
@@ -175,12 +175,12 @@ class HomeCollectionViewController: UICollectionViewController {
 		case .video:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 1.1)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 1.1)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 1.1)
-				case .iPhone_Xr:			numberOfItems = (1, 1.2)
-				case .iPhone_X_Xs:			numberOfItems = (1, 1.2)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 1.2)
+				case .iPhone5SSE:	numberOfItems = (1, 1.1)
+				case .iPhone66S78:		numberOfItems = (1, 1.1)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 1.1)
+				case .iPhoneXr:			numberOfItems = (1, 1.2)
+				case .iPhoneXXs:			numberOfItems = (1, 1.2)
+				case .iPhoneXsMax:		numberOfItems = (1, 1.2)
 
 				case .iPad:					numberOfItems = (1, 1.79)
 				case .iPadAir3:				numberOfItems = (1, 1.79)
@@ -189,12 +189,12 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8:		numberOfItems = (1, 2.0)
-				case .iPhone_6_6S_7_8_PLUS:	numberOfItems = (1, 2.0)
-				case .iPhone_Xr:			numberOfItems = (1, 2.4)
-				case .iPhone_X_Xs:			numberOfItems = (1, 2.4)
-				case .iPhone_Xs_Max:		numberOfItems = (1, 2.4)
+				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone66S78:		numberOfItems = (1, 2.0)
+				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
+				case .iPhoneXr:			numberOfItems = (1, 2.4)
+				case .iPhoneXXs:			numberOfItems = (1, 2.4)
+				case .iPhoneXsMax:		numberOfItems = (1, 2.4)
 
 				case .iPad:					numberOfItems = (1, 3.0)
 				case .iPadAir3:				numberOfItems = (1, 3.0)
@@ -295,7 +295,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			placeholderTimer = nil
 		}
 	}
-	
+
 	// MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {

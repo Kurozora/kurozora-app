@@ -19,4 +19,3 @@ class KBaseCollectionViewFlowLayout: UICollectionViewFlowLayout {
 		return UIDevice.isPad ? 20 : 10
 	}
 }
-

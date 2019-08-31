@@ -20,7 +20,7 @@ class BasicTabBarItemContentView: ESTabBarItemContentView {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: Notification.Name(rawValue: ThemeUpdateNotification), object: nil
 		)
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

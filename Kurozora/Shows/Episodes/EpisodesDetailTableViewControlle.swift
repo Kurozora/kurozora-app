@@ -29,12 +29,12 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 
 	var episodeCell: EpisodesCollectionViewCell?
 	var episodeElement: EpisodesElement?
-	var delegate: EpisodesDetailTableViewControlleDelegate?
+	weak var delegate: EpisodesDetailTableViewControlleDelegate?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
 		configureEpisodeDetails(from: episodeCell)
 
 		tableView.rowHeight = UITableView.automaticDimension
@@ -96,7 +96,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 	@IBAction func episodeMoreButtonPressed(_ sender: UIButton) {
 		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = episodeWatchedButton.tag
-		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (action) in
+		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
 			self.episodeWatchedButtonPressed(sender)
 		}))
 		controller.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))

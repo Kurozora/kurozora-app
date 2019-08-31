@@ -178,7 +178,7 @@ public class ForumsCell: UITableViewCell {
 
 	// Reply to the current thread
 	func replyThread() {
-		// TODO: Add reply function here
+		// TODO: - Add reply function here
 	}
 
 	// Share the current thread

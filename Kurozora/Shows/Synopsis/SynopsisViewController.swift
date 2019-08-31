@@ -14,7 +14,7 @@ class SynopsisViewController: UIViewController {
 			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	
+
 	var synopsis: String?
 
 	override func viewDidLoad() {

@@ -25,8 +25,7 @@ extension UIApplication {
 		}
 
 		if let tab = base as? UITabBarController {
-			if let selected = tab.selectedViewController
-			{
+			if let selected = tab.selectedViewController {
 				let top = topViewController(selected)
 				return top
 			}

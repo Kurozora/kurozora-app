@@ -9,8 +9,6 @@
 import UIKit
 
 class ShowLinkCell: UITableViewCell {
-    
     @IBOutlet weak var linkLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
-
 }

@@ -158,9 +158,9 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	// MARK: - Functions
 	/**
-		Instantiates and returns a view controller from the relevant storyboard.
+	Instantiates and returns a view controller from the relevant storyboard.
 
-		- Returns: a view controller from the relevant storyboard.
+	- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "forums", bundle: nil)

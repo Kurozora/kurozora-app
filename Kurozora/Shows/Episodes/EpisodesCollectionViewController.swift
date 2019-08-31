@@ -28,12 +28,12 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	return (2.08, 1.8)
-				case .iPhone_6_6S_7_8:		return (2.08, 1.8)
-				case .iPhone_6_6S_7_8_PLUS:	return (2.08, 1.8)
-				case .iPhone_Xr:			return (2.28, 1.8)
-				case .iPhone_X_Xs:			return (2.28, 1.8)
-				case .iPhone_Xs_Max:		return (2.28, 1.8)
+				case .iPhone5SSE:	return (2.08, 1.8)
+				case .iPhone66S78:		return (2.08, 1.8)
+				case .iPhone66S78PLUS:	return (2.08, 1.8)
+				case .iPhoneXr:			return (2.28, 1.8)
+				case .iPhoneXXs:			return (2.28, 1.8)
+				case .iPhoneXsMax:		return (2.28, 1.8)
 
 				case .iPad:					return (3.08, 3.6)
 				case .iPadAir3:				return (3.08, 3.6)
@@ -43,12 +43,12 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 			}
 
 			switch UIDevice.type {
-			case .iPhone_5_5S_5C_SE:	return (1, 3)
-			case .iPhone_6_6S_7_8:		return (1, 3)
-			case .iPhone_6_6S_7_8_PLUS:	return (1, 3)
-			case .iPhone_Xr:			return (1, 3.8)
-			case .iPhone_X_Xs:			return (1, 3.8)
-			case .iPhone_Xs_Max:		return (1, 3.8)
+			case .iPhone5SSE:	return (1, 3)
+			case .iPhone66S78:		return (1, 3)
+			case .iPhone66S78PLUS:	return (1, 3)
+			case .iPhoneXr:			return (1, 3.8)
+			case .iPhoneXXs:			return (1, 3.8)
+			case .iPhoneXsMax:		return (1, 3.8)
 
 			case .iPad:					return (2, 4.4)
 			case .iPadAir3:				return (2, 4.4)
@@ -148,7 +148,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 	func populateActionSheet(for episode: EpisodesElement, at cell: EpisodesCollectionViewCell) {
 		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = cell.episodeWatchedButton.tag
-		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (action) in
+		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
 			self.episodesCellWatchedButtonPressed(for: cell)
 		}))
 		controller.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
@@ -247,7 +247,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 
 		switch orientation {
 		case .right:
-			let rateAction = SwipeAction(style: .default, title: "Rate") { action, indexPath in
+			let rateAction = SwipeAction(style: .default, title: "Rate") { _, _ in
 			}
 			rateAction.backgroundColor = .clear
 			rateAction.image = #imageLiteral(resourceName: "rate_circle")
@@ -255,7 +255,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			rateAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			rateAction.transitionDelegate = ScaleTransition.default
 
-			let moreAction = SwipeAction(style: .default, title: "More") { action, indexPath in
+			let moreAction = SwipeAction(style: .default, title: "More") { _, _ in
 				self.populateActionSheet(for: episode, at: cell)
 			}
 			moreAction.backgroundColor = .clear
@@ -266,7 +266,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 
 			return [rateAction, moreAction]
 		case .left:
-			let watchedAction = SwipeAction(style: .default, title: "") { action, indexPath in
+			let watchedAction = SwipeAction(style: .default, title: "") { _, _ in
 				self.episodesCellWatchedButtonPressed(for: cell)
 			}
 			watchedAction.backgroundColor = .clear
@@ -354,7 +354,7 @@ extension Array {
 
         var delta = 1
 
-        while(true) {
+        while true {
             guard index + delta < count || index - delta >= 0 else {
                 return nil
             }
@@ -367,7 +367,7 @@ extension Array {
                 return (index - delta, self[index - delta])
             }
 
-            delta = delta + 1
+            delta += 1
         }
     }
 }

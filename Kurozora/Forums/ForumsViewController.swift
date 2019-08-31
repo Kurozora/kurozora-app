@@ -14,8 +14,8 @@ import SCLAlertView
 import SwiftTheme
 
 enum ForumSortingStyle: String {
-	case top = "top"
-	case recent = "recent"
+	case top
+	case recent
 
 	func image() -> UIImage? {
 		switch self {
@@ -126,7 +126,7 @@ class ForumsViewController: TabmanViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")),("Recent","recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")), ("Recent", "recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
 			currentSection?.pageNumber = 0

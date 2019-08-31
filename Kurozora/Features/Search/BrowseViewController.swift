@@ -11,198 +11,197 @@ import UIKit
 //import ANParseKit
 
 enum BrowseType: String {
-    case TopAnime = "Top Anime"
-    case TopAiring = "Top Airing"
-    case TopUpcoming = "Top Upcoming"
-    case TopTVSeries = "Top TV Series"
-    case TopMovies = "Top Movies"
-    case TopOVA = "Top OVA"
-    case TopSpecials = "Top Specials"
-    case JustAdded = "Just Added"
-    case MostPopular = "Most Popular"
-    case Filtering = "Advanced Search"
-    
-    static func allItems() -> [String] {
-        return [
-            BrowseType.TopAnime.rawValue,
-            BrowseType.TopAiring.rawValue,
-            BrowseType.TopUpcoming.rawValue,
-            BrowseType.TopTVSeries.rawValue,
-            BrowseType.TopMovies.rawValue,
-            BrowseType.TopOVA.rawValue,
-            BrowseType.TopSpecials.rawValue,
-            BrowseType.JustAdded.rawValue,
-            BrowseType.MostPopular.rawValue,
-        ]
-    }
+	case topAnime = "Top Anime"
+	case topAiring = "Top Airing"
+	case topUpcoming = "Top Upcoming"
+	case topTVSeries = "Top TV Series"
+	case topMovies = "Top Movies"
+	case topOVA = "Top OVA"
+	case topSpecials = "Top Specials"
+	case justAdded = "Just Added"
+	case mostPopular = "Most Popular"
+	case filtering = "Advanced Search"
+
+	static func allItems() -> [String] {
+		return [
+			BrowseType.TopAnime.rawValue,
+			BrowseType.TopAiring.rawValue,
+			BrowseType.TopUpcoming.rawValue,
+			BrowseType.TopTVSeries.rawValue,
+			BrowseType.TopMovies.rawValue,
+			BrowseType.TopOVA.rawValue,
+			BrowseType.TopSpecials.rawValue,
+			BrowseType.JustAdded.rawValue,
+			BrowseType.MostPopular.rawValue
+		]
+	}
 }
 
 class BrowseViewController: UIViewController {
-    
-    //    var currentBrowseType: BrowseType = .TopAnime
-    //    var animator: ZFModalTransitionAnimator!
-    ////    var loadingView: LoaderView!
-    //    var currentConfiguration: Configuration =
-    //        [
-    //            (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.Newest.rawValue, SortType.Oldest.rawValue]),
-    //            (FilterSection.FilterTitle, nil, []),
-    //            (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
-    //            (FilterSection.Year, nil, allYears),
-    //            (FilterSection.Status, nil, AnimeStatus.allRawValues()),
-    //            (FilterSection.Studio, nil, allStudios.sort({$0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending})),
-    //            (FilterSection.Classification, nil, AnimeClassification.allRawValues()),
-    //            (FilterSection.Genres, nil, AnimeGenre.allRawValues())
-    //    ]
-    //    var selectedGenres: [String] = []
-    //    var fetchController = FetchController()
-    //
-    //    @IBOutlet weak var navigationBarTitle: UILabel!
-    //    @IBOutlet weak var collectionView: UICollectionView!
-    //    @IBOutlet weak var navigationBarTitleView: UIView!
-    //
-    //    override func viewDidLoad() {
-    //        super.viewDidLoad()
-    //
-    //        AnimeCell.registerNibFor(collectionView: collectionView)
-    //
-    //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
-    //        navigationBarTitleView.addGestureRecognizer(tapGestureRecognizer)
-    //
-    //        loadingView = LoaderView(parentView: view)
-    //
-    //        fetchListType(currentBrowseType)
-    //        updateLayout(withSize: view.bounds.size)
-    //
-    //        NotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
-    //
-    //        navigationController?.setNavigationBarHidden(false, animated: true)
-    //
-    //        if currentBrowseType == .Filtering {
-    //            showFilterPressed(self)
-    //        }
-    //    }
-    //
-    //    override func viewWillAppear(animated: Bool) {
-    //        super.viewWillAppear(animated)
-    //
-    //        if loadingView.animating == false {
-    //            loadingView.stopAnimating()
-    //            collectionView.animateFadeIn()
-    //        }
-    //    }
-    //
-    //    deinit {
-    //        NotificationCenter.defaultCenter().removeObserver(self)
-    //    }
-    //
-    //    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    //        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-    //
-    //        updateLayout(withSize: size)
-    //    }
-    //
-    //    func updateLayout(withSize viewSize: CGSize) {
-    //
-    //        guard let collectionView = collectionView,
-    //            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-    //                return
-    //        }
-    //
-    //        AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
-    //    }
-    //
-    //    func updateETACells() {
-    //        let indexPaths = collectionView.indexPathsForVisibleItems()
-    //        collectionView.reloadItemsAtIndexPaths(indexPaths)
-    //    }
-    //
-    //    func fetchListType(type: BrowseType, customQuery: PFQuery? = nil) {
-    //
-    //        // Animate
-    //        collectionView.animateFadeOut()
-    //        loadingView.startAnimating()
-    //
-    //        // Update model
-    //        currentBrowseType = type
-    //
-    //        // Update UI
-    //        navigationBarTitle.text! = currentBrowseType.rawValue + " " + FontAwesome.AngleDown.rawValue
-    //
-    //        // Fetch
-    //        var query: PFQuery!
-    //        if let customQuery = customQuery {
-    //            query = customQuery
-    //        } else {
-    //            query = BrowseViewController.queryForBrowseType(currentBrowseType, customQuery: customQuery)
-    //        }
-    //
-    //        fetchController.configureWith(self, query: query, collectionView: collectionView)
-    //        collectionView.reloadData()
-    //    }
-    //
-    //    class func queryForBrowseType(browseType: BrowseType, customQuery: PFQuery? = nil) -> PFQuery {
-    //        let query = Anime.query()!
-    //        switch browseType {
-    //        case .TopAnime:
-    //            query
-    //                .whereKey("rank", greaterThan: 0)
-    //                .orderByAscending("rank")
-    //        case .TopAiring:
-    //            query
-    //                .whereKey("rank", greaterThan: 0)
-    //                .orderByAscending("rank")
-    //                .whereKey("status", equalTo: AnimeStatus.CurrentlyAiring.rawValue)
-    //        case .TopUpcoming:
-    //            query
-    //                .orderByAscending("popularityRank")
-    //                .whereKey("status", equalTo: AnimeStatus.NotYetAired.rawValue)
-    //        case .TopTVSeries:
-    //            query.orderByAscending("rank")
-    //                .whereKey("rank", greaterThan: 0)
-    //                .whereKey("type", equalTo: AnimeType.TV.rawValue)
-    //        case .TopMovies:
-    //            query.orderByAscending("rank")
-    //                .whereKey("rank", greaterThan: 0)
-    //                .whereKey("type", equalTo: AnimeType.Movie.rawValue)
-    //        case .TopOVA:
-    //            query.orderByAscending("rank")
-    //                .whereKey("rank", greaterThan: 0)
-    //                .whereKey("type", equalTo: AnimeType.OVA.rawValue)
-    //        case .TopSpecials:
-    //            query.orderByAscending("rank")
-    //                .whereKey("rank", greaterThan: 0)
-    //                .whereKey("type", equalTo: AnimeType.Special.rawValue)
-    //        case .JustAdded:
-    //            query.orderByDescending("createdAt")
-    //        case .MostPopular:
-    //            query.orderByAscending("popularityRank")
-    //        case .Filtering:
-    //            // Do nothing
-    //            break
-    //        }
-    //        return query
-    //    }
-    //
-    //    func changeSeasonalChart() {
-    //        if let navigationController = navigationController {
-    //            DropDownListViewController.showDropDownListWith(sender: navigationController.navigationBar, viewController: navigationController, delegate: self, dataSource: [BrowseType.allItems()])
-    //        }
-    //    }
-    //
-    //    // MARK: - IBActions
-    //
-    //    @IBAction func showFilterPressed(sender: AnyObject) {
-    //
-    //        if let navigationController = navigationController {
-    //            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
-    //
-    //            controller.delegate = self
-    //            controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
-    //            animator = navigationController.presentViewControllerModal(controller)
-    //        }
-    //    }
-}
 
+	//    var currentBrowseType: BrowseType = .TopAnime
+	//    var animator: ZFModalTransitionAnimator!
+	////    var loadingView: LoaderView!
+	//    var currentConfiguration: Configuration =
+	//        [
+	//            (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.Newest.rawValue, SortType.Oldest.rawValue]),
+	//            (FilterSection.FilterTitle, nil, []),
+	//            (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
+	//            (FilterSection.Year, nil, allYears),
+	//            (FilterSection.Status, nil, AnimeStatus.allRawValues()),
+	//            (FilterSection.Studio, nil, allStudios.sort({$0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending})),
+	//            (FilterSection.Classification, nil, AnimeClassification.allRawValues()),
+	//            (FilterSection.Genres, nil, AnimeGenre.allRawValues())
+	//    ]
+	//    var selectedGenres: [String] = []
+	//    var fetchController = FetchController()
+	//
+	//    @IBOutlet weak var navigationBarTitle: UILabel!
+	//    @IBOutlet weak var collectionView: UICollectionView!
+	//    @IBOutlet weak var navigationBarTitleView: UIView!
+	//
+	//    override func viewDidLoad() {
+	//        super.viewDidLoad()
+	//
+	//        AnimeCell.registerNibFor(collectionView: collectionView)
+	//
+	//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
+	//        navigationBarTitleView.addGestureRecognizer(tapGestureRecognizer)
+	//
+	//        loadingView = LoaderView(parentView: view)
+	//
+	//        fetchListType(currentBrowseType)
+	//        updateLayout(withSize: view.bounds.size)
+	//
+	//        NotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
+	//
+	//        navigationController?.setNavigationBarHidden(false, animated: true)
+	//
+	//        if currentBrowseType == .Filtering {
+	//            showFilterPressed(self)
+	//        }
+	//    }
+	//
+	//    override func viewWillAppear(animated: Bool) {
+	//        super.viewWillAppear(animated)
+	//
+	//        if loadingView.animating == false {
+	//            loadingView.stopAnimating()
+	//            collectionView.animateFadeIn()
+	//        }
+	//    }
+	//
+	//    deinit {
+	//        NotificationCenter.defaultCenter().removeObserver(self)
+	//    }
+	//
+	//    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+	//        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+	//
+	//        updateLayout(withSize: size)
+	//    }
+	//
+	//    func updateLayout(withSize viewSize: CGSize) {
+	//
+	//        guard let collectionView = collectionView,
+	//            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+	//                return
+	//        }
+	//
+	//        AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
+	//    }
+	//
+	//    func updateETACells() {
+	//        let indexPaths = collectionView.indexPathsForVisibleItems()
+	//        collectionView.reloadItemsAtIndexPaths(indexPaths)
+	//    }
+	//
+	//    func fetchListType(type: BrowseType, customQuery: PFQuery? = nil) {
+	//
+	//        // Animate
+	//        collectionView.animateFadeOut()
+	//        loadingView.startAnimating()
+	//
+	//        // Update model
+	//        currentBrowseType = type
+	//
+	//        // Update UI
+	//        navigationBarTitle.text! = currentBrowseType.rawValue + " " + FontAwesome.AngleDown.rawValue
+	//
+	//        // Fetch
+	//        var query: PFQuery!
+	//        if let customQuery = customQuery {
+	//            query = customQuery
+	//        } else {
+	//            query = BrowseViewController.queryForBrowseType(currentBrowseType, customQuery: customQuery)
+	//        }
+	//
+	//        fetchController.configureWith(self, query: query, collectionView: collectionView)
+	//        collectionView.reloadData()
+	//    }
+	//
+	//    class func queryForBrowseType(browseType: BrowseType, customQuery: PFQuery? = nil) -> PFQuery {
+	//        let query = Anime.query()!
+	//        switch browseType {
+	//        case .TopAnime:
+	//            query
+	//                .whereKey("rank", greaterThan: 0)
+	//                .orderByAscending("rank")
+	//        case .TopAiring:
+	//            query
+	//                .whereKey("rank", greaterThan: 0)
+	//                .orderByAscending("rank")
+	//                .whereKey("status", equalTo: AnimeStatus.CurrentlyAiring.rawValue)
+	//        case .TopUpcoming:
+	//            query
+	//                .orderByAscending("popularityRank")
+	//                .whereKey("status", equalTo: AnimeStatus.NotYetAired.rawValue)
+	//        case .TopTVSeries:
+	//            query.orderByAscending("rank")
+	//                .whereKey("rank", greaterThan: 0)
+	//                .whereKey("type", equalTo: AnimeType.TV.rawValue)
+	//        case .TopMovies:
+	//            query.orderByAscending("rank")
+	//                .whereKey("rank", greaterThan: 0)
+	//                .whereKey("type", equalTo: AnimeType.Movie.rawValue)
+	//        case .TopOVA:
+	//            query.orderByAscending("rank")
+	//                .whereKey("rank", greaterThan: 0)
+	//                .whereKey("type", equalTo: AnimeType.OVA.rawValue)
+	//        case .TopSpecials:
+	//            query.orderByAscending("rank")
+	//                .whereKey("rank", greaterThan: 0)
+	//                .whereKey("type", equalTo: AnimeType.Special.rawValue)
+	//        case .JustAdded:
+	//            query.orderByDescending("createdAt")
+	//        case .MostPopular:
+	//            query.orderByAscending("popularityRank")
+	//        case .Filtering:
+	//            // Do nothing
+	//            break
+	//        }
+	//        return query
+	//    }
+	//
+	//    func changeSeasonalChart() {
+	//        if let navigationController = navigationController {
+	//            DropDownListViewController.showDropDownListWith(sender: navigationController.navigationBar, viewController: navigationController, delegate: self, dataSource: [BrowseType.allItems()])
+	//        }
+	//    }
+	//
+	//    // MARK: - IBActions
+	//
+	//    @IBAction func showFilterPressed(sender: AnyObject) {
+	//
+	//        if let navigationController = navigationController {
+	//            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
+	//
+	//            controller.delegate = self
+	//            controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
+	//            animator = navigationController.presentViewControllerModal(controller)
+	//        }
+	//    }
+}
 
 //extension BrowseViewController: UICollectionViewDataSource {
 //    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -286,7 +285,6 @@ class BrowseViewController: UIViewController {
 //        loadingView.stopAnimating()
 //    }
 //}
-
 
 //extension BrowseViewController: DropDownListDelegate {
 //    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {

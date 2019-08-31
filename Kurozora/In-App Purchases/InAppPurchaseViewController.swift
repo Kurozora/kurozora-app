@@ -11,7 +11,6 @@ import KCommonKit
 import UIKit
 
 class InAppPurchaseViewController: UITableViewController {
-    
 //    var loadingView: LoaderView!
 //
 //    @IBOutlet weak var descriptionLabel: UILabel!

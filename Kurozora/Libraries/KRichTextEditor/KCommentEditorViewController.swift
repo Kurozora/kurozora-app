@@ -48,7 +48,6 @@ class KCommentEditorViewController: UIViewController {
 		}
 	}
 
-
 	@IBOutlet weak var replyToUserContainer: UIView! {
 		didSet {
 			replyToUserContainer.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -123,7 +122,7 @@ class KCommentEditorViewController: UIViewController {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
 			guard let threadID = forumThread?.id else { return }
 			guard let comment = commentTextView.text, comment != "" else { return }
-			
+
 			Service.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {
 					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
@@ -175,7 +174,7 @@ extension KCommentEditorViewController: UITextViewDelegate {
 			} else if commentTextView.text.count + (text.count - range.length) <= charLimit { // Else reset color to 56% white
 				characterCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.56)
 			}
-			
+
 			return true
 		}
 

@@ -10,7 +10,6 @@
 import KCommonKit
 
 class CustomThreadViewController: ThreadTableViewController {
-//
 //    @IBOutlet weak var imageContent: UIImageView!
 //    @IBOutlet weak var threadTitle: UILabel!
 //    @IBOutlet weak var threadContent: UILabel!
@@ -129,7 +128,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //            })
 //        }
 //        
-//        // TODO: Merge this repeated code
+//        // TODO: - Merge this repeated code
 //        if let startedBy = thread.startedBy {
 //            if let avatarThumb = startedBy.avatarThumb {
 //                avatar.setImageWithPFFile(avatarThumb)
@@ -195,7 +194,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
 //            
 //            if let _ = error {
-//                // TODO: Show error
+//                // TODO: - Show error
 //            } else if let result = result, let thread = result.last as? Thread {
 //                self.thread = thread
 //                self.updateUIWithThread(thread)
@@ -348,7 +347,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //                
 //                let pinned = thread.pinType != nil
 //                
-//                // TODO: Refactor all this
+//                // TODO: - Refactor all this
 //                if pinned {
 //                    alert.addAction(UIAlertAction(title: "Unpin", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction!) -> Void in
 //                        thread.pinType = nil
@@ -417,7 +416,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //                        })
 //                        
 //                    } else {
-//                        // TODO: Show error
+//                        // TODO: - Show error
 //                    }
 //                })
 //            }))

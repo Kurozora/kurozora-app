@@ -17,7 +17,7 @@ class LibraryCompactColelctionViewCell: LibraryCollectionViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		
+
 		posterShadowView?.applyShadow()
 	}
 }

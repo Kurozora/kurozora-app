@@ -13,11 +13,11 @@ public class KCommonKit {
     public class func bundle() -> Bundle {
         return Bundle(for: self)
     }
-    
+
     public class func defaultStoryboard() -> UIStoryboard {
         return UIStoryboard(name: "Action", bundle: bundle())
     }
-    
+
     public class func actionListViewController() -> ActionListViewController {
         let actionListController = defaultStoryboard().instantiateViewController(withIdentifier: "ActionList") as! ActionListViewController
         return actionListController
@@ -27,7 +27,7 @@ public class KCommonKit {
         let dropDownListController = defaultStoryboard().instantiateViewController(withIdentifier: "DropDownList") as! DropDownListViewController
         return dropDownListController
     }
-    
+
     public static var shared = KCommonKit()
     private init() {}
 
@@ -71,21 +71,21 @@ public enum AnimeType: String {
 	List of anime classifications
 
 	```
-	case g = "G - All Ages"
-	case pg = "PG - Children"
+	case gAllAges = "G - All Ages"
+	case pgChildren = "PG - Children"
 	case pg13 = "PG-13 - Teens 13 or older"
 	case r17 = "R - 17+ (violence & profanity)"
 	case rPlus = "R+ - Mild Nudity"
 	```
 */
 public enum AnimeClassification: String {
-    case g = "G - All Ages"
-    case pg = "PG - Children"
+    case gAllAges = "G - All Ages"
+    case pgChildren = "PG - Children"
     case pg13 = "PG-13 - Teens 13 or older"
     case r17 = "R - 17+ (violence & profanity)"
     case rPlus = "R+ - Mild Nudity"
 
-	static public let allRawValues: [String] = [AnimeClassification.g.rawValue, AnimeClassification.pg.rawValue, AnimeClassification.pg13.rawValue, AnimeClassification.r17.rawValue, AnimeClassification.rPlus.rawValue]
+	static public let allRawValues: [String] = [AnimeClassification.gAllAges.rawValue, AnimeClassification.pgChildren.rawValue, AnimeClassification.pg13.rawValue, AnimeClassification.r17.rawValue, AnimeClassification.rPlus.rawValue]
 	static public let count: Int = allRawValues.count
 }
 
@@ -171,13 +171,13 @@ public enum AnimeGenre: String {
 	List of anime sorting
 
 	```
-	case az = "A-Z"
+	case alphabetic = "A-Z"
 	case popular = "Most Popular"
 	case rating = "Highest Rated"
 	```
 */
 public enum AnimeSort: String {
-    case az = "A-Z"
+    case alphabetic = "A-Z"
     case popular = "Most Popular"
     case rating = "Highest Rated"
 }

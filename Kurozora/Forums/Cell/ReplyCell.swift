@@ -36,7 +36,7 @@ class ReplyCell: UITableViewCell {
 			dateTimeButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
-	@IBOutlet weak var voteCountButton: UIButton!{
+	@IBOutlet weak var voteCountButton: UIButton! {
 		didSet {
 			voteCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
@@ -106,7 +106,6 @@ class ReplyCell: UITableViewCell {
 		if let creationDate = threadRepliesElement.postedAt, creationDate != "" {
 			dateTimeButton.setTitle("\(Date.timeAgo(creationDate))", for: .normal)
 		}
-
 
 		// Check if thread is locked
 		if let locked = forumThreadElement?.locked {

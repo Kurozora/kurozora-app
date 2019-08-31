@@ -10,11 +10,11 @@ import TRON
 import SwiftyJSON
 
 class UserNotification: JSONDecodable {
-    let success: Bool?
+	let success: Bool?
 	let notifications: [UserNotificationsElement]
-    
-    required init(json: JSON) throws {
-        self.success = json["success"].boolValue
+
+	required init(json: JSON) throws {
+		self.success = json["success"].boolValue
 		var notifications = [UserNotificationsElement]()
 
 		let notificationsArray = json["notifications"].arrayValue

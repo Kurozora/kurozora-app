@@ -13,22 +13,22 @@ import EmptyDataSet_Swift
 import SwiftTheme
 
 class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-    @IBOutlet var collectionView: UICollectionView!
-    
-    var themes: [ThemesElement]?
-    
-    override func viewWillAppear(_ animated: Bool) {
+	@IBOutlet var collectionView: UICollectionView!
+
+	var themes: [ThemesElement]?
+
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		Service.shared.getThemes( withSuccess: { (themes) in
 			self.themes = themes
 
-			DispatchQueue.main.async() {
+			DispatchQueue.main.async {
 				self.collectionView.reloadData()
 			}
 		})
@@ -46,7 +46,7 @@ class ManageThemesController: UIViewController, EmptyDataSetSource, EmptyDataSet
 				.isTouchAllowed(true)
 				.isScrollAllowed(true)
 		}
-    }
+	}
 
 	// MARK: - Functions
 	fileprivate func downloadStart(for theme: ThemesElement?) {

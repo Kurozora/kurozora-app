@@ -17,7 +17,6 @@ class Search: JSONDecodable {
 		self.success = json["success"].boolValue
 		var results = [SearchElement]()
 
-
 		let resultsArray = json["results"].arrayValue
 		for resultsItem in resultsArray {
 			if let searchElement = try? SearchElement(json: resultsItem) {

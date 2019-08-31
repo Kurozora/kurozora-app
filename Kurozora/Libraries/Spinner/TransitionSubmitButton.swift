@@ -4,9 +4,9 @@ import UIKit
 @IBDesignable
 class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, CAAnimationDelegate {
 	lazy var spiner: SpinerLayer! = {
-		let s = SpinerLayer(frame: self.frame)
-		self.layer.addSublayer(s)
-		return s
+		let spinLayer = SpinerLayer(frame: self.frame)
+		self.layer.addSublayer(spinLayer)
+		return spinLayer
 	}()
 
 	@IBInspectable var spinnerColor: UIColor = UIColor.white {
@@ -15,7 +15,7 @@ class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, 
 		}
 	}
 
-	var didEndFinishAnimation : (()->())? = nil
+	var didEndFinishAnimation: (() -> Void)? = nil
 
 	let springGoEase = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
 	let shrinkCurve = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
@@ -49,24 +49,24 @@ class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, 
 		self.setTitle("", for: UIControl.State())
 		UIView.animate(withDuration: 0.1, animations: { () -> Void in
 			self.layer.cornerRadius = self.frame.height / 2
-		}, completion: { (done) -> Void in
+		}, completion: { (_) -> Void in
 			self.shrink()
-			Timer.schedule(delay: self.shrinkDuration - 0.25) { timer in
+			Timer.schedule(delay: self.shrinkDuration - 0.25) { _ in
 				self.spiner.animation()
 			}
 		})
 
 	}
 
-	func startFinishAnimation(_ delay: TimeInterval, completion:(()->())?) {
-		Timer.schedule(delay: delay) { timer in
+	func startFinishAnimation(_ delay: TimeInterval, completion: (() -> Void)?) {
+		Timer.schedule(delay: delay) { _ in
 			self.didEndFinishAnimation = completion
 			self.expand()
 			self.spiner.stopAnimation()
 		}
 	}
 
-	func animate(_ duration: TimeInterval, completion:(()->())?) {
+	func animate(_ duration: TimeInterval, completion: (() -> Void)?) {
 		startLoadingAnimation()
 		startFinishAnimation(duration, completion: completion)
 	}
@@ -80,7 +80,7 @@ class TKTransitionSubmitButton: KButton, UIViewControllerTransitioningDelegate, 
 		let a = anim as! CABasicAnimation
 		if a.keyPath == "transform.scale" {
 			didEndFinishAnimation?()
-			Timer.schedule(delay: 1) { timer in
+			Timer.schedule(delay: 1) { _ in
 				self.returnToOriginalState()
 			}
 		}

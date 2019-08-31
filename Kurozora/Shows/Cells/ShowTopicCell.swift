@@ -9,10 +9,8 @@
 import UIKit
 
 public class ShowTopicCell: UITableViewCell {
-    
     @IBOutlet public weak var title: UILabel!
     @IBOutlet public weak var information: UILabel!
     @IBOutlet public weak var typeLabel: UILabel!
     @IBOutlet public weak var tagsLabel: UILabel!
-    
 }

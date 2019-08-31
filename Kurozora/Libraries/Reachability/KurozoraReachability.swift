@@ -45,8 +45,8 @@ public extension Notification.Name {
 
 public class KurozoraReachability {
 
-	public typealias NetworkReachable = (KurozoraReachability) -> ()
-	public typealias NetworkUnreachable = (KurozoraReachability) -> ()
+	public typealias NetworkReachable = (KurozoraReachability) -> Void
+	public typealias NetworkUnreachable = (KurozoraReachability) -> Void
 
 	@available(*, unavailable, renamed: "Connection")
 	public enum NetworkStatus: CustomStringConvertible {

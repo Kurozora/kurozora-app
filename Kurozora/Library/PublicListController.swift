@@ -9,7 +9,6 @@
 import KCommonKit
 
 class PublicListViewController: UIViewController {
-    
 //    let FirstHeaderCellHeight: CGFloat = 108.0
 //    let HeaderCellHeight: CGFloat = 64.0
 //

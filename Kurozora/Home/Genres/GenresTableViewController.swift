@@ -46,7 +46,7 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 	// MARK: - Functions
 	func fetchGenres() {
 		Service.shared.getGenres { (genres) in
-			DispatchQueue.main.async() {
+			DispatchQueue.main.async {
 				self.genres = genres
 			}
 		}

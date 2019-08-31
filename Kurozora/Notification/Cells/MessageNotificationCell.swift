@@ -11,7 +11,7 @@ import SwipeCellKit
 import Kingfisher
 
 class MessageNotificationCell: SwipeTableViewCell {
-    // Header
+	// Header
 	@IBOutlet weak var notificationTypeLabel: UILabel! {
 		didSet {
 			notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
@@ -23,15 +23,15 @@ class MessageNotificationCell: SwipeTableViewCell {
 		}
 	}
 	@IBOutlet weak var notificationIconImageView: UIImageView!
-    
-    // Body
+
+	// Body
 	@IBOutlet weak var notificationProfileImageView: UIImageView! {
 		didSet {
 			notificationProfileImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 	@IBOutlet weak var notificationTitleLabel: UILabel!
-    @IBOutlet weak var notificationTextLabel: UILabel!
+	@IBOutlet weak var notificationTextLabel: UILabel!
 
 	var notificationsElement: UserNotificationsElement? {
 		didSet {

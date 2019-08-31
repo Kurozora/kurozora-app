@@ -24,4 +24,3 @@ class SubscriptionPreviewCollectionViewCell: UICollectionViewCell {
 		previewImageView.image = UIImage(named: previewItem)
 	}
 }
-

@@ -9,12 +9,10 @@
 import UIKit
 
 class ReviewCell: UITableViewCell {
-    
     @IBOutlet weak var reviewerLabel: UILabel!
     @IBOutlet weak var reviewerAvatar: UIImageView!
     @IBOutlet weak var reviewerOverallScoreLabel: UILabel!
     @IBOutlet weak var reviewerReviewLabel: UILabel!
     @IBOutlet weak var reviewStatisticsLabel: UILabel!
-    
-    @IBOutlet weak var reviewHeightConstraint: NSLayoutConstraint!
+	@IBOutlet weak var reviewHeightConstraint: NSLayoutConstraint!
 }

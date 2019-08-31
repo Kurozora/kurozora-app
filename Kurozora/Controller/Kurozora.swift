@@ -59,7 +59,7 @@ class Kurozora: NSObject {
 			window?.addSubview(revealingSplashView)
 			revealingSplashView.playHeartBeatAnimation()
 			NotificationCenter.default.addObserver(self.shared, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
-		} else if viewController is KurozoraReachabilityViewController  {
+		} else if viewController is KurozoraReachabilityViewController {
 			viewController.dismiss(animated: true, completion: nil)
 		}
 	}
@@ -138,7 +138,7 @@ class Kurozora: NSObject {
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
 	*/
-	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
+	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) {
 		let urlScheme = url.host?.removingPercentEncoding
 
 		if urlScheme == "anime" {

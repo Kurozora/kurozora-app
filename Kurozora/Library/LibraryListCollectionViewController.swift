@@ -32,7 +32,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
     var sectionTitle: String?
 	var sectionIndex: Int?
 	var libraryLayout: LibraryListStyle = .detailed
-	var delegate: LibraryListViewControllerDelegate?
+	weak var delegate: LibraryListViewControllerDelegate?
 	var gap: CGFloat {
 		return UIDevice.isPad ? 40 : 20
 	}
@@ -40,24 +40,24 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhone_Xr:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
-				case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
-				case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPhone5SSE:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhone66S78:		return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhone66S78PLUS:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhoneXr:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPhoneXXs:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPhoneXsMax:		return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
 
 				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (3.06, 3.8) : (8, 4.2)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone_5_5S_5C_SE:	return (libraryLayout == .detailed) ? (1, 3.2) : (2.18, 2.8)
-			case .iPhone_6_6S_7_8:		return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
-			case .iPhone_6_6S_7_8_PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
-			case .iPhone_Xr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
-			case .iPhone_X_Xs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
-			case .iPhone_Xs_Max:		return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPhone5SSE:	return (libraryLayout == .detailed) ? (1, 3.2) : (2.18, 2.8)
+			case .iPhone66S78:		return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
+			case .iPhone66S78PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
+			case .iPhoneXr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPhoneXXs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPhoneXsMax:		return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
 
 			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (2, 4.8) : (6, 6.0)
 			}
@@ -79,11 +79,11 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		UserSettings.set(sectionIndex, forKey: .libraryPage)
 		delegate?.updateLayoutChangeButton(current: libraryLayout)
 	}
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
 		guard let sectionTitle = sectionTitle else {return}
 		let lowerdSectionTitle = sectionTitle.lowercased()
 
@@ -105,7 +105,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
         // Setup empty collection view
         collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetSource = self
-        
+
         collectionView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "Your \(lowerdSectionTitle) list is empty!"))
 				.shouldDisplay(true)

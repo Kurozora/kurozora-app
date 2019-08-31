@@ -45,7 +45,6 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 		seeAllButton.isHidden = (titleLabel.text == "Top Genres") ? false : true
 	}
 
-
 	@IBAction func seeAllButtonPressed(_ sender: UIButton) {
 		homeCollectionViewController?.performSegue(withIdentifier: "GenresSegue", sender: self)
 	}

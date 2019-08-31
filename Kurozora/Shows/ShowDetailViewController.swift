@@ -81,7 +81,7 @@ class ShowDetailViewController: UIViewController {
 	@IBOutlet weak var ratingTitleLabel: UILabel!
 	@IBOutlet weak var rankTitleLabel: UILabel!
 	@IBOutlet weak var ageTitleLabel: UILabel!
-	
+
 	// Compact detail vars
 	let headerHeightInSection: CGFloat = 48
 	var headerViewHeight: CGFloat = 390
@@ -124,7 +124,7 @@ class ShowDetailViewController: UIViewController {
 			self.tableView.reloadData()
 		}
 	}
-	var delegate: ShowDetailViewControllerDelegate?
+	weak var delegate: ShowDetailViewControllerDelegate?
 	var libraryStatus: String?
 	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
@@ -218,14 +218,14 @@ class ShowDetailViewController: UIViewController {
 			KCommonKit.shared.showID = showID
 
 			Service.shared.getDetails(forShow: showID) { (showDetails) in
-				DispatchQueue.main.async() {
+				DispatchQueue.main.async {
 					self.showDetails = showDetails
 					self.libraryStatus = showDetails.userProfile?.libraryStatus
 				}
 			}
 
 			Service.shared.getCastFor(showID, withSuccess: { (actors) in
-				DispatchQueue.main.async() {
+				DispatchQueue.main.async {
 					self.actors = actors
 				}
 			})
@@ -285,8 +285,8 @@ class ShowDetailViewController: UIViewController {
 		// Configure library status
 		if let libraryStatus = userProfile.libraryStatus, !libraryStatus.isEmpty {
 			let mutableAttributedTitle = NSMutableAttributedString()
-			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
-			let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+			let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
 			mutableAttributedTitle.append(attributedTitleString)
 			mutableAttributedTitle.append(attributedIconString)
 
@@ -489,7 +489,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"),("Watching","Watching"),("Completed","Completed"),("Dropped","Dropped"),("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showID else {return}
 
 			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
@@ -502,8 +502,8 @@ class ShowDetailViewController: UIViewController {
 					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
-					let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
 					mutableAttributedTitle.append(attributedTitleString)
 					mutableAttributedTitle.append(attributedIconString)
 
@@ -520,7 +520,7 @@ class ShowDetailViewController: UIViewController {
 						self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
 
 						let mutableAttributedTitle = NSMutableAttributedString()
-						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
 						mutableAttributedTitle.append(attributedTitleString)
 						self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
 					}
@@ -672,8 +672,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 	// Reload table to fix layout - NEEDS A BETTER FIX IF POSSIBLE
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
-		coordinator.animate(alongsideTransition: nil, completion: {
-			_ in
+		coordinator.animate(alongsideTransition: nil, completion: { _ in
 			self.tableView.reloadData()
 		})
 	}

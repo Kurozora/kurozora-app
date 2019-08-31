@@ -197,7 +197,7 @@ extension KThemeStyle {
 
 		let sessionConfig = URLSessionConfiguration.default
 		let session = URLSession(configuration: sessionConfig)
-		let request = try! URLRequest(url: urlString, method: .get)
+		guard let request = try? URLRequest(url: urlString, method: .get) else { return }
 
 		let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
 			if let tempLocalUrl = tempLocalUrl, error == nil {
@@ -210,7 +210,7 @@ extension KThemeStyle {
 				if !directoryExist(atPath: themesDirectoryUrl.path) {
 					do {
 						try FileManager.default.createDirectory(atPath: libraryDirectoryUrl.appendingPathComponent("Themes/").path, withIntermediateDirectories: true, attributes: nil)
-					} catch (let createError) {
+					} catch let createError {
 						DispatchQueue.main.async {
 							successHandler(themeExist(for: themeID))
 						}
@@ -224,7 +224,7 @@ extension KThemeStyle {
 					DispatchQueue.main.async {
 						successHandler(themeExist(for: themeID))
 					}
-				} catch (let writeError) {
+				} catch let writeError {
 					DispatchQueue.main.async {
 						successHandler(themeExist(for: themeID))
 					}

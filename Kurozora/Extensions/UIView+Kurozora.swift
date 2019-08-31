@@ -20,7 +20,7 @@ extension UIView {
 		layer.cornerRadius = radius
 		layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
 	}
-	
+
 	/**
 		Give the view a nice shadow.
 

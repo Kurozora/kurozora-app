@@ -27,12 +27,12 @@ public class WorkflowController {
 			let myChannel = pusher.subscribe("private-user.\(currentID)")
 
 			let _ = myChannel.bind(eventName: "session.new", callback: { (data: Any?) -> Void in
-				if let data = data as? [String : AnyObject] {
-					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String  {
+				if let data = data as? [String: AnyObject] {
+					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String {
 						if sessionID != User.currentSessionID {
 							notificationsHandler(device)
 
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id" : sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id": sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
 					} else {
 						NSLog("------- Pusher error -------")
@@ -41,7 +41,7 @@ public class WorkflowController {
 			})
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { (data: Any?) -> Void in
-				if let data = data as? [String : AnyObject], data.count != 0 {
+				if let data = data as? [String: AnyObject], data.count != 0 {
 					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let logoutReason = data["reason"] as? String {
 						let isKiller = User.currentSessionID == sessionKillerId
 
@@ -53,7 +53,7 @@ public class WorkflowController {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
 						} else {
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id" : sessionID])
+							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id": sessionID])
 						}
 					}
 				} else {

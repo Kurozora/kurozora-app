@@ -46,7 +46,7 @@ class SearchResultsTableViewController: UITableViewController {
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return statusBarStyle
 	}
-	
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -158,7 +158,7 @@ class SearchResultsTableViewController: UITableViewController {
 						profileViewController.otherUserID = currentCell.searchElement?.id
 					}
 				}
-			}  else if segue.identifier == "ThreadSegue" {
+			} else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
@@ -212,7 +212,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		let searchScope = searchBar.selectedScopeButtonIndex
-		
+
 		if searchText != "" {
 			timer?.invalidate()
 			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)

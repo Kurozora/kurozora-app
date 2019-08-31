@@ -9,7 +9,6 @@
 import KCommonKit
 
 class ChartViewController: UIViewController {
-    
 //    enum SelectedList: Int {
 //        case SeasonalChart = 0
 //        case AllSeasons

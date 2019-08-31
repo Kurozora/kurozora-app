@@ -80,7 +80,7 @@ class AuthenticationSettingsCell: SettingsCell {
 	// MARK: IBActions
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
 		try? GlobalVariables().KDefaults.set("\(sender.isOn)", key: "authenticationEnabled")
-		
+
 		if let tableView = self.superview as? UITableView {
 			tableView.reloadData()
 		}

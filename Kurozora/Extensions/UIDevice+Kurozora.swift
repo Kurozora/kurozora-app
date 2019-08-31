@@ -102,8 +102,8 @@ extension UIDevice {
 extension UIDevice {
 	/// Returns true if the current device is an iPad
 	static var isPad: Bool {
-        return UIDevice.current.userInterfaceIdiom == .pad
-    }
+		return UIDevice.current.userInterfaceIdiom == .pad
+	}
 
 	/// Returns true if the current device is an iPhone
 	static var isPhone: Bool {
@@ -127,8 +127,8 @@ extension UIDevice {
 
 	/// Returns true if the current device orientation is landscape
 	static var isLandscape: Bool {
-        return UIDevice.current.orientation.isLandscape
-    }
+		return UIDevice.current.orientation.isLandscape
+	}
 
 	/// Returns true if the current device orientation is portrait
 	static var isPortrait: Bool {
@@ -177,31 +177,31 @@ extension UIDevice {
 extension UIDevice {
 	public enum `Type` {
 		// iPhone
-		case iPhone_5_5S_5C_SE
-		case iPhone_6_6S_7_8
-		case iPhone_6_6S_7_8_PLUS
-		case iPhone_X_Xs
-		case iPhone_Xs_Max
-		case iPhone_Xr
+		case iPhone5SSE
+		case iPhone66S78
+		case iPhone66S78PLUS
+		case iPhoneXXs
+		case iPhoneXsMax
+		case iPhoneXr
 
 		// iPad
 		case iPad
 		case iPadAir3
 		case iPadPro11
 		case iPadPro12
-	 }
+	}
 
 	static var type: Type {
 		switch UIDevice().userInterfaceIdiom {
 		case .phone:
 			switch UIScreen.main.nativeBounds.height {
-			case 1136:		return .iPhone_5_5S_5C_SE
-			case 1334:		return .iPhone_6_6S_7_8
-			case 1920, 2208:return .iPhone_6_6S_7_8_PLUS
-			case 1792:		return .iPhone_Xr
-			case 2436:		return .iPhone_X_Xs
-			case 2688:		return .iPhone_Xs_Max
-			default:		return .iPhone_6_6S_7_8
+			case 1136:		return .iPhone5SSE
+			case 1334:		return .iPhone66S78
+			case 1920, 2208:return .iPhone66S78PLUS
+			case 1792:		return .iPhoneXr
+			case 2436:		return .iPhoneXXs
+			case 2688:		return .iPhoneXsMax
+			default:		return .iPhone66S78
 			}
 		case .pad:
 			switch UIScreen.main.nativeBounds.height {
@@ -211,7 +211,7 @@ extension UIDevice {
 			case 2732:		return .iPadPro12
 			default:		return .iPadAir3
 			}
-		default: 			return .iPhone_6_6S_7_8
+		default: 			return .iPhone66S78
 		}
 	}
 }

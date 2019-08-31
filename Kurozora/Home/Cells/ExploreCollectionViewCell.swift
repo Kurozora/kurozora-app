@@ -45,7 +45,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	var avPlayer: AVPlayer?
 	var avPlayerLayer: AVPlayerLayer?
 	var indexPath: IndexPath?
-	var delegate: ExploreCollectionViewCellDelegate?
+	weak var delegate: ExploreCollectionViewCellDelegate?
 	var shouldPlay = false
 
 	var homeCollectionViewController: HomeCollectionViewController?
@@ -156,8 +156,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		// Configure library status
 		if let libraryStatus = showElement?.userProfile?.libraryStatus, !libraryStatus.isEmpty {
 			let mutableAttributedTitle = NSMutableAttributedString()
-			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
-			let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+			let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
 			mutableAttributedTitle.append(attributedTitleString)
 			mutableAttributedTitle.append(attributedIconString)
 
@@ -234,7 +234,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		let imageGenerator = AVAssetImageGenerator(asset: asset)
 
 		do {
-			let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60) , actualTime: nil)
+			let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60), actualTime: nil)
 			return UIImage(cgImage: thumbnailImage)
 		} catch let error {
 			print(error)
@@ -252,7 +252,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"),("Watching","Watching"),("Completed","Completed"),("Dropped","Dropped"),("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showElement?.id else {return}
 
 			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
@@ -265,8 +265,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
-					let attributedIconString = NSAttributedString(string: "", attributes: [.font : UIFont.init(name: "FontAwesome", size: 15)!])
+					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
 					mutableAttributedTitle.append(attributedTitleString)
 					mutableAttributedTitle.append(attributedIconString)
 
@@ -282,7 +282,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 						self.libraryStatus = ""
 
 						let mutableAttributedTitle = NSMutableAttributedString()
-						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font : UIFont.systemFont(ofSize: 15, weight: .medium)])
+						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
 						mutableAttributedTitle.append(attributedTitleString)
 						self.listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
 					}

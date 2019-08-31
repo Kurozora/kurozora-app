@@ -107,7 +107,7 @@ extension ManageIconTableViewController {
 		tableView.deselectRow(at: indexPath, animated: true)
 		let iconTableViewCell = tableView.cellForRow(at: indexPath) as! IconTableViewCell
 
-		if indexPath == [0,0] {
+		if indexPath == [0, 0] {
 			KThemeStyle.changeIcon(to: nil)
 		} else {
 			KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)

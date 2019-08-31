@@ -43,7 +43,7 @@ class KNavigationController: UINavigationController {
 			self.navigationBar.theme_tintColor = KThemePicker.tintColor.rawValue
 			self.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 
-			self.navigationBar.theme_titleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+			self.navigationBar.theme_titleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
@@ -52,7 +52,7 @@ class KNavigationController: UINavigationController {
 			}
 
 			self.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
-			self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+			self.navigationBar.theme_largeTitleTextAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.barTitleTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]

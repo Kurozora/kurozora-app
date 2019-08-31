@@ -23,7 +23,7 @@ class Genres: JSONDecodable {
 				genres.append(genreElement)
 			}
 		}
-		
+
 		self.genres = genres
 	}
 }
@@ -43,4 +43,3 @@ class GenreElement: JSONDecodable {
 		self.nsfw = json["nsfw"].boolValue
 	}
 }
-

@@ -11,33 +11,32 @@ import UIKit
 //import ANParseKit
 
 enum FilterSection: String {
-    case View = "View"
-    case Sort = "Sort"
-    case FilterTitle = "Filter"
-    case AnimeType = "Type"
-    case Year = "Year"
-    case Status = "Status"
-    case Studio = "Studio"
-    case Classification = "Classification"
-    case Genres = "Genres"
-    
+    case view = "View"
+    case sort = "Sort"
+    case filterTitle = "Filter"
+    case animeType = "Type"
+    case year = "Year"
+    case status = "Status"
+    case studio = "Studio"
+    case classification = "Classification"
+    case genres = "Genres"
 }
 
 enum SortType: String {
-    case Rating = "Rating"
-    case Popularity = "Popularity"
-    case Title = "Title"
-    case NextAiringEpisode = "Next Episode to Air"
-    case NextEpisodeToWatch = "Next Episode to Watch"
-    case Newest = "Newest"
-    case Oldest = "Oldest"
-    case None = "None"
-    case MyRating = "My Rating"
+    case rating = "Rating"
+    case popularity = "Popularity"
+    case title = "Title"
+    case nextAiringEpisode = "Next Episode to Air"
+    case nextEpisodeToWatch = "Next Episode to Watch"
+    case newest = "Newest"
+    case oldest = "Oldest"
+    case none = "None"
+    case myRating = "My Rating"
 }
 
 enum LayoutType: String {
-    case Chart = "Chart"
-    case SeasonalChart = "SeasonalChart"
+    case chart = "Chart"
+    case seasonalChart = "SeasonalChart"
 }
 
 typealias Configuration = [(section: FilterSection, value: String?, dataSource: [String])]
@@ -47,7 +46,6 @@ typealias Configuration = [(section: FilterSection, value: String?, dataSource: 
 //}
 
 class FilterViewController: UIViewController {
-    
 //    let sectionHeaderHeight: CGFloat = 44
 //
 //    @IBOutlet weak var collectionView: UICollectionView!
@@ -251,7 +249,6 @@ class FilterViewController: UIViewController {
 //        }
 //    }
 //}
-
 
 //extension FilterViewController: BasicCollectionReusableViewDelegate {
 //    func headerSelectedActionButton(cell: BasicCollectionReusableView) {

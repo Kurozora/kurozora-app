@@ -12,7 +12,7 @@ import SwiftyJSON
 class ForumSections: JSONDecodable {
     let success: Bool?
     let sections: [ForumSectionsElement]?
-    
+
     required init(json: JSON) throws {
         self.success = json["success"].boolValue
 		var sections = [ForumSectionsElement]()

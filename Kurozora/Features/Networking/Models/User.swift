@@ -13,21 +13,21 @@ import Kingfisher
 import CoreLocation
 
 class User: JSONDecodable {
-    let success: Bool?
+	let success: Bool?
 	let message: String?
 
 	let rating: Double?
 	let currentlyFollowing: Bool?
 	let profile: UserProfile?
-    
-    required init(json: JSON) throws {
-        self.success = json["success"].boolValue
+
+	required init(json: JSON) throws {
+		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
 
 		self.rating = json["rating"].doubleValue
 		self.currentlyFollowing = json["currently_following"].boolValue
 		self.profile = try? UserProfile(json: json["user"])
-    }
+	}
 }
 
 class UserProfile: JSONDecodable {
@@ -107,7 +107,7 @@ class UserProfile: JSONDecodable {
 //        UserDefaults.standard.removeObject(forKey: User.MyAnimeListPasswordKey)
 //        UserDefaults.standard.synchronize()
 //    }
-    
+
 //    class func syncingWithMyAnimeList() -> Bool {
 //        guard let user = User.currentUser() else {
 //            return false
@@ -119,38 +119,36 @@ class UserProfile: JSONDecodable {
 //        details.incrementKey("posts", byAmount: byAmount)
 //        details.saveInBackground()
 //    }
-    
-    // Trial
+
+// Trial
 //    func hasTrial() -> Bool {
 //        return trialExpiration?.compare(Date()) == .orderedDescending
 //    }
 
-    // Muting
+// Muting
 //    class func muted(viewController: UIViewController) -> Bool {
-    
-        
 //        guard let currentUser = User.currentUser() else {
 //            return false
 //        }
-        
+
 //        var mutedUntil: Date?
-        
+
 //        do {
 //            let details = try currentUser.details.fetchIfNeeded()
 //            mutedUntil = details.mutedUntil
-            
+
 //        } catch _ { }
-        
+
 //        guard let muteDate = mutedUntil else {
 //            return false
 //        }
-        
+
 //        if muteDate.compare(Date()) == ComparisonResult.orderedAscending  {
 //            currentUser.details.mutedUntil = nil
 //            currentUser.saveInBackground()
 //            return false
 //        }
-    
+
 //        viewController.presentBasicAlertWithTitle(title: "Account muted", message: "Until \(muteDate.mediumDateTime()).\nContact admins for more information.")
 //        return true
 //    }

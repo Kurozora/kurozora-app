@@ -34,25 +34,25 @@ class LegalViewController: UIViewController {
 	@IBOutlet weak var scrollView: UIScrollView!
 
 	override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+		super.viewWillAppear(animated)
 
 		self.navigationController?.navigationBar.isTranslucent = true
 		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.navigationController?.navigationBar.backgroundColor = .clear
 
-        Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
-            if let privacyPolicyText = privacyPolicy?.text {
-                self.privacyPolicyTextView.text = privacyPolicyText
-            }
-            
-            if let lastUpdatedAt = privacyPolicy?.lastUpdate {
-                self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
-            }
-        })
+		Service.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
+			if let privacyPolicyText = privacyPolicy?.text {
+				self.privacyPolicyTextView.text = privacyPolicyText
+			}
+
+			if let lastUpdatedAt = privacyPolicy?.lastUpdate {
+				self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
+			}
+		})
 		self.navigationTitleView.alpha = 0
 
 		scrollView.delegate = self
-    }
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -70,7 +70,7 @@ extension LegalViewController: UIScrollViewDelegate {
 		let titleFrame = titleLabel.frame
 		let container = CGRect(origin: scrollView.contentOffset, size: scrollView.frame.size)
 
-		if (!container.intersects(titleFrame)) {
+		if !container.intersects(titleFrame) {
 			if self.navigationTitleView.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
 					self.titleLabel.alpha = 0

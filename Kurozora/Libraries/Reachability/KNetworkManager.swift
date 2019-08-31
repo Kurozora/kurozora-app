@@ -40,7 +40,7 @@ class KNetworkManager: NSObject {
 		// Do something globally here!
 	}
 
-	static func stopNotifier() -> Void {
+	static func stopNotifier() {
 		do {
 			// Stop the network status notifier
 			try (KNetworkManager.shared.reachability).startNotifier()

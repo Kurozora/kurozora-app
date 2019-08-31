@@ -15,7 +15,7 @@ import SwiftTheme
 class ForumsListViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	var refresh = UIRefreshControl()
 
-    var sectionTitle: String?
+	var sectionTitle: String?
 	var sectionID: Int?
 	var sectionIndex: Int?
 	var forumThreads: [ForumThreadsElement]? {
@@ -33,46 +33,46 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		super.viewWillAppear(animated)
 		UserSettings.set(sectionIndex, forKey: .forumsPage)
 	}
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
 		guard let sectionTitle = sectionTitle else { return }
 
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refresh
 		refresh.theme_tintColor = KThemePicker.tintColor.rawValue
-		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refresh.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		fetchThreads()
-        
-        // Setup table view
+
+		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
-        
-        // Setup empty table view
-        tableView.emptyDataSetDelegate = self
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetView { (view) in
-            view.titleLabelString(NSAttributedString(string: sectionTitle))
+
+		// Setup empty table view
+		tableView.emptyDataSetDelegate = self
+		tableView.emptyDataSetSource = self
+		tableView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: sectionTitle))
 				.shouldDisplay(true)
 				.shouldFadeIn(true)
 				.isTouchAllowed(true)
 				.isScrollAllowed(true)
-        }
-    }
+		}
+	}
 
 	// MARK: - Functions
 	/**
-		Refresh the threads data by fetching new items from the server.
+	Refresh the threads data by fetching new items from the server.
 
-		- Parameter sender: The object requesting the refresh.
+	- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
-		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		pageNumber = 0
 		fetchThreads()
 	}
@@ -81,7 +81,10 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	func fetchThreads() {
 		guard let sectionTitle = sectionTitle else { return }
 		guard let sectionID = sectionID else { return }
-		if let _ = threadOrder { } else { threadOrder = "top" }
+
+		if threadOrder == nil {
+			threadOrder = "top"
+		}
 
 		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: pageNumber, withSuccess: { (threads) in
 			DispatchQueue.main.async {
@@ -99,7 +102,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 					self.pageNumber += 1
 				}
 
-				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor : KThemePicker.tintColor.colorValue])
+				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		})
 
@@ -148,8 +151,6 @@ extension ForumsListViewController {
 			}
 		}
 	}
-
-	
 }
 
 // MARK: - KRichTextEditorViewDelegate

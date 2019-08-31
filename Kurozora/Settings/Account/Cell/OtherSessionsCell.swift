@@ -50,7 +50,7 @@ class OtherSessionsCell: UITableViewCell {
 		}
 	}
 
-	var delegate: OtherSessionsCellDelegate?
+	weak var delegate: OtherSessionsCellDelegate?
 	var sessions: UserSessionsElement? {
 		didSet {
 			updateOtherSessions()

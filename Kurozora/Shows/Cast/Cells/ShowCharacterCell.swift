@@ -15,11 +15,11 @@ protocol ShowCharacterCellDelegate: class {
 }
 
 class ShowCharacterCell: UITableViewCell {
-//    @IBOutlet weak var characterImageView: CachedImageView!
-//    @IBOutlet weak var characterName: UILabel!
-//    @IBOutlet weak var characterRole: UILabel!
-    
-    @IBOutlet weak var actorImageView: UIImageView!
+	//    @IBOutlet weak var characterImageView: CachedImageView!
+	//    @IBOutlet weak var characterName: UILabel!
+	//    @IBOutlet weak var characterRole: UILabel!
+
+	@IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
 	@IBOutlet weak var actorName: KLabel! {
 		didSet {
@@ -44,7 +44,7 @@ class ShowCharacterCell: UITableViewCell {
 			setup()
 		}
 	}
-	var delegate: ShowCharacterCellDelegate?
+	weak var delegate: ShowCharacterCellDelegate?
 
 	fileprivate func setup() {
 		guard let actorElement = actorElement else { return }
@@ -92,11 +92,11 @@ class ShowCharacterCell: UITableViewCell {
 }
 
 class ShowCharacterCollectionCell: UICollectionViewCell {
-    //    @IBOutlet weak var characterImageView: CachedImageView!
-    //    @IBOutlet weak var characterName: UILabel!
-    //    @IBOutlet weak var characterRole: UILabel!
-    
-    @IBOutlet weak var actorImageView: UIImageView!
+	//    @IBOutlet weak var characterImageView: CachedImageView!
+	//    @IBOutlet weak var characterName: UILabel!
+	//    @IBOutlet weak var characterRole: UILabel!
+
+	@IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
 	@IBOutlet weak var actorName: KLabel! {
 		didSet {
@@ -121,7 +121,7 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 			setup()
 		}
 	}
-	var delegate: ShowCharacterCellDelegate?
+	weak var delegate: ShowCharacterCellDelegate?
 
 	fileprivate func setup() {
 		guard let actorElement = actorElement else { return }
@@ -134,7 +134,7 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 			self.actorJob.text = actorRole
 		}
 
-		if let actorImage = actorElement.image, actorImage != ""  {
+		if let actorImage = actorElement.image, actorImage != "" {
 			let actorImageUrl = URL(string: actorImage)
 			let resource = ImageResource(downloadURL: actorImageUrl!)
 			self.actorImageView.kf.indicatorType = .activity

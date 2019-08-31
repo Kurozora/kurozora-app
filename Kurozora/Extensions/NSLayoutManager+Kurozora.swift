@@ -9,6 +9,7 @@
 import UIKit
 
 extension NSLayoutManager {
+	/// Returns the number of lines in the text view.
 	var numberOfLines: Int {
 		guard textStorage != nil else { return 0 }
 

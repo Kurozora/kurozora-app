@@ -12,7 +12,7 @@ open class TKFadeInAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 	var transitionDuration: TimeInterval = 0.5
 	var startingAlpha: CGFloat = 0.0
 
-	public convenience init(transitionDuration: TimeInterval, startingAlpha: CGFloat){
+	public convenience init(transitionDuration: TimeInterval, startingAlpha: CGFloat) {
 		self.init()
 		self.transitionDuration = transitionDuration
 		self.startingAlpha = startingAlpha
@@ -38,8 +38,7 @@ open class TKFadeInAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 			toView.alpha = 1.0
 			fromView.alpha = 0.0
 
-		}, completion: {
-			_ in
+		}, completion: { _ in
 			fromView.alpha = 1.0
 			transitionContext.completeTransition(true)
 		})

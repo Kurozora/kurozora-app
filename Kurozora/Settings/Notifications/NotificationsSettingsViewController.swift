@@ -36,7 +36,7 @@ class NotificationsSettingsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed
 		soundsSwitch.isOn = UserSettings.notificationsSound
 		vibrationsSwitch.isOn = UserSettings.notificationsVibration

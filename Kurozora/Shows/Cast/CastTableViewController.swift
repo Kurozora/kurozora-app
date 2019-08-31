@@ -16,12 +16,12 @@ class CastCollectionViewController: UICollectionViewController, EmptyDataSetDele
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone_5_5S_5C_SE:	return (1, 1.7)
-				case .iPhone_6_6S_7_8:		return (2, 2)
-				case .iPhone_6_6S_7_8_PLUS:	return (2, 2.3)
-				case .iPhone_Xr:			return (2, 2.3)
-				case .iPhone_X_Xs:			return (2, 2)
-				case .iPhone_Xs_Max:		return (2, 2.3)
+				case .iPhone5SSE:	return (1, 1.7)
+				case .iPhone66S78:		return (2, 2)
+				case .iPhone66S78PLUS:	return (2, 2.3)
+				case .iPhoneXr:			return (2, 2.3)
+				case .iPhoneXXs:			return (2, 2)
+				case .iPhoneXsMax:		return (2, 2.3)
 
 				case .iPad:					return (2, 4.4)
 				case .iPadAir3:				return (3, 5)
@@ -31,12 +31,12 @@ class CastCollectionViewController: UICollectionViewController, EmptyDataSetDele
 			}
 
 			switch UIDevice.type {
-			case .iPhone_5_5S_5C_SE:	return (1, 3.4)
-			case .iPhone_6_6S_7_8:		return (1, 4)
-			case .iPhone_6_6S_7_8_PLUS:	return (1, 4.5)
-			case .iPhone_Xr:			return (1, 5.6)
-			case .iPhone_X_Xs:			return (1, 5)
-			case .iPhone_Xs_Max:		return (1, 5.5)
+			case .iPhone5SSE:	return (1, 3.4)
+			case .iPhone66S78:		return (1, 4)
+			case .iPhone66S78PLUS:	return (1, 4.5)
+			case .iPhoneXr:			return (1, 5.6)
+			case .iPhoneXXs:			return (1, 5)
+			case .iPhoneXsMax:		return (1, 5.5)
 
 			case .iPad:					return (2, 6.2)
 			case .iPadAir3:				return (2, 6.8)
@@ -151,4 +151,3 @@ extension CastCollectionViewController: ShowCharacterCellDelegate {
 		presentPhotoViewControllerWith(url: url, from: imageView)
 	}
 }
-

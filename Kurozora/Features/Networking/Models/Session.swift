@@ -13,7 +13,7 @@ class UserSessions: JSONDecodable {
     let success: Bool?
 	let currentSessions: UserSessionsElement?
     var otherSessions: [UserSessionsElement]?
-    
+
     required init(json: JSON) throws {
         success = json["success"].boolValue
 		self.currentSessions = try? UserSessionsElement(json: json["current_session"])

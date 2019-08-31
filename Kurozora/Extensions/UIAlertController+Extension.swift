@@ -26,7 +26,7 @@ extension UIAlertController {
 		for (var title, value) in items {
 			if let selection = currentSelection, value == selection {
 				// NOTE: - Checkmark and space have a neutral text flow direction so this is correct for RTL
-				title = title + " ✔︎"
+				title += " ✔︎"
 			}
 
 			let action = UIAlertAction(title: title, style: .default) {_ in
@@ -56,7 +56,7 @@ extension UIAlertController {
 		for (var title, value, image) in items {
 			if let selection = currentSelection, value == selection {
 				// NOTE: - Checkmark and space have a neutral text flow direction so this is correct for RTL
-				title = title + " ✔︎"
+				title += " ✔︎"
 			}
 
 			let action = UIAlertAction(title: title, style: .default) {_ in

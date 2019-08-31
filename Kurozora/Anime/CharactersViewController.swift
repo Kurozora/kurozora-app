@@ -9,10 +9,10 @@
 import KCommonKit
 
 enum CharacterSection: Int {
-    case Character = 0
-    case Cast
-    
-    static var allSections: [CharacterSection] = [.Character,.Cast]
+    case character = 0
+    case cast
+
+    static var allSections: [CharacterSection] = [.character, .cast]
 }
 
 public class CharactersViewController: AnimeBaseViewController {

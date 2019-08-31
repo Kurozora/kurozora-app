@@ -23,4 +23,3 @@ class ChartController {
 //        return query.findAllObjectsInBackground()
 //    }
 }
-

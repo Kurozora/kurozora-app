@@ -109,7 +109,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	func fetchNotifications() {
 		Service.shared.getNotifications(withSuccess: { (notifications) in
 			self.userNotificationsElement = []
-			DispatchQueue.main.async() {
+			DispatchQueue.main.async {
 				self.userNotificationsElement = notifications
 
 				switch self.grouping {
@@ -410,7 +410,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
 		switch orientation {
 		case .right:
-			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
 				switch self.grouping {
 				case .automatic, .byType:
 					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
@@ -459,7 +459,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				}
 			}
 
-			let markedAction = SwipeAction(style: .default, title: "") { action, indexPath in
+			let markedAction = SwipeAction(style: .default, title: "") { _, indexPath in
 				var notificationID = 0
 
 				switch self.grouping {

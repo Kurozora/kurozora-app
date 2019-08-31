@@ -29,20 +29,20 @@ class AccountTableViewController: UITableViewController {
 			userEmailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 
 		// Setup user email
 		userEmailLabel.text = "\(GlobalVariables().KDefaults["username"] ?? "kurozora")@kurozora.app"
-        userEmailLabel.textAlignment = .center
-        userEmailLabel.font = UIFont(name: "System", size: 13)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+		userEmailLabel.textAlignment = .center
+		userEmailLabel.font = UIFont(name: "System", size: 13)
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-    }
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -51,8 +51,8 @@ extension AccountTableViewController {
 		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
 		switch (indexPath.section, indexPath.row) {
-//		case (0,0): break
-		case (1,0):
+//		case (0, 0): break
+		case (1, 0):
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isLoggedIn {

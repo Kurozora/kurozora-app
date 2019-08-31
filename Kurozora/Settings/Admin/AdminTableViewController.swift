@@ -17,17 +17,17 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 		}
 	}
 
-    let kDefaultItems = GlobalVariables().KDefaults.allItems()
-    let kDefaultKeys = GlobalVariables().KDefaults.allKeys()
-    var kDefaultCount = GlobalVariables().KDefaults.allItems().count
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	let kDefaultItems = GlobalVariables().KDefaults.allItems()
+	let kDefaultKeys = GlobalVariables().KDefaults.allKeys()
+	var kDefaultCount = GlobalVariables().KDefaults.allItems().count
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		
+
 		// Setup table view
 		tableView.dataSource = self
-        tableView.delegate = self
+		tableView.delegate = self
 
 		// Setup empty table view
 		tableView.emptyDataSetDelegate = self
@@ -39,7 +39,7 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 				.isTouchAllowed(true)
 				.isScrollAllowed(false)
 		}
-    }
+	}
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()

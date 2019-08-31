@@ -11,34 +11,33 @@ import UIKit
 //import ANParseKit
 
 enum BrowseType: String {
-    case TopAnime = "Top Anime"
-    case TopAiring = "Top Airing"
-    case TopUpcoming = "Top Upcoming"
-    case TopTVSeries = "Top TV Series"
-    case TopMovies = "Top Movies"
-    case TopOVA = "Top OVA"
-    case TopSpecials = "Top Specials"
-    case JustAdded = "Just Added"
-    case MostPopular = "Most Popular"
-    case Filtering = "Advanced Search"
-    
+    case topAnime = "Top Anime"
+    case topAiring = "Top Airing"
+    case topUpcoming = "Top Upcoming"
+    case topTVSeries = "Top TV Series"
+    case topMovies = "Top Movies"
+    case topOVA = "Top OVA"
+    case topSpecials = "Top Specials"
+    case justAdded = "Just Added"
+    case mostPopular = "Most Popular"
+    case filtering = "Advanced Search"
+
     static func allItems() -> [String] {
         return [
-            BrowseType.TopAnime.rawValue,
-            BrowseType.TopAiring.rawValue,
-            BrowseType.TopUpcoming.rawValue,
-            BrowseType.TopTVSeries.rawValue,
-            BrowseType.TopMovies.rawValue,
-            BrowseType.TopOVA.rawValue,
-            BrowseType.TopSpecials.rawValue,
-            BrowseType.JustAdded.rawValue,
-            BrowseType.MostPopular.rawValue,
+            BrowseType.topAnime.rawValue,
+            BrowseType.topAiring.rawValue,
+            BrowseType.topUpcoming.rawValue,
+            BrowseType.topTVSeries.rawValue,
+            BrowseType.topMovies.rawValue,
+            BrowseType.topOVA.rawValue,
+            BrowseType.topSpecials.rawValue,
+            BrowseType.justAdded.rawValue,
+            BrowseType.mostPopular.rawValue
         ]
     }
 }
 
 class BrowseViewController: UIViewController {
-    
     //    var currentBrowseType: BrowseType = .TopAnime
     //    var animator: ZFModalTransitionAnimator!
     ////    var loadingView: LoaderView!
@@ -203,7 +202,6 @@ class BrowseViewController: UIViewController {
     //    }
 }
 
-
 //extension BrowseViewController: UICollectionViewDataSource {
 //    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return fetchController.dataCount()
@@ -286,7 +284,6 @@ class BrowseViewController: UIViewController {
 //        loadingView.stopAnimating()
 //    }
 //}
-
 
 //extension BrowseViewController: DropDownListDelegate {
 //    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {

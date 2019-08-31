@@ -13,7 +13,7 @@ import WhatsNew
 
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
-	
+
 	var logoutReason: String? = nil
 	var isKiller: Bool?
 	var statusBarShouldBeHidden = true
@@ -36,7 +36,7 @@ class WelcomeViewController: UIViewController {
 			self.setNeedsStatusBarAppearanceUpdate()
 		}
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 		backgroundImageView.addParallax()
@@ -49,7 +49,7 @@ class WelcomeViewController: UIViewController {
 			let whatsNew = KWhatsNewViewController(items: [
 				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
 				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
-				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon")),
+				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
 			])
 			whatsNew.titleText = "What's New"
 			whatsNew.buttonText = "Continue"

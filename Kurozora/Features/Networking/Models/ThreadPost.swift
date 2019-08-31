@@ -18,4 +18,3 @@ class ThreadPost: JSONDecodable {
 		self.threadID = json["thread_id"].intValue
 	}
 }
-

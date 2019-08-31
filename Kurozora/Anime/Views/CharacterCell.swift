@@ -9,13 +9,11 @@
 import UIKit
 
 class CharacterCell: UITableViewCell {
-    
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var characterName: UILabel!
     @IBOutlet weak var characterRole: UILabel!
-    
+
     @IBOutlet weak var personImageView: UIImageView!
     @IBOutlet weak var personName: UILabel!
     @IBOutlet weak var personJob: UILabel!
-    
 }

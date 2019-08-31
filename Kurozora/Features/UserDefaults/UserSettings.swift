@@ -84,7 +84,7 @@ extension UserSettings {
 	}
 
 	/// Returns an integer indication the library page the user was on last
-	static var libraryLayouts: Dictionary<String, Any> {
+	static var libraryLayouts: [String: Any] {
 		guard let libraryLayouts = shared.dictionary(forKey: #function) else { return [:] }
 		return libraryLayouts
 	}

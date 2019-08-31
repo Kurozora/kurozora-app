@@ -14,10 +14,10 @@ import SwiftTheme
 class SettingsTableViewController: UITableViewController {
 //	let FacebookPageDeepLink = "fb://profile/713541968752502"
 //	let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
-    let TwitterPageDeepLink = "twitter://user?id=991929359052177409"
-    let TwitterPageURL = "https://www.twitter.com/KurozoraApp"
-    let MediumPageDeepLink = "medium://@kurozora"
-    let MediumPageURL = "https://medium.com/@kurozora"
+    let twitterPageDeepLink = "twitter://user?id=991929359052177409"
+    let twitterPageURL = "https://www.twitter.com/KurozoraApp"
+    let mediumPageDeepLink = "medium://@kurozora"
+    let mediumPageURL = "https://medium.com/@kurozora"
 
 	// Section vars
 	let sectionTitles = ["Account", "Admin", "Alerts", "General", "In-App Purchases", "Rate", "Social", "About"]
@@ -40,7 +40,7 @@ class SettingsTableViewController: UITableViewController {
 			case .success(let size):
 				// Convert from bytes to mebibytes (2^20)
 				let sizeInMiB = Double(size) / 1024 / 1024
-				successHandler(String(format:"%.2f", sizeInMiB) + "MiB")
+				successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
 			case .failure(let error):
 				print("Cache size calculation error: \(error)")
 			}
@@ -182,11 +182,11 @@ extension SettingsTableViewController {
 		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
 
 		switch (indexPath.section, indexPath.row) {
-//		case (0,0): break
-//		case (1,0): break
-//		case (2,0): break
-//		case (3,0): break
-		case (3,4): // Clear cache
+//		case (0, 0): break
+//		case (1, 0): break
+//		case (2, 0): break
+//		case (3, 0): break
+		case (3, 4): // Clear cache
 			let alertView = SCLAlertView()
 			alertView.addButton("Clear 🗑", action: {
 				// Clear memory cache right away.
@@ -205,8 +205,8 @@ extension SettingsTableViewController {
 			})
 
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
-//		case (4,0): // Unlock features
-//		case (4,1): // Restore purchases
+//		case (4, 0): // Unlock features
+//		case (4, 1): // Restore purchases
 //			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
 //				if let _ = task.result {
 //					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
@@ -217,26 +217,26 @@ extension SettingsTableViewController {
 //
 //				return nil
 //			})
-//		case (5,0): // Rate app
+//		case (5, 0): // Rate app
 //			iRate.sharedInstance().openRatingsPageInAppStore()
-		case (6,0): // Open Twitter
+		case (6, 0): // Open Twitter
 			var url: URL?
 			let twitterScheme = URL(string: "twitter://")!
 
 			if UIApplication.shared.canOpenURL(twitterScheme) {
-				url = URL(string: TwitterPageDeepLink)
+				url = URL(string: twitterPageDeepLink)
 			} else {
-				url = URL(string: TwitterPageURL)
+				url = URL(string: twitterPageURL)
 			}
 			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-		case (6,1): // Open Medium
+		case (6, 1): // Open Medium
 			var url: URL?
 			let mediumScheme = URL(string: "medium://")!
 
 			if UIApplication.shared.canOpenURL(mediumScheme) {
-				url = URL(string: MediumPageDeepLink)
+				url = URL(string: mediumPageDeepLink)
 			} else {
-				url = URL(string: MediumPageURL)
+				url = URL(string: mediumPageURL)
 			}
 			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
 		default: break
