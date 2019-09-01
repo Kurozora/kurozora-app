@@ -2065,6 +2065,7 @@
 				667FBAD22088A85C00CE6F67 /* Embed Frameworks */,
 				EADEF8E9DAFBA77C64EB699E /* [CP] Embed Pods Frameworks */,
 				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
+				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -2289,7 +2290,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2304,6 +2306,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\n\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\")\n\nbuildNumber=${buildVersion//[^0-9]/}\nbuildNumber=$(($buildNumber + 1))\n\nbuildString=${buildVersion//[^a-z]/}\n\nbuildVersion=\"$buildNumber$buildString\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion\" \"${INFOPLIST_FILE}\"\n";
+		};
+		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		9F2E34C3EAB82D3DD3D34F4B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

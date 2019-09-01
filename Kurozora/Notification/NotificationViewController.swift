@@ -353,7 +353,7 @@ extension NotificationsViewController {
 		case .automatic, .byType:
 			let notifications = groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
 
-			if let type = notifications.type, type != "", let notificationType = NotificationType(rawValue: type) {
+			if let type = notifications.type, !type.isEmpty, let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
 					sessionNotificationCell.notificationsElement = notifications
@@ -365,7 +365,7 @@ extension NotificationsViewController {
 			}
 		case .off:
 			let notifications = userNotificationsElement?[indexPath.row]
-			if let type = notifications?.type, type != "", let notificationType = NotificationType(rawValue: type) {
+			if let type = notifications?.type, !type.isEmpty, let notificationType = NotificationType(rawValue: type) {
 				switch notificationType {
 				case .session:
 					sessionNotificationCell.notificationsElement = notifications

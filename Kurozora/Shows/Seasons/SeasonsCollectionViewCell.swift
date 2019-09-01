@@ -72,7 +72,7 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		guard let seasonsElement = seasonsElement else { return }
 
-		if let seasonPosterImage = seasonsElement.poster, seasonPosterImage != "" {
+		if let seasonPosterImage = seasonsElement.poster, !seasonPosterImage.isEmpty {
 			let posterImageUrl = URL(string: seasonPosterImage)
 			let resource = ImageResource(downloadURL: posterImageUrl!)
 
@@ -89,7 +89,7 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Season title
-		if let seasonTitle = seasonsElement.title, seasonTitle != "" {
+		if let seasonTitle = seasonsElement.title, !seasonTitle.isEmpty {
 			self.titleLabel.text = seasonTitle
 		} else {
 			self.titleLabel.text = "Unknown"

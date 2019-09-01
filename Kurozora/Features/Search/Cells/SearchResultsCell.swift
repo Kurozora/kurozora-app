@@ -61,7 +61,7 @@ class SearchResultsCell: UITableViewCell {
 		case .show:
 			titleLabel?.text = searchElement.title
 
-			if let posterThumbnail = searchElement.posterThumbnail, posterThumbnail != "" {
+			if let posterThumbnail = searchElement.posterThumbnail, !posterThumbnail.isEmpty {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				posterImageView?.kf.indicatorType = .activity
@@ -72,7 +72,7 @@ class SearchResultsCell: UITableViewCell {
 
 			statusLabel?.text = searchElement.status ?? "TBA"
 
-			if let rating = searchElement.rating, rating != "" {
+			if let rating = searchElement.rating, !rating.isEmpty {
 				showRatingLabel?.text = rating
 			} else {
 				showRatingLabel?.isHidden = true
@@ -84,7 +84,7 @@ class SearchResultsCell: UITableViewCell {
 				episodeCountLabel?.isHidden = true
 			}
 
-			if let airDate = searchElement.airDate, airDate != "" {
+			if let airDate = searchElement.airDate, !airDate.isEmpty {
 				airDateLabel?.text = airDate
 			} else {
 				airDateLabel?.isHidden = true
@@ -113,7 +113,7 @@ class SearchResultsCell: UITableViewCell {
 		case .user:
 			usernameLabel?.text = searchElement.username
 
-			if let avatar = searchElement.avatar, avatar != "" {
+			if let avatar = searchElement.avatar, !avatar.isEmpty {
 				let avatarUrl = URL(string: avatar)
 				let resource = ImageResource(downloadURL: avatarUrl!)
 				avatarImageView?.kf.indicatorType = .activity

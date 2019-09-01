@@ -1155,7 +1155,7 @@ struct Service {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		if User.authToken != "" && User.currentID != nil {
+		if !User.authToken.isEmpty && User.currentID != nil {
 			guard let sessionID = User.currentSessionID else { return }
 			let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [

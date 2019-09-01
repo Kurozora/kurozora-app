@@ -30,7 +30,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 		self.titleLabel.hero.id = "library_\(showTitle)_title"
 
 		self.posterView.hero.id = "library_\(showTitle)_poster"
-		if let posterThumbnail = libraryElement.posterThumbnail, posterThumbnail != "" {
+		if let posterThumbnail = libraryElement.posterThumbnail, !posterThumbnail.isEmpty {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			self.posterView.kf.indicatorType = .activity

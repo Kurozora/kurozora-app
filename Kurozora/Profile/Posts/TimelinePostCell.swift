@@ -59,7 +59,7 @@ class FeedPostCell: BaseFeedPostCell {
 		}
 
 		// Other Username
-//		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, otherUsername != "" {
+//		if let otherUsername = posts?[indexPath.row]["other_username"].stringValue, !otherUsername.isEmpty {
 //			otherUserNameLabel?.text = otherUsername
 //
 //			userSeparatorLabel?.isHidden = false

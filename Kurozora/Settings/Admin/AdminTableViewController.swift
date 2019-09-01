@@ -96,10 +96,10 @@ extension AdminTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
 
-		if let key = kDefaultItems[indexPath.row]["key"] as? String, key != "" {
+		if let key = kDefaultItems[indexPath.row]["key"] as? String, !key.isEmpty {
 			kDefaultsCell.cellTitle?.text = key
 		}
-		if let value = kDefaultItems[indexPath.row]["value"] as? String, value != "" {
+		if let value = kDefaultItems[indexPath.row]["value"] as? String, !value.isEmpty {
 			kDefaultsCell.valueTextField.text = value
 		}
 

@@ -41,12 +41,12 @@ class ShowCharacterCell: UITableViewCell {
 
 	var actorElement: ActorsElement? = nil {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	weak var delegate: ShowCharacterCellDelegate?
 
-	fileprivate func setup() {
+	fileprivate func configureCell() {
 		guard let actorElement = actorElement else { return }
 
 		// Actor name
@@ -60,7 +60,7 @@ class ShowCharacterCell: UITableViewCell {
 		}
 
 		// Actor image view
-		if let actorImage = actorElement.image, actorImage != "" {
+		if let actorImage = actorElement.image, !actorImage.isEmpty {
 			let actorImageUrl = URL(string: actorImage)
 			let resource = ImageResource(downloadURL: actorImageUrl!)
 			self.actorImageView.kf.indicatorType = .activity
@@ -83,7 +83,7 @@ class ShowCharacterCell: UITableViewCell {
 	@objc func showCast(_ tap: UITapGestureRecognizer) {
 		guard let actorElement = actorElement else { return }
 
-		if let imageUrl = actorElement.image, imageUrl != "" {
+		if let imageUrl = actorElement.image, !imageUrl.isEmpty {
 			delegate?.presentPhoto(withUrl: imageUrl, from: actorImageView)
 		} else {
 			delegate?.presentPhoto(withString: "placeholder_person", from: actorImageView)
@@ -118,12 +118,12 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 
 	var actorElement: ActorsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	weak var delegate: ShowCharacterCellDelegate?
 
-	fileprivate func setup() {
+	fileprivate func configureCell() {
 		guard let actorElement = actorElement else { return }
 
 		if let actorName = actorElement.name {
@@ -134,7 +134,7 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 			self.actorJob.text = actorRole
 		}
 
-		if let actorImage = actorElement.image, actorImage != "" {
+		if let actorImage = actorElement.image, !actorImage.isEmpty {
 			let actorImageUrl = URL(string: actorImage)
 			let resource = ImageResource(downloadURL: actorImageUrl!)
 			self.actorImageView.kf.indicatorType = .activity
@@ -157,7 +157,7 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 	@objc func showCast(_ tap: UITapGestureRecognizer) {
 		guard let actorElement = actorElement else { return }
 
-		if let imageUrl = actorElement.image, imageUrl != "" {
+		if let imageUrl = actorElement.image, !imageUrl.isEmpty {
 			delegate?.presentPhoto(withUrl: imageUrl, from: actorImageView)
 		} else {
 			delegate?.presentPhoto(withString: "placeholder_person", from: actorImageView)

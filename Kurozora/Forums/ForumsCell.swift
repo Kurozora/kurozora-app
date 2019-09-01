@@ -102,7 +102,7 @@ public class ForumsCell: UITableViewCell {
 			commentCountButton.setTitle("\((threadReplyCount >= 1000) ? threadReplyCount.kFormatted : threadReplyCount.string) · ", for: .normal)
 		}
 
-		if let creationDate = forumThreadsElement.creationDate, creationDate != "" {
+		if let creationDate = forumThreadsElement.creationDate, !creationDate.isEmpty {
 			dateTimeButton.setTitle("\(Date.timeAgo(creationDate))", for: .normal)
 		}
 
@@ -260,7 +260,7 @@ public class ForumsCell: UITableViewCell {
 		}
 
 		// Username action
-		if let username = forumThreadsElement.posterUsername, username != "" {
+		if let username = forumThreadsElement.posterUsername, !username.isEmpty {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})

@@ -171,7 +171,7 @@
 //			let linkTextField = alertView.addTextField("https://")
 //
 //			alertView.addButton("Link") {
-//				if let linkText = linkTextField.text, linkText != "" {
+//				if let linkText = linkTextField.text, !linkText.isEmpty {
 //					toolbar.editor?.insertLink(linkText, title: "")
 //				}
 //			}
@@ -186,7 +186,7 @@
 //	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 //		// extract image from the picker and save it
 //		if let pickedImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//			if let pickedImageBase64 = pickedImage.toBase64(format: .jpeg(0.1)), pickedImageBase64 != "" {
+//			if let pickedImageBase64 = pickedImage.toBase64(format: .jpeg(0.1)), !pickedImageBase64.isEmpty {
 //				toolbar.editor?.insertImage("data:image/jpg;base64,\(pickedImageBase64)", alt: "")
 //			}
 //		}

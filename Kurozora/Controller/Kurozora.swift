@@ -143,7 +143,7 @@ class Kurozora: NSObject {
 
 		if urlScheme == "anime" {
 			let showID = url.lastPathComponent
-			if showID != "" {
+			if !showID.isEmpty {
 				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
 					showTabBarController.showID = Int(showID)
 
@@ -154,7 +154,7 @@ class Kurozora: NSObject {
 
 		if urlScheme == "profile" || urlScheme == "user" {
 			let userID = url.lastPathComponent
-			if userID != "" {
+			if !userID.isEmpty {
 				if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
 					profileViewController.otherUserID = Int(userID)
 
@@ -179,7 +179,7 @@ class Kurozora: NSObject {
 
 		if urlScheme == "forum" || urlScheme == "forums" || urlScheme == "forumThread" || urlScheme == "forumsThread" || urlScheme == "thread" {
 			let forumThreadID = url.lastPathComponent
-			if forumThreadID != "" {
+			if !forumThreadID.isEmpty {
 				if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
 					threadViewController.forumThreadID = Int(forumThreadID)
 

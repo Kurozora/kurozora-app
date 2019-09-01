@@ -515,7 +515,7 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	@IBAction func showAvatar(_ sender: AnyObject) {
-		if let avatar = user?.profile?.avatar, avatar != "" {
+		if let avatar = user?.profile?.avatar, !avatar.isEmpty {
 			presentPhotoViewControllerWith(url: avatar, from: profileImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "default_avatar", from: profileImageView)
@@ -523,7 +523,7 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let banner = user?.profile?.banner, banner != "" {
+		if let banner = user?.profile?.banner, !banner.isEmpty {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "default_banner", from: bannerImageView)

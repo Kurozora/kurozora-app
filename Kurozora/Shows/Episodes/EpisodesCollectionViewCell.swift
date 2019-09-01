@@ -73,7 +73,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	fileprivate func configureCell() {
 		guard let episodesElement = episodesElement else { return }
 
-		if let episodeScreenshot = episodesElement.screenshot, episodeScreenshot != "" {
+		if let episodeScreenshot = episodesElement.screenshot, !episodeScreenshot.isEmpty {
 			let episodeScreenshotUrl = URL(string: episodeScreenshot)
 			let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
 

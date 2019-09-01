@@ -86,7 +86,7 @@ class ReplyCell: UITableViewCell {
 	fileprivate func configureCell() {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
-		if let avatar = threadRepliesElement.user?.avatar, avatar != "" {
+		if let avatar = threadRepliesElement.user?.avatar, !avatar.isEmpty {
 			let avatar = URL(string: avatar)
 			let resource = ImageResource(downloadURL: avatar!)
 			self.avatarImageView.kf.indicatorType = .activity
@@ -103,7 +103,7 @@ class ReplyCell: UITableViewCell {
 			voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
 		}
 
-		if let creationDate = threadRepliesElement.postedAt, creationDate != "" {
+		if let creationDate = threadRepliesElement.postedAt, !creationDate.isEmpty {
 			dateTimeButton.setTitle("\(Date.timeAgo(creationDate))", for: .normal)
 		}
 
@@ -212,7 +212,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Username action
-		if let username = threadRepliesElement.user?.username, username != "" {
+		if let username = threadRepliesElement.user?.username, !username.isEmpty {
 			action.addAction(UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			}))

@@ -52,13 +52,13 @@ class CurrentSessionCell: UITableViewCell {
 	fileprivate func updateCurrentSession() {
 		guard let session = session else { return }
 
-		if let sessionIP = session.ip, sessionIP != "" {
+		if let sessionIP = session.ip, !sessionIP.isEmpty {
 			ipAddressValueLabel.text = sessionIP
 		} else {
 			ipAddressValueLabel.text = "-"
 		}
 
-		if let sessionDevice = session.device, sessionDevice != "" {
+		if let sessionDevice = session.device, !sessionDevice.isEmpty {
 			deviceValueLabel.text = sessionDevice
 		} else {
 			deviceValueLabel.text = "-"

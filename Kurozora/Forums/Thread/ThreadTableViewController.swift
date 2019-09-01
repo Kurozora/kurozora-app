@@ -275,7 +275,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		guard let threadID = forumThreadID else { return }
 		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
 
-		if let title = forumThreadElement?.title, title != "" {
+		if let title = forumThreadElement?.title, !title.isEmpty {
 			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
 		}
 
@@ -382,7 +382,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 
 		// Username action
-		if let username = forumThreadElement.user?.username, username != "" {
+		if let username = forumThreadElement.user?.username, !username.isEmpty {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})

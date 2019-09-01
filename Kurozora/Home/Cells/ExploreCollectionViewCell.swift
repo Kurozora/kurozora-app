@@ -111,7 +111,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				genreLabel?.text = ""
 			}
 
-			if let bannerThumbnail = showElement.banner, bannerThumbnail != "" {
+			if let bannerThumbnail = showElement.banner, !bannerThumbnail.isEmpty {
 				let bannerThumbnailUrl = URL(string: bannerThumbnail)
 				let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
 				self.bannerImageView?.kf.indicatorType = .activity
@@ -120,7 +120,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
-			if let posterThumbnail = showElement.posterThumbnail, posterThumbnail != "" {
+			if let posterThumbnail = showElement.posterThumbnail, !posterThumbnail.isEmpty {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				self.posterImageView?.kf.indicatorType = .activity
@@ -178,7 +178,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		colorOverlayView?.backgroundColor = UIColor(hexString: genreColor)?.withAlphaComponent(0.6)
 		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
 
-		if let symbol = genreElement.symbol, symbol != "" {
+		if let symbol = genreElement.symbol, !symbol.isEmpty {
 			let symbolUrl = URL(string: symbol)
 			let resource = ImageResource(downloadURL: symbolUrl!)
 			bannerImageView?.kf.indicatorType = .activity

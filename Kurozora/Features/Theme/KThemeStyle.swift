@@ -181,7 +181,7 @@ extension KThemeStyle {
 		- Parameter isSuccess: A boolean value indicating whether the download is successful.
 	*/
 	static func downloadThemeTask(for theme: ThemesElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
-		guard let urlString = theme?.downloadLink, urlString != "" else {
+		guard let urlString = theme?.downloadLink, !urlString.isEmpty else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}

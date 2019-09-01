@@ -76,7 +76,7 @@ class OtherSessionsCell: UITableViewCell {
 		}
 
 		// Last Accessed
-		if let lastValidated = sessions.lastValidated, lastValidated != "" {
+		if let lastValidated = sessions.lastValidated, !lastValidated.isEmpty {
 			dateValueLabel?.text = lastValidated
 		} else {
 			dateValueLabel.text = "-"

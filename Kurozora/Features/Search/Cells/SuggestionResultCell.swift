@@ -24,7 +24,7 @@ class SuggestionResultCell: UICollectionViewCell {
 		guard let searchElement = searchElement else { return }
 		titleLabel?.text = searchElement.title
 
-		if let posterThumbnail = searchElement.posterThumbnail, posterThumbnail != "" {
+		if let posterThumbnail = searchElement.posterThumbnail, !posterThumbnail.isEmpty {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			posterImageView?.kf.indicatorType = .activity

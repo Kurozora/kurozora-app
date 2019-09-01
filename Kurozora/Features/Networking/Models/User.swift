@@ -160,19 +160,19 @@ extension User {
 
 	/// Returns the username saved in KDefaults
 	static var username: String? {
-		guard let username = GlobalVariables().KDefaults["username"], username != "" else { return nil }
+		guard let username = GlobalVariables().KDefaults["username"], !username.isEmpty else { return nil }
 		return username
 	}
 
 	/// Returns the current User ID saved in KDefaults
 	static var currentID: Int? {
-		guard let userID = GlobalVariables().KDefaults["user_id"], userID != "" else { return nil }
+		guard let userID = GlobalVariables().KDefaults["user_id"], !userID.isEmpty else { return nil }
 		return Int(userID)
 	}
 
 	/// Returns the Auth Token saved in KDefaults
 	static var authToken: String {
-		guard let authToken = GlobalVariables().KDefaults["auth_token"], authToken != "" else { return "" }
+		guard let authToken = GlobalVariables().KDefaults["auth_token"], !authToken.isEmpty else { return "" }
 		return authToken
 	}
 
@@ -194,14 +194,14 @@ extension User {
 
 	/// Returns the user's latitude saved in KDefaults
 	static var latitude: Double {
-		guard let latitudeString = GlobalVariables().KDefaults["latitude"], latitudeString != "",
+		guard let latitudeString = GlobalVariables().KDefaults["latitude"], !latitudeString.isEmpty,
 			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
 		return latitude
 	}
 
 	/// Returns the user's longitude saved in KDefaults
 	static var longitude: Double {
-		guard let longitudeString = GlobalVariables().KDefaults["longitude"], longitudeString != "",
+		guard let longitudeString = GlobalVariables().KDefaults["longitude"], !longitudeString.isEmpty,
 			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
 		return longitude
 	}
@@ -231,7 +231,7 @@ extension User {
 
 	/// Returns the current Session ID saved in KDefaults
 	static var currentSessionID: Int? {
-		guard let sessionID = GlobalVariables().KDefaults["session_id"], sessionID != "" else { return nil }
+		guard let sessionID = GlobalVariables().KDefaults["session_id"], !sessionID.isEmpty else { return nil }
 		return Int(sessionID)
 	}
 
@@ -252,7 +252,7 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is an admin
 	static var isAdmin: Bool {
-		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
+		if let userType = GlobalVariables().KDefaults["user_role"], !userType.isEmpty {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = UserType(rawValue: userType) else { return false }
 
@@ -268,7 +268,7 @@ extension User {
 
 	/// Returns a boolean if the current user is a mod
 	static var isMod: Bool {
-		if let userType = GlobalVariables().KDefaults["user_role"], userType != "" {
+		if let userType = GlobalVariables().KDefaults["user_role"], !userType.isEmpty {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = UserType(rawValue: userType) else { return false }
 

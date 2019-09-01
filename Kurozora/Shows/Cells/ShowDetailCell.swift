@@ -131,21 +131,21 @@ class InformationTableViewCell: UITableViewCell {
 			separatorView.isHidden = true
 //            case 9:
 //                cell.titleLabel.text = "English Titles"
-//                if let englishTitle = showDetailsElement?.englishTitles, englishTitle != "" {
+			//                if let englishTitle = showDetailsElement?.englishTitles, !englishTitle.isEmpty {
 //         er           cell.detailLabel.text = englishTitle
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
 //            case 10:
 //                cell.titleLabel.text = "Japanese Titles"
-//                if let japaneseTitle = showDetailsElement?.japaneseTitles, japaneseTitle != "" {
+			//                if let japaneseTitle = showDetailsElement?.japaneseTitles, !japaneseTitle.isEmpty {
 //                    cell.detailLabel.text = japaneseTitle
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
 //            case 11:
 //                cell.titleLabel.text = "Synonyms"
-//                if let synonyms = showDetailsElement?.synonyms, synonyms != "" {
+			//                if let synonyms = showDetailsElement?.synonyms, !synonyms.isEmpty {
 //                    cell.detailLabel.text = synonyms
 //                } else {
 //                    cell.detailLabel.text = "-"

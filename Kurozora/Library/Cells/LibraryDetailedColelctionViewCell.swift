@@ -30,7 +30,7 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 		self.userProgressLabel?.text = "TV ·  \(libraryElement.episodeCount ?? 0) ·  \(libraryElement.averageRating ?? 0)"
 
 		self.episodeImageView?.hero.id = "library_\(showTitle)_banner"
-		if let backgroundThumbnail = libraryElement.backgroundThumbnail, backgroundThumbnail != "" {
+		if let backgroundThumbnail = libraryElement.backgroundThumbnail, !backgroundThumbnail.isEmpty {
 			let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
 			let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
 			self.episodeImageView?.kf.indicatorType = .activity

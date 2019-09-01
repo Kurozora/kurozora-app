@@ -262,7 +262,7 @@ class ShowDetailViewController: UIViewController {
 			decimalScore?.removeFirst()
 
 			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal?.first ?? "0")"
-			ratingScoreDecimalLabel.text = (decimalScore != "") ? decimalScore : "0"
+			ratingScoreDecimalLabel.text = decimalScore ?? "0"
 		}
 	}
 
@@ -362,7 +362,7 @@ class ShowDetailViewController: UIViewController {
 		}
 
 		// Configure poster view
-		if let posterThumb = showDetailsElement.posterThumbnail, posterThumb != "" {
+		if let posterThumb = showDetailsElement.posterThumbnail, !posterThumb.isEmpty {
 			let posterThumb = URL(string: posterThumb)
 			let resource = ImageResource(downloadURL: posterThumb!)
 			posterImageView.kf.indicatorType = .activity
@@ -372,7 +372,7 @@ class ShowDetailViewController: UIViewController {
 		}
 
 		// Configure banner view
-		if let bannerImage = showDetailsElement.banner, bannerImage != "" {
+		if let bannerImage = showDetailsElement.banner, !bannerImage.isEmpty {
 			let bannerImage = URL(string: bannerImage)
 			let resource = ImageResource(downloadURL: bannerImage!)
 			bannerImageView.kf.indicatorType = .activity
@@ -381,7 +381,7 @@ class ShowDetailViewController: UIViewController {
 			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
 		}
 
-		if let videoUrl = showDetailsElement.videoUrl, videoUrl != "" {
+		if let videoUrl = showDetailsElement.videoUrl, !videoUrl.isEmpty {
 			trailerButton.isHidden = false
 			trailerLabel.isHidden = false
 		} else {
@@ -474,7 +474,7 @@ class ShowDetailViewController: UIViewController {
 		guard let showID = showID else { return }
 		var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
 
-		if let title = showDetails?.showDetailsElement?.title, title != "" {
+		if let title = showDetails?.showDetailsElement?.title, !title.isEmpty {
 			shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
 		}
 
@@ -544,7 +544,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let banner = showDetails?.showDetailsElement?.banner, banner != "" {
+		if let banner = showDetails?.showDetailsElement?.banner, !banner.isEmpty {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "placeholder_banner", from: bannerImageView)
@@ -552,7 +552,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showPoster(_ sender: AnyObject) {
-		if let poster = showDetails?.showDetailsElement?.poster, poster != "" {
+		if let poster = showDetails?.showDetailsElement?.poster, !poster.isEmpty {
 			presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "placeholder_poster", from: posterImageView)
@@ -560,7 +560,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func playTrailerPressed(_ sender: UIButton) {
-		if let videoUrl = showDetails?.showDetailsElement?.videoUrl, videoUrl != "" {
+		if let videoUrl = showDetails?.showDetailsElement?.videoUrl, !videoUrl.isEmpty {
 			presentVideoViewControllerWith(string: videoUrl)
 		}
 	}
@@ -645,23 +645,27 @@ extension ShowDetailViewController: UITableViewDataSource {
 		let showTitleCell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
 		var title = ""
 
-		switch ShowSections(rawValue: section)! {
-		case .synopsis:
-			title = (showDetails?.showDetailsElement?.synopsis != "") ? "Synopsis" : ""
-		case .information:
-			title = "Information"
-		case .rating:
-			title = "Ratings"
-		case .cast:
-			guard let castCount = actors?.count else { return showTitleCell.contentView }
-			title = (castCount != 0) ? "Actors" : ""
-			showTitleCell.seeMoreActorsButton.isHidden = !(castCount > 2)
-		case .related:
-			title = "Related"
+		if let showSection = ShowSections(rawValue: section) {
+			switch showSection {
+			case .synopsis:
+				if let synopsis = showDetails?.showDetailsElement?.synopsis, !synopsis.isEmpty {
+					title = "Synopsis"
+				}
+			case .information:
+				title = "Information"
+			case .rating:
+				title = "Ratings"
+			case .cast:
+				if let castCount = actors?.count, castCount != 0 {
+					title = "Actors"
+					showTitleCell.seeMoreActorsButton.isHidden = castCount < 2
+				}
+			case .related:
+				title = "Related"
+			}
 		}
 
 		showTitleCell.titleLabel.text = title
-
 		return showTitleCell.contentView
 	}
 

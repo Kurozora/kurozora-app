@@ -45,7 +45,7 @@ class MessageNotificationCell: SwipeTableViewCell {
 			notificationTitleLabel.text = title
 		}
 
-		if let avatar = notificationsElement.data?.avatar, avatar != "" {
+		if let avatar = notificationsElement.data?.avatar, !avatar.isEmpty {
 			let avatarUrl = URL(string: avatar)
 			let resource = ImageResource(downloadURL: avatarUrl!)
 			notificationProfileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])

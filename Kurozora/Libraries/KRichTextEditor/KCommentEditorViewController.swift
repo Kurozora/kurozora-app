@@ -121,7 +121,7 @@ class KCommentEditorViewController: UIViewController {
 	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
 			guard let threadID = forumThread?.id else { return }
-			guard let comment = commentTextView.text, comment != "" else { return }
+			guard let comment = commentTextView.text, !comment.isEmpty else { return }
 
 			Service.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {

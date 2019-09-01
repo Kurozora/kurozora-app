@@ -14,9 +14,7 @@ import SwiftTheme
 class SearchResultsTableViewController: UITableViewController {
 	var statusBarStyle: UIStatusBarStyle {
 		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
-		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
-
-		return statusBarStyle
+		return .fromString(statusBarStyleString)
 	}
 	var results: [SearchElement]?
 	var timer: Timer?
@@ -25,14 +23,12 @@ class SearchResultsTableViewController: UITableViewController {
 		var results = [SearchElement]()
 
 		let resultsArray: [JSON] = [
-			["id": 118, "title": "ONE ~Kagayaku Kisetsu e~", "average_rating": 0, "poster_thumbnail": ""],
-			["id": 202, "title": "Naruto", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/78857-9.jpg"],
-			["id": 147, "title": "Outlaw Star", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/75911-5.jpg"],
-			["id": 235, "title": "Kodocha", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79544-2.jpg"],
-			["id": 236, "title": "Re: Zero kara Hajimeru Isekai Seikatsu", "average_rating": 0, "poster_thumbnail": ""],
-			["id": 56, "title": "Vampire Hunter D", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79042-3.jpg"],
-			["id": 22, "title": ".hack", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/79099-3.jpg"],
-			["id": 28, "title": "Hellsing", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/_cache/posters/71278-6.jpg"]
+			["id": 1774, "title": "One Piece", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/81797-1.jpg"],
+			["id": 2345, "title": "Steins;Gate 0", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/339268-1.jpg"],
+			["id": 147, "title": "Death Parade", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/289177-1.jpg"],
+			["id": 235, "title": "One-Punch Man", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/293088-2.jpg"],
+			["id": 236, "title": "Re: Zero kara Hajimeru Isekai Seikatsu", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/305089-3.jpg"],
+			["id": 56, "title": "Gintama'", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/79895-24.jpg"]
 		]
 		for resultsItem in resultsArray {
 			if let searchElement = try? SearchElement(json: resultsItem) {
@@ -88,7 +84,7 @@ class SearchResultsTableViewController: UITableViewController {
 
 		guard let searchScope = SearchScope(rawValue: searchScope) else { return }
 
-		if text != "" {
+		if !text.isEmpty {
 			switch searchScope {
 			case .show:
 				Service.shared.search(forShow: text) { (results) in
@@ -195,7 +191,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 		results = nil
 		tableView.reloadData()
 
-		if text != "" {
+		if !text.isEmpty {
 			switch searchScope {
 			case .show, .thread, .user:
 				search(forText: text, searchScope: selectedScope)
@@ -213,7 +209,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		let searchScope = searchBar.selectedScopeButtonIndex
 
-		if searchText != "" {
+		if !searchText.isEmpty {
 			timer?.invalidate()
 			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)
 		} else {
@@ -257,19 +253,19 @@ extension SearchResultsTableViewController {
 			}
 
 			if indexPath.row == 0 {
-				searchResultsCell.visualEffectView?.roundCorners([.topRight, .topLeft], radius: 10)
+				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 			} else if indexPath.row == results!.count - 1 {
-				searchResultsCell.visualEffectView?.roundCorners([.bottomRight, .bottomLeft], radius: 10)
+				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 			} else {
-				searchResultsCell.visualEffectView?.roundCorners(.allCorners, radius: 0)
+				searchResultsCell.visualEffectView?.layer.cornerRadius = 0
 			}
 
 			return searchResultsCell
 		} else {
 			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SuggestionResultCell", for: indexPath) as! SearchResultsCell
-
 			searchResultsCell.suggestionElement = suggestions
-
 			return searchResultsCell
 		}
 	}
