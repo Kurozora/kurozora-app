@@ -45,6 +45,97 @@ class HomeCollectionViewController: UICollectionViewController {
 		collectionView.reloadData()
 	}
 
+	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
+		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
+		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
+		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
+		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
+	}
+	#endif
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController.delegate = self
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
+
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
+		startPlaceholderTimer(for: searchControllerBar)
+
+		navigationItem.searchController = searchController
+
+        // Validate session
+        Service.shared.validateSession(withSuccess: { (success) in
+            if !success {
+				if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
+                	self.present(welcomeViewController, animated: true, completion: nil)
+				}
+            }
+			NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
+        })
+
+        Service.shared.getExplore(withSuccess: { (explore) in
+			DispatchQueue.main.async {
+				self.exploreCategories = explore?.categories
+			}
+        })
+
+		#if DEBUG
+		numberOfItemsTextField.placeholder = "# items for: width, height"
+		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
+		numberOfItemsTextField.textAlignment = .center
+		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
+		navigationItem.title = nil
+		navigationItem.titleView = numberOfItemsTextField
+		#endif
+    }
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+			return
+		}
+		flowLayout.invalidateLayout()
+	}
+
+    // MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "home", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
+	}
+
+	@objc func updateSearchPlaceholder(_ timer: Timer) {
+		if let searchControllerBar = timer.userInfo as? UISearchBar {
+			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
+				searchControllerBar.placeholder = self.placeholderArray.randomElement()
+			}, completion: nil)
+		}
+	}
+
+	func startPlaceholderTimer(for searchControllerBar: UISearchBar) {
+		if placeholderTimer == nil {
+			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder(_:)), userInfo: searchControllerBar, repeats: true)
+		}
+	}
+
+	func stopPlacholderTimer() {
+		if placeholderTimer != nil {
+			placeholderTimer?.invalidate()
+			placeholderTimer = nil
+		}
+	}
+
 	func getItems(forCell exploreCellStyle: ExploreCellStyle? = nil, forSection section: Int? = -1) {
 		guard let exploreCellStyle = exploreCellStyle else {
 			if section == 0 {
@@ -205,97 +296,6 @@ class HomeCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
-		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
-		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
-		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
-		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
-	}
-	#endif
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
-		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
-
-		searchController = SearchController(searchResultsController: searchResultsViewController)
-		searchController.delegate = self
-		searchController.searchResultsUpdater = searchResultsViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsViewController
-		startPlaceholderTimer(for: searchControllerBar)
-
-		navigationItem.searchController = searchController
-
-        // Validate session
-        Service.shared.validateSession(withSuccess: { (success) in
-            if !success {
-				if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
-                	self.present(welcomeViewController, animated: true, completion: nil)
-				}
-            }
-			NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
-        })
-
-        Service.shared.getExplore(withSuccess: { (explore) in
-			DispatchQueue.main.async {
-				self.exploreCategories = explore?.categories
-			}
-        })
-
-		#if DEBUG
-		numberOfItemsTextField.placeholder = "# items for: width, height"
-		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
-		numberOfItemsTextField.textAlignment = .center
-		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
-		navigationItem.title = nil
-		navigationItem.titleView = numberOfItemsTextField
-		#endif
-    }
-
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-			return
-		}
-		flowLayout.invalidateLayout()
-	}
-
-    // MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "home", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
-	}
-
-	@objc func updateSearchPlaceholder(_ timer: Timer) {
-		if let searchControllerBar = timer.userInfo as? UISearchBar {
-			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
-				searchControllerBar.placeholder = self.placeholderArray.randomElement()
-			}, completion: nil)
-		}
-	}
-
-	func startPlaceholderTimer(for searchControllerBar: UISearchBar) {
-		if placeholderTimer == nil {
-			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder(_:)), userInfo: searchControllerBar, repeats: true)
-		}
-	}
-
-	func stopPlacholderTimer() {
-		if placeholderTimer != nil {
-			placeholderTimer?.invalidate()
-			placeholderTimer = nil
-		}
-	}
-
 	// MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {
@@ -437,9 +437,9 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 			if indexPath.section < exploreCategoriesCount {
 				if let categoryType = exploreCategories?[indexPath.section].size {
 					if indexPath.section == 0 {
-						getItems(forSection: indexPath.section)
+						self.getItems(forSection: indexPath.section)
 					} else {
-						getItems(forCell: ExploreCellStyle(rawValue: categoryType))
+						self.getItems(forCell: ExploreCellStyle(rawValue: categoryType))
 					}
 
 					#if DEBUG
