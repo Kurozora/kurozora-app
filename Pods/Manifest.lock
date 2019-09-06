@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-beta.7)
+  - Alamofire (5.0.0-rc.1)
   - AutoInsetter (1.7.2)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
@@ -32,7 +32,7 @@ PODS:
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
   - RevealingSplashView (0.6.0)
-  - RichTextView (2.2.4):
+  - RichTextView (2.3.0):
     - Down
     - iosMath
     - SnapKit
@@ -60,19 +60,19 @@ PODS:
   - SwifterSwift/SpriteKit (5.0.0)
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
-  - SwiftTheme (0.4.4)
+  - SwiftTheme (0.4.5)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.6.0)
   - Tabman (2.4.3):
     - AutoInsetter (~> 1.7.2)
     - Pageboy (~> 3.2.3)
-  - TRON (5.0.0-beta.5):
-    - Alamofire (~> 5.0.0-beta.6)
-    - TRON/Core (= 5.0.0-beta.5)
-  - TRON/Core (5.0.0-beta.5):
-    - Alamofire (~> 5.0.0-beta.6)
-  - TRON/SwiftyJSON (5.0.0-beta.5):
-    - Alamofire (~> 5.0.0-beta.6)
+  - TRON (5.0.0-rc.1):
+    - Alamofire (~> 5.0.0-rc.1)
+    - TRON/Core (= 5.0.0-rc.1)
+  - TRON/Core (5.0.0-rc.1):
+    - Alamofire (~> 5.0.0-rc.1)
+  - TRON/SwiftyJSON (5.0.0-rc.1):
+    - Alamofire (~> 5.0.0-rc.1)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
   - WhatsNew (0.4.6)
@@ -162,7 +162,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
-  Alamofire: bd07938ceecad59d2492aeecb1f785a8f2721160
+  Alamofire: b752289c6040d77e9738610c9080276f18276842
   AutoInsetter: 176c5c069b40bf6afa51bf7081be346ab70ca315
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
@@ -185,18 +185,18 @@ SPEC CHECKSUMS:
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
-  RichTextView: a8aeabdc23d3eb1688e90fc576aa01cdb4abdf18
+  RichTextView: 6734df0f02b6ff0d409fdeaea0b4c0572ba4003a
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
-  SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
+  SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
   Tabman: c2c83ebfcbec3e5be67e27a1dd6689a4e3efccd3
-  TRON: 38ac8e2c64a466343bb0c364da895488b6a6f123
+  TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
 PODFILE CHECKSUM: 9f8201e0b0165828006c1a672b627f35f67021f3

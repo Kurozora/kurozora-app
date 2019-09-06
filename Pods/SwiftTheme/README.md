@@ -16,7 +16,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 <a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat"></a>
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
-<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.4"><img src="https://img.shields.io/badge/release-0.4.4-blue.svg"></a>
+<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.5"><img src="https://img.shields.io/badge/release-0.4.5-blue.svg"></a>
 </p>
 
 ## Screenshot
@@ -236,6 +236,7 @@ NotificationCenter.default.addObserver(
 ##### UILabel
 - var theme_font: ThemeFontPicker?
 - var theme_textColor: ThemeColorPicker?
+- var theme_textAttributes: ThemeStringAttributesPicker?
 - var theme_highlightedTextColor: ThemeColorPicker?
 - var theme_shadowColor: ThemeColorPicker?
 
@@ -306,6 +307,9 @@ NotificationCenter.default.addObserver(
 ##### UIRefreshControl
 - var theme_titleAttributes: ThemeDictionaryPicker?
 
+##### UIVisualEffectView
+- var theme_effect: ThemeVisualEffectPicker?
+
 ### *Picker*
 ***
 
@@ -370,9 +374,17 @@ ThemeFontPicker.pickerWithFonts([UIFont.systemFont(ofSize: 10), UIFont.systemFon
 ①
 ThemeDictionaryPicker(dicts: ["key": "value"], ["key": "value"])
 ThemeDictionaryPicker.pickerWithDicts([["key": "value"], ["key": "value"]])
+②
+ThemeBarStylePicker(keyPath: "someStringKeyPath") { (Any?) -> [String: AnyObject]? in ... }
+```
+
+#### ThemeStringAttributesPicker
+```swift
+①
+ThemeDictionaryPicker(dicts: ["key": "value"], ["key": "value"])
 ThemeDictionaryPicker.pickerWithAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
 ②
-// Reading dictionary from plist is not supported now
+ThemeBarStylePicker(keyPath: "someStringKeyPath") { (Any?) -> [NSAttributedString.Key: Any]? in ... }
 ```
 
 #### ThemeBarStylePicker
@@ -423,6 +435,18 @@ ThemeActivityIndicatorViewStylePicker(keyPath: "someStringKeyPath")
 ThemeActivityIndicatorViewStylePicker.pickerWithKeyPath("someStringKeyPath")
 ```
 
+#### ThemeVisualEffectPicker
+```swift
+①
+ThemeVisualEffectPicker(effects: UIBlurEffect(style: .light), UIBlurEffect(style: .dark))
+ThemeVisualEffectPicker.pickerWithEffects([UIBlurEffect(style: .light), UIBlurEffect(style: .dark)])
+ThemeVisualEffectPicker.pickerWithStringEffects(["light", "dark", "extralight", "prominent", "regular"])
+②
+// name the key you like, but the available values are "light", "dark", "extralight", "prominent" and "regular"
+ThemeVisualEffectPicker(keyPath: "someStringKeyPath")
+ThemeVisualEffectPicker.pickerWithKeyPath("someStringKeyPath")
+```
+
 ### *More*
 
 Download this project and find more. There are two demo targets:
@@ -450,7 +474,7 @@ If you find a bug or need a help, you can [create a issue](https://github.com/wx
 We are happy to accept pull requests :D. But please make sure it's needed by most developers and make it simple to use. If you are not sure, create an issue and we can discuss it before you get to coding.
 
 ### Contributors
-[Gesen](https://github.com/wxxsw), [Zhoujun](https://github.com/shannonchou)
+[Gesen](https://github.com/wxxsw), [Zhoujun](https://github.com/shannonchou), [Kevin Cramer](https://github.com/kcramer)
 
 
 ## Lisence

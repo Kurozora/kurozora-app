@@ -9,13 +9,19 @@
 import UIKit
 import Kingfisher
 import Cosmos
+import SwiftTheme
 
 class SearchResultsCell: UITableViewCell {
 	@IBOutlet weak var collectionView: UICollectionView?
 
 	// Global cell outlets
 	@IBOutlet weak var separatorView: UIView?
-	@IBOutlet weak var visualEffectView: UIVisualEffectView?
+	@IBOutlet weak var visualEffectView: UIVisualEffectView? {
+		didSet {
+			visualEffectView?.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: true)
+			visualEffectView?.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
+		}
+	}
 
 	// Show search cell outlets
 	@IBOutlet weak var titleLabel: UILabel?

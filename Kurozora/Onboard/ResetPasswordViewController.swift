@@ -15,7 +15,7 @@ class ResetPasswordViewController: UIViewController {
 		didSet {
 			userEmailTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			userEmailTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			userEmailTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
+			userEmailTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]

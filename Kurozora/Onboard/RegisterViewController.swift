@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
 		didSet {
 			usernameTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			usernameTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			usernameTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
+			usernameTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
@@ -29,7 +29,7 @@ class RegisterViewController: UIViewController {
 		didSet {
 			emailTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			emailTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			emailTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
+			emailTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
@@ -42,7 +42,7 @@ class RegisterViewController: UIViewController {
 		didSet {
 			passwordTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 			passwordTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			passwordTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: AnyObject]? in
+			passwordTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 				guard let rgba = value as? String else { return nil }
 				let color = UIColor(rgba: rgba)
 				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]

@@ -18,13 +18,13 @@
                 <viewControllerPlaceholder storyboardName="details" id="kWy-vp-aKx" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVz-Yf-Prr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1612" y="119"/>
+            <point key="canvasLocation" x="1610" y="114"/>
         </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="lfD-Or-ghU">
             <objects>
                 <tableViewController storyboardIdentifier="SearchResultsTableViewController" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LvW-Sg-g0V" customClass="SearchResultsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="20" sectionFooterHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="siF-Bi-ioL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="20" sectionFooterHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="siF-Bi-ioL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -111,7 +111,7 @@
                                                     <constraint firstItem="tce-me-3Tz" firstAttribute="top" secondItem="sqB-Pw-GTq" secondAttribute="top" id="dOW-Rz-ZL5"/>
                                                 </constraints>
                                             </view>
-                                            <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.5" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
                                             <vibrancyEffect>
                                                 <blurEffect style="dark"/>
                                             </vibrancyEffect>
@@ -483,25 +483,6 @@
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4OI-4g-0ta">
                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="274"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBF-8N-ql9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="335" height="274"/>
-                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="whs-5a-6gE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="274"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            </view>
-                                                            <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <vibrancyEffect>
-                                                                <blurEffect style="regular"/>
-                                                            </vibrancyEffect>
-                                                        </visualEffectView>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="rBF-8N-ql9" secondAttribute="bottom" id="IQS-nQ-hG5"/>
-                                                        <constraint firstItem="rBF-8N-ql9" firstAttribute="leading" secondItem="4OI-4g-0ta" secondAttribute="leading" id="Xza-b2-NZX"/>
-                                                        <constraint firstItem="rBF-8N-ql9" firstAttribute="top" secondItem="4OI-4g-0ta" secondAttribute="top" id="fEZ-Fh-3Cs"/>
-                                                        <constraint firstAttribute="trailing" secondItem="rBF-8N-ql9" secondAttribute="trailing" id="vdY-pO-rdB"/>
-                                                    </constraints>
                                                 </view>
                                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="0.5" colorSpace="calibratedRGB"/>
                                                 <vibrancyEffect>
@@ -570,6 +551,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="collectionView" destination="LcB-nj-paH" id="sGv-50-8rJ"/>
+                                    <outlet property="visualEffectView" destination="Mb1-uX-CG8" id="sAF-qc-2af"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -591,7 +573,7 @@
                 <viewControllerPlaceholder storyboardName="forums" id="AEz-xT-jfB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bv8-00-ReG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1615" y="206"/>
+            <point key="canvasLocation" x="1612" y="202"/>
         </scene>
         <!--profile-->
         <scene sceneID="ww2-I0-p6Y">
@@ -599,7 +581,7 @@
                 <viewControllerPlaceholder storyboardName="profile" id="sGa-wM-2xH" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Qx-9L-HCG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1611" y="164"/>
+            <point key="canvasLocation" x="1610" y="158"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dI9-VK-jhk">

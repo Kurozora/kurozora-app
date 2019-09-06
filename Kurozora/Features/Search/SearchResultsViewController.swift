@@ -235,6 +235,7 @@ extension SearchResultsTableViewController {
 		if results != nil {
 			var searchResultsCell = SearchResultsCell()
 
+			// Configure cell
 			if let searchScope = SearchScope(rawValue: currentScope) {
 				let identifier = searchScope.identifierString
 				searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
@@ -246,13 +247,18 @@ extension SearchResultsTableViewController {
 				}
 			}
 
+			// Configure separator
 			if tableView.numberOfRows() == 1 {
 				searchResultsCell.separatorView?.isHidden = true
 			} else {
 				searchResultsCell.separatorView?.isHidden = false
 			}
 
-			if indexPath.row == 0 {
+			// Configure corner radius
+			if results?.count == 1 {
+				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+			} else if indexPath.row == 0 {
 				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
 				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 			} else if indexPath.row == results!.count - 1 {

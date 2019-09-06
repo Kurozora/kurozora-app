@@ -144,7 +144,7 @@ open class URLEncodedFormParameterEncoder: ParameterEncoder {
     }
 
     open func encode<Parameters: Encodable>(_ parameters: Parameters?,
-                                              into request: URLRequest) throws -> URLRequest {
+                                            into request: URLRequest) throws -> URLRequest {
         guard let parameters = parameters else { return request }
 
         var request = request
@@ -153,15 +153,15 @@ open class URLEncodedFormParameterEncoder: ParameterEncoder {
             throw AFError.parameterEncoderFailed(reason: .missingRequiredComponent(.url))
         }
 
-        guard let rawMethod = request.httpMethod, let method = HTTPMethod(rawValue: rawMethod) else {
-            let rawValue = request.httpMethod ?? "nil"
+        guard let method = request.method else {
+            let rawValue = request.method?.rawValue ?? "nil"
             throw AFError.parameterEncoderFailed(reason: .missingRequiredComponent(.httpMethod(rawValue: rawValue)))
         }
 
         if destination.encodesParametersInURL(for: method),
             var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-            let query: String = try AFResult<String> { try encoder.encode(parameters) }
-                                .mapError { AFError.parameterEncoderFailed(reason: .encoderFailed(error: $0)) }.get()
+            let query: String = try Result<String, Error> { try encoder.encode(parameters) }
+                .mapError { AFError.parameterEncoderFailed(reason: .encoderFailed(error: $0)) }.get()
             let newQueryString = [components.percentEncodedQuery, query].compactMap { $0 }.joinedWithAmpersands()
             components.percentEncodedQuery = newQueryString.isEmpty ? nil : newQueryString
 
@@ -175,8 +175,8 @@ open class URLEncodedFormParameterEncoder: ParameterEncoder {
                 request.headers.update(.contentType("application/x-www-form-urlencoded; charset=utf-8"))
             }
 
-            request.httpBody = try AFResult<Data> { try encoder.encode(parameters) }
-                                .mapError { AFError.parameterEncoderFailed(reason: .encoderFailed(error: $0)) }.get()
+            request.httpBody = try Result<Data, Error> { try encoder.encode(parameters) }
+                .mapError { AFError.parameterEncoderFailed(reason: .encoderFailed(error: $0)) }.get()
         }
 
         return request

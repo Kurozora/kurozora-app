@@ -14,6 +14,7 @@ import SwiftTheme
 
 	```
 	case statusBarStyle = "UIStatusBarStyle"
+	case visualEffect = "UIVisualEffectView"
 	case backgroundColor = "Global.backgroundColor"
 	case tintedBackgroundColor = "Global.tintedBackgroundColor"
 	case barTintColor = "Global.barTintColor"
@@ -21,12 +22,15 @@ import SwiftTheme
 	etc.
 */
 enum KThemePicker: ThemeColorPicker {
-	// Global
 	case statusBarStyle = "UIStatusBarStyle"
+	case visualEffect = "UIVisualEffectView"
+
+	// Global
 	case backgroundColor = "Global.backgroundColor"
 	case tintedBackgroundColor = "Global.tintedBackgroundColor"
 	case barTintColor = "Global.barTintColor"
 	case barTitleTextColor = "Global.barTitleTextColor"
+	case blurBackgroundColor = "Global.blurBackgroundColor"
 	case textColor = "Global.textColor"
 	case textFieldBackgroundColor = "Global.textFieldBackgroundColor"
 	case textFieldTextColor = "Global.textFieldTextColor"
@@ -54,9 +58,11 @@ enum KThemePicker: ThemeColorPicker {
 	/// The string value of a theme picker attribute.
 	var stringValue: String {
 		switch self {
-		// Global
 		case .statusBarStyle:
 			return "UIStatusBarStyle"
+		case .visualEffect:
+			return "UIVisualEffectView"
+		// Global
 		case .backgroundColor:
 			return "Global.backgroundColor"
 		case .tintedBackgroundColor:
@@ -65,6 +71,8 @@ enum KThemePicker: ThemeColorPicker {
 			return "Global.barTintColor"
 		case .barTitleTextColor:
 			return "Global.barTitleTextColor"
+		case .blurBackgroundColor:
+			return "Global.blurBackgroundColor"
 		case .textColor:
 			return "Global.textColor"
 		case .textFieldBackgroundColor:

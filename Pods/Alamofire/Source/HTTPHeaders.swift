@@ -24,13 +24,12 @@
 
 import Foundation
 
-
 /// An order-preserving and case-insensitive representation of HTTP headers.
 public struct HTTPHeaders {
     private var headers: [HTTPHeader] = []
 
     /// Creates an empty instance.
-    public init() { }
+    public init() {}
 
     /// Creates an instance from an array of `HTTPHeader`s. Duplicate case-insensitive names are collapsed into the last
     /// name and value encountered.
@@ -95,7 +94,7 @@ public struct HTTPHeaders {
     }
 
     /// Sort the current instance by header name.
-    mutating public func sort() {
+    public mutating func sort() {
         headers.sort { $0.name < $1.name }
     }
 
@@ -137,7 +136,7 @@ public struct HTTPHeaders {
     public var dictionary: [String: String] {
         let namesAndValues = headers.map { ($0.name, $0.value) }
 
-        return Dictionary(namesAndValues, uniquingKeysWith: { (_, last) in last })
+        return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
     }
 }
 
@@ -156,7 +155,7 @@ extension HTTPHeaders: ExpressibleByArrayLiteral {
 }
 
 extension HTTPHeaders: Sequence {
-    public func makeIterator() -> IndexingIterator<Array<HTTPHeader>> {
+    public func makeIterator() -> IndexingIterator<[HTTPHeader]> {
         return headers.makeIterator()
     }
 }
@@ -182,7 +181,7 @@ extension HTTPHeaders: Collection {
 extension HTTPHeaders: CustomStringConvertible {
     public var description: String {
         return headers.map { $0.description }
-                      .joined(separator: "\n")
+            .joined(separator: "\n")
     }
 }
 
@@ -214,6 +213,14 @@ extension HTTPHeader: CustomStringConvertible {
 }
 
 extension HTTPHeader {
+    /// Returns an `Accept` header.
+    ///
+    /// - Parameter value: The `Accept` value.
+    /// - Returns:         The header.
+    public static func accept(_ value: String) -> HTTPHeader {
+        return HTTPHeader(name: "Accept", value: value)
+    }
+
     /// Returns an `Accept-Charset` header.
     ///
     /// - Parameter value: The `Accept-Charset` value.
@@ -271,7 +278,7 @@ extension HTTPHeader {
     /// Returns an `Authorization` header.
     ///
     /// Alamofire provides built-in methods to produce `Authorization` headers. For a Basic `Authorization` header use
-    /// `HTTPHeader.authorization(username: password:)`. For a Bearer `Authorization` header, use
+    /// `HTTPHeader.authorization(username:password:)`. For a Bearer `Authorization` header, use
     /// `HTTPHeader.authorization(bearerToken:)`.
     ///
     /// - Parameter value: The `Authorization` value.
@@ -292,7 +299,7 @@ extension HTTPHeader {
 
     /// Returns a `Content-Type` header.
     ///
-    /// All Alamofire `ParameterEncoding`s set the `Content-Type` of the request, so it may not be necessary to manually
+    /// All Alamofire `ParameterEncoding`s and `ParameterEncoder`s set the `Content-Type` of the request, so it may not be necessary to manually
     /// set this value.
     ///
     /// - Parameter value: The `Content-Type` value.
@@ -358,7 +365,7 @@ extension HTTPHeader {
     ///
     /// See the [User-Agent header documentation](https://tools.ietf.org/html/rfc7231#section-5.5.3).
     ///
-    /// Example: `iOS Example/1.0 (org.alamofire.iOS-Example; build:1; iOS 12.0.0) Alamofire/5.0.0`
+    /// Example: `iOS Example/1.0 (org.alamofire.iOS-Example; build:1; iOS 13.0.0) Alamofire/5.0.0`
     public static let defaultUserAgent: HTTPHeader = {
         let userAgent: String = {
             if let info = Bundle.main.infoDictionary {
@@ -370,34 +377,28 @@ extension HTTPHeader {
                 let osNameVersion: String = {
                     let version = ProcessInfo.processInfo.operatingSystemVersion
                     let versionString = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
-
+                    // swiftformat:disable indent
                     let osName: String = {
-                        #if os(iOS)
+                    #if os(iOS)
                         return "iOS"
-                        #elseif os(watchOS)
+                    #elseif os(watchOS)
                         return "watchOS"
-                        #elseif os(tvOS)
+                    #elseif os(tvOS)
                         return "tvOS"
-                        #elseif os(macOS)
+                    #elseif os(macOS)
                         return "macOS"
-                        #elseif os(Linux)
+                    #elseif os(Linux)
                         return "Linux"
-                        #else
+                    #else
                         return "Unknown"
-                        #endif
+                    #endif
                     }()
+                    // swiftformat:enable indent
 
                     return "\(osName) \(versionString)"
                 }()
 
-                let alamofireVersion: String = {
-                    guard
-                        let afInfo = Bundle(for: Session.self).infoDictionary,
-                        let build = afInfo["CFBundleShortVersionString"]
-                        else { return "Unknown" }
-
-                    return "Alamofire/\(build)"
-                }()
+                let alamofireVersion = "Alamofire/\(AF.version)"
 
                 return "\(executable)/\(appVersion) (\(bundle); build:\(appBuild); \(osNameVersion)) \(alamofireVersion)"
             }
@@ -411,7 +412,7 @@ extension HTTPHeader {
 
 extension Collection where Element == String {
     func qualityEncoded() -> String {
-        return enumerated().map { (index, encoding) in
+        return enumerated().map { index, encoding in
             let quality = 1.0 - (Double(index) * 0.1)
             return "\(encoding);q=\(quality)"
         }.joined(separator: ", ")

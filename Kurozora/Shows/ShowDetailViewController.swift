@@ -11,6 +11,7 @@ import Kingfisher
 import Cosmos
 import Intents
 import IntentsUI
+import SwiftTheme
 
 protocol ShowDetailViewControllerDelegate: class {
 	func updateShowInLibrary(for cell: LibraryCollectionViewCell?)
@@ -421,8 +422,8 @@ class ShowDetailViewController: UIViewController {
 	/// Creates a snapshot of the current view and adds it as a subview.
 	fileprivate func createSnapshotOfView() {
 		if !UIAccessibility.isReduceTransparencyEnabled {
-			let blurEffect = UIBlurEffect(style: .extraLight)
-			let blurEffectView = UIVisualEffectView(effect: blurEffect)
+			let blurEffectView = UIVisualEffectView()
+			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
 			blurEffectView.frame = self.view.bounds
 			blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
