@@ -23,7 +23,7 @@ class ForumThreadElement: JSONDecodable {
 	let id: Int?
 	let title: String?
 	let content: String?
-	let locked: Bool?
+	var locked: Bool?
 	let creationDate: String?
 	let replyCount: Int?
 	let score: Int?

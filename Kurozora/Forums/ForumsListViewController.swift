@@ -7,10 +7,10 @@
 //
 
 import KCommonKit
-import SwiftyJSON
-import SCLAlertView
 import EmptyDataSet_Swift
+import SCLAlertView
 import SwiftTheme
+import SwiftyJSON
 
 class ForumsListViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	var refresh = UIRefreshControl()
@@ -66,9 +66,9 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 
 	// MARK: - Functions
 	/**
-	Refresh the threads data by fetching new items from the server.
+		Refresh the threads data by fetching new items from the server.
 
-	- Parameter sender: The object requesting the refresh.
+		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
@@ -77,7 +77,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		fetchThreads()
 	}
 
-	// Fetch threads list for the current section
+	/// Fetch threads list for the current section.
 	func fetchThreads() {
 		guard let sectionTitle = sectionTitle else { return }
 		guard let sectionID = sectionID else { return }

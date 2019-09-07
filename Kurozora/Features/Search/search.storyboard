@@ -378,7 +378,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugc-I2-pJ0">
-                                                                    <rect key="frame" x="34.000000000000007" y="33" width="69.666666666666686" height="15.666666666666664"/>
+                                                                    <rect key="frame" x="34.000000000000007" y="28.000000000000004" width="69.666666666666686" height="15.666666666666668"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <nil key="textColor"/>
@@ -440,7 +440,7 @@
                                         <constraint firstItem="lkG-RX-ixa" firstAttribute="top" secondItem="wiT-eF-Bqf" secondAttribute="top" id="deT-1u-Bkx"/>
                                         <constraint firstItem="cLr-wb-ctP" firstAttribute="leading" secondItem="ZCT-8w-13h" secondAttribute="leading" constant="20" id="gDc-Nx-GxJ"/>
                                         <constraint firstItem="lkG-RX-ixa" firstAttribute="leading" secondItem="wiT-eF-Bqf" secondAttribute="trailing" constant="5" id="iEt-zR-8MN"/>
-                                        <constraint firstItem="ugc-I2-pJ0" firstAttribute="top" secondItem="lkG-RX-ixa" secondAttribute="bottom" constant="5" id="mAY-I2-Pdt"/>
+                                        <constraint firstItem="ugc-I2-pJ0" firstAttribute="top" secondItem="lkG-RX-ixa" secondAttribute="bottom" id="mAY-I2-Pdt"/>
                                         <constraint firstAttribute="trailing" secondItem="cLr-wb-ctP" secondAttribute="trailing" constant="20" id="qtv-4Y-hNj"/>
                                         <constraint firstAttribute="bottom" secondItem="cLr-wb-ctP" secondAttribute="bottom" id="vDN-xY-u7H"/>
                                         <constraint firstItem="cLr-wb-ctP" firstAttribute="top" secondItem="ZCT-8w-13h" secondAttribute="top" id="xiS-RZ-s6Y"/>
@@ -619,7 +619,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="BdE-MB-m5s"/>
         <segue reference="zu2-na-X15"/>
-        <segue reference="sr9-R1-Ogy"/>
+        <segue reference="ID5-St-BcV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

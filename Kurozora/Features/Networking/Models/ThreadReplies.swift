@@ -42,7 +42,7 @@ class ThreadRepliesElement: JSONDecodable {
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.postedAt = json["posted_at"].stringValue
-		self.user = try? UserProfile(json: json["user"])
+		self.user = try? UserProfile(json: json["poster"])
 		self.score = json["score"].intValue
 		self.content = json["content"].stringValue
 	}

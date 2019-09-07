@@ -211,11 +211,11 @@ public class ForumsCell: UITableViewCell {
 		if User.isAdmin || User.isMod {
 			if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
 				var lock = 0
-				var lockTitle = "Unlock"
+				var lockTitle = "Locked"
 
 				if !locked {
 					lock = 1
-					lockTitle = "Lock"
+					lockTitle = "Unlocked"
 				}
 
 				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in

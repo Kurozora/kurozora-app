@@ -156,7 +156,7 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// Visit the poster's profile page
+	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = threadRepliesElement?.user?.id, posterId != 0 {
 			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
@@ -171,7 +171,11 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// Lock thread
+	/**
+		Shows and hides some elements according to the lock status of the current thread.
+
+		- Parameter locked: The boolean indicating whather to show or hide the element.
+	*/
 	fileprivate func isLocked(_ locked: Bool) {
 		// Set lock label
 		if locked {
@@ -189,7 +193,7 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// Populate action list
+	/// Builds and presents an action sheet.
 	fileprivate func actionList() {
 		guard let threadViewController = threadViewController else { return }
 		guard let threadRepliesElement = threadRepliesElement else { return }
@@ -201,48 +205,54 @@ class ReplyCell: UITableViewCell {
 
 		// Upvote, downvote and reply actions
 		if let replyID = threadRepliesElement.id, let locked = forumThreadElement?.locked, replyID != 0 && !locked {
-			action.addAction(UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
+			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForReply(with: 1)
-			}))
-			action.addAction(UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
+			})
+			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
 				self.voteForReply(with: 0)
-			}))
-//			action.addAction(UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
-//			}))
+			})
+//			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+//				self.replyThread()
+//			})
+
+			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")
+			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			downvoteAction.setValue(#imageLiteral(resourceName: "arrow_down"), forKey: "image")
+			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//			replyAction.setValue(#imageLiteral(resourceName: "comment"), forKey: "image")
+//			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+			action.addAction(upvoteAction)
+			action.addAction(downvoteAction)
+//			action.addAction(replyAction)
 		}
 
 		// Username action
 		if let username = threadRepliesElement.user?.username, !username.isEmpty {
-			action.addAction(UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
+			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
-			}))
+			})
+			userAction.setValue(#imageLiteral(resourceName: "profile"), forKey: "image")
+			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(userAction)
 		}
 
 		// Share thread action
-		action.addAction(UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			var shareText = ""
-
-			if let title = self.replyLabel.text {
-				shareText = title
-			}
-
-			let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-			if let popoverController = activityVC.popoverPresentationController {
-				popoverController.sourceView = threadViewController.view
-				popoverController.sourceRect = CGRect(x: threadViewController.view.bounds.midX, y: threadViewController.view.bounds.midY, width: 0, height: 0)
-				popoverController.permittedArrowDirections = []
-			}
-			threadViewController.present(activityVC, animated: true, completion: nil)
-		}))
+		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
+			self.shareReply()
+		})
+		shareAction.setValue(#imageLiteral(resourceName: "share"), forKey: "image")
+		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(shareAction)
 
 		// Report thread action
-		action.addAction(UIAlertAction.init(title: "Report", style: .default, handler: { (_) in
-		}))
+		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+		})
+		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
+		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(reportAction)
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
@@ -256,7 +266,28 @@ class ReplyCell: UITableViewCell {
 		}
 	}
 
-	// Show cell options
+	/// Presents a share sheet to share the current thread.
+	func shareReply() {
+		guard let threadViewController = threadViewController else { return }
+		guard let threadRepliesElement = threadRepliesElement else { return }
+
+		var shareText: [String] = [""]
+
+		if let replyContent = threadRepliesElement.content, let posterUsername = threadRepliesElement.user?.username {
+			shareText = ["\"\(replyContent)\"-\(posterUsername)"]
+		}
+
+		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+
+		if let popoverController = activityVC.popoverPresentationController {
+			popoverController.sourceView = threadViewController.view
+			popoverController.sourceRect = CGRect(x: threadViewController.view.bounds.midX, y: threadViewController.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+		threadViewController.present(activityVC, animated: true, completion: nil)
+	}
+
+	/// Shows the relevant options for the current reply.
 	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
 		actionList()
 	}
@@ -281,14 +312,4 @@ class ReplyCell: UITableViewCell {
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		actionList()
 	}
-
-//	override func layoutSubviews() {
-//		super.layoutSubviews()
-//		replyLabel.preferredMaxLayoutWidth = textContent.frame.size.width
-//	}
-//
-//	override func prepareForReuse() {
-//		super.prepareForReuse()
-//		textContent.preferredMaxLayoutWidth = textContent.frame.size.width
-//	}
 }

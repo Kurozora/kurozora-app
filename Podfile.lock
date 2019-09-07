@@ -32,7 +32,7 @@ PODS:
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
   - RevealingSplashView (0.6.0)
-  - RichTextView (2.3.0):
+  - RichTextView (2.3.1):
     - Down
     - iosMath
     - SnapKit
@@ -185,7 +185,7 @@ SPEC CHECKSUMS:
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
-  RichTextView: 6734df0f02b6ff0d409fdeaea0b4c0572ba4003a
+  RichTextView: 64a11656ae597e65e49ded59f13c242469d40738
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24

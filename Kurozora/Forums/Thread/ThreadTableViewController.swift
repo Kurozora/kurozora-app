@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import EmptyDataSet_Swift
+import Kingfisher
+import RichTextView
 import SwiftyJSON
 import SCLAlertView
-import RichTextView
-import Kingfisher
-import EmptyDataSet_Swift
 
 class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
 	@IBOutlet weak var lockLabel: UILabel!
@@ -167,11 +167,16 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		return storyboard.instantiateViewController(withIdentifier: "ThreadTableViewController")
 	}
 
+	/**
+		Dismisses the view controller. Used for navigation bar buttons.
+
+		- Parameter sender: The object requesting the dismisssal of the current view.
+	*/
 	@objc func dismissPressed(_ sender: AnyObject) {
 		self.dismiss(animated: true, completion: nil)
 	}
 
-	// Update the thread view with the fetched details
+	/// Update the thread view with the fetched details.
 	func updateThreadDetails() {
 		// Set thread stats
 		if let voteCount = forumThreadElement?.score {
@@ -208,6 +213,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 	}
 
+	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
 		Service.shared.getReplies(forThread: forumThreadID, order: order, page: pageNumber) { (replies) in
 			DispatchQueue.main.async {
@@ -230,10 +236,13 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 	}
 
-	// Vote for current thread
+	/**
+		Vote the current thread with the given vote.
+
+		- Parameter vote: The integer indicating whether to upvote or downvote the thread.
+	*/
 	func voteForThread(with vote: Int?) {
 		guard var threadScore = forumThreadElement?.score else { return }
-
 		Service.shared.vote(forThread: forumThreadID, vote: vote, withSuccess: { (action) in
 			DispatchQueue.main.async {
 				if action == 1 { // upvote
@@ -254,7 +263,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		})
 	}
 
-	// Reply to the current thread
+	/// Presents the reply view for the current thread.
 	func replyThread() {
 		let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
 		kCommentEditorViewController?.delegate = self
@@ -270,7 +279,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 	}
 
-	// Share the current thread
+	/// Presents a share sheet to share the current thread.
 	func shareThread() {
 		guard let threadID = forumThreadID else { return }
 		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
@@ -289,8 +298,14 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		self.present(activityVC, animated: true, completion: nil)
 	}
 
-	// Lock thread
+	/**
+		Shows and hides some elements according to the lock status of the current thread.
+
+		- Parameter locked: The boolean indicating whather to show or hide the element.
+	*/
 	func isLocked(_ locked: Bool) {
+		forumThreadElement?.locked = locked
+		// Set lock label
 		if locked {
 			lockLabel.isHidden = false
 			upvoteButton.isUserInteractionEnabled = false
@@ -304,9 +319,10 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 			replyButton.isUserInteractionEnabled = true
 			actionsStackView.isHidden = false
 		}
+		tableView.reloadData()
 	}
 
-	// Visit the poster's profile page
+	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
 		if let posterId = forumThreadElement?.user?.id, posterId != 0 {
 			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
@@ -321,7 +337,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 	}
 
-	// Populate action list
+	/// Builds and presents an action sheet.
 	func actionList() {
 		guard let forumThreadElement = forumThreadElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -329,15 +345,12 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		// Mod and Admin features actions
 		if User.isAdmin || User.isMod {
 			if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
-				var lock: Int
-				var lockTitle: String
+				var lock = 0
+				var lockTitle = "Locked"
 
-				if locked {
+				if !locked {
 					lock = 1
-					lockTitle = "Lock"
-				} else {
-					lock = 0
-					lockTitle = "Unock"
+					lockTitle = "Unlocked"
 				}
 
 				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
@@ -407,8 +420,6 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		action.addAction(reportAction)
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
