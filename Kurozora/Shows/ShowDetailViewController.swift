@@ -419,19 +419,20 @@ class ShowDetailViewController: UIViewController {
 		}
 	}
 
+	/// Creates a blur visual effect and adds it as a subview
+	fileprivate func createBlurVisualEffect() {
+		let blurEffectView = UIVisualEffectView()
+		blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
+		blurEffectView.frame = self.view.bounds
+		blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+		self.view.addSubview(blurEffectView)
+		blurView = blurEffectView
+		blurView?.isHidden = true
+	}
+
 	/// Creates a snapshot of the current view and adds it as a subview.
 	fileprivate func createSnapshotOfView() {
-		if !UIAccessibility.isReduceTransparencyEnabled {
-			let blurEffectView = UIVisualEffectView()
-			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
-			blurEffectView.frame = self.view.bounds
-			blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-			self.view.addSubview(blurEffectView)
-			blurView = blurEffectView
-			blurView?.isHidden = true
-		}
-
 		snapshotView.clipsToBounds = true
 		snapshotView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		snapshotView.isUserInteractionEnabled = true
@@ -467,6 +468,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func closeButtonPressed(_ sender: UIButton) {
+		createBlurVisualEffect()
 		createSnapshotOfView()
 		dismiss()
 	}
@@ -693,6 +695,7 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		updateHeaderView()
 		if shouldSnapshot && scrollView.isTracking {
+			self.createBlurVisualEffect()
 			self.createSnapshotOfView()
 			shouldSnapshot = false
 		}
