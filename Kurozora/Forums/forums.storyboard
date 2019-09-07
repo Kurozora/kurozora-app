@@ -294,7 +294,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="xXf-PZ-dvX">
                                             <rect key="frame" x="0.0" y="10.5" width="96" height="28"/>
                                             <subviews>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQs-9L-9g0">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQs-9L-9g0" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
@@ -303,7 +303,7 @@
                                                         <action selector="upVoteButtonPressed:" destination="GSs-Vf-tBR" eventType="touchUpInside" id="PVj-Dd-twe"/>
                                                     </connections>
                                                 </button>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4c-dR-1PW">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4c-dR-1PW" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="34" y="0.0" width="28" height="28"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
@@ -314,7 +314,7 @@
                                                         <action selector="downVoteButtonPressed:" destination="GSs-Vf-tBR" eventType="touchUpInside" id="JJD-mV-Kxi"/>
                                                     </connections>
                                                 </button>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXK-GI-064" userLabel="Reply Button">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXK-GI-064" userLabel="Reply Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="68" y="0.0" width="28" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -328,7 +328,7 @@
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hN9-iL-DBF">
+                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hN9-iL-DBF" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="345" y="10" width="29" height="29"/>
                                             <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <inset key="contentEdgeInsets" minX="5" minY="2" maxX="5" maxY="3"/>
@@ -428,7 +428,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSd-5w-QRi">
+                                                <button tag="1" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSd-5w-QRi" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="109" y="8" width="31" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -453,7 +453,7 @@
                                                     <color key="textColor" white="0.90000000000000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYI-wX-wrG">
+                                                <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYI-wX-wrG" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="68" y="118" width="32" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -463,7 +463,7 @@
                                                         <action selector="upvoteButtonPressed:" destination="0vN-TI-GMB" eventType="touchUpInside" id="lmv-fa-Y7r"/>
                                                     </connections>
                                                 </button>
-                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0s-OD-atE">
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0s-OD-atE" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="110" y="118" width="32" height="24"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
@@ -472,7 +472,7 @@
                                                         <action selector="downvoteButtonPressed:" destination="0vN-TI-GMB" eventType="touchUpInside" id="xlX-zO-QpJ"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AxO-Ue-tdi">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AxO-Ue-tdi" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="322" y="118" width="24" height="24"/>
                                                     <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="more"/>

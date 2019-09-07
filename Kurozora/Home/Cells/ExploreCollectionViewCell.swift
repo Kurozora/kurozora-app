@@ -35,7 +35,12 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var shadowView: UIView?
 	@IBOutlet weak var colorOverlayView: UIView?
 	@IBOutlet weak var backgroundColorView: UIView?
-	@IBOutlet weak var listButton: UIButton?
+	@IBOutlet weak var listButton: UIButton? {
+		didSet {
+			listButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			listButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
 
 	@IBOutlet weak var videoPlayerContainer: UIView?
 	@IBOutlet weak var videoPlayerPreviewImageView: UIImageView?

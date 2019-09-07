@@ -29,12 +29,12 @@ class KButton: UIButton {
 
 	// MARK: - Functions
 	private func sharedInit() {
-		_highlightBackgroundColor = (backgroundColor != .white) ? backgroundColor?.lighten(by: 0.1) : backgroundColor?.darken(by: 0.15)
 		addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
 		addTarget(self, action: #selector(touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
 	}
 
 	@objc private func touchDown() {
+		_highlightBackgroundColor = (backgroundColor != .white) ? backgroundColor?.lighten(by: 0.1) : backgroundColor?.darken(by: 0.15)
 		if highlightBackgroundColorEnabled || highlightBackgroundColor != nil {
 			normalBackgroundColor = backgroundColor
 			UIViewPropertyAnimator().stopAnimation(true)

@@ -53,7 +53,12 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	// Action buttons
-	@IBOutlet weak var listButton: UIButton!
+	@IBOutlet weak var listButton: UIButton! {
+		didSet {
+			listButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			listButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
 	@IBOutlet weak var cosmosView: CosmosView!
 	@IBOutlet weak var reminderButton: UIButton!
 

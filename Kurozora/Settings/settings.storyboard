@@ -1368,9 +1368,9 @@ Kurozora 1.0.0 (1)</string>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Knj-Tx-NvK">
                                             <rect key="frame" x="20" y="11" width="374" height="126"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-Pe-2Kp" userLabel="Remove  Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBA-Pe-2Kp" userLabel="Remove Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="330" y="51" width="24" height="24"/>
-                                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="0mK-OE-1GZ"/>
                                                         <constraint firstAttribute="height" constant="24" id="fhg-dM-7ar"/>
