@@ -513,7 +513,7 @@ extension NotificationsViewController: UISearchControllerDelegate {
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.tabBarController?.tabBar.isHidden = true
 			})
 		}
 	}
@@ -522,7 +522,7 @@ extension NotificationsViewController: UISearchControllerDelegate {
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.frame = tabBarFrame
+				self.tabBarController?.tabBar.isHidden = false
 			})
 		}
 	}
