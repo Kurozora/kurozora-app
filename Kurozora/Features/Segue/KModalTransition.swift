@@ -10,6 +10,7 @@ import UIKit
 import SPStorkController
 
 class KModalTransition: UIStoryboardSegue {
+	// swiftlint:disable weak_delegate
 	public var transitioningDelegate: SPStorkTransitioningDelegate?
 
 	override func perform() {

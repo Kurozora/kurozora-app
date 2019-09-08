@@ -49,7 +49,7 @@
         <!--Library List Collection View Controller-->
         <scene sceneID="NBJ-mP-QVs">
             <objects>
-                <collectionViewController storyboardIdentifier="LibraryListCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YkS-DU-LSm" customClass="LibraryListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="LibraryListCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YkS-DU-LSm" customClass="LibraryListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="Chm-ki-pCF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -349,7 +349,7 @@
         <!--Library-->
         <scene sceneID="HTe-q8-fSw">
             <objects>
-                <viewController storyboardIdentifier="LibraryViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B4w-wJ-4Cf" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LibraryViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B4w-wJ-4Cf" customClass="LibraryViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mUg-UP-NVd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

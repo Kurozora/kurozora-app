@@ -123,7 +123,7 @@
 //            }
 //
 //            animeTitle.text = anime.title
-//            tagsLabel.text = anime.informationString()
+//            tagsLabel.text = anime.informationString
 //
 //            if let status = AnimeStatus(rawValue: anime.status) {
 //                switch status {

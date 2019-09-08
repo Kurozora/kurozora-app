@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchController: UISearchController, UISearchBarDelegate {
+class SearchController: UISearchController {
 	let scopeButtonTitles = SearchScope.allString
 	var viewController: UIViewController?
 

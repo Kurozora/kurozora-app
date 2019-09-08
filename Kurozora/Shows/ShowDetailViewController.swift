@@ -312,8 +312,8 @@ class ShowDetailViewController: UIViewController {
 
 		// Configure tags label
 		compactTagsLabel.alpha = 0.80
-		tagsLabel.text = showDetailsElement.informationString()
-		compactTagsLabel.text = showDetailsElement.informationString()
+		tagsLabel.text = showDetailsElement.informationString
+		compactTagsLabel.text = showDetailsElement.informationString
 
 		// Configure status label
 		if let status = showDetailsElement.status, !status.isEmpty {

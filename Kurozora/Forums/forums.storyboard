@@ -622,7 +622,7 @@
         <!--Forums-->
         <scene sceneID="ojo-nC-5dI">
             <objects>
-                <viewController storyboardIdentifier="ForumsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Haj-ko-0LW" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForumsViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Haj-ko-0LW" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BaG-JS-iS2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

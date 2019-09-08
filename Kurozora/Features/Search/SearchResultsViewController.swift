@@ -11,6 +11,10 @@ import SwiftyJSON
 import Kingfisher
 import SwiftTheme
 
+protocol SearchResultsTableViewControllerDelegate: class {
+	func didCancelSearchController()
+}
+
 class SearchResultsTableViewController: UITableViewController {
 	var statusBarStyle: UIStatusBarStyle {
 		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
@@ -18,6 +22,7 @@ class SearchResultsTableViewController: UITableViewController {
 	}
 	var results: [SearchElement]?
 	var timer: Timer?
+	var viaSearchButton: Bool = false
 	var currentScope: Int!
 	var suggestions: [SearchElement] {
 		var results = [SearchElement]()
@@ -38,6 +43,7 @@ class SearchResultsTableViewController: UITableViewController {
 
 		return results
 	}
+	weak var delegate: SearchResultsTableViewControllerDelegate?
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return statusBarStyle
@@ -136,10 +142,6 @@ class SearchResultsTableViewController: UITableViewController {
 //		}
 //	}
 
-	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-		self.dismiss(animated: true, completion: nil)
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? SearchResultsCell {
@@ -221,6 +223,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		results = nil
 		tableView.reloadData()
+		delegate?.didCancelSearchController()
 	}
 }
 

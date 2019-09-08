@@ -13,20 +13,6 @@ import Pageboy
 import SCLAlertView
 import SwiftTheme
 
-enum ForumSortingStyle: String {
-	case top
-	case recent
-
-	func image() -> UIImage? {
-		switch self {
-		case .top:
-			return #imageLiteral(resourceName: "sort_top")
-		case .recent:
-			return #imageLiteral(resourceName: "sort_recent")
-		}
-	}
-}
-
 class ForumsViewController: TabmanViewController {
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
@@ -40,7 +26,7 @@ class ForumsViewController: TabmanViewController {
 	var threadSorting: String?
 //	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UIViewController]()
-	var searchResultsViewController: SearchResultsTableViewController?
+	var searchResultsTableViewController: SearchResultsTableViewController?
 	var searchController: SearchController!
 
 	let bar = TMBar.ButtonBar()
@@ -51,15 +37,17 @@ class ForumsViewController: TabmanViewController {
 		dataSource = self
 
 		// Search bar
-		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		searchResultsTableViewController?.delegate = self
 
-		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController = SearchController(searchResultsController: searchResultsTableViewController)
+		searchController.delegate = self
 		searchController.searchBar.selectedScopeButtonIndex = SearchScope.thread.rawValue
-		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.searchResultsUpdater = searchResultsTableViewController
 		searchController.viewController = self
 
 		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsViewController
+		searchControllerBar.delegate = searchResultsTableViewController
 
 		// Fetch forum sections
 		Service.shared.getForumSections(withSuccess: { (sections) in
@@ -131,7 +119,7 @@ class ForumsViewController: TabmanViewController {
 			currentSection?.threadOrder = value
 			currentSection?.pageNumber = 0
 			self.sortingBarButtonItem.title = value
-			self.sortingBarButtonItem.image = ForumSortingStyle(rawValue: value)?.image()
+			self.sortingBarButtonItem.image = ForumsSortingStyle(rawValue: value)?.imageValue
 			currentSection?.fetchThreads()
 		})
 
@@ -160,7 +148,8 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-		self.present(searchController, animated: true, completion: nil)
+		self.navigationItem.searchController = searchController
+		searchController.searchBar.becomeFirstResponder()
 	}
 }
 
@@ -188,5 +177,32 @@ extension ForumsViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
+	}
+}
+
+// MARK: - UISearchControllerDelegate
+extension ForumsViewController: UISearchControllerDelegate {
+	func willPresentSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.isHidden = true
+			})
+		}
+	}
+
+	func willDismissSearchController(_ searchController: UISearchController) {
+		if var tabBarFrame = self.tabBarController?.tabBar.frame {
+			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
+			UIView.animate(withDuration: 0.5, animations: {
+				self.tabBarController?.tabBar.isHidden = false
+			})
+		}
+	}
+}
+
+extension ForumsViewController: SearchResultsTableViewControllerDelegate {
+	func didCancelSearchController() {
+		self.navigationItem.searchController = nil
 	}
 }

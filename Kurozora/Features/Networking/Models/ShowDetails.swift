@@ -119,22 +119,11 @@ class ShowDetailsElement: JSONDecodable {
 		videoUrl = json["video_url"].stringValue
 	}
 
-	public func informationString() -> String {
+	/// Returns a string containing all the necessary information of a show.
+	var informationString: String {
 		let episodes = (self.episodes != 0) ? self.episodes : 0
 		let runtime = (self.runtime != 0) ? self.runtime : 0
 		let year = (self.year != 0) ? self.year : 0000
 		return "\(type ?? "Unknown") · \(watchRating ?? "N/A") · \(episodes ?? 0) eps · \(runtime ?? 0) min · \(year ?? 0000)"
-	}
-
-	public func attributedSynopsis() -> NSAttributedString? {
-		if let synopsis = synopsis, let data = synopsis.data(using: String.Encoding.unicode) {
-			let font = UIFont.systemFont(ofSize: 17)
-
-			if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-				attributedString.addAttribute(.font, value: font, range: NSMakeRange(0, attributedString.length))
-				return attributedString
-			}
-		}
-		return nil
 	}
 }

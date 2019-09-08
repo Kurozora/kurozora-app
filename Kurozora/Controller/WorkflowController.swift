@@ -19,6 +19,7 @@ let optionsWithEndpoint = PusherClientOptions(
 let pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
 
 public class WorkflowController {
+	// swiftlint:disable redundant_discardable_let
 	/// Initialise Pusher and connect to subsequent channels
 	class func pusherInit() {
 		if let currentID = User.currentID, currentID != 0 {
