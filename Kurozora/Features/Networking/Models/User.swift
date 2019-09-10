@@ -56,6 +56,8 @@ class UserProfile: JSONDecodable {
 	let currentRating: Double?
 	var libraryStatus: String?
 
+	let themeBought: Bool?
+
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.authToken = json["kuro_auth_token"].stringValue
@@ -90,6 +92,8 @@ class UserProfile: JSONDecodable {
 
 		self.currentRating = json["current_rating"].doubleValue
 		self.libraryStatus = json["library_status"].stringValue
+
+		self.themeBought = json["theme_bought"].boolValue
 	}
 }
 

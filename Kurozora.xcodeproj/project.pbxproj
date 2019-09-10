@@ -218,7 +218,6 @@
 		6675263022280ACB007C1617 /* Day.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262D22280ACB007C1617 /* Day.plist */; };
 		6675263122280ACB007C1617 /* Night.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262E22280ACB007C1617 /* Night.plist */; };
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
-		66752636222820E0007C1617 /* TestThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752635222820E0007C1617 /* TestThemeCell.swift */; };
 		6675263822282B06007C1617 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675263722282B06007C1617 /* Themes.swift */; };
 		66754BC42101020800268355 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613F02320F6423000071CAE /* Service.swift */; };
 		66754BC621011D1000268355 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CEFCFE20AD8C1D00792B1B /* User.swift */; };
@@ -616,7 +615,6 @@
 		6675262D22280ACB007C1617 /* Day.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Day.plist; sourceTree = "<group>"; };
 		6675262E22280ACB007C1617 /* Night.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Night.plist; sourceTree = "<group>"; };
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
-		66752635222820E0007C1617 /* TestThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestThemeCell.swift; sourceTree = "<group>"; };
 		6675263722282B06007C1617 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* SynopsisTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisTableViewCell.swift; sourceTree = "<group>"; };
@@ -920,7 +918,6 @@
 			isa = PBXGroup;
 			children = (
 				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
-				66752635222820E0007C1617 /* TestThemeCell.swift */,
 				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
 			);
 			path = Cells;
@@ -2528,7 +2525,6 @@
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */,
-				66752636222820E0007C1617 /* TestThemeCell.swift in Sources */,
 				660E9FC721455F3100F6813C /* Cast.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
 				664133E121DA64C800CE823A /* SettingsNotificationCell.swift in Sources */,

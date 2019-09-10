@@ -31,11 +31,18 @@ class Themes: JSONDecodable {
 class ThemesElement: JSONDecodable {
 	let id: Int?
 	let name: String?
+	let downloadCount: Int?
 	let downloadLink: String?
+	let userProfile: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue
+		self.downloadCount = json["download_count"].intValue
 		self.downloadLink = json["download_link"].stringValue
+		let userProfileJson = json["user"]
+		let userProfile = try? UserProfile(json: userProfileJson)
+
+		self.userProfile = userProfile
 	}
 }

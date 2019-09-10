@@ -141,31 +141,31 @@ class HomeCollectionViewController: UICollectionViewController {
 			if section == 0 {
 				if UIDevice.isLandscape {
 					switch UIDevice.type {
-					case .iPhone5SSE:	numberOfItems = (1, 1.4)
+					case .iPhone5SSE:		numberOfItems = (1, 1.4)
 					case .iPhone66S78:		numberOfItems = (1, 1.4)
 					case .iPhone66S78PLUS:	numberOfItems = (1, 1.4)
 					case .iPhoneXr:			numberOfItems = (1, 1.4)
-					case .iPhoneXXs:			numberOfItems = (1, 1.4)
+					case .iPhoneXXs:		numberOfItems = (1, 1.4)
 					case .iPhoneXsMax:		numberOfItems = (1, 1.4)
 
-					case .iPad:					numberOfItems = (1, 2.0)
-					case .iPadAir3:				numberOfItems = (1, 2.0)
-					case .iPadPro11:			numberOfItems = (1, 2.0)
-					case .iPadPro12:			numberOfItems = (1, 2.0)
+					case .iPad:				numberOfItems = (1, 2.0)
+					case .iPadAir3:			numberOfItems = (1, 2.0)
+					case .iPadPro11:		numberOfItems = (1, 2.0)
+					case .iPadPro12:		numberOfItems = (1, 2.0)
 					}
 				} else {
 					switch UIDevice.type {
-					case .iPhone5SSE:	numberOfItems = (1, 2.8)
+					case .iPhone5SSE:		numberOfItems = (1, 2.8)
 					case .iPhone66S78:		numberOfItems = (1, 2.8)
 					case .iPhone66S78PLUS:	numberOfItems = (1, 2.8)
 					case .iPhoneXr:			numberOfItems = (1, 3.4)
-					case .iPhoneXXs:			numberOfItems = (1, 3.4)
+					case .iPhoneXXs:		numberOfItems = (1, 3.4)
 					case .iPhoneXsMax:		numberOfItems = (1, 3.4)
 
-					case .iPad:					numberOfItems = (1, 3.0)
-					case .iPadAir3:				numberOfItems = (1, 3.0)
-					case .iPadPro11:			numberOfItems = (1, 3.0)
-					case .iPadPro12:			numberOfItems = (1, 3.0)
+					case .iPad:				numberOfItems = (1, 3.0)
+					case .iPadAir3:			numberOfItems = (1, 3.0)
+					case .iPadPro11:		numberOfItems = (1, 3.0)
+					case .iPadPro12:		numberOfItems = (1, 3.0)
 					}
 				}
 			}
@@ -176,121 +176,121 @@ class HomeCollectionViewController: UICollectionViewController {
 		case .large:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone5SSE:		numberOfItems = (1, 2.0)
 				case .iPhone66S78:		numberOfItems = (1, 2.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
 				case .iPhoneXr:			numberOfItems = (1, 1.8)
-				case .iPhoneXXs:			numberOfItems = (1, 1.8)
+				case .iPhoneXXs:		numberOfItems = (1, 1.8)
 				case .iPhoneXsMax:		numberOfItems = (1, 1.8)
 
-				case .iPad:					numberOfItems = (1, 2.6)
-				case .iPadAir3:				numberOfItems = (1, 2.6)
-				case .iPadPro11:			numberOfItems = (1, 2.6)
-				case .iPadPro12:			numberOfItems = (1, 2.6)
+				case .iPad:				numberOfItems = (1, 2.6)
+				case .iPadAir3:			numberOfItems = (1, 2.6)
+				case .iPadPro11:		numberOfItems = (1, 2.6)
+				case .iPadPro12:		numberOfItems = (1, 2.6)
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 4.0)
+				case .iPhone5SSE:		numberOfItems = (1, 4.0)
 				case .iPhone66S78:		numberOfItems = (1, 4.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 4.0)
 				case .iPhoneXr:			numberOfItems = (1, 4.6)
-				case .iPhoneXXs:			numberOfItems = (1, 4.6)
+				case .iPhoneXXs:		numberOfItems = (1, 4.6)
 				case .iPhoneXsMax:		numberOfItems = (1, 4.6)
 
-				case .iPad:					numberOfItems = (1, 4.8)
-				case .iPadAir3:				numberOfItems = (1, 4.8)
-				case .iPadPro11:			numberOfItems = (1, 5.0)
-				case .iPadPro12:			numberOfItems = (1, 5.0)
+				case .iPad:				numberOfItems = (1, 4.8)
+				case .iPadAir3:			numberOfItems = (1, 4.8)
+				case .iPadPro11:		numberOfItems = (1, 5.0)
+				case .iPadPro12:		numberOfItems = (1, 5.0)
 				}
 			}
 		case .medium:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 3.0)
+				case .iPhone5SSE:		numberOfItems = (1, 3.0)
 				case .iPhone66S78:		numberOfItems = (1, 3.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 3.0)
 				case .iPhoneXr:			numberOfItems = (1, 2.6)
-				case .iPhoneXXs:			numberOfItems = (1, 2.6)
+				case .iPhoneXXs:		numberOfItems = (1, 2.6)
 				case .iPhoneXsMax:		numberOfItems = (1, 2.6)
 
-				case .iPad:					numberOfItems = (1, 5.0)
-				case .iPadAir3:				numberOfItems = (1, 5.0)
-				case .iPadPro11:			numberOfItems = (1, 5.0)
-				case .iPadPro12:			numberOfItems = (1, 5.0)
+				case .iPad:				numberOfItems = (1, 5.0)
+				case .iPadAir3:			numberOfItems = (1, 5.0)
+				case .iPadPro11:		numberOfItems = (1, 5.0)
+				case .iPadPro12:		numberOfItems = (1, 5.0)
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 5.0)
+				case .iPhone5SSE:		numberOfItems = (1, 5.0)
 				case .iPhone66S78:		numberOfItems = (1, 5.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 5.0)
 				case .iPhoneXr:			numberOfItems = (1, 6.0)
-				case .iPhoneXXs:			numberOfItems = (1, 6.0)
+				case .iPhoneXXs:		numberOfItems = (1, 6.0)
 				case .iPhoneXsMax:		numberOfItems = (1, 6.0)
 
-				case .iPad:					numberOfItems = (1, 7.0)
-				case .iPadAir3:				numberOfItems = (1, 7.0)
-				case .iPadPro11:			numberOfItems = (1, 7.0)
-				case .iPadPro12:			numberOfItems = (1, 7.0)
+				case .iPad:				numberOfItems = (1, 7.0)
+				case .iPadAir3:			numberOfItems = (1, 7.0)
+				case .iPadPro11:		numberOfItems = (1, 7.0)
+				case .iPadPro12:		numberOfItems = (1, 7.0)
 				}
 			}
 		case .small:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone5SSE:		numberOfItems = (1, 2.0)
 				case .iPhone66S78:		numberOfItems = (1, 2.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
 				case .iPhoneXr:			numberOfItems = (1, 1.6)
-				case .iPhoneXXs:			numberOfItems = (1, 1.6)
+				case .iPhoneXXs:		numberOfItems = (1, 1.6)
 				case .iPhoneXsMax:		numberOfItems = (1, 1.6)
 
-				case .iPad:					numberOfItems = (1, 3.2)
-				case .iPadAir3:				numberOfItems = (1, 3.2)
-				case .iPadPro11:			numberOfItems = (1, 3.0)
-				case .iPadPro12:			numberOfItems = (1, 3.2)
+				case .iPad:				numberOfItems = (1, 3.2)
+				case .iPadAir3:			numberOfItems = (1, 3.2)
+				case .iPadPro11:		numberOfItems = (1, 3.0)
+				case .iPadPro12:		numberOfItems = (1, 3.2)
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 4.2)
+				case .iPhone5SSE:		numberOfItems = (1, 4.2)
 				case .iPhone66S78:		numberOfItems = (1, 4.2)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 4.2)
 				case .iPhoneXr:			numberOfItems = (1, 5.0)
-				case .iPhoneXXs:			numberOfItems = (1, 5.0)
+				case .iPhoneXXs:		numberOfItems = (1, 5.0)
 				case .iPhoneXsMax:		numberOfItems = (1, 5.0)
 
-				case .iPad:					numberOfItems = (1, 5.2)
-				case .iPadAir3:				numberOfItems = (1, 5.2)
-				case .iPadPro11:			numberOfItems = (1, 5.2)
-				case .iPadPro12:			numberOfItems = (1, 5.2)
+				case .iPad:				numberOfItems = (1, 5.2)
+				case .iPadAir3:			numberOfItems = (1, 5.2)
+				case .iPadPro11:		numberOfItems = (1, 5.2)
+				case .iPadPro12:		numberOfItems = (1, 5.2)
 				}
 			}
 		case .video:
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 1.1)
+				case .iPhone5SSE:		numberOfItems = (1, 1.1)
 				case .iPhone66S78:		numberOfItems = (1, 1.1)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 1.1)
 				case .iPhoneXr:			numberOfItems = (1, 1.2)
-				case .iPhoneXXs:			numberOfItems = (1, 1.2)
+				case .iPhoneXXs:		numberOfItems = (1, 1.2)
 				case .iPhoneXsMax:		numberOfItems = (1, 1.2)
 
-				case .iPad:					numberOfItems = (1, 1.79)
-				case .iPadAir3:				numberOfItems = (1, 1.79)
-				case .iPadPro11:			numberOfItems = (1, 1.7)
-				case .iPadPro12:			numberOfItems = (1, 1.9)
+				case .iPad:				numberOfItems = (1, 1.79)
+				case .iPadAir3:			numberOfItems = (1, 1.79)
+				case .iPadPro11:		numberOfItems = (1, 1.7)
+				case .iPadPro12:		numberOfItems = (1, 1.9)
 				}
 			} else {
 				switch UIDevice.type {
-				case .iPhone5SSE:	numberOfItems = (1, 2.0)
+				case .iPhone5SSE:		numberOfItems = (1, 2.0)
 				case .iPhone66S78:		numberOfItems = (1, 2.0)
 				case .iPhone66S78PLUS:	numberOfItems = (1, 2.0)
 				case .iPhoneXr:			numberOfItems = (1, 2.4)
-				case .iPhoneXXs:			numberOfItems = (1, 2.4)
+				case .iPhoneXXs:		numberOfItems = (1, 2.4)
 				case .iPhoneXsMax:		numberOfItems = (1, 2.4)
 
-				case .iPad:					numberOfItems = (1, 3.0)
-				case .iPadAir3:				numberOfItems = (1, 3.0)
-				case .iPadPro11:			numberOfItems = (1, 3.2)
-				case .iPadPro12:			numberOfItems = (1, 3.2)
+				case .iPad:				numberOfItems = (1, 3.0)
+				case .iPadAir3:			numberOfItems = (1, 3.0)
+				case .iPadPro11:		numberOfItems = (1, 3.2)
+				case .iPadPro12:		numberOfItems = (1, 3.2)
 				}
 			}
 		}

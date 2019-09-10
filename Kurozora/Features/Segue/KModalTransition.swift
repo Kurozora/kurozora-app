@@ -21,7 +21,6 @@ class KModalTransition: UIStoryboardSegue {
 			transitioningDelegate?.showIndicator = false
 			destination.transitioningDelegate = transitioningDelegate
 			destination.modalPresentationStyle = .custom
-			//	super.perform()
 			source.present(destination, animated: true, completion: nil)
 		}
 	}
