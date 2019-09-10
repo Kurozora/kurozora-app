@@ -271,6 +271,7 @@ extension SearchResultsTableViewController {
 				searchResultsCell.visualEffectView?.layer.cornerRadius = 0
 			}
 
+			searchResultsCell.searchResultsTableViewController = self
 			return searchResultsCell
 		} else {
 			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SuggestionResultCell", for: indexPath) as! SearchResultsCell

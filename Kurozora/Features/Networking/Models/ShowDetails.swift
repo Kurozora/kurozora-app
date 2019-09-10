@@ -14,14 +14,8 @@ class ShowDetails: JSONDecodable {
 	var userProfile: UserProfile?
 
 	required init(json: JSON) throws {
-		let showDetailsJson = json["anime"]
-		let userProfileJson = json["user"]
-
-		let showDetailsElement = try? ShowDetailsElement(json: showDetailsJson)
-		let userProfile = try? UserProfile(json: userProfileJson)
-
-		self.showDetailsElement = showDetailsElement
-		self.userProfile = userProfile
+		self.showDetailsElement = try? ShowDetailsElement(json: json["anime"])
+		self.userProfile = try? UserProfile(json: json["user"])
 	}
 }
 

@@ -49,6 +49,9 @@ class SearchElement: JSONDecodable {
 	let contentTeaser: String?
 	let locked: Bool?
 
+	// User data keys
+	let userProfile: UserProfile?
+
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 
@@ -69,5 +72,8 @@ class SearchElement: JSONDecodable {
 		// Thread search unique values
 		self.contentTeaser = json["content_teaser"].stringValue
 		self.locked = json["locked"].boolValue
+
+		// User data values
+		self.userProfile = try? UserProfile(json: json["user"])
 	}
 }

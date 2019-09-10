@@ -62,7 +62,6 @@ class ExploreElement: JSONDecodable {
 		self.bannerThumbnail = json["background_thumbnail"].stringValue
 		self.videoUrl = json["video_url"].stringValue
 		var genres = [GenreElement]()
-		let userProfileJson = json["user"]
 
 		let genresArray = json["genres"].arrayValue
 		for genreItem in genresArray {
@@ -70,10 +69,9 @@ class ExploreElement: JSONDecodable {
 				genres.append(genresElement)
 			}
 		}
-		let userProfile = try? UserProfile(json: userProfileJson)
 
 		self.genres = genres
-		self.userProfile = userProfile
+		self.userProfile = try? UserProfile(json: json["user"])
 	}
 }
 

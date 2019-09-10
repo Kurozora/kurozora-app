@@ -498,7 +498,7 @@ class ShowDetailViewController: UIViewController {
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
-			guard let showID = self.showID else {return}
+			guard let showID = self.showID else { return }
 
 			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 				if success {

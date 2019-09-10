@@ -135,7 +135,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRy-uH-r84" userLabel="Rating View">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DRy-uH-r84" userLabel="Rating View">
                                             <rect key="frame" x="110" y="102" width="107" height="22"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoQ-Bm-O9Z">
@@ -150,7 +150,7 @@
                                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ooQ-Mg-rII" customClass="CosmosView" customModule="Cosmos">
+                                                <view contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooQ-Mg-rII" customClass="CosmosView" customModule="Cosmos">
                                                     <rect key="frame" x="25" y="4" width="82" height="14"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -186,14 +186,35 @@
                                                 <constraint firstItem="ooQ-Mg-rII" firstAttribute="leading" secondItem="ij4-57-m2V" secondAttribute="trailing" constant="1" id="zXk-RH-o47"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3M-Ig-K1I" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                            <rect key="frame" x="288" y="99" width="47" height="25"/>
+                                            <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                            <state key="normal" title="ADD">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="12.5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="chooseStatusButtonPressed:" destination="H7V-MN-gNQ" eventType="touchUpInside" id="AWt-XZ-zm6"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="4WE-mR-MBh" firstAttribute="leading" secondItem="7zv-4u-Cw6" secondAttribute="leading" constant="20" id="566-Lg-X9P"/>
-                                        <constraint firstItem="pBn-6w-d4h" firstAttribute="leading" secondItem="4WE-mR-MBh" secondAttribute="leadingMargin" constant="12" id="5TC-To-HZv"/>
+                                        <constraint firstItem="pBn-6w-d4h" firstAttribute="leading" secondItem="4WE-mR-MBh" secondAttribute="leading" constant="20" id="5TC-To-HZv"/>
                                         <constraint firstItem="DRy-uH-r84" firstAttribute="leading" secondItem="O3m-WQ-7ia" secondAttribute="leading" id="6N1-sG-HGl"/>
-                                        <constraint firstItem="pBn-6w-d4h" firstAttribute="top" secondItem="4WE-mR-MBh" secondAttribute="topMargin" constant="6" id="GSa-kw-id0"/>
+                                        <constraint firstItem="pBn-6w-d4h" firstAttribute="top" secondItem="4WE-mR-MBh" secondAttribute="top" constant="14" id="GSa-kw-id0"/>
                                         <constraint firstItem="4Jh-Ja-MOe" firstAttribute="top" secondItem="pBn-6w-d4h" secondAttribute="top" id="IDA-Si-RxD"/>
+                                        <constraint firstItem="m3M-Ig-K1I" firstAttribute="bottom" secondItem="DRy-uH-r84" secondAttribute="bottom" id="L7j-6q-Eco"/>
+                                        <constraint firstItem="4WE-mR-MBh" firstAttribute="trailing" secondItem="m3M-Ig-K1I" secondAttribute="trailing" constant="20" id="LWI-5a-4iM"/>
                                         <constraint firstItem="8HZ-v3-NJN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Jh-Ja-MOe" secondAttribute="trailing" constant="10" id="OtU-qn-V1F"/>
+                                        <constraint firstItem="m3M-Ig-K1I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DRy-uH-r84" secondAttribute="trailing" constant="10" id="PNZ-gC-gD7"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DRy-uH-r84" secondAttribute="bottom" constant="14" id="Psy-or-Jeo"/>
                                         <constraint firstItem="YIZ-Rv-zVj" firstAttribute="top" secondItem="4Jh-Ja-MOe" secondAttribute="bottom" constant="10" id="QMb-c1-fv0"/>
                                         <constraint firstAttribute="bottom" secondItem="4WE-mR-MBh" secondAttribute="bottom" id="VJ2-qY-PHw"/>
@@ -211,6 +232,7 @@
                                     <outlet property="airDateLabel" destination="O3m-WQ-7ia" id="EvL-Rz-BNq"/>
                                     <outlet property="cosmosView" destination="ooQ-Mg-rII" id="d3e-FZ-GCl"/>
                                     <outlet property="episodeCountLabel" destination="mta-hA-lhe" id="bNe-ks-l5g"/>
+                                    <outlet property="libraryStatusButton" destination="m3M-Ig-K1I" id="5xT-TN-w6g"/>
                                     <outlet property="posterImageView" destination="pBn-6w-d4h" id="gZ1-HU-Vz8"/>
                                     <outlet property="scoreDecimalLabel" destination="ij4-57-m2V" id="XRK-bE-Wfy"/>
                                     <outlet property="scoreLabel" destination="xoQ-Bm-O9Z" id="xcr-xO-Sum"/>
@@ -590,7 +612,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="BdE-MB-m5s"/>
         <segue reference="zu2-na-X15"/>
-        <segue reference="ID5-St-BcV"/>
+        <segue reference="sr9-R1-Ogy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

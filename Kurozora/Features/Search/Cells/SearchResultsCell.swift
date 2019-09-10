@@ -33,6 +33,12 @@ class SearchResultsCell: UITableViewCell {
 	@IBOutlet weak var scoreLabel: UILabel?
 	@IBOutlet weak var scoreDecimalLabel: UILabel?
 	@IBOutlet weak var cosmosView: CosmosView?
+	@IBOutlet weak var libraryStatusButton: UIButton? {
+		didSet {
+			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+			libraryStatusButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
+		}
+	}
 
 	// Forum search cell outlets
 	@IBOutlet weak var contentTeaserLabel: UILabel?
@@ -56,6 +62,7 @@ class SearchResultsCell: UITableViewCell {
 			collectionView?.reloadData()
 		}
 	}
+	var searchResultsTableViewController: SearchResultsTableViewController!
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
@@ -78,24 +85,41 @@ class SearchResultsCell: UITableViewCell {
 
 			statusLabel?.text = searchElement.status ?? "TBA"
 
+			// Configure library status
+			if let libraryStatus = searchElement.userProfile?.libraryStatus, !libraryStatus.isEmpty {
+				let mutableAttributedTitle = NSMutableAttributedString()
+				let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+				let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
+				mutableAttributedTitle.append(attributedTitleString)
+				mutableAttributedTitle.append(attributedIconString)
+
+				libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+			} else {
+				libraryStatusButton?.setTitle("ADD", for: .normal)
+			}
+
+			// Cinfigure rating
 			if let rating = searchElement.rating, !rating.isEmpty {
 				showRatingLabel?.text = rating
 			} else {
 				showRatingLabel?.isHidden = true
 			}
 
+			// Configure episode count
 			if let episodeCount = searchElement.episodeCount, episodeCount != 0 {
 				episodeCountLabel?.text = "\(episodeCount)"
 			} else {
 				episodeCountLabel?.isHidden = true
 			}
 
+			// Configure air date
 			if let airDate = searchElement.airDate, !airDate.isEmpty {
 				airDateLabel?.text = airDate
 			} else {
 				airDateLabel?.isHidden = true
 			}
 
+			// Configure score
 			if let score = searchElement.score, score != 0 {
 				var decimalScore = "\(score)"
 				decimalScore.removeFirst()
@@ -139,6 +163,56 @@ class SearchResultsCell: UITableViewCell {
 				}
 			}
 		}
+	}
+
+	// MARK: - Functions
+	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
+		guard let libraryStatus = searchElement?.userProfile?.libraryStatus else { return }
+		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
+			guard let showID = self.searchElement?.id else { return }
+
+			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+				if success {
+					// Update entry in library
+					self.searchElement?.userProfile?.libraryStatus = value
+
+					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+
+					let mutableAttributedTitle = NSMutableAttributedString()
+					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
+					mutableAttributedTitle.append(attributedTitleString)
+					mutableAttributedTitle.append(attributedIconString)
+
+					self.libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+				}
+			})
+		})
+
+		if let libraryStatus = searchElement?.userProfile?.libraryStatus, !libraryStatus.isEmpty {
+			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+				Service.shared.removeFromLibrary(withID: self.searchElement?.id, withSuccess: { (success) in
+					if success {
+						self.searchElement?.userProfile?.libraryStatus = ""
+
+						let mutableAttributedTitle = NSMutableAttributedString()
+						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+						mutableAttributedTitle.append(attributedTitleString)
+						self.libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+					}
+				})
+			}))
+		}
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+		}
+
+		searchResultsTableViewController.present(action, animated: true, completion: nil)
 	}
 }
 
