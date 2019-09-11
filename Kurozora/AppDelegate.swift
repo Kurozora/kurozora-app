@@ -194,8 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func registerForPushNotifications() {
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-			[weak self] _, _ in
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
 
 			print("Permission granted: \(granted)")
 
