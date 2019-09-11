@@ -335,7 +335,10 @@ struct Service {
 		guard let user = user else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("users/search")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.parameters = [
 			"query": user
@@ -462,7 +465,10 @@ struct Service {
 	*/
 	func getExplore(withSuccess successHandler: @escaping (_ explore: Explore?) -> Void) {
 		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request("explore")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.perform(withSuccess: { explore in
 			if let success = explore.success {
@@ -481,10 +487,10 @@ struct Service {
 		Fetch the show details for the given show id.
 
 		- Parameter showID: The id of the show for which the details should be fetched.
-		- Parameter successHandler: A closure returning a ShowDetails object.
-		- Parameter showDetails: The returned ShowDetails object.
+		- Parameter successHandler: A closure returning a ShowDetailsElement object.
+		- Parameter showDetailsElement: The returned ShowDetailsElement object.
 	*/
-	func getDetails(forShow showID: Int?, withSuccess successHandler: @escaping (_ showDetails: ShowDetails) -> Void) {
+	func getDetails(forShow showID: Int?, withSuccess successHandler: @escaping (_ showDetailsElement: ShowDetailsElement) -> Void) {
 		guard let showID = showID else { return }
 
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("anime/\(showID)")
@@ -495,7 +501,9 @@ struct Service {
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
 			DispatchQueue.main.async {
-				successHandler(showDetails)
+				if let showDetailsElement = showDetails.showDetailsElement {
+					successHandler(showDetailsElement)
+				}
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get show details 😔", subTitle: error.message)
@@ -601,7 +609,10 @@ struct Service {
 		guard let show = show else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("anime/search")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.parameters = [
 			"query": show
@@ -874,7 +885,10 @@ struct Service {
 		guard let threadID = threadID else { return }
 
 		let request: APIRequest<ForumThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.perform(withSuccess: { thread in
 			if let success = thread.success {
@@ -1005,7 +1019,10 @@ struct Service {
 		guard let thread = thread else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("forum-threads/search")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.parameters = [
 			"query": thread

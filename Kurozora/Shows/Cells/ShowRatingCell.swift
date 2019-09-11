@@ -28,7 +28,7 @@ class ShowRatingCell: UITableViewCell {
 		}
 	}
 
-	var showDetails: ShowDetails? {
+	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			configureCell()
 		}
@@ -37,10 +37,10 @@ class ShowRatingCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let showDetails = showDetails else { return }
+		guard let showDetailsElement = showDetailsElement else { return }
 
 		// Configure cosmos view
-		if let userRating = showDetails.userProfile?.currentRating {
+		if let userRating = showDetailsElement.currentUser?.currentRating {
 			self.cosmosView.rating = userRating
 		}
 
@@ -49,12 +49,12 @@ class ShowRatingCell: UITableViewCell {
         }
 
 		// Configure average rating
-		if let averageRating = showDetails.showDetailsElement?.averageRating {
+		if let averageRating = showDetailsElement.averageRating {
 			ratingLabel.text = "\(averageRating)"
 		}
 
 		// Configure rating count
-		if let ratingCount = showDetails.showDetailsElement?.ratingCount {
+		if let ratingCount = showDetailsElement.ratingCount {
 			cosmosDetailLabel.text = ratingCount != 0 ? "\(ratingCount) Ratings" : "Not enough ratings"
 		}
 	}
@@ -65,8 +65,7 @@ class ShowRatingCell: UITableViewCell {
 		- Parameter rating: The rating to be saved when the show has been rated by the user.
 	*/
 	func rateShow(with rating: Double) {
-		guard let showDetails = showDetails else { return }
-		guard let showID = showDetails.showDetailsElement?.id else { return }
+		guard let showID = showDetailsElement?.id else { return }
 
 		Service.shared.rateShow(showID, with: rating, withSuccess: { (success) in
 			if success {

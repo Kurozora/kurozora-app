@@ -40,6 +40,6 @@ class ThemesElement: JSONDecodable {
 		self.name = json["name"].stringValue
 		self.downloadCount = json["download_count"].intValue
 		self.downloadLink = json["download_link"].stringValue
-		self.userProfile = try? UserProfile(json: json["user"])
+		self.userProfile = try? UserProfile(json: json["current_user"])
 	}
 }

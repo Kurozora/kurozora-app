@@ -11,11 +11,9 @@ import SwiftyJSON
 
 class ShowDetails: JSONDecodable {
 	var showDetailsElement: ShowDetailsElement?
-	var userProfile: UserProfile?
 
 	required init(json: JSON) throws {
 		self.showDetailsElement = try? ShowDetailsElement(json: json["anime"])
-		self.userProfile = try? UserProfile(json: json["user"])
 	}
 }
 
@@ -60,6 +58,9 @@ class ShowDetailsElement: JSONDecodable {
 	let synonyms: String?
 	let externalLinks: String?
 	let videoUrl: String?
+
+	// User details
+	var currentUser: UserProfile?
 
 	required init(json: JSON) throws {
 		// Anime
@@ -111,6 +112,9 @@ class ShowDetailsElement: JSONDecodable {
 		synonyms = json["synonyms"].stringValue
 		externalLinks = json["external_links"].stringValue
 		videoUrl = json["video_url"].stringValue
+
+		// User details
+		self.currentUser = try? UserProfile(json: json["current_user"])
 	}
 
 	/// Returns a string containing all the necessary information of a show.

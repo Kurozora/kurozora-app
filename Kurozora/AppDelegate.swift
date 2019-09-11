@@ -12,6 +12,7 @@ import RevealingSplashView
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
+import UserNotifications
 
 let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue) ?? #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1))
 
@@ -103,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 
+		registerForPushNotifications()
 		return true
 	}
 
@@ -176,8 +178,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		Kurozora.shared.shortcutHandler(application, shortcutItem)
 	}
 
+	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+		let token = tokenParts.joined()
+		print("Device Token: \(token)")
+	}
+
+	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+		print("Failed to register: \(error)")
+	}
+
 	// MARK: - Functions
 	@objc func handleHeartAttackNotification() {
 		revealingSplashView.heartAttack = true
+	}
+
+	func registerForPushNotifications() {
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+			[weak self] _, _ in
+
+			print("Permission granted: \(granted)")
+
+			guard granted else { return }
+			self?.getNotificationSettings()
+		}
+	}
+
+	func getNotificationSettings() {
+		UNUserNotificationCenter.current().getNotificationSettings { settings in
+			print("Notification settings: \(settings)")
+
+			guard settings.authorizationStatus == .authorized else { return }
+			DispatchQueue.main.async {
+			  UIApplication.shared.registerForRemoteNotifications()
+			}
+		}
 	}
 }

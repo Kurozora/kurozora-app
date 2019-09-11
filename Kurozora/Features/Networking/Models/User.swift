@@ -90,7 +90,7 @@ class UserProfile: JSONDecodable {
 		self.activeEnd = json["active_end"].stringValue
 		self.active = json["active"].boolValue
 
-		self.currentRating = json["current_rating"].doubleValue
+		self.currentRating = json["given_rating"].doubleValue
 		self.libraryStatus = json["library_status"].stringValue
 
 		self.themeBought = json["theme_bought"].boolValue

@@ -74,6 +74,6 @@ class SearchElement: JSONDecodable {
 		self.locked = json["locked"].boolValue
 
 		// User data values
-		self.userProfile = try? UserProfile(json: json["user"])
+		self.userProfile = try? UserProfile(json: json["current_user"])
 	}
 }

@@ -120,7 +120,7 @@ class ShowDetailViewController: UIViewController {
 	var heroID: String?
 
 	// Misc vars
-	var showDetails: ShowDetails? {
+	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			self.updateDetails()
 		}
@@ -157,7 +157,7 @@ class ShowDetailViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		// Donate suggestion to Siri
 		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetails?.showDetailsElement?.title, let showID = showID {
+		if let title = showDetailsElement?.title, let showID = showID {
 			let title = "Open \(title)"
 			userActivity?.title = title
 			userActivity?.userInfo = ["showID": showID]
@@ -223,10 +223,10 @@ class ShowDetailViewController: UIViewController {
 		if let showID = showID {
 			KCommonKit.shared.showID = showID
 
-			Service.shared.getDetails(forShow: showID) { (showDetails) in
+			Service.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
-					self.showDetails = showDetails
-					self.libraryStatus = showDetails.userProfile?.libraryStatus
+					self.showDetailsElement = showDetailsElement
+					self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
 				}
 			}
 
@@ -285,11 +285,11 @@ class ShowDetailViewController: UIViewController {
 
 	/// Update view with the details fetched from the server.
 	fileprivate func updateDetails() {
-		guard let showDetailsElement = showDetails?.showDetailsElement else { return }
-		guard let userProfile = showDetails?.userProfile else { return }
+		guard let showDetailsElement = showDetailsElement else { return }
+		guard let currentUser = showDetailsElement.currentUser else { return }
 
 		// Configure library status
-		if let libraryStatus = userProfile.libraryStatus, !libraryStatus.isEmpty {
+		if let libraryStatus = currentUser.libraryStatus, !libraryStatus.isEmpty {
 			let mutableAttributedTitle = NSMutableAttributedString()
 			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
 			let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
@@ -482,7 +482,7 @@ class ShowDetailViewController: UIViewController {
 		guard let showID = showID else { return }
 		var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
 
-		if let title = showDetails?.showDetailsElement?.title, !title.isEmpty {
+		if let title = showDetailsElement?.title, !title.isEmpty {
 			shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
 		}
 
@@ -552,7 +552,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let banner = showDetails?.showDetailsElement?.banner, !banner.isEmpty {
+		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "placeholder_banner", from: bannerImageView)
@@ -560,7 +560,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func showPoster(_ sender: AnyObject) {
-		if let poster = showDetails?.showDetailsElement?.poster, !poster.isEmpty {
+		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "placeholder_poster", from: posterImageView)
@@ -568,7 +568,7 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func playTrailerPressed(_ sender: UIButton) {
-		if let videoUrl = showDetails?.showDetailsElement?.videoUrl, !videoUrl.isEmpty {
+		if let videoUrl = showDetailsElement?.videoUrl, !videoUrl.isEmpty {
 			presentVideoViewControllerWith(string: videoUrl)
 		}
 	}
@@ -578,7 +578,7 @@ class ShowDetailViewController: UIViewController {
 		if let kNavigationController = segue.destination as? KNavigationController {
 			if segue.identifier == "SynopsisSegue" {
 				if let synopsisViewController = kNavigationController.viewControllers.first as? SynopsisViewController {
-					synopsisViewController.synopsis = showDetails?.showDetailsElement?.synopsis
+					synopsisViewController.synopsis = showDetailsElement?.synopsis
 				}
 			} else if segue.identifier == "ActorsSegue" {
 				if let castTableViewController = kNavigationController.viewControllers.first as? CastCollectionViewController {
@@ -592,7 +592,7 @@ class ShowDetailViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ShowDetailViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return showDetails?.showDetailsElement != nil ? ShowSections.all.count : 0
+		return showDetailsElement != nil ? ShowSections.all.count : 0
 	}
 
 	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -601,7 +601,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 
 		switch showSections {
 		case .synopsis:
-			if let synopsis = showDetails?.showDetailsElement?.synopsis, !synopsis.isEmpty {
+			if let synopsis = showDetailsElement?.synopsis, !synopsis.isEmpty {
 				numberOfRows = 1
 			}
 		case .information:
@@ -624,16 +624,16 @@ extension ShowDetailViewController: UITableViewDataSource {
 		switch ShowSections(rawValue: indexPath.section)! {
 		case .synopsis:
 			let synopsisTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisTableViewCell
-			synopsisTableViewCell.showDetailsElement = showDetails?.showDetailsElement
+			synopsisTableViewCell.showDetailsElement = showDetailsElement
 			return synopsisTableViewCell
 		case .information:
 			let informationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowDetailCell") as! InformationTableViewCell
 			informationTableViewCell.indexPathRow = indexPath.row
-			informationTableViewCell.showDetailsElement = showDetails?.showDetailsElement
+			informationTableViewCell.showDetailsElement = showDetailsElement
 			return informationTableViewCell
 		case .rating:
 			let showRatingCell = tableView.dequeueReusableCell(withIdentifier: "ShowRatingCell") as! ShowRatingCell
-			showRatingCell.showDetails = showDetails
+			showRatingCell.showDetailsElement = showDetailsElement
 			return showRatingCell
 		case .cast:
 			let showCharacterCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
@@ -656,7 +656,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		if let showSection = ShowSections(rawValue: section) {
 			switch showSection {
 			case .synopsis:
-				if let synopsis = showDetails?.showDetailsElement?.synopsis, !synopsis.isEmpty {
+				if let synopsis = showDetailsElement?.synopsis, !synopsis.isEmpty {
 					title = "Synopsis"
 				}
 			case .information:
