@@ -70,21 +70,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		get { return getVideoThumbnail() }
 	}
 
-	// MARK: - Observable
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		if (object as? AVPlayer) != nil {
-			if keyPath == "status" {
-				if avPlayer?.status == AVPlayer.Status.readyToPlay {
-					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
-				}
-			} else if keyPath == "playbackBufferEmpty" {
-				if let avPlayerRate = avPlayer?.rate, avPlayerRate > Float(0) {
-					thumbnailPlaceholder.isHidden = true
-				}
-			}
-		}
-	}
-
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		avPlayerViewController = AVPlayerViewController()
@@ -234,7 +219,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)
 		self.avPlayer?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
-		self.avPlayer?.addObserver(self, forKeyPath: "playbackBufferEmpty", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
 		self.avPlayer?.actionAtItemEnd = .none
 		self.avPlayer?.isMuted = true
 		self.avPlayerLayer = AVPlayerLayer(player: self.avPlayer)
@@ -295,6 +279,17 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 
 		self.homeCollectionViewController?.present(action, animated: true, completion: nil)
+	}
+
+	// MARK: - Observable
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		if (object as? AVPlayer) != nil {
+			if keyPath == "status" {
+				if avPlayer?.status == AVPlayer.Status.readyToPlay {
+					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
+				}
+			}
+		}
 	}
 }
 

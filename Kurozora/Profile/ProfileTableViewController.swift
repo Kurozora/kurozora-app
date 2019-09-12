@@ -285,10 +285,10 @@ class ProfileTableViewController: UITableViewController {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
-			if let currentlyFollowing = user.currentlyFollowing, currentlyFollowing == true {
-				followButton.setTitle(" Following", for: .normal)
+			if let currentlyFollowing = user.profile?.following, currentlyFollowing == true {
+				followButton.setTitle("✓ Following", for: .normal)
 			} else {
-				followButton.setTitle(" Follow", for: .normal)
+				followButton.setTitle("＋ Follow", for: .normal)
 			}
 
 			followButton.isHidden = false
@@ -494,21 +494,16 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		var follow = 1
-
-		let title = sender.title(for: .normal)
-		if title == " Following" {
-			follow = 0
-		} else {
-			follow = 1
-		}
+		let follow = user?.profile?.following ?? false ? 0 : 1
 
 		Service.shared.follow(follow, user: otherUserID) { (success) in
 			if success {
-				if title == " Following" {
-					sender.setTitle(" Follow", for: .normal)
+				if follow == 0 {
+					sender.setTitle("＋ Follow", for: .normal)
+					self.user?.profile?.following = false
 				} else {
-					sender.setTitle(" Following", for: .normal)
+					sender.setTitle("✓ Following", for: .normal)
+					self.user?.profile?.following = true
 				}
 			}
 		}

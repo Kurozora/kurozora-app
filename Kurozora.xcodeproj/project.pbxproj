@@ -239,7 +239,6 @@
 		668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63892098684D003B1C1D /* Aller_BdIt.ttf */; };
 		668F639120986851003B1C1D /* Aller_It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638A2098684F003B1C1D /* Aller_It.ttf */; };
 		668F639220986851003B1C1D /* Aller_LtIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638B20986850003B1C1D /* Aller_LtIt.ttf */; };
-		668F639420986A34003B1C1D /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F639320986A33003B1C1D /* FontAwesome.ttf */; };
 		66938FD6211CD3A800ADA5D6 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD5211CD3A800ADA5D6 /* Explore.swift */; };
 		66938FD8211CD3E600ADA5D6 /* ShowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */; };
 		66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */; };
@@ -635,7 +634,6 @@
 		668F63892098684D003B1C1D /* Aller_BdIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_BdIt.ttf; sourceTree = "<group>"; };
 		668F638A2098684F003B1C1D /* Aller_It.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_It.ttf; sourceTree = "<group>"; };
 		668F638B20986850003B1C1D /* Aller_LtIt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_LtIt.ttf; sourceTree = "<group>"; };
-		668F639320986A33003B1C1D /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		66938FD5211CD3A800ADA5D6 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 		66938FD7211CD3E600ADA5D6 /* ShowDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailViewController.swift; sourceTree = "<group>"; };
 		66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1583,7 +1581,6 @@
 		668F63842098681C003B1C1D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				668F639320986A33003B1C1D /* FontAwesome.ttf */,
 				668F63872098684B003B1C1D /* Aller_Bd.ttf */,
 				668F63892098684D003B1C1D /* Aller_BdIt.ttf */,
 				668F638A2098684F003B1C1D /* Aller_It.ttf */,
@@ -2270,7 +2267,6 @@
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				664801DD222DE76A0063143A /* App-Icon-iPad-Coral.png in Resources */,
 				6641D6EB222EA3DF0067BD3A /* App-Icon-iPad-Pro-Lime@2x.png in Resources */,
-				668F639420986A34003B1C1D /* FontAwesome.ttf in Resources */,
 				664801CC222DE76A0063143A /* App-Icon-iPad-Blue.png in Resources */,
 				66058DB6212E95AB0084B79E /* details.storyboard in Resources */,
 				668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */,

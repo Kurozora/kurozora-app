@@ -51,7 +51,7 @@ class ThemeCell: UICollectionViewCell {
 			}
 		}
 
-		if let themeBought = themesElement.userProfile?.themeBought {
+		if let themeBought = themesElement.currentUser?.themeBought {
 			buyButton.setTitle((themeBought ? "" : "GET"), for: .normal)
 		}
 

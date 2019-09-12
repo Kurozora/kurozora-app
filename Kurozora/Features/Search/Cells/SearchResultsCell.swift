@@ -86,7 +86,7 @@ class SearchResultsCell: UITableViewCell {
 			statusLabel?.text = searchElement.status ?? "TBA"
 
 			// Configure library status
-			if let libraryStatus = searchElement.userProfile?.libraryStatus, !libraryStatus.isEmpty {
+			if let libraryStatus = searchElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
 				libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 			} else {
 				libraryStatusButton?.setTitle("ADD", for: .normal)
@@ -161,7 +161,7 @@ class SearchResultsCell: UITableViewCell {
 
 	// MARK: - Functions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		guard let libraryStatus = searchElement?.userProfile?.libraryStatus else { return }
+		guard let libraryStatus = searchElement?.currentUser?.libraryStatus else { return }
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.searchElement?.id else { return }
 
@@ -169,7 +169,7 @@ class SearchResultsCell: UITableViewCell {
 				Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 					if success {
 						// Update entry in library
-						self.searchElement?.userProfile?.libraryStatus = value
+						self.searchElement?.currentUser?.libraryStatus = value
 
 						let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
 						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
@@ -180,11 +180,11 @@ class SearchResultsCell: UITableViewCell {
 			}
 		})
 
-		if let libraryStatus = searchElement?.userProfile?.libraryStatus, !libraryStatus.isEmpty {
+		if let libraryStatus = searchElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
 			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
 				Service.shared.removeFromLibrary(withID: self.searchElement?.id, withSuccess: { (success) in
 					if success {
-						self.searchElement?.userProfile?.libraryStatus = ""
+						self.searchElement?.currentUser?.libraryStatus = ""
 						self.libraryStatusButton?.setTitle("ADD", for: .normal)
 					}
 				})

@@ -15,17 +15,11 @@ import CoreLocation
 class User: JSONDecodable {
 	let success: Bool?
 	let message: String?
-
-	let rating: Double?
-	let currentlyFollowing: Bool?
 	let profile: UserProfile?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
-
-		self.rating = json["rating"].doubleValue
-		self.currentlyFollowing = json["currently_following"].boolValue
 		self.profile = try? UserProfile(json: json["user"])
 	}
 }
@@ -53,6 +47,7 @@ class UserProfile: JSONDecodable {
 	let activeEnd: String?
 	let active: Bool?
 
+	var following: Bool?
 	let currentRating: Double?
 	var libraryStatus: String?
 
@@ -90,6 +85,7 @@ class UserProfile: JSONDecodable {
 		self.activeEnd = json["active_end"].stringValue
 		self.active = json["active"].boolValue
 
+		self.following = json["current_user"]["following"].boolValue
 		self.currentRating = json["given_rating"].doubleValue
 		self.libraryStatus = json["library_status"].stringValue
 
