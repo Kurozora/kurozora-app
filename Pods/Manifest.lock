@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.0.0-rc.1)
-  - AutoInsetter (1.7.2)
+  - AutoInsetter (1.8.0)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
   - AXPhotoViewer/Core (1.7.1):
@@ -25,14 +25,14 @@ PODS:
   - NotificationBannerSwift (2.5.1):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
-  - Pageboy (3.2.3)
+  - Pageboy (3.4.0)
   - PusherSwift (7.0.0):
     - CryptoSwift (~> 0.9)
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
   - RevealingSplashView (0.6.0)
-  - RichTextView (2.3.2):
+  - RichTextView (2.3.3):
     - Down
     - iosMath
     - SnapKit
@@ -63,9 +63,9 @@ PODS:
   - SwiftTheme (0.4.5)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.6.0)
-  - Tabman (2.6.0):
-    - AutoInsetter (~> 1.7.2)
-    - Pageboy (~> 3.2.3)
+  - Tabman (2.6.1):
+    - AutoInsetter (~> 1.8.0)
+    - Pageboy (~> 3.4.0)
   - TRON (5.0.0-rc.1):
     - Alamofire (~> 5.0.0-rc.1)
     - TRON/Core (= 5.0.0-rc.1)
@@ -163,7 +163,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: b752289c6040d77e9738610c9080276f18276842
-  AutoInsetter: 176c5c069b40bf6afa51bf7081be346ab70ca315
+  AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
@@ -181,11 +181,11 @@ SPEC CHECKSUMS:
   Kingfisher: 7e5cef5ee82c0576e7d23035e1710b7e3b0a1e85
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
-  Pageboy: 347c49b3a7f15aa78ddb6bf5c6c3b113e382fe52
+  Pageboy: fd23a9b9e8156f4fac62731637f5d6f7d1e1c3aa
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
-  RichTextView: 45a700a5d0712d8394ded67841fa4b7c3b7c2a9b
+  RichTextView: 5e37d093aecfaa2f0eac3b5fa81a299b9f3d59b8
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
@@ -195,7 +195,7 @@ SPEC CHECKSUMS:
   SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
-  Tabman: e2c2e784a3c143b00af59ea2fdc8b235a49195a9
+  Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 

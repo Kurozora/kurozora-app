@@ -87,13 +87,7 @@ class SearchResultsCell: UITableViewCell {
 
 			// Configure library status
 			if let libraryStatus = searchElement.userProfile?.libraryStatus, !libraryStatus.isEmpty {
-				let mutableAttributedTitle = NSMutableAttributedString()
-				let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-				let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-				mutableAttributedTitle.append(attributedTitleString)
-				mutableAttributedTitle.append(attributedIconString)
-
-				libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+				libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 			} else {
 				libraryStatusButton?.setTitle("ADD", for: .normal)
 			}
@@ -171,23 +165,19 @@ class SearchResultsCell: UITableViewCell {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.searchElement?.id else { return }
 
-			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
-				if success {
-					// Update entry in library
-					self.searchElement?.userProfile?.libraryStatus = value
+			if libraryStatus != value {
+				Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+					if success {
+						// Update entry in library
+						self.searchElement?.userProfile?.libraryStatus = value
 
-					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
-					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+						let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
+						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
-					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-					mutableAttributedTitle.append(attributedTitleString)
-					mutableAttributedTitle.append(attributedIconString)
-
-					self.libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
-				}
-			})
+						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+					}
+				})
+			}
 		})
 
 		if let libraryStatus = searchElement?.userProfile?.libraryStatus, !libraryStatus.isEmpty {
@@ -195,11 +185,7 @@ class SearchResultsCell: UITableViewCell {
 				Service.shared.removeFromLibrary(withID: self.searchElement?.id, withSuccess: { (success) in
 					if success {
 						self.searchElement?.userProfile?.libraryStatus = ""
-
-						let mutableAttributedTitle = NSMutableAttributedString()
-						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-						mutableAttributedTitle.append(attributedTitleString)
-						self.libraryStatusButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+						self.libraryStatusButton?.setTitle("ADD", for: .normal)
 					}
 				})
 			}))

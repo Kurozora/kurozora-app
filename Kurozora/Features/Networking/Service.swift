@@ -98,17 +98,21 @@ struct Service {
 		Update the current user's profile information.
 
 		- Parameter bio: The new biography to set.
-		- Parameter image: The new user's avatar image.
+		- Parameter profileImage: The new user's avatar image.
+		- Parameter bannerImage: The new user's avatar image.
 		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
-	func updateInformation(withBio bio: String?, profileImage image: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	func updateInformation(withBio bio: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let userID = User.currentID else { return }
 		guard let bio = bio else { return }
 
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
-			if let profileImage = image?.jpegData(compressionQuality: 0.1) {
-				formData.append(profileImage, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
+			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
+				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
+			}
+			if let bannerImage = bannerImage?.jpegData(compressionQuality: 0.1) {
+				formData.append(bannerImage, withName: "bannerImage", fileName: "BannerImage.png", mimeType: "image/png")
 			}
 		}
 		request.headers = [

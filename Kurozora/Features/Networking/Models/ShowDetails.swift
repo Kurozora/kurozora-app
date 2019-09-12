@@ -39,6 +39,7 @@ class ShowDetailsElement: JSONDecodable {
 	let runtime: Int?
 	let watchRating: String?
 	let year: Int?
+	let tagline: String?
 
 	// Ratings & ranks
 	let averageRating: Double?
@@ -93,6 +94,7 @@ class ShowDetailsElement: JSONDecodable {
 		runtime = json["runtime"].intValue
 		watchRating = json["watch_rating"].stringValue
 		year = json["year"].intValue
+		tagline = json["tagline"].stringValue
 
 		// Ratings & ranks
 		averageRating = json["average_rating"].doubleValue

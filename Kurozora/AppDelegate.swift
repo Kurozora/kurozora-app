@@ -194,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func registerForPushNotifications() {
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
 
 			print("Permission granted: \(granted)")
 
@@ -209,7 +209,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			guard settings.authorizationStatus == .authorized else { return }
 			DispatchQueue.main.async {
-			  UIApplication.shared.registerForRemoteNotifications()
+				UIApplication.shared.registerForRemoteNotifications()
 			}
 		}
 	}

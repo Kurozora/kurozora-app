@@ -53,10 +53,10 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	// Action buttons
-	@IBOutlet weak var listButton: UIButton! {
+	@IBOutlet weak var libraryStatusButton: UIButton! {
 		didSet {
-			listButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			listButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+			libraryStatusButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			libraryStatusButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var cosmosView: CosmosView!
@@ -290,15 +290,9 @@ class ShowDetailViewController: UIViewController {
 
 		// Configure library status
 		if let libraryStatus = currentUser.libraryStatus, !libraryStatus.isEmpty {
-			let mutableAttributedTitle = NSMutableAttributedString()
-			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-			let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-			mutableAttributedTitle.append(attributedTitleString)
-			mutableAttributedTitle.append(attributedIconString)
-
-			listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
+			self.libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 		} else {
-			listButton.setTitle("ADD", for: .normal)
+			libraryStatusButton.setTitle("ADD", for: .normal)
 		}
 
 		// Configure title label
@@ -500,24 +494,20 @@ class ShowDetailViewController: UIViewController {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showID else { return }
 
-			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
-				if success {
-					// Update entry in library
-					self.libraryStatus = value
-					self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+			if self.libraryStatus != value {
+				Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+					if success {
+						// Update entry in library
+						self.libraryStatus = value
+						self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
 
-					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
-					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+						let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
-					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-					mutableAttributedTitle.append(attributedTitleString)
-					mutableAttributedTitle.append(attributedIconString)
-
-					self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
-				}
-			})
+						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+					}
+				})
+			}
 		})
 
 		if let libraryStatus = libraryStatus, !libraryStatus.isEmpty {
@@ -525,12 +515,10 @@ class ShowDetailViewController: UIViewController {
 				Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
 					if success {
 						self.libraryStatus = ""
+
 						self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
 
-						let mutableAttributedTitle = NSMutableAttributedString()
-						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-						mutableAttributedTitle.append(attributedTitleString)
-						self.listButton.setAttributedTitle(mutableAttributedTitle, for: .normal)
+						self.libraryStatusButton.setTitle("ADD", for: .normal)
 					}
 				})
 			}))

@@ -50,7 +50,7 @@ class SearchElement: JSONDecodable {
 	let locked: Bool?
 
 	// User data keys
-	let userProfile: UserProfile?
+	let currentUser: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
@@ -74,6 +74,6 @@ class SearchElement: JSONDecodable {
 		self.locked = json["locked"].boolValue
 
 		// User data values
-		self.userProfile = try? UserProfile(json: json["current_user"])
+		self.currentUser = try? UserProfile(json: json["current_user"])
 	}
 }

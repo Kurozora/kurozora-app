@@ -54,6 +54,9 @@ extension UIDevice {
 			case "iPhone11,2":                              return "iPhone XS"
 			case "iPhone11,4", "iPhone11,6":                return "iPhone XS Max"
 			case "iPhone11,8":                              return "iPhone XR"
+			case "iPhone12,1":                              return "iPhone 11"
+			case "iPhone12,3":                              return "iPhone 11 Pro"
+			case "iPhone12,5":                              return "iPhone 11 Pro Max"
 			// iPad
 			case "iPad1,1", "iPad1,2":						return "iPad"
 			case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
@@ -76,13 +79,31 @@ extension UIDevice {
 			case "iPad11,1", "iPad11,2":					return "iPad Mini 5"
 			case "iPad11,3", "iPad11,4":					return "iPad Air 3"
 			// Apple TV
-			case "AppleTV5,3":                              return "Apple TV"
+			case "AppleTV1,1":								return "Apple TV 1G"
+			case "AppleTV2,1":								return "Apple TV 2G"
+			case "AppleTV3,1":								return "Apple TV 3G"
+			case "AppleTV3,2":								return "Apple TV 3G rev A"
+			case "AppleTV5,3":                              return "Apple TV 4G"
 			case "AppleTV6,2":                              return "Apple TV 4K"
 			// HomePod
 			case "AudioAccessory1,1":                       return "HomePod"
 			// Simulator
 			case "i386", "x86_64":                          return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
 			default:                                        return identifier
+			}
+			#elseif os(watchOS)
+			switch identifier {
+			// Apple Watch
+			case "Watch1,1", "Watch1,2":					return "Apple Watch"
+			case "Watch2,3", "Watch2,4":					return "Apple Watch Series 2"
+			case "Watch2,6", "Watch2,7":					return "Apple Watch Series 1"
+			case "Watch3,1", "Watch3,2":					return "Apple Watch Series 3 Cellular"
+			case "Watch3,3", "Watch3,4":					return "Apple Watch Series 3"
+			case "Watch4,1", "Watch4,2":					return "Apple Watch Series 4"
+			case "Watch4,3", "Watch4,4":					return "Apple Watch Series 4 Cellular"
+			case "Watch5,1", "Watch5,2":					return "Apple Watch Series 5"
+			case "Watch5,3", "Watch5,4":					return "Apple Watch Series 5 Cellular"
+			default:										return identifier
 			}
 			#elseif os(tvOS)
 			switch identifier {

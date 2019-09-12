@@ -18,7 +18,7 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 			collectionView.delegate = self
 		}
 	}
-	var shows: [ExploreElement]? = nil {
+	var shows: [ShowDetailsElement]? = nil {
 		didSet {
 			collectionView.reloadData()
 		}
@@ -53,7 +53,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 		exploreCell.shouldPlay = self.currentlyPlayingIndexPath == indexPath
 
 		if shows != nil {
-			exploreCell.showElement = shows?[indexPath.row]
+			exploreCell.showDetailsElement = shows?[indexPath.row]
 		} else {
 			exploreCell.genreElement = genres?[indexPath.row]
 		}

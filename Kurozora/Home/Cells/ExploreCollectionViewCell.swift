@@ -35,16 +35,14 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var shadowView: UIView?
 	@IBOutlet weak var colorOverlayView: UIView?
 	@IBOutlet weak var backgroundColorView: UIView?
-	@IBOutlet weak var listButton: UIButton? {
+	@IBOutlet weak var libraryStatusButton: UIButton? {
 		didSet {
-			listButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			listButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+			libraryStatusButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 
 	@IBOutlet weak var videoPlayerContainer: UIView?
-	@IBOutlet weak var videoPlayerPreviewImageView: UIImageView?
-	@IBOutlet weak var videoPlayerButton: UIButton?
 
 	var avPlayerViewController: AVPlayerViewController?
 	var avPlayer: AVPlayer?
@@ -54,19 +52,38 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	var shouldPlay = false
 
 	var homeCollectionViewController: HomeCollectionViewController?
-	var showElement: ExploreElement? = nil {
+	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
-			setupCell()
+			configureCell()
 		}
 	}
 	var genreElement: GenreElement? = nil {
 		didSet {
-			showElement = nil
-			setupCell()
+			showDetailsElement = nil
+			configureCell()
 		}
 	}
 	var libraryStatus: String?
 	var showTabBarController: ShowDetailTabBarController?
+
+	var thumbnailPlaceholder: UIImageView {
+		get { return getVideoThumbnail() }
+	}
+
+	// MARK: - Observable
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		if (object as? AVPlayer) != nil {
+			if keyPath == "status" {
+				if avPlayer?.status == AVPlayer.Status.readyToPlay {
+					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
+				}
+			} else if keyPath == "playbackBufferEmpty" {
+				if let avPlayerRate = avPlayer?.rate, avPlayerRate > Float(0) {
+					thumbnailPlaceholder.isHidden = true
+				}
+			}
+		}
+	}
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -83,23 +100,24 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
-	fileprivate func setupCell() {
-		if showElement != nil {
-			guard let showElement = showElement else { return }
-			guard let showTitle = showElement.title else { return }
+	/// Configure the cell with the given details.
+	fileprivate func configureCell() {
+		if showDetailsElement != nil {
+			guard let showDetailsElement = showDetailsElement else { return }
+			guard let showTitle = showDetailsElement.title else { return }
 			guard let section = indexPath?.section else { return }
 
-			libraryStatus = showElement.userProfile?.libraryStatus
+			self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
 
-			if taglineLabel != nil {
-				configureVideoCell()
+			if self.taglineLabel != nil {
+				self.configureVideoCell()
 			}
 
 			self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
-			titleLabel?.hero.id = (titleLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
-			titleLabel?.text = showElement.title
+			self.titleLabel?.hero.id = (titleLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
+			self.titleLabel?.text = showDetailsElement.title
 
-			if let genres = showElement.genres, genres.count != 0 {
+			if let genres = showDetailsElement.genres, genres.count != 0 {
 				var genreNames = ""
 				for (genreIndex, genreItem) in genres.enumerated() {
 					if let genreName = genreItem.name {
@@ -111,12 +129,12 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 					}
 				}
 
-				genreLabel?.text = genreNames
+				self.genreLabel?.text = genreNames
 			} else {
-				genreLabel?.text = ""
+				self.genreLabel?.text = ""
 			}
 
-			if let bannerThumbnail = showElement.banner, !bannerThumbnail.isEmpty {
+			if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
 				let bannerThumbnailUrl = URL(string: bannerThumbnail)
 				let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
 				self.bannerImageView?.kf.indicatorType = .activity
@@ -125,7 +143,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
 			}
 
-			if let posterThumbnail = showElement.posterThumbnail, !posterThumbnail.isEmpty {
+			if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				self.posterImageView?.kf.indicatorType = .activity
@@ -134,47 +152,43 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				self.posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
 			}
 
-			if let score = showElement.averageRating, score != 0 {
-				scoreButton?.setTitle(" \(score)", for: .normal)
+			if let score = showDetailsElement.averageRating, score != 0 {
+				self.scoreButton?.setTitle(" \(score)", for: .normal)
 				// Change color based on score
 				if score >= 2.5 {
-					scoreButton?.backgroundColor = #colorLiteral(red: 0.9907178283, green: 0.8274499178, blue: 0.3669273257, alpha: 1)
+					self.scoreButton?.backgroundColor = #colorLiteral(red: 0.9907178283, green: 0.8274499178, blue: 0.3669273257, alpha: 1)
 				} else {
-					scoreButton?.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.262745098, blue: 0.2509803922, alpha: 1)
+					self.scoreButton?.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.262745098, blue: 0.2509803922, alpha: 1)
 				}
 			} else {
-				scoreButton?.setTitle("New", for: .normal)
-				scoreButton?.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.8235294118, blue: 0.2823529412, alpha: 1)
+				self.scoreButton?.setTitle("New", for: .normal)
+				self.scoreButton?.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.8235294118, blue: 0.2823529412, alpha: 1)
 			}
 		} else if genreElement != nil {
 			configureGenreCell()
 		}
 	}
 
+	/// Configures the video cell with the necessary details.
 	func configureVideoCell() {
 		self.titleLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		self.genreLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 
 		// Configure tagline
-		self.taglineLabel?.text = showElement?.tagline
+		self.taglineLabel?.text = showDetailsElement?.tagline
 
 		// Configure library status
-		if let libraryStatus = showElement?.userProfile?.libraryStatus, !libraryStatus.isEmpty {
-			let mutableAttributedTitle = NSMutableAttributedString()
-			let  attributedTitleString = NSAttributedString(string: "\(libraryStatus.capitalized) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-			let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-			mutableAttributedTitle.append(attributedTitleString)
-			mutableAttributedTitle.append(attributedIconString)
-
-			self.listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+		if let libraryStatus = showDetailsElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
+			self.libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 		} else {
-			self.listButton?.setTitle("ADD", for: .normal)
+			self.libraryStatusButton?.setTitle("ADD", for: .normal)
 		}
 
 		// Configure video
 		configureVideoPlayer()
 	}
 
+	/// Configures the genre cell with the necessary details.
 	func configureGenreCell() {
 		guard let genreElement = genreElement else { return }
 		guard let genreColor = genreElement.color else { return }
@@ -193,12 +207,34 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	/**
+		Return a UIImage object containing a video thumbnail.
+	
+		- Returns: a UIImage object containing a video thumbnail
+	*/
+	func getVideoThumbnail() -> UIImageView {
+		guard let showDetailsElement = showDetailsElement else { return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner"))}
+		if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
+			let bannerThumbnailUrl = URL(string: bannerThumbnail)
+			let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
+			let thumbnailPlaceholder = UIImageView(frame: CGRect(origin: .zero, size: videoPlayerContainer?.frame.size ?? .zero))
+			thumbnailPlaceholder.kf.indicatorType = .activity
+			thumbnailPlaceholder.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+			return thumbnailPlaceholder
+		} else {
+			return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner"))
+		}
+	}
+
+	/// Configures the video player with the right settings.
 	func configureVideoPlayer() {
-		guard let videoUrlString = showElement?.videoUrl else { return }
+		guard let videoUrlString = showDetailsElement?.videoUrl else { return }
 		guard let videoUrl = URL(string: videoUrlString) else { return }
 		let avPlayerItem = AVPlayerItem(url: videoUrl)
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)
+		self.avPlayer?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
+		self.avPlayer?.addObserver(self, forKeyPath: "playbackBufferEmpty", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
 		self.avPlayer?.actionAtItemEnd = .none
 		self.avPlayer?.isMuted = true
 		self.avPlayerLayer = AVPlayerLayer(player: self.avPlayer)
@@ -219,77 +255,32 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		avPlayerControllerView?.didMoveToSuperview()
 	}
 
-	func shouldPlayVideo() {
-		if shouldPlay {
-			videoPlayerButton?.alpha = 0
-			videoPlayerPreviewImageView?.alpha = 0
-			self.avPlayerViewController?.player?.play()
-		} else {
-			self.avPlayerViewController?.player?.pause()
-		}
-
-		NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.avPlayer?.currentItem, queue: .main) { [weak self] _ in
-			self?.avPlayer?.seek(to: .zero)
-			self?.avPlayer?.play()
-		}
-	}
-
-	func getThumbnailImage(forUrl url: URL) -> UIImage? {
-		let asset: AVAsset = AVAsset(url: url)
-		let imageGenerator = AVAssetImageGenerator(asset: asset)
-
-		do {
-			let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60), actualTime: nil)
-			return UIImage(cgImage: thumbnailImage)
-		} catch let error {
-			print(error)
-		}
-
-		return nil
-	}
-
 	// MARK: - IBActions
-	@IBAction func playVideoButtonPressed(_ sender: UIButton) {
-		guard let indexPath = indexPath else { return }
-		self.delegate?.playVideoForCell(with: indexPath)
-
-		shouldPlayVideo()
-	}
-
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
-			guard let showID = self.showElement?.id else {return}
+			guard let showID = self.showDetailsElement?.id else {return}
 
 			Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 				if success {
 					// Update entry in library
 					self.libraryStatus = value
-					self.showElement?.userProfile?.libraryStatus = value
+					self.showDetailsElement?.currentUser?.libraryStatus = value
 
 					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
 					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
-					let mutableAttributedTitle = NSMutableAttributedString()
-					let  attributedTitleString = NSAttributedString(string: "\(title) ", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-					let attributedIconString = NSAttributedString(string: "", attributes: [.font: UIFont.init(name: "FontAwesome", size: 15)!])
-					mutableAttributedTitle.append(attributedTitleString)
-					mutableAttributedTitle.append(attributedIconString)
-
-					self.listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+					self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
 				}
 			})
 		})
 
 		if let libraryStatus = libraryStatus, !libraryStatus.isEmpty {
 			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-				Service.shared.removeFromLibrary(withID: self.showElement?.id, withSuccess: { (success) in
+				Service.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
 					if success {
 						self.libraryStatus = ""
 
-						let mutableAttributedTitle = NSMutableAttributedString()
-						let  attributedTitleString = NSAttributedString(string: "ADD", attributes: [.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
-						mutableAttributedTitle.append(attributedTitleString)
-						self.listButton?.setAttributedTitle(mutableAttributedTitle, for: .normal)
+						self.libraryStatusButton?.setTitle("ADD", for: .normal)
 					}
 				})
 			}))
@@ -312,10 +303,10 @@ extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
 		showTabBarController?.exploreCollectionViewCell = self
-		showTabBarController?.showID = showElement?.id
+		showTabBarController?.showID = showDetailsElement?.id
 		showTabBarController?.modalPresentationStyle = .overFullScreen
 
-		if let showTitle = showElement?.title, let section = indexPath?.section {
+		if let showTitle = showDetailsElement?.title, let section = indexPath?.section {
 			showTabBarController?.heroID = "explore_\(showTitle)_\(section)"
 		}
 

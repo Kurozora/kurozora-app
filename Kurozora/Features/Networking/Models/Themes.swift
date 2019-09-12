@@ -33,13 +33,13 @@ class ThemesElement: JSONDecodable {
 	let name: String?
 	let downloadCount: Int?
 	let downloadLink: String?
-	let userProfile: UserProfile?
+	let currentUser: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue
 		self.downloadCount = json["download_count"].intValue
 		self.downloadLink = json["download_link"].stringValue
-		self.userProfile = try? UserProfile(json: json["current_user"])
+		self.currentUser = try? UserProfile(json: json["current_user"])
 	}
 }

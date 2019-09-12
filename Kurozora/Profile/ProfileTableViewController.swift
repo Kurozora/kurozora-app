@@ -457,7 +457,7 @@ class ProfileTableViewController: UITableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			Service.shared.updateInformation(withBio: bioText, profileImage: profileImage) { (update) in
+			Service.shared.updateInformation(withBio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (update) in
 				if update {
 					self.editMode(!update)
 				}
