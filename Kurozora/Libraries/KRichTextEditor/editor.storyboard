@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8Vn-8I-M1E">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8Vn-8I-M1E">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -166,7 +164,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkW-jb-kza" userLabel="Reply To User Container">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkW-jb-kza">
                                 <rect key="frame" x="20" y="104" width="374" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Photos Taken Right Before Something Tragic Happened" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-UU-0qu">
@@ -198,13 +196,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuH-90-nho" userLabel="Comment Preview Container">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuH-90-nho">
                                 <rect key="frame" x="20" y="188" width="374" height="658"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR" userLabel="User Avatar Image View Container">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR">
                                         <rect key="frame" x="8" y="8" width="35" height="35"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs">
                                                 <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -311,10 +309,10 @@
                         <outlet property="commentPreviewContainer" destination="iuH-90-nho" id="fvL-ts-rg7"/>
                         <outlet property="commentTextView" destination="R8d-mS-n8Z" id="6CA-fw-mDf"/>
                         <outlet property="currentUsernameLabel" destination="X0I-6b-2zo" id="keW-Lz-lXU"/>
+                        <outlet property="profileImageView" destination="xIW-OE-8Zs" id="DyV-iq-arj"/>
                         <outlet property="replyToTextLabel" destination="XGS-UU-0qu" id="maQ-jL-aJg"/>
                         <outlet property="replyToUserContainer" destination="vkW-jb-kza" id="hCk-hE-EkR"/>
                         <outlet property="replyToUsernameLabel" destination="9JM-0l-wTQ" id="MhL-um-vjU"/>
-                        <outlet property="userAvatarImageView" destination="xIW-OE-8Zs" id="DyV-iq-arj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-DL-cSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -349,7 +347,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="default_avatar" width="100" height="100"/>
+        <image name="default_profile_image" width="100" height="100"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

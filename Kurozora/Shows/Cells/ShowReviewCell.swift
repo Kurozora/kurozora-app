@@ -10,7 +10,7 @@ import UIKit
 
 class ShowReviewCell: UITableViewCell {
     @IBOutlet weak var reviewerLabel: UILabel!
-    @IBOutlet weak var reviewerAvatar: UIImageView!
+    @IBOutlet weak var reviewerProfileImage: UIImageView!
     @IBOutlet weak var reviewerOverallScoreLabel: UILabel!
     @IBOutlet weak var reviewerReviewLabel: UILabel!
     @IBOutlet weak var reviewStatisticsLabel: UILabel!

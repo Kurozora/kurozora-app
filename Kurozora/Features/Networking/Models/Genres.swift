@@ -15,15 +15,14 @@ class Genres: JSONDecodable {
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
-		var genres = [GenreElement]()
 
+		var genres = [GenreElement]()
 		let genresArray = json["genres"].arrayValue
 		for genreItem in genresArray {
 			if let genreElement = try? GenreElement(json: genreItem) {
 				genres.append(genreElement)
 			}
 		}
-
 		self.genres = genres
 	}
 }

@@ -34,9 +34,9 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			self.posterView.kf.indicatorType = .activity
-			self.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			self.posterView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.posterView.image = #imageLiteral(resourceName: "placeholder_poster")
+			self.posterView.image = #imageLiteral(resourceName: "placeholder_poster_image")
 		}
 	}
 }

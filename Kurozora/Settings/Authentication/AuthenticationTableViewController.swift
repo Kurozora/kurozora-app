@@ -21,6 +21,7 @@ class AuthenticationTableViewController: UITableViewController {
 			title = "Passcode"
 		}
 	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue

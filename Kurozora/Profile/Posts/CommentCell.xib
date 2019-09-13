@@ -124,9 +124,9 @@
             <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="avatar" destination="s63-Rt-Hna" id="IwL-Cp-qyb"/>
                 <outlet property="dateTime" destination="Kcv-70-dIz" id="nZl-8C-Lfn"/>
                 <outlet property="heartButton" destination="1MN-wD-chI" id="Vap-dn-91F"/>
+                <outlet property="profileImage" destination="s63-Rt-Hna" id="IZ0-D7-3Ea"/>
                 <outlet property="textContent" destination="mcx-PL-p5s" id="GoB-I4-gqG"/>
                 <outlet property="username" destination="K8i-TH-Ymk" id="FCb-eP-aMS"/>
             </connections>

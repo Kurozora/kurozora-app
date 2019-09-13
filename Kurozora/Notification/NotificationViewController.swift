@@ -103,9 +103,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		fetchNotifications()
 	}
 
-	/**
-		Fetch the notifications for the current user.
-	*/
+	/// Fetch the notifications for the current user.
 	func fetchNotifications() {
 		Service.shared.getNotifications(withSuccess: { (notifications) in
 			self.userNotificationsElement = []
@@ -216,30 +214,32 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		var status = 0
 		var indexPaths = [IndexPath]()
 
 		let numberOfRows = tableView.numberOfRows()
 		for row in 0..<numberOfRows {
-			if let read = userNotificationsElement?[row].read, !read && status == 0 {
-				status = 1
-			}
 			indexPaths.append(IndexPath(row: row, section: 0))
 		}
 
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		let markActionTitle = (status == 0) ? "Mark All as Unread" : "Mark All as Read"
 
-		// Mark action
-		let markAction = UIAlertAction.init(title: markActionTitle, style: .default, handler: { (_) in
-			self.updateNotification(at: indexPaths, for: "all", with: status)
+		// Mark all as read action
+		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
+			self.updateNotification(at: indexPaths, for: "all", with: 1)
 		})
-		markAction.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
-		markAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(markAction)
+		markAllAsRead.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
+		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(markAllAsRead)
+
+		// Mark all as unread
+		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
+			self.updateNotification(at: indexPaths, for: "all", with: 0)
+		})
+		markAllAsUnread.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
+		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(markAllAsUnread)
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		// Present the controller
 		if let popoverController = action.popoverPresentationController {
@@ -272,10 +272,10 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 				}
 				if row == groupedNotifications[section].sectionNotifications.count - 1 {
 					if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
-						notificationIDs += ("\(notificationID)")
+						notificationIDs += notificationID.string
 					}
 				} else if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
-					notificationIDs += ("\(notificationID), ")
+					notificationIDs += notificationID.string + ", "
 				}
 			case .off:
 				if let notificationStatus = userNotificationsElement?[row].read, notificationStatus {
@@ -283,16 +283,16 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 				}
 				if let userNotificationsElementCount = userNotificationsElement?.count, row == userNotificationsElementCount - 1 {
 					if let notificationID = userNotificationsElement?[row].id {
-						notificationIDs += ("\(notificationID)")
+						notificationIDs += notificationID.string
 					}
 				} else if let notificationID = userNotificationsElement?[row].id {
-					notificationIDs += ("\(notificationID), ")
+					notificationIDs += notificationID.string + ", "
 				}
 			}
 
 			indexPaths.append(IndexPath(row: row, section: section))
 		}
-
+		sender.setTitle(status == 0 ? "Mark as read" : "Mark as unread", for: .normal)
 		updateNotification(at: indexPaths, for: notificationIDs, with: status)
 	}
 }
@@ -397,7 +397,7 @@ extension NotificationsViewController {
 				}
 			}
 
-			self.updateNotification(at: [indexPath], for: "\(notificationID)", with: 1)
+			self.updateNotification(at: [indexPath], for: notificationID.string, with: 1)
 
 			// Show sessions view
 			WorkflowController.showSessions()
@@ -473,7 +473,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 					}
 				}
 
-				self.updateNotification(at: [indexPath], for: "\(notificationID)", with: isRead ? 0 : 1)
+				self.updateNotification(at: [indexPath], for: notificationID.string, with: isRead ? 0 : 1)
 			}
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"

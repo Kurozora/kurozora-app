@@ -15,7 +15,7 @@ class SubscriptionPreviewTableViewCell: UITableViewCell {
 			collectionView.delegate = self
 		}
 	}
-	var previewItems = ["aozora", "default_banner", "placeholder_banner"]
+	var previewItems = ["aozora", "default_banner_image", "placeholder_banner_image"]
 }
 
 // MARK: - UICollectionViewDataSource

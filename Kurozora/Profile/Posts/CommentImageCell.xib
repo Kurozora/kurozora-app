@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-0k-zx2" userLabel="Avatar">
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-0k-zx2">
                         <rect key="frame" x="8" y="8" width="35" height="35"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -35,7 +35,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4d ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yG-ym-g6N" userLabel="Date">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4d ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yG-ym-g6N">
                         <rect key="frame" x="58" y="197.5" width="44" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="chy-6g-uXu"/>
@@ -44,14 +44,14 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8ho-YB-xG7" userLabel="Image Content">
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8ho-YB-xG7">
                         <rect key="frame" x="51" y="34.5" width="261" height="154"/>
                         <color key="backgroundColor" red="0.83751755952835083" green="0.76316435240735092" blue="0.80550840529097023" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="154" id="f8h-og-Udi"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-2A-ef5" userLabel="ButtonTrailer">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-2A-ef5">
                         <rect key="frame" x="156.5" y="86.5" width="50" height="50"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -68,7 +68,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CE0-k4-2ih" userLabel="Heart Button">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CE0-k4-2ih">
                         <rect key="frame" x="98" y="189.5" width="44" height="35"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="3fI-F7-NaN"/>
@@ -84,7 +84,7 @@
                             <action selector="heartPressedWithSender:" destination="2Ms-qN-7zN" eventType="touchUpInside" id="MYQ-w2-bce"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZx-ZT-jZ3" userLabel="Text Content">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZx-ZT-jZ3">
                         <rect key="frame" x="51" y="8.5" width="261" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -111,19 +111,19 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatar" destination="ggh-0k-zx2" id="env-GR-UXT"/>
-                <outlet property="date" destination="1yG-ym-g6N" id="f7p-je-rl9"/>
+                <outlet property="dateTime" destination="1yG-ym-g6N" id="Yaw-Re-RWp"/>
                 <outlet property="heartButton" destination="CE0-k4-2ih" id="Ixs-h8-Zvw"/>
                 <outlet property="imageContent" destination="8ho-YB-xG7" id="iCZ-Nj-nTe"/>
                 <outlet property="imageHeightConstraint" destination="f8h-og-Udi" id="vST-IW-ska"/>
                 <outlet property="playButton" destination="1Zy-2A-ef5" id="y0P-AL-QXC"/>
+                <outlet property="profileImage" destination="ggh-0k-zx2" id="J90-35-CFL"/>
                 <outlet property="textContent" destination="nZx-ZT-jZ3" id="QHc-i5-GRf"/>
             </connections>
             <point key="canvasLocation" x="69" y="132.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="default_avatar" width="100" height="100"/>
+        <image name="default_profile_image" width="100" height="100"/>
         <image name="play" width="22" height="24"/>
     </resources>
 </document>

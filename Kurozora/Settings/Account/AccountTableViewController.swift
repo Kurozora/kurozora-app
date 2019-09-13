@@ -12,10 +12,10 @@ import SCLAlertView
 import SwiftTheme
 
 class AccountTableViewController: UITableViewController {
-	@IBOutlet weak var userAvatar: UIImageView! {
+	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			self.userAvatar?.image = User.currentUserAvatar
-			self.userAvatar?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			self.profileImageView?.image = User.currentUserProfileImage
+			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {

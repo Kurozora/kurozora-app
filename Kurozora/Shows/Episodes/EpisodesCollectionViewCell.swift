@@ -77,9 +77,9 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 			let episodeScreenshotUrl = URL(string: episodeScreenshot)
 			let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
 
-			self.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode"), options: [.transition(.fade(0.2))])
+			self.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode")
+			self.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode_image")
 		}
 
 		if let episodeNumber = episodesElement.number {

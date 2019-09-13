@@ -199,8 +199,8 @@
 //        } else if let profile = object as? User {
 //            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! BasicCollectionCell
 //
-//            if let avatarFile = profile.avatarThumb {
-//                cell.titleimageView.setImageWithPFFile(avatarFile)
+//            if let profileImageFile = profile.profileImageThumb {
+//                cell.titleimageView.setImageWithPFFile(profileImageFile)
 //            }
 //            cell.titleLabel.text = profile.kurozoraUsername
 //            cell.layoutIfNeeded()

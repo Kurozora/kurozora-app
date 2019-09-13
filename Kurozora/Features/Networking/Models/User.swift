@@ -31,7 +31,7 @@ class UserProfile: JSONDecodable {
 	let role: Int?
 
 	let username: String?
-	let avatar: String?
+	let profileImage: String?
 	let banner: String?
 	let bio: String?
 	let badges: [BadgeElement]?
@@ -60,7 +60,7 @@ class UserProfile: JSONDecodable {
 		self.role = json["role"].intValue
 
 		self.username = json["username"].stringValue
-		self.avatar = json["avatar_url"].stringValue
+		self.profileImage = json["avatar_url"].stringValue
 		self.banner = json["banner_url"].stringValue
 		self.bio = json["biography"].stringValue
 		var badges = [BadgeElement]()
@@ -85,7 +85,7 @@ class UserProfile: JSONDecodable {
 		self.activeEnd = json["active_end"].stringValue
 		self.active = json["active"].boolValue
 
-		self.following = json["current_user"]["following"].boolValue
+		self.following = json["current_user", "following"].boolValue
 		self.currentRating = json["given_rating"].doubleValue
 		self.libraryStatus = json["library_status"].stringValue
 
@@ -206,23 +206,23 @@ extension User {
 		return longitude
 	}
 
-	/// Returns the current user avatar from cache if available, otherwise returns default avatar
-	static var currentUserAvatar: UIImage? {
-		var image = UIImage(named: "default_avatar")
+	/// Returns the current user profile image from cache if available, otherwise returns default profile image
+	static var currentUserProfileImage: UIImage? {
+		var image = UIImage(named: "default_profile_image")
 		let cache = ImageCache.default
 
-		cache.retrieveImage(forKey: "currentUserAvatar", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
+		cache.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
 			switch result {
 			case .success(let value):
 				// If the `cacheType is `.none`, `image` will be `nil`.
 				if value.cacheType == .none {
-					image = #imageLiteral(resourceName: "default_avatar")
+					image = #imageLiteral(resourceName: "default_profile_image")
 				} else {
 					image = value.image
 				}
 			case .failure(let error):
 				print(error)
-				image = #imageLiteral(resourceName: "default_avatar")
+				image = #imageLiteral(resourceName: "default_profile_image")
 			}
 		}
 

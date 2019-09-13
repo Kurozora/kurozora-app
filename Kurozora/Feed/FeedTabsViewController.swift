@@ -31,8 +31,8 @@ class FeedTabsViewController: TabmanViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		dataSource = self
 
-		navigationProfileButton.setImage(User.currentUserAvatar, for: .normal)
-		navigationProfileButton.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		navigationProfileButton.setImage(User.currentUserProfileImage, for: .normal)
+		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 

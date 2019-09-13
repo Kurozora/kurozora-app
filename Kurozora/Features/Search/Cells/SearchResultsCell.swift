@@ -46,7 +46,7 @@ class SearchResultsCell: UITableViewCell {
 
 	// User search cell outlets
 	@IBOutlet weak var usernameLabel: UILabel?
-	@IBOutlet weak var avatarImageView: UIImageView?
+	@IBOutlet weak var profileImageView: UIImageView?
 	@IBOutlet weak var followerCountLabel: UILabel?
 	@IBOutlet weak var followButton: UIButton?
 
@@ -78,9 +78,9 @@ class SearchResultsCell: UITableViewCell {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				posterImageView?.kf.indicatorType = .activity
-				posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+				posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 			} else {
-				posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
+				posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
 			}
 
 			statusLabel?.text = searchElement.status ?? "TBA"
@@ -137,13 +137,13 @@ class SearchResultsCell: UITableViewCell {
 		case .user:
 			usernameLabel?.text = searchElement.username
 
-			if let avatar = searchElement.avatar, !avatar.isEmpty {
-				let avatarUrl = URL(string: avatar)
-				let resource = ImageResource(downloadURL: avatarUrl!)
-				avatarImageView?.kf.indicatorType = .activity
-				avatarImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			if let profileImage = searchElement.profileImage, !profileImage.isEmpty {
+				let profileImageUrl = URL(string: profileImage)
+				let resource = ImageResource(downloadURL: profileImageUrl!)
+				profileImageView?.kf.indicatorType = .activity
+				profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
 			} else {
-				avatarImageView?.image = #imageLiteral(resourceName: "default_avatar")
+				profileImageView?.image = #imageLiteral(resourceName: "default_profile_image")
 			}
 
 			if let followerCount = searchElement.followerCount {

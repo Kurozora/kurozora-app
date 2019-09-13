@@ -247,6 +247,7 @@
 		669C8D582107B8170014EB7A /* BasicTabBarItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */; };
 		669EA9A022C1490A00784181 /* PurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669EA99F22C1490A00784181 /* PurchasesViewController.swift */; };
 		669EA9A222C1491600784181 /* purchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669EA9A122C1491600784181 /* purchase.storyboard */; };
+		66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A1C65B232B75360044EAD1 /* FollowCell.swift */; };
 		66A254C622AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */; };
 		66A254C722AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */; };
 		66A254C822AA9EE9002A0E34 /* App-Icon-iPad-Product-RED.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C422AA9EE9002A0E34 /* App-Icon-iPad-Product-RED.png */; };
@@ -339,8 +340,7 @@
 		66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D5A20A9775C00F98375 /* ForumViewController.swift */; };
 		66CF6D6220A97CAD00F98375 /* forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D6120A97CAD00F98375 /* forum.storyboard */; };
 		66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */; };
-		66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* UserListViewController.swift */; };
-		66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */; };
+		66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */; };
 		66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */; };
 		66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationViewController.swift */; };
 		66CF6D7120A9934F00F98375 /* profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* profile.storyboard */; };
@@ -642,6 +642,7 @@
 		669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTabBarItemContentView.swift; sourceTree = "<group>"; };
 		669EA99F22C1490A00784181 /* PurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesViewController.swift; sourceTree = "<group>"; };
 		669EA9A122C1491600784181 /* purchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = purchase.storyboard; sourceTree = "<group>"; };
+		66A1C65B232B75360044EAD1 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
 		66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED@2x.png"; sourceTree = "<group>"; };
 		66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Product-RED@3x.png"; sourceTree = "<group>"; };
 		66A254C422AA9EE9002A0E34 /* App-Icon-iPad-Product-RED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED.png"; sourceTree = "<group>"; };
@@ -744,8 +745,7 @@
 		66CF6D5A20A9775C00F98375 /* ForumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
 		66CF6D6120A97CAD00F98375 /* forum.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = forum.storyboard; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
-		66CF6D6820A98CAA00F98375 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
-		66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewController.swift; sourceTree = "<group>"; };
 		66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		66CF6D6E20A9921000F98375 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		66CF6D7020A9934F00F98375 /* profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profile.storyboard; sourceTree = "<group>"; };
@@ -1143,6 +1143,7 @@
 			children = (
 				66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */,
 				66232CD82310050700C45B5A /* EmptyProfileCell.swift */,
+				66A1C65B232B75360044EAD1 /* FollowCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1387,6 +1388,7 @@
 		665F49C421F766A400A7A659 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				6674A0C820A45EB700AAB527 /* ForumsCell.swift */,
 				665F49C521F766CC00A7A659 /* ReplyCell.swift */,
 			);
 			path = Cell;
@@ -1633,7 +1635,6 @@
 			isa = PBXGroup;
 			children = (
 				66A552D520A2D40100E515DB /* forums.storyboard */,
-				6674A0C820A45EB700AAB527 /* ForumsCell.swift */,
 				6619EE73216F969B00655B99 /* ForumsListViewController.swift */,
 				66A552D320A2D24F00E515DB /* ForumsViewController.swift */,
 				665F49C421F766A400A7A659 /* Cell */,
@@ -1880,9 +1881,8 @@
 			isa = PBXGroup;
 			children = (
 				66CF6D7020A9934F00F98375 /* profile.storyboard */,
-				66CF6D6A20A98D3E00F98375 /* EditProfileViewController.swift */,
 				66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */,
-				66CF6D6820A98CAA00F98375 /* UserListViewController.swift */,
+				66CF6D6820A98CAA00F98375 /* FollowTableViewController.swift */,
 				66CF6D6C20A98E1700F98375 /* UserProfileManager.swift */,
 				667F9AD521B47E8B003F6629 /* Badges */,
 				66232CD7231004EE00C45B5A /* Cells */,
@@ -2485,7 +2485,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66CF6D6920A98CAA00F98375 /* UserListViewController.swift in Sources */,
+				66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */,
 				666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */,
 				663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */,
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
@@ -2585,7 +2585,6 @@
 				6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */,
 				66244D8F230B76F800EC33E0 /* LibraryCompactColelctionViewCell.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
-				66CF6D6B20A98D3E00F98375 /* EditProfileViewController.swift in Sources */,
 				66DEB4B221D419420093725F /* SearchController.swift in Sources */,
 				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,
@@ -2667,6 +2666,7 @@
 				667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */,
 				664A065C21EA1187008CF4A6 /* Genres.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
+				66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */,
 				66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */,
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				66160C3E215C271700D0D722 /* KurozoraReachability.swift in Sources */,

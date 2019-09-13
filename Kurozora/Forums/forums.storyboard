@@ -12,7 +12,7 @@
         <scene sceneID="Tqb-xm-fnT">
             <objects>
                 <tableViewController storyboardIdentifier="ForumsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0BH-dQ-UPb" customClass="ForumsListViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="vDh-24-9OG">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="vDh-24-9OG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -211,7 +211,7 @@
         <scene sceneID="MAt-lX-RPe">
             <objects>
                 <tableViewController storyboardIdentifier="ThreadTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GSs-Vf-tBR" customClass="ThreadTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="3kf-0m-8lZ">
+                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="3kf-0m-8lZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -518,11 +518,11 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <outlet property="avatarImageView" destination="48j-ld-ZlI" id="7YV-10-Gaq"/>
                                     <outlet property="bubbleView" destination="Bo8-EV-Ks9" id="yVq-Fb-yc9"/>
                                     <outlet property="dateTimeButton" destination="lnM-yW-kb6" id="Tuc-eL-6kY"/>
                                     <outlet property="downvoteButton" destination="k0s-OD-atE" id="RsA-UL-4kE"/>
                                     <outlet property="moreButton" destination="AxO-Ue-tdi" id="u7u-uc-vzH"/>
+                                    <outlet property="profileImageView" destination="48j-ld-ZlI" id="7YV-10-Gaq"/>
                                     <outlet property="replyLabel" destination="zaw-9O-sbP" id="Ec9-sE-8SH"/>
                                     <outlet property="upvoteButton" destination="eYI-wX-wrG" id="7ed-bm-3Qs"/>
                                     <outlet property="usernameLabel" destination="IXO-7a-aDm" id="ltp-5h-HZy"/>

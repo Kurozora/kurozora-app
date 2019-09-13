@@ -10,13 +10,13 @@ import UIKit
 import Kingfisher
 
 class ReplyCell: UITableViewCell {
-	@IBOutlet weak var avatarImageView: UIImageView! {
+	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			avatarImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
-			avatarImageView.addGestureRecognizer(gestureRecognizer)
+			profileImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel? {
@@ -86,13 +86,13 @@ class ReplyCell: UITableViewCell {
 	fileprivate func configureCell() {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
-		if let avatar = threadRepliesElement.user?.avatar, !avatar.isEmpty {
-			let avatar = URL(string: avatar)
-			let resource = ImageResource(downloadURL: avatar!)
-			self.avatarImageView.kf.indicatorType = .activity
-			self.avatarImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		if let profileImage = threadRepliesElement.user?.profileImage, !profileImage.isEmpty {
+			let profileImage = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImage!)
+			self.profileImageView.kf.indicatorType = .activity
+			self.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
 		} else {
-			avatarImageView.image = #imageLiteral(resourceName: "default_avatar")
+			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
 		}
 
 		usernameLabel?.text = threadRepliesElement.user?.username

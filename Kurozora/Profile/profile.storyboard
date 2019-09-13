@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--User List View Controller-->
+        <!--Follow Table View Controller-->
         <scene sceneID="JNH-Id-RWd">
             <objects>
-                <tableViewController storyboardIdentifier="UserListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XA6-b9-chf" customClass="UserListViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UserListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XA6-b9-chf" customClass="FollowTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uqZ-5p-HcB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="70" id="ThI-dY-yLk">
+                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="FollowCell" rowHeight="70" id="ThI-dY-yLk" customClass="FollowCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ThI-dY-yLk" id="JLa-Rq-KcM">
@@ -50,6 +50,14 @@
                                                 <constraint firstAttribute="bottom" secondItem="h23-Bd-SeG" secondAttribute="bottom" id="WFn-Hx-IjG"/>
                                                 <constraint firstAttribute="trailing" secondItem="h23-Bd-SeG" secondAttribute="trailing" id="j9X-sg-1r6"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="25"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wek-mf-rNu" userLabel="Username">
                                             <rect key="frame" x="76" y="24.666666666666671" width="43" height="21"/>
@@ -70,10 +78,13 @@
                                             </state>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="10"/>
+                                                    <real key="value" value="15"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="followButtonPressed:" destination="ThI-dY-yLk" eventType="touchUpInside" id="OaD-wm-Gtj"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="586-B7-zQg" userLabel="Separator">
                                             <rect key="frame" x="0.0" y="69.666666666666671" width="375" height="0.3333333333333286"/>
@@ -99,6 +110,16 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="followButton" destination="qIk-Mi-I8x" id="9qG-LK-Tj2"/>
+                                    <outlet property="profileImageView" destination="h23-Bd-SeG" id="oIT-Bg-lMH"/>
+                                    <outlet property="profileImageViewContainer" destination="zpR-A2-5um" id="IdX-KL-qwI"/>
+                                    <outlet property="usernameLabel" destination="Wek-mf-rNu" id="TVT-q8-UXB"/>
+                                    <segue destination="zlF-Vo-yv3" kind="show" identifier="ProfileSegue" id="Uy1-s4-x1D">
+                                        <segue key="commit" inheritsFrom="parent" id="4rF-DK-5Qi"/>
+                                        <segue key="preview" inheritsFrom="commit" id="dtn-Z1-QTv"/>
+                                    </segue>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -117,7 +138,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ProfileTableViewController" title="Profile" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zlF-Vo-yv3" customClass="ProfileTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="200" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Zag-E8-3Pp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="YlQ-WU-WCF">
@@ -127,7 +148,7 @@
                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ct4-sA-QJa">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="274.66666666666669"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="default_banner" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
+                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" image="default_banner_image" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="225.66666666666666"/>
                                             <gestureRecognizers/>
                                             <connections>
@@ -151,7 +172,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJX-ls-ZaG" userLabel="Profile View">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald">
+                                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald">
                                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -696,7 +717,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="n16-TW-RUz" userLabel="AvatarTap">
                     <connections>
-                        <action selector="showAvatar:" destination="zlF-Vo-yv3" id="N1R-hy-wHF"/>
+                        <action selector="showProfileImage:" destination="zlF-Vo-yv3" id="N1R-hy-wHF"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -707,7 +728,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BadgesTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TCw-Pu-tHm" customClass="BadgesTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="66" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="eAj-A5-MCM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -859,6 +880,7 @@
                             <outlet property="delegate" destination="TCw-Pu-tHm" id="wfH-TD-YRc"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="5kE-b5-5ya"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uMU-AB-vWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -892,12 +914,13 @@
     </scenes>
     <resources>
         <image name="comment_small" width="18" height="14"/>
-        <image name="default_avatar" width="100" height="100"/>
-        <image name="default_banner" width="1130" height="706"/>
+        <image name="default_banner_image" width="1130" height="706"/>
+        <image name="default_profile_image" width="100" height="100"/>
         <image name="heart_small" width="17" height="17"/>
         <image name="more" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Uy1-s4-x1D"/>
         <segue reference="xRc-mP-Blz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -366,9 +366,9 @@ class ShowDetailViewController: UIViewController {
 			let posterThumb = URL(string: posterThumb)
 			let resource = ImageResource(downloadURL: posterThumb!)
 			posterImageView.kf.indicatorType = .activity
-			posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 		} else {
-			posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+			posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
 		}
 
 		// Configure banner view
@@ -376,9 +376,9 @@ class ShowDetailViewController: UIViewController {
 			let bannerImage = URL(string: bannerImage)
 			let resource = ImageResource(downloadURL: bannerImage!)
 			bannerImageView.kf.indicatorType = .activity
-			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
 		} else {
-			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner")
+			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner_image")
 		}
 
 		if let videoUrl = showDetailsElement.videoUrl, !videoUrl.isEmpty {
@@ -543,7 +543,7 @@ class ShowDetailViewController: UIViewController {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "placeholder_banner", from: bannerImageView)
+			presentPhotoViewControllerWith(string: "placeholder_banner_image", from: bannerImageView)
 		}
 	}
 
@@ -551,7 +551,7 @@ class ShowDetailViewController: UIViewController {
 		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "placeholder_poster", from: posterImageView)
+			presentPhotoViewControllerWith(string: "placeholder_poster_image", from: posterImageView)
 		}
 	}
 

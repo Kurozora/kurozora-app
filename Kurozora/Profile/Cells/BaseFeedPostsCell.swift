@@ -11,7 +11,7 @@ import UIKit
 class BaseFeedPostCell: UITableViewCell {
 	@IBOutlet weak var profileImageView: UIImageView? {
 		didSet {
-			profileImageView?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel? {

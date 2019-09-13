@@ -64,9 +64,9 @@ class ShowCharacterCell: UITableViewCell {
 			let actorImageUrl = URL(string: actorImage)
 			let resource = ImageResource(downloadURL: actorImageUrl!)
 			self.actorImageView.kf.indicatorType = .activity
-			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
+			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
+			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person_image")
 		}
 
 		// Actor shadow view
@@ -86,7 +86,7 @@ class ShowCharacterCell: UITableViewCell {
 		if let imageUrl = actorElement.image, !imageUrl.isEmpty {
 			delegate?.presentPhoto(withUrl: imageUrl, from: actorImageView)
 		} else {
-			delegate?.presentPhoto(withString: "placeholder_person", from: actorImageView)
+			delegate?.presentPhoto(withString: "placeholder_person_image", from: actorImageView)
 		}
 	}
 }
@@ -138,9 +138,9 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 			let actorImageUrl = URL(string: actorImage)
 			let resource = ImageResource(downloadURL: actorImageUrl!)
 			self.actorImageView.kf.indicatorType = .activity
-			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person"), options: [.transition(.fade(0.2))])
+			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person")
+			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person_image")
 		}
 
 		// Actor shadow view
@@ -160,7 +160,7 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 		if let imageUrl = actorElement.image, !imageUrl.isEmpty {
 			delegate?.presentPhoto(withUrl: imageUrl, from: actorImageView)
 		} else {
-			delegate?.presentPhoto(withString: "placeholder_person", from: actorImageView)
+			delegate?.presentPhoto(withString: "placeholder_person_image", from: actorImageView)
 		}
 	}
 }

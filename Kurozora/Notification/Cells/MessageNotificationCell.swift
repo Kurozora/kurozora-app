@@ -17,17 +17,17 @@ class MessageNotificationCell: SwipeTableViewCell {
 			notificationTypeLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var notificationDateLabel: UILabel! {
+	@IBOutlet weak var dateLabel: UILabel! {
 		didSet {
-			notificationDateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			dateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 	@IBOutlet weak var notificationIconImageView: UIImageView!
 
 	// Body
-	@IBOutlet weak var notificationProfileImageView: UIImageView! {
+	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			notificationProfileImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var notificationTitleLabel: UILabel!
@@ -35,26 +35,27 @@ class MessageNotificationCell: SwipeTableViewCell {
 
 	var notificationsElement: UserNotificationsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
-	fileprivate func setup() {
+	// MARK: - Functions
+	fileprivate func configureCell() {
 		guard let notificationsElement = notificationsElement else { return }
 		if let title = notificationsElement.data?.name {
 			notificationTitleLabel.text = title
 		}
 
-		if let avatar = notificationsElement.data?.avatar, !avatar.isEmpty {
-			let avatarUrl = URL(string: avatar)
-			let resource = ImageResource(downloadURL: avatarUrl!)
-			notificationProfileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+		if let profileImage = notificationsElement.data?.profileImage, !profileImage.isEmpty {
+			let profileImageUrl = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImageUrl!)
+			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
 		} else {
-			notificationProfileImageView.image = #imageLiteral(resourceName: "default_avatar")
+			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
 		}
 
 		if let creationDate = notificationsElement.creationDate {
-			notificationDateLabel.text = Date.timeAgo(creationDate)
+			dateLabel.text = Date.timeAgo(creationDate)
 		}
 
 		if let notificationContent = notificationsElement.message {

@@ -17,7 +17,11 @@ class ProfileTableViewController: UITableViewController {
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
 	@IBOutlet weak var profileImageView: UIImageView!
-	@IBOutlet weak var profileBorderView: UIView!
+	@IBOutlet weak var profileBorderView: UIView! {
+		didSet {
+			profileBorderView.theme_borderColor = KThemePicker.borderColor.rawValue
+		}
+	}
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -144,6 +148,12 @@ class ProfileTableViewController: UITableViewController {
 		if segue.identifier == "BadgeSegue" {
 			let vc = segue.destination as! BadgesTableViewController
 			vc.badges = user?.profile?.badges
+		} else if let followTableViewController = segue.destination as? FollowTableViewController {
+			if segue.identifier == "FollowingSegue" {
+				followTableViewController.followList = "following"
+			} else if segue.identifier == "FollowersSegue" {
+				followTableViewController.followList = "followers"
+			}
 		}
 	}
 
@@ -202,27 +212,27 @@ class ProfileTableViewController: UITableViewController {
 			usernameLabel.text = "Unknown"
 		}
 
-		// Setup avatar
-		if let avatar = user.profile?.avatar, !avatar.isEmpty {
-			let avatar = URL(string: avatar)
-			let resource = ImageResource(downloadURL: avatar!)
+		// Setup profile image
+		if let profileImage = user.profile?.profileImage, !profileImage.isEmpty {
+			let profileImage = URL(string: profileImage)
+			let resource = ImageResource(downloadURL: profileImage!)
 			profileImageView.kf.indicatorType = .activity
-			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
 
 			let cache = ImageCache.default
 			cache.store(profileImageView.image!, forKey: "currentprofileImageView")
 		} else {
-			profileImageView.image = #imageLiteral(resourceName: "default_avatar")
+			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
 		}
 
-		// Setup banner
+		// Setup banner image
 		if let banner = user.profile?.banner, !banner.isEmpty {
 			let banner = URL(string: banner)
 			let resource = ImageResource(downloadURL: banner!)
 			bannerImageView.kf.indicatorType = .activity
-			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner"))
+			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner_image"))
 		} else {
-			bannerImageView.image = #imageLiteral(resourceName: "default_banner")
+			bannerImageView.image = #imageLiteral(resourceName: "default_banner_image")
 		}
 
 		// Setup user bio
@@ -509,11 +519,11 @@ class ProfileTableViewController: UITableViewController {
 		}
 	}
 
-	@IBAction func showAvatar(_ sender: AnyObject) {
-		if let avatar = user?.profile?.avatar, !avatar.isEmpty {
-			presentPhotoViewControllerWith(url: avatar, from: profileImageView)
+	@IBAction func showProfileImage(_ sender: AnyObject) {
+		if let profileImage = user?.profile?.profileImage, !profileImage.isEmpty {
+			presentPhotoViewControllerWith(url: profileImage, from: profileImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "default_avatar", from: profileImageView)
+			presentPhotoViewControllerWith(string: "default_profile_image", from: profileImageView)
 		}
 	}
 
@@ -521,7 +531,7 @@ class ProfileTableViewController: UITableViewController {
 		if let banner = user?.profile?.banner, !banner.isEmpty {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "default_banner", from: bannerImageView)
+			presentPhotoViewControllerWith(string: "default_banner_image", from: bannerImageView)
 		}
 	}
 }
@@ -896,7 +906,7 @@ extension ProfileTableViewController: UITextViewDelegate {
 //            }))
 //
 //            alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.default, handler: { (alertAction: UIAlertAction) -> Void in
-//                let userListController = UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "UserListViewController") as! UserListViewController
+//                let userListController = UIStoryboard(name: "profile", bundle: nil).instantiateViewController(withIdentifier: "FollowTableViewController") as! UserListViewController
 //
 //                self.presentSmallViewController(viewController: userListController, sender: sender)
 //            }))

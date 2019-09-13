@@ -18,6 +18,8 @@
 		<string>#EEEEEE</string>
 		<key>blurBackgroundColor</key>
 		<string>#33333380</string>
+		<key>borderColor</key>
+		<string>#AFAFAF</string>
 		<key>textColor</key>
 		<string>#EEEEEE</string>
 		<key>textFieldBackgroundColor</key>

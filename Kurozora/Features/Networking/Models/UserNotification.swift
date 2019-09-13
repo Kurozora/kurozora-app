@@ -54,12 +54,12 @@ class UserNotificationData: JSONDecodable {
 	let ip: String?
 	let sessionID: Int?
 	let name: String?
-	let avatar: String?
+	let profileImage: String?
 
 	required init(json: JSON) throws {
 		self.ip = json["ip"].stringValue
 		self.sessionID = json["session_id"].intValue
 		self.name = json["follower_name"].stringValue
-		self.avatar = json["follower_avatar"].stringValue
+		self.profileImage = json["follower_avatar"].stringValue
 	}
 }

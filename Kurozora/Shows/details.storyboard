@@ -36,7 +36,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qrx-LK-co9" userLabel="Corner View">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_episode" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-hw-Zcg">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_episode_image" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-hw-Zcg">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_template" translatesAutoresizingMaskIntoConstraints="NO" id="qlf-0i-I9W">
@@ -244,7 +244,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_episode" translatesAutoresizingMaskIntoConstraints="NO" id="OKO-CZ-hkq">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_episode_image" translatesAutoresizingMaskIntoConstraints="NO" id="OKO-CZ-hkq">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
                                 </imageView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_template" translatesAutoresizingMaskIntoConstraints="NO" id="nuH-hZ-tHc">
@@ -715,7 +715,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fh7-KX-xZC" userLabel="Shadow View">
                                             <rect key="frame" x="8" y="10" width="88" height="129.5"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="51O-Dj-s3w">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="51O-Dj-s3w">
                                                     <rect key="frame" x="0.0" y="0.0" width="88" height="129.5"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
@@ -2376,8 +2376,8 @@
         <image name="heart" width="26" height="24"/>
         <image name="list" width="23" height="24"/>
         <image name="more" width="24" height="24"/>
-        <image name="placeholder_episode" width="1920" height="1080"/>
-        <image name="placeholder_poster" width="680" height="1000"/>
+        <image name="placeholder_episode_image" width="1920" height="1080"/>
+        <image name="placeholder_poster_image" width="680" height="1000"/>
         <image name="play" width="22" height="24"/>
         <image name="shadow_right" width="30" height="6"/>
         <image name="shadow_template" width="6" height="30"/>

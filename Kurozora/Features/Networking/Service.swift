@@ -29,7 +29,7 @@ struct Service {
 		- Parameter username: The new user's username.
 		- Parameter password: The new user's password.
 		- Parameter email: The new user's email.
-		- Parameter profileImage: The new user's avatar image.
+		- Parameter profileImage: The new user's profile image.
 		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
@@ -59,7 +59,6 @@ struct Service {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
-
 			print("Received reset password error: \(error)")
 		})
 	}
@@ -89,7 +88,6 @@ struct Service {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't send reset link 😔", subTitle: error.message)
-
 			print("Received reset password error: \(error)")
 		})
 	}
@@ -98,8 +96,8 @@ struct Service {
 		Update the current user's profile information.
 
 		- Parameter bio: The new biography to set.
-		- Parameter profileImage: The new user's avatar image.
-		- Parameter bannerImage: The new user's avatar image.
+		- Parameter profileImage: The new user's profile image.
+		- Parameter bannerImage: The new user's profile image.
 		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
@@ -136,7 +134,6 @@ struct Service {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't update information 😔", subTitle: error.message)
-
 			print("Received update information error: \(error)")
 		})
 	}
@@ -164,7 +161,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get session 😔", subTitle: error.message)
-
 			print("Received get session error: \(error)")
 		})
 	}
@@ -197,7 +193,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get your library 😔", subTitle: error.message)
-
 			print("Received get library error: \(error)")
 		})
 	}
@@ -233,7 +228,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't add to your library 😔", subTitle: error.message)
-
 			print("Received add library error: \(error)")
 		})
 	}
@@ -266,7 +260,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.message)
-
 			print("Received remove library error: \(error)")
 		})
 	}
@@ -295,7 +288,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get user details 😔", subTitle: error.message)
-
 			print("Received user profile error: \(error)")
 		})
 	}
@@ -323,7 +315,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get your notifications 😔", subTitle: error.message)
-
 			print("Received get notifications error: \(error)")
 		})
 	}
@@ -355,7 +346,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-
 			print("Received user search error: \(error)")
 		})
 	}
@@ -389,8 +379,38 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't follow user 😔", subTitle: error.message)
-
 			print("Received follow user error: \(error)")
+		})
+	}
+
+	/**
+	Fetch the followers or following list for the current user.
+	
+	- Parameter list: The string indicating whather to fetch the followers or following list.
+	- Parameter successHandler: A closure returning a UserNotificationsElement array.
+	- Parameter userFollow: The returned UserFollow object.
+	*/
+	func getFollow(for list: String, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
+		guard let userID = User.currentID else { return }
+
+		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/\(list)")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.method = .get
+		request.parameters = [
+			"page": page
+		]
+		request.perform(withSuccess: { userFollow in
+			if let success = userFollow.success {
+				if success {
+					successHandler(userFollow)
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Can't get your \(list) list 😔", subTitle: error.message)
+			print("Received get following \(list) error: \(error)")
 		})
 	}
 
@@ -420,7 +440,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't delete notification 😔", subTitle: error.message)
-
 			print("Received delete notification error: \(error)")
 		})
 	}
@@ -454,7 +473,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't update notification 😔", subTitle: error.message)
-
 			print("Received update notification error: \(error)")
 		})
 	}
@@ -482,7 +500,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get explore page 😔", subTitle: error.message)
-
 			print("Received explore error: \(error)")
 		})
 	}
@@ -511,7 +528,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get show details 😔", subTitle: error.message)
-
 			print("Received get details error: \(error)")
 		})
 	}
@@ -537,7 +553,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get casts list 😔", subTitle: error.message)
-
 			print("Received get cast error: \(error)")
 		})
 	}
@@ -563,7 +578,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get seasons list 😔", subTitle: error.message)
-
 			print("Received get show seasons error: \(error)")
 		})
 	}
@@ -597,7 +611,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't rate this show 😔", subTitle: error.message)
-
 			print("Received rating error: \(error)")
 		})
 	}
@@ -629,7 +642,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-
 			print("Received show search error: \(error)")
 		})
 	}
@@ -660,7 +672,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get episodes list 😔", subTitle: error.message)
-
 			print("Received get show episodes error: \(error)")
 		})
 	}
@@ -694,7 +705,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)
-
 			print("Received mark episode error: \(error)")
 		})
 	}
@@ -719,7 +729,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get genres list 😔", subTitle: error.message)
-
 			print("Received get genres error: \(error)")
 		})
 	}
@@ -744,7 +753,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get feed sections 😔", subTitle: error.message)
-
 			print("Received get feed sections error: \(error)")
 		})
 	}
@@ -775,7 +783,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get feed posts 😔", subTitle: error.message)
-
 			print("Received get feed posts error: \(error)")
 		})
 	}
@@ -800,7 +807,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
-
 			print("Received get forum sections error: \(error)")
 		})
 	}
@@ -834,7 +840,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
-
 			print("Received get forum threads error: \(error)")
 		})
 	}
@@ -871,7 +876,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
-
 			print("Received post thread error: \(error)")
 		})
 	}
@@ -902,7 +906,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get thread details 😔", subTitle: error.message)
-
 			print("Received get thread error: \(error)")
 		})
 	}
@@ -936,7 +939,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't vote on this thread 😔", subTitle: error.message)
-
 			print("Received vote thread error: \(error)")
 		})
 	}
@@ -973,7 +975,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get replies 😔", subTitle: error.message)
-
 			print("Received get replies error: \(error)")
 		})
 	}
@@ -1007,7 +1008,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't reply 😔", subTitle: error.message)
-
 			print("Received post reply error: \(error)")
 		})
 	}
@@ -1039,7 +1039,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-
 			print("Received thread search error: \(error)")
 		})
 	}
@@ -1073,7 +1072,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't lock thread 😔", subTitle: error.message)
-
 			print("Received thread lock error: \(error)")
 		})
 	}
@@ -1109,7 +1107,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.message)
-
 			print("Received vote reply error: \(error)")
 		})
 	}
@@ -1164,7 +1161,6 @@ struct Service {
 		}, failure: { error in
 			SCLAlertView().showError("Can't login 😔", subTitle: error.message)
 			successHandler(false)
-
 			print("Received login error: \(error)")
 		})
 	}
@@ -1192,7 +1188,6 @@ struct Service {
 				WorkflowController.logoutUser()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
 				NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
-
 				print("Received validate session error: \(error)")
 			})
 		} else {
@@ -1224,7 +1219,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
-
 			print("Received delete session error: \(error)")
 		})
 	}
@@ -1253,7 +1247,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't logout 😔", subTitle: error.message)
-
 			print("Received logout error: \(error)")
 		})
 	}
@@ -1278,7 +1271,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
-
 			print("Received privacy policy error: \(error)")
 		})
 	}
@@ -1302,7 +1294,6 @@ struct Service {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get themes 😔", subTitle: error.message)
-
 			print("Received get themes error: \(error)")
 		})
 	}

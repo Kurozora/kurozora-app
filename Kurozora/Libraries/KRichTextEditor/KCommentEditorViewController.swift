@@ -26,9 +26,9 @@ class KCommentEditorViewController: UIViewController {
 		}
 	}
 
-	@IBOutlet weak var userAvatarImageView: UIImageView! {
+	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			userAvatarImageView.theme_borderColor = KThemePicker.subTextColor.rawValue
+			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var currentUsernameLabel: UILabel! {
@@ -83,8 +83,8 @@ class KCommentEditorViewController: UIViewController {
 			replyToUsernameLabel.text = replyToUsername
 		}
 
-		let image = User.currentUserAvatar
-		userAvatarImageView.image = image
+		let image = User.currentUserProfileImage
+		profileImageView.image = image
 
 		if let currentUsername = User.username {
 			currentUsernameLabel.text = currentUsername
@@ -132,7 +132,7 @@ class KCommentEditorViewController: UIViewController {
 						"user": [
 							"id": User.currentID!,
 							"username": User.username!,
-							"avatar": User.currentUserAvatar!
+							"avatar": User.currentUserProfileImage!
 						],
 						"score": 0,
 						"content": comment

@@ -20,7 +20,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var lightOptionSelectedImageView: UIImageView? {
 		didSet {
 			lightOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			lightOptionSelectedImageView?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			lightOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var lightOptionTitleLabel: UILabel? {
@@ -43,7 +43,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var darkOptionSelectedImageView: UIImageView? {
 		didSet {
 			darkOptionSelectedImageView?.theme_tintColor = KThemePicker.tintColor.rawValue
-			darkOptionSelectedImageView?.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			darkOptionSelectedImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var darkOptionTitleLabel: UILabel? {

@@ -18,6 +18,8 @@
 		<string>#A5A5A5</string>
 		<key>blurBackgroundColor</key>
 		<string>#33333380</string>
+		<key>borderColor</key>
+		<string>#696969</string>
 		<key>textColor</key>
 		<string>#A5A5A5</string>
 		<key>textFieldBackgroundColor</key>

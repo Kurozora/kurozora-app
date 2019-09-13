@@ -28,9 +28,9 @@ class SuggestionResultCell: UICollectionViewCell {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			posterImageView?.kf.indicatorType = .activity
-			posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 		} else {
-			posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
+			posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
 		}
 	}
 }

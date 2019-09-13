@@ -17,7 +17,7 @@ import UIKit
 }
 
 class PostCell: UITableViewCell {
-	@IBOutlet weak public var avatar: UIImageView!
+	@IBOutlet weak public var profileImage: UIImageView!
 	@IBOutlet weak public var username: UILabel?
 	@IBOutlet weak public var dateTime: UILabel!
 
@@ -60,7 +60,7 @@ class PostCell: UITableViewCell {
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
-			avatar.addGestureRecognizer(gestureRecognizer)
+			profileImage.addGestureRecognizer(gestureRecognizer)
 		}
 
 		if let imageContent = imageContent {

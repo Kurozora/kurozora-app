@@ -31,10 +31,10 @@ class SettingsCell: UITableViewCell {
 			self.usernameLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var userAvatar: UIImageView? {
+	@IBOutlet weak var profileImageView: UIImageView? {
 		didSet {
-			self.userAvatar?.image = User.currentUserAvatar
-			self.userAvatar?.theme_borderColor = KThemePicker.tableViewCellChevronColor.rawValue
+			self.profileImageView?.image = User.currentUserProfileImage
+			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue // KThemePicker.tableViewCellChevronColor.rawValue
 		}
 	}
 	@IBOutlet weak var cacheSizeLabel: UILabel? {

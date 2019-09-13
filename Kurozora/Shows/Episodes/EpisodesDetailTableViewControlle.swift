@@ -62,7 +62,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 		guard let cell = episodeCell else { return }
 		// Episode Misc
 		title = cell.episodeNumberLabel.text
-		screenshotImageView?.image = cell.episodeImageView.image.unwrapped(or: #imageLiteral(resourceName: "placeholder_episode"))
+		screenshotImageView?.image = cell.episodeImageView.image.unwrapped(or: #imageLiteral(resourceName: "placeholder_episode_image"))
 		episodeNumberLabel.text = cell.episodeNumberLabel.text
 		episodeTitleLabel.text = cell.episodeTitleLabel.text
 		episodeFirstAiredLabel.text = cell.episodeFirstAiredLabel.text

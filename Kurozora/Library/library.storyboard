@@ -66,7 +66,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BMx-lf-Gcm">
                                             <rect key="frame" x="0.0" y="0.0" width="406" height="244"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_banner" translatesAutoresizingMaskIntoConstraints="NO" id="11A-h0-OAy">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_banner_image" translatesAutoresizingMaskIntoConstraints="NO" id="11A-h0-OAy">
                                                     <rect key="frame" x="0.0" y="0.0" width="406" height="244"/>
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
@@ -114,7 +114,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-3G-CsC">
                                             <rect key="frame" x="10" y="146" width="60" height="88"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="rbB-Ss-rPx">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="rbB-Ss-rPx">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="88"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
@@ -188,7 +188,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWG-KG-rnm">
                                             <rect key="frame" x="10" y="0.0" width="80" height="118"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="placeholder_poster" translatesAutoresizingMaskIntoConstraints="NO" id="SX5-JO-WGv">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="placeholder_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="SX5-JO-WGv">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="118"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
@@ -375,8 +375,8 @@
     <resources>
         <image name="check" width="44" height="34"/>
         <image name="detailed_view_icon" width="30" height="24"/>
-        <image name="placeholder_banner" width="1920" height="1080"/>
-        <image name="placeholder_poster" width="680" height="1000"/>
+        <image name="placeholder_banner_image" width="1920" height="1080"/>
+        <image name="placeholder_poster_image" width="680" height="1000"/>
         <image name="shadow" width="7" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>

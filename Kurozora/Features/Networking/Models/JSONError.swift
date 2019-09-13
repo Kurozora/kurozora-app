@@ -24,6 +24,13 @@ class JSONError: ErrorSerializable {
 		}
 
 		self.success = false
-		self.message = "There was an error while connecting to the server. If this error persists, check out our Twitter account @KurozoraApp for more information!"
+		if let responseCode = error?.asAFError?.responseCode {
+			switch responseCode {
+			case 429:
+				self.message = "You have sent too many requests. Please try again in a minute."
+			default:
+				self.message = "There was an error while connecting to the server. If this error persists, check out our Twitter account @KurozoraApp for more information!"
+			}
+		}
 	}
 }

@@ -13,8 +13,8 @@ import UIKit
 //import Parse
 
 public protocol UserProfileManagerDelegate: class {
-    func selectedAvatar(avatar: UIImage)
-    func selectedBanner(banner: UIImage)
+    func selectedProfileImage(profileImage: UIImage)
+    func selectedBannerImage(bannerImage: UIImage)
 }
 
 public class UserProfileManager: NSObject {
@@ -25,20 +25,20 @@ public class UserProfileManager: NSObject {
 //    var viewController: UIViewController!
 //    var delegate: UserProfileManagerDelegate?
 //    var imagePicker: UIImagePickerController!
-//    var selectingAvatar = true
+//    var selectingProfileImage = true
 //
 //    public func initWith(controller: UIViewController, delegate: UserProfileManagerDelegate) {
 //        self.viewController = controller
 //        self.delegate = delegate
 //    }
 //
-//    public func selectAvatar() {
-//        selectingAvatar = true
+//    public func selectProfileImage() {
+//        selectingProfileImage = true
 //        selectImage()
 //    }
 //
 //    public func selectBanner() {
-//        selectingAvatar = false
+//        selectingProfileImage = false
 //        selectImage()
 //    }
 //
@@ -61,7 +61,7 @@ public class UserProfileManager: NSObject {
 //        username: String,
 //        password: String,
 //        email: String,
-//        avatar: UIImage?,
+//        profileImage: UIImage?,
 //        user: User,
 //        loginInWithFacebook: Bool) -> BFTask {
 //
@@ -118,11 +118,11 @@ public class UserProfileManager: NSObject {
 //
 //                    user.aozoraUsername = username
 //                    user.email = email
-//                    user.avatarThumb = self.avatarThumbImageToPFFile(avatar)
+//                    user.profileImageThumb = self.profileImageThumbImageToPFFile(profileImage)
 //
 //                    // Add user detail object
 //                    let userDetails = UserDetails()
-//                    userDetails.avatarRegular = self.avatarRegularImageToPFFile(avatar)
+//                    userDetails.profileImageRegular = self.profileImageRegularImageToPFFile(profileImage)
 //                    userDetails.about = ""
 //                    userDetails.planningAnimeCount = 0
 //                    userDetails.watchingAnimeCount = 0
@@ -159,8 +159,8 @@ public class UserProfileManager: NSObject {
 //        viewController: UIViewController,
 //        user: User,
 //        email: String? = nil,
-//        avatar: UIImage? = nil,
-//        banner: UIImage? = nil,
+//        profileImage: UIImage? = nil,
+//        bannerImage: UIImage? = nil,
 //        about: String? = nil
 //        ) -> BFTask {
 //
@@ -168,17 +168,17 @@ public class UserProfileManager: NSObject {
 //            return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
 //        }
 //
-//        if let avatar = avatar {
-//            user.avatarThumb = self.avatarThumbImageToPFFile(avatar)
-//            user.details.avatarRegular = self.avatarRegularImageToPFFile(avatar)
+//        if let profileImage = profileImage {
+//            user.profileImageThumb = self.profileImageThumbImageToPFFile(profileImage)
+//            user.details.profileImageRegular = self.profileImageRegularImageToPFFile(profileImage)
 //        }
 //
 //        if let email = email {
 //            user.email = email
 //        }
 //
-//        if let banner = banner, let avatarRegularData = UIImagePNGRepresentation(banner) {
-//            user.banner = PFFile(name:"banner.png", data: avatarRegularData)
+//        if let banner = banner, let profileImageRegularData = UIImagePNGRepresentation(banner) {
+//            user.banner = PFFile(name:"banner.png", data: profileImageRegularData)
 //        }
 //
 //        if let about = about {
@@ -200,18 +200,18 @@ public class UserProfileManager: NSObject {
 //
 //    // MARK: - Internal functions
 //
-//    func avatarThumbImageToPFFile(avatar: UIImage?) -> PFFile {
-//        let avatar = avatar ?? UIImage(named: "default-avatar")!
-//        let thumbAvatar = UIImage.imageWithImage(avatar, newSize: CGSize(width: UserProfileManager.ImageMinimumSideSize, height: UserProfileManager.ImageMinimumSideSize))
-//        let avatarThumbData = UIImagePNGRepresentation(thumbAvatar)
-//        return PFFile(name:"avatarThumb.png", data: avatarThumbData!)!
+//    func profileImageThumbImageToPFFile(profileImage: UIImage?) -> PFFile {
+//        let profileImage = profileImage ?? UIImage(named: "default-avatar")!
+//        let thumbProfileImage = UIImage.imageWithImage(profileImage, newSize: CGSize(width: UserProfileManager.ImageMinimumSideSize, height: UserProfileManager.ImageMinimumSideSize))
+//        let profileImageThumbData = UIImagePNGRepresentation(thumbProfileImage)
+//        return PFFile(name:"profileImageThumb.png", data: profileImageThumbData!)!
 //    }
 //
-//    func avatarRegularImageToPFFile(avatar: UIImage?) -> PFFile {
-//        let avatar = avatar ?? UIImage(named: "default-avatar")!
-//        let regularAvatar = UIImage.imageWithImage(avatar, maxSize: CGSize(width: UserProfileManager.ImageMaximumSideSize, height: UserProfileManager.ImageMaximumSideSize))
-//        let avatarRegularData = UIImagePNGRepresentation(regularAvatar)
-//        return PFFile(name:"avatarRegular.png", data: avatarRegularData!)!
+//    func profileImageRegularImageToPFFile(profileImage: UIImage?) -> PFFile {
+//        let profileImage = profileImage ?? UIImage(named: "default-avatar")!
+//        let regularProfileImage = UIImage.imageWithImage(profileImage, maxSize: CGSize(width: UserProfileManager.ImageMaximumSideSize, height: UserProfileManager.ImageMaximumSideSize))
+//        let profileImageRegularData = UIImagePNGRepresentation(regularProfileImage)
+//        return PFFile(name:"profileImageRegular.png", data: profileImageRegularData!)!
 //    }
 //
 //}
@@ -225,7 +225,7 @@ public class UserProfileManager: NSObject {
 //            } else {
 //                let imageCropVC: RSKImageCropViewController!
 //
-//                if self.selectingAvatar {
+//                if self.selectingProfileImage {
 //                    imageCropVC = imageCropViewController(image: image)
 //                } else {
 //                    imageCropVC = RSKImageCropViewController(image: image, cropMode: RSKImageCropMode.Custom)
@@ -244,10 +244,10 @@ public class UserProfileManager: NSObject {
 //    public func imageCropViewController(controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
 //        controller.dismissViewControllerAnimated(true, completion: nil)
 //
-//        if selectingAvatar {
-//            delegate?.selectedAvatar(avatar: croppedImage)
+//        if selectingProfileImage {
+//            delegate?.selectedProfileImage(profileImage: croppedImage)
 //        } else {
-//            delegate?.selectedBanner(banner: croppedImage)
+//            delegate?.selectedBannerImage(bannerImage: croppedImage)
 //        }
 //    }
 //

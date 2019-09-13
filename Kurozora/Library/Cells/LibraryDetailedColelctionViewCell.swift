@@ -35,9 +35,9 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 			let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
 			let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
 			self.episodeImageView?.kf.indicatorType = .activity
-			self.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+			self.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
+			self.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner_image")
 		}
 
 		self.contentView.applyShadow()

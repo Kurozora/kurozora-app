@@ -76,9 +76,9 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 			let posterImageUrl = URL(string: seasonPosterImage)
 			let resource = ImageResource(downloadURL: posterImageUrl!)
 
-			self.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			self.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 		} else {
-			self.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster")
+			self.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
 		}
 
 		// Season number

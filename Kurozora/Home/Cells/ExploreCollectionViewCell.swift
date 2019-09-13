@@ -123,18 +123,18 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				let bannerThumbnailUrl = URL(string: bannerThumbnail)
 				let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
 				self.bannerImageView?.kf.indicatorType = .activity
-				self.bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+				self.bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
 			} else {
-				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner")
+				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner_image")
 			}
 
 			if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
 				let posterThumbnailUrl = URL(string: posterThumbnail)
 				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 				self.posterImageView?.kf.indicatorType = .activity
-				self.posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+				self.posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 			} else {
-				self.posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
+				self.posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
 			}
 
 			if let score = showDetailsElement.averageRating, score != 0 {
@@ -186,9 +186,9 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			let symbolUrl = URL(string: symbol)
 			let resource = ImageResource(downloadURL: symbolUrl!)
 			bannerImageView?.kf.indicatorType = .activity
-			bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster"), options: [.transition(.fade(0.2))])
+			bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
 		} else {
-			bannerImageView?.image = #imageLiteral(resourceName: "placeholder_poster")
+			bannerImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
 		}
 	}
 
@@ -198,16 +198,16 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		- Returns: a UIImage object containing a video thumbnail
 	*/
 	func getVideoThumbnail() -> UIImageView {
-		guard let showDetailsElement = showDetailsElement else { return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner"))}
+		guard let showDetailsElement = showDetailsElement else { return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner_image")) }
 		if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
 			let bannerThumbnailUrl = URL(string: bannerThumbnail)
 			let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
 			let thumbnailPlaceholder = UIImageView(frame: CGRect(origin: .zero, size: videoPlayerContainer?.frame.size ?? .zero))
 			thumbnailPlaceholder.kf.indicatorType = .activity
-			thumbnailPlaceholder.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner"), options: [.transition(.fade(0.2))])
+			thumbnailPlaceholder.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
 			return thumbnailPlaceholder
 		} else {
-			return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner"))
+			return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
 	}
 

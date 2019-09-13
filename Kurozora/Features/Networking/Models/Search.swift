@@ -42,7 +42,7 @@ class SearchElement: JSONDecodable {
 
 	// User search keys
 	let username: String?
-	let avatar: String?
+	let profileImage: String?
 	let followerCount: Int?
 
 	// Thread search unique keys
@@ -66,7 +66,7 @@ class SearchElement: JSONDecodable {
 
 		// User search unique values
 		self.username = json["username"].stringValue
-		self.avatar = json["avatar"].stringValue
+		self.profileImage = json["avatar"].stringValue
 		self.followerCount = json["follower_count"].intValue
 
 		// Thread search unique values

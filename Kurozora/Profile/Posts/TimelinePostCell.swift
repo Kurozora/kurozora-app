@@ -51,11 +51,11 @@ class FeedPostCell: BaseFeedPostCell {
 		// Profile Image
 		if let profileImage = feedPostElement.profileImage, !profileImage.isEmpty {
 			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserAvatar")
+			let resource = ImageResource(downloadURL: profileImage!, cacheKey: "currentUserProfileImage")
 			profileImageView?.kf.indicatorType = .activity
-			profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_avatar"), options: [.transition(.fade(0.2))])
+			profileImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
 		} else {
-			profileImageView?.image = #imageLiteral(resourceName: "default_avatar")
+			profileImageView?.image = #imageLiteral(resourceName: "default_profile_image")
 		}
 
 		// Other Username

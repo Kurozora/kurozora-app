@@ -42,19 +42,19 @@ class NotificationSettingsCell: SettingsCell {
 	@IBOutlet weak var basicNotificationSelectedImageView: UIImageView! {
 		didSet {
 			basicNotificationSelectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-			basicNotificationSelectedImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			basicNotificationSelectedImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var iconNotificationSelectedImageView: UIImageView! {
 		didSet {
 			iconNotificationSelectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-			iconNotificationSelectedImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			iconNotificationSelectedImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var statusBarNotificationSelectedImageView: UIImageView! {
 		didSet {
 			statusBarNotificationSelectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-			statusBarNotificationSelectedImageView.theme_borderColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			statusBarNotificationSelectedImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 

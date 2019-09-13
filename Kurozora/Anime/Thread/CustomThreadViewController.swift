@@ -14,7 +14,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //    @IBOutlet weak var threadTitle: UILabel!
 //    @IBOutlet weak var threadContent: UILabel!
 //    @IBOutlet weak var tagsLabel: UILabel!
-//    @IBOutlet weak var avatar: UIImageView!
+//    @IBOutlet weak var profileImage: UIImageView!
 //    @IBOutlet weak var username: UILabel!
 //    @IBOutlet weak var postedDate: UILabel!
 //    @IBOutlet weak var commentsButton: UIButton!
@@ -113,7 +113,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //            username.text = title
 //            
 //            imageContent.setImageFrom(urlString: episode.imageURLString(), animated: true)
-//            avatar.setImageFrom(urlString: anime.imageUrl)
+//            profileImage.setImageFrom(urlString: anime.imageUrl)
 //        }
 //    }
 //    
@@ -130,8 +130,8 @@ class CustomThreadViewController: ThreadTableViewController {
 //        
 //        // TODO: - Merge this repeated code
 //        if let startedBy = thread.startedBy {
-//            if let avatarThumb = startedBy.avatarThumb {
-//                avatar.setImageWithPFFile(avatarThumb)
+//            if let profileImageThumb = startedBy.profileImageThumb {
+//                profileImage.setImageWithPFFile(profileImageThumb)
 //            }
 //            
 //            username.text = startedBy.aozoraUsername
