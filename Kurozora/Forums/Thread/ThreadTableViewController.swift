@@ -90,7 +90,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	var threadInformation: String?
 	var isDismissEnabled = false
 
-	// Reply vars
+	// Reply variables
 	var replies: [ThreadRepliesElement]?
 	var order = "top"
 

@@ -40,26 +40,17 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhone66S78:		return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhone66S78PLUS:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhoneXr:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
-				case .iPhoneXXs:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
-				case .iPhoneXsMax:		return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
-
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (3.06, 3.8) : (8, 4.2)
+				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:	return (libraryLayout == .detailed) ? (2.08, 2.0) : (6, 2.4)
+				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:			return (libraryLayout == .detailed) ? (2.32, 1.8) : (8, 2.6)
+				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:		return (libraryLayout == .detailed) ? (3.06, 3.8) : (8, 4.2)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone5SSE:	return (libraryLayout == .detailed) ? (1, 3.2) : (2.18, 2.8)
-			case .iPhone66S78:		return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
-			case .iPhone66S78PLUS:	return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
-			case .iPhoneXr:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
-			case .iPhoneXXs:			return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
-			case .iPhoneXsMax:		return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
-
-			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12: return (libraryLayout == .detailed) ? (2, 4.8) : (6, 6.0)
+			case .iPhone5SSE:										return (libraryLayout == .detailed) ? (1, 3.2) : (2.18, 2.8)
+			case .iPhone66S78, .iPhone66S78PLUS:					return (libraryLayout == .detailed) ? (1, 3.2) : (3.34, 4.2)
+			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				return (libraryLayout == .detailed) ? (1, 3.8) : (3.34, 5.2)
+			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			return (libraryLayout == .detailed) ? (2, 4.8) : (6.00, 6.0)
 			}
 		}
 	}

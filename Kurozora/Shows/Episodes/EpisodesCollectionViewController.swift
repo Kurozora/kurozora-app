@@ -28,32 +28,17 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	return (2.08, 1.8)
-				case .iPhone66S78:		return (2.08, 1.8)
-				case .iPhone66S78PLUS:	return (2.08, 1.8)
-				case .iPhoneXr:			return (2.28, 1.8)
-				case .iPhoneXXs:			return (2.28, 1.8)
-				case .iPhoneXsMax:		return (2.28, 1.8)
-
-				case .iPad:					return (3.08, 3.6)
-				case .iPadAir3:				return (3.08, 3.6)
-				case .iPadPro11:			return (3.08, 3.6)
-				case .iPadPro12:			return (3.08, 3.6)
+				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:	return (2.08, 1.8)
+				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:			return (2.28, 1.8)
+				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:		return (3.08, 3.6)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone5SSE:	return (1, 3)
-			case .iPhone66S78:		return (1, 3)
-			case .iPhone66S78PLUS:	return (1, 3)
-			case .iPhoneXr:			return (1, 3.8)
-			case .iPhoneXXs:			return (1, 3.8)
-			case .iPhoneXsMax:		return (1, 3.8)
-
-			case .iPad:					return (2, 4.4)
-			case .iPadAir3:				return (2, 4.4)
-			case .iPadPro11:			return (2, 4.6)
-			case .iPadPro12:			return (2, 4.6)
+			case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		return (1, 3)
+			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				return (1, 3.8)
+			case .iPad, .iPadAir3:									return (2, 4.4)
+			case .iPadPro11, .iPadPro12:							return (2, 4.6)
 			}
 		}
 	}

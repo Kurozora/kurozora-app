@@ -18,32 +18,18 @@ class ManageThemesCollectionViewController: UICollectionViewController, EmptyDat
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:		return (2.22, 0.8)
-				case .iPhone66S78:		return (2.22, 0.8)
-				case .iPhone66S78PLUS:	return (2.22, 0.8)
-				case .iPhoneXr:			return (2.22, 0.8)
-				case .iPhoneXXs:		return (3.22, 0.8)
-				case .iPhoneXsMax:		return (2.22, 0.8)
-
-				case .iPad:				return (2.0, 2.2)
-				case .iPadAir3:			return (2.0, 2.2)
-				case .iPadPro11:		return (2.0, 2.2)
-				case .iPadPro12:		return (2.0, 2.2)
+				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS, .iPhoneXr, .iPhoneXsMax:		return (2.22, 0.8)
+				case .iPhoneXXs:																return (3.22, 0.8)
+				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:									return (2.00, 2.2)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone5SSE:			return (2.08, 1.6)
-			case .iPhone66S78:			return (2.08, 1.8)
-			case .iPhone66S78PLUS:		return (2.08, 2.0)
-			case .iPhoneXr:				return (2.08, 2.2)
-			case .iPhoneXXs:			return (2.08, 2.2)
-			case .iPhoneXsMax:			return (2.08, 2.2)
-
-			case .iPad:					return (2.0, 2.2)
-			case .iPadAir3:				return (2.0, 2.2)
-			case .iPadPro11:			return (2.0, 2.2)
-			case .iPadPro12:			return (2.0, 2.2)
+			case .iPhone5SSE:																	return (2.08, 1.6)
+			case .iPhone66S78:																	return (2.08, 1.8)
+			case .iPhone66S78PLUS:																return (2.08, 2.0)
+			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:											return (2.08, 2.2)
+			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:										return (2.00, 2.2)
 			}
 		}
 	}

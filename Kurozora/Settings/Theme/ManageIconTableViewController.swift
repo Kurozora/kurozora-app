@@ -94,9 +94,9 @@ extension ManageIconTableViewController {
 			if alternativeIcons?.limitedIcons?.count != 0 {
 				return "LIMITED TIME"
 			}
-		default: return nil
+		default:
+			return nil
 		}
-
 		return nil
 	}
 }

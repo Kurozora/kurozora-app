@@ -180,27 +180,30 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
-	func updateNotification(at indexPaths: [IndexPath], for notificationID: String, with status: Int) {
+	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, with status: Int) {
 		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
-			for indexPath in indexPaths {
-				if notificationID == "all" {
-					self.userNotificationsElement?[indexPath.row].read = read
-				} else {
+			if indexPaths == nil, let userNotificationsElement = self.userNotificationsElement {
+				for userNotificationElement in userNotificationsElement {
+					userNotificationElement.read = read
+				}
+				self.tableView.reloadData()
+			} else if let indexPaths = indexPaths {
+				for indexPath in indexPaths {
 					switch self.grouping {
 					case .automatic, .byType:
 						self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
 					case .off:
 						self.userNotificationsElement?[indexPath.row].read = read
 					}
-				}
 
-				if indexPaths.count == 1, let indexPath = indexPaths.first {
-					if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
-						sessionNotificationCell.updateReadStatus(animated: true)
-					}
-				} else {
-					if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
-						sessionNotificationCell.updateReadStatus(animated: false)
+					if indexPaths.count == 1, let indexPath = indexPaths.first {
+						if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
+							sessionNotificationCell.updateReadStatus(animated: true)
+						}
+					} else {
+						if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
+							sessionNotificationCell.updateReadStatus(animated: false)
+						}
 					}
 				}
 			}
@@ -214,18 +217,11 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		var indexPaths = [IndexPath]()
-
-		let numberOfRows = tableView.numberOfRows()
-		for row in 0..<numberOfRows {
-			indexPaths.append(IndexPath(row: row, section: 0))
-		}
-
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mark all as read action
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
-			self.updateNotification(at: indexPaths, for: "all", with: 1)
+			self.updateNotification(for: "all", with: 1)
 		})
 		markAllAsRead.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -233,7 +229,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Mark all as unread
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
-			self.updateNotification(at: indexPaths, for: "all", with: 0)
+			self.updateNotification(for: "all", with: 0)
 		})
 		markAllAsUnread.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

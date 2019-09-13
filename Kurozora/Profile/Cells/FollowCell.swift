@@ -27,6 +27,11 @@ class FollowCell: UITableViewCell {
 			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
+	@IBOutlet weak var separatorView: UIView! {
+		didSet {
+			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+		}
+	}
 
 	var userProfile: UserProfile? {
 		didSet {

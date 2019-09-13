@@ -86,22 +86,21 @@
                                                 <action selector="followButtonPressed:" destination="ThI-dY-yLk" eventType="touchUpInside" id="OaD-wm-Gtj"/>
                                             </connections>
                                         </button>
-                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="586-B7-zQg" userLabel="Separator">
-                                            <rect key="frame" x="0.0" y="69.666666666666671" width="375" height="0.3333333333333286"/>
+                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="586-B7-zQg">
+                                            <rect key="frame" x="16" y="69.666666666666671" width="343" height="0.3333333333333286"/>
                                             <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="0.5" id="57q-To-Pw0"/>
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="qIk-Mi-I8x" secondAttribute="trailing" id="26s-dw-adf"/>
-                                        <constraint firstItem="586-B7-zQg" firstAttribute="leading" secondItem="JLa-Rq-KcM" secondAttribute="leading" id="5Xn-sd-Qqb"/>
+                                        <constraint firstItem="586-B7-zQg" firstAttribute="leading" secondItem="JLa-Rq-KcM" secondAttribute="leadingMargin" id="5Xn-sd-Qqb"/>
                                         <constraint firstItem="Wek-mf-rNu" firstAttribute="centerY" secondItem="zpR-A2-5um" secondAttribute="centerY" id="8sl-NS-JOS"/>
                                         <constraint firstItem="qIk-Mi-I8x" firstAttribute="centerY" secondItem="Wek-mf-rNu" secondAttribute="centerY" id="ALx-Z8-s1q"/>
                                         <constraint firstItem="zpR-A2-5um" firstAttribute="centerY" secondItem="JLa-Rq-KcM" secondAttribute="centerY" id="Al6-fA-n7Y"/>
-                                        <constraint firstAttribute="trailing" secondItem="586-B7-zQg" secondAttribute="trailing" id="IgQ-u6-s2o"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="586-B7-zQg" secondAttribute="trailing" id="IgQ-u6-s2o"/>
                                         <constraint firstAttribute="bottom" secondItem="586-B7-zQg" secondAttribute="bottom" id="fTK-eF-bP9"/>
                                         <constraint firstAttribute="bottom" secondItem="zpR-A2-5um" secondAttribute="bottom" constant="10" id="h1T-xw-xke"/>
                                         <constraint firstItem="Wek-mf-rNu" firstAttribute="leading" secondItem="zpR-A2-5um" secondAttribute="trailing" constant="10" id="iRB-Ms-fsi"/>
@@ -114,6 +113,7 @@
                                     <outlet property="followButton" destination="qIk-Mi-I8x" id="9qG-LK-Tj2"/>
                                     <outlet property="profileImageView" destination="h23-Bd-SeG" id="oIT-Bg-lMH"/>
                                     <outlet property="profileImageViewContainer" destination="zpR-A2-5um" id="IdX-KL-qwI"/>
+                                    <outlet property="separatorView" destination="586-B7-zQg" id="VlC-or-9rH"/>
                                     <outlet property="usernameLabel" destination="Wek-mf-rNu" id="TVT-q8-UXB"/>
                                     <segue destination="zlF-Vo-yv3" kind="show" identifier="ProfileSegue" id="Uy1-s4-x1D">
                                         <segue key="commit" inheritsFrom="parent" id="4rF-DK-5Qi"/>

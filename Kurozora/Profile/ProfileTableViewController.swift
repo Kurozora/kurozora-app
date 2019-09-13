@@ -149,6 +149,7 @@ class ProfileTableViewController: UITableViewController {
 			let vc = segue.destination as! BadgesTableViewController
 			vc.badges = user?.profile?.badges
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
+			followTableViewController.userID = otherUserID ?? User.currentID
 			if segue.identifier == "FollowingSegue" {
 				followTableViewController.followList = "following"
 			} else if segue.identifier == "FollowersSegue" {

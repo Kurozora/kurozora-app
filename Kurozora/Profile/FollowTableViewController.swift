@@ -16,8 +16,11 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		}
 	}
 	var followList: String = "followers"
-	var currentPage = 0
-	var lastPage = 0
+	var userID: Int?
+
+	// Pagination
+	var currentPage = 1
+	var lastPage = 1
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -60,10 +63,17 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 
 	// MARK: - Functions
     func fetchFollowList() {
-		Service.shared.getFollow(for: followList, page: 0) { (userFollow) in
-			self.currentPage = userFollow?.currentPage ?? 0
-			self.lastPage = userFollow?.lastPage ?? 0
-			self.userFollow = userFollow?.following ?? userFollow?.followers
+		Service.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
+			self.currentPage = userFollow?.currentPage ?? 1
+			self.lastPage = userFollow?.lastPage ?? 1
+
+			if self.currentPage == 1 {
+				self.userFollow = userFollow?.following ?? userFollow?.followers
+			} else {
+				for userProfile in userFollow?.following ?? userFollow?.followers ?? [] {
+					self.userFollow.append(userProfile)
+				}
+			}
 		}
 	}
 }
@@ -84,5 +94,14 @@ extension FollowTableViewController {
 
 // MARK: - UITableViewDelegate
 extension FollowTableViewController {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let numberOfRows = tableView.numberOfRows()
 
+		if indexPath.row == numberOfRows - 2 {
+			if currentPage != lastPage {
+				currentPage += 1
+				fetchFollowList()
+			}
+		}
+	}
 }

@@ -390,8 +390,8 @@ struct Service {
 	- Parameter successHandler: A closure returning a UserNotificationsElement array.
 	- Parameter userFollow: The returned UserFollow object.
 	*/
-	func getFollow(for list: String, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
-		guard let userID = User.currentID else { return }
+	func getFollow(list: String, for userID: Int?, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
+		guard let userID = userID else { return }
 
 		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/\(list)")
 		request.headers = [

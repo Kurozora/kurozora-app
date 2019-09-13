@@ -23,8 +23,10 @@ enum ForumsSortingStyle: String {
 	/// The image value of a sorting style.
 	var imageValue: UIImage {
 		switch self {
-		case .top: return #imageLiteral(resourceName: "sort_top")
-		case .recent: return #imageLiteral(resourceName: "sort_recent")
+		case .top:
+			return #imageLiteral(resourceName: "sort_top")
+		case .recent:
+			return #imageLiteral(resourceName: "sort_recent")
 		}
 	}
 }

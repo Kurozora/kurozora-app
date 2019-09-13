@@ -16,32 +16,26 @@ class CastCollectionViewController: UICollectionViewController, EmptyDataSetDele
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE:	return (1, 1.7)
-				case .iPhone66S78:		return (2, 2)
-				case .iPhone66S78PLUS:	return (2, 2.3)
-				case .iPhoneXr:			return (2, 2.3)
-				case .iPhoneXXs:			return (2, 2)
-				case .iPhoneXsMax:		return (2, 2.3)
-
-				case .iPad:					return (2, 4.4)
-				case .iPadAir3:				return (3, 5)
-				case .iPadPro11:			return (3, 5)
-				case .iPadPro12:			return (3, 6.2)
+				case .iPhone5SSE:								return (1, 1.7)
+				case .iPhone66S78, .iPhoneXXs:					return (2, 2)
+				case .iPhone66S78PLUS, .iPhoneXr, .iPhoneXsMax:	return (2, 2.3)
+				case .iPad:										return (2, 4.4)
+				case .iPadAir3, .iPadPro11:						return (3, 5)
+				case .iPadPro12:								return (3, 6.2)
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone5SSE:	return (1, 3.4)
-			case .iPhone66S78:		return (1, 4)
-			case .iPhone66S78PLUS:	return (1, 4.5)
-			case .iPhoneXr:			return (1, 5.6)
-			case .iPhoneXXs:			return (1, 5)
-			case .iPhoneXsMax:		return (1, 5.5)
-
-			case .iPad:					return (2, 6.2)
-			case .iPadAir3:				return (2, 6.8)
-			case .iPadPro11:			return (2, 7.4)
-			case .iPadPro12:			return (2, 8.4)
+			case .iPhone5SSE:									return (1, 3.4)
+			case .iPhone66S78:									return (1, 4)
+			case .iPhone66S78PLUS:								return (1, 4.5)
+			case .iPhoneXr:										return (1, 5.6)
+			case .iPhoneXXs:									return (1, 5)
+			case .iPhoneXsMax:									return (1, 5.5)
+			case .iPad:											return (2, 6.2)
+			case .iPadAir3:										return (2, 6.8)
+			case .iPadPro11:									return (2, 7.4)
+			case .iPadPro12:									return (2, 8.4)
 			}
 		}
 	}
