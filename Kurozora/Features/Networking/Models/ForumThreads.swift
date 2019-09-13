@@ -11,23 +11,22 @@ import SwiftyJSON
 
 class ForumThreads: JSONDecodable {
 	let success: Bool?
-	let page: Int?
-	let threadPages: Int?
+	let currentPage: Int?
+	let lastPage: Int?
 	let threads: [ForumThreadsElement]?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
-		self.page = json["page"].intValue
-		self.threadPages = json["thread_pages"].intValue
-		var threads = [ForumThreadsElement]()
+		self.currentPage = json["page"].intValue
+		self.lastPage = json["last_page"].intValue
 
+		var threads = [ForumThreadsElement]()
 		let threadsArray = json["threads"].arrayValue
 		for thread in threadsArray {
 			if let threadsElement = try? ForumThreadsElement(json: thread) {
 				threads.append(threadsElement)
 			}
 		}
-
 		self.threads = threads
 	}
 }
@@ -42,6 +41,7 @@ class ForumThreadsElement: JSONDecodable {
 	let creationDate: String?
 	let replyCount: Int?
 	let score: Int?
+	let currentUser: UserProfile?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
@@ -53,5 +53,6 @@ class ForumThreadsElement: JSONDecodable {
 		self.creationDate = json["creation_date"].stringValue
 		self.replyCount = json["reply_count"].intValue
 		self.score = json["score"].intValue
+		self.currentUser = try UserProfile(json: json["current_user"])
 	}
 }

@@ -117,7 +117,7 @@ class ForumsViewController: TabmanViewController {
 		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")), ("Recent", "recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
-			currentSection?.pageNumber = 0
+			currentSection?.currentPage = 1
 			self.sortingBarButtonItem.title = value
 			self.sortingBarButtonItem.image = ForumsSortingStyle(rawValue: value)?.imageValue
 			currentSection?.fetchThreads()

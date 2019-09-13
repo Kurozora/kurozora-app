@@ -62,16 +62,19 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 	}
 
 	// MARK: - Functions
+	/// Fetch the follow list for the currently viewed profile.
     func fetchFollowList() {
 		Service.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
-			self.currentPage = userFollow?.currentPage ?? 1
-			self.lastPage = userFollow?.lastPage ?? 1
+			DispatchQueue.main.async {
+				self.currentPage = userFollow?.currentPage ?? 1
+				self.lastPage = userFollow?.lastPage ?? 1
 
-			if self.currentPage == 1 {
-				self.userFollow = userFollow?.following ?? userFollow?.followers
-			} else {
-				for userProfile in userFollow?.following ?? userFollow?.followers ?? [] {
-					self.userFollow.append(userProfile)
+				if self.currentPage == 1 {
+					self.userFollow = userFollow?.following ?? userFollow?.followers
+				} else {
+					for userProfile in userFollow?.following ?? userFollow?.followers ?? [] {
+						self.userFollow.append(userProfile)
+					}
 				}
 			}
 		}

@@ -775,10 +775,10 @@ struct Service {
 		request.parameters = [
 			"page": page
 		]
-		request.perform(withSuccess: { threads in
-			if let success = threads.success {
+		request.perform(withSuccess: { feedPosts in
+			if let success = feedPosts.success {
 				if success {
-					successHandler(threads)
+					successHandler(feedPosts)
 				}
 			}
 		}, failure: { error in
@@ -820,10 +820,9 @@ struct Service {
 		- Parameter successHandler: A closure returning a ForumThreads array.
 		- Parameter forumThreads: The returned ForumThreads array.
 	*/
-	func getForumThreads(for sectionID: Int?, order: String?, page: Int?, withSuccess successHandler: @escaping (_ forumThreads: ForumThreads?) -> Void) {
+	func getForumThreads(for sectionID: Int?, order: String?, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumThreads?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let order = order else { return }
-		guard let page = page else { return }
 
 		let request: APIRequest<ForumThreads, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = headers

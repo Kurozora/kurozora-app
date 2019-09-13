@@ -26,8 +26,8 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	var threadOrder: String?
 
 	// Pagination
-	var totalPages = 0
-	var pageNumber = 0
+	var currentPage = 1
+	var lastPage = 1
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -73,7 +73,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	@objc private func refreshThreadsData(_ sender: Any) {
 		guard let sectionTitle = sectionTitle else {return}
 		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		pageNumber = 0
+		currentPage = 0
 		fetchThreads()
 	}
 
@@ -86,20 +86,17 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 			threadOrder = "top"
 		}
 
-		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: pageNumber, withSuccess: { (threads) in
+		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
 			DispatchQueue.main.async {
-				if let threadPages = threads?.threadPages {
-					self.totalPages = threadPages
-				}
+				self.currentPage = threads?.currentPage ?? 1
+				self.lastPage = threads?.lastPage ?? 1
 
-				if self.pageNumber == 0 {
+				if self.currentPage == 1 {
 					self.forumThreads = threads?.threads
-					self.pageNumber += 1
-				} else if self.pageNumber <= self.totalPages-1 {
-					for forumThreadElement in (threads?.threads)! {
+				} else {
+					for forumThreadElement in threads?.threads ?? [] {
 						self.forumThreads?.append(forumThreadElement)
 					}
-					self.pageNumber += 1
 				}
 
 				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
@@ -145,8 +142,9 @@ extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
-		if indexPath.row == numberOfRows - 1 {
-			if pageNumber <= totalPages - 1 {
+		if indexPath.row == numberOfRows - 2 {
+			if currentPage != lastPage {
+				currentPage += 1
 				fetchThreads()
 			}
 		}
