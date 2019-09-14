@@ -62,7 +62,7 @@
                                                         <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="posterUsernameButtonPressed:" destination="SCj-O7-TEI" eventType="touchUpInside" id="ZNV-QB-nVn"/>
+                                                        <action selector="usernameButtonPressed:" destination="SCj-O7-TEI" eventType="touchUpInside" id="ZNV-QB-nVn"/>
                                                     </connections>
                                                 </button>
                                                 <button userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMw-uh-MhM">
@@ -113,7 +113,7 @@
                                                             <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" backgroundImage="arrow_up"/>
                                                             <connections>
-                                                                <action selector="upVoteButtonAction:" destination="SCj-O7-TEI" eventType="touchUpInside" id="ss1-Jt-T5V"/>
+                                                                <action selector="upvoteButtonAction:" destination="SCj-O7-TEI" eventType="touchUpInside" id="ss1-Jt-T5V"/>
                                                             </connections>
                                                         </button>
                                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mm7-ly-trG" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
@@ -126,7 +126,7 @@
                                                             <color key="tintColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" backgroundImage="arrow_down"/>
                                                             <connections>
-                                                                <action selector="downVoteButtonAction:" destination="SCj-O7-TEI" eventType="touchUpInside" id="mrY-n8-o6S"/>
+                                                                <action selector="downvoteButtonAction:" destination="SCj-O7-TEI" eventType="touchUpInside" id="mrY-n8-o6S"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -186,9 +186,9 @@
                                     <outlet property="downvoteButton" destination="Mm7-ly-trG" id="BY3-fs-Yia"/>
                                     <outlet property="lockLabel" destination="Xhu-UU-4f0" id="xto-4L-RaB"/>
                                     <outlet property="moreButton" destination="HR4-En-zxB" id="bST-Ef-z8C"/>
-                                    <outlet property="posterUsernameButton" destination="9ss-Hv-TuU" id="3VI-qw-KjV"/>
                                     <outlet property="titleLabel" destination="jGw-Ib-wBw" id="tfF-Pq-fG3"/>
                                     <outlet property="upvoteButton" destination="QLb-OY-5CD" id="OE0-8i-uGg"/>
+                                    <outlet property="usernameButton" destination="9ss-Hv-TuU" id="3VI-qw-KjV"/>
                                     <outlet property="voteCountButton" destination="KMw-uh-MhM" id="dL0-GY-eaK"/>
                                 </connections>
                             </tableViewCell>

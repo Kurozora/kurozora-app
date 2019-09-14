@@ -51,6 +51,7 @@ class UserProfile: JSONDecodable {
 	let currentRating: Double?
 	var libraryStatus: String?
 
+	let likeAction: Int?
 	let themeBought: Bool?
 
 	required init(json: JSON) throws {
@@ -89,6 +90,7 @@ class UserProfile: JSONDecodable {
 		self.currentRating = json["given_rating"].doubleValue
 		self.libraryStatus = json["library_status"].stringValue
 
+		self.likeAction = json["like_action"].intValue
 		self.themeBought = json["theme_bought"].boolValue
 	}
 }

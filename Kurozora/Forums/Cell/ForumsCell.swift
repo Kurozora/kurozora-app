@@ -10,9 +10,9 @@ import UIKit
 import SwiftyJSON
 
 public class ForumsCell: UITableViewCell {
-	@IBOutlet weak var posterUsernameButton: UIButton! {
+	@IBOutlet weak var usernameButton: UIButton! {
 		didSet {
-			posterUsernameButton.theme_tintColor = KThemePicker.tintColor.rawValue
+			usernameButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		}
 	}
 	@IBOutlet weak var titleLabel: UILabel! {
@@ -75,13 +75,14 @@ public class ForumsCell: UITableViewCell {
 	var forumsChildViewController: ForumsListViewController?
 	var forumThreadsElement: ForumThreadsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	var previousVote = 0
 
 	// MARK: - Functions
-	fileprivate func setup() {
+	/// Configure the cell with the given details.
+	fileprivate func configureCell() {
 		guard let forumThreadsElement = forumThreadsElement else { return }
 
 		// Set title label
@@ -91,7 +92,7 @@ public class ForumsCell: UITableViewCell {
 		contentLabel.text = forumThreadsElement.contentTeaser
 
 		// Set poster username label
-		posterUsernameButton.setTitle(forumThreadsElement.posterUsername, for: .normal)
+		usernameButton.setTitle(forumThreadsElement.posterUsername, for: .normal)
 
 		// Set thread stats
 		if let threadScore = forumThreadsElement.score {
@@ -106,6 +107,9 @@ public class ForumsCell: UITableViewCell {
 			dateTimeButton.setTitle("\(Date.timeAgo(creationDate))", for: .normal)
 		}
 
+		// Thread vote state
+		updateVoting(with: forumThreadsElement.currentUser?.likeAction)
+
 		// Check if thread is locked
 		if let locked = forumThreadsElement.locked {
 			isLocked(locked)
@@ -117,7 +121,30 @@ public class ForumsCell: UITableViewCell {
 		isUserInteractionEnabled = true
 	}
 
-	// Visit the poster's profile page
+	/**
+	Upvote or downvote a thread according to the given integer.
+	
+	- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
+	*/
+	fileprivate func voteForThread(with vote: Int) {
+		guard let forumThreadsElement = forumThreadsElement else { return }
+		guard var threadScore = forumThreadsElement.score else { return }
+
+		Service.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
+			DispatchQueue.main.async {
+				self.updateVoting(with: action)
+				if action == 1 {
+					threadScore += 1
+				} else if action == -1 {
+					threadScore -= 1
+				}
+
+				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+			}
+		})
+	}
+
+	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
 			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
@@ -132,76 +159,29 @@ public class ForumsCell: UITableViewCell {
 		}
 	}
 
-	// Lock thread
+	/**
+		Shows and hides some elements according to the lock status of the current thread.
+		
+		- Parameter locked: The boolean indicating whather to show or hide the element.
+	*/
 	fileprivate func isLocked(_ locked: Bool) {
 		forumThreadsElement?.locked = locked
-		// Set lock label
 		if locked {
 			lockLabel.isHidden = false
+			upvoteButton.isHidden = true
+			downvoteButton.isHidden = true
 			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
-			moreButton.isUserInteractionEnabled = false
-			actionsStackView.isHidden = true
 		} else {
 			lockLabel.isHidden = true
+			upvoteButton.isHidden = false
+			downvoteButton.isHidden = false
 			upvoteButton.isUserInteractionEnabled = true
 			downvoteButton.isUserInteractionEnabled = true
-			moreButton.isUserInteractionEnabled = true
-			actionsStackView.isHidden = false
 		}
 	}
 
-	// Upvote/Downvote a thread
-	fileprivate func voteForThread(with vote: Int) {
-		guard let forumThreadsElement = forumThreadsElement else { return }
-		guard var threadScore = forumThreadsElement.score else { return }
-
-		Service.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
-			DispatchQueue.main.async {
-				if action == 1 { // upvote
-					threadScore += 1
-					self.upvoteButton.tintColor = #colorLiteral(red: 0.2156862745, green: 0.8274509804, blue: 0.1294117647, alpha: 1)
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == 0 { // no vote
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == -1 { // downvote
-					threadScore -= 1
-					self.downvoteButton.tintColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				}
-
-				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
-			}
-		})
-	}
-
-	// Reply to the current thread
-	func replyThread() {
-		// TODO: - Add reply function here
-	}
-
-	// Share the current thread
-	func shareThread() {
-		guard let threadID = forumThreadsElement?.id else { return }
-		guard let forumsChildViewController = forumsChildViewController else { return }
-		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
-
-		if let title = self.titleLabel.text {
-			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
-		}
-
-		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
-
-		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = forumsChildViewController.view
-			popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
-		}
-		forumsChildViewController.present(activityVC, animated: true, completion: nil)
-	}
-
-	// Populate action list
+	/// Builds and presents an action sheet.
 	fileprivate func actionList() {
 		guard let forumsChildViewController = self.forumsChildViewController else { return }
 		guard let forumThreadsElement = forumThreadsElement else { return }
@@ -300,23 +280,64 @@ public class ForumsCell: UITableViewCell {
 		}
 	}
 
-	// Show cell options
+	/// Presents a share sheet to share the selected thread.
+	func shareThread() {
+		guard let threadID = forumThreadsElement?.id else { return }
+		guard let forumsChildViewController = forumsChildViewController else { return }
+		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
+
+		if let title = self.titleLabel.text {
+			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
+		}
+
+		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+
+		if let popoverController = activityVC.popoverPresentationController {
+			popoverController.sourceView = forumsChildViewController.view
+			popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
+			popoverController.permittedArrowDirections = []
+		}
+		forumsChildViewController.present(activityVC, animated: true, completion: nil)
+	}
+
+	/**
+	Update the voting state of the reply
+	*/
+	fileprivate func updateVoting(with action: Int?) {
+		if action == 1 { // upvote
+			self.upvoteButton.tintColor = #colorLiteral(red: 0.2156862745, green: 0.8274509804, blue: 0.1294117647, alpha: 1)
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if action == 0 { // no vote
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if action == -1 { // downvote
+			self.downvoteButton.tintColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
+	}
+
+	// Reply to the current thread
+	func replyThread() {
+		// TODO: - Add reply function here
+	}
+
+	/// Shows the relevant options for the selected thread.
 	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
 		actionList()
 	}
 
 	// MARK: - IBActions
-	@IBAction func posterUsernameButtonPressed(_ sender: UIButton) {
+	@IBAction func usernameButtonPressed(_ sender: UIButton) {
 		visitPosterProfilePage()
 	}
 
-	@IBAction func upVoteButtonAction(_ sender: UIButton) {
+	@IBAction func upvoteButtonAction(_ sender: UIButton) {
 		previousVote = 1
 		voteForThread(with: 1)
 		upvoteButton.animateBounce()
 	}
 
-	@IBAction func downVoteButtonAction(_ sender: UIButton) {
+	@IBAction func downvoteButtonAction(_ sender: UIButton) {
 		previousVote = 0
 		voteForThread(with: 0)
 		downvoteButton.animateBounce()

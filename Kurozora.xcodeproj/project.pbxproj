@@ -294,6 +294,7 @@
 		66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
 		66B216AC21C1681F006E167D /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
 		66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216AD21C16B15006E167D /* ThreadPost.swift */; };
+		66B2C73D232D0F350042AB12 /* PostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73C232D0F350042AB12 /* PostType.swift */; };
 		66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */; };
 		66B4F1D8223D145F007C5048 /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */; };
 		66B4F1DB223D2CA5007C5048 /* SearchResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchResultsCell.swift */; };
@@ -686,6 +687,7 @@
 		66B216A521BF16AE006E167D /* ForumThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumThread.swift; sourceTree = "<group>"; };
 		66B216A721C033B9006E167D /* UIView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Kurozora.swift"; sourceTree = "<group>"; };
 		66B216AD21C16B15006E167D /* ThreadPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPost.swift; sourceTree = "<group>"; };
+		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
 		66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListStyle.swift; sourceTree = "<group>"; };
 		66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
 		66B4F1DA223D2CA5007C5048 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
@@ -1381,6 +1383,7 @@
 			isa = PBXGroup;
 			children = (
 				665099D222FC22670053C2FD /* UserType.swift */,
+				66B2C73C232D0F350042AB12 /* PostType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2590,6 +2593,7 @@
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,
 				660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */,
 				66058DBA212E97670084B79E /* ShowReviewCell.swift in Sources */,
+				66B2C73D232D0F350042AB12 /* PostType.swift in Sources */,
 				66232CD92310050700C45B5A /* EmptyProfileCell.swift in Sources */,
 				664B6D7C230F532500F9C726 /* BadgeElement.swift in Sources */,
 				66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */,

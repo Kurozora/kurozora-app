@@ -172,7 +172,7 @@
                 <outlet property="textContent" destination="MFN-FE-bow" id="Oon-dm-nc1"/>
                 <outlet property="toIcon" destination="3kJ-WY-2nA" id="mln-qn-apC"/>
                 <outlet property="toUsername" destination="Eki-Ag-PBc" id="UPR-Er-MXA"/>
-                <outlet property="username" destination="3Om-lJ-o0H" id="iV0-yC-bZW"/>
+                <outlet property="usernameLabel" destination="3Om-lJ-o0H" id="iV0-yC-bZW"/>
             </connections>
             <point key="canvasLocation" x="37" y="-2"/>
         </tableViewCell>

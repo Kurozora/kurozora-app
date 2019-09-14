@@ -18,7 +18,7 @@ import UIKit
 
 class PostCell: UITableViewCell {
 	@IBOutlet weak public var profileImage: UIImageView!
-	@IBOutlet weak public var username: UILabel?
+	@IBOutlet weak public var usernameLabel: UILabel?
 	@IBOutlet weak public var dateTime: UILabel!
 
 	@IBOutlet weak public var toIcon: UILabel?
@@ -32,20 +32,9 @@ class PostCell: UITableViewCell {
 	@IBOutlet weak public var heartButton: UIButton!
 	@IBOutlet weak public var playButton: UIButton?
 
-	public weak var delegate: PostCellDelegate?
+	weak var delegate: PostCellDelegate?
 
-	public enum PostType {
-		case Text
-		case Image
-		case Image2
-		case Image3
-		case Image4
-		case Image5
-		case Video
-	}
-
-	public class func registerNibFor(tableView: UITableView) {
-
+	class func registerNibFor(tableView: UITableView) {
 		let listNib = UINib(nibName: "PostTextCell", bundle: nil)
 		tableView.register(listNib, forCellReuseIdentifier: "PostTextCell")
 		let listNib2 = UINib(nibName: "PostImageCell", bundle: nil)
@@ -53,25 +42,25 @@ class PostCell: UITableViewCell {
 
 	}
 
-	public override func awakeFromNib() {
+	override func awakeFromNib() {
 		super.awakeFromNib()
 
 		do {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			profileImage.addGestureRecognizer(gestureRecognizer)
 		}
 
 		if let imageContent = imageContent {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedOnImage))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImagePressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			imageContent.addGestureRecognizer(gestureRecognizer)
 		}
 
-		if let username = username {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
+		if let username = usernameLabel {
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			username.addGestureRecognizer(gestureRecognizer)
@@ -85,8 +74,18 @@ class PostCell: UITableViewCell {
 		}
 	}
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		textContent.preferredMaxLayoutWidth = textContent.frame.size.width
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		textContent.preferredMaxLayoutWidth = textContent.frame.size.width
+	}
+
 	// MARK: - IBActions
-	@objc func pressedUserProfile(sender: AnyObject) {
+	@objc func usernameLabelPressed(sender: AnyObject) {
 		delegate?.postCellSelectedUserProfile(postCell: self)
 	}
 
@@ -94,7 +93,7 @@ class PostCell: UITableViewCell {
 		delegate?.postCellSelectedToUserProfile?(postCell: self)
 	}
 
-	@objc func pressedOnImage(sender: AnyObject) {
+	@objc func profileImagePressed(sender: AnyObject) {
 		delegate?.postCellSelectedImage?(postCell: self)
 	}
 
@@ -106,15 +105,5 @@ class PostCell: UITableViewCell {
 	@IBAction func heartPressed(sender: AnyObject) {
 		delegate?.postCellSelectedHeart(postCell: self)
 		heartButton.animateBounce()
-	}
-
-	public override func layoutSubviews() {
-		super.layoutSubviews()
-		textContent.preferredMaxLayoutWidth = textContent.frame.size.width
-	}
-
-	public override func prepareForReuse() {
-		super.prepareForReuse()
-		textContent.preferredMaxLayoutWidth = textContent.frame.size.width
 	}
 }

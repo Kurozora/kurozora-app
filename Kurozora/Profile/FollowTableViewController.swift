@@ -70,9 +70,9 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 				self.lastPage = userFollow?.lastPage ?? 1
 
 				if self.currentPage == 1 {
-					self.userFollow = userFollow?.following ?? userFollow?.followers
+					self.userFollow = userFollow?.following?.isEmpty ?? true ? userFollow?.followers : userFollow?.following
 				} else {
-					for userProfile in userFollow?.following ?? userFollow?.followers ?? [] {
+					for userProfile in (userFollow?.following?.isEmpty ?? true ? userFollow?.followers : userFollow?.following) ?? [] {
 						self.userFollow.append(userProfile)
 					}
 				}

@@ -825,7 +825,10 @@ struct Service {
 		guard let order = order else { return }
 
 		let request: APIRequest<ForumThreads, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
 		request.method = .get
 		request.parameters = [
 			"order": order,

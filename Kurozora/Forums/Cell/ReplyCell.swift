@@ -13,7 +13,7 @@ class ReplyCell: UITableViewCell {
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
 			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			profileImageView.addGestureRecognizer(gestureRecognizer)
@@ -23,7 +23,7 @@ class ReplyCell: UITableViewCell {
 		didSet {
 			usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pressedUserProfile))
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
 			usernameLabel?.addGestureRecognizer(gestureRecognizer)
@@ -83,6 +83,7 @@ class ReplyCell: UITableViewCell {
 	var previousVote = 0
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
@@ -177,18 +178,15 @@ class ReplyCell: UITableViewCell {
 		- Parameter locked: The boolean indicating whather to show or hide the element.
 	*/
 	fileprivate func isLocked(_ locked: Bool) {
-		// Set lock label
 		if locked {
 			upvoteButton.isHidden = true
-			upvoteButton.isUserInteractionEnabled = false
-
 			downvoteButton.isHidden = true
+			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
 		} else {
 			upvoteButton.isHidden = false
-			upvoteButton.isUserInteractionEnabled = true
-
 			downvoteButton.isHidden = false
+			upvoteButton.isUserInteractionEnabled = true
 			downvoteButton.isUserInteractionEnabled = true
 		}
 	}
@@ -256,17 +254,16 @@ class ReplyCell: UITableViewCell {
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = threadViewController.view
-			popoverController.sourceRect = CGRect(x: threadViewController.view.bounds.midX, y: threadViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.sourceView = moreButton
+			popoverController.sourceRect = moreButton.bounds
 		}
 
-		if !(threadViewController.navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
+		if (threadViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
 			threadViewController.present(action, animated: true, completion: nil)
 		}
 	}
 
-	/// Presents a share sheet to share the current thread.
+	/// Presents a share sheet to share the selected reply.
 	func shareReply() {
 		guard let threadViewController = threadViewController else { return }
 		guard let threadRepliesElement = threadRepliesElement else { return }
@@ -287,13 +284,13 @@ class ReplyCell: UITableViewCell {
 		threadViewController.present(activityVC, animated: true, completion: nil)
 	}
 
-	/// Shows the relevant options for the current reply.
+	/// Shows the relevant options for the selected reply.
 	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
 		actionList()
 	}
 
 	// MARK: - IBActions
-	@objc func pressedUserProfile(sender: AnyObject) {
+	@objc func usernameLabelPressed(sender: AnyObject) {
 		visitPosterProfilePage()
 	}
 

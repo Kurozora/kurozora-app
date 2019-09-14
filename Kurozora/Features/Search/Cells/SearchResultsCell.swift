@@ -198,7 +198,9 @@ class SearchResultsCell: UITableViewCell {
 			popoverController.sourceRect = sender.bounds
 		}
 
-		searchResultsTableViewController.present(action, animated: true, completion: nil)
+		if (searchResultsTableViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
+			searchResultsTableViewController.present(action, animated: true, completion: nil)
+		}
 	}
 }
 
@@ -211,9 +213,7 @@ extension SearchResultsCell: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let suggestionResultCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SuggestionResultCell", for: indexPath) as! SuggestionResultCell
-
 		suggestionResultCell.searchElement = suggestionElement?[indexPath.item]
-
 		return suggestionResultCell
 	}
 }
