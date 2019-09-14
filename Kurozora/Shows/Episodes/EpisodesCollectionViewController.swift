@@ -166,7 +166,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 	}
 
 	/// Builds and presents an action sheet.
-	fileprivate func actionList() {
+	fileprivate func showActionList() {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let visibleIndexPath = collectionView.indexPathsForVisibleItems
 
@@ -203,7 +203,7 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 
 	// MARK: - IBActions
 	@IBAction func goToButtonPressed(_ sender: UIBarButtonItem) {
-		actionList()
+		showActionList()
 	}
 }
 

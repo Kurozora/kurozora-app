@@ -324,21 +324,23 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
-		if let posterId = forumThreadElement?.user?.id, posterId != 0 {
-			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
-			profileViewController?.otherUserID = posterId
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
+		if let userID = forumThreadElement?.user?.id, userID != 0 {
+			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+				profileViewController.userID = userID
+				profileViewController.dismissButtonIsEnabled = true
 
-			if #available(iOS 13.0, *) {
-				self.present(kurozoraNavigationController, animated: true, completion: nil)
-			} else {
-				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
+				if #available(iOS 13.0, *) {
+					self.present(kurozoraNavigationController, animated: true, completion: nil)
+				} else {
+					self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				}
 			}
 		}
 	}
 
 	/// Builds and presents an action sheet.
-	func actionList() {
+	func showActionList() {
 		guard let forumThreadElement = forumThreadElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -428,25 +430,14 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 			popoverController.permittedArrowDirections = []
 		}
 
-		if !(self.navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
 			self.present(action, animated: true, completion: nil)
 		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
-		if let posterID = forumThreadElement?.user?.id, posterID != 0 {
-			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
-			profileViewController?.otherUserID = posterID
-
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
-
-			if #available(iOS 13.0, *) {
-				self.present(kurozoraNavigationController, animated: true, completion: nil)
-			} else {
-				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-			}
-		}
+		visitPosterProfilePage()
 	}
 
 	@IBAction func upVoteButtonPressed(_ sender: UIButton) {
@@ -469,7 +460,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		actionList()
+		showActionList()
 	}
 }
 

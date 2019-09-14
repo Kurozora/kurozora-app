@@ -156,10 +156,10 @@ class Kurozora: NSObject {
 			let userID = url.lastPathComponent
 			if !userID.isEmpty {
 				if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
-					profileViewController.otherUserID = Int(userID)
+					profileViewController.userID = Int(userID)
+					profileViewController.dismissButtonIsEnabled = true
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-
 					UIApplication.topViewController?.present(kurozoraNavigationController)
 				}
 			}

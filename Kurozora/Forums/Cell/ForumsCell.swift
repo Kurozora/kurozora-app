@@ -147,14 +147,16 @@ public class ForumsCell: UITableViewCell {
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
-			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
-			profileViewController?.otherUserID = posterId
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
+			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+				profileViewController.userID = posterId
+				profileViewController.dismissButtonIsEnabled = true
 
-			if #available(iOS 13.0, *) {
-				forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
-			} else {
-				forumsChildViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
+				if #available(iOS 13.0, *) {
+					forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+				} else {
+					forumsChildViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				}
 			}
 		}
 	}
@@ -182,7 +184,7 @@ public class ForumsCell: UITableViewCell {
 	}
 
 	/// Builds and presents an action sheet.
-	fileprivate func actionList() {
+	fileprivate func showActionList() {
 		guard let forumsChildViewController = self.forumsChildViewController else { return }
 		guard let forumThreadsElement = forumThreadsElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -323,7 +325,7 @@ public class ForumsCell: UITableViewCell {
 
 	/// Shows the relevant options for the selected thread.
 	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
-		actionList()
+		showActionList()
 	}
 
 	// MARK: - IBActions
@@ -344,6 +346,6 @@ public class ForumsCell: UITableViewCell {
 	}
 
 	@IBAction func moreButtonAction(_ sender: UIButton) {
-		actionList()
+		showActionList()
 	}
 }

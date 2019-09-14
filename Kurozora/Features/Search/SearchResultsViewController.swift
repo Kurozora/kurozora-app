@@ -153,7 +153,8 @@ class SearchResultsTableViewController: UITableViewController {
 				// Show user profile for user cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
-						profileViewController.otherUserID = currentCell.searchElement?.id
+						profileViewController.userID = currentCell.searchElement?.id
+						profileViewController.dismissButtonIsEnabled = true
 					}
 				}
 			} else if segue.identifier == "ThreadSegue" {

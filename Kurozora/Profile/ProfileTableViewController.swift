@@ -84,9 +84,10 @@ class ProfileTableViewController: UITableViewController {
 			self.tableView.reloadData()
 		}
 	}
-	var otherUserID: Int? = nil {
+	var userID: Int?
+	var dismissButtonIsEnabled: Bool = false {
 		didSet {
-			if otherUserID != nil {
+			if dismissButtonIsEnabled {
 				enableDismissButton()
 			}
 		}
@@ -114,13 +115,7 @@ class ProfileTableViewController: UITableViewController {
 		self.bioTextView.delegate = self
 
 		// Fetch user details
-		if otherUserID != nil {
-			fetchUserDetails(for: otherUserID)
-			//			profileNavigationItem.leftBarButtonItems?.remove(at: 1)
-		} else {
-			fetchUserDetails(for: User.currentID)
-			//			profileNavigationItem.leftBarButtonItems?.remove(at: 0)
-		}
+		fetchUserDetails(for: userID ?? User.currentID)
 
 		// Setup refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -149,7 +144,7 @@ class ProfileTableViewController: UITableViewController {
 			let vc = segue.destination as! BadgesTableViewController
 			vc.badges = user?.profile?.badges
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
-			followTableViewController.userID = otherUserID ?? User.currentID
+			followTableViewController.userID = userID ?? User.currentID
 			if segue.identifier == "FollowingSegue" {
 				followTableViewController.followList = "following"
 			} else if segue.identifier == "FollowersSegue" {
@@ -160,9 +155,9 @@ class ProfileTableViewController: UITableViewController {
 
 	// MARK: - Functions
 	/**
-	Instantiates and returns a view controller from the relevant storyboard.
+		Instantiates and returns a view controller from the relevant storyboard.
 
-	- Returns: a view controller from the relevant storyboard.
+		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "profile", bundle: nil)
@@ -170,9 +165,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-	Refresh the posts data by fetching new items from the server.
+		Refresh the posts data by fetching new items from the server.
 
-	- Parameter sender: The object requesting the refresh.
+		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
@@ -187,9 +182,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-	Fetches user detail for the given user id.
+		Fetches user detail for the given user id.
 
-	- Parameter userID: The user id for which the details should be fetched.
+		- Parameter userID: The user id for which the details should be fetched.
 	*/
 	private func fetchUserDetails(for userID: Int?) {
 		guard let userID = userID else { return }
@@ -292,7 +287,7 @@ class ProfileTableViewController: UITableViewController {
 		}
 
 		// Setup follow button
-		if otherUserID == User.currentID || otherUserID == nil {
+		if userID == nil {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
@@ -507,7 +502,7 @@ class ProfileTableViewController: UITableViewController {
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		let follow = user?.profile?.following ?? false ? 0 : 1
 
-		Service.shared.follow(follow, user: otherUserID) { (success) in
+		Service.shared.follow(follow, user: userID) { (success) in
 			if success {
 				if follow == 0 {
 					sender.setTitle("＋ Follow", for: .normal)
@@ -548,7 +543,7 @@ extension ProfileTableViewController {
 		if feedPostElement == nil {
 			let emptyProfileCell = tableView.dequeueReusableCell(withIdentifier: "EmptyProfileCell") as! EmptyProfileCell
 			var title = "There are no posts on your timeline!"
-			if otherUserID != nil {
+			if userID != nil {
 				title = "There are no posts on this timeline! Be the first to post :D"
 			}
 			emptyProfileCell.title = title

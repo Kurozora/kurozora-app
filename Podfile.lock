@@ -62,7 +62,7 @@ PODS:
   - SwifterSwift/UIKit (5.0.0)
   - SwiftTheme (0.4.5)
   - SwiftyJSON (5.0.0)
-  - SwipeCellKit (2.6.0)
+  - SwipeCellKit (2.7.0)
   - Tabman (2.6.1):
     - AutoInsetter (~> 1.8.0)
     - Pageboy (~> 3.4.0)
@@ -194,7 +194,7 @@ SPEC CHECKSUMS:
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
+  SwipeCellKit: cfcdcbfb739734e494c9d3832a7b6e6f9411e1fd
   Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003

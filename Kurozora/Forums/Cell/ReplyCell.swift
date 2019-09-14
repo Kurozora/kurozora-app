@@ -159,15 +159,17 @@ class ReplyCell: UITableViewCell {
 
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
-		if let posterId = threadRepliesElement?.user?.id, posterId != 0 {
-			let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController
-			profileViewController?.otherUserID = posterId
-			let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController!)
+		if let userID = threadRepliesElement?.user?.id, userID != 0 {
+			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+				profileViewController.userID = userID
+				profileViewController.dismissButtonIsEnabled = true
 
-			if #available(iOS 13.0, *) {
-				threadViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
-			} else {
-				threadViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
+				if #available(iOS 13.0, *) {
+					threadViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
+				} else {
+					threadViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+				}
 			}
 		}
 	}
@@ -192,7 +194,7 @@ class ReplyCell: UITableViewCell {
 	}
 
 	/// Builds and presents an action sheet.
-	fileprivate func actionList() {
+	fileprivate func showActionList() {
 		guard let threadViewController = threadViewController else { return }
 		guard let threadRepliesElement = threadRepliesElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -286,7 +288,7 @@ class ReplyCell: UITableViewCell {
 
 	/// Shows the relevant options for the selected reply.
 	@objc func showCellOptions(_ longPress: UILongPressGestureRecognizer) {
-		actionList()
+		showActionList()
 	}
 
 	// MARK: - IBActions
@@ -307,6 +309,6 @@ class ReplyCell: UITableViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		actionList()
+		showActionList()
 	}
 }

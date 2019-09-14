@@ -55,7 +55,7 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		if let currentCell = sender as? FollowCell {
 			if segue.identifier == "ProfileSegue" {
 				if let profileTableViewController = segue.destination as? ProfileTableViewController {
-					profileTableViewController.otherUserID = currentCell.userProfile?.id
+					profileTableViewController.userID = currentCell.userProfile?.id
 				}
 			}
 		}
