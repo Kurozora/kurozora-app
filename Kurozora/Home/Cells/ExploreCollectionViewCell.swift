@@ -69,6 +69,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	var thumbnailPlaceholder: UIImageView {
 		get { return getVideoThumbnail() }
 	}
+	var avPlayerStatus: NSKeyValueObservation? = nil
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -218,7 +219,12 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		let avPlayerItem = AVPlayerItem(url: videoUrl)
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)
-		self.avPlayer?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
+		avPlayerStatus = self.avPlayer?.observe(\.status, changeHandler: { (_, _) in
+			if self.avPlayer?.status == AVPlayer.Status.readyToPlay {
+				self.avPlayerViewController?.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
+			}
+		})
+		addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
 		self.avPlayer?.actionAtItemEnd = .none
 		self.avPlayer?.isMuted = true
 		self.avPlayerLayer = AVPlayerLayer(player: self.avPlayer)
@@ -272,25 +278,26 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		// Present the controller
-		if let popoverController = action.popoverPresentationController, let homeCollectionViewController = self.homeCollectionViewController {
-			popoverController.sourceView = homeCollectionViewController.view
-			popoverController.sourceRect = CGRect(x: homeCollectionViewController.view.bounds.midX, y: homeCollectionViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
 		}
 
-		self.homeCollectionViewController?.present(action, animated: true, completion: nil)
-	}
-
-	// MARK: - Observable
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		if (object as? AVPlayer) != nil {
-			if keyPath == "status" {
-				if avPlayer?.status == AVPlayer.Status.readyToPlay {
-					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
-				}
-			}
+		if (homeCollectionViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.homeCollectionViewController?.present(action, animated: true, completion: nil)
 		}
 	}
+
+//	// MARK: - Observable
+//	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//		if (object as? AVPlayer) != nil {
+//			if keyPath == "status" {
+//				if avPlayer?.status == AVPlayer.Status.readyToPlay {
+//					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
+//				}
+//			}
+//		}
+//	}
 }
 
 // MARK: - UIViewControllerPreviewingDelegate

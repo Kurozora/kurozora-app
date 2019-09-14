@@ -41,7 +41,7 @@ class SearchResultsCell: UITableViewCell {
 	}
 
 	// Forum search cell outlets
-	@IBOutlet weak var contentTeaserLabel: UILabel?
+	@IBOutlet weak var contentLabel: UILabel?
 	@IBOutlet weak var lockLabel: UILabel?
 
 	// User search cell outlets
@@ -50,12 +50,28 @@ class SearchResultsCell: UITableViewCell {
 	@IBOutlet weak var followerCountLabel: UILabel?
 	@IBOutlet weak var followButton: UIButton?
 
-	var searchElement: SearchElement? {
+	var showDetailsElement: ShowDetailsElement? {
 		didSet {
-			configureCell()
+			if showDetailsElement != nil {
+				configureCell()
+			}
 		}
 	}
-	var suggestionElement: [SearchElement]? {
+	var forumsThreadElement: ForumsThreadElement? = nil {
+		didSet {
+			if forumsThreadElement != nil {
+				configureCell()
+			}
+		}
+	}
+	var userProfile: UserProfile? = nil {
+		didSet {
+			if userProfile != nil {
+				configureCell()
+			}
+		}
+	}
+	var suggestionElement: [ShowDetailsElement]? {
 		didSet {
 			collectionView?.dataSource = self
 			collectionView?.delegate = self
@@ -66,55 +82,57 @@ class SearchResultsCell: UITableViewCell {
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
-		guard let searchElement = searchElement else { return }
 		guard let reuseIdentifier = self.reuseIdentifier else { return }
 		let cellType = SearchScope.scope(from: reuseIdentifier)
 
 		switch cellType {
 		case .show:
-			titleLabel?.text = searchElement.title
+			guard let showDetailsElement = showDetailsElement else { return }
 
-			if let posterThumbnail = searchElement.posterThumbnail, !posterThumbnail.isEmpty {
-				let posterThumbnailUrl = URL(string: posterThumbnail)
-				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-				posterImageView?.kf.indicatorType = .activity
-				posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
+			titleLabel?.text = showDetailsElement.title
+
+			if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
+				if let posterThumbnailUrl = URL(string: posterThumbnail) {
+					let resource = ImageResource(downloadURL: posterThumbnailUrl)
+					posterImageView?.kf.indicatorType = .activity
+					posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
+				}
 			} else {
 				posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
 			}
 
-			statusLabel?.text = searchElement.status ?? "TBA"
+			statusLabel?.text = showDetailsElement.status ?? "TBA"
 
 			// Configure library status
-			if let libraryStatus = searchElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
+			if let libraryStatus = showDetailsElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
 				libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 			} else {
 				libraryStatusButton?.setTitle("ADD", for: .normal)
 			}
 
 			// Cinfigure rating
-			if let rating = searchElement.rating, !rating.isEmpty {
-				showRatingLabel?.text = rating
+			if let watchRating = showDetailsElement.watchRating, !watchRating.isEmpty {
+				showRatingLabel?.text = watchRating
 			} else {
 				showRatingLabel?.isHidden = true
 			}
 
 			// Configure episode count
-			if let episodeCount = searchElement.episodeCount, episodeCount != 0 {
+			if let episodeCount = showDetailsElement.episodes, episodeCount != 0 {
 				episodeCountLabel?.text = "\(episodeCount)"
 			} else {
 				episodeCountLabel?.isHidden = true
 			}
 
 			// Configure air date
-			if let airDate = searchElement.airDate, !airDate.isEmpty {
+			if let airDate = showDetailsElement.airDate, !airDate.isEmpty {
 				airDateLabel?.text = airDate
 			} else {
 				airDateLabel?.isHidden = true
 			}
 
 			// Configure score
-			if let score = searchElement.score, score != 0 {
+			if let score = showDetailsElement.averageRating, score != 0 {
 				var decimalScore = "\(score)"
 				decimalScore.removeFirst()
 
@@ -128,16 +146,22 @@ class SearchResultsCell: UITableViewCell {
 			}
 		case .myLibrary: break
 		case .thread:
-			titleLabel?.text = searchElement.title
-			contentTeaserLabel?.text = searchElement.contentTeaser
+			guard let forumsThreadElement = forumsThreadElement else { return }
 
-			if let locked = searchElement.locked {
+			titleLabel?.text = forumsThreadElement.title
+			contentLabel?.text = forumsThreadElement.content
+
+			// Configure lock
+			if let locked = forumsThreadElement.locked {
 				lockLabel?.isHidden = locked
 			}
 		case .user:
-			usernameLabel?.text = searchElement.username
+			guard let userProfile = userProfile else { return }
 
-			if let profileImage = searchElement.profileImage, !profileImage.isEmpty {
+			usernameLabel?.text = userProfile.username
+
+			// Configure profile image
+			if let profileImage = userProfile.profileImage, !profileImage.isEmpty {
 				let profileImageUrl = URL(string: profileImage)
 				let resource = ImageResource(downloadURL: profileImageUrl!)
 				profileImageView?.kf.indicatorType = .activity
@@ -146,7 +170,8 @@ class SearchResultsCell: UITableViewCell {
 				profileImageView?.image = #imageLiteral(resourceName: "default_profile_image")
 			}
 
-			if let followerCount = searchElement.followerCount {
+			// Configure follower count label
+			if let followerCount = userProfile.followerCount {
 				switch followerCount {
 				case 0:
 					followerCountLabel?.text = "Be the first to follow!"
@@ -161,15 +186,15 @@ class SearchResultsCell: UITableViewCell {
 
 	// MARK: - Functions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		guard let libraryStatus = searchElement?.currentUser?.libraryStatus else { return }
+		guard let libraryStatus = showDetailsElement?.currentUser?.libraryStatus else { return }
 		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
-			guard let showID = self.searchElement?.id else { return }
+			guard let showID = self.showDetailsElement?.id else { return }
 
 			if libraryStatus != value {
 				Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 					if success {
 						// Update entry in library
-						self.searchElement?.currentUser?.libraryStatus = value
+						self.showDetailsElement?.currentUser?.libraryStatus = value
 
 						let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
 						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
@@ -180,11 +205,11 @@ class SearchResultsCell: UITableViewCell {
 			}
 		})
 
-		if let libraryStatus = searchElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
+		if let libraryStatus = showDetailsElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
 			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-				Service.shared.removeFromLibrary(withID: self.searchElement?.id, withSuccess: { (success) in
+				Service.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
 					if success {
-						self.searchElement?.currentUser?.libraryStatus = ""
+						self.showDetailsElement?.currentUser?.libraryStatus = ""
 						self.libraryStatusButton?.setTitle("ADD", for: .normal)
 					}
 				})
@@ -213,14 +238,13 @@ extension SearchResultsCell: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let suggestionResultCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SuggestionResultCell", for: indexPath) as! SuggestionResultCell
-		suggestionResultCell.searchElement = suggestionElement?[indexPath.item]
+		suggestionResultCell.showDetailsElement = suggestionElement?[indexPath.item]
 		return suggestionResultCell
 	}
 }
 
 // MARK: - UICollectionViewDelegate
 extension SearchResultsCell: UICollectionViewDelegate {
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

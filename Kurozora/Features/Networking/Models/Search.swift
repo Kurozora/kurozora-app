@@ -11,69 +11,38 @@ import SwiftyJSON
 
 class Search: JSONDecodable {
 	let success: Bool?
-	let results: [SearchElement]?
+	let showResults: [ShowDetailsElement]?
+	let threadResults: [ForumsThreadElement]?
+	let userResults: [UserProfile]?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
-		var results = [SearchElement]()
 
-		let resultsArray = json["results"].arrayValue
-		for resultsItem in resultsArray {
-			if let searchElement = try? SearchElement(json: resultsItem) {
-				results.append(searchElement)
+		var showResults = [ShowDetailsElement]()
+		let showResultsArray = json["results"].arrayValue
+		for showResultsItem in showResultsArray {
+			if let searchElement = try? ShowDetailsElement(json: showResultsItem) {
+				showResults.append(searchElement)
 			}
 		}
+		self.showResults = showResults
 
-		self.results = results
-	}
-}
+		var threadResults = [ForumsThreadElement]()
+		let threadResultsArray = json["results"].arrayValue
+		for threadResultsItem in threadResultsArray {
+			if let searchElement = try? ForumsThreadElement(json: threadResultsItem) {
+				threadResults.append(searchElement)
+			}
+		}
+		self.threadResults = threadResults
 
-class SearchElement: JSONDecodable {
-	let id: Int?
-
-	// Show search keys
-	let title: String?
-	let posterThumbnail: String?
-	let status: String?
-	let rating: String?
-	let episodeCount: Int?
-	let airDate: String?
-	let score: Double?
-
-	// User search keys
-	let username: String?
-	let profileImage: String?
-	let followerCount: Int?
-
-	// Thread search unique keys
-	let contentTeaser: String?
-	let locked: Bool?
-
-	// User data keys
-	let currentUser: UserProfile?
-
-	required init(json: JSON) throws {
-		self.id = json["id"].intValue
-
-		// Show search unique values
-		self.title = json["title"].stringValue
-		self.posterThumbnail = json["poster_thumbnail"].stringValue
-		self.status = json["status"].stringValue
-		self.rating = json["rating"].stringValue
-		self.episodeCount = json["episode_count"].intValue
-		self.airDate = json["air_date"].stringValue
-		self.score = json["score"].doubleValue
-
-		// User search unique values
-		self.username = json["username"].stringValue
-		self.profileImage = json["avatar"].stringValue
-		self.followerCount = json["follower_count"].intValue
-
-		// Thread search unique values
-		self.contentTeaser = json["content_teaser"].stringValue
-		self.locked = json["locked"].boolValue
-
-		// User data values
-		self.currentUser = try? UserProfile(json: json["current_user"])
+		var userResults = [UserProfile]()
+		let userResultsArray = json["results"].arrayValue
+		for userResultsItem in userResultsArray {
+			if let searchElement = try? UserProfile(json: userResultsItem) {
+				userResults.append(searchElement)
+			}
+		}
+		self.userResults = userResults
 	}
 }

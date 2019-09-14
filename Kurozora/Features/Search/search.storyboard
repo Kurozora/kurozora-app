@@ -465,7 +465,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="contentTeaserLabel" destination="ugc-I2-pJ0" id="tsJ-MF-7EY"/>
+                                    <outlet property="contentLabel" destination="ugc-I2-pJ0" id="tsJ-MF-7EY"/>
                                     <outlet property="lockLabel" destination="wiT-eF-Bqf" id="U4B-xt-Sdg"/>
                                     <outlet property="separatorView" destination="l59-1q-BL5" id="LLh-WR-uwu"/>
                                     <outlet property="titleLabel" destination="lkG-RX-ixa" id="WRk-KG-0Iy"/>

@@ -35,7 +35,7 @@ class ShowDetailsElement: JSONDecodable {
 	let seasons: Int?
 	let episodes: Int?
 	let status: String?
-	let aired: String?
+	let airDate: String?
 	let runtime: Int?
 	let watchRating: String?
 	let year: Int?
@@ -90,7 +90,7 @@ class ShowDetailsElement: JSONDecodable {
 		seasons = json["seasons"].intValue
 		episodes = json["episodes"].intValue
 		status = json["status"].stringValue
-		aired = json["aired"].stringValue
+		airDate = json["air_date"].stringValue
 		runtime = json["runtime"].intValue
 		watchRating = json["watch_rating"].stringValue
 		year = json["year"].intValue

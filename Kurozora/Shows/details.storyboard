@@ -235,6 +235,7 @@
         <!--Episode 1-->
         <scene sceneID="hH8-k2-Rzd">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BuW-Ni-7jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="EpisodesDetailTableViewControlle" title="Episode 1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TAm-6J-FKB" customClass="EpisodesDetailTableViewControlle" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="zFl-6D-1Zh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -686,7 +687,6 @@
                         <outlet property="shadowImageView" destination="nuH-hZ-tHc" id="xoL-OP-y40"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BuW-Ni-7jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2337.68115942029" y="-291.29464285714283"/>
         </scene>
@@ -1035,7 +1035,7 @@
                                                 <action selector="playTrailerPressed:" destination="vfx-ya-sYW" eventType="touchUpInside" id="hCs-kf-EFT"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW TRAILER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nT-Lx-s0D">
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW TRAILER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nT-Lx-s0D">
                                             <rect key="frame" x="165" y="159" width="84" height="14.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2385,7 +2385,7 @@
         <image name="star_filled" width="48" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aRb-Rr-nTC"/>
+        <segue reference="GYG-t0-9AU"/>
         <segue reference="3th-8p-pos"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

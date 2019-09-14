@@ -37,7 +37,6 @@ extension SubscriptionPreviewTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension SubscriptionPreviewTableViewCell: UICollectionViewDelegate {
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

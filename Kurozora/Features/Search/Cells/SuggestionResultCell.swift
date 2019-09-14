@@ -13,7 +13,7 @@ class SuggestionResultCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel?
 	@IBOutlet weak var posterImageView: UIImageView?
 
-	var searchElement: SearchElement? {
+	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			configureCell()
 		}
@@ -21,10 +21,10 @@ class SuggestionResultCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
-		guard let searchElement = searchElement else { return }
-		titleLabel?.text = searchElement.title
+		guard let showDetailsElement = showDetailsElement else { return }
+		titleLabel?.text = showDetailsElement.title
 
-		if let posterThumbnail = searchElement.posterThumbnail, !posterThumbnail.isEmpty {
+		if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			posterImageView?.kf.indicatorType = .activity

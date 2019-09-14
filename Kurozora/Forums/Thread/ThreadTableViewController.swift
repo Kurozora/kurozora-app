@@ -84,11 +84,20 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	var forumThreadID: Int?
-	var forumThreadElement: ForumThreadElement?
+	var forumsThreadElement: ForumsThreadElement?
 	var replyID: Int?
 	var newReplyID: Int!
 	var threadInformation: String?
-	var isDismissEnabled = false
+	var dismissButtonIsEnabled = false {
+		didSet {
+			// If presented modally, show a dismiss button instead of the default "back" button
+			if dismissButtonIsEnabled {
+				navigationItem.leftBarButtonItems = nil
+				let stopItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissPressed(_:)))
+				navigationItem.leftBarButtonItem = stopItem
+			}
+		}
+	}
 
 	// Reply variables
 	var replies: [ThreadRepliesElement]?
@@ -106,17 +115,10 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		// If presented modally, show a dismiss button instead of the default "back" button
-		if isDismissEnabled {
-			navigationItem.leftBarButtonItems = nil
-			let stopItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissPressed(_:)))
-			navigationItem.leftBarButtonItem = stopItem
-		}
-
 		// Fetch thread details
 		Service.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
 			DispatchQueue.main.async {
-				self.forumThreadElement = thread
+				self.forumsThreadElement = thread
 				self.updateThreadDetails()
 				self.getThreadReplies()
 				self.tableView.reloadData()
@@ -179,36 +181,36 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	/// Update the thread view with the fetched details.
 	func updateThreadDetails() {
 		// Set thread stats
-		if let voteCount = forumThreadElement?.score {
+		if let voteCount = forumsThreadElement?.score {
 			voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
 		}
 
-		if let commentCount = forumThreadElement?.replyCount {
+		if let commentCount = forumsThreadElement?.replyCount {
 			commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
 		}
 
-		if let creationDate = forumThreadElement?.creationDate {
+		if let creationDate = forumsThreadElement?.creationDate {
 			dateTimeButton.setTitle("\(Date.timeAgo(creationDate)) · by ", for: .normal)
 		}
 
 		// Set poster username
-		if let posterUsername = forumThreadElement?.user?.username {
+		if let posterUsername = forumsThreadElement?.posterUsername {
 			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
 		}
 
 		// Set thread title
-		if let threadTitle = forumThreadElement?.title {
+		if let threadTitle = forumsThreadElement?.title {
 			self.title = threadTitle
 			self.threadTitleLabel.text = threadTitle
 		}
 
 		// Set thread content
-		if let threadContent = forumThreadElement?.content {
+		if let threadContent = forumsThreadElement?.content {
 			self.richTextView.update(input: threadContent, textColor: KThemePicker.tableViewCellSubTextColor.colorValue, completion: nil)
 		}
 
 		// Set locked state
-		if let locked = forumThreadElement?.locked {
+		if let locked = forumsThreadElement?.locked {
 			isLocked(locked)
 		}
 	}
@@ -242,7 +244,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		- Parameter vote: The integer indicating whether to upvote or downvote the thread.
 	*/
 	func voteForThread(with vote: Int?) {
-		guard var threadScore = forumThreadElement?.score else { return }
+		guard var threadScore = forumsThreadElement?.score else { return }
 		Service.shared.vote(forThread: forumThreadID, vote: vote, withSuccess: { (action) in
 			DispatchQueue.main.async {
 				if action == 1 { // upvote
@@ -267,7 +269,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	func replyThread() {
 		let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
 		kCommentEditorViewController?.delegate = self
-		kCommentEditorViewController?.forumThread = forumThreadElement
+		kCommentEditorViewController?.forumsThreadElement = forumsThreadElement
 
 		let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
 		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
@@ -284,7 +286,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		guard let threadID = forumThreadID else { return }
 		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
 
-		if let title = forumThreadElement?.title, !title.isEmpty {
+		if let title = forumsThreadElement?.title, !title.isEmpty {
 			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
 		}
 
@@ -304,7 +306,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		- Parameter locked: The boolean indicating whather to show or hide the element.
 	*/
 	func isLocked(_ locked: Bool) {
-		forumThreadElement?.locked = locked
+		forumsThreadElement?.locked = locked
 		// Set lock label
 		if locked {
 			lockLabel.isHidden = false
@@ -324,9 +326,9 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
-		if let userID = forumThreadElement?.user?.id, userID != 0 {
+		if let posterUserID = forumsThreadElement?.posterUserID, posterUserID != 0 {
 			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
-				profileViewController.userID = userID
+				profileViewController.userID = posterUserID
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
@@ -341,12 +343,12 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Builds and presents an action sheet.
 	func showActionList() {
-		guard let forumThreadElement = forumThreadElement else { return }
+		guard let forumsThreadElement = forumsThreadElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
 		if User.isAdmin || User.isMod {
-			if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 {
+			if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 {
 				var lock = 0
 				var lockTitle = "Locked"
 
@@ -373,7 +375,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 
 		// Upvote, downvote and reply actions
-		if let threadID = forumThreadElement.id, let locked = forumThreadElement.locked, threadID != 0 && !locked {
+		if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 && !locked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 1)
 			})
@@ -397,8 +399,8 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 
 		// Username action
-		if let username = forumThreadElement.user?.username, !username.isEmpty {
-			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
+		if let posterUsername = forumsThreadElement.posterUsername, !posterUsername.isEmpty {
+			let userAction = UIAlertAction.init(title: posterUsername + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
 			userAction.setValue(#imageLiteral(resourceName: "profile"), forKey: "image")
@@ -480,7 +482,7 @@ extension ThreadTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let replyCell = tableView.dequeueReusableCell(withIdentifier: "ReplyCell", for: indexPath) as! ReplyCell
 
-		replyCell.forumThreadElement = forumThreadElement
+		replyCell.forumsThreadElement = forumsThreadElement
 		replyCell.threadRepliesElement = replies?[indexPath.section]
 		replyCell.threadViewController = self
 

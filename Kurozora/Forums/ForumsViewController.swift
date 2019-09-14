@@ -17,7 +17,7 @@ class ForumsViewController: TabmanViewController {
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
-	var sections: [ForumSectionsElement]? {
+	var sections: [ForumsSectionsElement]? {
 		didSet {
 			self.reloadData()
 		}

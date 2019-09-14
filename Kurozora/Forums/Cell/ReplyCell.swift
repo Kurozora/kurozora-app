@@ -74,7 +74,7 @@ class ReplyCell: UITableViewCell {
 	}
 
 	var threadViewController: ThreadTableViewController?
-	var forumThreadElement: ForumThreadElement?
+	var forumsThreadElement: ForumsThreadElement?
 	var threadRepliesElement: ThreadRepliesElement? {
 		didSet {
 			configureCell()
@@ -109,7 +109,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Check if thread is locked
-		if let locked = forumThreadElement?.locked {
+		if let locked = forumsThreadElement?.locked {
 			isLocked(locked)
 		}
 
@@ -204,7 +204,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Upvote, downvote and reply actions
-		if let replyID = threadRepliesElement.id, let locked = forumThreadElement?.locked, replyID != 0 && !locked {
+		if let replyID = threadRepliesElement.id, let locked = forumsThreadElement?.locked, replyID != 0 && !locked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForReply(with: 1)
 			})

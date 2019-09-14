@@ -483,11 +483,13 @@ class ShowDetailViewController: UIViewController {
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
 		}
-		present(activityVC, animated: true, completion: nil)
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(activityVC, animated: true, completion: nil)
+		}
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
@@ -532,7 +534,9 @@ class ShowDetailViewController: UIViewController {
 			popoverController.permittedArrowDirections = []
 		}
 
-		self.present(action, animated: true, completion: nil)
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(action, animated: true, completion: nil)
+		}
 	}
 
 	@IBAction func showRating(_ sender: Any) {
@@ -680,7 +684,6 @@ extension ShowDetailViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ShowDetailViewController: UITableViewDelegate {
-
 }
 
 // MARK: - UIScrollViewDelegate

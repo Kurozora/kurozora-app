@@ -20,14 +20,35 @@ class SearchResultsTableViewController: UITableViewController {
 		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
 		return .fromString(statusBarStyleString)
 	}
-	var results: [SearchElement]?
+
+	var showResults: [ShowDetailsElement]? {
+		didSet {
+			if showResults != nil {
+				self.tableView.reloadData()
+			}
+		}
+	}
+	var threadResults: [ForumsThreadElement]? {
+		didSet {
+			if threadResults != nil {
+				self.tableView.reloadData()
+			}
+		}
+	}
+	var userResults: [UserProfile]? {
+		didSet {
+			if userResults != nil {
+				self.tableView.reloadData()
+			}
+		}
+	}
+
 	var timer: Timer?
 	var viaSearchButton: Bool = false
-	var currentScope: Int!
-	var suggestions: [SearchElement] {
-		var results = [SearchElement]()
-
-		let resultsArray: [JSON] = [
+	var currentScope: Int?
+	var suggestions: [ShowDetailsElement] {
+		var suggestionResults = [ShowDetailsElement]()
+		let suggestionResultsArray: [JSON] = [
 			["id": 1774, "title": "One Piece", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/81797-1.jpg"],
 			["id": 2345, "title": "Steins;Gate 0", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/339268-1.jpg"],
 			["id": 147, "title": "Death Parade", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/289177-1.jpg"],
@@ -35,13 +56,12 @@ class SearchResultsTableViewController: UITableViewController {
 			["id": 236, "title": "Re: Zero kara Hajimeru Isekai Seikatsu", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/305089-3.jpg"],
 			["id": 56, "title": "Gintama'", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/79895-24.jpg"]
 		]
-		for resultsItem in resultsArray {
-			if let searchElement = try? SearchElement(json: resultsItem) {
-				results.append(searchElement)
+		for suggestionResultItem in suggestionResultsArray {
+			if let showDetailsElement = try? ShowDetailsElement(json: suggestionResultItem) {
+				suggestionResults.append(showDetailsElement)
 			}
 		}
-
-		return results
+		return suggestionResults
 	}
 	weak var delegate: SearchResultsTableViewControllerDelegate?
 
@@ -84,7 +104,13 @@ class SearchResultsTableViewController: UITableViewController {
 		return storyboard.instantiateViewController(withIdentifier: "SearchResultsTableViewController")
 	}
 
-	fileprivate func search(forText text: String, searchScope: Int) {
+	/**
+		Perform search with the given search text and the search scope.
+
+		- Parameter text: The string which to search for.
+		- Parameter searchScope: The scope in which the text should be searched.
+	*/
+	fileprivate func performSearch(forText text: String, searchScope: Int) {
 		// Prepare view for search
 		currentScope = searchScope
 
@@ -93,35 +119,40 @@ class SearchResultsTableViewController: UITableViewController {
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
-				Service.shared.search(forShow: text) { (results) in
+				Service.shared.search(forShow: text) { (showResults) in
 					DispatchQueue.main.async {
-						self.results = results
-						self.tableView.reloadData()
+						self.showResults = showResults
 					}
 				}
 			case .myLibrary: break
 			case .thread:
-				Service.shared.search(forThread: text) { (results) in
+				Service.shared.search(forThread: text) { (threadResults) in
 					DispatchQueue.main.async {
-						self.results = results
-						self.tableView.reloadData()
+						self.threadResults = threadResults
 					}
 				}
 			case .user:
-				Service.shared.search(forUser: text) { (results) in
+				Service.shared.search(forUser: text) { (userResults) in
 					DispatchQueue.main.async {
-						self.results = results
-						self.tableView.reloadData()
+						self.userResults = userResults
 					}
 				}
 			}
 		}
 	}
 
+	/// Sets all search results to nil and reloads the table view
+	fileprivate func emptySearchResults() {
+		showResults = nil
+		threadResults = nil
+		userResults = nil
+		tableView.reloadData()
+	}
+
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
 		if let text = userInfo?["searchText"] as? String, let scope = userInfo?["searchScope"] as? Int {
-			search(forText: text, searchScope: scope)
+			performSearch(forText: text, searchScope: scope)
 		}
 	}
 
@@ -148,12 +179,12 @@ class SearchResultsTableViewController: UITableViewController {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
 				let showTabBarController = segue.destination as? ShowDetailTabBarController
-				showTabBarController?.showID = currentCell.searchElement?.id
+				showTabBarController?.showID = currentCell.showDetailsElement?.id
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
-						profileViewController.userID = currentCell.searchElement?.id
+						profileViewController.userID = currentCell.userProfile?.id
 						profileViewController.dismissButtonIsEnabled = true
 					}
 				}
@@ -161,8 +192,8 @@ class SearchResultsTableViewController: UITableViewController {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-						threadViewController.isDismissEnabled = true
-						threadViewController.forumThreadID = currentCell.searchElement?.id
+						threadViewController.forumThreadID = currentCell.forumsThreadElement?.id
+						threadViewController.dismissButtonIsEnabled = true
 
 						kurozoraNavigationController.pushViewController(threadViewController)
 					}
@@ -172,7 +203,7 @@ class SearchResultsTableViewController: UITableViewController {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
 				let showTabBarController = segue.destination as? ShowDetailTabBarController
-				showTabBarController?.showID = currentCell.searchElement?.id
+				showTabBarController?.showID = currentCell.showDetailsElement?.id
 			}
 		}
 	}
@@ -191,13 +222,12 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 		guard let text = searchBar.text else { return }
 
-		results = nil
-		tableView.reloadData()
+		emptySearchResults()
 
 		if !text.isEmpty {
 			switch searchScope {
 			case .show, .thread, .user:
-				search(forText: text, searchScope: selectedScope)
+				performSearch(forText: text, searchScope: selectedScope)
 			case .myLibrary: break
 			}
 		}
@@ -206,7 +236,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text else { return }
 		let scope = searchBar.selectedScopeButtonIndex
-		search(forText: text, searchScope: scope)
+		performSearch(forText: text, searchScope: scope)
 	}
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -216,14 +246,12 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 			timer?.invalidate()
 			timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(search(_:)), userInfo: ["searchText": searchText, "searchScope": searchScope], repeats: false)
 		} else {
-			results = nil
-			tableView.reloadData()
+			emptySearchResults()
 		}
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		results = nil
-		tableView.reloadData()
+		emptySearchResults()
 		delegate?.didCancelSearchController()
 	}
 }
@@ -231,41 +259,62 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 // MARK: - UITableViewDataSource
 extension SearchResultsTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let resultsCount = results?.count else { return 1 }
-		return resultsCount
+		guard let currentScope = currentScope else { return 1 }
+		var resultsCount: Int? = nil
+
+		if let searchScope = SearchScope(rawValue: currentScope) {
+			switch searchScope {
+			case .show:
+				resultsCount = showResults?.count
+			case .thread:
+				resultsCount = threadResults?.count
+			case .user:
+				resultsCount = userResults?.count
+			case .myLibrary: break
+			}
+		}
+		return resultsCount ?? 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if results != nil {
+		if showResults != nil || threadResults != nil || userResults != nil {
 			var searchResultsCell = SearchResultsCell()
+			var resultsCount = 1
 
 			// Configure cell
-			if let searchScope = SearchScope(rawValue: currentScope) {
+			if let currentScope = currentScope, let searchScope = SearchScope(rawValue: currentScope) {
 				let identifier = searchScope.identifierString
 				searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
 
 				switch searchScope {
-				case .show, .thread, .user:
-					searchResultsCell.searchElement = results?[indexPath.row]
+				case .show:
+					searchResultsCell.showDetailsElement = showResults?[indexPath.row]
+					resultsCount = showResults?.count ?? 0
+				case .thread:
+					searchResultsCell.forumsThreadElement = threadResults?[indexPath.row]
+					resultsCount = threadResults?.count ?? 0
+				case .user:
+					searchResultsCell.userProfile = userResults?[indexPath.row]
+					resultsCount = userResults?.count ?? 0
 				case .myLibrary: break
 				}
 			}
 
 			// Configure separator
-			if tableView.numberOfRows() == 1 {
+			if tableView.numberOfRows() == 1 || indexPath.row == tableView.numberOfRows() - 1 {
 				searchResultsCell.separatorView?.isHidden = true
 			} else {
 				searchResultsCell.separatorView?.isHidden = false
 			}
 
 			// Configure corner radius
-			if results?.count == 1 {
+			if resultsCount == 1 {
 				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
 				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 			} else if indexPath.row == 0 {
 				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
 				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-			} else if indexPath.row == results!.count - 1 {
+			} else if indexPath.row == resultsCount - 1 {
 				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
 				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 			} else {

@@ -9,5 +9,4 @@
 import UIKit
 
 class ShowRelatedCell: UITableViewCell {
-
 }

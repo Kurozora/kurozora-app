@@ -326,7 +326,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forUser user: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forUser user: String?, withSuccess successHandler: @escaping (_ search: [UserProfile]?) -> Void) {
 		guard let user = user else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("users/search")
@@ -341,7 +341,7 @@ struct Service {
 		request.perform(withSuccess: { search in
 			if let success = search.success {
 				if success {
-					successHandler(search.results)
+					successHandler(search.userResults)
 				}
 			}
 		}, failure: { error in
@@ -622,7 +622,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forShow show: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forShow show: String?, withSuccess successHandler: @escaping (_ search: [ShowDetailsElement]?) -> Void) {
 		guard let show = show else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("anime/search")
@@ -637,7 +637,7 @@ struct Service {
 		request.perform(withSuccess: { search in
 			if let success = search.success {
 				if success {
-					successHandler(search.results)
+					successHandler(search.showResults)
 				}
 			}
 		}, failure: { error in
@@ -792,11 +792,11 @@ struct Service {
 	/**
 		Fetch the list of forum sections.
 
-		- Parameter successHandler: A closure returning a ForumSectionsElement array.
-		- Parameter forumSections: The returned ForumSectionElement array.
+		- Parameter successHandler: A closure returning a ForumsSectionsElement array.
+		- Parameter forumSections: The returned ForumsSectionsElement array.
 	*/
-	func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumSectionsElement]?) -> Void) {
-		let request: APIRequest<ForumSections, JSONError> = tron.swiftyJSON.request("forum-sections")
+	func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumsSectionsElement]?) -> Void) {
+		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request("forum-sections")
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
@@ -817,14 +817,14 @@ struct Service {
 		- Parameter sectionID: The id of the forum section for which the forum threads should be fetched.
 		- Parameter order: The method by which the threads should be ordered. Currently "top" and "recent".
 		- Parameter page: The page to retrieve threads from. (starts at 0)
-		- Parameter successHandler: A closure returning a ForumThreads array.
-		- Parameter forumThreads: The returned ForumThreads array.
+		- Parameter successHandler: A closure returning a ForumsThread array.
+		- Parameter forumThreads: The returned ForumsThread array.
 	*/
-	func getForumThreads(for sectionID: Int?, order: String?, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumThreads?) -> Void) {
+	func getForumsThreads(for sectionID: Int?, order: String?, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumsThread?) -> Void) {
 		guard let sectionID = sectionID else { return }
 		guard let order = order else { return }
 
-		let request: APIRequest<ForumThreads, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
+		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -888,13 +888,13 @@ struct Service {
 		Fetch the details of the given thread id.
 
 		- Parameter threadID: The id of the thread for which the details should be fetched.
-		- Parameter successHandler: A closure returning a ForumThreadElement object.
-		- Parameter thread: The returned ForumTheadElement object.
+		- Parameter successHandler: A closure returning a ForumsThreadElement object.
+		- Parameter thread: The returned ForumsThreadElement object.
 	*/
-	func getDetails(forThread threadID: Int?, withSuccess successHandler: @escaping (_ thread: ForumThreadElement?) -> Void) {
+	func getDetails(forThread threadID: Int?, withSuccess successHandler: @escaping (_ thread: ForumsThreadElement?) -> Void) {
 		guard let threadID = threadID else { return }
 
-		let request: APIRequest<ForumThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
+		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -1021,7 +1021,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forThread thread: String?, withSuccess successHandler: @escaping (_ search: [SearchElement]?) -> Void) {
+	func search(forThread thread: String?, withSuccess successHandler: @escaping (_ search: [ForumsThreadElement]?) -> Void) {
 		guard let thread = thread else { return }
 
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("forum-threads/search")
@@ -1036,7 +1036,7 @@ struct Service {
 		request.perform(withSuccess: { search in
 			if let success = search.success {
 				if success {
-					successHandler(search.results)
+					successHandler(search.threadResults)
 				}
 			}
 		}, failure: { error in
@@ -1057,7 +1057,7 @@ struct Service {
 		guard let threadID = threadID else { return }
 		guard let lock = lock else { return }
 
-		let request: APIRequest<ForumThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
+		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -1066,9 +1066,9 @@ struct Service {
 		request.parameters = [
 			"lock": lock
 		]
-		request.perform(withSuccess: { lock in
-			if let success = lock.success {
-				if success, let locked = lock.thread?.locked {
+		request.perform(withSuccess: { forums in
+			if let success = forums.success {
+				if success, let locked = forums.thread?.locked {
 					successHandler(locked)
 				}
 			}

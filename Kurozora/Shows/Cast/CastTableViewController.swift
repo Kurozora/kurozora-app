@@ -121,7 +121,6 @@ extension CastCollectionViewController {
 
 // MARK: - UICollectionViewDelegate
 extension CastCollectionViewController {
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

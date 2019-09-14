@@ -73,7 +73,7 @@ public class ForumsCell: UITableViewCell {
 	}
 
 	var forumsChildViewController: ForumsListViewController?
-	var forumThreadsElement: ForumThreadsElement? {
+	var forumThreadsElement: ForumsThreadElement? {
 		didSet {
 			configureCell()
 		}
@@ -89,7 +89,7 @@ public class ForumsCell: UITableViewCell {
 		titleLabel.text = forumThreadsElement.title
 
 		// Set content label
-		contentLabel.text = forumThreadsElement.contentTeaser
+		contentLabel.text = forumThreadsElement.content
 
 		// Set poster username label
 		usernameButton.setTitle(forumThreadsElement.posterUsername, for: .normal)
@@ -272,12 +272,11 @@ public class ForumsCell: UITableViewCell {
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = forumsChildViewController.view
-			popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.sourceView = moreButton
+			popoverController.sourceRect = moreButton.bounds
 		}
 
-		if !(forumsChildViewController.navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
+		if (forumsChildViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
 			forumsChildViewController.present(action, animated: true, completion: nil)
 		}
 	}

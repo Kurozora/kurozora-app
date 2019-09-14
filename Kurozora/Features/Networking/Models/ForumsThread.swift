@@ -13,17 +13,19 @@ class ForumsThread: JSONDecodable {
 	let success: Bool?
 	let currentPage: Int?
 	let lastPage: Int?
-	let threads: [ForumThreadsElement]?
+	let thread: ForumsThreadElement?
+	let threads: [ForumsThreadElement]?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
+		self.thread = try ForumsThreadElement(json: json["thread"])
 
-		var threads = [ForumThreadsElement]()
+		var threads = [ForumsThreadElement]()
 		let threadsArray = json["threads"].arrayValue
 		for thread in threadsArray {
-			if let threadsElement = try? ForumThreadsElement(json: thread) {
+			if let threadsElement = try? ForumsThreadElement(json: thread) {
 				threads.append(threadsElement)
 			}
 		}
@@ -31,7 +33,7 @@ class ForumsThread: JSONDecodable {
 	}
 }
 
-class ForumThreadsElement: JSONDecodable {
+class ForumsThreadElement: JSONDecodable {
 	let id: Int?
 	let title: String?
 	let content: String?

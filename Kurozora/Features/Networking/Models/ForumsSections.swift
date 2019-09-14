@@ -1,5 +1,5 @@
 //
-//  ForumSections.swift
+//  ForumsSections.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 11/10/2018.
@@ -9,25 +9,25 @@
 import TRON
 import SwiftyJSON
 
-class ForumSections: JSONDecodable {
+class ForumsSections: JSONDecodable {
     let success: Bool?
-    let sections: [ForumSectionsElement]?
+    let sections: [ForumsSectionsElement]?
 
     required init(json: JSON) throws {
         self.success = json["success"].boolValue
-		var sections = [ForumSectionsElement]()
+		var sections = [ForumsSectionsElement]()
 
-		let forumSectionsArray = json["sections"].arrayValue
-		for forumSection in forumSectionsArray {
-			let forumSectionsElement = try ForumSectionsElement(json: forumSection)
-			sections.append(forumSectionsElement)
+		let forumsSectionsArray = json["sections"].arrayValue
+		for forumsSection in forumsSectionsArray {
+			let forumsSectionsElement = try ForumsSectionsElement(json: forumsSection)
+			sections.append(forumsSectionsElement)
 		}
 
         self.sections = sections
     }
 }
 
-class ForumSectionsElement: JSONDecodable {
+class ForumsSectionsElement: JSONDecodable {
 	let id: Int?
 	let name: String?
 	let locked: Bool?

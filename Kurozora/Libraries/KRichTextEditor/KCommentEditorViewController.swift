@@ -20,9 +20,9 @@ class KCommentEditorViewController: UIViewController {
 			replyToTextLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var replyToUsernameLabel: UILabel! {
+	@IBOutlet weak var posterUsernameLabel: UILabel! {
 		didSet {
-			replyToUsernameLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+			posterUsernameLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 
@@ -61,7 +61,7 @@ class KCommentEditorViewController: UIViewController {
 
 	let charLimit = 240
 
-	var forumThread: ForumThreadElement?
+	var forumsThreadElement: ForumsThreadElement?
 	weak var delegate: KCommentEditorViewDelegate?
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -75,12 +75,12 @@ class KCommentEditorViewController: UIViewController {
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 0
 		IQKeyboardManager.shared.shouldResignOnTouchOutside = false
 
-		if let replyToText = forumThread?.title {
+		if let replyToText = forumsThreadElement?.title {
 			replyToTextLabel.text = replyToText
 		}
 
-		if let replyToUsername = forumThread?.user?.username {
-			replyToUsernameLabel.text = replyToUsername
+		if let posterUsername = forumsThreadElement?.posterUsername {
+			posterUsernameLabel.text = posterUsername
 		}
 
 		let image = User.currentUserProfileImage
@@ -120,7 +120,7 @@ class KCommentEditorViewController: UIViewController {
 
 	@IBAction func replyButtonPressed(_ sender: UIBarButtonItem) {
 		if let characterCount = characterCountLabel.text?.int, characterCount >= 0 {
-			guard let threadID = forumThread?.id else { return }
+			guard let threadID = forumsThreadElement?.id else { return }
 			guard let comment = commentTextView.text, !comment.isEmpty else { return }
 
 			Service.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in

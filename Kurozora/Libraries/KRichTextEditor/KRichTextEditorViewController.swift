@@ -14,7 +14,7 @@
 //import SwiftTheme
 
 //protocol KRichTextEditorViewDelegate: class {
-//	func updateThreadsList(with thread: ForumThreadsElement)
+//	func updateThreadsList(with thread: ForumsThreadElement)
 //	func updateFeedPosts(with thread: FeedPostsElement)
 //}
 
@@ -107,11 +107,11 @@
 //		Service.shared.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
 //			DispatchQueue.main.async {
 //				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-//				let contentTeaser = self.richEditorView?.text
+//				let content = self.richEditorView?.text
 //				let forumThreadJSON: JSON = [
 //					"id": threadID,
 //					"title": self.titleTextField.text!,
-//					"content_teaser": contentTeaser!,
+//					"content": content!,
 //					"locked": false,
 //					"poster_user_id": User.currentID!,
 //					"poster_username": User.username!,

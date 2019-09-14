@@ -18,7 +18,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	var sectionTitle: String?
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var forumThreads: [ForumThreadsElement]? {
+	var forumThreads: [ForumsThreadElement]? {
 		didSet {
 			tableView.reloadData()
 		}
@@ -86,7 +86,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 			threadOrder = "top"
 		}
 
-		Service.shared.getForumThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
+		Service.shared.getForumsThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
 			DispatchQueue.main.async {
 				self.currentPage = threads?.currentPage ?? 1
 				self.lastPage = threads?.lastPage ?? 1
@@ -156,7 +156,7 @@ extension ForumsListViewController {
 //	func updateFeedPosts(with thread: FeedPostsElement) {
 //	}
 //
-//	func updateThreadsList(with thread: ForumThreadsElement) {
+//	func updateThreadsList(with thread: ForumsThreadElement) {
 //		DispatchQueue.main.async {
 //			if self.forumThreads == nil {
 //				self.forumThreads = [thread]

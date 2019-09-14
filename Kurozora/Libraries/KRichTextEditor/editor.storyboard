@@ -309,10 +309,10 @@
                         <outlet property="commentPreviewContainer" destination="iuH-90-nho" id="fvL-ts-rg7"/>
                         <outlet property="commentTextView" destination="R8d-mS-n8Z" id="6CA-fw-mDf"/>
                         <outlet property="currentUsernameLabel" destination="X0I-6b-2zo" id="keW-Lz-lXU"/>
+                        <outlet property="posterUsernameLabel" destination="9JM-0l-wTQ" id="MhL-um-vjU"/>
                         <outlet property="profileImageView" destination="xIW-OE-8Zs" id="DyV-iq-arj"/>
                         <outlet property="replyToTextLabel" destination="XGS-UU-0qu" id="maQ-jL-aJg"/>
                         <outlet property="replyToUserContainer" destination="vkW-jb-kza" id="hCk-hE-EkR"/>
-                        <outlet property="replyToUsernameLabel" destination="9JM-0l-wTQ" id="MhL-um-vjU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-DL-cSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
