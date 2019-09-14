@@ -542,10 +542,7 @@ extension ProfileTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if feedPostElement == nil {
 			let emptyProfileCell = tableView.dequeueReusableCell(withIdentifier: "EmptyProfileCell") as! EmptyProfileCell
-			var title = "There are no posts on your timeline!"
-			if userID != nil {
-				title = "There are no posts on this timeline! Be the first to post :D"
-			}
+			let title = userID == User.currentID || userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			emptyProfileCell.title = title
 			return emptyProfileCell
 		}

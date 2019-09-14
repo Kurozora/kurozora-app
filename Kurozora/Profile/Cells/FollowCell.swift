@@ -54,6 +54,7 @@ class FollowCell: UITableViewCell {
 		}
 
 		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)
+		followButton.isHidden = userProfile.id == User.currentID
 	}
 
 	// MARK: - IBActions
