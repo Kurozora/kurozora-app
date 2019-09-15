@@ -345,7 +345,6 @@
 		66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6E20A9921000F98375 /* NotificationViewController.swift */; };
 		66CF6D7120A9934F00F98375 /* profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CF6D7020A9934F00F98375 /* profile.storyboard */; };
 		66D1358D228087920079438C /* KButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D1358C228087920079438C /* KButton.swift */; };
-		66D4735021AB332000A894B7 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4734F21AB332000A894B7 /* Library.swift */; };
 		66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */; };
 		66D6236C20A09E5400304914 /* ChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6236B20A09E5400304914 /* ChartController.swift */; };
 		66D6236E20A09F6B00304914 /* season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D6236D20A09F6B00304914 /* season.storyboard */; };
@@ -750,7 +749,6 @@
 		66CF6D6E20A9921000F98375 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		66CF6D7020A9934F00F98375 /* profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profile.storyboard; sourceTree = "<group>"; };
 		66D1358C228087920079438C /* KButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KButton.swift; sourceTree = "<group>"; };
-		66D4734F21AB332000A894B7 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		66D6236B20A09E5400304914 /* ChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
 		66D6236D20A09F6B00304914 /* season.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = season.storyboard; sourceTree = "<group>"; };
@@ -893,7 +891,6 @@
 				6669386F21AF39A000BA9620 /* ForumsThread.swift */,
 				664A065B21EA1187008CF4A6 /* Genres.swift */,
 				660A642521CE90080032FDCF /* JSONError.swift */,
-				66D4734F21AB332000A894B7 /* Library.swift */,
 				66B69BD721454618007154BD /* PrivacyPolicy.swift */,
 				66DEB4A921D26FBC0093725F /* Search.swift */,
 				6619EE77216FDD3E00655B99 /* Seasons.swift */,
@@ -2634,7 +2631,6 @@
 				663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
-				66D4735021AB332000A894B7 /* Library.swift in Sources */,
 				66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */,
 				66938FD6211CD3A800ADA5D6 /* Explore.swift in Sources */,
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,

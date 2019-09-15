@@ -12,7 +12,11 @@ import SCLAlertView
 import SwiftTheme
 
 class ManageThemesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-	var themes: [ThemesElement]?
+	var themes: [ThemesElement]? {
+		didSet {
+			self.collectionView.reloadData()
+		}
+	}
 	var gap: CGFloat = UIDevice.isPad ? 40 : 20
 	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
 		get {
@@ -69,10 +73,6 @@ class ManageThemesCollectionViewController: UICollectionViewController, EmptyDat
 
 		Service.shared.getThemes( withSuccess: { (themes) in
 			self.themes = themes
-
-			DispatchQueue.main.async {
-				self.collectionView.reloadData()
-			}
 		})
 
 		#if DEBUG

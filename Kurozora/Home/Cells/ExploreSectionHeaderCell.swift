@@ -14,7 +14,11 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var seeAllButton: UIButton!
+	@IBOutlet weak var seeAllButton: UIButton! {
+		didSet {
+			seeAllButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+		}
+	}
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue

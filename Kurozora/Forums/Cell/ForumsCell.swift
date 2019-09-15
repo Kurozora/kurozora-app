@@ -12,7 +12,7 @@ import SwiftyJSON
 public class ForumsCell: UITableViewCell {
 	@IBOutlet weak var usernameButton: UIButton! {
 		didSet {
-			usernameButton.theme_tintColor = KThemePicker.tintColor.rawValue
+			usernameButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var titleLabel: UILabel! {

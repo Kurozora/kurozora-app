@@ -36,7 +36,7 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
-	static var KSNormalLargeTitlesDidChange: NSNotification.Name {
+	static var ThemeUpdateNotification: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 }
