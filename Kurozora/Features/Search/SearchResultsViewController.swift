@@ -178,8 +178,8 @@ class SearchResultsTableViewController: UITableViewController {
 		if let currentCell = sender as? SearchResultsCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showTabBarController = segue.destination as? ShowDetailTabBarController
-				showTabBarController?.showID = currentCell.showDetailsElement?.id
+				let showDetailTabBarController = segue.destination as? ShowDetailTabBarController
+				showDetailTabBarController?.showDetailsElement = currentCell.showDetailsElement
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
@@ -202,8 +202,8 @@ class SearchResultsTableViewController: UITableViewController {
 		} else if let currentCell = sender as? SuggestionResultCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showTabBarController = segue.destination as? ShowDetailTabBarController
-				showTabBarController?.showID = currentCell.showDetailsElement?.id
+				let showDetailTabBarController = segue.destination as? ShowDetailTabBarController
+				showDetailTabBarController?.showID = currentCell.showDetailsElement?.id
 			}
 		}
 	}

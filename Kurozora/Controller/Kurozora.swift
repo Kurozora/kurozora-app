@@ -138,16 +138,17 @@ class Kurozora: NSObject {
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
 	*/
-	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) {
+	func schemeHandler(_ app: UIApplication = UIApplication.shared, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
 		let urlScheme = url.host?.removingPercentEncoding
 
-		if urlScheme == "anime" {
+		if urlScheme == "anime" || urlScheme == "show" {
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
 				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
 					showTabBarController.showID = Int(showID)
 
 					UIApplication.topViewController?.present(showTabBarController, animated: true)
+					return
 				}
 			}
 		}
@@ -161,6 +162,7 @@ class Kurozora: NSObject {
 
 					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
 					UIApplication.topViewController?.present(kurozoraNavigationController)
+					return
 				}
 			}
 		}
@@ -168,12 +170,14 @@ class Kurozora: NSObject {
 		if urlScheme == "explore" || urlScheme == "home" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 0
+				return
 			}
 		}
 
 		if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 1
+				return
 			}
 		}
 
@@ -184,10 +188,12 @@ class Kurozora: NSObject {
 					threadViewController.forumThreadID = Int(forumThreadID)
 
 					UIApplication.topViewController?.present(threadViewController, animated: true)
+					return
 				}
 			} else {
 				if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 					tabBarController.selectedIndex = 2
+					return
 				}
 			}
 		}
@@ -195,14 +201,27 @@ class Kurozora: NSObject {
 		if urlScheme == "notification" || urlScheme == "notifications" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 3
+				return
 			}
 		}
 
 		if urlScheme == "feed" || urlScheme == "timeline" {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
+				return
 			}
 		}
+	}
+
+	/**
+		Handle the scheme passed to the app on iOS 13+.
+
+		- Parameter scene: The object that represents one instance of the app's user interface.
+		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
+	*/
+	@available(iOS 13.0, *)
+	func schemeHandler(scene: UIScene? = nil, open url: URL) {
+		schemeHandler(open: url, options: [:])
 	}
 
 	/// Stop the splash view animation

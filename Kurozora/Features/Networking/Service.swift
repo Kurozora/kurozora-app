@@ -172,11 +172,11 @@ struct Service {
 		- Parameter successHandler: A closure returning a LibraryElement array.
 		- Parameter library: The returned LibraryElement array.
 	*/
-	func getLibrary(withStatus status: String?, withSuccess successHandler: @escaping (_ library: [LibraryElement]?) -> Void) {
+	func getLibrary(withStatus status: String?, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
 		guard let status = status else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -185,10 +185,10 @@ struct Service {
 		request.parameters = [
 			"status": status
 		]
-		request.perform(withSuccess: { library in
-			if let success = library.success {
+		request.perform(withSuccess: { showDetails in
+			if let success = showDetails.success {
 				if success {
-					successHandler(library.library)
+					successHandler(showDetails.showDetailsElements)
 				}
 			}
 		}, failure: { error in
@@ -210,7 +210,7 @@ struct Service {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -220,8 +220,8 @@ struct Service {
 			"status": status,
 			"anime_id": showID
 		]
-		request.perform(withSuccess: { library in
-			if let success = library.success {
+		request.perform(withSuccess: { showDetails in
+			if let success = showDetails.success {
 				if success {
 					successHandler(success)
 				}
@@ -243,7 +243,7 @@ struct Service {
 		guard let showID = showID else { return }
 		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<Library, JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -252,8 +252,8 @@ struct Service {
 		request.parameters = [
 			"anime_id": showID
 		]
-		request.perform(withSuccess: { library in
-			if let success = library.success {
+		request.perform(withSuccess: { showDetails in
+			if let success = showDetails.success {
 				if success {
 					successHandler(success)
 				}

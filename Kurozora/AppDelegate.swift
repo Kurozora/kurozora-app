@@ -157,7 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
 		Kurozora.shared.schemeHandler(app, open: url, options: options)
-
 		return true
 	}
 
@@ -165,9 +164,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
 
-			if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
-				showTabBarController.showID = showID
-				UIApplication.topViewController?.present(showTabBarController, animated: true)
+			if let showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
+				showDetailTabBarController.showID = showID
+				UIApplication.topViewController?.present(showDetailTabBarController, animated: true)
 			}
 		}
 

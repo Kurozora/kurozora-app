@@ -13,6 +13,7 @@ import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
+@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 	var authenticated = false
@@ -20,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var isUnreachable = false
 	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
-	@available(iOS 13.0, *)
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 
@@ -109,7 +109,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 	}
 
-	@available(iOS 13.0, *)
+	func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+		guard let url = URLContexts.first?.url else { return }
+		Kurozora.shared.schemeHandler(scene: scene, open: url)
+	}
+
 	func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
         return scene.userActivity
     }
@@ -123,10 +127,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
-				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
-					showTabBarController.showID = showID
+				if let showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
+					showDetailTabBarController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
-						tabBarController.present(showTabBarController)
+						tabBarController.present(showDetailTabBarController)
 						return true
 					}
 				}

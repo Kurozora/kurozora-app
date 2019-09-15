@@ -74,6 +74,9 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
+		fetchSeasons()
+
+		// Setup empty table view
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
         collectionView?.emptyDataSetView { view in
@@ -84,9 +87,6 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
                 .isTouchAllowed(true)
                 .isScrollAllowed(false)
         }
-
-		showID = KCommonKit.shared.showID
-        fetchSeasons()
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -126,6 +126,7 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 		return storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController")
 	}
 
+	/// Fetch seasons for the current show.
     fileprivate func fetchSeasons() {
         Service.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {

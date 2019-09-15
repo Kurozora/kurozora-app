@@ -112,17 +112,14 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	// Hero Transition vars
-	var showID: Int? {
-		didSet {
-			fetchDetails()
-		}
-	}
+	var showID: Int?
 	var heroID: String?
 
 	// Misc vars
-	var showDetailsElement: ShowDetailsElement? {
+	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
-			self.updateDetails()
+			self.showID = showDetailsElement?.id
+			self.libraryStatus = showDetailsElement?.currentUser?.libraryStatus
 		}
 	}
 	var actors: [ActorsElement]? {
@@ -183,6 +180,14 @@ class ShowDetailViewController: UIViewController {
 
 		toggleHeroID(on: true)
 
+		// Update view with details
+		if showDetailsElement != nil {
+			DispatchQueue.main.async {
+				self.updateDetails()
+			}
+		}
+		self.fetchDetails()
+
 		// Make header view stretchable
 		headerView = tableView.tableHeaderView
 		tableView.tableHeaderView = nil
@@ -220,22 +225,22 @@ class ShowDetailViewController: UIViewController {
 
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
-		if let showID = showID {
-			KCommonKit.shared.showID = showID
-
+		if showDetailsElement == nil {
 			Service.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
-					self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
+//					self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
+					self.updateDetails()
+					self.tableView.reloadData()
 				}
 			}
-
-			Service.shared.getCastFor(showID, withSuccess: { (actors) in
-				DispatchQueue.main.async {
-					self.actors = actors
-				}
-			})
 		}
+
+		Service.shared.getCastFor(showID, withSuccess: { (actors) in
+			DispatchQueue.main.async {
+				self.actors = actors
+			}
+		})
 	}
 
 	/// Prepare the view to be dismissed.
@@ -283,7 +288,7 @@ class ShowDetailViewController: UIViewController {
 		posterImageView.image = cell.posterView?.image
 	}
 
-	/// Update view with the details fetched from the server.
+	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
 		guard let showDetailsElement = showDetailsElement else { return }
 		guard let currentUser = showDetailsElement.currentUser else { return }
@@ -362,23 +367,27 @@ class ShowDetailViewController: UIViewController {
 		}
 
 		// Configure poster view
-		if let posterThumb = showDetailsElement.posterThumbnail, !posterThumb.isEmpty {
-			let posterThumb = URL(string: posterThumb)
-			let resource = ImageResource(downloadURL: posterThumb!)
-			posterImageView.kf.indicatorType = .activity
-			posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-		} else {
-			posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
+		if posterImageView.image == nil {
+			if let posterThumb = showDetailsElement.posterThumbnail, !posterThumb.isEmpty {
+				let posterThumb = URL(string: posterThumb)
+				let resource = ImageResource(downloadURL: posterThumb!)
+				posterImageView.kf.indicatorType = .activity
+				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
+			} else {
+				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
+			}
 		}
 
 		// Configure banner view
-		if let bannerImage = showDetailsElement.banner, !bannerImage.isEmpty {
-			let bannerImage = URL(string: bannerImage)
-			let resource = ImageResource(downloadURL: bannerImage!)
-			bannerImageView.kf.indicatorType = .activity
-			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
-		} else {
-			bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner_image")
+		if bannerImageView.image == nil {
+			if let bannerImage = showDetailsElement.banner, !bannerImage.isEmpty {
+				let bannerImage = URL(string: bannerImage)
+				let resource = ImageResource(downloadURL: bannerImage!)
+				bannerImageView.kf.indicatorType = .activity
+				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
+			} else {
+				bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner_image")
+			}
 		}
 
 		if let videoUrl = showDetailsElement.videoUrl, !videoUrl.isEmpty {
@@ -396,7 +405,6 @@ class ShowDetailViewController: UIViewController {
 
 		// Display details
 		quickDetailsView.isHidden = false
-		tableView.reloadData()
 	}
 
 	/**

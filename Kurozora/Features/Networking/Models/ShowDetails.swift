@@ -10,54 +10,66 @@ import TRON
 import SwiftyJSON
 
 class ShowDetails: JSONDecodable {
+	let success: Bool?
 	var showDetailsElement: ShowDetailsElement?
+	let showDetailsElements: [ShowDetailsElement]?
 
 	required init(json: JSON) throws {
+		self.success = json["success"].boolValue
 		self.showDetailsElement = try? ShowDetailsElement(json: json["anime"])
+
+		var showDetailsElements = [ShowDetailsElement]()
+		let showDetailsElementsArray = json["anime"].arrayValue
+		for showDetailsElementItem in showDetailsElementsArray {
+			if let showDetailsElement = try? ShowDetailsElement(json: showDetailsElementItem) {
+				showDetailsElements.append(showDetailsElement)
+			}
+		}
+		self.showDetailsElements = showDetailsElements
 	}
 }
 
 class ShowDetailsElement: JSONDecodable {
 	// General
 	let id: Int?
-	let imdbId: String?
-	let title: String?
+	let imdbID: String?
+	let banner: String?
+	let bannerThumbnail: String?
 	let genres: [GenreElement]?
 	let poster: String?
 	let posterThumbnail: String?
-	let banner: String?
-	let bannerThumbnail: String?
+	let title: String?
 
 	// Details
-	let screenshots: [String]?
-	let synopsis: String?
-	let type: String?
-	let seasons: Int?
-	let episodes: Int?
-	let status: String?
 	let airDate: String?
+	let episodes: Int?
 	let runtime: Int?
+	let screenshots: [String]?
+	let seasons: Int?
+	let status: String?
+	let synopsis: String?
+	let tagline: String?
+	let type: String?
 	let watchRating: String?
 	let year: Int?
-	let tagline: String?
 
 	// Ratings & ranks
 	let averageRating: Double?
-	let ratingCount: Int?
-	let rank: Int?
-	let popularityRank: Int?
-	let startDate: Date?
 	let endDate: Date?
 	let network: String?
-	let producers: String?
 	let nsfw: Bool?
+	let popularityRank: Int?
+	let producers: String?
+	let rank: Int?
+	let ratingCount: Int?
+	let startDate: Date?
 
 	// Extra's
-	let languages: String?
 	let englishTitles: String?
-	let japaneseTitles: String?
-	let synonyms: String?
 	let externalLinks: String?
+	let japaneseTitles: String?
+	let languages: String?
+	let synonyms: String?
 	let videoUrl: String?
 
 	// User details
@@ -65,55 +77,53 @@ class ShowDetailsElement: JSONDecodable {
 
 	required init(json: JSON) throws {
 		// Anime
-		id = json["id"].intValue
-		imdbId = json["imdb_id"].stringValue
-		title = json["title"].stringValue
+		self.id = json["id"].intValue
+		self.imdbID = json["imdb_id"].stringValue
+		self.banner = json["background"].stringValue
+		self.bannerThumbnail = json["background_thumbnail"].stringValue
 		var genres = [GenreElement]()
-
 		let genresArray = json["genres"].arrayValue
 		for genreItem in genresArray {
 			if let genreElement = try? GenreElement(json: genreItem) {
 				genres.append(genreElement)
 			}
 		}
-
 		self.genres = genres
-		poster = json["poster"].stringValue
-		posterThumbnail = json["poster_thumbnail"].stringValue
-		banner = json["background"].stringValue
-		bannerThumbnail = json["background_thumbnail"].stringValue
+		self.poster = json["poster"].stringValue
+		self.posterThumbnail = json["poster_thumbnail"].stringValue
+		self.title = json["title"].stringValue
 
 		// Details
-		screenshots = json["screenshots"].rawValue as? [String]
-		synopsis = json["synopsis"].stringValue
-		type = json["type"].stringValue
-		seasons = json["seasons"].intValue
-		episodes = json["episodes"].intValue
-		status = json["status"].stringValue
-		airDate = json["air_date"].stringValue
-		runtime = json["runtime"].intValue
-		watchRating = json["watch_rating"].stringValue
-		year = json["year"].intValue
-		tagline = json["tagline"].stringValue
+		self.airDate = json["air_date"].stringValue
+		self.episodes = json["episodes"].intValue
+		self.runtime = json["runtime"].intValue
+		self.screenshots = json["screenshots"].rawValue as? [String]
+		self.seasons = json["seasons"].intValue
+		self.status = json["status"].stringValue
+		self.synopsis = json["synopsis"].stringValue
+		self.tagline = json["tagline"].stringValue
+		self.type = json["type"].stringValue
+		self.watchRating = json["watch_rating"].stringValue
+		self.year = json["year"].intValue
 
 		// Ratings & ranks
-		averageRating = json["average_rating"].doubleValue
-		ratingCount = json["rating_count"].intValue
-		rank = json["rank"].intValue
-		popularityRank = json["popularity_rank"].intValue
-		startDate = json["start_date"].rawValue as? Date
-		endDate = json["end_date"].rawValue as? Date
-		network = json["network"].stringValue
-		producers = json["producers"].stringValue
-		nsfw = json["nsfw"].boolValue
+		self.averageRating = json["average_rating"].doubleValue
+		self.endDate = json["end_date"].rawValue as? Date
+		self.network = json["network"].stringValue
+		self.nsfw = json["nsfw"].boolValue
+		self.popularityRank = json["popularity_rank"].intValue
+		self.producers = json["producers"].stringValue
+		self.rank = json["rank"].intValue
+		self.ratingCount = json["rating_count"].intValue
+		self.startDate = json["start_date"].rawValue as? Date
 
 		// Extra's
-		languages = json["languages"].stringValue
-		englishTitles = json["english_titles"].stringValue
-		japaneseTitles = json["japanese_titles"].stringValue
-		synonyms = json["synonyms"].stringValue
-		externalLinks = json["external_links"].stringValue
-		videoUrl = json["video_url"].stringValue
+		self.englishTitles = json["english_titles"].stringValue
+		self.externalLinks = json["external_links"].stringValue
+		self.japaneseTitles = json["japanese_titles"].stringValue
+		self.languages = json["languages"].stringValue
+		self.synonyms = json["synonyms"].stringValue
+		self.videoUrl = json["video_url"].stringValue
 
 		// User details
 		self.currentUser = try? UserProfile(json: json["current_user"])
@@ -125,5 +135,14 @@ class ShowDetailsElement: JSONDecodable {
 		let runtime = (self.runtime != 0) ? self.runtime : 0
 		let year = (self.year != 0) ? self.year : 0000
 		return "\(type ?? "Unknown") · \(watchRating ?? "N/A") · \(episodes ?? 0) eps · \(runtime ?? 0) min · \(year ?? 0000)"
+	}
+
+	/// Create an NSUserActivity from the selected show.
+	var openDetailUserActivity: NSUserActivity? {
+		guard let id = id else { return nil }
+		let userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+		userActivity.title = "OpenShowDetail"
+		userActivity.userInfo = ["showID": id]
+		return userActivity
 	}
 }

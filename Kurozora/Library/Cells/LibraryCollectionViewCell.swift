@@ -14,7 +14,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterShadowView: UIView!
 	@IBOutlet weak var posterView: UIImageView!
 
-	var libraryElement: LibraryElement? {
+	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			configureCell()
 		}
@@ -23,14 +23,14 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 	func configureCell() {
 		self.hero.id = nil
 
-		guard let libraryElement = libraryElement else { return }
-		guard let showTitle = libraryElement.title else { return }
+		guard let showDetailsElement = showDetailsElement else { return }
+		guard let showTitle = showDetailsElement.title else { return }
 
-		self.titleLabel.text = libraryElement.title
+		self.titleLabel.text = showDetailsElement.title
 		self.titleLabel.hero.id = "library_\(showTitle)_title"
 
 		self.posterView.hero.id = "library_\(showTitle)_poster"
-		if let posterThumbnail = libraryElement.posterThumbnail, !posterThumbnail.isEmpty {
+		if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
 			let posterThumbnailUrl = URL(string: posterThumbnail)
 			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
 			self.posterView.kf.indicatorType = .activity

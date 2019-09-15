@@ -224,11 +224,11 @@ class HomeCollectionViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {
             // Show detail for explore cell
-			if let currentCell = sender as? ExploreCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
-				showTabBarController.exploreCollectionViewCell = currentCell
-				showTabBarController.showID = currentCell.showDetailsElement?.id
+			if let currentCell = sender as? ExploreCollectionViewCell, let showDetailTabBarController = segue.destination as? ShowDetailTabBarController {
+				showDetailTabBarController.exploreCollectionViewCell = currentCell
+				showDetailTabBarController.showDetailsElement = currentCell.showDetailsElement
 				if let showTitle = currentCell.showDetailsElement?.title, let section = currentCell.indexPath?.section {
-					showTabBarController.heroID = "explore_\(showTitle)_\(section)"
+					showDetailTabBarController.heroID = "explore_\(showTitle)_\(section)"
 				}
 			}
 		}

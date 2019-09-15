@@ -64,7 +64,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var libraryStatus: String?
-	var showTabBarController: ShowDetailTabBarController?
+	var showDetailTabBarController: ShowDetailTabBarController?
 
 	var thumbnailPlaceholder: UIImageView {
 		get { return getVideoThumbnail() }
@@ -303,23 +303,23 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 // MARK: - UIViewControllerPreviewingDelegate
 extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
-		showTabBarController?.exploreCollectionViewCell = self
-		showTabBarController?.showID = showDetailsElement?.id
-		showTabBarController?.modalPresentationStyle = .overFullScreen
+		showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
+		showDetailTabBarController?.exploreCollectionViewCell = self
+		showDetailTabBarController?.showDetailsElement = showDetailsElement
+		showDetailTabBarController?.modalPresentationStyle = .overFullScreen
 
 		if let showTitle = showDetailsElement?.title, let section = indexPath?.section {
-			showTabBarController?.heroID = "explore_\(showTitle)_\(section)"
+			showDetailTabBarController?.heroID = "explore_\(showTitle)_\(section)"
 		}
 
 		previewingContext.sourceRect = previewingContext.sourceView.bounds
 
-		return showTabBarController
+		return showDetailTabBarController
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		if let showTabBarController = showTabBarController {
-			homeCollectionViewController?.present(showTabBarController, animated: true, completion: nil)
+		if let showDetailTabBarController = showDetailTabBarController {
+			homeCollectionViewController?.present(showDetailTabBarController, animated: true, completion: nil)
 		}
 	}
 }

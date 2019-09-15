@@ -50,7 +50,7 @@ class InformationTableViewCell: UITableViewCell {
 			}
 		case 1:
 			titleLabel.text = "IMDB ID"
-			if let imdbId = showDetail.imdbId, !imdbId.isEmpty {
+			if let imdbId = showDetail.imdbID, !imdbId.isEmpty {
 				detailLabel.text = imdbId
 			} else {
 				detailLabel.text = "No IMDB ID found"

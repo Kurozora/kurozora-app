@@ -10,8 +10,9 @@ import UIKit
 import ESTabBarController_swift
 
 class ShowDetailTabBarController: ESTabBarController {
-	var showID: Int?
-	var heroID: String?
+	var showID: Int? = nil
+	var heroID: String? = nil
+	var showDetailsElement: ShowDetailsElement? = nil
 	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	weak var showDetailViewControllerDelegate: ShowDetailViewControllerDelegate?
@@ -27,16 +28,21 @@ class ShowDetailTabBarController: ESTabBarController {
 		self.tabBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 
 		// Instantiate views
-		let showDetail = ShowDetailViewController.instantiateFromStoryboard() as! ShowDetailViewController
-		showDetail.exploreCollectionViewCell = exploreCollectionViewCell
-		showDetail.libraryCollectionViewCell = libraryCollectionViewCell
-		showDetail.modalPresentationCapturesStatusBarAppearance = true
-		showDetail.showID = showID
-		showDetail.heroID = heroID
-		showDetail.delegate = showDetailViewControllerDelegate
+		let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as! ShowDetailViewController
+		showDetailViewController.exploreCollectionViewCell = exploreCollectionViewCell
+		showDetailViewController.libraryCollectionViewCell = libraryCollectionViewCell
+		showDetailViewController.modalPresentationCapturesStatusBarAppearance = true
+		if showID == nil {
+			showDetailViewController.showDetailsElement = showDetailsElement
+		} else {
+			showDetailViewController.showID = showID
+		}
+		showDetailViewController.heroID = heroID
+		showDetailViewController.delegate = showDetailViewControllerDelegate
 
 		let seasons = SeasonsCollectionViewController.instantiateFromStoryboard() as! SeasonsCollectionViewController
 		seasons.modalPresentationCapturesStatusBarAppearance = true
+		seasons.showID = showID ?? showDetailsElement?.id
 		if let heroID = heroID {
 			if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
 				seasons.heroID = "\(heroID)_banner"
@@ -46,7 +52,7 @@ class ShowDetailTabBarController: ESTabBarController {
 		}
 
 		// Setup animation, title and image
-		showDetail.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Details", image: UIImage(named: "details_icon"), selectedImage: UIImage(named: "details_icon"))
+		showDetailViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Details", image: UIImage(named: "details_icon"), selectedImage: UIImage(named: "details_icon"))
 		seasons.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Seasons", image: UIImage(named: "list"), selectedImage: UIImage(named: "list"))
 
 		// Setup navigation and title
@@ -55,14 +61,14 @@ class ShowDetailTabBarController: ESTabBarController {
 		seasons.title = "Seasons"
 
 		// Initialize views
-		viewControllers = [showDetail, n1]
+		viewControllers = [showDetailViewController, n1]
 	}
 
 	// MARK: - Functions
 	/**
-	Instantiates and returns a view controller from the relevant storyboard.
+		Instantiates and returns a view controller from the relevant storyboard.
 
-	- Returns: a view controller from the relevant storyboard.
+		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "details", bundle: nil)

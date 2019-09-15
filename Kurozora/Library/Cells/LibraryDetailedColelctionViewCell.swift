@@ -24,16 +24,16 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()
-		guard let libraryElement = libraryElement else { return }
-		guard let showTitle = libraryElement.title else { return }
+		guard let showDetailsElement = showDetailsElement else { return }
+		guard let showTitle = showDetailsElement.title else { return }
 
 		self.userProgressLabel?.hero.id = "library_\(showTitle)_progress"
-		self.userProgressLabel?.text = "TV · ✓ \(libraryElement.episodeCount ?? 0) · ☆ \(libraryElement.averageRating ?? 0)"
+		self.userProgressLabel?.text = "TV · ✓ \(showDetailsElement.episodes ?? 0) · ☆ \(showDetailsElement.averageRating ?? 0)"
 
 		self.episodeImageView?.hero.id = "library_\(showTitle)_banner"
-		if let backgroundThumbnail = libraryElement.backgroundThumbnail, !backgroundThumbnail.isEmpty {
-			let backgroundThumbnailUrl = URL(string: backgroundThumbnail)
-			let resource = ImageResource(downloadURL: backgroundThumbnailUrl!)
+		if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
+			let bannerThumbnailUrl = URL(string: bannerThumbnail)
+			let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
 			self.episodeImageView?.kf.indicatorType = .activity
 			self.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
 		} else {

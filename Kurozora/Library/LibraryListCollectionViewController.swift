@@ -20,7 +20,7 @@ protocol LibraryListViewControllerDelegate: class {
 class LibraryListCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
 	private let refreshControl = UIRefreshControl()
 
-	var library: [LibraryElement]? {
+	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			collectionView.reloadData {
 				if self.collectionView.numberOfItems() != 0 {
@@ -116,12 +116,12 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showTabBarController = segue.destination as? ShowDetailTabBarController {
-			showTabBarController.libraryCollectionViewCell = currentCell
-			showTabBarController.showID = currentCell.libraryElement?.id
-			if let showTitle = currentCell.libraryElement?.title {
-				showTabBarController.heroID = "library_\(showTitle)"
-				showTabBarController.showDetailViewControllerDelegate = self
+		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailTabBarControllerLibrary = segue.destination as? ShowDetailTabBarController {
+			showDetailTabBarControllerLibrary.libraryCollectionViewCell = currentCell
+			showDetailTabBarControllerLibrary.showDetailsElement = currentCell.showDetailsElement
+			if let showTitle = currentCell.showDetailsElement?.title {
+				showDetailTabBarControllerLibrary.heroID = "library_\(showTitle)"
+				showDetailTabBarControllerLibrary.showDetailViewControllerDelegate = self
 			}
 		}
 	}
@@ -145,35 +145,31 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	@objc private func fetchLibrary() {
 		guard let sectionTitle = sectionTitle else {return}
 
-		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (library) in
+		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
 			DispatchQueue.main.async {
-				self.library = library
+				self.showDetailsElements = showDetailsElements
 				self.refreshControl.endRefreshing()
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
 			}
 		})
 	}
 
-	func show(at indexPath: IndexPath) -> LibraryElement? {
-		return library?[indexPath.row]
+	func show(at indexPath: IndexPath) -> ShowDetailsElement? {
+		return showDetailsElements?[indexPath.row]
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if let libraryCount = library?.count, libraryCount != 0 {
-			return libraryCount
-		}
-		return 0
+		guard let showDetailsElementsCount = showDetailsElements?.count else { return 0 }
+		return showDetailsElementsCount
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let libraryCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryLayout.rawValue, for: indexPath) as! LibraryCollectionViewCell
-
-		libraryCell.libraryElement = library?[indexPath.item]
-
-		return libraryCell
+		let libraryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryLayout.rawValue, for: indexPath) as! LibraryCollectionViewCell
+		libraryCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.item]
+		return libraryCollectionViewCell
 	}
 }
 
@@ -239,7 +235,7 @@ extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate 
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
 
 		collectionView.performBatchUpdates({
-			library?.remove(at: indexPath.item)
+			showDetailsElements?.remove(at: indexPath.item)
 			collectionView.deleteItems(at: [indexPath])
 		})
 
