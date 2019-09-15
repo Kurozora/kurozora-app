@@ -192,7 +192,7 @@ class SearchResultsTableViewController: UITableViewController {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-						threadViewController.forumThreadID = currentCell.forumsThreadElement?.id
+						threadViewController.forumsThreadElement = currentCell.forumsThreadElement
 						threadViewController.dismissButtonIsEnabled = true
 
 						kurozoraNavigationController.pushViewController(threadViewController)

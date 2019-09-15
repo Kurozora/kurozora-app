@@ -111,11 +111,8 @@ class ShowDetailViewController: UIViewController {
 		}
 	}
 
-	// Hero Transition vars
-	var showID: Int?
 	var heroID: String?
-
-	// Misc vars
+	var showID: Int?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			self.showID = showDetailsElement?.id
@@ -148,21 +145,6 @@ class ShowDetailViewController: UIViewController {
 		statusBarShouldBeHidden = true
 		UIView.animate(withDuration: 0.3) {
 			self.setNeedsStatusBarAppearanceUpdate()
-		}
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		// Donate suggestion to Siri
-		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetailsElement?.title, let showID = showID {
-			let title = "Open \(title)"
-			userActivity?.title = title
-			userActivity?.userInfo = ["showID": showID]
-			if #available(iOS 12.0, *) {
-				userActivity?.suggestedInvocationPhrase = title
-				userActivity?.isEligibleForPrediction = true
-			}
-			userActivity?.isEligibleForSearch = true
 		}
 	}
 
@@ -202,6 +184,21 @@ class ShowDetailViewController: UIViewController {
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		// Donate suggestion to Siri
+		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+		if let title = showDetailsElement?.title, let showID = showID {
+			let title = "Open \(title)"
+			userActivity?.title = title
+			userActivity?.userInfo = ["showID": showID]
+			if #available(iOS 12.0, *) {
+				userActivity?.suggestedInvocationPhrase = title
+				userActivity?.isEligibleForPrediction = true
+			}
+			userActivity?.isEligibleForSearch = true
+		}
+	}
+
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
@@ -229,7 +226,6 @@ class ShowDetailViewController: UIViewController {
 			Service.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
-//					self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
 					self.updateDetails()
 					self.tableView.reloadData()
 				}

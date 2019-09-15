@@ -48,7 +48,7 @@ public class ForumsCell: UITableViewCell {
 			dateTimeButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var lockLabel: UILabel!
+	@IBOutlet weak var lockImageView: UIImageView!
 
 	@IBOutlet weak var moreButton: KButton! {
 		didSet {
@@ -169,13 +169,13 @@ public class ForumsCell: UITableViewCell {
 	fileprivate func isLocked(_ locked: Bool) {
 		forumThreadsElement?.locked = locked
 		if locked {
-			lockLabel.isHidden = false
+			lockImageView.isHidden = false
 			upvoteButton.isHidden = true
 			downvoteButton.isHidden = true
 			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
 		} else {
-			lockLabel.isHidden = true
+			lockImageView.isHidden = true
 			upvoteButton.isHidden = false
 			downvoteButton.isHidden = false
 			upvoteButton.isUserInteractionEnabled = true

@@ -119,7 +119,7 @@ class SearchResultsCell: UITableViewCell {
 
 			// Configure episode count
 			if let episodeCount = showDetailsElement.episodes, episodeCount != 0 {
-				episodeCountLabel?.text = "\(episodeCount)"
+				episodeCountLabel?.text = "\(episodeCount) \(episodeCount == 1 ? "Episode" : "Episodes")"
 			} else {
 				episodeCountLabel?.isHidden = true
 			}

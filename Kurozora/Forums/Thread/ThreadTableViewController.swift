@@ -14,7 +14,7 @@ import SwiftyJSON
 import SCLAlertView
 
 class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
-	@IBOutlet weak var lockLabel: UILabel!
+	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var discussionLabel: UILabel! {
 		didSet {
 			discussionLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
@@ -84,7 +84,11 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	var forumThreadID: Int?
-	var forumsThreadElement: ForumsThreadElement?
+	var forumsThreadElement: ForumsThreadElement? {
+		didSet {
+			self.forumThreadID = forumsThreadElement?.id
+		}
+	}
 	var replyID: Int?
 	var newReplyID: Int!
 	var threadInformation: String?
@@ -116,14 +120,12 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Fetch thread details
-		Service.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
+		if forumsThreadElement != nil {
 			DispatchQueue.main.async {
-				self.forumsThreadElement = thread
 				self.updateThreadDetails()
-				self.getThreadReplies()
-				self.tableView.reloadData()
 			}
-		})
+		}
+		fetchDetails()
 
 		// Setup table view
 		tableView.dataSource = self
@@ -213,6 +215,20 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		if let locked = forumsThreadElement?.locked {
 			isLocked(locked)
 		}
+	}
+
+	/// Fetch thread details for the current thread.
+	func fetchDetails() {
+		if forumsThreadElement == nil {
+			Service.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
+				DispatchQueue.main.async {
+					self.forumsThreadElement = thread
+					self.updateThreadDetails()
+					self.tableView.reloadData()
+				}
+			})
+		}
+		getThreadReplies()
 	}
 
 	/// Fetch the thread replies for the current thread.
@@ -309,13 +325,13 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		forumsThreadElement?.locked = locked
 		// Set lock label
 		if locked {
-			lockLabel.isHidden = false
+			lockImageView.isHidden = false
 			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
 			replyButton.isUserInteractionEnabled = false
 			actionsStackView.isHidden = true
 		} else {
-			lockLabel.isHidden = true
+			lockImageView.isHidden = true
 			upvoteButton.isUserInteractionEnabled = true
 			downvoteButton.isUserInteractionEnabled = true
 			replyButton.isUserInteractionEnabled = true

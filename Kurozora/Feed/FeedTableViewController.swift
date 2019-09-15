@@ -100,7 +100,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		if segue.identifier == "FeedSegue" {
 			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
-			threadViewController?.forumThreadID = sender as? Int
+			threadViewController?.forumsThreadElement = sender as? ForumsThreadElement
 		}
 	}
 }
@@ -122,9 +122,7 @@ extension FeedTableViewController {
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if let forumThreadID = feedPostElement?[indexPath.row].id {
-			performSegue(withIdentifier: "ThreadSegue", sender: forumThreadID)
-		}
+		performSegue(withIdentifier: "ThreadSegue", sender: feedPostElement?[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
