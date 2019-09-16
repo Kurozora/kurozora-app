@@ -183,6 +183,7 @@
                                 <connections>
                                     <outlet property="dateLabel" destination="6MN-pn-YOV" id="WjO-B6-1Ry"/>
                                     <outlet property="notificationIconImageView" destination="YKm-sf-d9B" id="9pe-GV-sk6"/>
+                                    <outlet property="notificationMark" destination="5yi-U6-q3P" id="QcV-JO-yYZ"/>
                                     <outlet property="notificationTextLabel" destination="uj8-UI-F9c" id="mBg-kQ-pGl"/>
                                     <outlet property="notificationTitleLabel" destination="HBA-Cy-hoI" id="Jvt-cc-6eh"/>
                                     <outlet property="notificationTypeLabel" destination="EvR-b1-6iW" id="gie-z1-tYr"/>
@@ -278,7 +279,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="notificationDateLabel" destination="QdZ-Zr-Pub" id="xiE-Wr-Opz"/>
+                                    <outlet property="dateLabel" destination="QdZ-Zr-Pub" id="zHh-La-YLq"/>
                                     <outlet property="notificationIconImageView" destination="v7I-mK-kbO" id="tWU-XE-iLM"/>
                                     <outlet property="notificationMark" destination="VjR-jp-bBK" id="3Fi-28-LkT"/>
                                     <outlet property="notificationTextLabel" destination="vqu-xF-Uzd" id="9zQ-a2-BNF"/>
@@ -304,7 +305,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Pull to refresh your notifications list!">
                                 <attributes>
-                                    <font key="NSFont" metaFont="label" size="11"/>
+                                    <font key="NSFont" metaFont="message" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>

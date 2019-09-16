@@ -294,6 +294,8 @@
 		66B216AC21C1681F006E167D /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
 		66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216AD21C16B15006E167D /* ThreadPost.swift */; };
 		66B2C73D232D0F350042AB12 /* PostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73C232D0F350042AB12 /* PostType.swift */; };
+		66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */; };
+		66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C740232F99440042AB12 /* Array+Kurozora.swift */; };
 		66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */; };
 		66B4F1D8223D145F007C5048 /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */; };
 		66B4F1DB223D2CA5007C5048 /* SearchResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchResultsCell.swift */; };
@@ -685,6 +687,8 @@
 		66B216A721C033B9006E167D /* UIView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Kurozora.swift"; sourceTree = "<group>"; };
 		66B216AD21C16B15006E167D /* ThreadPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPost.swift; sourceTree = "<group>"; };
 		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
+		66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNotificationCell.swift; sourceTree = "<group>"; };
+		66B2C740232F99440042AB12 /* Array+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Kurozora.swift"; sourceTree = "<group>"; };
 		66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListStyle.swift; sourceTree = "<group>"; };
 		66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
 		66B4F1DA223D2CA5007C5048 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
@@ -967,6 +971,7 @@
 		6611234C208F70B500E6033A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				66B2C740232F99440042AB12 /* Array+Kurozora.swift */,
 				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
 				66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */,
 				66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */,
@@ -1175,6 +1180,7 @@
 				6601F1AB2118488D0074C1DD /* MessageNotificationCell.swift */,
 				662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */,
 				662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */,
+				66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2586,6 +2592,7 @@
 				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				66CF6D6D20A98E1700F98375 /* UserProfileManager.swift in Sources */,
 				660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */,
+				66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */,
 				66058DBA212E97670084B79E /* ShowReviewCell.swift in Sources */,
 				66B2C73D232D0F350042AB12 /* PostType.swift in Sources */,
 				66232CD92310050700C45B5A /* EmptyProfileCell.swift in Sources */,
@@ -2700,6 +2707,7 @@
 				660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */,
 				664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */,
 				66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */,
+				66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */,
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */,
 				6674DBEE22EDB941006455C1 /* ExploreMediumCollectionViewFlowLayout.swift in Sources */,

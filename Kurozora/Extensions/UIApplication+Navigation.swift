@@ -18,7 +18,7 @@ extension UIApplication {
 
 		- Returns: the top (root) view controller of a given view controller.
 	*/
-	private class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+	private class func topViewController(_ base: UIViewController?) -> UIViewController? {
 		if let nav = base as? UINavigationController {
 			let top = topViewController(nav.visibleViewController)
 			return top
@@ -40,7 +40,7 @@ extension UIApplication {
 
 	/// The root view controller of the application.
 	static var topViewController: UIViewController? {
-		var base: UIViewController?
+		var base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
 		if #available(iOS 13.0, *) {
 			for scene in UIApplication.shared.connectedScenes where scene.activationState == .foregroundInactive {
 				if let scene = scene as? UIWindowScene {

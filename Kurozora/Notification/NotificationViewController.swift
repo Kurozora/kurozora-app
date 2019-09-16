@@ -147,7 +147,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: {Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate)})
+			self.groupedNotifications.sort(by: { Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate) })
 		case .byType:
 			self.groupedNotifications = []
 
@@ -167,7 +167,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: {Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate)})
+			self.groupedNotifications.sort(by: { Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate) })
 		case .off:
 			self.groupedNotifications = []
 		}
@@ -180,15 +180,15 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
-	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, with status: Int) {
+	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String?, with status: Int) {
 		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
-			if indexPaths == nil, let userNotificationsElement = self.userNotificationsElement {
-				for userNotificationElement in userNotificationsElement {
+			if indexPaths == nil {
+				for userNotificationElement in self.userNotificationsElement ?? [] {
 					userNotificationElement.read = read
 				}
 				self.tableView.reloadData()
-			} else if let indexPaths = indexPaths {
-				for indexPath in indexPaths {
+			} else {
+				for indexPath in indexPaths ?? [] {
 					switch self.grouping {
 					case .automatic, .byType:
 						self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
@@ -196,15 +196,8 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 						self.userNotificationsElement?[indexPath.row].read = read
 					}
 
-					if indexPaths.count == 1, let indexPath = indexPaths.first {
-						if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
-							sessionNotificationCell.updateReadStatus(animated: true)
-						}
-					} else {
-						if let sessionNotificationCell = self.tableView.cellForRow(at: indexPath) as? SessionNotificationCell {
-							sessionNotificationCell.updateReadStatus(animated: false)
-						}
-					}
+					let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
+					baseNotificationCell?.updateReadStatus(animated: indexPaths?.count == 1)
 				}
 			}
 		}
@@ -227,7 +220,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(markAllAsRead)
 
-		// Mark all as unread
+		// Mark all as unread action
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", with: 0)
 		})
@@ -242,8 +235,8 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			popoverController.barButtonItem = sender
 		}
 
-		if !(navigationController?.visibleViewController?.isKind(of: UIAlertController.self))! {
-			present(action, animated: true, completion: nil)
+		if (navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(action, animated: true, completion: nil)
 		}
 	}
 
@@ -322,6 +315,8 @@ extension NotificationsViewController {
 		switch self.grouping {
 		case .automatic, .byType:
 			notificationTitleCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.read ?? false })
+			notificationTitleCell.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Marks as read", for: .normal)
 			return notificationTitleCell.contentView
 		case .off: break
 		}
@@ -339,61 +334,34 @@ extension NotificationsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let messageNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "MessageNotificationCell", for: indexPath) as! MessageNotificationCell
-		let sessionNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: "SessionNotificationCell", for: indexPath) as! SessionNotificationCell
+		// Prepare necessary information for setting up the correct cell
+		var notificationType: NotificationType?
+		var notificationCellIdentifier: String = "MessageNotificationCell"
 
-		messageNotificationCell.delegate = self
-		sessionNotificationCell.delegate = self
-
-		switch self.grouping {
-		case .automatic, .byType:
-			let notifications = groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
-
-			if let type = notifications.type, !type.isEmpty, let notificationType = NotificationType(rawValue: type) {
-				switch notificationType {
-				case .session:
-					sessionNotificationCell.notificationsElement = notifications
-					return sessionNotificationCell
-				case .follower:
-					messageNotificationCell.notificationsElement = notifications
-				default: break
-				}
-			}
-		case .off:
-			let notifications = userNotificationsElement?[indexPath.row]
-			if let type = notifications?.type, !type.isEmpty, let notificationType = NotificationType(rawValue: type) {
-				switch notificationType {
-				case .session:
-					sessionNotificationCell.notificationsElement = notifications
-					return sessionNotificationCell
-				case .follower:
-					messageNotificationCell.notificationsElement = notifications
-				default: break
-				}
-			}
+		let notifications = (self.grouping == .off) ? userNotificationsElement?[indexPath.row] : groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
+		if let notificationsType = notifications?.type, !notificationsType.isEmpty {
+			notificationType = NotificationType(rawValue: notificationsType)
+			notificationCellIdentifier = notificationType?.identifierString ?? notificationCellIdentifier
 		}
-		return messageNotificationCell
+
+		// Setup cell
+		let baseNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: notificationCellIdentifier, for: indexPath) as! BaseNotificationCell
+		baseNotificationCell.delegate = self
+		baseNotificationCell.notificationType = notificationType
+		baseNotificationCell.userNotificationsElement = notifications
+		return baseNotificationCell
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if tableView.cellForRow(at: indexPath) as? SessionNotificationCell != nil {
-			// Change notification status to read
-			var notificationID = 0
-			switch self.grouping {
-			case .automatic, .byType:
-				if let id = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
-					notificationID = id
-				}
-			case .off:
-				if let id = self.userNotificationsElement?[indexPath.row].id {
-					notificationID = id
-				}
-			}
+		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 
-			self.updateNotification(at: [indexPath], for: notificationID.string, with: 1)
+		if baseNotificationCell?.notificationType == .session {
+			// Change notification status to read
+			let notificationID = baseNotificationCell?.userNotificationsElement?.id
+			self.updateNotification(at: [indexPath], for: notificationID?.string, with: 1)
 
 			// Show sessions view
 			WorkflowController.showSessions()

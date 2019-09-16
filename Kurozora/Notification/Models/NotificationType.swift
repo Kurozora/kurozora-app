@@ -38,4 +38,15 @@ enum NotificationType: String {
 			return "Messages"
 		}
 	}
+
+	var identifierString: String {
+		switch self {
+		case .unknown:
+			return ""
+		case .session:
+			return "SessionNotificationCell"
+		case .follower:
+			return "MessageNotificationCell"
+		}
+	}
 }
