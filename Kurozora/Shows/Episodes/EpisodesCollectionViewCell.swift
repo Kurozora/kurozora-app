@@ -43,7 +43,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
             self.episodeWatchedButton.isEnabled = true
 			self.episodeWatchedButton.isHidden = false
 			self.episodeWatchedButton.tag = 1
-			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			self.episodeWatchedButton.backgroundColor = .kurozora
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         case .notWatched:
             self.episodeWatchedButton.isEnabled = true
@@ -57,7 +57,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	func configureCell(with watchStatus: Bool, shouldUpdate: Bool = false, withValue: Bool = false) {
 		if watchStatus {
 			self.episodeWatchedButton.tag = 1
-			self.episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			self.episodeWatchedButton.backgroundColor = .kurozora
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		} else {
 			self.episodeWatchedButton.tag = 0

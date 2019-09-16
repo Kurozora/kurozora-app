@@ -61,7 +61,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 		// Refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 		refreshControl?.addTarget(self, action: #selector(refreshNotificationsData(_:)), for: .valueChanged)
 
 		// Setup table view
@@ -99,7 +99,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	*/
 	@objc private func refreshNotificationsData(_ sender: Any) {
 		// Fetch library data
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 		fetchNotifications()
 	}
 
@@ -118,7 +118,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 
 				self.tableView.reloadData()
 				self.refreshControl?.endRefreshing()
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 			}
 		})
 	}
@@ -406,7 +406,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			}
 			deleteAction.backgroundColor = .clear
 			deleteAction.image = #imageLiteral(resourceName: "trash_circle")
-			deleteAction.textColor = #colorLiteral(red: 0.8156862745, green: 0.007843137255, blue: 0.1058823529, alpha: 1)
+			deleteAction.textColor = .kLightRed
 			deleteAction.font = .systemFont(ofSize: 13)
 			deleteAction.transitionDelegate = ScaleTransition.default
 			return [deleteAction]
@@ -442,7 +442,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
 			markedAction.image = isRead ? #imageLiteral(resourceName: "watched_circle") : #imageLiteral(resourceName: "unwatched_circle")
-			markedAction.textColor = isRead ? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
+			markedAction.textColor = isRead ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
 			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			markedAction.transitionDelegate = ScaleTransition.default
 			return [markedAction]

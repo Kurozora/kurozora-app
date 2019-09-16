@@ -314,13 +314,13 @@ class ShowDetailViewController: UIViewController {
 		if let status = showDetailsElement.status, !status.isEmpty {
 			statusButton.setTitle(status, for: .normal)
 			if status == "Ended" {
-				statusButton.backgroundColor = .dropped()
+				statusButton.backgroundColor = .dropped
 			} else {
-				statusButton.backgroundColor = .planning()
+				statusButton.backgroundColor = .planning
 			}
 		} else {
 			statusButton.setTitle("TBA", for: .normal)
-			statusButton.backgroundColor = .onHold()
+			statusButton.backgroundColor = .onHold
 		}
 
 //		if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {

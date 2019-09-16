@@ -36,7 +36,7 @@ public class LoaderView: UIView {
 		rectShape.position = CGPoint(x: CGFloat(diameter/2), y: CGFloat(diameter/2))
 		rectShape.cornerRadius = bounds.width / 2
 		rectShape.path = UIBezierPath(ovalIn: rectShape.bounds).cgPath
-		rectShape.fillColor = UIColor.belizeHole().cgColor
+		rectShape.fillColor = #colorLiteral(red: 0.1607843137, green: 0.5019607843, blue: 0.7254901961, alpha: 1).cgColor
 
 		translatesAutoresizingMaskIntoConstraints = false
 

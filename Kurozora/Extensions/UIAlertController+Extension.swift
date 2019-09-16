@@ -35,7 +35,7 @@ extension UIAlertController {
 			alertController.addAction(action)
 		}
 
-		alertController.view.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		alertController.view.tintColor = .kurozora
 		return alertController
 	}
 
@@ -67,7 +67,7 @@ extension UIAlertController {
 			alertController.addAction(action)
 		}
 
-		alertController.view.tintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		alertController.view.tintColor = .kurozora
 		return alertController
 	}
 }

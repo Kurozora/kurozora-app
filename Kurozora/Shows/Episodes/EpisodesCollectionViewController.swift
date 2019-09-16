@@ -236,7 +236,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			}
 			rateAction.backgroundColor = .clear
 			rateAction.image = #imageLiteral(resourceName: "rate_circle")
-			rateAction.textColor = #colorLiteral(red: 0.9725490196, green: 0.9058823529, blue: 0.1098039216, alpha: 1)
+			rateAction.textColor = .kYellow
 			rateAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			rateAction.transitionDelegate = ScaleTransition.default
 
@@ -258,7 +258,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			if let tag = cell.episodeWatchedButton?.tag {
 				watchedAction.title = (tag == 0) ? "Mark as Watched" : "Mark as Unwatched"
 				watchedAction.image = (tag == 0) ? #imageLiteral(resourceName: "watched_circle") : #imageLiteral(resourceName: "unwatched_circle")
-				watchedAction.textColor = (tag == 0) ? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1) : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
+				watchedAction.textColor = (tag == 0) ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
 			}
 			watchedAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			watchedAction.transitionDelegate = ScaleTransition.default

@@ -142,13 +142,13 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 				self.scoreButton?.setTitle(" \(score)", for: .normal)
 				// Change color based on score
 				if score >= 2.5 {
-					self.scoreButton?.backgroundColor = #colorLiteral(red: 0.9907178283, green: 0.8274499178, blue: 0.3669273257, alpha: 1)
+					self.scoreButton?.backgroundColor = .kYellow
 				} else {
-					self.scoreButton?.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.262745098, blue: 0.2509803922, alpha: 1)
+					self.scoreButton?.backgroundColor = .kLightRed
 				}
 			} else {
 				self.scoreButton?.setTitle("New", for: .normal)
-				self.scoreButton?.backgroundColor = #colorLiteral(red: 0.2588235294, green: 0.8235294118, blue: 0.2823529412, alpha: 1)
+				self.scoreButton?.backgroundColor = .kGreen
 			}
 		} else if genreElement != nil {
 			configureGenreCell()

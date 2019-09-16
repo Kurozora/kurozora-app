@@ -170,7 +170,7 @@ extension KCommentEditorViewController: UITextViewDelegate {
 			return true
 		} else { // For every other case, the text should change with the usual behavior...
 			if commentTextView.text.count + (text.count - range.length) >= charLimit { // If character count passed then change text to red
-				characterCountLabel.textColor = #colorLiteral(red: 1, green: 0.3019607843, blue: 0.262745098, alpha: 1)
+				characterCountLabel.textColor = .kLightRed
 			} else if commentTextView.text.count + (text.count - range.length) <= charLimit { // Else reset color to 56% white
 				characterCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.56)
 			}

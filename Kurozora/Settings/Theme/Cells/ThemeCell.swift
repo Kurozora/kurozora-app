@@ -56,7 +56,7 @@ class ThemeCell: UICollectionViewCell {
 		}
 
 		if row == 0 {
-			themeScreenshot.backgroundColor = #colorLiteral(red: 0.2174186409, green: 0.2404800057, blue: 0.332449615, alpha: 1)
+			themeScreenshot.backgroundColor = .kGrayishNavy
 			buyButton.addTarget(self, action: #selector(tapDefault(_:)), for: .touchUpInside)
 		} else if row == 1 {
 			themeScreenshot.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)

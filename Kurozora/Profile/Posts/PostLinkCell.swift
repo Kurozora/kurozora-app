@@ -47,7 +47,7 @@ class LinkCell: PostCell {
 		}
 
 		let borderWidth: CGFloat = 1
-		linkContentView.layer.borderColor = UIColor.backgroundDarker().cgColor
+		linkContentView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1).cgColor
 		linkContentView.layer.borderWidth = borderWidth
 	}
 

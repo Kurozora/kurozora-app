@@ -47,7 +47,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 			episodeWatchedButton.isEnabled = true
 			episodeWatchedButton.isHidden = false
 			episodeWatchedButton.tag = 1
-			episodeWatchedButton.backgroundColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			episodeWatchedButton.backgroundColor = .kurozora
 			episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 		} else {
 			episodeWatchedButton.isEnabled = true

@@ -61,7 +61,7 @@ class CustomThreadViewController: ThreadTableViewController {
 //            commentsButton.setTitle("Locked", for: .normal)
 //            navigationItem.rightBarButtonItem?.isEnabled = false
 //        } else {
-//            let repliesTitle = repliesButtonTitle(repliesCount: thread.replyCount)
+//            let repliesTitle = repliesButtonTitle(repliesCount: thread.commentCount)
 //            commentsButton.setTitle(repliesTitle, for: .normal)
 //        }
 //        

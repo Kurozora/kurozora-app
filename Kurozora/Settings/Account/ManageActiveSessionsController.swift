@@ -274,7 +274,7 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 			annotationView.glyphImage = annotation.image
 		}
 
-		annotationView.markerTintColor = #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+		annotationView.markerTintColor = .kurozora
 
 		return annotationView
 	}

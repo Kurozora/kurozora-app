@@ -182,37 +182,38 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Update the thread view with the fetched details.
 	func updateThreadDetails() {
-		// Set thread stats
-		if let voteCount = forumsThreadElement?.score {
-			voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
-		}
-
-		if let commentCount = forumsThreadElement?.replyCount {
-			commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
-		}
-
-		if let creationDate = forumsThreadElement?.creationDate {
-			dateTimeButton.setTitle("\(Date.timeAgo(creationDate)) · by ", for: .normal)
-		}
-
-		// Set poster username
-		if let posterUsername = forumsThreadElement?.posterUsername {
-			self.posterUsernameLabel.setTitle(posterUsername, for: .normal)
-		}
+		guard let forumsThreadElement = forumsThreadElement else { return }
 
 		// Set thread title
-		if let threadTitle = forumsThreadElement?.title {
-			self.title = threadTitle
-			self.threadTitleLabel.text = threadTitle
-		}
+		self.title = forumsThreadElement.title
+		self.threadTitleLabel.text = forumsThreadElement.title
 
 		// Set thread content
-		if let threadContent = forumsThreadElement?.content {
+		if let threadContent = forumsThreadElement.content {
 			self.richTextView.update(input: threadContent, textColor: KThemePicker.tableViewCellSubTextColor.colorValue, completion: nil)
 		}
 
+		// Set poster username
+		self.posterUsernameLabel.setTitle(forumsThreadElement.posterUsername, for: .normal)
+
+		// Set thread stats
+		if let voteCount = forumsThreadElement.voteCount {
+			voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
+		}
+
+		if let commentCount = forumsThreadElement.commentCount {
+			commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
+		}
+
+		if let creationDate = forumsThreadElement.creationDate {
+			dateTimeButton.setTitle("\(Date.timeAgo(creationDate)) · by ", for: .normal)
+		}
+
+		// Thread vote state
+		updateVoting(with: forumsThreadElement.currentUser?.likeAction)
+
 		// Set locked state
-		if let locked = forumsThreadElement?.locked {
+		if let locked = forumsThreadElement.locked {
 			isLocked(locked)
 		}
 	}
@@ -260,25 +261,43 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		- Parameter vote: The integer indicating whether to upvote or downvote the thread.
 	*/
 	func voteForThread(with vote: Int?) {
-		guard var threadScore = forumsThreadElement?.score else { return }
+		guard var threadScore = forumsThreadElement?.voteCount else { return }
 		Service.shared.vote(forThread: forumThreadID, vote: vote, withSuccess: { (action) in
 			DispatchQueue.main.async {
 				if action == 1 { // upvote
 					threadScore += 1
-					self.upvoteButton.tintColor = #colorLiteral(red: 0.2156862745, green: 0.8274509804, blue: 0.1294117647, alpha: 1)
+					self.upvoteButton.tintColor = .kGreen
 					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 				} else if action == 0 { // no vote
 					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 				} else if action == -1 { // downvote
 					threadScore -= 1
-					self.downvoteButton.tintColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
+					self.downvoteButton.tintColor = .kLightRed
 					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 				}
 
 				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
 			}
 		})
+	}
+
+	/**
+		Update the voting state of the reply.
+
+		- Parameter action: The integer indicating whether to upvote, downvote or remove vote.
+	*/
+	fileprivate func updateVoting(with action: Int?) {
+		if action == 1 { // upvote
+			self.upvoteButton.tintColor = .kGreen
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if action == 0 { // no vote
+			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		} else if action == -1 { // downvote
+			self.downvoteButton.tintColor = .kLightRed
+			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+		}
 	}
 
 	/// Presents the reply view for the current thread.

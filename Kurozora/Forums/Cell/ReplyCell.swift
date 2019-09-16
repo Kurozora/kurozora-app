@@ -133,10 +133,9 @@ class ReplyCell: UITableViewCell {
 				if action == 1 { // upvote
 					replyScore += 1
 					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
-					self.voteCountButton.setTitleColor(#colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1), for: .normal)
-					self.voteCountButton.tintColor = #colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1)
-
-					self.upvoteButton.tintColor = #colorLiteral(red: 0.2156862745, green: 0.8274509804, blue: 0.1294117647, alpha: 1)
+					self.voteCountButton.setTitleColor(.kGreen, for: .normal)
+					self.voteCountButton.tintColor = .kGreen
+					self.upvoteButton.tintColor = .kGreen
 					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 				} else if action == 0 { // no vote
 					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
@@ -145,10 +144,9 @@ class ReplyCell: UITableViewCell {
 				} else if action == -1 { // downvote
 					replyScore -= 1
 					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_down_small"), for: .normal)
-					self.voteCountButton.setTitleColor(#colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1), for: .normal)
-					self.voteCountButton.tintColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
-
-					self.downvoteButton.tintColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
+					self.voteCountButton.setTitleColor(.kLightRed, for: .normal)
+					self.voteCountButton.tintColor = .kLightRed
+					self.downvoteButton.tintColor = .kLightRed
 					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 				}
 

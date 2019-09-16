@@ -67,6 +67,7 @@
 		662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */; };
 		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
+		66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
 		663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */; };
 		663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C95B823084FAC003720A4 /* SceneDelegate.swift */; };
@@ -271,7 +272,6 @@
 		66A8AF272099A4C30011A342 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF262099A4C30011A342 /* String+Date.swift */; };
 		66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF282099A52D0011A342 /* UIView+Animation.swift */; };
 		66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */; };
-		66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */; };
 		66A8AF332099E6370011A342 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */; };
 		66A8AF352099E7A80011A342 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF342099E7A70011A342 /* UIViewController+Image.swift */; };
 		66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */; };
@@ -472,6 +472,7 @@
 		662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionCell.swift; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
+		66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewController.swift; sourceTree = "<group>"; };
 		663C95B823084FAC003720A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -667,7 +668,6 @@
 		66A8AF262099A4C30011A342 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		66A8AF282099A52D0011A342 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
-		66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
 		66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Appearance.swift"; sourceTree = "<group>"; };
 		66A8AF342099E7A70011A342 /* UIViewController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Image.swift"; sourceTree = "<group>"; };
 		66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Dates.swift"; sourceTree = "<group>"; };
@@ -977,6 +977,7 @@
 				66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */,
 				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
 				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
+				66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */,
 				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
 				66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */,
 				66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */,
@@ -1108,7 +1109,6 @@
 				66A8AF262099A4C30011A342 /* String+Date.swift */,
 				66A8AF282099A52D0011A342 /* UIView+Animation.swift */,
 				66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */,
-				66A8AF2E2099B8B60011A342 /* UIColor+Kurozora.swift */,
 				66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */,
 				66A8AF342099E7A70011A342 /* UIViewController+Image.swift */,
 				66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */,
@@ -2463,7 +2463,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66A8AF2F2099B8B60011A342 /* UIColor+Kurozora.swift in Sources */,
 				66CE1AF4209B2C710007A4DE /* AnimeController.swift in Sources */,
 				66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */,
 				6611235A2090907200E6033A /* Kurozora.swift in Sources */,
@@ -2643,6 +2642,7 @@
 				66BEC13523191D090039D683 /* NSLayoutManager+Kurozora.swift in Sources */,
 				662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */,
 				66E1B86E20911F7500D7AC1A /* BrowseViewController.swift in Sources */,
+				66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */,
 				665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */,
 				667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */,
 				6617D536222C9CC0001FD649 /* ShowRelatedCell.swift in Sources */,

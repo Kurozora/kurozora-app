@@ -6,11 +6,10 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import FLAnimatedImage
 import Kingfisher
 import SCLAlertView
-import SwiftyJSON
 import SwiftTheme
 
 class ProfileTableViewController: UITableViewController {
@@ -119,7 +118,7 @@ class ProfileTableViewController: UITableViewController {
 
 		// Setup refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts!", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh posts!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
 		refreshControl?.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
 		// Fetch posts
@@ -171,7 +170,7 @@ class ProfileTableViewController: UITableViewController {
 	*/
 	@objc private func refreshPostsData(_ sender: Any) {
 		// Fetch posts data
-		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing posts...", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)])
+		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing posts...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kurozora])
 		fetchPosts()
 	}
 
@@ -426,9 +425,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-	Cancel profile edit mode and return to view mode.
+		Cancel profile edit mode and return to view mode.
 
-	- Parameter sender: The object requesting the cancelation of the edit mode.
+		- Parameter sender: The object requesting the cancelation of the edit mode.
 	*/
 	@objc func cancelProfileEdit(_ sender: Any) {
 		// User doesn't want changes to be saved, pute everything back.
@@ -442,9 +441,9 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	/**
-	Apply profile changes.
+		Apply profile changes.
 
-	- Parameter sender: The object requesting the changes to be applied.
+		- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
 		guard let bioText = bioTextView.text else { return }

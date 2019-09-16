@@ -36,7 +36,7 @@ class HighlightButton: UIButton {
 		rectShape.position = CGPoint(x: bounds.midX, y: bounds.midY)
 		rectShape.cornerRadius = bounds.height / 2
 		rectShape.path = UIBezierPath(ovalIn: rectShape.bounds).cgPath
-		rectShape.fillColor = UIColor.midnightBlue().cgColor
+		rectShape.fillColor = #colorLiteral(red: 0.1725490196, green: 0.2431372549, blue: 0.3137254902, alpha: 1).cgColor
 	}
 
 	@objc func buttonHighlight(sender: UIButton) {

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SwiftTheme
 
 /**
@@ -132,7 +132,7 @@ enum KThemePicker: ThemeColorPicker {
 				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 			}
 		default:
-			return ThemeManager.color(for: self.stringValue) ?? #colorLiteral(red: 1, green: 0.5764705882, blue: 0, alpha: 1)
+			return ThemeManager.color(for: self.stringValue) ?? .kurozora
 		}
 	}
 }

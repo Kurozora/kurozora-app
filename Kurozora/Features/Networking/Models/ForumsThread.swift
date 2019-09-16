@@ -41,8 +41,8 @@ class ForumsThreadElement: JSONDecodable {
 	let posterUserID: Int?
 	let posterUsername: String?
 	let creationDate: String?
-	let replyCount: Int?
-	let score: Int?
+	let commentCount: Int?
+	let voteCount: Int?
 	let currentUser: UserProfile?
 
 	required init(json: JSON) throws {
@@ -53,8 +53,8 @@ class ForumsThreadElement: JSONDecodable {
 		self.posterUserID = json["poster_user_id"].intValue
 		self.posterUsername = json["poster_username"].stringValue
 		self.creationDate = json["creation_date"].stringValue
-		self.replyCount = json["reply_count"].intValue
-		self.score = json["score"].intValue
+		self.commentCount = json["reply_count"].intValue
+		self.voteCount = json["score"].intValue
 		self.currentUser = try UserProfile(json: json["current_user"])
 	}
 }
