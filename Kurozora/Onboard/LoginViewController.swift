@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
 			forgotPasswordButton.theme_setTitleColor(KThemePicker.textColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var loginButton: TKTransitionSubmitButton! {
+	@IBOutlet weak var loginButton: UIButton! {
 		didSet {
 			loginButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			loginButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
@@ -71,9 +71,9 @@ class LoginViewController: UIViewController {
 
 	// MARK: - Functions
 	/**
-	Instantiates and returns a view controller from the relevant storyboard.
+		Instantiates and returns a view controller from the relevant storyboard.
 
-	- Returns: a view controller from the relevant storyboard.
+		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "login", bundle: nil)
@@ -82,7 +82,6 @@ class LoginViewController: UIViewController {
 
 	// MARK: - IBActions
 	@IBAction func loginPressed(sender: AnyObject) {
-		loginButton.startLoadingAnimation()
 		view.endEditing(true)
 		let username = usernameTextField.trimmedText
 		let password = passwordTextField.text
@@ -93,31 +92,16 @@ class LoginViewController: UIViewController {
 				DispatchQueue.main.async {
 					WorkflowController.pusherInit()
 
-					self.loginButton.startFinishAnimation(1) {
-						let customTabBar = KTabBarController()
-						customTabBar.transitioningDelegate = self
-						customTabBar.modalPresentationStyle = .fullScreen
-						self.present(customTabBar, animated: true, completion: nil)
-					}
+					let customTabBar = KTabBarController()
+					customTabBar.modalPresentationStyle = .fullScreen
+					self.present(customTabBar, animated: true, completion: nil)
 				}
 			} else {
-				self.loginButton.returnToOriginalState()
 				self.passwordTextField.text = ""
 				self.loginButton.isEnabled = false
 				self.loginButton.alpha = 0.5
 			}
 		})
-	}
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-extension LoginViewController: UIViewControllerTransitioningDelegate {
-	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return TKFadeInAnimator(transitionDuration: 0.5, startingAlpha: 0.8)
-	}
-
-	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return nil
 	}
 }
 

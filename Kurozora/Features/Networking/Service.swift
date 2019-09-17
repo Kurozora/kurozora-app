@@ -40,7 +40,7 @@ struct Service {
 
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users") { (formData) in
 			if let profileImage = image?.jpegData(compressionQuality: 0.1) {
-				formData.append(profileImage, withName: "profileImage", fileName: "ProfilePicture.png", mimeType: "image/png")
+				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
 		}
 		request.headers = headers

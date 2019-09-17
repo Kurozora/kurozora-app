@@ -105,11 +105,11 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	// Reply variables
 	var replies: [ThreadRepliesElement]?
-	var order = "top"
+	var repliesOrder = "top"
 
 	// Pagination
-	var totalPages = 0
-	var pageNumber = 0
+	var totalPages = 1
+	var lastPage = 1
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -162,9 +162,9 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	// MARK: - Functions
 	/**
-	Instantiates and returns a view controller from the relevant storyboard.
+		Instantiates and returns a view controller from the relevant storyboard.
 
-	- Returns: a view controller from the relevant storyboard.
+		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "forums", bundle: nil)
@@ -213,6 +213,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		updateVoting(with: forumsThreadElement.currentUser?.likeAction)
 
 		// Set locked state
+		lockImageView.tintColor = .kLightRed
 		if let locked = forumsThreadElement.locked {
 			isLocked(locked)
 		}
@@ -234,20 +235,20 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
-		Service.shared.getReplies(forThread: forumThreadID, order: order, page: pageNumber) { (replies) in
+		Service.shared.getReplies(forThread: forumThreadID, order: repliesOrder, page: lastPage) { (replies) in
 			DispatchQueue.main.async {
 				if let replyPages = replies.replyPages {
 					self.totalPages = replyPages
 				}
 
-				if self.pageNumber == 0 {
+				if self.lastPage == 0 {
 					self.replies = replies.replies
-					self.pageNumber += 1
-				} else if self.pageNumber <= self.totalPages-1 {
+					self.lastPage += 1
+				} else if self.lastPage <= self.totalPages-1 {
 					for threadRepliesElement in (replies.replies)! {
 						self.replies?.append(threadRepliesElement)
 					}
-					self.pageNumber += 1
+					self.lastPage += 1
 				}
 
 				self.tableView.reloadData()
@@ -531,7 +532,7 @@ extension ThreadTableViewController {
 		let numberOfSections = tableView.numberOfSections
 
 		if indexPath.section == numberOfSections-1 {
-			if pageNumber <= totalPages-1 {
+			if lastPage <= totalPages-1 {
 				getThreadReplies()
 			}
 		}

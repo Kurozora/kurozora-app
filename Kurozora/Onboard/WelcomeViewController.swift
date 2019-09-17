@@ -10,9 +10,11 @@ import UIKit
 import SCLAlertView
 import SwiftTheme
 import WhatsNew
+import AuthenticationServices
 
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
+	@IBOutlet weak var buttonsStackView: UIStackView!
 
 	var logoutReason: String? = nil
 	var isKiller: Bool?
@@ -40,6 +42,14 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		backgroundImageView.addParallax()
+
+		if #available(iOS 13.0, *) {
+			let signInWithAppleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .black)
+			signInWithAppleButton.addConstraint(signInWithAppleButton.heightAnchor.constraint(equalToConstant: 40))
+			signInWithAppleButton.cornerRadius = 20
+			signInWithAppleButton.addTarget(self, action: #selector(signInWithAppleButtonPressed), for: .touchUpInside)
+			buttonsStackView.addArrangedSubview(signInWithAppleButton)
+		}
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -84,6 +94,36 @@ class WelcomeViewController: UIViewController {
 		return storyboard.instantiateInitialViewController()
 	}
 
+	@objc @available(iOS 13.0, *)
+	func signInWithAppleButtonPressed() {
+		let authorizationRequest = ASAuthorizationAppleIDProvider().createRequest()
+		authorizationRequest.requestedScopes = [.email]
+
+		let authorizationController = ASAuthorizationController(authorizationRequests: [authorizationRequest])
+		authorizationController.delegate = self
+		authorizationController.presentationContextProvider = self
+		authorizationController.performRequests()
+	}
+
+	@objc @available(iOS 13.0, *)
+	func testUserID(userID: String) {
+		let provider = ASAuthorizationAppleIDProvider()
+		provider.getCredentialState(forUserID: userID) { (credentialState, _) in
+			switch credentialState {
+			case .revoked:
+				print("ID is revoked")
+			case .authorized:
+				print("ID is authorized")
+			case .notFound:
+				print("ID is notFound")
+			case .transferred:
+				print("ID is transferred.")
+			default:
+				break
+			}
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// Hide the status bar
@@ -91,5 +131,27 @@ class WelcomeViewController: UIViewController {
 		UIView.animate(withDuration: 0.25) {
 			self.setNeedsStatusBarAppearanceUpdate()
 		}
+	}
+}
+
+// MARK: - ASAuthorizationControllerDelegate
+@available(iOS 13.0, *)
+extension WelcomeViewController: ASAuthorizationControllerDelegate {
+	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+		if let authorizationCredentials = authorization.credential as? ASAuthorizationAppleIDCredential {
+			if let email = authorizationCredentials.email {
+				print("Got email: \(email)")
+			}
+			print("and user: \(authorizationCredentials.user)")
+			testUserID(userID: authorizationCredentials.user)
+		}
+	}
+}
+
+// MARK: - ASAuthorizationControllerPresentationContextProviding
+@available(iOS 13.0, *)
+extension WelcomeViewController: ASAuthorizationControllerPresentationContextProviding {
+	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+		return self.view.window!
 	}
 }

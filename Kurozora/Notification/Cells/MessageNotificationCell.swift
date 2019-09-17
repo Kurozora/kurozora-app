@@ -21,6 +21,8 @@ class MessageNotificationCell: BaseNotificationCell {
 
 	// MARK: - Functions
 	override func configureCell() {
+		super.configureCell()
+
 		if let title = userNotificationsElement?.data?.name {
 			notificationTitleLabel.text = title
 		}

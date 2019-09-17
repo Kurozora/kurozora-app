@@ -59,11 +59,6 @@
 		66232CDB2310055900C45B5A /* BaseFeedPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */; };
 		66244D8F230B76F800EC33E0 /* LibraryCompactColelctionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D8E230B76F700EC33E0 /* LibraryCompactColelctionViewCell.swift */; };
 		66244D91230B774200EC33E0 /* LibraryDetailedColelctionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D90230B774200EC33E0 /* LibraryDetailedColelctionViewCell.swift */; };
-		662A5FE5223913AB00F3B61D /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A5FE0223913A900F3B61D /* FadeTransition.swift */; };
-		662A5FE6223913AB00F3B61D /* TimerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A5FE1223913AA00F3B61D /* TimerEx.swift */; };
-		662A5FE7223913AB00F3B61D /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A5FE2223913AA00F3B61D /* CGRectEx.swift */; };
-		662A5FE8223913AB00F3B61D /* SpinerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A5FE3223913AB00F3B61D /* SpinerLayer.swift */; };
-		662A5FE9223913AB00F3B61D /* TransitionSubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A5FE4223913AB00F3B61D /* TransitionSubmitButton.swift */; };
 		662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */; };
 		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
@@ -464,11 +459,6 @@
 		66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedPostsCell.swift; sourceTree = "<group>"; };
 		66244D8E230B76F700EC33E0 /* LibraryCompactColelctionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LibraryCompactColelctionViewCell.swift; path = Kurozora/Library/Cells/LibraryCompactColelctionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		66244D90230B774200EC33E0 /* LibraryDetailedColelctionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDetailedColelctionViewCell.swift; sourceTree = "<group>"; };
-		662A5FE0223913A900F3B61D /* FadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
-		662A5FE1223913AA00F3B61D /* TimerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerEx.swift; sourceTree = "<group>"; };
-		662A5FE2223913AA00F3B61D /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
-		662A5FE3223913AB00F3B61D /* SpinerLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinerLayer.swift; sourceTree = "<group>"; };
-		662A5FE4223913AB00F3B61D /* TransitionSubmitButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionSubmitButton.swift; sourceTree = "<group>"; };
 		662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionCell.swift; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
@@ -1122,7 +1112,6 @@
 			children = (
 				66B216A921C166B5006E167D /* KRichTextEditor */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
-				662A5FDF2239139200F3B61D /* Spinner */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -1147,18 +1136,6 @@
 				66A1C65B232B75360044EAD1 /* FollowCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		662A5FDF2239139200F3B61D /* Spinner */ = {
-			isa = PBXGroup;
-			children = (
-				662A5FE2223913AA00F3B61D /* CGRectEx.swift */,
-				662A5FE0223913A900F3B61D /* FadeTransition.swift */,
-				662A5FE3223913AB00F3B61D /* SpinerLayer.swift */,
-				662A5FE1223913AA00F3B61D /* TimerEx.swift */,
-				662A5FE4223913AB00F3B61D /* TransitionSubmitButton.swift */,
-			);
-			path = Spinner;
 			sourceTree = "<group>";
 		};
 		662F706B22A4521E00C3599D /* Layouts */ = {
@@ -2507,7 +2484,6 @@
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				6675263822282B06007C1617 /* Themes.swift in Sources */,
-				662A5FE9223913AB00F3B61D /* TransitionSubmitButton.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
 				66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */,
 				6674DBEA22EDB88B006455C1 /* ExploreSmallCollectionViewFlowLayout.swift in Sources */,
@@ -2613,7 +2589,6 @@
 				666C82582162898400C93A70 /* CastTableViewController.swift in Sources */,
 				661F9F842087282500CF4153 /* WelcomeViewController.swift in Sources */,
 				66ED9D8B22AC15E600C7A45C /* ImageAnnotation.swift in Sources */,
-				662A5FE5223913AB00F3B61D /* FadeTransition.swift in Sources */,
 				664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */,
 				664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */,
 				6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */,
@@ -2627,7 +2602,6 @@
 				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
-				662A5FE6223913AB00F3B61D /* TimerEx.swift in Sources */,
 				66D6236C20A09E5400304914 /* ChartController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */,
 				66EC939A2274B90100D584F7 /* ShowSections.swift in Sources */,
@@ -2662,7 +2636,6 @@
 				6669387021AF39A000BA9620 /* ForumsThread.swift in Sources */,
 				663F8C4F22F199A400F1EACB /* SubscriptionPreviewCollectionViewCell.swift in Sources */,
 				66CBFB6221217F60006A5E4F /* ShowDetailCell.swift in Sources */,
-				662A5FE7223913AB00F3B61D /* CGRectEx.swift in Sources */,
 				666938B221B1D4DF00BA9620 /* WriteACommentCell.swift in Sources */,
 				6674A0D120A576D100AAB527 /* CustomThreadViewController.swift in Sources */,
 				664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */,
@@ -2696,7 +2669,6 @@
 				6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */,
 				664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */,
 				66973DFA2311E4400097A9F8 /* Notification+Kurozora.swift in Sources */,
-				662A5FE8223913AB00F3B61D /* SpinerLayer.swift in Sources */,
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				66C86404216DFB850054EE16 /* SeasonsCollectionViewCell.swift in Sources */,

@@ -111,6 +111,7 @@ public class ForumsCell: UITableViewCell {
 		updateVoting(with: forumThreadsElement.currentUser?.likeAction)
 
 		// Check if thread is locked
+		lockImageView.tintColor = .kLightRed
 		if let locked = forumThreadsElement.locked {
 			isLocked(locked)
 		}

@@ -10,11 +10,7 @@ import UIKit
 import SwiftTheme
 
 class AuthenticationViewController: UIViewController {
-	@IBOutlet weak var lockImageView: UIImageView! {
-		didSet {
-			lockImageView.theme_tintColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var unlockDescriptionView: UIView!
 	@IBOutlet weak var unlockButton: UIButton! {
 		didSet {

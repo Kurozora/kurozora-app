@@ -11,7 +11,7 @@ import SCLAlertView
 import SwiftTheme
 
 class RegisterViewController: UIViewController {
-	@IBOutlet weak var profileView: UIView!
+	@IBOutlet weak var profileImageView: UIImageView!
 	@IBOutlet weak var usernameTextField: UITextField! {
 		didSet {
 			usernameTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
@@ -62,22 +62,21 @@ class RegisterViewController: UIViewController {
 			selectButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var profileImage: UIImageView!
 
-	var imagePicker = UIImagePickerController()
+	lazy var imagePicker = UIImagePickerController()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		self.profileView.applyShadow(cornerRadius: profileView.bounds.height / 2)
 
+		// Apply shadow
+		self.profileImageView.applyShadow(cornerRadius: profileImageView.bounds.height / 2)
+
+		// Disable register button
 		registerButton.isEnabled = false
 		registerButton.alpha = 0.5
-	}
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
+		// Setup textfields
 		usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 		emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 		passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -85,9 +84,9 @@ class RegisterViewController: UIViewController {
 
 	// MARK: - Functions
 	/**
-	Instantiates and returns a view controller from the relevant storyboard.
+		Instantiates and returns a view controller from the relevant storyboard.
 
-	- Returns: a view controller from the relevant storyboard.
+		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "login", bundle: nil)
@@ -114,15 +113,12 @@ class RegisterViewController: UIViewController {
 		self.present(imagePicker, animated: true, completion: nil)
 	}
 
-	//MARK: - IBActions
-	@IBAction func registerPressed(sender: AnyObject) {
-		registerButton.isEnabled = false
-		registerButton.alpha = 0.5
-
-		let username = usernameTextField.trimmedText!
-		let email = emailTextField.trimmedText!
-		let password = passwordTextField.text!
-		let image = profileImage.image
+	/// Registers the user using the information filled by the user.
+	func registerUser() {
+		let username = usernameTextField.trimmedText
+		let email = emailTextField.trimmedText
+		let password = passwordTextField.text
+		let image = profileImageView.image
 
 		Service.shared.register(withUsername: username, email: email, password: password, profileImage: image) { (success) in
 			if success {
@@ -136,8 +132,14 @@ class RegisterViewController: UIViewController {
 		}
 	}
 
-	// Image picker
-	@IBAction func btnChooseImageOnClick(_ sender: UIButton) {
+	//MARK: - IBActions
+	@IBAction func registerButtonPressed(_ sender: UIButton) {
+		registerButton.isEnabled = false
+		registerButton.alpha = 0.5
+		registerUser()
+	}
+
+	@IBAction func chooseImageButtonPressed(_ sender: UIButton) {
 		let alert = UIAlertController(title: "Profile Photo", message: "Choose an awesome photo 😉", preferredStyle: .actionSheet)
 		alert.addAction(UIAlertAction(title: "Take a photo 📷", style: .default, handler: { _ in
 			self.openCamera()
@@ -186,7 +188,7 @@ extension RegisterViewController: UITextFieldDelegate {
 		switch textField {
 		case usernameTextField: emailTextField.becomeFirstResponder()
 		case emailTextField: passwordTextField.becomeFirstResponder()
-		case passwordTextField: registerPressed(sender: passwordTextField)
+		case passwordTextField: registerUser()
 		default: usernameTextField.resignFirstResponder()
 		}
 
@@ -198,7 +200,7 @@ extension RegisterViewController: UITextFieldDelegate {
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		if let editedImage = info[.editedImage] as? UIImage {
-			self.profileImage.image = editedImage
+			self.profileImageView.image = editedImage
 		}
 
 		// Dismiss the UIImagePicker after selection

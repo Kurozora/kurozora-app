@@ -1,465 +1,465 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>INEnums</key>
-		<array/>
-		<key>INIntentDefinitionModelVersion</key>
-		<string>1.1</string>
-		<key>INIntentDefinitionNamespace</key>
-		<string>m7PQAB</string>
-		<key>INIntentDefinitionSystemVersion</key>
-		<string>19A487m</string>
-		<key>INIntentDefinitionToolsBuildVersion</key>
-		<string>11M337n</string>
-		<key>INIntentDefinitionToolsVersion</key>
-		<string>11.0</string>
-		<key>INIntents</key>
-		<array>
+<dict>
+	<key>INEnums</key>
+	<array/>
+	<key>INIntentDefinitionModelVersion</key>
+	<string>1.1</string>
+	<key>INIntentDefinitionNamespace</key>
+	<string>m7PQAB</string>
+	<key>INIntentDefinitionSystemVersion</key>
+	<string>19A558d</string>
+	<key>INIntentDefinitionToolsBuildVersion</key>
+	<string>11A419c</string>
+	<key>INIntentDefinitionToolsVersion</key>
+	<string>11.0</string>
+	<key>INIntents</key>
+	<array>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>create</string>
+			<key>INIntentDescription</key>
+			<string>Add an anime to your library</string>
+			<key>INIntentDescriptionID</key>
+			<string>ApmvFu</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>2</integer>
+			<key>INIntentName</key>
+			<string>AddAnime</string>
+			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>INIntentCategory</key>
-				<string>create</string>
-				<key>INIntentDescription</key>
-				<string>Add an anime to your library</string>
-				<key>INIntentDescriptionID</key>
-				<string>ApmvFu</string>
-				<key>INIntentLastParameterTag</key>
-				<integer>2</integer>
-				<key>INIntentName</key>
-				<string>AddAnime</string>
-				<key>INIntentParameterCombinations</key>
+				<key>library,title</key>
 				<dict>
-					<key>library,title</key>
-					<dict>
-						<key>INIntentParameterCombinationSubtitle</key>
-						<string>Add ${title}to your ${library}</string>
-						<key>INIntentParameterCombinationSubtitleID</key>
-						<string>o86m0j</string>
-						<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-						<true/>
-						<key>INIntentParameterCombinationTitle</key>
-						<string>Add ${title} to ${library}</string>
-						<key>INIntentParameterCombinationTitleID</key>
-						<string>vSNfhz</string>
-					</dict>
-					<key>title</key>
-					<dict>
-						<key>INIntentParameterCombinationIsPrimary</key>
-						<true/>
-						<key>INIntentParameterCombinationSubtitle</key>
-						<string>Add ${title} to your library</string>
-						<key>INIntentParameterCombinationSubtitleID</key>
-						<string>U3bp9v</string>
-						<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-						<true/>
-						<key>INIntentParameterCombinationTitle</key>
-						<string>Add ${title}</string>
-						<key>INIntentParameterCombinationTitleID</key>
-						<string>AdP7k7</string>
-					</dict>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Add ${title}to your ${library}</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>o86m0j</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Add ${title} to ${library}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>vSNfhz</string>
 				</dict>
-				<key>INIntentParameters</key>
-				<array>
-					<dict>
-						<key>INIntentParameterCustomDisambiguation</key>
-						<true/>
-						<key>INIntentParameterDisplayName</key>
-						<string>Title</string>
-						<key>INIntentParameterDisplayNameID</key>
-						<string>w7jFlr</string>
-						<key>INIntentParameterDisplayPriority</key>
-						<integer>1</integer>
-						<key>INIntentParameterMetadata</key>
-						<dict>
-							<key>INIntentParameterMetadataCapitalization</key>
-							<string>None</string>
-						</dict>
-						<key>INIntentParameterName</key>
-						<string>title</string>
-						<key>INIntentParameterPromptDialogs</key>
-						<array>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Adding ${title}to your library...</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>BfcbUF</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Primary</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>There are ${count} options matching ‘${title}’.</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>DwjvUm</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationIntroduction</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Which one?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>VYCi7U</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationSelection</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Just to confirm, you wanted ‘${title}’?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>Qqwx2V</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Confirmation</string>
-							</dict>
-						</array>
-						<key>INIntentParameterSupportsResolution</key>
-						<true/>
-						<key>INIntentParameterTag</key>
-						<integer>1</integer>
-						<key>INIntentParameterType</key>
-						<string>String</string>
-					</dict>
-					<dict>
-						<key>INIntentParameterCustomDisambiguation</key>
-						<true/>
-						<key>INIntentParameterDisplayName</key>
-						<string>Library</string>
-						<key>INIntentParameterDisplayNameID</key>
-						<string>lJkP7h</string>
-						<key>INIntentParameterDisplayPriority</key>
-						<integer>2</integer>
-						<key>INIntentParameterMetadata</key>
-						<dict>
-							<key>INIntentParameterMetadataCapitalization</key>
-							<string>None</string>
-						</dict>
-						<key>INIntentParameterName</key>
-						<string>library</string>
-						<key>INIntentParameterPromptDialogs</key>
-						<array>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Adding to your ${library}...</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>IF0kR4</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Primary</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>There are ${count} options matching ‘${library}’.</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>vBeR15</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationIntroduction</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Which one?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>q4Utd3</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationSelection</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Just to confirm, you wanted ‘${library}’?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>Pa9YMd</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Confirmation</string>
-							</dict>
-						</array>
-						<key>INIntentParameterSupportsResolution</key>
-						<true/>
-						<key>INIntentParameterTag</key>
-						<integer>2</integer>
-						<key>INIntentParameterType</key>
-						<string>String</string>
-					</dict>
-				</array>
-				<key>INIntentResponse</key>
+				<key>title</key>
 				<dict>
-					<key>INIntentResponseCodes</key>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Add ${title} to your library</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>U3bp9v</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Add ${title}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>AdP7k7</string>
+				</dict>
+			</dict>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Title</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>w7jFlr</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>None</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>title</string>
+					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>success</string>
-							<key>INIntentResponseCodeSuccess</key>
+							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Adding ${title}to your library...</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>BfcbUF</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
 						</dict>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>failure</string>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${title}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>DwjvUm</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Which one?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>VYCi7U</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationSelection</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${title}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Qqwx2V</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>1</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
 				</dict>
-				<key>INIntentTitle</key>
-				<string>Add Anime</string>
-				<key>INIntentTitleID</key>
-				<string>c2ajYn</string>
-				<key>INIntentType</key>
-				<string>Custom</string>
-				<key>INIntentVerb</key>
-				<string>Add</string>
-			</dict>
-			<dict>
-				<key>INIntentCategory</key>
-				<string>search</string>
-				<key>INIntentDescription</key>
-				<string>Search for anime in Kurozora</string>
-				<key>INIntentDescriptionID</key>
-				<string>sIAYXr</string>
-				<key>INIntentLastParameterTag</key>
-				<integer>3</integer>
-				<key>INIntentName</key>
-				<string>SearchAnime</string>
-				<key>INIntentParameterCombinations</key>
 				<dict>
-					<key>title</key>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Library</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>lJkP7h</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterMetadata</key>
 					<dict>
-						<key>INIntentParameterCombinationIsPrimary</key>
-						<true/>
-						<key>INIntentParameterCombinationSubtitle</key>
-						<string>Search for ${title}in Kurozora</string>
-						<key>INIntentParameterCombinationSubtitleID</key>
-						<string>EmTZC7</string>
-						<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-						<true/>
-						<key>INIntentParameterCombinationTitle</key>
-						<string>Search for ${title}</string>
-						<key>INIntentParameterCombinationTitleID</key>
-						<string>3Ay8hO</string>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>None</string>
 					</dict>
-				</dict>
-				<key>INIntentParameters</key>
-				<array>
-					<dict>
-						<key>INIntentParameterCustomDisambiguation</key>
-						<true/>
-						<key>INIntentParameterDisplayName</key>
-						<string>Title</string>
-						<key>INIntentParameterDisplayNameID</key>
-						<string>VSfYrP</string>
-						<key>INIntentParameterDisplayPriority</key>
-						<integer>1</integer>
-						<key>INIntentParameterMetadata</key>
-						<dict>
-							<key>INIntentParameterMetadataCapitalization</key>
-							<string>None</string>
-						</dict>
-						<key>INIntentParameterName</key>
-						<string>title</string>
-						<key>INIntentParameterPromptDialogs</key>
-						<array>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Searching for ${title}in Kurozora...</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>ZMM2Jy</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Primary</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>There are ${count} options matching ‘${title}’.</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>MnSlVE</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationIntroduction</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Which one?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>hRp8UT</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationSelection</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Just to confirm, you wanted ‘${title}’?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>YhI7Wl</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Confirmation</string>
-							</dict>
-						</array>
-						<key>INIntentParameterSupportsResolution</key>
-						<true/>
-						<key>INIntentParameterTag</key>
-						<integer>3</integer>
-						<key>INIntentParameterType</key>
-						<string>String</string>
-					</dict>
-				</array>
-				<key>INIntentResponse</key>
-				<dict>
-					<key>INIntentResponseCodes</key>
+					<key>INIntentParameterName</key>
+					<string>library</string>
+					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>success</string>
-							<key>INIntentResponseCodeSuccess</key>
+							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Adding to your ${library}...</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>IF0kR4</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
 						</dict>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>failure</string>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${library}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>vBeR15</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Which one?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>q4Utd3</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationSelection</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${library}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Pa9YMd</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
 				</dict>
-				<key>INIntentTitle</key>
-				<string>Search Anime</string>
-				<key>INIntentTitleID</key>
-				<string>Ed8WpH</string>
-				<key>INIntentType</key>
-				<string>Custom</string>
-				<key>INIntentVerb</key>
-				<string>Search</string>
-			</dict>
+			</array>
+			<key>INIntentResponse</key>
 			<dict>
-				<key>INIntentCategory</key>
-				<string>checkIn</string>
-				<key>INIntentDefaultImageName</key>
-				<string>kdefaults_icon</string>
-				<key>INIntentDescription</key>
-				<string>Open an anime in Kurozora</string>
-				<key>INIntentDescriptionID</key>
-				<string>vyB30O</string>
-				<key>INIntentLastParameterTag</key>
-				<integer>7</integer>
-				<key>INIntentName</key>
-				<string>OpenAnime</string>
-				<key>INIntentParameterCombinations</key>
-				<dict>
-					<key>title</key>
-					<dict>
-						<key>INIntentParameterCombinationSubtitle</key>
-						<string>Open ${title}details</string>
-						<key>INIntentParameterCombinationSubtitleID</key>
-						<string>GGesCN</string>
-						<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-						<false/>
-						<key>INIntentParameterCombinationTitle</key>
-						<string>Open ${title}</string>
-						<key>INIntentParameterCombinationTitleID</key>
-						<string>U79Arz</string>
-					</dict>
-				</dict>
-				<key>INIntentParameters</key>
+				<key>INIntentResponseCodes</key>
 				<array>
 					<dict>
-						<key>INIntentParameterCustomDisambiguation</key>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
 						<true/>
-						<key>INIntentParameterDisplayName</key>
-						<string>Title</string>
-						<key>INIntentParameterDisplayNameID</key>
-						<string>cEmpgH</string>
-						<key>INIntentParameterDisplayPriority</key>
-						<integer>1</integer>
-						<key>INIntentParameterMetadata</key>
-						<dict>
-							<key>INIntentParameterMetadataCapitalization</key>
-							<string>None</string>
-						</dict>
-						<key>INIntentParameterName</key>
-						<string>title</string>
-						<key>INIntentParameterPromptDialogs</key>
-						<array>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Opening ${title}...</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>RHS0CI</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Primary</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>There are ${count} options matching ‘${title}’.</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>gWro6W</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationIntroduction</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Which one?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>8ayrtp</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>DisambiguationSelection</string>
-							</dict>
-							<dict>
-								<key>INIntentParameterPromptDialogCustom</key>
-								<true/>
-								<key>INIntentParameterPromptDialogFormatString</key>
-								<string>Just to confirm, you wanted ‘${title}’?</string>
-								<key>INIntentParameterPromptDialogFormatStringID</key>
-								<string>igEeB9</string>
-								<key>INIntentParameterPromptDialogType</key>
-								<string>Confirmation</string>
-							</dict>
-						</array>
-						<key>INIntentParameterSupportsResolution</key>
-						<true/>
-						<key>INIntentParameterTag</key>
-						<integer>5</integer>
-						<key>INIntentParameterType</key>
-						<string>String</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
 					</dict>
 				</array>
-				<key>INIntentResponse</key>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Add Anime</string>
+			<key>INIntentTitleID</key>
+			<string>c2ajYn</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Add</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>search</string>
+			<key>INIntentDescription</key>
+			<string>Search for anime in Kurozora</string>
+			<key>INIntentDescriptionID</key>
+			<string>sIAYXr</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>3</integer>
+			<key>INIntentName</key>
+			<string>SearchAnime</string>
+			<key>INIntentParameterCombinations</key>
+			<dict>
+				<key>title</key>
 				<dict>
-					<key>INIntentResponseCodes</key>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Search for ${title}in Kurozora</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>EmTZC7</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Search for ${title}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>3Ay8hO</string>
+				</dict>
+			</dict>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Title</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>VSfYrP</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>None</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>title</string>
+					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>success</string>
-							<key>INIntentResponseCodeSuccess</key>
+							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Searching for ${title}in Kurozora...</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>ZMM2Jy</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
 						</dict>
 						<dict>
-							<key>INIntentResponseCodeName</key>
-							<string>failure</string>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${title}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>MnSlVE</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Which one?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>hRp8UT</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationSelection</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${title}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>YhI7Wl</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>3</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
 				</dict>
-				<key>INIntentTitle</key>
-				<string>Open Anime</string>
-				<key>INIntentTitleID</key>
-				<string>pXo46W</string>
-				<key>INIntentType</key>
-				<string>Custom</string>
-				<key>INIntentUserConfirmationRequired</key>
-				<true/>
-				<key>INIntentVerb</key>
-				<string>CheckIn</string>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
 			</dict>
-		</array>
-		<key>INTypes</key>
-		<array/>
-	</dict>
+			<key>INIntentTitle</key>
+			<string>Search Anime</string>
+			<key>INIntentTitleID</key>
+			<string>Ed8WpH</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Search</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>checkIn</string>
+			<key>INIntentDefaultImageName</key>
+			<string>kdefaults_icon</string>
+			<key>INIntentDescription</key>
+			<string>Open an anime in Kurozora</string>
+			<key>INIntentDescriptionID</key>
+			<string>vyB30O</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>7</integer>
+			<key>INIntentName</key>
+			<string>OpenAnime</string>
+			<key>INIntentParameterCombinations</key>
+			<dict>
+				<key>title</key>
+				<dict>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Open ${title}details</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>GGesCN</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<false/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Open ${title}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>U79Arz</string>
+				</dict>
+			</dict>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Title</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>cEmpgH</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>None</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>title</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Opening ${title}...</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>RHS0CI</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${title}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>gWro6W</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Which one?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>8ayrtp</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationSelection</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${title}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>igEeB9</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>5</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Open Anime</string>
+			<key>INIntentTitleID</key>
+			<string>pXo46W</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentUserConfirmationRequired</key>
+			<true/>
+			<key>INIntentVerb</key>
+			<string>CheckIn</string>
+		</dict>
+	</array>
+	<key>INTypes</key>
+	<array/>
+</dict>
 </plist>

@@ -24,7 +24,7 @@
 //		didSet {
 //			titleTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
 //			titleTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-//			titleTextField.theme_placeholderAttributes = ThemeDictionaryPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key : AnyObject]? in
+//			titleTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
 //				guard let rgba = value as? String else { return nil }
 //				let color = UIColor(rgba: rgba)
 //				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
