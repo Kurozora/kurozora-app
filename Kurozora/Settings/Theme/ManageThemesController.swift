@@ -95,57 +95,24 @@ class ManageThemesCollectionViewController: UICollectionViewController, EmptyDat
 				.isScrollAllowed(true)
 		}
 	}
-
-	// MARK: - Functions
-	fileprivate func downloadStart(for theme: ThemesElement?) {
-		guard let themeName = theme?.name else { return }
-		guard let themeID = theme?.id else { return }
-		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Downloading \(themeName)...")
-
-		KThemeStyle.downloadThemeTask(for: theme) { isSuccess in
-			sclAlertView.setTitle(isSuccess ? "Finished downloading!" : "Download failed :(")
-
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-				sclAlertView.close()
-			}
-
-			if isSuccess {
-				KThemeStyle.switchTo(theme: themeID)
-			}
-		}
-	}
-}
-
-// MARK: - UIAlertViewDelegate
-extension ManageThemesCollectionViewController: UIAlertViewDelegate {
-	fileprivate func tapDownload(for theme: ThemesElement?) {
-		guard let themeID = theme?.id else { return }
-		guard KThemeStyle.themeExist(for: themeID) else {
-			let alert = SCLAlertView()
-			alert.addButton("Sure") {
-				self.downloadStart(for: theme)
-			}
-			alert.showInfo("Not Downloaded", subTitle: "Download the theme right now?", closeButtonTitle: "Cancel")
-			return
-		}
-
-		KThemeStyle.switchTo(theme: themeID)
-	}
 }
 
 // MARK: - UICollectionViewDataSource
 extension ManageThemesCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard let themesCount = themes?.count else { return 0 }
-		return themesCount
+		return themesCount + 3
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let themeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! ThemeCell //TestThemeCell
 
 		themeCell.row = indexPath.row
-		themeCell.themesElement = themes?[indexPath.row]
+		if indexPath.row > 3 {
+			themeCell.themesElement = themes?[indexPath.row - 3]
+		} else {
+			themeCell.themesElement = themes?.first
+		}
 
 		return themeCell
 	}
@@ -153,9 +120,6 @@ extension ManageThemesCollectionViewController {
 
 // MARK: - UICollectionViewDelegate
 extension ManageThemesCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		tapDownload(for: themes?[indexPath.row])
-	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

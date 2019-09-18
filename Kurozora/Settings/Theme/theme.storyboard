@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -157,24 +157,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="uLH-Bd-wlF">
-                            <size key="itemSize" width="160" height="344"/>
+                            <size key="itemSize" width="154" height="344"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemeCell" id="LQw-RA-Vgs" customClass="ThemeCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="8" y="8" width="155" height="332"/>
+                                <rect key="frame" x="8" y="8" width="154" height="332"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="155" height="332"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="332"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvK-7T-gjk" userLabel="Content View">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="344"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="154" height="344"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="M8r-MS-gaT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="286.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="286.5"/>
                                                     <color key="backgroundColor" red="0.0" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="275" id="deX-hE-CuZ"/>
@@ -185,6 +185,31 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
+                                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boX-Aw-VdH" userLabel="More Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
+                                                    <rect key="frame" x="123" y="5" width="26" height="26"/>
+                                                    <color key="backgroundColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="26" id="E7F-4C-yMP"/>
+                                                        <constraint firstAttribute="width" constant="26" id="ER6-Wf-rgt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="tintColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                                    <state key="normal" image="more">
+                                                        <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="13"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                                            <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="moreButtonPressed:" destination="LQw-RA-Vgs" eventType="touchUpInside" id="iXD-Y3-D12"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Strawberry adsasdasd" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2">
                                                     <rect key="frame" x="0.0" y="296.5" width="72.5" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
@@ -198,7 +223,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="111" y="302.5" width="49" height="20"/>
+                                                    <rect key="frame" x="105" y="302.5" width="49" height="20"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="TUA-Ju-URN"/>
@@ -218,6 +243,7 @@
                                             <constraints>
                                                 <constraint firstItem="Vgt-I3-cKU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Sp-VC-gg2" secondAttribute="trailing" constant="10" id="I02-eT-T8I"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Vgt-I3-cKU" secondAttribute="bottom" constant="5" id="P7U-28-dwd"/>
+                                                <constraint firstItem="boX-Aw-VdH" firstAttribute="top" secondItem="M8r-MS-gaT" secondAttribute="top" constant="5" id="Umb-zm-1uZ"/>
                                                 <constraint firstItem="4Sp-VC-gg2" firstAttribute="leading" secondItem="M8r-MS-gaT" secondAttribute="leading" id="VfO-bo-ooJ"/>
                                                 <constraint firstItem="M8r-MS-gaT" firstAttribute="top" secondItem="KvK-7T-gjk" secondAttribute="top" id="YEs-cp-dF8"/>
                                                 <constraint firstItem="Vgt-I3-cKU" firstAttribute="centerY" secondItem="4Sp-VC-gg2" secondAttribute="centerY" id="aZr-Ph-2yu"/>
@@ -229,6 +255,7 @@
                                                 <constraint firstItem="NMR-PH-sic" firstAttribute="leading" secondItem="KvK-7T-gjk" secondAttribute="leading" id="nkz-eX-MaN"/>
                                                 <constraint firstItem="M8r-MS-gaT" firstAttribute="leading" secondItem="KvK-7T-gjk" secondAttribute="leading" id="opn-mH-Wu9"/>
                                                 <constraint firstAttribute="trailing" secondItem="M8r-MS-gaT" secondAttribute="trailing" id="ppX-3c-4Ua"/>
+                                                <constraint firstItem="M8r-MS-gaT" firstAttribute="trailing" secondItem="boX-Aw-VdH" secondAttribute="trailing" constant="5" id="vM7-uq-7pD"/>
                                                 <constraint firstItem="NMR-PH-sic" firstAttribute="top" secondItem="4Sp-VC-gg2" secondAttribute="bottom" id="xLN-zb-dR2"/>
                                             </constraints>
                                         </view>
@@ -240,10 +267,11 @@
                                     <constraint firstAttribute="trailing" secondItem="KvK-7T-gjk" secondAttribute="trailing" id="O62-0D-R3f"/>
                                     <constraint firstItem="KvK-7T-gjk" firstAttribute="top" secondItem="LQw-RA-Vgs" secondAttribute="top" id="V5D-KG-rkC"/>
                                 </constraints>
-                                <size key="customSize" width="155" height="332"/>
+                                <size key="customSize" width="154" height="332"/>
                                 <connections>
                                     <outlet property="buyButton" destination="Vgt-I3-cKU" id="lON-XC-fzl"/>
                                     <outlet property="downloadCountLabel" destination="NMR-PH-sic" id="fwe-77-Kzh"/>
+                                    <outlet property="moreButton" destination="boX-Aw-VdH" id="eXo-fP-nod"/>
                                     <outlet property="themeScreenshot" destination="M8r-MS-gaT" id="6as-qG-q9H"/>
                                     <outlet property="titleLabel" destination="4Sp-VC-gg2" id="uh5-Xv-TpF"/>
                                 </connections>
@@ -258,11 +286,12 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O7Q-cO-RkM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="406" y="-1673"/>
+            <point key="canvasLocation" x="405.79710144927537" y="-1673.4375"/>
         </scene>
     </scenes>
     <resources>
         <image name="check" width="44" height="34"/>
+        <image name="more" width="24" height="24"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

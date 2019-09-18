@@ -5,13 +5,11 @@
 	<key>UIStatusBarStyle</key>
 	<string>LightContent</string>
 	<key>UIVisualEffectView</key>
-	<string>dark</string>
+	<string>Dark</string>
 	<key>Global</key>
 	<dict>
 		<key>backgroundColor</key>
 		<string>#353A50</string>
-		<key>tintedBackgroundColor</key>
-		<string>#7078AA</string>
 		<key>barTintColor</key>
 		<string>#353A50</string>
 		<key>barTitleTextColor</key>
@@ -30,6 +28,8 @@
 		<string>#979DA9</string>
 		<key>tintColor</key>
 		<string>#FF9300</string>
+		<key>tintedBackgroundColor</key>
+		<string>#7078AA</string>
 		<key>tintedButtonTextColor</key>
 		<string>#EEEEEE</string>
 		<key>separatorColor</key>
@@ -59,11 +59,6 @@
 		<string>#AFAFAF</string>
 		<key>actionDefaultColor</key>
 		<string>#959DAD</string>
-	</dict>
-	<key>Notifications</key>
-	<dict>
-		<key>accentColor</key>
-		<string>#FFFFFF</string>
 	</dict>
 </dict>
 </plist>

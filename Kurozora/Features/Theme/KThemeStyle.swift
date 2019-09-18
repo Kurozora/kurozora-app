@@ -174,7 +174,36 @@ extension KThemeStyle {
 // MARK: - Download
 extension KThemeStyle {
 	/**
-		Downlaoad a theme from a given link.
+		Remove a theme for a given theme element.
+
+		- Parameter theme: The theme element which contains the link.
+		- Parameter successHandler: A closure returning a boolean indicating whether remove is successful.
+		- Parameter isSuccess: A boolean value indicating whether the remove is successful.
+	*/
+	static func removeThemeTask(for theme: ThemesElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+		guard let themeID = theme?.id else {
+			DispatchQueue.main.async {
+				successHandler(false)
+			}
+			return
+		}
+
+		do {
+			try FileManager.default.removeItem(at: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist"))
+
+			DispatchQueue.main.async {
+				successHandler(!themeExist(for: themeID))
+			}
+		} catch let writeError {
+			DispatchQueue.main.async {
+				successHandler(themeExist(for: themeID))
+			}
+			print("Error removing file \(themesDirectoryUrl) : \(writeError)")
+		}
+	}
+
+	/**
+		Downlaoad a theme for a given theme element.
 
 		- Parameter theme: The theme element which contains the link.
 		- Parameter successHandler: A closure returning a boolean indicating whether download is successful.
@@ -214,7 +243,7 @@ extension KThemeStyle {
 						DispatchQueue.main.async {
 							successHandler(themeExist(for: themeID))
 						}
-						print("error creating directory \(libraryDirectoryUrl) : \(createError)")
+						print("Error creating directory \(libraryDirectoryUrl) : \(createError)")
 					}
 				}
 
@@ -228,7 +257,7 @@ extension KThemeStyle {
 					DispatchQueue.main.async {
 						successHandler(themeExist(for: themeID))
 					}
-					print("error writing file \(themesDirectoryUrl) : \(writeError)")
+					print("Error writing file \(themesDirectoryUrl) : \(writeError)")
 				}
 			} else {
 				print("Failure: \(String(describing: error?.localizedDescription))")
@@ -260,7 +289,8 @@ extension KThemeStyle {
 
 		- Returns: a boolean indicating whether a theme exists.
 	*/
-	static func themeExist(for themeID: Int) -> Bool {
+	static func themeExist(for themeID: Int?) -> Bool {
+		guard let themeID = themeID else { return false }
 		let themeFileDirectoryUrl: URL = themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist")
 		return FileManager.default.fileExists(atPath: themeFileDirectoryUrl.path)
 	}

@@ -53,9 +53,6 @@ enum KThemePicker: ThemeColorPicker {
 	case tableViewCellSelectedChevronColor = "TableViewCell.selectedChevronColor"
 	case tableViewCellActionDefaultColor = "TableViewCell.actionDefaultColor"
 
-	// Notifications
-	case accentColor = "Notifications.accentColor"
-
 	/// The string value of a theme picker attribute.
 	var stringValue: String {
 		switch self {
@@ -113,9 +110,6 @@ enum KThemePicker: ThemeColorPicker {
 			return "TableViewCell.selectedChevronColor"
 		case .tableViewCellActionDefaultColor:
 			return "TableViewCell.actionDefaultColor"
-		// Notifications
-		case .accentColor:
-			return "Notifications.accentColor"
 		}
 	}
 
