@@ -129,6 +129,7 @@ class ThemeCell: UICollectionViewCell {
 
 			if isSuccess {
 				self.updateBuyButton()
+				self.shouldHideMoreButton()
 				KThemeStyle.switchTo(theme: themeID)
 			}
 		}
