@@ -1,6 +1,0 @@
-framework module Solar {
-  umbrella header "Solar-umbrella.h"
-
-  export *
-  module * { export * }
-}

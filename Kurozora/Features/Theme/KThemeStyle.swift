@@ -10,7 +10,6 @@ import KCommonKit
 import SwiftTheme
 import TRON
 import Alamofire
-import Solar
 import CoreLocation
 
 /**

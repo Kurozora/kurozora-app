@@ -641,6 +641,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="createThreadButton:" destination="Haj-ko-0LW" eventType="touchUpInside" id="zWg-H1-xJJ"/>
+                                    <segue destination="7Sh-9I-KwA" kind="presentation" modalPresentationStyle="overFullScreen" id="8kz-SJ-UJ8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -673,6 +674,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfp-Yv-lzg" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="275" y="483"/>
+        </scene>
+        <!--editor-->
+        <scene sceneID="dTh-0J-gzz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="editor" id="7Sh-9I-KwA" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v7O-5W-ON0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="822" y="483"/>
         </scene>
     </scenes>
     <resources>

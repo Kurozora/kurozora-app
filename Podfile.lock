@@ -8,7 +8,6 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - ColorSlider (4.4)
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
   - Down (0.8.6)
@@ -16,7 +15,6 @@ PODS:
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
-  - IBAnimatable (6.0.0)
   - iosMath (0.9.4)
   - IQKeyboardManagerSwift (6.4.2)
   - KeychainAccess (3.2.0)
@@ -38,7 +36,6 @@ PODS:
     - SnapKit
   - SCLAlertView (0.8.1)
   - SnapKit (5.0.1)
-  - Solar (2.1.0)
   - SPStorkController (1.7.9)
   - Starscream (3.0.6)
   - SwifterSwift (5.0.0):
@@ -80,12 +77,10 @@ PODS:
 
 DEPENDENCIES:
   - AXPhotoViewer
-  - ColorSlider
   - Cosmos
   - EmptyDataSet-Swift
   - ESTabBarController-swift
   - Hero
-  - IBAnimatable
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, commit `xcode11`)
@@ -94,7 +89,6 @@ DEPENDENCIES:
   - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichTextView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
-  - Solar
   - SPStorkController
   - SwifterSwift
   - SwiftTheme
@@ -111,7 +105,6 @@ SPEC REPOS:
     - AutoInsetter
     - AXPhotoViewer
     - AXStateButton
-    - ColorSlider
     - Cosmos
     - CryptoSwift
     - Down
@@ -119,7 +112,6 @@ SPEC REPOS:
     - ESTabBarController-swift
     - FLAnimatedImage
     - Hero
-    - IBAnimatable
     - iosMath
     - IQKeyboardManagerSwift
     - KeychainAccess
@@ -130,7 +122,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - RichTextView
     - SnapKit
-    - Solar
     - SPStorkController
     - Starscream
     - SwifterSwift
@@ -169,7 +160,6 @@ SPEC CHECKSUMS:
   AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
@@ -177,7 +167,6 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
-  IBAnimatable: d49f9fee0c401b5b08d31b77256b77fb067e0e92
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   IQKeyboardManagerSwift: 79a3ec200dfb41cb66a89b8575417b5378107c5d
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
@@ -191,7 +180,6 @@ SPEC CHECKSUMS:
   RichTextView: 5e37d093aecfaa2f0eac3b5fa81a299b9f3d59b8
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
@@ -203,6 +191,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   WordPress-Aztec-iOS: e58c7ab55b0bae53418a705876093fed314b6586
 
-PODFILE CHECKSUM: f587f13b46d47f3031d8c5312ad5e1dc8e3dda14
+PODFILE CHECKSUM: 460f26b4a6fbd29852528f90194d2e14de9a4425
 
 COCOAPODS: 1.8.0.beta.1

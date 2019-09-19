@@ -63,6 +63,7 @@
 		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
 		66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
+		6634735C233398AF006B7F99 /* Solar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634735B233398AF006B7F99 /* Solar.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
 		663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */; };
 		663C95B923084FAC003720A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C95B823084FAC003720A4 /* SceneDelegate.swift */; };
@@ -283,7 +284,7 @@
 		66AEABF122994F4600949FD8 /* EpisodeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABF022994F4600949FD8 /* EpisodeSection.swift */; };
 		66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AF50DC21D9B67900FC622E /* NotificationsSettingsViewController.swift */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
-		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
+		66B216AA21C16817006E167D /* Aztec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* Aztec.swift */; };
 		66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
 		66B216AC21C1681F006E167D /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
 		66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216AD21C16B15006E167D /* ThreadPost.swift */; };
@@ -462,6 +463,7 @@
 		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
 		66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
+		6634735B233398AF006B7F99 /* Solar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solar.swift; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewController.swift; sourceTree = "<group>"; };
 		663C95B823084FAC003720A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -616,7 +618,7 @@
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		66825BE721B29E5900A2F602 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
-		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
+		66825BE921B29F3800A2F602 /* Aztec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aztec.swift; sourceTree = "<group>"; };
 		66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestBuilder.swift; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
@@ -1107,7 +1109,8 @@
 		66160C3C215C26F300D0D722 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				66B216A921C166B5006E167D /* KRichTextEditor */,
+				6634735A23339885006B7F99 /* Solar */,
+				66B216A921C166B5006E167D /* Aztec */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 			);
 			path = Libraries;
@@ -1157,6 +1160,14 @@
 				66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		6634735A23339885006B7F99 /* Solar */ = {
+			isa = PBXGroup;
+			children = (
+				6634735B233398AF006B7F99 /* Solar.swift */,
+			);
+			path = Solar;
 			sourceTree = "<group>";
 		};
 		663F8C4522F1881000F1EACB /* Cells */ = {
@@ -1656,15 +1667,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		66B216A921C166B5006E167D /* KRichTextEditor */ = {
+		66B216A921C166B5006E167D /* Aztec */ = {
 			isa = PBXGroup;
 			children = (
 				66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */,
 				666938AC21B19E3800BA9620 /* editor.storyboard */,
-				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
+				66825BE921B29F3800A2F602 /* Aztec.swift */,
 				66825BE721B29E5900A2F602 /* KeyboardManager.swift */,
 			);
-			path = KRichTextEditor;
+			path = Aztec;
 			sourceTree = "<group>";
 		};
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
@@ -2271,8 +2282,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
+			shellScript = "\n";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2353,7 +2363,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXStateButton/AXStateButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
-				"${BUILT_PRODUCTS_DIR}/ColorSlider/ColorSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
@@ -2361,7 +2370,6 @@
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-				"${BUILT_PRODUCTS_DIR}/IBAnimatable/IBAnimatable.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2375,7 +2383,6 @@
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
@@ -2393,7 +2400,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXStateButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ColorSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
@@ -2401,7 +2407,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IBAnimatable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2415,7 +2420,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
@@ -2489,6 +2493,7 @@
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
+				6634735C233398AF006B7F99 /* Solar.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
@@ -2605,7 +2610,7 @@
 				66EC939A2274B90100D584F7 /* ShowSections.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */,
-				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
+				66B216AA21C16817006E167D /* Aztec.swift in Sources */,
 				663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
