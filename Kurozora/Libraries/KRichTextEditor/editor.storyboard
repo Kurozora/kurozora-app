@@ -61,7 +61,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5BB-1p-TAp">
                                 <rect key="frame" x="20" y="156" width="374" height="706"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4y6-Eq-tbU" customClass="RichEditorView" customModule="RichEditorView">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4y6-Eq-tbU" customClass="EditorView" customModule="Aztec">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="706"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
@@ -106,21 +106,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="yqC-Ud-lJQ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="1zf-Gi-Mdg">
-                            <connections>
-                                <action selector="cancelButtonPressed:" destination="Hhy-HY-4Mq" id="SqU-z8-YM2"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Post" style="done" id="8Au-53-wQI">
-                            <connections>
-                                <action selector="postButtonPressed:" destination="Hhy-HY-4Mq" id="K66-PC-ekY"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="1zf-Gi-Mdg"/>
+                        <barButtonItem key="rightBarButtonItem" title="Post" style="done" id="8Au-53-wQI"/>
                     </navigationItem>
-                    <connections>
-                        <outlet property="richEditorView" destination="4y6-Eq-tbU" id="4gy-jR-OO4"/>
-                        <outlet property="titleTextField" destination="j89-fz-JFL" id="AbQ-en-jOt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k0-4G-HKi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

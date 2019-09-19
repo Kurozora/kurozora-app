@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-//import UIKit
+import UIKit
 //import ColorSlider
 //import RichEditorView
 //import SCLAlertView
@@ -202,3 +202,7 @@
 //		print("Loaded")
 //	}
 //}
+
+class KRichTextEditorViewController: UIViewController {
+
+}

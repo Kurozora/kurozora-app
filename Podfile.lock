@@ -76,6 +76,7 @@ PODS:
     - SwiftyJSON (~> 5.0)
     - TRON/Core
   - WhatsNew (0.4.6)
+  - WordPress-Aztec-iOS (1.9.0)
 
 DEPENDENCIES:
   - AXPhotoViewer
@@ -102,6 +103,7 @@ DEPENDENCIES:
   - TRON (~> 5.0.0-beta.5)
   - TRON/SwiftyJSON
   - WhatsNew
+  - WordPress-Aztec-iOS
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -138,6 +140,7 @@ SPEC REPOS:
     - Tabman
     - TRON
     - WhatsNew
+    - WordPress-Aztec-iOS
 
 EXTERNAL SOURCES:
   Kingfisher:
@@ -198,7 +201,8 @@ SPEC CHECKSUMS:
   Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
+  WordPress-Aztec-iOS: e58c7ab55b0bae53418a705876093fed314b6586
 
-PODFILE CHECKSUM: 9f8201e0b0165828006c1a672b627f35f67021f3
+PODFILE CHECKSUM: f587f13b46d47f3031d8c5312ad5e1dc8e3dda14
 
 COCOAPODS: 1.8.0.beta.1

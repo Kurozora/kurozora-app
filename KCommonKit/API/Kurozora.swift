@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public struct KList {
 	public var accessToken: String

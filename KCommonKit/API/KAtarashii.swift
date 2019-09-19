@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public enum SyncState: Int {
 	case inSync = 0

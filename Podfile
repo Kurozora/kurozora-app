@@ -8,37 +8,38 @@ use_frameworks!
 
 # MARK: - Defs
 def common_pods
-	pod 'AXPhotoViewer'
-	pod 'EmptyDataSet-Swift'
-	pod 'ESTabBarController-swift'
 	pod 'KeychainAccess'
 	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
-	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 #	pod 'Shimmer'
 #	pod 'SnowGlobe'
+#	pod 'UIImageColors'
+end
+
+def kurozora_pods
+	pod 'AXPhotoViewer'
+	pod 'ColorSlider'
+	pod 'Cosmos'
+	pod 'ESTabBarController-swift'
+	pod 'EmptyDataSet-Swift'
+	pod 'Hero'
+	pod 'IBAnimatable'
+	pod 'IQKeyboardManagerSwift'
+	pod 'NotificationBannerSwift'
+	pod 'PusherSwift'
+	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
+#	pod 'RichEditorView'
+	pod 'RichTextView'
+	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
+	pod 'SPStorkController'
+	pod 'Solar'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
 	pod 'TRON', '~> 5.0.0-beta.5'
 	pod 'TRON/SwiftyJSON'
-#	pod 'UIImageColors'
-end
-
-def kurozora_pods
-	pod 'Hero'
-	pod 'ColorSlider'
-	pod 'Cosmos'
-	pod 'IQKeyboardManagerSwift'
-	pod 'IBAnimatable'
-	pod 'NotificationBannerSwift'
-	pod 'PusherSwift'
-	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
-#	pod 'RichEditorView'
-	pod 'RichTextView'
-	pod 'Solar'
-	pod 'SPStorkController'
 	pod 'WhatsNew'
+	pod "WordPress-Aztec-iOS"
 #	pod 'Zip'
 end
 

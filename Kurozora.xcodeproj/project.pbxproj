@@ -268,7 +268,6 @@
 		66A8AF292099A52D0011A342 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF282099A52D0011A342 /* UIView+Animation.swift */; };
 		66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */; };
 		66A8AF332099E6370011A342 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */; };
-		66A8AF352099E7A80011A342 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF342099E7A70011A342 /* UIViewController+Image.swift */; };
 		66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */; };
 		66A8AF392099FC870011A342 /* UIViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */; };
 		66AC260422F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */; };
@@ -659,7 +658,6 @@
 		66A8AF282099A52D0011A342 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Appearance.swift"; sourceTree = "<group>"; };
-		66A8AF342099E7A70011A342 /* UIViewController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Image.swift"; sourceTree = "<group>"; };
 		66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Kurozora.swift"; sourceTree = "<group>"; };
 		66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonExploreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1100,7 +1098,6 @@
 				66A8AF282099A52D0011A342 /* UIView+Animation.swift */,
 				66A8AF2A2099AF870011A342 /* Date+Kurozora.swift */,
 				66A8AF322099E6370011A342 /* UISearchBar+Appearance.swift */,
-				66A8AF342099E7A70011A342 /* UIViewController+Image.swift */,
 				66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */,
 				66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */,
 			);
@@ -2387,6 +2384,7 @@
 				"${BUILT_PRODUCTS_DIR}/TRON/TRON.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
+				"${BUILT_PRODUCTS_DIR}/WordPress-Aztec-iOS/Aztec.framework",
 				"${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2426,6 +2424,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Aztec.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iosMath.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2447,7 +2446,6 @@
 				66BF02C3209F97EC00BDAF41 /* HighlightButton.swift in Sources */,
 				66E1B8692090AFC600D7AC1A /* KAtarashii.swift in Sources */,
 				66A8AF332099E6370011A342 /* UISearchBar+Appearance.swift in Sources */,
-				66A8AF352099E7A80011A342 /* UIViewController+Image.swift in Sources */,
 				66BF02C1209F846A00BDAF41 /* LoaderView.swift in Sources */,
 				66A8AF2B2099AF870011A342 /* Date+Kurozora.swift in Sources */,
 				66BF02CC209F9BA900BDAF41 /* ActionListViewController.swift in Sources */,
