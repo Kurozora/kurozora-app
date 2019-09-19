@@ -20,6 +20,7 @@ class SuggestionResultCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let showDetailsElement = showDetailsElement else { return }
 		titleLabel?.text = showDetailsElement.title

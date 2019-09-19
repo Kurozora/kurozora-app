@@ -81,6 +81,7 @@ class SearchResultsCell: UITableViewCell {
 	var searchResultsTableViewController: SearchResultsTableViewController!
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let reuseIdentifier = self.reuseIdentifier else { return }
 		let cellType = SearchScope.scope(from: reuseIdentifier)

@@ -46,6 +46,8 @@ class ShowCharacterCell: UITableViewCell {
 	}
 	weak var delegate: ShowCharacterCellDelegate?
 
+	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let actorElement = actorElement else { return }
 
@@ -123,6 +125,8 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 	}
 	weak var delegate: ShowCharacterCellDelegate?
 
+	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let actorElement = actorElement else { return }
 

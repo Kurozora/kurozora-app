@@ -1,5 +1,5 @@
 //
-//  ThemeCell.swift
+//  ThemesCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/08/2018.
@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SCLAlertView
 
-class ThemeCell: UICollectionViewCell {
+class ThemesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var themeScreenshot: UIImageView!
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
@@ -22,15 +22,15 @@ class ThemeCell: UICollectionViewCell {
 			downloadCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var buyButton: UIButton! {
+	@IBOutlet weak var getThemeButton: UIButton! {
 		didSet {
-			buyButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			buyButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+			getThemeButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			getThemeButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var moreButton: UIButton!
 
-	var row: Int = 0
+	var indexPathItem: Int = 0
 	var themesElement: ThemesElement? {
 		didSet {
 			configureCell()
@@ -38,10 +38,35 @@ class ThemeCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let themesElement = themesElement else { return }
-		titleLabel.text = themesElement.name
 
+		switch indexPathItem {
+		case 0:
+			titleLabel.text = "Default"
+			themeScreenshot.backgroundColor = .kGrayishNavy
+		case 1:
+			titleLabel.text = "Day"
+			themeScreenshot.backgroundColor = #colorLiteral(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+		case 2:
+			titleLabel.text = "Night"
+			themeScreenshot.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+		default:
+			titleLabel.text = themesElement.name
+			themeScreenshot.backgroundColor = UIColor.random
+		}
+
+		// Configure get theme button
+		getThemeButton.tag = indexPathItem
+		getThemeButton.addTarget(self, action: #selector(getThemeButtonPressed(_:)), for: .touchUpInside)
+
+		// Configure buy state
+//		if let themeBought = themesElement.currentUser?.themeBought {
+//
+//		}
+
+		// Configure download count
 		if let downloadCount = themesElement.downloadCount {
 			switch downloadCount {
 			case 0:
@@ -53,35 +78,13 @@ class ThemeCell: UICollectionViewCell {
 			}
 		}
 
-//		if let themeBought = themesElement.currentUser?.themeBought {
-
-//		}
-
-		if row == 0 {
-			themeScreenshot.backgroundColor = .kGrayishNavy
-			buyButton.addTarget(self, action: #selector(defaultThemePressed(_:)), for: .touchUpInside)
-		} else if row == 1 {
-			themeScreenshot.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
-			buyButton.addTarget(self, action: #selector(dayThemePressed(_:)), for: .touchUpInside)
-		} else if row == 2 {
-			themeScreenshot.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-			buyButton.addTarget(self, action: #selector(nightThemePressed(_:)), for: .touchUpInside)
-		} else {
-			themeScreenshot.backgroundColor = UIColor.random
-			buyButton.addTarget(self, action: #selector(downloadThemePressed(_:)), for: .touchUpInside)
-		}
-
 		shouldHideMoreButton()
-		updateBuyButton()
+		updateGetThemeButton()
 	}
 
-	/**
-		Checks whether to hide or unhide the more button for the current cell.
-
-		- Parameter row: The row number fot the cell for which the more button should be hidden or unhidden.
-	*/
+	/// Checks whether to hide or unhide the more button for the current cell.
 	fileprivate func shouldHideMoreButton() {
-		switch row {
+		switch indexPathItem {
 		case 0...2:
 			moreButton.isHidden = true
 		default:
@@ -89,12 +92,13 @@ class ThemeCell: UICollectionViewCell {
 		}
 	}
 
-	fileprivate func updateBuyButton() {
-		switch row {
+	/// Sets the correct title for `getThemeButton`.
+	fileprivate func updateGetThemeButton() {
+		switch indexPathItem {
 		case 0...2:
-			buyButton.setTitle("USE", for: .normal)
+			getThemeButton.setTitle("USE", for: .normal)
 		default:
-			buyButton.setTitle((KThemeStyle.themeExist(for: themesElement?.id) ? "USE" : "GET"), for: .normal)
+			getThemeButton.setTitle((KThemeStyle.themeExist(for: themesElement?.id) ? "USE" : "GET"), for: .normal)
 		}
 	}
 
@@ -104,7 +108,7 @@ class ThemeCell: UICollectionViewCell {
 		guard KThemeStyle.themeExist(for: themeID) else {
 			let alert = SCLAlertView()
 			alert.addButton("Sure") {
-				self.downloadTheme()
+				self.handleDownloadTheme()
 			}
 			alert.showInfo("Not Downloaded", subTitle: "Download the theme right now?", closeButtonTitle: "Cancel")
 			return
@@ -113,8 +117,8 @@ class ThemeCell: UICollectionViewCell {
 		KThemeStyle.switchTo(theme: themeID)
 	}
 
-	/// Start the download process for the selected theme.
-	fileprivate func downloadTheme() {
+	/// Handle the download process for the selected theme.
+	fileprivate func handleDownloadTheme() {
 		guard let themeName = themesElement?.name else { return }
 		guard let themeID = themesElement?.id else { return }
 		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
@@ -128,15 +132,15 @@ class ThemeCell: UICollectionViewCell {
 			}
 
 			if isSuccess {
-				self.updateBuyButton()
+				self.updateGetThemeButton()
 				self.shouldHideMoreButton()
 				KThemeStyle.switchTo(theme: themeID)
 			}
 		}
 	}
 
-	/// Removes a downloaded theme.
-	fileprivate func removeTheme() {
+	/// Handle the removing process for a downloaded theme.
+	fileprivate func handleRemoveTheme() {
 		guard let themeName = themesElement?.name else { return }
 		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Removing \(themeName)...")
@@ -149,38 +153,40 @@ class ThemeCell: UICollectionViewCell {
 			}
 
 			if isSuccess {
-				self.updateBuyButton()
+				self.updateGetThemeButton()
 				self.shouldHideMoreButton()
 			}
 		}
 	}
 
-	@objc func defaultThemePressed(_ sender: UIButton) {
-		KThemeStyle.switchTo(.default)
-	}
+	/**
+		Switches the theme used throught the app to the selected theme.
 
-	@objc func dayThemePressed(_ sender: UIButton) {
-		KThemeStyle.switchTo(.day)
-	}
-
-	@objc func nightThemePressed(_ sender: UIButton) {
-		KThemeStyle.switchTo(.night)
-	}
-
-	@objc func downloadThemePressed(_ sender: UIButton) {
-		shouldDownloadTheme()
+		- Parameter sender: The button sending the request for switching the theme.
+	*/
+	@objc func getThemeButtonPressed(_ sender: UIButton) {
+		switch sender.tag {
+		case 0:
+			KThemeStyle.switchTo(.default)
+		case 1:
+			KThemeStyle.switchTo(.day)
+		case 2:
+			KThemeStyle.switchTo(.night)
+		default:
+			shouldDownloadTheme()
+		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		controller.addAction(UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
-			self.removeTheme()
+			self.handleRemoveTheme()
 		}))
 		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
-//		if (navigationController?.visibleViewController as? UIAlertController) == nil {
-		self.parentViewController?.present(controller, animated: true, completion: nil)
-//		}
+		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.parentViewController?.present(controller, animated: true, completion: nil)
+		}
 	}
 }

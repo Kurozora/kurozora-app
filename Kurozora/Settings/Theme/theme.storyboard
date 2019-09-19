@@ -157,24 +157,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="uLH-Bd-wlF">
-                            <size key="itemSize" width="154" height="344"/>
+                            <size key="itemSize" width="154" height="331"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemeCell" id="LQw-RA-Vgs" customClass="ThemeCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="8" y="8" width="154" height="332"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemesCollectionViewCell" id="LQw-RA-Vgs" customClass="ThemesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="154" height="331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="154" height="332"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="331"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvK-7T-gjk" userLabel="Content View">
-                                            <rect key="frame" x="0.0" y="0.0" width="154" height="344"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="154" height="331"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="M8r-MS-gaT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="286.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="275"/>
                                                     <color key="backgroundColor" red="0.0" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="275" id="deX-hE-CuZ"/>
@@ -211,19 +211,19 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Strawberry adsasdasd" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2">
-                                                    <rect key="frame" x="0.0" y="296.5" width="72.5" height="31.5"/>
+                                                    <rect key="frame" x="0.0" y="285" width="72.5" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="923 Downloads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMR-PH-sic">
-                                                    <rect key="frame" x="0.0" y="328" width="93.5" height="16"/>
+                                                    <rect key="frame" x="0.0" y="316.5" width="93.5" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="0.86110805459999995" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="105" y="302.5" width="49" height="20"/>
+                                                    <rect key="frame" x="105" y="291" width="49" height="20"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="TUA-Ju-URN"/>
@@ -267,10 +267,10 @@
                                     <constraint firstAttribute="trailing" secondItem="KvK-7T-gjk" secondAttribute="trailing" id="O62-0D-R3f"/>
                                     <constraint firstItem="KvK-7T-gjk" firstAttribute="top" secondItem="LQw-RA-Vgs" secondAttribute="top" id="V5D-KG-rkC"/>
                                 </constraints>
-                                <size key="customSize" width="154" height="332"/>
+                                <size key="customSize" width="154" height="331"/>
                                 <connections>
-                                    <outlet property="buyButton" destination="Vgt-I3-cKU" id="lON-XC-fzl"/>
                                     <outlet property="downloadCountLabel" destination="NMR-PH-sic" id="fwe-77-Kzh"/>
+                                    <outlet property="getThemeButton" destination="Vgt-I3-cKU" id="lON-XC-fzl"/>
                                     <outlet property="moreButton" destination="boX-Aw-VdH" id="eXo-fP-nod"/>
                                     <outlet property="themeScreenshot" destination="M8r-MS-gaT" id="6as-qG-q9H"/>
                                     <outlet property="titleLabel" destination="4Sp-VC-gg2" id="uh5-Xv-TpF"/>

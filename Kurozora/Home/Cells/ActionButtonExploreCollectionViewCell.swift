@@ -24,6 +24,7 @@ class ActionButtonExploreCollectionViewCell: UICollectionViewCell {
 	var homeCollectionViewController: HomeCollectionViewController?
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let actionButtonItem = actionButtonItem else { return }
 		actionButton.setTitle(actionButtonItem["title"], for: .normal)

@@ -18,6 +18,7 @@ class SubscriptionPreviewCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let previewItem = previewItem else { return }
 

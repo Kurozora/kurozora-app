@@ -20,6 +20,7 @@ class BadgeTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let badge = badge else { return }
 

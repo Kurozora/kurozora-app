@@ -40,6 +40,7 @@ class FollowCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let userProfile = userProfile else { return }
 

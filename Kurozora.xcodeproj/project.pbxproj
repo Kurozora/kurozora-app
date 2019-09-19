@@ -24,7 +24,7 @@
 		660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642921D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift */; };
 		660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642D21D175110032FDCF /* EpisodesWatched.swift */; };
 		660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42A621259E300051EF66 /* ManageThemesController.swift */; };
-		660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42AA2125AF830051EF66 /* ThemeCell.swift */; };
+		660B42AB2125AF830051EF66 /* ThemesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */; };
 		660B5B5F21523612002D05F3 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B5E21523612002D05F3 /* Session.swift */; };
 		660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660B5B652152F47A002D05F3 /* NoSessionsCell.swift */; };
 		660E9FC721455F3100F6813C /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E9FC621455F3100F6813C /* Cast.swift */; };
@@ -284,7 +284,7 @@
 		66AEABF122994F4600949FD8 /* EpisodeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABF022994F4600949FD8 /* EpisodeSection.swift */; };
 		66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AF50DC21D9B67900FC622E /* NotificationsSettingsViewController.swift */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
-		66B216AA21C16817006E167D /* Aztec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* Aztec.swift */; };
+		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
 		66B216AB21C1681C006E167D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE721B29E5900A2F602 /* KeyboardManager.swift */; };
 		66B216AC21C1681F006E167D /* editor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* editor.storyboard */; };
 		66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216AD21C16B15006E167D /* ThreadPost.swift */; };
@@ -421,7 +421,7 @@
 		660A642921D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		660A642D21D175110032FDCF /* EpisodesWatched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesWatched.swift; sourceTree = "<group>"; };
 		660B42A621259E300051EF66 /* ManageThemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageThemesController.swift; sourceTree = "<group>"; };
-		660B42AA2125AF830051EF66 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
+		660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesCollectionViewCell.swift; sourceTree = "<group>"; };
 		660B5B5E21523612002D05F3 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		660B5B652152F47A002D05F3 /* NoSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSessionsCell.swift; sourceTree = "<group>"; };
 		660E9FC621455F3100F6813C /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -618,7 +618,7 @@
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		66825BE721B29E5900A2F602 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
-		66825BE921B29F3800A2F602 /* Aztec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aztec.swift; sourceTree = "<group>"; };
+		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
 		66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestBuilder.swift; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
@@ -906,7 +906,7 @@
 			isa = PBXGroup;
 			children = (
 				66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */,
-				660B42AA2125AF830051EF66 /* ThemeCell.swift */,
+				660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1110,7 +1110,7 @@
 			isa = PBXGroup;
 			children = (
 				6634735A23339885006B7F99 /* Solar */,
-				66B216A921C166B5006E167D /* Aztec */,
+				66B216A921C166B5006E167D /* Editor */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 			);
 			path = Libraries;
@@ -1667,15 +1667,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		66B216A921C166B5006E167D /* Aztec */ = {
+		66B216A921C166B5006E167D /* Editor */ = {
 			isa = PBXGroup;
 			children = (
 				66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */,
 				666938AC21B19E3800BA9620 /* editor.storyboard */,
-				66825BE921B29F3800A2F602 /* Aztec.swift */,
+				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
 				66825BE721B29E5900A2F602 /* KeyboardManager.swift */,
 			);
-			path = Aztec;
+			path = Editor;
 			sourceTree = "<group>";
 		};
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
@@ -2282,7 +2282,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "";
 		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2610,7 +2610,7 @@
 				66EC939A2274B90100D584F7 /* ShowSections.swift in Sources */,
 				669C8D562107B7D80014EB7A /* BounceAnimation.swift in Sources */,
 				66C863FF216CE7240054EE16 /* ShowDetails.swift in Sources */,
-				66B216AA21C16817006E167D /* Aztec.swift in Sources */,
+				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
 				663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
@@ -2686,7 +2686,7 @@
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */,
 				6674DBEE22EDB941006455C1 /* ExploreMediumCollectionViewFlowLayout.swift in Sources */,
-				660B42AB2125AF830051EF66 /* ThemeCell.swift in Sources */,
+				660B42AB2125AF830051EF66 /* ThemesCollectionViewCell.swift in Sources */,
 				6674A0B720A38E4700AAB527 /* CharactersViewController.swift in Sources */,
 				66754BC42101020800268355 /* Service.swift in Sources */,
 			);

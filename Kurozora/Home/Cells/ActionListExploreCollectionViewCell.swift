@@ -28,6 +28,7 @@ class ActionListExploreCollectionViewCell: UICollectionViewCell {
 	var homeCollectionViewController: HomeCollectionViewController?
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let actionUrlItem = actionUrlItem else { return }
 

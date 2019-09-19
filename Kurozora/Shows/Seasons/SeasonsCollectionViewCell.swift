@@ -69,6 +69,8 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let seasonsElement = seasonsElement else { return }
 

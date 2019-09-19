@@ -105,11 +105,11 @@ extension ManageThemesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let themeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThemeCell", for: indexPath) as! ThemeCell //TestThemeCell
+		let themeCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThemesCollectionViewCell", for: indexPath) as! ThemesCollectionViewCell
 
-		themeCell.row = indexPath.row
+		themeCell.indexPathItem = indexPath.item
 		if indexPath.row > 3 {
-			themeCell.themesElement = themes?[indexPath.row - 3]
+			themeCell.themesElement = themes?[indexPath.item - 3]
 		} else {
 			themeCell.themesElement = themes?.first
 		}

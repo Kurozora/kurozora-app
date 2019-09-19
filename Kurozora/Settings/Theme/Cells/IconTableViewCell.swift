@@ -23,6 +23,7 @@ class IconTableViewCell: SelectableSettingsCell {
 	}
 
 	// MARK: - Functions
+	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let alternativeIconsElement = alternativeIconsElement else { return }
 		let selected = UserSettings.appIcon
