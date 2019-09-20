@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 let PurchasedProNotification = "InApps.Purchased.Pro"
 

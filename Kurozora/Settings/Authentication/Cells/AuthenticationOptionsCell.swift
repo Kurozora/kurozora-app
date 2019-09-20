@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 class AuthenticationOptionsCell: SettingsCell {
 	@IBOutlet weak var selectedImageView: UIImageView! {
@@ -26,7 +26,7 @@ class AuthenticationOptionsCell: SettingsCell {
 			if isSelected {
 				self.selectedImageView.image = #imageLiteral(resourceName: "check")
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-				try? GlobalVariables().KDefaults.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
+				try? Kurozora.shared.KDefaults.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
 			} else {
 				self.selectedImageView.image = nil
 			}
@@ -39,7 +39,7 @@ class AuthenticationOptionsCell: SettingsCell {
 		guard let requireAuthentication = requireAuthentication else { return }
 		cellTitle?.text = requireAuthentication.stringValue
 
-		if let requireAuthenticationString = try? GlobalVariables().KDefaults.get("requireAuthentication") {
+		if let requireAuthenticationString = try? Kurozora.shared.KDefaults.get("requireAuthentication") {
 			self.isSelected = requireAuthentication.equals(requireAuthenticationString)
 		}
 	}

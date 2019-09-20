@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 class AuthenticationTableViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
@@ -31,7 +31,7 @@ class AuthenticationTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension AuthenticationTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		guard let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"),
+		guard let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"),
 			  let authenticationEnabled = Bool(authenticationEnabledString) else { return 1 }
 
 		return authenticationEnabled ? 2 : 1

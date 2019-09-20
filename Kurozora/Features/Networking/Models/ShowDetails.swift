@@ -55,14 +55,14 @@ class ShowDetailsElement: JSONDecodable {
 
 	// Ratings & ranks
 	let averageRating: Double?
-	let endDate: Date?
+	let endDate: String?
 	let network: String?
 	let nsfw: Bool?
 	let popularityRank: Int?
 	let producers: String?
 	let rank: Int?
 	let ratingCount: Int?
-	let startDate: Date?
+	let startDate: String?
 
 	// Extra's
 	let englishTitles: String?
@@ -108,14 +108,14 @@ class ShowDetailsElement: JSONDecodable {
 
 		// Ratings & ranks
 		self.averageRating = json["average_rating"].doubleValue
-		self.endDate = json["end_date"].rawValue as? Date
+		self.endDate = json["end_date"].stringValue
 		self.network = json["network"].stringValue
 		self.nsfw = json["nsfw"].boolValue
 		self.popularityRank = json["popularity_rank"].intValue
 		self.producers = json["producers"].stringValue
 		self.rank = json["rank"].intValue
 		self.ratingCount = json["rating_count"].intValue
-		self.startDate = json["start_date"].rawValue as? Date
+		self.startDate = json["start_date"].stringValue
 
 		// Extra's
 		self.englishTitles = json["english_titles"].stringValue

@@ -9,16 +9,40 @@
 import UIKit
 
 extension UIView {
-	/**
-		Add rounded corners for each specified corner.
 
-		- Parameter corners: The corner which should be rounded.
-		- Parameter radius: The amount by which the corner should be rounded.
+	/**
+		Adds parallax effect to the view.
+
+		- Parameter amount: The amount by which the view moves around. Default amount is `50`.
 	*/
-	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
-		clipsToBounds = true
-		layer.cornerRadius = radius
-		layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+	func addParallax(with amount: Int = 50) {
+		let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+		horizontal.minimumRelativeValue = -amount
+		horizontal.maximumRelativeValue = amount
+
+		let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+		vertical.minimumRelativeValue = -amount
+		vertical.maximumRelativeValue = amount
+
+		let group = UIMotionEffectGroup()
+		group.motionEffects = [horizontal, vertical]
+		self.addMotionEffect(group)
+	}
+
+	/**
+		Bounces the view with the given growth value.
+
+		- Parameter growth: The given float value used to bounce the view. Default is `1.25`.
+	*/
+	func animateBounce(growth: CGFloat = 1.25) {
+		transform = .identity
+		UIView.animate(withDuration: 0.2, animations: { () -> Void in
+			self.transform = self.transform.scaledBy(x: growth, y: growth)
+		}) { completion in
+			UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.4, options: [.curveEaseIn, .allowUserInteraction], animations: { () -> Void in
+				self.transform = .identity
+			}, completion: nil)
+		}
 	}
 
 	/**
@@ -56,25 +80,6 @@ extension UIView {
 	}
 
 	/**
-		Adds parallax effect to the view.
-
-		- Parameter amount: The amount by which the view moves around. Default amount is 50.
-	*/
-	func addParallax(with amount: Int = 50) {
-		let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
-		horizontal.minimumRelativeValue = -amount
-		horizontal.maximumRelativeValue = amount
-
-		let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
-		vertical.minimumRelativeValue = -amount
-		vertical.maximumRelativeValue = amount
-
-		let group = UIMotionEffectGroup()
-		group.motionEffects = [horizontal, vertical]
-		self.addMotionEffect(group)
-	}
-
-	/**
 		Create a snapshot of current view.
 
 		- Returns: an image of the created snapshot of the view.
@@ -88,4 +93,17 @@ extension UIView {
 
 		return image
 	}
+
+	/**
+		Add rounded corners for each specified corner.
+
+		- Parameter corners: The corner which should be rounded.
+		- Parameter radius: The amount by which the corner should be rounded.
+	*/
+	func roundedCorners(_ corners: UIRectCorner, radius: CGFloat) {
+		clipsToBounds = true
+		layer.cornerRadius = radius
+		layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+	}
+
 }

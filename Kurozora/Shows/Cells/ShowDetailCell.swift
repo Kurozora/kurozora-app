@@ -78,11 +78,16 @@ class InformationTableViewCell: UITableViewCell {
 			}
 		case 5:
 			titleLabel.text = "Aired"
-			if let startDate = showDetail.startDate, let endDate = showDetail.endDate {
-				detailLabel.text = startDate.mediumDate() + " - " + endDate.mediumDate()
-			} else {
-				detailLabel.text = "N/A - N/A"
+
+			var dateInfo: String = "-"
+			if let startDate = showDetail.startDate {
+				dateInfo = startDate.isEmpty ? "N/A - " : startDate.mediumDate() + " - "
 			}
+			if let endDate = showDetail.endDate {
+				dateInfo += endDate.isEmpty ? "N/A" : endDate.mediumDate()
+			}
+
+			detailLabel.text = dateInfo
 		case 6:
 			titleLabel.text = "Network"
 			if let network = showDetail.network, !network.isEmpty {

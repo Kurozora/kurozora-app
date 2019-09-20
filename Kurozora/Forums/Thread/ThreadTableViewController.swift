@@ -206,7 +206,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		}
 
 		if let creationDate = forumsThreadElement.creationDate {
-			dateTimeButton.setTitle("\(Date.timeAgo(creationDate)) · by ", for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo() + " · by ", for: .normal)
 		}
 
 		// Thread vote state

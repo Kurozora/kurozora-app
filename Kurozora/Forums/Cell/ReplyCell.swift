@@ -105,7 +105,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		if let creationDate = threadRepliesElement.postedAt, !creationDate.isEmpty {
-			dateTimeButton.setTitle("\(Date.timeAgo(creationDate))", for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo(), for: .normal)
 		}
 
 		// Check if thread is locked

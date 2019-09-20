@@ -9,7 +9,6 @@
 import Foundation
 
 extension String {
-
 	// Does not include seconds
 	public func dateWithISO8601() -> Date? {
 		let dateFormatter = DateFormatter()

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
 import UIKit
 //import ANParseKit
 

@@ -6,11 +6,10 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
-import TRON
-import SwiftyJSON
-import Kingfisher
 import CoreLocation
+import Kingfisher
+import SwiftyJSON
+import TRON
 
 class User: JSONDecodable {
 	let success: Bool?
@@ -162,19 +161,19 @@ extension User {
 
 	/// Returns the username saved in KDefaults
 	static var username: String? {
-		guard let username = GlobalVariables().KDefaults["username"], !username.isEmpty else { return nil }
+		guard let username = Kurozora.shared.KDefaults["username"], !username.isEmpty else { return nil }
 		return username
 	}
 
 	/// Returns the current User ID saved in KDefaults
 	static var currentID: Int? {
-		guard let userID = GlobalVariables().KDefaults["user_id"], !userID.isEmpty else { return nil }
+		guard let userID = Kurozora.shared.KDefaults["user_id"], !userID.isEmpty else { return nil }
 		return Int(userID)
 	}
 
 	/// Returns the Auth Token saved in KDefaults
 	static var authToken: String {
-		guard let authToken = GlobalVariables().KDefaults["auth_token"], !authToken.isEmpty else { return "" }
+		guard let authToken = Kurozora.shared.KDefaults["auth_token"], !authToken.isEmpty else { return "" }
 		return authToken
 	}
 
@@ -185,8 +184,8 @@ extension User {
 		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
 			CLLocationManager.authorizationStatus() ==  .authorizedAlways {
 			if let currentLocation: CLLocation = locationManager.location {
-				try? GlobalVariables().KDefaults.set("\(currentLocation.coordinate.latitude)", key: "latitude")
-				try? GlobalVariables().KDefaults.set("\(currentLocation.coordinate.longitude)", key: "longitude")
+				try? Kurozora.shared.KDefaults.set("\(currentLocation.coordinate.latitude)", key: "latitude")
+				try? Kurozora.shared.KDefaults.set("\(currentLocation.coordinate.longitude)", key: "longitude")
 				return currentLocation.coordinate
 			}
 		}
@@ -196,14 +195,14 @@ extension User {
 
 	/// Returns the user's latitude saved in KDefaults
 	static var latitude: Double {
-		guard let latitudeString = GlobalVariables().KDefaults["latitude"], !latitudeString.isEmpty,
+		guard let latitudeString = Kurozora.shared.KDefaults["latitude"], !latitudeString.isEmpty,
 			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
 		return latitude
 	}
 
 	/// Returns the user's longitude saved in KDefaults
 	static var longitude: Double {
-		guard let longitudeString = GlobalVariables().KDefaults["longitude"], !longitudeString.isEmpty,
+		guard let longitudeString = Kurozora.shared.KDefaults["longitude"], !longitudeString.isEmpty,
 			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
 		return longitude
 	}
@@ -233,7 +232,7 @@ extension User {
 
 	/// Returns the current Session ID saved in KDefaults
 	static var currentSessionID: Int? {
-		guard let sessionID = GlobalVariables().KDefaults["session_id"], !sessionID.isEmpty else { return nil }
+		guard let sessionID = Kurozora.shared.KDefaults["session_id"], !sessionID.isEmpty else { return nil }
 		return Int(sessionID)
 	}
 
@@ -254,7 +253,7 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is an admin
 	static var isAdmin: Bool {
-		if let userType = GlobalVariables().KDefaults["user_role"], !userType.isEmpty {
+		if let userType = Kurozora.shared.KDefaults["user_role"], !userType.isEmpty {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = UserType(rawValue: userType) else { return false }
 
@@ -270,7 +269,7 @@ extension User {
 
 	/// Returns a boolean if the current user is a mod
 	static var isMod: Bool {
-		if let userType = GlobalVariables().KDefaults["user_role"], !userType.isEmpty {
+		if let userType = Kurozora.shared.KDefaults["user_role"], !userType.isEmpty {
 			guard let userType = Int(userType) else { return false }
 			guard let type: UserType = UserType(rawValue: userType) else { return false }
 

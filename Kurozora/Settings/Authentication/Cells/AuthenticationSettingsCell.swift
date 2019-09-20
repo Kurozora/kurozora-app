@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 class AuthenticationSettingsCell: SettingsCell {
 	@IBOutlet weak var authenticationTitleLabel: UILabel? {
@@ -56,7 +56,7 @@ class AuthenticationSettingsCell: SettingsCell {
 		didSet {
 			enabledSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
 
-			if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
+			if let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 				enabledSwitch?.isOn = authenticationEnabled
 			} else {
 				enabledSwitch?.isOn = false
@@ -67,19 +67,19 @@ class AuthenticationSettingsCell: SettingsCell {
 	@IBOutlet weak var authenticationRequireValueLabel: UILabel? {
 		didSet {
 			authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			authenticationRequireValueLabel?.text = try? GlobalVariables().KDefaults.get("requireAuthentication")
+			authenticationRequireValueLabel?.text = try? Kurozora.shared.KDefaults.get("requireAuthentication")
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		}
 	}
 
 	// MARK: - Functions
 	@objc func updateAuthenticationRequireValueLabel() {
-		authenticationRequireValueLabel?.text = try? GlobalVariables().KDefaults.get("requireAuthentication")
+		authenticationRequireValueLabel?.text = try? Kurozora.shared.KDefaults.get("requireAuthentication")
 	}
 
 	// MARK: IBActions
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
-		try? GlobalVariables().KDefaults.set("\(sender.isOn)", key: "authenticationEnabled")
+		try? Kurozora.shared.KDefaults.set("\(sender.isOn)", key: "authenticationEnabled")
 
 		if let tableView = self.superview as? UITableView {
 			tableView.reloadData()

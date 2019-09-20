@@ -7,7 +7,7 @@
 //
 
 //import Parse
-import KCommonKit
+import UIKit
 
 class NotificationThreadViewController: ThreadTableViewController {
 //

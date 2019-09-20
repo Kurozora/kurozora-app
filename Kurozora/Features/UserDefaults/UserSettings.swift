@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 class UserSettings: UserDefaults {
 	/// The base UserDefaults suit of the Kurozora Apps.

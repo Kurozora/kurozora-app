@@ -6,8 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-//import KDatabaseKit
-//import KCommonKit
+//import UIKit
 //
 //protocol CustomAnimatorProtocol {
 //    func scrollView() -> UIScrollView

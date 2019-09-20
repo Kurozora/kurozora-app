@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 //import Bolts
 //import iAd
 //import Parse
@@ -83,7 +83,7 @@ public class ForumViewController: AnimeBaseViewController {
 //
 //        cell.title.text = title
 //        let lastPostedByUsername = thread.lastPostedBy?.aozoraUsername ?? ""
-//        cell.information.text = "\(thread.commentCount) comments · \(thread.updatedAt!.timeAgo()) · \(lastPostedByUsername)"
+//        cell.information.text = "\(thread.commentCount) comments · " + thread.updatedAt!.timeAgo() + " · \(lastPostedByUsername)"
 //        cell.layoutIfNeeded()
 //        return cell
 //    }

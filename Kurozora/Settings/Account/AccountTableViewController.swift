@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
@@ -20,7 +20,7 @@ class AccountTableViewController: UITableViewController {
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
-			usernameLabel.text = GlobalVariables().KDefaults["username"]
+			usernameLabel.text = Kurozora.shared.KDefaults["username"]
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
@@ -34,7 +34,7 @@ class AccountTableViewController: UITableViewController {
 		super.viewWillAppear(animated)
 
 		// Setup user email
-		userEmailLabel.text = "\(GlobalVariables().KDefaults["username"] ?? "kurozora")@kurozora.app"
+		userEmailLabel.text = "\(Kurozora.shared.KDefaults["username"] ?? "kurozora")@kurozora.app"
 		userEmailLabel.textAlignment = .center
 		userEmailLabel.font = UIFont(name: "System", size: 13)
 	}

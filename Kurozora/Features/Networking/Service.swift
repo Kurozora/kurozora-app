@@ -6,7 +6,6 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
 import Alamofire
 import SwiftyJSON
 import SCLAlertView
@@ -1141,21 +1140,21 @@ struct Service {
 			if let success = user.success {
 				if success {
 					if let userId = user.profile?.id {
-						try? GlobalVariables().KDefaults.set(String(userId), key: "user_id")
+						try? Kurozora.shared.KDefaults.set(String(userId), key: "user_id")
 					}
 
-					try? GlobalVariables().KDefaults.set(username, key: "username")
+					try? Kurozora.shared.KDefaults.set(username, key: "username")
 
 					if let authToken = user.profile?.authToken {
-						try? GlobalVariables().KDefaults.set(authToken, key: "auth_token")
+						try? Kurozora.shared.KDefaults.set(authToken, key: "auth_token")
 					}
 
 					if let sessionID = user.profile?.sessionID {
-						try? GlobalVariables().KDefaults.set(String(sessionID), key: "session_id")
+						try? Kurozora.shared.KDefaults.set(String(sessionID), key: "session_id")
 					}
 
 					if let role = user.profile?.role {
-						try? GlobalVariables().KDefaults.set(String(role), key: "user_role")
+						try? Kurozora.shared.KDefaults.set(String(role), key: "user_role")
 					}
 					successHandler(success)
 				}

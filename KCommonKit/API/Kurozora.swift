@@ -14,7 +14,7 @@ public struct KList {
 	//    public enum Router: URLRequestConvertible {
 	//        static let ClientID = ""
 	//        static let ClientSecret = ""
-	//        static let BaseURLString = GlobalVariables().baseUrlString
+	//        static let BaseURLString = Kurozora.shared.baseUrlString
 	//
 	//        case requestAccessToken()
 	//        case browseAnime(year: Int?, season: AnimeSeason?, type: AnimeType?, status: AnimeStatus?, genres: [String]?, excludedGenres: [String]?, sort: AnimeSort, airingData: Bool, fullPage: Bool, page: Int?)

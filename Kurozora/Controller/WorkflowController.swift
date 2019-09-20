@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import PusherSwift
 import NotificationBannerSwift
 import SCLAlertView
@@ -71,7 +71,7 @@ public class WorkflowController {
 		- Parameter isKiller: A boolean indicating whether the current user is the one who initiated the logout.
 	*/
 	class func logoutUser(with logoutReason: String? = nil, whereUser isKiller: Bool = false) {
-		try? GlobalVariables().KDefaults.removeAll()
+		try? Kurozora.shared.KDefaults.removeAll()
 
 		if let kNavigationController = WelcomeViewController.instantiateFromStoryboard() as? KNavigationController {
 			if let welcomeViewController = kNavigationController.visibleViewController as? WelcomeViewController {

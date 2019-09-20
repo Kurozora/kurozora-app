@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 
 class SettingsCell: UITableViewCell {
 	@IBOutlet weak var appIconImageView: UIImageView? {
@@ -27,14 +27,14 @@ class SettingsCell: UITableViewCell {
 	}
 	@IBOutlet weak var usernameLabel: UILabel? {
 		didSet {
-			self.usernameLabel?.text = GlobalVariables().KDefaults["username"]
+			self.usernameLabel?.text = Kurozora.shared.KDefaults["username"]
 			self.usernameLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var profileImageView: UIImageView? {
 		didSet {
 			self.profileImageView?.image = User.currentUserProfileImage
-			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue // KThemePicker.tableViewCellChevronColor.rawValue
+			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var cacheSizeLabel: UILabel? {

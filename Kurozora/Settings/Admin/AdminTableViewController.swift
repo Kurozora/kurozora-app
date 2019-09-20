@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import EmptyDataSet_Swift
 
 class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
@@ -17,9 +17,9 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 		}
 	}
 
-	let kDefaultItems = GlobalVariables().KDefaults.allItems()
-	let kDefaultKeys = GlobalVariables().KDefaults.allKeys()
-	var kDefaultCount = GlobalVariables().KDefaults.allItems().count
+	let kDefaultItems = Kurozora.shared.KDefaults.allItems()
+	let kDefaultKeys = Kurozora.shared.KDefaults.allKeys()
+	var kDefaultCount = Kurozora.shared.KDefaults.allItems().count
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -78,7 +78,7 @@ extension AdminTableViewController {
 			guard let key = kDefaultsTableViewCell.cellTitle?.text else {return}
 
 			self.tableView.beginUpdates()
-			try? GlobalVariables().KDefaults.remove(key)
+			try? Kurozora.shared.KDefaults.remove(key)
 			self.kDefaultCount = kDefaultCount - 1
 			self.tableView.deleteRows(at: [indexPath], with: .automatic)
 			self.tableView.endUpdates()

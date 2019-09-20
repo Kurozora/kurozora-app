@@ -29,7 +29,7 @@ class SearchController: UISearchController {
 		searchControllerBar.barStyle = .black
 		searchControllerBar.searchBarStyle = .default
 		searchControllerBar.isTranslucent = true
-		searchControllerBar.enableCancelButton()
+		searchControllerBar.showsCancelButton = true
 		searchControllerBar.scopeButtonTitles = scopeButtonTitles
 		searchControllerBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
 	}

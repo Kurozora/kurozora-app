@@ -8,7 +8,6 @@ use_frameworks!
 
 # MARK: - Defs
 def common_pods
-	pod 'KeychainAccess'
 	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
 #	pod 'SnowGlobe'
 #	pod 'UIImageColors'
@@ -21,6 +20,7 @@ def kurozora_pods
 	pod 'EmptyDataSet-Swift'
 	pod 'Hero'
 	pod 'IQKeyboardManagerSwift'
+	pod 'KeychainAccess'
 	pod 'NotificationBannerSwift'
 	pod 'PusherSwift'
 	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'

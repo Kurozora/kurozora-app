@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import SwiftTheme
 
 class KDefaultsCell: SettingsCell {
@@ -28,6 +28,6 @@ class KDefaultsCell: SettingsCell {
         guard let key = cellTitle?.text else {return}
         guard let value = valueTextField.text else {return}
 
-        GlobalVariables().KDefaults[key] = value
+        Kurozora.shared.KDefaults[key] = value
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import SwiftyJSON
 import SCLAlertView
 import Kingfisher
@@ -134,8 +134,8 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
 			self.groupedNotifications = []
 			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
-				guard let time = userNotificationsElement.creationDate else { return }
-				let timeKey = Date.groupTime(by: time)
+				guard let creationDate = userNotificationsElement.creationDate else { return }
+				let timeKey = creationDate.groupTime()
 
 				result[timeKey, default: []].append(userNotificationsElement)
 			})
@@ -147,7 +147,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate) })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate() ?? Date() > $1.sectionNotifications[0].creationDate?.toDate() ?? Date() })
 		case .byType:
 			self.groupedNotifications = []
 
@@ -167,7 +167,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { Date.stringToDateTime(string: $0.sectionNotifications[0].creationDate) > Date.stringToDateTime(string: $1.sectionNotifications[0].creationDate) })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate() ?? Date() > $1.sectionNotifications[0].creationDate?.toDate() ?? Date() })
 		case .off:
 			self.groupedNotifications = []
 		}

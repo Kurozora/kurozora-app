@@ -28,7 +28,7 @@ class FeedPostCell: BaseFeedPostCell {
 		postTextView?.text = feedPostElement.content
 
 		// Date time
-		dateTimeLabel?.text = Date.timeAgo(feedPostElement.creationDate)
+		dateTimeLabel?.text = feedPostElement.creationDate?.timeAgo()
 
 		// Post
 		if let postText = feedPostElement.content {

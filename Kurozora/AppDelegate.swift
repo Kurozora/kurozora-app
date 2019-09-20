@@ -6,7 +6,7 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import IQKeyboardManagerSwift
 import RevealingSplashView
 import Kingfisher
@@ -60,13 +60,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		if isUnreachable {
-			Kurozora.showOfflinePage(for: window)
+			Kurozora.shared.showOfflinePage(for: window)
 			return true
 		}
 
 		// Monitor network availability
 		KNetworkManager.shared.reachability.whenUnreachable = { _ in
-			Kurozora.showOfflinePage(for: nil)
+			Kurozora.shared.showOfflinePage(for: nil)
 		}
 
 		// Initialize Pusher

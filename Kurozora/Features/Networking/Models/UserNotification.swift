@@ -24,7 +24,7 @@ class UserNotification: JSONDecodable {
 			}
 		}
 
-		let sortedNotifications = notifications.sorted(by: {Date.stringToDateTime(string: $0.creationDate) > Date.stringToDateTime(string: $1.creationDate)})
+		let sortedNotifications = notifications.sorted(by: { $0.creationDate?.toDate() ?? Date() > $1.creationDate?.toDate() ?? Date() })
 
 		self.notifications = sortedNotifications
 	}

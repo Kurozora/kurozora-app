@@ -6,20 +6,32 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KCommonKit
+import UIKit
 import ESTabBarController_swift
 import IQKeyboardManagerSwift
 import Kingfisher
+import KeychainAccess
 import RevealingSplashView
 import LocalAuthentication
 import SCLAlertView
 
-class Kurozora: NSObject {
+class Kurozora {
+	// MARK: - Properties
 	fileprivate static var success = false
 	var authenticationEnabled = false
 	var authenticationInterval = 0
 
+	/// Returns the singleton Kurozora instance.
 	static let shared = Kurozora()
+
+	/// The base url of the Kurozora API.
+	let baseUrlString = "https://kurozora.app/api/v1/"
+
+	/// The base keychain service of the Kurozora App.
+	let KDefaults = Keychain(service: "app.kurozora.anime")
+
+	// MARK: - Initializations
+	private init() {}
 
 	// MARK: - Functions
 	/**
@@ -28,7 +40,7 @@ class Kurozora: NSObject {
 		- Parameter window: The window on which the offline view will be shown.
 		- Parameter viewController: The view controller that should be dismissed.
 	*/
-	static func showMainPage(for window: UIWindow?, viewController: UIViewController) {
+	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
 			// Initialize Pusher
 			WorkflowController.pusherInit()
@@ -58,7 +70,7 @@ class Kurozora: NSObject {
 			// Play splash view animation
 			window?.addSubview(revealingSplashView)
 			revealingSplashView.playHeartBeatAnimation()
-			NotificationCenter.default.addObserver(self.shared, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
+			NotificationCenter.default.addObserver(Kurozora.shared, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 		} else if viewController is KurozoraReachabilityViewController {
 			viewController.dismiss(animated: true, completion: nil)
 		}
@@ -69,7 +81,7 @@ class Kurozora: NSObject {
 
 		- Parameter window: The window on which the offline view will be shown.
 	*/
-	static func showOfflinePage(for window: UIWindow?) {
+	func showOfflinePage(for window: UIWindow?) {
 		if window != nil {
 			if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() as? KurozoraReachabilityViewController {
 				reachabilityViewController.window = window
@@ -234,7 +246,7 @@ class Kurozora: NSObject {
 extension Kurozora {
 	/// Asks the app if the user should authenticate so the app prepares for it.
 	func userShouldAuthenticate() {
-		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
+		if let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
 				self.authenticationEnabled = authenticationEnabled
 				prepareView()
@@ -245,7 +257,7 @@ extension Kurozora {
 
 	/// Tells the app that the user has to authenticate so the app prepares for it.
 	func userHasToAuthenticate() {
-		if let authenticationEnabledString = try? GlobalVariables().KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
+		if let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
 				prepareForAuthentication()
 			}
@@ -267,7 +279,7 @@ extension Kurozora {
 
 	/// Prepare timer to prepare the app for authentication.
 	func prepareTimer() {
-		let requireAuthentication = try? GlobalVariables().KDefaults.get("requireAuthentication")
+		let requireAuthentication = try? Kurozora.shared.KDefaults.get("requireAuthentication")
 		var interval = 0
 
 		switch RequireAuthentication.valueFrom(requireAuthentication) {

@@ -6,8 +6,6 @@
 //  Copyright © 2018 Kurozora. All rights reserved.
 //
 
-import KeychainAccess
-
 public class KCommonKit {
     public class func bundle() -> Bundle {
         return Bundle(for: self)
@@ -29,15 +27,6 @@ public class KCommonKit {
 
     public static var shared = KCommonKit()
     private init() {}
-}
-
-public struct GlobalVariables {
-	public init() {}
-	/// The base url of the Kurozora API.
-	public let baseUrlString = "https://kurozora.app/api/v1/"
-
-	/// The base keychain service of the Kurozora App.
-    public let KDefaults = Keychain(service: "app.kurozora.anime")
 }
 
 /**
