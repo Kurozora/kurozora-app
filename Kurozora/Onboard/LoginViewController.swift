@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
 		Service.shared.login(username, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
-					WorkflowController.pusherInit()
+					WorkflowController.shared.registerForPusher()
 
 					let customTabBar = KTabBarController()
 					customTabBar.modalPresentationStyle = .fullScreen

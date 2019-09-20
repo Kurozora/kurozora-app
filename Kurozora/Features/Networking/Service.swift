@@ -1186,7 +1186,7 @@ struct Service {
 					successHandler(success)
 				}
 			}, failure: { error in
-				WorkflowController.logoutUser()
+				WorkflowController.shared.logoutUser()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
 				NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
 				print("Received validate session error: \(error)")
@@ -1242,7 +1242,7 @@ struct Service {
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					WorkflowController.logoutUser()
+					WorkflowController.shared.logoutUser()
 					successHandler?(success)
 				}
 			}

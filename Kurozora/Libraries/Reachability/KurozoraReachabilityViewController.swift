@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RevealingSplashView
 
 class KurozoraReachabilityViewController: UIViewController {
 	@IBOutlet weak var shadowView: UIView!

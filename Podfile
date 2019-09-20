@@ -7,12 +7,6 @@ inhibit_all_warnings!
 use_frameworks!
 
 # MARK: - Defs
-def common_pods
-	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
-#	pod 'SnowGlobe'
-#	pod 'UIImageColors'
-end
-
 def kurozora_pods
 	pod 'AXPhotoViewer'
 	pod 'Cosmos'
@@ -21,18 +15,20 @@ def kurozora_pods
 	pod 'Hero'
 	pod 'IQKeyboardManagerSwift'
 	pod 'KeychainAccess'
+	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
 	pod 'NotificationBannerSwift'
 	pod 'PusherSwift'
-	pod 'RevealingSplashView', :git => 'https://github.com/PiXeL16/RevealingSplashView.git', :commit => 'master'
 	pod 'RichTextView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 	pod 'SPStorkController'
+#	pod 'SnowGlobe'
 	pod 'SwiftTheme'
 	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
 	pod 'TRON', '~> 5.0.0-beta.5'
 	pod 'TRON/SwiftyJSON'
+#	pod 'UIImageColors'
 	pod 'WhatsNew'
 	pod "WordPress-Aztec-iOS"
 #	pod 'Zip'
@@ -41,11 +37,6 @@ end
 # MARK: - Targets
 target 'Kurozora' do
     kurozora_pods
-    common_pods
-end
-
-target 'KCommonKit' do
-	common_pods
 end
 
 # MARK: - Post install scripts

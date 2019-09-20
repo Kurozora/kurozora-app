@@ -11,7 +11,6 @@ import ESTabBarController_swift
 import IQKeyboardManagerSwift
 import Kingfisher
 import KeychainAccess
-import RevealingSplashView
 import LocalAuthentication
 import SCLAlertView
 
@@ -43,7 +42,7 @@ class Kurozora {
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
 			// Initialize Pusher
-			WorkflowController.pusherInit()
+			WorkflowController.shared.registerForPusher()
 
 			// Max disk cache size
 			ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
@@ -57,20 +56,8 @@ class Kurozora {
 			IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
 			IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
-			// User login status
-			if User.username != nil {
-				let customTabBar = KTabBarController()
-				window?.rootViewController = customTabBar
-			} else {
-				revealingSplashView.heartAttack = true
-				let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
-				window?.rootViewController = welcomeViewController
-			}
-
-			// Play splash view animation
-			window?.addSubview(revealingSplashView)
-			revealingSplashView.playHeartBeatAnimation()
-			NotificationCenter.default.addObserver(Kurozora.shared, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
+			let customTabBar = KTabBarController()
+			window?.rootViewController = customTabBar
 		} else if viewController is KurozoraReachabilityViewController {
 			viewController.dismiss(animated: true, completion: nil)
 		}
@@ -235,11 +222,6 @@ class Kurozora {
 	@available(iOS 13.0, *)
 	func schemeHandler(scene: UIScene? = nil, open url: URL) {
 		schemeHandler(open: url, options: [:])
-	}
-
-	/// Stop the splash view animation
-	@objc func handleHeartAttackNotification() {
-		revealingSplashView.heartAttack = true
 	}
 }
 

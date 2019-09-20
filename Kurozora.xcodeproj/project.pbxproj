@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DD2C86AE4714F771AA2EE20 /* Pods_KCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */; };
 		6601F1AC2118488D0074C1DD /* MessageNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601F1AB2118488D0074C1DD /* MessageNotificationCell.swift */; };
 		6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6603F5E922E9BB7A0064BE62 /* KModalTransition.swift */; };
 		66058DB6212E95AB0084B79E /* details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66058DB5212E95AB0084B79E /* details.storyboard */; };
@@ -782,10 +781,7 @@
 		66F944B222F0D11B009F1FE2 /* KWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWebViewController.swift; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
-		681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.release.xcconfig"; sourceTree = "<group>"; };
-		950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KCommonKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KCommonKit/Pods-KCommonKit.debug.xcconfig"; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -793,7 +789,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DD2C86AE4714F771AA2EE20 /* Pods_KCommonKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,7 +817,6 @@
 				66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */,
 				66A254DD22AAEF5D002A0E34 /* MapKit.framework */,
 				E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */,
-				EA7ECD008C80ED6A334C9EA6 /* Pods_KCommonKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2010,8 +2004,6 @@
 			children = (
 				66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */,
 				268B0B9B5A247314B6D3FBD6 /* Pods-Kurozora.release.xcconfig */,
-				950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */,
-				681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2034,7 +2026,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6614DF4F2088D1C600B0BC69 /* Build configuration list for PBXNativeTarget "KCommonKit" */;
 			buildPhases = (
-				9F2E34C3EAB82D3DD3D34F4B /* [CP] Check Pods Manifest.lock */,
 				6614DF332088D1C600B0BC69 /* Sources */,
 				6614DF342088D1C600B0BC69 /* Frameworks */,
 				6614DF352088D1C600B0BC69 /* Headers */,
@@ -2319,24 +2310,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		9F2E34C3EAB82D3DD3D34F4B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KCommonKit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2381,7 +2354,6 @@
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
@@ -2418,7 +2390,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
@@ -2720,7 +2691,6 @@
 /* Begin XCBuildConfiguration section */
 		6614DF502088D1C600B0BC69 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 950158F91306F36AB1F102A5 /* Pods-KCommonKit.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -2779,7 +2749,6 @@
 		};
 		6614DF512088D1C600B0BC69 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 681D01BF46C20CA1653DF338 /* Pods-KCommonKit.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;

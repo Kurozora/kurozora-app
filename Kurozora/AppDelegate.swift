@@ -8,13 +8,10 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import RevealingSplashView
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
 import UserNotifications
-
-let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "kurozora_icon"), iconInitialSize: CGSize(width: 80, height: 80), backgroundColor: ThemeManager.color(for: KThemePicker.backgroundColor.stringValue) ?? .kGrayishNavy)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -70,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		// Initialize Pusher
-		WorkflowController.pusherInit()
+		WorkflowController.shared.registerForPusher()
 
 		// Max disk cache size
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
@@ -88,23 +85,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		authenticated = User.username != nil
 
 		// Prepare home view
-		let customTabBar = KTabBarController()
-		self.window?.rootViewController = customTabBar
+		if #available(iOS 13.0, *) {
+		} else {
+			let customTabBar = KTabBarController()
+			self.window?.rootViewController = customTabBar
+		}
 
 		if User.username != nil {
 			// Check if user should authenticate
 			Kurozora.shared.userHasToAuthenticate()
 		}
 
-		// Add splashview to the window and play it
-		window?.addSubview(revealingSplashView)
-		revealingSplashView.playHeartBeatAnimation()
-
-		// Prepare notification for terminating the splashview
-		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
-
 		// Register the app for receiving push notifications
-		registerForPushNotifications()
+		WorkflowController.shared.registerForPushNotifications()
 		return true
 	}
 
@@ -185,31 +178,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 		print("Failed to register: \(error)")
-	}
-
-	// MARK: - Functions
-	@objc func handleHeartAttackNotification() {
-		revealingSplashView.heartAttack = true
-	}
-
-	func registerForPushNotifications() {
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-
-			print("Permission granted: \(granted)")
-
-			guard granted else { return }
-			self?.getNotificationSettings()
-		}
-	}
-
-	func getNotificationSettings() {
-		UNUserNotificationCenter.current().getNotificationSettings { settings in
-			print("Notification settings: \(settings)")
-
-			guard settings.authorizationStatus == .authorized else { return }
-			DispatchQueue.main.async {
-				UIApplication.shared.registerForRemoteNotifications()
-			}
-		}
 	}
 }

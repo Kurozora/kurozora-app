@@ -364,7 +364,7 @@ extension NotificationsViewController {
 			self.updateNotification(at: [indexPath], for: notificationID?.string, with: 1)
 
 			// Show sessions view
-			WorkflowController.showSessions()
+			WorkflowController.shared.showSessions()
 		}
 	}
 }

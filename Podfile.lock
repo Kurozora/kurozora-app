@@ -11,7 +11,7 @@ PODS:
   - Cosmos (19.0.3)
   - CryptoSwift (0.15.0)
   - Down (0.8.6)
-  - EmptyDataSet-Swift (4.2.0)
+  - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
@@ -29,8 +29,7 @@ PODS:
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
-  - RevealingSplashView (0.6.0)
-  - RichTextView (2.3.3):
+  - RichTextView (2.3.4):
     - Down
     - iosMath
     - SnapKit
@@ -86,7 +85,6 @@ DEPENDENCIES:
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, commit `xcode11`)
   - NotificationBannerSwift
   - PusherSwift
-  - RevealingSplashView (from `https://github.com/PiXeL16/RevealingSplashView.git`, commit `master`)
   - RichTextView
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SPStorkController
@@ -137,9 +135,6 @@ EXTERNAL SOURCES:
   Kingfisher:
     :commit: xcode11
     :git: https://github.com/onevcat/Kingfisher.git
-  RevealingSplashView:
-    :commit: master
-    :git: https://github.com/PiXeL16/RevealingSplashView.git
   SCLAlertView:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
@@ -148,9 +143,6 @@ CHECKOUT OPTIONS:
   Kingfisher:
     :commit: xcode11
     :git: https://github.com/onevcat/Kingfisher.git
-  RevealingSplashView:
-    :commit: master
-    :git: https://github.com/PiXeL16/RevealingSplashView.git
   SCLAlertView:
     :commit: f76bb0306b4c73523ca64100b0e3f2ad6896cee2
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
@@ -163,7 +155,7 @@ SPEC CHECKSUMS:
   Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
-  EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
+  EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
@@ -176,8 +168,7 @@ SPEC CHECKSUMS:
   Pageboy: fd23a9b9e8156f4fac62731637f5d6f7d1e1c3aa
   PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
-  RevealingSplashView: 4db6bfd0800a1f4f8e5ad87ce5cdf3d276cd19cf
-  RichTextView: 5e37d093aecfaa2f0eac3b5fa81a299b9f3d59b8
+  RichTextView: 16ff2e75058fc99f37b4587fce3609063a70bee4
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
@@ -191,6 +182,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   WordPress-Aztec-iOS: e58c7ab55b0bae53418a705876093fed314b6586
 
-PODFILE CHECKSUM: c626b40b7f8937346c58acf23a269adefd02e927
+PODFILE CHECKSUM: 2b1f5b2428a95716d649a6980cfa79fc93266f4a
 
 COCOAPODS: 1.8.0.beta.1
