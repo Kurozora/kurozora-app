@@ -106,17 +106,18 @@ class Kurozora {
 		- Returns: a boolean value indicating if the current session is valid.
 	*/
 	static func validateSession(window: UIWindow?) -> Bool {
-		Service.shared.validateSession(withSuccess: { (success) in
-			if !success {
-				if window?.rootViewController as? WelcomeViewController == nil {
-					let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
-					window?.rootViewController = welcomeViewController
-					self.success = success
+		if User.isLoggedIn {
+			Service.shared.validateSession(withSuccess: { (success) in
+				if !success {
+					if window?.rootViewController as? WelcomeViewController == nil {
+						let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
+						window?.rootViewController = welcomeViewController
+					}
 				}
-			} else {
+
 				self.success = success
-			}
-		})
+			})
+		}
 
 		return success
 	}

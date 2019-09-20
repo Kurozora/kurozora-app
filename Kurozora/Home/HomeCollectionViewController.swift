@@ -71,14 +71,16 @@ class HomeCollectionViewController: UICollectionViewController {
 		navigationItem.searchController = searchController
 
         // Validate session
-        Service.shared.validateSession(withSuccess: { (success) in
-            if !success {
-				if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
-                	self.present(welcomeViewController, animated: true, completion: nil)
+		if User.isLoggedIn {
+			Service.shared.validateSession(withSuccess: { (success) in
+				if !success {
+					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
+						self.present(welcomeViewController, animated: true, completion: nil)
+					}
 				}
-            }
-			NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
-        })
+				NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
+			})
+		}
 
         Service.shared.getExplore(withSuccess: { (explore) in
 			DispatchQueue.main.async {

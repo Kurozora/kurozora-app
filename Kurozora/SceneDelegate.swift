@@ -76,32 +76,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
-        // IQKeyoardManager
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
-        IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
-        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+		// IQKeyoardManager
+		IQKeyboardManager.shared.enable = true
+		IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
+		IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
+		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
-		// User login status
+		// Set authentication status
+		authenticated = User.username != nil
+
+		// Prepare home view
+		let customTabBar = KTabBarController()
+		self.window?.rootViewController = customTabBar
+
 		if User.username != nil {
-			authenticated = true
-            let customTabBar = KTabBarController()
-            self.window?.rootViewController = customTabBar
-        } else {
-			authenticated = false
-            revealingSplashView.heartAttack = true
-			let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
-            self.window?.rootViewController = welcomeViewController
-        }
+			// Check if user should authenticate
+			Kurozora.shared.userHasToAuthenticate()
+		}
 
-		// Check if user should authenticate
-		Kurozora.shared.userHasToAuthenticate()
-
+		// Add splashview to the window and play it
         window?.addSubview(revealingSplashView)
 		revealingSplashView.playHeartBeatAnimation()
 
+		// Prepare notification for terminating the splashview
 		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			self.handleHeartAttackNotification()
+		}
+
+		// Register the app for receiving push notifications
+		registerForPushNotifications()
+
+		// Resotre previoud activity
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			 if !configure(window: window, with: userActivity) {
 				print("Failed to restore from \(userActivity)")
@@ -138,4 +145,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         return false
     }
+
+	func registerForPushNotifications() {
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+
+			print("Permission granted: \(granted)")
+
+			guard granted else { return }
+			self?.getNotificationSettings()
+		}
+	}
+
+	func getNotificationSettings() {
+		UNUserNotificationCenter.current().getNotificationSettings { settings in
+			print("Notification settings: \(settings)")
+
+			guard settings.authorizationStatus == .authorized else { return }
+			DispatchQueue.main.async {
+				UIApplication.shared.registerForRemoteNotifications()
+			}
+		}
+	}
 }

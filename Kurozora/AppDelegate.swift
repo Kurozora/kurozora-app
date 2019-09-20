@@ -84,26 +84,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
 		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
-		// User login status
+		// Set authentication status
+		authenticated = User.username != nil
+
+		// Prepare home view
+		let customTabBar = KTabBarController()
+		self.window?.rootViewController = customTabBar
+
 		if User.username != nil {
-			authenticated = true
-			let customTabBar = KTabBarController()
-			self.window?.rootViewController = customTabBar
-		} else {
-			authenticated = false
-			revealingSplashView.heartAttack = true
-			let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
-			self.window?.rootViewController = welcomeViewController
+			// Check if user should authenticate
+			Kurozora.shared.userHasToAuthenticate()
 		}
 
-		// Check if user should authenticate
-		Kurozora.shared.userHasToAuthenticate()
-
+		// Add splashview to the window and play it
 		window?.addSubview(revealingSplashView)
 		revealingSplashView.playHeartBeatAnimation()
 
+		// Prepare notification for terminating the splashview
 		NotificationCenter.default.addObserver(self, selector: #selector(handleHeartAttackNotification), name: .KHeartAttackShouldHappen, object: nil)
 
+		// Register the app for receiving push notifications
 		registerForPushNotifications()
 		return true
 	}
