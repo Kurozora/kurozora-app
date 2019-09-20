@@ -953,7 +953,7 @@ struct Service {
 		- Parameter successHandler: A closure returning a ThreadReplies object.
 		- Parameter threadReplies: The returned ThreadReplies object.
 	*/
-	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies) -> Void) {
+	func getReplies(forThread threadID: Int?, order: String?, page: Int?, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies?) -> Void) {
 		guard let threadID = threadID else { return }
 		guard let order = order else { return }
 		guard let page = page else { return }
