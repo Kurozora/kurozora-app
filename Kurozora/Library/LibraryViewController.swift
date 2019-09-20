@@ -95,7 +95,7 @@ class LibraryViewController: TabmanViewController {
 		addBar(systemBar, dataSource: self, at: .top)
 
 		if let barItemsCount = bar.items?.count {
-			bar.isHidden = barItemsCount <= 1
+			bar.isHidden = !User.isLoggedIn && barItemsCount >= 1
 		}
 
 		#if DEBUG
@@ -149,7 +149,6 @@ class LibraryViewController: TabmanViewController {
 	private func changeLayout() {
 		guard let buttonTitle = changeLayoutButton.title else { return }
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
-		guard let sectionTitle = currentSection.sectionTitle else { return }
 
 		var libraryLayout: LibraryListStyle = .detailed
 
@@ -166,7 +165,7 @@ class LibraryViewController: TabmanViewController {
 		// Add to UserSettings
 		if let libraryLayouts = UserSettings.libraryLayouts as? [String: String] {
 			var newLibraryLayouts = libraryLayouts
-			newLibraryLayouts[sectionTitle] = changeLayoutButton.title
+			newLibraryLayouts[currentSection.sectionTitle] = changeLayoutButton.title
 			UserSettings.set(newLibraryLayouts, forKey: .libraryLayouts)
 		}
 
@@ -203,7 +202,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = librarySections.count
+		let sectionsCount = User.isLoggedIn ? librarySections.count : 1
 		initializeViewControllers(with: sectionsCount)
 		return sectionsCount
 	}

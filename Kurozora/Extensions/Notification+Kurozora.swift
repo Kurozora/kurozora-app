@@ -9,10 +9,6 @@
 import Foundation
 
 extension Notification.Name {
-	static var KHeartAttackShouldHappen: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {
 		return Notification.Name(#function)
 	}

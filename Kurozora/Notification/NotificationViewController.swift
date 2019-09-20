@@ -19,7 +19,7 @@ protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerClearedAllNotifications()
 }
 
-class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
+class NotificationsViewController: UITableViewController {
 	var searchResultsViewController: SearchResultsTableViewController!
 	var searchController: SearchController!
 	var grouping: NotificationGroupStyle = .off
@@ -69,16 +69,7 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetSource = self
-		tableView.emptyDataSetDelegate = self
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No notifications to show."))
-				.image(UIImage(named: "notification"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(true)
-		}
+		setupEmptyView()
 	}
 
 	// MARK: - Functions
@@ -90,6 +81,35 @@ class NotificationsViewController: UITableViewController, EmptyDataSetDelegate, 
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "notification", bundle: nil)
 		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
+	}
+
+	/// Setup empty view data.
+	private func setupEmptyView() {
+		tableView.emptyDataSetView { (view) in
+			if User.isLoggedIn {
+				view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					.detailLabelString(NSAttributedString(string: "When you have notifications, you will see them here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+					.image(#imageLiteral(resourceName: "empty_notifications"))
+					.imageTintColor(KThemePicker.textColor.colorValue)
+					.verticalOffset(-60)
+					.verticalSpace(10)
+			} else {
+				view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					.detailLabelString(NSAttributedString(string: "Notifications is only available to registered Kurozora users.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+					.image(#imageLiteral(resourceName: "empty_notifications"))
+					.imageTintColor(KThemePicker.textColor.colorValue)
+					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
+					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
+					.verticalOffset(-60)
+					.verticalSpace(10)
+					.didTapDataButton {
+						if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
+							let kNavigationController = KNavigationController(rootViewController: loginViewController)
+							self.present(kNavigationController)
+						}
+				}
+			}
+		}
 	}
 
 	/**

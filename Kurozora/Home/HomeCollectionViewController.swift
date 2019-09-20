@@ -78,7 +78,6 @@ class HomeCollectionViewController: UICollectionViewController {
 						self.present(welcomeViewController, animated: true, completion: nil)
 					}
 				}
-				NotificationCenter.default.post(name: .KHeartAttackShouldHappen, object: nil)
 			})
 		}
 

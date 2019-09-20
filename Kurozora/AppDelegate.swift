@@ -159,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			if let showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
 				showDetailTabBarController.showID = showID
-				UIApplication.topViewController?.present(showDetailTabBarController, animated: true)
+				UIApplication.topViewController?.present(showDetailTabBarController)
 			}
 		}
 

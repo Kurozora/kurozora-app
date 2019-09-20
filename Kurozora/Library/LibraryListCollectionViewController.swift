@@ -17,7 +17,7 @@ protocol LibraryListViewControllerDelegate: class {
 	func updateLayoutChangeButton(current layout: LibraryListStyle)
 }
 
-class LibraryListCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class LibraryListCollectionViewController: UICollectionViewController {
 	private let refreshControl = UIRefreshControl()
 
 	var showDetailsElements: [ShowDetailsElement]? {
@@ -26,10 +26,13 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 				if self.collectionView.numberOfItems() != 0 {
 					self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
 				}
+
+				self.refreshControl.endRefreshing()
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 			}
 		}
 	}
-    var sectionTitle: String?
+	var sectionTitle: String = ""
 	var sectionIndex: Int?
 	var libraryLayout: LibraryListStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
@@ -75,35 +78,25 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		guard let sectionTitle = sectionTitle else {return}
-		let lowerdSectionTitle = sectionTitle.lowercased()
+		if User.isLoggedIn {
+			// Add Refresh Control to Collection View
+			collectionView.refreshControl = refreshControl
+			refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
+			refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
+			refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
 
-		// Add Refresh Control to Collection View
-		collectionView.refreshControl = refreshControl
-		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(lowerdSectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
-		refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
+			// Observe NotificationCenter for update notification
+			let libraryUpdateNotificationName = Notification.Name("Update\(sectionTitle)Section")
+			NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: libraryUpdateNotificationName, object: nil)
 
-		// Observe NotificationCenter for update notification
-		let libraryUpdateNotificationName = Notification.Name("Update\(sectionTitle)Section")
-		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: libraryUpdateNotificationName, object: nil)
+			fetchLibrary()
 
-		fetchLibrary()
-
-		// Setup collection view
-		collectionView.dragDelegate = self
+			// Setup collection view
+			collectionView.dragDelegate = self
+		}
 
         // Setup empty collection view
-        collectionView.emptyDataSetDelegate = self
-        collectionView.emptyDataSetSource = self
-
-        collectionView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "Your \(lowerdSectionTitle) list is empty!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(true)
-        }
+		setupEmptyView()
     }
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -127,6 +120,33 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	}
 
 	// MARK: - Functions
+	/// Setup empty view data.
+	private func setupEmptyView() {
+		collectionView.emptyDataSetView { (view) in
+			if User.isLoggedIn {
+				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					.detailLabelString(NSAttributedString(string: "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+					.image(#imageLiteral(resourceName: "empty_library"))
+					.verticalOffset(-50)
+					.verticalSpace(10)
+			} else {
+				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					.detailLabelString(NSAttributedString(string: "Library is only available to registered Kurozora users.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+					.image(#imageLiteral(resourceName: "empty_library"))
+					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
+					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
+					.verticalOffset(-50)
+					.verticalSpace(10)
+					.didTapDataButton {
+						if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
+							let kNavigationController = KNavigationController(rootViewController: loginViewController)
+							self.present(kNavigationController)
+						}
+					}
+			}
+		}
+	}
+
 	/**
 		Refresh the library data by fetching new items from the server.
 
@@ -134,8 +154,7 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 	*/
 	@objc private func refreshLibraryData(_ sender: Any) {
 		// Fetch library data
-		guard let sectionTitle = sectionTitle?.lowercased() else {return}
-		refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
+		refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 		fetchLibrary()
 	}
 
@@ -143,13 +162,9 @@ class LibraryListCollectionViewController: UICollectionViewController, EmptyData
 		Fetch the library items for the current user.
 	*/
 	@objc private func fetchLibrary() {
-		guard let sectionTitle = sectionTitle else {return}
-
 		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
 			DispatchQueue.main.async {
 				self.showDetailsElements = showDetailsElements
-				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
 			}
 		})
 	}

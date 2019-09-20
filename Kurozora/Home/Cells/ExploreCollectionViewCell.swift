@@ -287,17 +287,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			self.homeCollectionViewController?.present(action, animated: true, completion: nil)
 		}
 	}
-
-//	// MARK: - Observable
-//	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//		if (object as? AVPlayer) != nil {
-//			if keyPath == "status" {
-//				if avPlayer?.status == AVPlayer.Status.readyToPlay {
-//					avPlayerViewController?.contentOverlayView?.addSubview(thumbnailPlaceholder)
-//				}
-//			}
-//		}
-//	}
 }
 
 // MARK: - UIViewControllerPreviewingDelegate

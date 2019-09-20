@@ -111,8 +111,15 @@ class FeedTabsViewController: TabmanViewController {
 	}
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
-			self.show(profileTableViewController, sender: nil)
+		if User.isLoggedIn {
+			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
+				self.show(profileTableViewController, sender: nil)
+			}
+		} else {
+			if let loginViewController = LoginViewController.instantiateFromStoryboard() {
+				let kNavigationController = KNavigationController(rootViewController: loginViewController)
+				self.present(kNavigationController)
+			}
 		}
 	}
 }

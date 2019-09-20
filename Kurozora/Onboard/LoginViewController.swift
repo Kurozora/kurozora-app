@@ -92,9 +92,10 @@ class LoginViewController: UIViewController {
 				DispatchQueue.main.async {
 					WorkflowController.shared.registerForPusher()
 
-					let customTabBar = KTabBarController()
-					customTabBar.modalPresentationStyle = .fullScreen
-					self.present(customTabBar, animated: true, completion: nil)
+					self.dismiss(animated: true, completion: nil)
+//					let customTabBar = KTabBarController()
+//					customTabBar.modalPresentationStyle = .fullScreen
+//					self.present(customTabBar, animated: true, completion: nil)
 				}
 			} else {
 				self.passwordTextField.text = ""
