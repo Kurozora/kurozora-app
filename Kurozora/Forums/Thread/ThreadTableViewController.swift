@@ -108,7 +108,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	var repliesOrder = "top"
 
 	// Pagination
-	var totalPages = 1
+	var currentPage = 1
 	var lastPage = 1
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -237,18 +237,15 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	func getThreadReplies() {
 		Service.shared.getReplies(forThread: forumThreadID, order: repliesOrder, page: lastPage) { (replies) in
 			DispatchQueue.main.async {
-				if let replyPages = replies.replyPages {
-					self.totalPages = replyPages
-				}
+				self.currentPage = replies?.currentPage ?? 1
+				self.lastPage = replies?.lastPage ?? 1
 
-				if self.lastPage == 0 {
-					self.replies = replies.replies
-					self.lastPage += 1
-				} else if self.lastPage <= self.totalPages-1 {
-					for threadRepliesElement in (replies.replies)! {
+				if self.currentPage == 1 {
+					self.replies = replies?.replies
+				} else {
+					for threadRepliesElement in replies?.replies ?? [] {
 						self.replies?.append(threadRepliesElement)
 					}
-					self.lastPage += 1
 				}
 
 				self.tableView.reloadData()
@@ -531,8 +528,9 @@ extension ThreadTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.section == numberOfSections-1 {
-			if lastPage <= totalPages-1 {
+		if indexPath.section == numberOfSections - 2 {
+			if currentPage != lastPage {
+				currentPage += 1
 				getThreadReplies()
 			}
 		}

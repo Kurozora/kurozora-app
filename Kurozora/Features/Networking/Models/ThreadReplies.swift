@@ -11,23 +11,24 @@ import SwiftyJSON
 
 class ThreadReplies: JSONDecodable {
 	let success: Bool?
-	let page: Int?
+	let currentPage: Int?
+	let lastPage: Int?
 	let replyPages: Int?
 	let replies: [ThreadRepliesElement]?
 
 	required init(json: JSON) throws {
 		self.success = json["success"].boolValue
-		self.page = json["page"].intValue
+		self.currentPage = json["page"].intValue
+		self.lastPage = json["last_page"].intValue
   		self.replyPages = json["reply_pages"].intValue
-		var replies = [ThreadRepliesElement]()
 
+		var replies = [ThreadRepliesElement]()
 		let repliesArray = json["replies"].arrayValue
 		for repliesItem in repliesArray {
 			if let threadRepliesElement = try? ThreadRepliesElement(json: repliesItem) {
 				replies.append(threadRepliesElement)
 			}
 		}
-
 		self.replies = replies
 	}
 }
