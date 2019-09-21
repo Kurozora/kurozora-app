@@ -57,11 +57,8 @@ extension AccountTableViewController {
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isLoggedIn {
 					Service.shared.logout(withSuccess: nil)
-				} else {
-					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
-						UIApplication.topViewController?.present(welcomeViewController, animated: true, completion: nil)
-					}
 				}
+				self.dismiss(animated: true, completion: nil)
 			})
 
 			alertView.showError("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")

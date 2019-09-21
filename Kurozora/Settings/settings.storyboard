@@ -32,7 +32,6 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mc7-tL-ktD">
                                                             <rect key="frame" x="8" y="20" width="50" height="50"/>
-                                                            <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="50" id="94p-Mc-5Ik"/>
                                                                 <constraint firstAttribute="width" constant="50" id="KKv-kG-ZTW"/>
@@ -96,7 +95,7 @@
                                             <outlet property="profileImageView" destination="mc7-tL-ktD" id="3CA-yZ-YSx"/>
                                             <outlet property="selectedView" destination="Pdr-wa-wj3" id="oHD-aR-Izl"/>
                                             <outlet property="usernameLabel" destination="3WP-Ke-ygy" id="oeZ-tf-xGk"/>
-                                            <segue destination="Zmg-c6-Igs" kind="showDetail" id="gXD-Me-I3f"/>
+                                            <segue destination="Zmg-c6-Igs" kind="showDetail" identifier="AccountSegue" id="gXD-Me-I3f"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1020,6 +1019,7 @@ Kurozora 1.0.0 (1)</string>
         <!--Navigation Controller-->
         <scene sceneID="GHi-cX-FjE">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cJu-79-oFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="SettingsKNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j9b-id-9wy" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Y0h-Co-3aP">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1036,7 +1036,6 @@ Kurozora 1.0.0 (1)</string>
                         <segue destination="YOh-JN-Nev" kind="relationship" relationship="rootViewController" id="DEq-v4-iSC"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cJu-79-oFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3252" y="-998"/>
         </scene>

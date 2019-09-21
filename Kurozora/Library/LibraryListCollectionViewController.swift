@@ -107,18 +107,6 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		flowLayout.invalidateLayout()
 	}
 
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailTabBarControllerLibrary = segue.destination as? ShowDetailTabBarController {
-			showDetailTabBarControllerLibrary.libraryCollectionViewCell = currentCell
-			showDetailTabBarControllerLibrary.showDetailsElement = currentCell.showDetailsElement
-			if let showTitle = currentCell.showDetailsElement?.title {
-				showDetailTabBarControllerLibrary.heroID = "library_\(showTitle)"
-				showDetailTabBarControllerLibrary.showDetailViewControllerDelegate = self
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/// Setup empty view data.
 	private func setupEmptyView() {
@@ -172,6 +160,18 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	func show(at indexPath: IndexPath) -> ShowDetailsElement? {
 		return showDetailsElements?[indexPath.row]
     }
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailTabBarControllerLibrary = segue.destination as? ShowDetailTabBarController {
+			showDetailTabBarControllerLibrary.libraryCollectionViewCell = currentCell
+			showDetailTabBarControllerLibrary.showDetailsElement = currentCell.showDetailsElement
+			if let showTitle = currentCell.showDetailsElement?.title {
+				showDetailTabBarControllerLibrary.heroID = "library_\(showTitle)"
+				showDetailTabBarControllerLibrary.showDetailViewControllerDelegate = self
+			}
+		}
+	}
 }
 
 // MARK: - UICollectionViewDataSource

@@ -116,7 +116,7 @@ class FeedTabsViewController: TabmanViewController {
 				self.show(profileTableViewController, sender: nil)
 			}
 		} else {
-			if let loginViewController = LoginViewController.instantiateFromStoryboard() {
+			if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
 				let kNavigationController = KNavigationController(rootViewController: loginViewController)
 				self.present(kNavigationController)
 			}

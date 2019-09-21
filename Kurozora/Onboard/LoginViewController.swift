@@ -10,8 +10,6 @@ import UIKit
 import SwiftTheme
 
 class LoginViewController: UIViewController {
-	var window: UIWindow?
-
 	@IBOutlet weak var usernameTextField: UITextField! {
 		didSet {
 			usernameTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
@@ -91,11 +89,8 @@ class LoginViewController: UIViewController {
 			if success {
 				DispatchQueue.main.async {
 					WorkflowController.shared.registerForPusher()
-
+					NotificationCenter.default.post(name: .KUserIsLoggedInDidChange, object: nil)
 					self.dismiss(animated: true, completion: nil)
-//					let customTabBar = KTabBarController()
-//					customTabBar.modalPresentationStyle = .fullScreen
-//					self.present(customTabBar, animated: true, completion: nil)
 				}
 			} else {
 				self.passwordTextField.text = ""

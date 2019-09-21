@@ -103,17 +103,6 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		flowLayout.invalidateLayout()
 	}
 
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
-			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
-				episodeDetailViewController.episodeCell = episodeCell
-				episodeDetailViewController.delegate = episodeCell
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
@@ -204,6 +193,17 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 	// MARK: - IBActions
 	@IBAction func goToButtonPressed(_ sender: UIBarButtonItem) {
 		showActionList()
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
+			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
+				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
+				episodeDetailViewController.episodeCell = episodeCell
+				episodeDetailViewController.delegate = episodeCell
+			}
+		}
 	}
 }
 

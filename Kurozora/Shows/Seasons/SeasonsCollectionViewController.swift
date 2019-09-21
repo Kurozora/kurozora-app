@@ -106,15 +106,6 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 		flowLayout.invalidateLayout()
 	}
 
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodesSegue", let cell = sender as? SeasonsCollectionViewCell {
-			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: cell) {
-				episodesCollectionViewController.seasonID = seasons?[indexPath.item].id
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Instantiates and returns a view controller from the relevant storyboard.
@@ -144,6 +135,15 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		collectionView.collectionViewLayout.invalidateLayout()
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EpisodesSegue", let cell = sender as? SeasonsCollectionViewCell {
+			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: cell) {
+				episodesCollectionViewController.seasonID = seasons?[indexPath.item].id
+			}
+		}
 	}
 }
 

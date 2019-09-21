@@ -12,8 +12,6 @@ import SCLAlertView
 import SwiftTheme
 
 class SettingsTableViewController: UITableViewController {
-//	let FacebookPageDeepLink = "fb://profile/713541968752502"
-//	let FacebookPageURL = "https://www.facebook.com/KurozoraApp"
     let twitterPageDeepLink = "twitter://user?id=991929359052177409"
     let twitterPageURL = "https://www.twitter.com/KurozoraApp"
     let mediumPageDeepLink = "medium://@kurozora"
@@ -25,6 +23,7 @@ class SettingsTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsLoggedInDidChange, object: nil)
 	}
 
     // MARK: - Functions
@@ -47,10 +46,23 @@ class SettingsTableViewController: UITableViewController {
 		}
     }
 
+	@objc private func reloadData() {
+		tableView.reloadData()
+	}
+
     // MARK: - IBActions
     @IBAction func dismissPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+
+	// MARK: - Segue
+	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+		if identifier == "AccountSegue", !User.isLoggedIn {
+			return false
+		}
+
+		return true
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -74,6 +86,12 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let settingsCell = super.tableView(tableView, cellForRowAt: indexPath) as! SettingsCell
+
+		switch (indexPath.section, indexPath.row) {
+		case (0, 0):
+			settingsCell.updateAccountCell()
+		default: break
+		}
 
 		if !User.isAdmin && indexPath.section == 1 {
 			return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
@@ -103,7 +121,7 @@ extension SettingsTableViewController {
 //            message += "Going PRO unlocks all features and help us keep improving the app"
 //            return message
 //        case 2:
-//            return "If you're looking for support drop us a message on Facebook or Twitter"
+//            return "If you're looking for support drop us a message on Twitter"
 //        case 3:
 //            let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 //            let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
@@ -178,11 +196,16 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//		tableView.deselectRow(at: indexPath, animated: true)
 		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
 
 		switch (indexPath.section, indexPath.row) {
-//		case (0, 0): break
+		case (0, 0):
+			if !User.isLoggedIn {
+				if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
+					let kNavigationController = KNavigationController(rootViewController: loginViewController)
+					self.present(kNavigationController)
+				}
+			}
 //		case (1, 0): break
 //		case (2, 0): break
 //		case (3, 0): break

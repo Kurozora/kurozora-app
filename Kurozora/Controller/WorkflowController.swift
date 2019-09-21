@@ -81,13 +81,15 @@ class WorkflowController {
 	func logoutUser(with logoutReason: String? = nil, whereUser isKiller: Bool = false) {
 		try? Kurozora.shared.KDefaults.removeAll()
 
-		if let kNavigationController = WelcomeViewController.instantiateFromStoryboard() as? KNavigationController {
-			if let welcomeViewController = kNavigationController.visibleViewController as? WelcomeViewController {
-				welcomeViewController.logoutReason = logoutReason
-				welcomeViewController.isKiller = isKiller
-			}
-			UIApplication.topViewController?.present(kNavigationController, animated: true)
-		}
+//		if let kNavigationController = WelcomeViewController.instantiateFromStoryboard() as? KNavigationController {
+//			if let welcomeViewController = kNavigationController.visibleViewController as? WelcomeViewController {
+//				welcomeViewController.logoutReason = logoutReason
+//				welcomeViewController.isKiller = isKiller
+//			}
+//			UIApplication.topViewController?.present(kNavigationController, animated: true)
+//		}
+
+		NotificationCenter.default.post(name: .KUserIsLoggedInDidChange, object: nil)
 	}
 }
 

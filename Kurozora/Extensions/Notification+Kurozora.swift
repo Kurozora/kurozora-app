@@ -9,6 +9,10 @@
 import Foundation
 
 extension Notification.Name {
+	static var KUserIsLoggedInDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {
 		return Notification.Name(#function)
 	}

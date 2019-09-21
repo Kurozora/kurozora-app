@@ -50,17 +50,6 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		}
     }
 
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? FollowCell {
-			if segue.identifier == "ProfileSegue" {
-				if let profileTableViewController = segue.destination as? ProfileTableViewController {
-					profileTableViewController.userID = currentCell.userProfile?.id
-				}
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/// Fetch the follow list for the currently viewed profile.
     func fetchFollowList() {
@@ -75,6 +64,17 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 					for userProfile in (userFollow?.following?.isEmpty ?? true ? userFollow?.followers : userFollow?.following) ?? [] {
 						self.userFollow.append(userProfile)
 					}
+				}
+			}
+		}
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let currentCell = sender as? FollowCell {
+			if segue.identifier == "ProfileSegue" {
+				if let profileTableViewController = segue.destination as? ProfileTableViewController {
+					profileTableViewController.userID = currentCell.userProfile?.id
 				}
 			}
 		}

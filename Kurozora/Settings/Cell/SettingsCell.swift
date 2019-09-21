@@ -27,14 +27,14 @@ class SettingsCell: UITableViewCell {
 	}
 	@IBOutlet weak var usernameLabel: UILabel? {
 		didSet {
-			self.usernameLabel?.text = Kurozora.shared.KDefaults["username"]
 			self.usernameLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var profileImageView: UIImageView? {
 		didSet {
-			self.profileImageView?.image = User.currentUserProfileImage
 			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
+			self.profileImageView?.theme_tintColor = KThemePicker.borderColor.rawValue
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAccountCell), name: .KUserIsLoggedInDidChange, object: nil)
 		}
 	}
 	@IBOutlet weak var cacheSizeLabel: UILabel? {
@@ -82,10 +82,20 @@ class SettingsCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
+	/// Updates the account cell depending on the user's loggin state.
+	@objc func updateAccountCell() {
+		self.profileImageView?.image = User.isLoggedIn ? User.currentUserProfileImage : #imageLiteral(resourceName: "profile")
+		self.usernameLabel?.text = User.isLoggedIn ? Kurozora.shared.KDefaults["username"] : "Sign in to your Kurozora account"
+		self.cellSubTitle?.text = User.isLoggedIn ? "Kurozora ID" : "Setup Kurozora ID and more."
+		self.chevronImageView?.isHidden = !User.isLoggedIn
+	}
+
+	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
 		self.appIconImageView?.image = UIImage(named: UserSettings.appIcon)
 	}
 
+	/// Updates the notification value labels with the respective options selected by the user.
 	@objc func updateNotificationValueLabels() {
 		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
 		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
