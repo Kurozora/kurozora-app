@@ -560,7 +560,7 @@ Kurozora</string>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
-                                            <rect key="frame" x="20" y="50" width="374" height="18"/>
+                                            <rect key="frame" x="107.5" y="50" width="199.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -583,7 +583,7 @@ Kurozora</string>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Kurozora ID is the account you use to access all Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C71-jA-gSI">
-                                            <rect key="frame" x="20" y="208" width="374" height="36"/>
+                                            <rect key="frame" x="24.5" y="208" width="365" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -612,22 +612,26 @@ Kurozora</string>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Uls-SB-5wS" secondAttribute="trailing" id="2Ku-3f-17d"/>
-                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="4pW-pt-bzj"/>
-                                        <constraint firstItem="C71-jA-gSI" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="56v-mm-Olh"/>
-                                        <constraint firstItem="Uls-SB-5wS" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="94z-eR-vfP"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Uls-SB-5wS" secondAttribute="trailing" id="2Ku-3f-17d"/>
+                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="4pW-pt-bzj"/>
+                                        <constraint firstItem="C71-jA-gSI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="56v-mm-Olh"/>
+                                        <constraint firstItem="Uls-SB-5wS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="94z-eR-vfP"/>
                                         <constraint firstAttribute="bottom" secondItem="F7x-5a-Rci" secondAttribute="bottom" id="9C8-bH-gs7"/>
+                                        <constraint firstItem="bL3-c9-8O1" firstAttribute="centerX" secondItem="5B2-1M-yaM" secondAttribute="centerX" id="CVs-1N-Smm"/>
                                         <constraint firstItem="Uls-SB-5wS" firstAttribute="centerX" secondItem="bL3-c9-8O1" secondAttribute="centerX" id="FSZ-kZ-090"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="u2b-Lj-jIl" secondAttribute="trailing" id="G9f-lr-uWq"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="u2b-Lj-jIl" secondAttribute="trailing" id="G9f-lr-uWq"/>
                                         <constraint firstItem="bL3-c9-8O1" firstAttribute="top" secondItem="5B2-1M-yaM" secondAttribute="top" constant="10" id="HNM-WE-VOD"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="u2b-Lj-jIl" secondAttribute="bottom" constant="40" id="HjU-a0-hUL"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="u2b-Lj-jIl" secondAttribute="leading" id="M1s-ga-c5h"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="C71-jA-gSI" secondAttribute="trailing" id="Nn7-j7-JFy"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="bL3-c9-8O1" secondAttribute="leading" id="RwD-BZ-PTS"/>
+                                        <constraint firstItem="C71-jA-gSI" firstAttribute="centerX" secondItem="Spl-yt-qj9" secondAttribute="centerX" id="JbC-UJ-dHo"/>
+                                        <constraint firstAttribute="leadingMargin" relation="greaterThanOrEqual" secondItem="u2b-Lj-jIl" secondAttribute="leading" id="M1s-ga-c5h"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="C71-jA-gSI" secondAttribute="trailing" id="Nn7-j7-JFy"/>
+                                        <constraint firstItem="u2b-Lj-jIl" firstAttribute="centerX" secondItem="Uls-SB-5wS" secondAttribute="centerX" id="Rra-tM-2ph"/>
+                                        <constraint firstAttribute="leadingMargin" relation="greaterThanOrEqual" secondItem="bL3-c9-8O1" secondAttribute="leading" id="RwD-BZ-PTS"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="F7x-5a-Rci" secondAttribute="trailing" id="Xwn-i8-Sbx"/>
                                         <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="20" id="Xyg-3T-SD1"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="bL3-c9-8O1" secondAttribute="trailing" id="YTA-Im-WEf"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="bL3-c9-8O1" secondAttribute="trailing" id="YTA-Im-WEf"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
+                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="u2b-Lj-jIl" secondAttribute="centerX" id="eEi-HS-iga"/>
                                         <constraint firstItem="Uls-SB-5wS" firstAttribute="top" secondItem="bL3-c9-8O1" secondAttribute="bottom" id="hV6-gg-cXy"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="top" secondItem="Spl-yt-qj9" secondAttribute="bottom" constant="20" id="kEG-1x-To3"/>
                                         <constraint firstItem="u2b-Lj-jIl" firstAttribute="top" secondItem="Uls-SB-5wS" secondAttribute="bottom" id="vfN-5q-mf2"/>
@@ -639,7 +643,9 @@ Kurozora</string>
                                     <outlet property="descriptionLabel" destination="C71-jA-gSI" id="eoa-kp-ERh"/>
                                     <outlet property="forgotPasswordButton" destination="bL3-c9-8O1" id="Zue-aS-Diq"/>
                                     <outlet property="legalButton" destination="F7x-5a-Rci" id="cr8-QX-Gbo"/>
+                                    <outlet property="orLabel" destination="Uls-SB-5wS" id="7aM-jD-fh3"/>
                                     <outlet property="promotionalImageView" destination="Spl-yt-qj9" id="evW-lg-V8d"/>
+                                    <outlet property="registerPasswordButton" destination="u2b-Lj-jIl" id="ZyS-K2-fkk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -667,7 +673,7 @@ Kurozora</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0BR-6a-Dts" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1316" y="137"/>
+            <point key="canvasLocation" x="1315.9420289855072" y="136.60714285714286"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UHM-Wc-4qv">
@@ -747,8 +753,8 @@ Kurozora</string>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Enter your Kurozora ID to receive the magical link." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-GC-XfQ">
-                                    <rect key="frame" x="17.5" y="62" width="379" height="43"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Enter your email address to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-GC-XfQ">
+                                    <rect key="frame" x="65" y="62" width="284" height="43"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -802,14 +808,32 @@ Kurozora</string>
                                     <outlet property="textField" destination="Khe-nX-yBW" id="kjb-be-QqS"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="50" id="DIc-ml-yv5" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="250.5" width="414" height="50"/>
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="65" id="DIc-ml-yv5" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="250.5" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DIc-ml-yv5" id="ujn-rt-3U9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the email address linked to your Kurozora ID to receive the magical link." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxE-Q9-ZJm">
+                                            <rect key="frame" x="25.5" y="10" width="363" height="45"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="top" secondItem="ujn-rt-3U9" secondAttribute="top" constant="10" id="7au-ee-7Rv"/>
+                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ujn-rt-3U9" secondAttribute="leadingMargin" id="9Az-iB-U7O"/>
+                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="centerX" secondItem="ujn-rt-3U9" secondAttribute="centerX" id="LQF-K3-qTP"/>
+                                        <constraint firstAttribute="bottom" secondItem="xxE-Q9-ZJm" secondAttribute="bottom" constant="10" id="Sl6-Li-pcC"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xxE-Q9-ZJm" secondAttribute="trailing" id="dR9-dK-jhO"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="xxE-Q9-ZJm" id="mdH-gK-gg7"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -840,7 +864,7 @@ Kurozora</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qph-B1-EaH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2880" y="-177"/>
+            <point key="canvasLocation" x="2879.7101449275365" y="-177.45535714285714"/>
         </scene>
         <!--Register Table View Controller-->
         <scene sceneID="5MS-1r-T5m">
@@ -854,13 +878,13 @@ Kurozora</string>
                             <rect key="frame" x="0.0" y="0.0" width="414" height="204"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to Kurozora?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="New to Kurozora?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy">
                                     <rect key="frame" x="108" y="20" width="198" height="32"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Create an account and join the community." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Create an account and join the community." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr">
                                     <rect key="frame" x="44" y="62" width="326.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -953,14 +977,47 @@ Kurozora</string>
                                     <outlet property="textField" destination="tFV-uv-uCC" id="7x9-8N-0SU"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="50" id="Jl8-33-z0g" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="319.5" width="414" height="50"/>
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="82" id="Jl8-33-z0g" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="319.5" width="414" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jl8-33-z0g" id="X0g-QN-Fjh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFI-QU-QEl">
+                                            <rect key="frame" x="20" y="20" width="374" height="52"/>
+                                            <state key="normal">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment>
+                                                        <string key="content">Your Kurozra ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. </string>
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" metaFont="label" size="12"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="See how your data is managed...">
+                                                        <attributes>
+                                                            <color key="NSColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" metaFont="label" size="12"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="eFI-QU-QEl" secondAttribute="bottom" constant="10" id="90z-Sl-0RY"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="eFI-QU-QEl" secondAttribute="trailing" id="PMj-wO-5PQ"/>
+                                        <constraint firstItem="eFI-QU-QEl" firstAttribute="top" secondItem="X0g-QN-Fjh" secondAttribute="top" constant="20" id="SgL-nO-Tz8"/>
+                                        <constraint firstItem="eFI-QU-QEl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="X0g-QN-Fjh" secondAttribute="leadingMargin" id="tvs-Ip-Pso"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="legalButton" destination="eFI-QU-QEl" id="29w-FM-rsr"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -994,7 +1051,7 @@ Kurozora</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LxV-Og-AFi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2880" y="497"/>
+            <point key="canvasLocation" x="2879.7101449275365" y="496.875"/>
         </scene>
     </scenes>
     <resources>

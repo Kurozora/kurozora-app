@@ -15,6 +15,16 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 			forgotPasswordButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
 	}
+	@IBOutlet weak var orLabel: UILabel? {
+		didSet {
+			orLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var registerPasswordButton: UIButton! {
+		didSet {
+			registerPasswordButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+		}
+	}
 	@IBOutlet weak var promotionalImageView: UIImageView?
 	@IBOutlet weak var descriptionLabel: UILabel? {
 		didSet {
