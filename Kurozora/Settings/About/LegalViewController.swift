@@ -9,6 +9,7 @@
 import UIKit
 
 class LegalViewController: UIViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
 		didSet {
@@ -33,6 +34,7 @@ class LegalViewController: UIViewController {
 	}
 	@IBOutlet weak var scrollView: UIScrollView!
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -59,6 +61,18 @@ class LegalViewController: UIViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
+	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "about", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "LegalViewController")
+	}
+
+	// MARK: - IBActions
 	@IBAction func doneButtonPressed(_ sender: UIButton) {
 		self.dismiss(animated: true, completion: nil)
 	}

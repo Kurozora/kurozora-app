@@ -201,8 +201,8 @@ extension SettingsTableViewController {
 		switch (indexPath.section, indexPath.row) {
 		case (0, 0):
 			if !User.isLoggedIn {
-				if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
-					let kNavigationController = KNavigationController(rootViewController: loginViewController)
+				if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
+					let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
 					self.present(kNavigationController)
 				}
 			}

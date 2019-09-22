@@ -126,8 +126,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 					.verticalSpace(10)
 					.isScrollAllowed(false)
 					.didTapDataButton {
-						if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
-							let kNavigationController = KNavigationController(rootViewController: loginViewController)
+						if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
+							let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
 							self.present(kNavigationController)
 						}
 					}

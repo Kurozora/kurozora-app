@@ -543,8 +543,8 @@ class ShowDetailViewController: UIViewController {
 				self.present(action, animated: true, completion: nil)
 			}
 		} else {
-			if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
-				let kNavigationController = KNavigationController(rootViewController: loginViewController)
+			if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
+				let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
 				self.present(kNavigationController)
 			}
 		}

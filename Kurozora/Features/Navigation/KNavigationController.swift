@@ -10,6 +10,7 @@ import UIKit
 import SwiftTheme
 
 class KNavigationController: UINavigationController {
+	// MARK: - Properties
 	private var statusBarStyle: UIStatusBarStyle {
 		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
 		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
@@ -22,16 +23,24 @@ class KNavigationController: UINavigationController {
 		return statusBarStyle
 	}
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: .ThemeUpdateNotification, object: nil)
 		toggleStyle(.normal)
     }
 
+	// MARK: - Functions
+	/// Updates the normal navigation bar style with the changed values.
 	@objc func updateNormalStyle() {
 		toggleStyle(.normal)
 	}
 
+	/**
+		Toggles between navigation bar styles.
+
+		- Parameter style: The KNavigationStyle to be used on the navigation bar.
+	*/
 	func toggleStyle(_ style: KNavigationStyle) {
 		self.navigationBar.isTranslucent = true
 

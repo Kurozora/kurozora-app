@@ -10,8 +10,10 @@ import UIKit
 import ESTabBarController_swift
 
 class KTabBarController: ESTabBarController {
+	// MARK: - Properties
 	fileprivate var once: Bool = false
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
