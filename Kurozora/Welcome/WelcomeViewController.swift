@@ -8,13 +8,10 @@
 
 import UIKit
 import SCLAlertView
-import SwiftTheme
-import WhatsNew
 import AuthenticationServices
 
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
-	@IBOutlet weak var buttonsStackView: UIStackView!
 
 	var logoutReason: String? = nil
 	var isKiller: Bool?
@@ -48,29 +45,11 @@ class WelcomeViewController: UIViewController {
 			signInWithAppleButton.addConstraint(signInWithAppleButton.heightAnchor.constraint(equalToConstant: 40))
 			signInWithAppleButton.cornerRadius = 20
 			signInWithAppleButton.addTarget(self, action: #selector(signInWithAppleButtonPressed), for: .touchUpInside)
-			buttonsStackView.addArrangedSubview(signInWithAppleButton)
 		}
     }
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-
-		if WhatsNew.shouldPresent() {
-			let whatsNew = KWhatsNewViewController(items: [
-				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
-				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
-				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
-			])
-			whatsNew.titleText = "What's New"
-			whatsNew.buttonText = "Continue"
-			whatsNew.titleColor = KThemePicker.textColor.colorValue
-			whatsNew.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
-			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
-			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
-			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
-			present(whatsNew, animated: true, completion: nil)
-		}
 
 		if let isKiller = isKiller, !isKiller && logoutReason != nil {
 			SCLAlertView().showInfo("You have been logged out", subTitle: logoutReason)

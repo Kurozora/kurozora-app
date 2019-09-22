@@ -9,6 +9,7 @@
 import UIKit
 import SCLAlertView
 import SwiftyJSON
+import WhatsNew
 
 class HomeCollectionViewController: UICollectionViewController {
 	// Search bar controller
@@ -56,6 +57,23 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		if WhatsNew.shouldPresent() {
+			let whatsNew = KWhatsNewViewController(items: [
+				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
+				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
+				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
+			])
+			whatsNew.titleText = "What's New"
+			whatsNew.buttonText = "Continue"
+			whatsNew.titleColor = KThemePicker.textColor.colorValue
+			whatsNew.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
+			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
+			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
+			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
+			present(whatsNew, animated: true, completion: nil)
+		}
 
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 

@@ -273,6 +273,7 @@
 		66A8AF372099FBF50011A342 /* UserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */; };
 		66A8AF392099FC870011A342 /* UIViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */; };
 		66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABF5F9233835FF00795750 /* OnboardingType.swift */; };
+		66ABF5FD23383BAA00795750 /* welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ABF5FC23383BAA00795750 /* welcome.storyboard */; };
 		66AC260422F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */; };
 		66AC260622F0E58A0064541B /* webbrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AC260522F0E58A0064541B /* webbrowser.storyboard */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
@@ -671,6 +672,7 @@
 		66A8AF362099FBF50011A342 /* UserDefaults+Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		66A8AF382099FC870011A342 /* UIViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Kurozora.swift"; sourceTree = "<group>"; };
 		66ABF5F9233835FF00795750 /* OnboardingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingType.swift; sourceTree = "<group>"; };
+		66ABF5FC23383BAA00795750 /* welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = welcome.storyboard; sourceTree = "<group>"; };
 		66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66AC260522F0E58A0064541B /* webbrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = webbrowser.storyboard; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
@@ -1133,7 +1135,6 @@
 				661F9F7E2087282400CF4153 /* LoginTableViewController.swift */,
 				661F9F7F2087282500CF4153 /* RegisterViewController.swift */,
 				661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */,
-				661F9F802087282500CF4153 /* WelcomeViewController.swift */,
 				66CAE6832337CF9B00991E59 /* Cells */,
 				66CAE68A2337D0D800991E59 /* Models */,
 			);
@@ -1426,6 +1427,7 @@
 				66B4F1D9223D1F70007C5048 /* Classes */,
 				6611234C208F70B500E6033A /* Extensions */,
 				66160C3C215C26F300D0D722 /* Libraries */,
+				66ABF5FB23383B8B00795750 /* Welcome */,
 				661F9F872087383500CF4153 /* Onboard */,
 				66E748BA20987E1A0039A105 /* Home */,
 				66058DB2212E915D0084B79E /* Shows */,
@@ -1665,6 +1667,15 @@
 				66A8AF20209991310011A342 /* AnimeCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		66ABF5FB23383B8B00795750 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				661F9F802087282500CF4153 /* WelcomeViewController.swift */,
+				66ABF5FC23383BAA00795750 /* welcome.storyboard */,
+			);
+			path = Welcome;
 			sourceTree = "<group>";
 		};
 		66AEABE72298A9DF00949FD8 /* Models */ = {
@@ -2259,6 +2270,7 @@
 				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6641D6F4222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange.png in Resources */,
 				669EA9A222C1491600784181 /* purchase.storyboard in Resources */,
+				66ABF5FD23383BAA00795750 /* welcome.storyboard in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				664801C6222DE76A0063143A /* App-Icon-iPad-Green@2x.png in Resources */,
