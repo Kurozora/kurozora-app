@@ -55,16 +55,16 @@ class KTabBarController: ESTabBarController {
 		viewControllers = [homeCollectionViewController, libraryViewController, forumsViewController, notificationsViewController, feedViewController]
 
 		setupBadgeValue()
-		NotificationCenter.default.addObserver(self, selector: #selector(toggleBadge(_:)), name: .KSNotificationsBadgeIsOn, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(toggleBadge), name: .KSNotificationsBadgeIsOn, object: nil)
     }
 
 	// MARK: - Functions
-	@objc func toggleBadge(_ notification: Notification) {
+	@objc func toggleBadge() {
 		setupBadgeValue()
 	}
 
 	fileprivate func setupBadgeValue() {
-		if UserSettings.notificationsBadge {
+		if UserSettings.notificationsBadge, User.isLoggedIn {
 			self.tabBar.items?[3].badgeValue = "\(69)"
 		} else {
 			self.tabBar.items?[3].badgeValue = nil
