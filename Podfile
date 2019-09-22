@@ -13,7 +13,6 @@ def kurozora_pods
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
 	pod 'Hero'
-	pod 'IQKeyboardManagerSwift'
 	pod 'KeychainAccess'
 	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
 	pod 'NotificationBannerSwift'

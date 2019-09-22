@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import IQKeyboardManagerSwift
 
 protocol KCommentEditorViewDelegate: class {
 	func updateReplies(with threadRepliesElement: ThreadRepliesElement)
@@ -72,9 +71,6 @@ class KCommentEditorViewController: UIViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		IQKeyboardManager.shared.keyboardDistanceFromTextField = 0
-		IQKeyboardManager.shared.shouldResignOnTouchOutside = false
-
 		if let replyToText = forumsThreadElement?.title {
 			replyToTextLabel.text = replyToText
 		}
@@ -112,9 +108,6 @@ class KCommentEditorViewController: UIViewController {
 
 	// MARK: - IBActions
 	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
-		IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
-		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-
 		self.dismiss(animated: true, completion: nil)
 	}
 

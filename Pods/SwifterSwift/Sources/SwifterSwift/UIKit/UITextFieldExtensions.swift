@@ -14,10 +14,14 @@ public extension UITextField {
 
     /// SwifterSwift: UITextField text type.
     ///
+	/// - username: UITextField is used to enter username.
     /// - emailAddress: UITextField is used to enter email addresses.
     /// - password: UITextField is used to enter passwords.
     /// - generic: UITextField is used to enter generic text.
     enum TextType {
+		/// UITextField is used to enter username.
+		case username
+
         /// UITextField is used to enter email addresses.
         case emailAddress
 
@@ -38,13 +42,21 @@ public extension UITextField {
         get {
             if keyboardType == .emailAddress {
                 return .emailAddress
-            } else if isSecureTextEntry {
+			} else if isSecureTextEntry {
                 return .password
-            }
+			} else if autocorrectionType == .no {
+				return .username
+			}
             return .generic
         }
         set {
             switch newValue {
+			case .username:
+				keyboardType = .default
+				autocorrectionType = .no
+				autocapitalizationType = .none
+				isSecureTextEntry = false
+				placeholder = "Username"
             case .emailAddress:
                 keyboardType = .emailAddress
                 autocorrectionType = .no
@@ -61,7 +73,7 @@ public extension UITextField {
 
             case .generic:
                 isSecureTextEntry = false
-            }
+			}
         }
     }
 

@@ -16,7 +16,6 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
   - iosMath (0.9.4)
-  - IQKeyboardManagerSwift (6.4.2)
   - KeychainAccess (3.2.0)
   - Kingfisher (5.6.0)
   - MarqueeLabel (4.0.0)
@@ -80,7 +79,6 @@ DEPENDENCIES:
   - EmptyDataSet-Swift
   - ESTabBarController-swift
   - Hero
-  - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, commit `xcode11`)
   - NotificationBannerSwift
@@ -111,7 +109,6 @@ SPEC REPOS:
     - FLAnimatedImage
     - Hero
     - iosMath
-    - IQKeyboardManagerSwift
     - KeychainAccess
     - MarqueeLabel
     - NotificationBannerSwift
@@ -160,7 +157,6 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
-  IQKeyboardManagerSwift: 79a3ec200dfb41cb66a89b8575417b5378107c5d
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Kingfisher: 7e5cef5ee82c0576e7d23035e1710b7e3b0a1e85
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
@@ -182,6 +178,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   WordPress-Aztec-iOS: e58c7ab55b0bae53418a705876093fed314b6586
 
-PODFILE CHECKSUM: 2b1f5b2428a95716d649a6980cfa79fc93266f4a
+PODFILE CHECKSUM: 3907f88cc79d648cc4abe923de5ac97b7cd0ad4d
 
 COCOAPODS: 1.8.0.beta.1

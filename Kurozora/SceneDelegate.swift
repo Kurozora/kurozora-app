@@ -19,6 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: windowScene)
 		window?.makeKeyAndVisible()
 
+		// Global app tint color
+		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
+
 		// Initialize home view
 		let customTabBar = KTabBarController()
 		self.window?.rootViewController = customTabBar

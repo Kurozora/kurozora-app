@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginFooterTableViewCell: LoginBaseTableViewCell {
+class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var forgotPasswordButton: UIButton! {
 		didSet {

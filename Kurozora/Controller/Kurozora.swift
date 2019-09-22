@@ -8,7 +8,6 @@
 
 import UIKit
 import ESTabBarController_swift
-import IQKeyboardManagerSwift
 import Kingfisher
 import KeychainAccess
 import LocalAuthentication
@@ -49,12 +48,6 @@ class Kurozora {
 
 			// Global app tint color
 			window?.theme_tintColor = KThemePicker.tintColor.rawValue
-
-			// IQKeyoardManager
-			IQKeyboardManager.shared.enable = true
-			IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
-			IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
-			IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
 			let customTabBar = KTabBarController()
 			window?.rootViewController = customTabBar

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
@@ -74,12 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
-
-		// IQKeyoardManager
-		IQKeyboardManager.shared.enable = true
-		IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
-		IQKeyboardManager.shared.keyboardDistanceFromTextField = 100.0
-		IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
 		// Set authentication status
 		authenticated = User.username != nil
