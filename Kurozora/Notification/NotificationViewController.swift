@@ -25,9 +25,18 @@ class NotificationsViewController: UITableViewController {
 	// MARK: - Properties
 	var searchResultsViewController: SearchResultsTableViewController!
 	var searchController: SearchController!
-	var grouping: NotificationGroupStyle = .off
+	var grouping: NotificationGroupStyle = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
-	var userNotificationsElement: [UserNotificationsElement]? // Grouping type: Off
+	var userNotificationsElement: [UserNotificationsElement]? {
+		didSet {
+			self.groupNotifications(userNotificationsElement)
+
+			self.tableView.reloadData {
+				self.refreshControl?.endRefreshing()
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			}
+		}
+	} // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
 
 	// MARK: - View
@@ -50,7 +59,7 @@ class NotificationsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsLoggedInDidChange, object: nil)
 
 		// Search bar
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
@@ -91,13 +100,6 @@ class NotificationsViewController: UITableViewController {
 		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
 	}
 
-	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
-	private func enableActions() {
-		markAllButton.isEnabled = User.isLoggedIn
-		markAllButton.title = User.isLoggedIn ? "Mark all" : ""
-		refreshControl?.isEnabled = User.isLoggedIn
-	}
-
 	/// Setup empty view data.
 	private func setupEmptyView() {
 		tableView.emptyDataSetView { (view) in
@@ -127,8 +129,15 @@ class NotificationsViewController: UITableViewController {
 		}
 	}
 
+	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
+	private func enableActions() {
+		markAllButton.isEnabled = User.isLoggedIn
+		markAllButton.title = User.isLoggedIn ? "Mark all" : ""
+		refreshControl?.isEnabled = User.isLoggedIn
+	}
+
 	/// Reload the data on the view.
-	@objc func reloadData() {
+	@objc func reloadView() {
 		enableActions()
 		fetchNotifications()
 	}
@@ -142,16 +151,6 @@ class NotificationsViewController: UITableViewController {
 				self.userNotificationsElement = []
 				DispatchQueue.main.async {
 					self.userNotificationsElement = notifications
-
-					switch self.grouping {
-					case .automatic, .byType:
-						self.groupNotifications(notifications)
-					case .off: break
-					}
-
-					self.tableView.reloadData()
-					self.refreshControl?.endRefreshing()
-					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
 			})
 		} else {

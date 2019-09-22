@@ -365,6 +365,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="changeLayoutButton" destination="Dnc-bs-5ES" id="VvY-Rh-WNJ"/>
+                        <outlet property="searchButton" destination="6pL-pD-tnK" id="aZY-3b-9Su"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>

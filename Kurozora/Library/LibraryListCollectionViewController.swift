@@ -18,17 +18,14 @@ protocol LibraryListViewControllerDelegate: class {
 }
 
 class LibraryListCollectionViewController: UICollectionViewController {
+	// MARK: - Properties
 	private let refreshControl = UIRefreshControl()
 
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			collectionView.reloadData {
-				if self.collectionView.numberOfItems() != 0 {
-					self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-				}
-
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		}
 	}
@@ -68,6 +65,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	}
 	#endif
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		UserSettings.set(sectionIndex, forKey: .libraryPage)
@@ -77,22 +75,22 @@ class LibraryListCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsLoggedInDidChange, object: nil)
+
+		// Add Refresh Control to Collection View
+		collectionView.refreshControl = refreshControl
+		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl.addTarget(self, action: #selector(reloadData), for: .valueChanged)
+
+		// Observe NotificationCenter for an update
+		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(sectionTitle)Section"), object: nil)
+
+		// Setup collection view
+		collectionView.dragDelegate = self
 
 		if User.isLoggedIn {
-			// Add Refresh Control to Collection View
-			collectionView.refreshControl = refreshControl
-			refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-			refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list!", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
-			refreshControl.addTarget(self, action: #selector(refreshLibraryData(_:)), for: .valueChanged)
-
-			// Observe NotificationCenter for update notification
-			let libraryUpdateNotificationName = Notification.Name("Update\(sectionTitle)Section")
-			NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: libraryUpdateNotificationName, object: nil)
-
 			fetchLibrary()
-
-			// Setup collection view
-			collectionView.dragDelegate = self
 		}
 
         // Setup empty collection view
@@ -135,26 +133,31 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	/**
-		Refresh the library data by fetching new items from the server.
+	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
+	private func enableActions() {
+		refreshControl.isEnabled = User.isLoggedIn
+	}
 
-		- Parameter sender: The object requesting the refresh.
-	*/
-	@objc private func refreshLibraryData(_ sender: Any) {
-		// Fetch library data
-		refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.tintColor.stringValue) ?? .kurozora])
+	/// Reload the data on the view.
+	@objc private func reloadData() {
+		enableActions()
 		fetchLibrary()
 	}
 
-	/**
-		Fetch the library items for the current user.
-	*/
+	/// Fetch the library items for the current user.
 	@objc private func fetchLibrary() {
-		Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
-			DispatchQueue.main.async {
-				self.showDetailsElements = showDetailsElements
-			}
-		})
+		if User.isLoggedIn {
+			refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+
+			Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
+				DispatchQueue.main.async {
+					self.showDetailsElements = showDetailsElements
+				}
+			})
+		} else {
+			self.showDetailsElements = nil
+			collectionView.reloadData()
+		}
 	}
 
 	func show(at indexPath: IndexPath) -> ShowDetailsElement? {
