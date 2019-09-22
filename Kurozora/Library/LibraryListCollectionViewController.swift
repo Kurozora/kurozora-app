@@ -115,6 +115,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 					.image(#imageLiteral(resourceName: "empty_library"))
 					.verticalOffset(-50)
 					.verticalSpace(10)
+					.isScrollAllowed(true)
 			} else {
 				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 					.detailLabelString(NSAttributedString(string: "Library is only available to registered Kurozora users.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -123,6 +124,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 					.verticalOffset(-50)
 					.verticalSpace(10)
+					.isScrollAllowed(false)
 					.didTapDataButton {
 						if let loginViewController = LoginViewController.instantiateFromStoryboard() as? LoginViewController {
 							let kNavigationController = KNavigationController(rootViewController: loginViewController)
