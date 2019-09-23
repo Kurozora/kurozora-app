@@ -6,7 +6,7 @@
 //  Copyright © 2018 Gesen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIRefreshControl {
     @objc func updateTitleAttributes(_ newAttributes: [NSAttributedString.Key: Any]) {

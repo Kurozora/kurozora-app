@@ -55,7 +55,7 @@ PODS:
   - SwifterSwift/SpriteKit (5.0.0)
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
-  - SwiftTheme (0.4.5)
+  - SwiftTheme (0.4.6)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.0)
   - Tabman (2.6.1):
@@ -170,7 +170,7 @@ SPEC CHECKSUMS:
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
-  SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
+  SwiftTheme: 4b9c8ff2b99d4b5204ccfef97a53d359a3457f48
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: cfcdcbfb739734e494c9d3832a7b6e6f9411e1fd
   Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db

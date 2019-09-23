@@ -6,7 +6,7 @@
 //  Copyright © 2019 Gesen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UILabel {
     @objc func updateTextAttributes(_ newAttributes: [NSAttributedString.Key: Any]) {

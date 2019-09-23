@@ -10,14 +10,14 @@ import UIKit
 
 @objc public final class ThemeVisualEffectPicker: ThemePicker {
     
-	public convenience init(keyPath: String) {
-		self.init(v: { ThemeVisualEffectPicker.getEffect(stringEffect: ThemeManager.string(for: keyPath) ?? "") })
+    public convenience init(keyPath: String) {
+        self.init(v: { ThemeVisualEffectPicker.getEffect(stringEffect: ThemeManager.string(for: keyPath) ?? "") })
     }
 
 	public convenience init(keyPath: String, vibrancyEnabled: Bool) {
 		self.init(v: { ThemeVisualEffectPicker.getEffect(stringEffect: ThemeManager.string(for: keyPath) ?? "", vibrancyEnabled: vibrancyEnabled) })
-    }
-    
+	}
+
     public convenience init(keyPath: String, map: @escaping (Any?) -> UIVisualEffect?) {
         self.init(v: { map(ThemeManager.value(for: keyPath)) })
     }
@@ -44,29 +44,29 @@ import UIKit
     
 	class func getEffect(stringEffect: String, vibrancyEnabled: Bool = false) -> UIVisualEffect {
 		var uiVisualEffect = UIBlurEffect()
-        switch stringEffect.replacingOccurrences(of: "_", with: "").lowercased() {
-        case "dark":
-            uiVisualEffect = UIBlurEffect(style: .dark)
-        case "extralight":
-            uiVisualEffect = UIBlurEffect(style: .extraLight)
-        case "prominent":
-            if #available(iOS 10.0, *) {
-                uiVisualEffect = UIBlurEffect(style: .prominent)
-            } else {
-                uiVisualEffect = UIBlurEffect(style: .light)
-            }
-        case "regular":
-            if #available(iOS 10.0, *) {
-                uiVisualEffect = UIBlurEffect(style: .regular)
-            } else {
-                uiVisualEffect = UIBlurEffect(style: .light)
-            }
-        default:
-            uiVisualEffect = UIBlurEffect(style: .light)
-        }
+		switch stringEffect.replacingOccurrences(of: "_", with: "").lowercased() {
+		case "dark":
+			uiVisualEffect = UIBlurEffect(style: .dark)
+		case "extralight":
+			uiVisualEffect = UIBlurEffect(style: .extraLight)
+		case "prominent":
+			if #available(iOS 10.0, *) {
+				uiVisualEffect = UIBlurEffect(style: .prominent)
+			} else {
+				uiVisualEffect = UIBlurEffect(style: .light)
+			}
+		case "regular":
+			if #available(iOS 10.0, *) {
+				uiVisualEffect = UIBlurEffect(style: .regular)
+			} else {
+				uiVisualEffect = UIBlurEffect(style: .light)
+			}
+		default:
+			uiVisualEffect = UIBlurEffect(style: .light)
+		}
 
 		return vibrancyEnabled ? UIVibrancyEffect(blurEffect: uiVisualEffect) : uiVisualEffect
-    }
+	}
     
 }
 
@@ -96,4 +96,3 @@ public extension ThemeVisualEffectPicker {
 
 extension ThemeVisualEffectPicker: ExpressibleByArrayLiteral {}
 extension ThemeVisualEffectPicker: ExpressibleByStringLiteral {}
-

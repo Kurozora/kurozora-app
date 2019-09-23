@@ -16,7 +16,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 <a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat"></a>
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
-<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.5"><img src="https://img.shields.io/badge/release-0.4.5-blue.svg"></a>
+<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.6"><img src="https://img.shields.io/badge/release-0.4.6-blue.svg"></a>
 </p>
 
 ## Screenshot
@@ -159,8 +159,14 @@ use_frameworks!
 github "wxxsw/SwiftTheme"
 ```
 
+#### Swift Package Manager
+
+1. Select `Xcode -> File -> Swift Packages -> Add Package Dependency...` 
+2. Enter `https://github.com/wxxsw/SwiftTheme`.
+3. Click `Next`, then select the version, complete.
+
 #### Source files
-Copy all the files in "Source" folder into your project
+Copy all the files in "Sources" folder into your project
 
 ## Documents
 
@@ -449,10 +455,12 @@ ThemeVisualEffectPicker.pickerWithKeyPath("someStringKeyPath")
 
 ### *More*
 
-Download this project and find more. There are two demo targets:
+Download this project and find more. There are four demo targets:
 
 - `Demo` shows how to use index mode and how to save the last selection of themes and other general usages.
 - `PlistDemo` shows how to use plist mode and how to download themes that packaged in zip files.
+- `OCDemo` is `Demo`'s Objective-c version.
+- `TVOSDemo` is used to test tvos compatibility.
 
 ## FAQ
 
