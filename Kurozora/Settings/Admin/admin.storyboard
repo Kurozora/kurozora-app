@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1gb-P5-jdL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1gb-P5-jdL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,13 +12,16 @@
         <scene sceneID="B2T-e1-T86">
             <objects>
                 <tableViewController storyboardIdentifier="AdminTableViewController" title="KDefaults Manager" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WH9-p1-zZB" customClass="AdminTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="TsW-1U-qHf">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TsW-1U-qHf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="QX8-oz-zlj"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="pDI-66-ERk"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="6yl-aK-mVZ"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="G5b-WZ-rgo">
+                        <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="G5b-WZ-rgo">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -32,9 +36,10 @@
                                 <constraint firstItem="dzF-JK-WhA" firstAttribute="centerX" secondItem="G5b-WZ-rgo" secondAttribute="centerXWithinMargins" id="7a1-t2-Bhf"/>
                                 <constraint firstItem="dzF-JK-WhA" firstAttribute="centerY" secondItem="G5b-WZ-rgo" secondAttribute="centerYWithinMargins" id="YeV-Jk-Jw8"/>
                             </constraints>
+                            <viewLayoutGuide key="safeArea" id="ZYJ-AY-Gax"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="KDefaultsCell" id="O9i-sO-KZG" customClass="KDefaultsCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="KDefaultsCell" id="O9i-sO-KZG" customClass="KDefaultsCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="105.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O9i-sO-KZG" id="e5Z-nK-fm3">
@@ -85,6 +90,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="mmn-Qt-D6y"/>
                                 <connections>
                                     <outlet property="bubbleView" destination="aZ1-WR-OSj" id="ghe-Jr-khE"/>
                                     <outlet property="cellTitle" destination="EHW-Ig-3nQ" id="dku-He-dlD"/>

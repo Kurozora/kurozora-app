@@ -11,17 +11,19 @@
         <scene sceneID="7k9-p6-L40">
             <objects>
                 <tableViewController storyboardIdentifier="NotificationsTableViewController" title="Notifications" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ax0-Yt-phx" customClass="NotificationsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="tfE-Du-aMU">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="tfE-Du-aMU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="3CR-mE-RHs"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="a0p-Xf-dmR"/>
                         <color key="separatorColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationTitleCell" rowHeight="40" id="Skw-hb-8qh" customClass="NotificationTitleCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationTitleCell" rowHeight="40" id="Skw-hb-8qh" customClass="NotificationTitleCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Skw-hb-8qh" id="wXO-qZ-JeT">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="Skw-hb-8qh" id="wXO-qZ-JeT">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -53,15 +55,15 @@
                                     <outlet property="notificationTitleLabel" destination="KnC-Lj-iBV" id="4by-JN-hn3"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageNotificationCell" rowHeight="108" id="wbn-0V-6lL" customClass="MessageNotificationCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageNotificationCell" rowHeight="108" id="wbn-0V-6lL" customClass="MessageNotificationCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="95.5" width="414" height="108"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wbn-0V-6lL" id="Xq7-ba-E9W">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="wbn-0V-6lL" id="Xq7-ba-E9W">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-cz-QfD" userLabel="Notification Bubble">
-                                            <rect key="frame" x="8" y="36" width="398" height="64"/>
+                                            <rect key="frame" x="20" y="36" width="374" height="64"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-tc-hKo">
                                                     <rect key="frame" x="16" y="10" width="44" height="44"/>
@@ -98,7 +100,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uj8-UI-F9c">
-                                                    <rect key="frame" x="68" y="28" width="322" height="31.5"/>
+                                                    <rect key="frame" x="68" y="28" width="298" height="31.5"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -125,10 +127,10 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMw-Am-bvt" userLabel="Notification Header">
-                                            <rect key="frame" x="8" y="8" width="398" height="34"/>
+                                            <rect key="frame" x="20" y="8" width="374" height="34"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MN-pn-YOV" userLabel="Notification Time">
-                                                    <rect key="frame" x="287" y="9" width="103" height="16"/>
+                                                    <rect key="frame" x="263" y="9" width="103" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -172,10 +174,10 @@
                                         <constraint firstItem="rnB-cz-QfD" firstAttribute="firstBaseline" secondItem="aMw-Am-bvt" secondAttribute="baseline" constant="-6" id="2vc-hB-B2f"/>
                                         <constraint firstAttribute="bottom" secondItem="rnB-cz-QfD" secondAttribute="bottom" constant="8" id="8wE-SQ-F7M"/>
                                         <constraint firstItem="aMw-Am-bvt" firstAttribute="top" secondItem="Xq7-ba-E9W" secondAttribute="top" constant="8" id="ER7-lq-J56"/>
-                                        <constraint firstItem="aMw-Am-bvt" firstAttribute="leading" secondItem="Xq7-ba-E9W" secondAttribute="leading" constant="8" id="FZt-wI-Hyo"/>
-                                        <constraint firstAttribute="trailing" secondItem="rnB-cz-QfD" secondAttribute="trailing" constant="8" id="GCW-gW-ap6"/>
-                                        <constraint firstItem="rnB-cz-QfD" firstAttribute="leading" secondItem="Xq7-ba-E9W" secondAttribute="leading" constant="8" id="Vib-XB-eZp"/>
-                                        <constraint firstAttribute="trailing" secondItem="aMw-Am-bvt" secondAttribute="trailing" constant="8" id="xK5-nV-wLX"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="rnB-cz-QfD" secondAttribute="trailing" id="GCW-gW-ap6"/>
+                                        <constraint firstItem="aMw-Am-bvt" firstAttribute="trailing" secondItem="rnB-cz-QfD" secondAttribute="trailing" id="HhX-rs-fjU"/>
+                                        <constraint firstItem="rnB-cz-QfD" firstAttribute="leading" secondItem="Xq7-ba-E9W" secondAttribute="leadingMargin" id="Vib-XB-eZp"/>
+                                        <constraint firstItem="aMw-Am-bvt" firstAttribute="leading" secondItem="rnB-cz-QfD" secondAttribute="leading" id="eeO-6c-duH"/>
                                         <constraint firstItem="YKm-sf-d9B" firstAttribute="centerX" secondItem="GDo-tc-hKo" secondAttribute="centerX" id="xeH-R5-FaI"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -190,18 +192,18 @@
                                     <outlet property="profileImageView" destination="4sh-iu-Zxu" id="qxN-Jv-0VH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SessionNotificationCell" rowHeight="102" id="kul-Nw-ISN" customClass="SessionNotificationCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SessionNotificationCell" rowHeight="102" id="kul-Nw-ISN" customClass="SessionNotificationCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="203.5" width="414" height="102"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kul-Nw-ISN" id="deI-YU-FxE">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="kul-Nw-ISN" id="deI-YU-FxE">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLQ-Lf-kPM" userLabel="Notification Bubble">
-                                            <rect key="frame" x="8" y="36" width="398" height="58"/>
+                                            <rect key="frame" x="20" y="36" width="374" height="58"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqu-xF-Uzd">
-                                                    <rect key="frame" x="16" y="8" width="374" height="42"/>
+                                                    <rect key="frame" x="16" y="8" width="350" height="42"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -223,10 +225,10 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-YH-pYX" userLabel="Notification Header">
-                                            <rect key="frame" x="8" y="8" width="398" height="34"/>
+                                            <rect key="frame" x="20" y="8" width="374" height="34"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdZ-Zr-Pub" userLabel="Notification Time">
-                                                    <rect key="frame" x="287" y="9" width="103" height="16"/>
+                                                    <rect key="frame" x="263" y="9" width="103" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -266,15 +268,15 @@
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="MeL-YH-pYX" firstAttribute="trailing" secondItem="PLQ-Lf-kPM" secondAttribute="trailing" id="2LY-WB-TOx"/>
                                         <constraint firstItem="PLQ-Lf-kPM" firstAttribute="firstBaseline" secondItem="MeL-YH-pYX" secondAttribute="baseline" constant="-6" id="7TT-Hi-YRy"/>
-                                        <constraint firstItem="PLQ-Lf-kPM" firstAttribute="leading" secondItem="deI-YU-FxE" secondAttribute="leading" constant="8" id="DU4-ca-Nh4"/>
+                                        <constraint firstItem="PLQ-Lf-kPM" firstAttribute="leading" secondItem="deI-YU-FxE" secondAttribute="leadingMargin" id="DU4-ca-Nh4"/>
+                                        <constraint firstItem="MeL-YH-pYX" firstAttribute="leading" secondItem="PLQ-Lf-kPM" secondAttribute="leading" id="J1h-Dw-2r3"/>
                                         <constraint firstItem="v7I-mK-kbO" firstAttribute="leading" secondItem="vqu-xF-Uzd" secondAttribute="leading" id="KdB-Tm-eTR"/>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="top" secondItem="deI-YU-FxE" secondAttribute="top" constant="8" id="KjE-f1-679"/>
-                                        <constraint firstAttribute="trailing" secondItem="PLQ-Lf-kPM" secondAttribute="trailing" constant="8" id="ORU-93-LEW"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="PLQ-Lf-kPM" secondAttribute="trailing" id="ORU-93-LEW"/>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="centerX" secondItem="deI-YU-FxE" secondAttribute="centerX" id="UaQ-WU-c3x"/>
-                                        <constraint firstAttribute="trailing" secondItem="MeL-YH-pYX" secondAttribute="trailing" constant="8" id="Zyo-lo-tmN"/>
                                         <constraint firstAttribute="bottom" secondItem="PLQ-Lf-kPM" secondAttribute="bottom" constant="8" id="hDo-av-6tD"/>
-                                        <constraint firstItem="MeL-YH-pYX" firstAttribute="leading" secondItem="deI-YU-FxE" secondAttribute="leading" constant="8" id="qKJ-96-dn9"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -299,18 +301,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="mYo-mn-OZv">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <attributedString key="attributedTitle">
-                            <fragment content="Pull to refresh your notifications list!">
-                                <attributes>
-                                    <font key="NSFont" metaFont="controlContent" size="11"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                    </refreshControl>
                     <connections>
                         <outlet property="markAllButton" destination="CAB-Vb-FGD" id="8jz-Bs-M3H"/>
                     </connections>

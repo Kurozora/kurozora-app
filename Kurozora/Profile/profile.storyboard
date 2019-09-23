@@ -11,10 +11,12 @@
         <scene sceneID="JNH-Id-RWd">
             <objects>
                 <tableViewController storyboardIdentifier="UserListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XA6-b9-chf" customClass="FollowTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uqZ-5p-HcB">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uqZ-5p-HcB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="0tb-SY-cHt"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="cgm-de-YM0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="FollowCell" rowHeight="70" id="ThI-dY-yLk" customClass="FollowCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
@@ -727,10 +729,12 @@
         <scene sceneID="R0A-Oe-tDS">
             <objects>
                 <tableViewController storyboardIdentifier="BadgesTableViewController" title="Badges" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TCw-Pu-tHm" customClass="BadgesTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="66" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="eAj-A5-MCM">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="66" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="eAj-A5-MCM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="gue-dv-VRT"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="7Ca-Pn-QVP"/>
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>

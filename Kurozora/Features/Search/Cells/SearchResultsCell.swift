@@ -188,7 +188,7 @@ class SearchResultsCell: UITableViewCell {
 	// MARK: - Functions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		guard let libraryStatus = showDetailsElement?.currentUser?.libraryStatus else { return }
-		let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: libraryStatus, action: { (title, value)  in
 			guard let showID = self.showDetailsElement?.id else { return }
 
 			if libraryStatus != value {

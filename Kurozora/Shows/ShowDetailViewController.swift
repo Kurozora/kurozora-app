@@ -498,7 +498,7 @@ class ShowDetailViewController: UIViewController {
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: self.libraryStatus, action: { (title, value)  in
+			let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: self.libraryStatus, action: { (title, value)  in
 				guard let showID = self.showID else { return }
 
 				if self.libraryStatus != value {
@@ -534,9 +534,8 @@ class ShowDetailViewController: UIViewController {
 
 			//Present the controller
 			if let popoverController = action.popoverPresentationController {
-				popoverController.sourceView = self.view
-				popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-				popoverController.permittedArrowDirections = []
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {

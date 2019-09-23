@@ -120,14 +120,21 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 		- Parameter cell: The cell that needs to be updated if actions are taken.
 	*/
 	func populateActionSheet(for episode: EpisodesElement, at cell: EpisodesCollectionViewCell) {
-		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = cell.episodeWatchedButton.tag
-		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		action.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
 			self.episodesCellWatchedButtonPressed(for: cell)
 		}))
-		controller.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		self.present(controller, animated: true, completion: nil)
+		action.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = cell.episodeMoreButton
+			popoverController.sourceRect = cell.episodeMoreButton.bounds
+		}
+
+		self.present(action, animated: true, completion: nil)
 	}
 
 	/// Goes to the first item in the presented collection view.

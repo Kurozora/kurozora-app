@@ -94,14 +94,21 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 	}
 
 	@IBAction func episodeMoreButtonPressed(_ sender: UIButton) {
-		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let tag = episodeWatchedButton.tag
-		controller.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		action.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
 			self.episodeWatchedButtonPressed(sender)
 		}))
-		controller.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		self.present(controller, animated: true, completion: nil)
+		action.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+		}
+
+		self.present(action, animated: true, completion: nil)
 	}
 }
 

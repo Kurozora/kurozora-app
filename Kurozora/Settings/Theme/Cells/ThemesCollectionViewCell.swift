@@ -179,14 +179,20 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		controller.addAction(UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		action.addAction(UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
 			self.handleRemoveTheme()
 		}))
-		controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+		}
 
 		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(controller, animated: true, completion: nil)
+			self.parentViewController?.present(action, animated: true, completion: nil)
 		}
 	}
 }

@@ -20,15 +20,18 @@
         <scene sceneID="3EW-to-g3U">
             <objects>
                 <tableViewController storyboardIdentifier="FeedTableViewController" title="Feed" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AtO-CH-0OW" customClass="FeedTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="sw4-l1-VrY">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sw4-l1-VrY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="7rU-XG-jEj"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="bMd-hk-eZA"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="mjV-mJ-MjQ"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedPostCell" rowHeight="200" id="K1C-kT-cG3" customClass="FeedPostCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedPostCell" rowHeight="200" id="K1C-kT-cG3" customClass="FeedPostCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K1C-kT-cG3" id="XYP-82-H1H">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="K1C-kT-cG3" id="XYP-82-H1H">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -174,8 +177,10 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="Jz0-qo-ltD" secondAttribute="bottom" id="OtV-A6-NC0"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Jz0-qo-ltD" secondAttribute="trailing" id="yMR-gV-a9l"/>
                                     </constraints>
+                                    <viewLayoutGuide key="safeArea" id="Au3-PL-aR4"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="zL0-Fo-uAg"/>
                                 <connections>
                                     <outlet property="bubbleView" destination="Jz0-qo-ltD" id="biX-kI-Ne4"/>
                                     <outlet property="commentButton" destination="w0t-EM-x4t" id="z5m-lu-miA"/>
@@ -207,9 +212,10 @@
             <objects>
                 <navigationController storyboardIdentifier="FeedTableKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="20p-4J-ZCZ" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="7t8-za-yO1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="7t8-za-yO1">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="nyf-u4-8OL"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -232,9 +238,10 @@
             <objects>
                 <navigationController storyboardIdentifier="FeedKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aDS-Jr-XTF" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="a1n-vP-GKy">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a1n-vP-GKy">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="IAj-Ol-xwi"/>
                         <color key="barTintColor" red="0.2208227217" green="0.23776745799999999" blue="0.32550072670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -256,9 +263,8 @@
         <scene sceneID="Uq3-co-bh8">
             <objects>
                 <viewController storyboardIdentifier="FeedTabsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SFM-Od-em0" customClass="FeedTabsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0ZA-DA-Zkg">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ZA-DA-Zkg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba9-s8-qJl" userLabel="Create Thread Button">
                                 <rect key="frame" x="350" y="798" width="44" height="44"/>

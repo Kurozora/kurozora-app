@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,16 +13,19 @@
         <scene sceneID="ofI-Cu-SE0">
             <objects>
                 <tableViewController storyboardIdentifier="DisplayTableViewController" title="Display &amp; Blindness" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2K-Bn-OHN" customClass="DisplayTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="aHe-u0-qgI">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aHe-u0-qgI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="jvV-1I-6oF"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="UYl-o7-L6B"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="u2x-Tc-QOk"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection headerTitle="Appearance" id="PWQ-vE-3Vx">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="FLY-O0-IPQ" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="FLY-O0-IPQ" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FLY-O0-IPQ" id="jsR-mC-339">
@@ -155,6 +159,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="5i7-OK-RJS"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="ub6-5S-qs3" id="elG-RY-Njd"/>
                                             <outlet property="darkOptionButton" destination="8Nb-Xc-bfx" id="hze-VB-stJ"/>
@@ -169,7 +174,7 @@
                                             <outlet property="lightOptionTitleLabel" destination="etK-mY-afC" id="Rzf-UX-y2X"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="55" id="yhj-hJ-uyo" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="yhj-hJ-uyo" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="255.5" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yhj-hJ-uyo" id="3BF-li-Lto">
@@ -217,13 +222,14 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="5La-np-e37"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="VTp-lT-kFi" id="EUS-fp-lFM"/>
                                             <outlet property="cellTitle" destination="qVG-Ip-C2B" id="w7w-fw-0yZ"/>
                                             <outlet property="enabledAutomaticDarkThemeSwitch" destination="JdA-Em-k7J" id="Y4A-gd-DDt"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="310.5" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qUb-FK-NCN" id="Hex-fY-tgp">
@@ -276,6 +282,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="Sot-LX-FbY"/>
                                         <connections>
                                             <outlet property="cellTitle" destination="aSb-K7-bBy" id="iUD-r8-ypo"/>
                                             <outlet property="chevronImageView" destination="HLr-i6-xdk" id="YE3-uT-69q"/>
@@ -289,7 +296,7 @@
                             <tableViewSection headerTitle="Blindness" id="BNQ-V8-EJu">
                                 <string key="footerTitle">Enable this option if you prefer a darker black color. Or if you value your eyes' health while using the app in the dark. Or those precious battery juices. Or or or...</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="UFt-sw-KLe" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-sw-KLe" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="433" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UFt-sw-KLe" id="mwQ-cc-SXz">
@@ -337,6 +344,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="FBp-2b-yDd"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="MLM-vB-q9S" id="vtw-xb-fCv"/>
                                             <outlet property="cellTitle" destination="BWx-Ky-TvQ" id="Lbz-5S-Rqw"/>
@@ -347,7 +355,7 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="Disable this option if you hate the large titles in the navigation bar #annoying #too_ugly_for_me" id="qHo-ad-Xw6">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="Idl-Sy-4tK" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="567" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Idl-Sy-4tK" id="wIn-nf-umu">
@@ -395,6 +403,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="GaF-c5-uhA"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="xhC-GQ-TLe" id="aOV-Bo-xY5"/>
                                             <outlet property="cellTitle" destination="B7h-A4-wen" id="vK1-fb-2tZ"/>
@@ -420,9 +429,10 @@
             <objects>
                 <navigationController storyboardIdentifier="DisplayKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="svG-2R-sWh" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="wZl-Va-6Ax">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" id="wZl-Va-6Ax">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="IeM-U7-K7Y"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -444,14 +454,17 @@
         <scene sceneID="XzS-5N-ouv">
             <objects>
                 <tableViewController storyboardIdentifier="AppearanceOptionsViewController" title="Options" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="r72-Ak-wXE" customClass="AppearanceOptionsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="17" sectionFooterHeight="22" id="BgZ-F4-sNO">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BgZ-F4-sNO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="4T8-xq-hoD"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="nXm-NY-WbS"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="yTP-ZJ-RTI"/>
                         <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="xUA-jL-Hgh" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="xUA-jL-Hgh" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xUA-jL-Hgh" id="Mw7-Y8-UoC">
@@ -494,13 +507,14 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="k8C-jS-qTE"/>
                                 <connections>
                                     <outlet property="cellTitle" destination="Gsi-g5-vk1" id="uo0-gg-7oV"/>
                                     <outlet property="selectedImageView" destination="PHE-Wb-uCl" id="2pC-CS-Y7d"/>
                                     <outlet property="selectedView" destination="Vxs-MW-Ztg" id="9cI-lT-Wzt"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateSettingsCell" id="uL8-Ph-RYR" customClass="DateSettingsCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="110.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uL8-Ph-RYR" id="qf7-8g-iCz">
@@ -544,13 +558,14 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="cQ9-nW-PBw"/>
                                 <connections>
                                     <outlet property="cellTitle" destination="dVR-to-nVy" id="Q1t-JN-zm6"/>
                                     <outlet property="dateLabel" destination="HJS-jZ-b10" id="JQB-45-Gy8"/>
                                     <outlet property="selectedView" destination="v6M-B0-z2V" id="ly9-C0-qJZ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" rowHeight="221" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerSettingsCell" rowHeight="221" id="JUg-XW-ius" customClass="DatePickerSettingsCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="165.5" width="414" height="221"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JUg-XW-ius" id="4ma-HZ-R9o">
@@ -584,6 +599,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="5ma-97-NDO"/>
                                 <connections>
                                     <outlet property="bubbleView" destination="EAm-sw-eys" id="xL4-jL-2aO"/>
                                     <outlet property="datePicker" destination="MC1-jj-Ic6" id="J8j-5J-INY"/>
