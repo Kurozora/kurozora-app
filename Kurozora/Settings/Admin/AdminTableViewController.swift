@@ -9,7 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
+class AdminTableViewController: UITableViewController {
 	@IBOutlet weak var warningLabel: UILabel! {
 		didSet {
 			warningLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -25,13 +25,7 @@ class AdminTableViewController: UITableViewController, EmptyDataSetDelegate, Emp
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
-
 		// Setup empty table view
-		tableView.emptyDataSetDelegate = self
-		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No badges found!"))
 				.shouldDisplay(true)

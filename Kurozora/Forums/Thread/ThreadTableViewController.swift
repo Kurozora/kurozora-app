@@ -13,7 +13,8 @@ import RichTextView
 import SwiftyJSON
 import SCLAlertView
 
-class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, EmptyDataSetSource {
+class ThreadTableViewController: UITableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var discussionLabel: UILabel! {
 		didSet {
@@ -83,6 +84,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	}
 	@IBOutlet weak var actionsStackView: UIStackView!
 
+	// MARK: - Properties
 	var forumThreadID: Int?
 	var forumsThreadElement: ForumsThreadElement? {
 		didSet {
@@ -111,6 +113,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 	var currentPage = 1
 	var lastPage = 1
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 	}
@@ -128,14 +131,10 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		fetchDetails()
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetSource = self
-		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No replies yet. Be the first to reply!"))
 				.shouldDisplay(true)
@@ -259,25 +258,27 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 		- Parameter vote: The integer indicating whether to upvote or downvote the thread.
 	*/
 	func voteForThread(with vote: Int?) {
-		guard var threadScore = forumsThreadElement?.voteCount else { return }
-		Service.shared.vote(forThread: forumThreadID, vote: vote, withSuccess: { (action) in
-			DispatchQueue.main.async {
-				if action == 1 { // upvote
-					threadScore += 1
-					self.upvoteButton.tintColor = .kGreen
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == 0 { // no vote
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == -1 { // downvote
-					threadScore -= 1
-					self.downvoteButton.tintColor = .kLightRed
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				}
+		WorkflowController.shared.isSignedIn {
+			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
+			Service.shared.vote(forThread: self.forumThreadID, vote: vote, withSuccess: { (action) in
+				DispatchQueue.main.async {
+					if action == 1 { // upvote
+						threadScore += 1
+						self.upvoteButton.tintColor = .kGreen
+						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					} else if action == 0 { // no vote
+						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					} else if action == -1 { // downvote
+						threadScore -= 1
+						self.downvoteButton.tintColor = .kLightRed
+						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					}
 
-				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
-			}
-		})
+					self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+				}
+			})
+		}
 	}
 
 	/**
@@ -300,27 +301,26 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 	/// Presents the reply view for the current thread.
 	func replyThread() {
-		let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
-		kCommentEditorViewController?.delegate = self
-		kCommentEditorViewController?.forumsThreadElement = forumsThreadElement
+		WorkflowController.shared.isSignedIn {
+			let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
+			kCommentEditorViewController?.delegate = self
+			kCommentEditorViewController?.forumsThreadElement = self.forumsThreadElement
 
-		let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
-		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+			let kurozoraNavigationController = KNavigationController.init(rootViewController: kCommentEditorViewController!)
+			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 
-		if #available(iOS 13.0, *) {
-			self.present(kurozoraNavigationController, animated: true, completion: nil)
-		} else {
-			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+			self.present(kurozoraNavigationController)
 		}
 	}
 
 	/// Presents a share sheet to share the current thread.
 	func shareThread() {
 		guard let threadID = forumThreadID else { return }
-		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
+		let threadUrl = "https://kurozora.app/thread/\(threadID)"
+		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
 
 		if let title = forumsThreadElement?.title, !title.isEmpty {
-			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
+			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
 		}
 
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
@@ -331,6 +331,12 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 			popoverController.permittedArrowDirections = []
 		}
 		self.present(activityVC, animated: true, completion: nil)
+	}
+
+	/// Sends a report of the selected thread to the mods.
+	func reportThread() {
+		WorkflowController.shared.isSignedIn {
+		}
 	}
 
 	/**
@@ -451,6 +457,7 @@ class ThreadTableViewController: UITableViewController, EmptyDataSetDelegate, Em
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+			self.reportThread()
 		})
 		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

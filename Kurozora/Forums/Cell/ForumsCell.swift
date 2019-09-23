@@ -123,26 +123,28 @@ public class ForumsCell: UITableViewCell {
 	}
 
 	/**
-	Upvote or downvote a thread according to the given integer.
-	
-	- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
+		Upvote or downvote a thread according to the given integer.
+
+		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
 	*/
 	fileprivate func voteForThread(with vote: Int) {
-		guard let forumThreadsElement = forumThreadsElement else { return }
-		guard var threadScore = forumThreadsElement.voteCount else { return }
+		WorkflowController.shared.isSignedIn {
+			guard let forumThreadsElement = self.forumThreadsElement else { return }
+			guard var threadScore = forumThreadsElement.voteCount else { return }
 
-		Service.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
-			DispatchQueue.main.async {
-				self.updateVoting(with: action)
-				if action == 1 {
-					threadScore += 1
-				} else if action == -1 {
-					threadScore -= 1
+			Service.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
+				DispatchQueue.main.async {
+					self.updateVoting(with: action)
+					if action == 1 {
+						threadScore += 1
+					} else if action == -1 {
+						threadScore -= 1
+					}
+
+					self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
 				}
-
-				self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
-			}
-		})
+			})
+		}
 	}
 
 	/// Presents the profile view for the thread poster.
@@ -262,6 +264,7 @@ public class ForumsCell: UITableViewCell {
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+			self.reportThread()
 		})
 		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -286,10 +289,11 @@ public class ForumsCell: UITableViewCell {
 	func shareThread() {
 		guard let threadID = forumThreadsElement?.id else { return }
 		guard let forumsChildViewController = forumsChildViewController else { return }
-		var shareText: [String] = ["https://kurozora.app/thread/\(threadID)\nYou should read this thread via @KurozoraApp"]
+		let threadUrl = "https://kurozora.app/thread/\(threadID)"
+		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
 
-		if let title = self.titleLabel.text {
-			shareText = ["https://kurozora.app/thread/\(threadID)\nYou should read \"\(title)\" via @KurozoraApp"]
+		if let title = self.titleLabel.text, !title.isEmpty {
+			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
 		}
 
 		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
@@ -300,6 +304,12 @@ public class ForumsCell: UITableViewCell {
 			popoverController.permittedArrowDirections = []
 		}
 		forumsChildViewController.present(activityVC, animated: true, completion: nil)
+	}
+
+	/// Sends a report of the selected thread to the mods.
+	func reportThread() {
+		WorkflowController.shared.isSignedIn {
+		}
 	}
 
 	/**
@@ -322,7 +332,9 @@ public class ForumsCell: UITableViewCell {
 
 	/// Presents the reply view for the current thread.
 	func replyThread() {
-		// TODO: - Add reply function here
+		WorkflowController.shared.isSignedIn {
+			// TODO: - Add reply function here
+		}
 	}
 
 	/// Shows the relevant options for the selected thread.

@@ -253,7 +253,7 @@
                                             <outlet property="cellTitle" destination="4fa-5J-FWf" id="pID-K2-Aff"/>
                                             <outlet property="chevronImageView" destination="JEA-Le-BNg" id="KF4-zy-R58"/>
                                             <outlet property="selectedView" destination="O14-5t-bhJ" id="9ce-AY-B9j"/>
-                                            <segue destination="vBk-eI-Fsp" kind="showDetail" id="d0q-YN-5BZ"/>
+                                            <segue destination="vBk-eI-Fsp" kind="showDetail" identifier="NotificationSegue" id="d0q-YN-5BZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

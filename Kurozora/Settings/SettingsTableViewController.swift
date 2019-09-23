@@ -59,6 +59,8 @@ class SettingsTableViewController: UITableViewController {
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 		if identifier == "AccountSegue", !User.isSignedIn {
 			return false
+		} else if identifier == "NotificationSegue", !User.isSignedIn {
+			return false
 		}
 
 		return true
@@ -202,7 +204,8 @@ extension SettingsTableViewController {
 		case (0, 0):
 			WorkflowController.shared.isSignedIn()
 //		case (1, 0): break
-//		case (2, 0): break
+		case (2, 0):
+			WorkflowController.shared.isSignedIn()
 //		case (3, 0): break
 		case (3, 4): // Clear cache
 			let alertView = SCLAlertView()

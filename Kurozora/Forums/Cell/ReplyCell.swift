@@ -125,33 +125,41 @@ class ReplyCell: UITableViewCell {
 		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
 	*/
 	fileprivate func voteForReply(with vote: Int) {
-		guard let threadRepliesElement = threadRepliesElement else { return }
-		guard var replyScore = threadRepliesElement.score else { return }
+		WorkflowController.shared.isSignedIn {
+			guard let threadRepliesElement = self.threadRepliesElement else { return }
+			guard var replyScore = threadRepliesElement.score else { return }
 
-		Service.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
-			DispatchQueue.main.async {
-				if action == 1 { // upvote
-					replyScore += 1
-					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
-					self.voteCountButton.setTitleColor(.kGreen, for: .normal)
-					self.voteCountButton.tintColor = .kGreen
-					self.upvoteButton.tintColor = .kGreen
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == 0 { // no vote
-					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
-					self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-				} else if action == -1 { // downvote
-					replyScore -= 1
-					self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_down_small"), for: .normal)
-					self.voteCountButton.setTitleColor(.kLightRed, for: .normal)
-					self.voteCountButton.tintColor = .kLightRed
-					self.downvoteButton.tintColor = .kLightRed
-					self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			Service.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
+				DispatchQueue.main.async {
+					if action == 1 { // upvote
+						replyScore += 1
+						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
+						self.voteCountButton.setTitleColor(.kGreen, for: .normal)
+						self.voteCountButton.tintColor = .kGreen
+						self.upvoteButton.tintColor = .kGreen
+						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					} else if action == 0 { // no vote
+						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
+						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					} else if action == -1 { // downvote
+						replyScore -= 1
+						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_down_small"), for: .normal)
+						self.voteCountButton.setTitleColor(.kLightRed, for: .normal)
+						self.voteCountButton.tintColor = .kLightRed
+						self.downvoteButton.tintColor = .kLightRed
+						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+					}
+
+					self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
 				}
-
-				self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
 			}
+		}
+	}
+
+	/// Sends a report of the selected reply to the mods.
+	func reportThread() {
+		WorkflowController.shared.isSignedIn {
 		}
 	}
 
@@ -245,6 +253,7 @@ class ReplyCell: UITableViewCell {
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
+			self.reportThread()
 		})
 		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")

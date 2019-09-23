@@ -9,7 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class CastCollectionViewController: UICollectionViewController, EmptyDataSetDelegate, EmptyDataSetSource {
+class CastCollectionViewController: UICollectionViewController {
     var actors: [ActorsElement]?
 	var gap: CGFloat = UIDevice.isPad ? 40 : 20
 	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
@@ -70,8 +70,6 @@ class CastCollectionViewController: UICollectionViewController, EmptyDataSetDele
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup empty collection view
-        collectionView.emptyDataSetSource = self
-        collectionView.emptyDataSetDelegate = self
         collectionView.emptyDataSetView { view in
             view.titleLabelString(NSAttributedString(string: "No actors found!"))
 				.shouldDisplay(true)

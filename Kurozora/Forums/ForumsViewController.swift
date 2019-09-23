@@ -134,17 +134,19 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	@IBAction func createThreadButton(_ sender: Any) {
-//		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
-//		kRichTextEditorViewController?.sectionID = currentIndex! + 1
+		WorkflowController.shared.isSignedIn {
+//			kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
+//			kRichTextEditorViewController?.sectionID = currentIndex! + 1
 //
-//		let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-//		kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+//			let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
+//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
 //
-//		if #available(iOS 13.0, *) {
-//			self.present(kurozoraNavigationController, animated: true, completion: nil)
-//		} else {
-//			self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-//		}
+//			if #available(iOS 13.0, *) {
+//				self.present(kurozoraNavigationController, animated: true, completion: nil)
+//			} else {
+//				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
+//			}
+		}
 	}
 
 	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
