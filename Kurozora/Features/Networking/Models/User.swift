@@ -104,7 +104,7 @@ class UserProfile: JSONDecodable {
 //        }
 //    }
 //    
-//    class func logoutMyAnimeList() {
+//    class func signOutMyAnimeList() {
 //        UserDefaults.standard.removeObject(forKey: User.MyAnimeListPasswordKey)
 //        UserDefaults.standard.synchronize()
 //    }
@@ -241,8 +241,8 @@ extension User {
 		return UIDevice.modelName
 	}
 
-	/// Returns a boolean indicating if the current user is logged in
-	static var isLoggedIn: Bool {
+	/// Returns a boolean indicating if the current user is signed in
+	static var isSignedIn: Bool {
 		return User.username != nil
 	}
 

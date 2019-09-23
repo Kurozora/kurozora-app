@@ -1,5 +1,5 @@
 //
-//  LoginTableViewController.swift
+//  SignInTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 17/04/2018.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class LoginTableViewController: BaseOnboardingTableViewController {
+class SignInTableViewController: BaseOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		onboardingType = .login
+		onboardingType = .signIn
 	}
 
 	// MARK: - Functions
@@ -23,7 +23,7 @@ class LoginTableViewController: BaseOnboardingTableViewController {
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "onboarding", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "LoginTableViewController")
+		return storyboard.instantiateViewController(withIdentifier: "SignInTableViewController")
 	}
 
 	// MARK: - IBActions
@@ -34,11 +34,11 @@ class LoginTableViewController: BaseOnboardingTableViewController {
 		let password = textFieldArray[1]?.text
 		let device = UIDevice.modelName + " on iOS " + UIDevice.current.systemVersion
 
-		Service.shared.login(username, password, device, withSuccess: { (success) in
+		Service.shared.signIn(username, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					WorkflowController.shared.registerForPusher()
-					NotificationCenter.default.post(name: .KUserIsLoggedInDidChange, object: nil)
+					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 					self.dismiss(animated: true, completion: nil)
 				}
 			}

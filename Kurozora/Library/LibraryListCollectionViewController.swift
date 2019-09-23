@@ -75,7 +75,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl
@@ -89,7 +89,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		// Setup collection view
 		collectionView.dragDelegate = self
 
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			fetchLibrary()
 		}
 
@@ -109,7 +109,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	/// Setup empty view data.
 	private func setupEmptyView() {
 		collectionView.emptyDataSetView { (view) in
-			if User.isLoggedIn {
+			if User.isSignedIn {
 				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 					.detailLabelString(NSAttributedString(string: "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 					.image(#imageLiteral(resourceName: "empty_library"))
@@ -126,8 +126,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 					.verticalSpace(10)
 					.isScrollAllowed(false)
 					.didTapDataButton {
-						if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
-							let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
+						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 							self.present(kNavigationController)
 						}
 					}
@@ -135,9 +135,9 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
+	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		refreshControl.isEnabled = User.isLoggedIn
+		refreshControl.isEnabled = User.isSignedIn
 	}
 
 	/// Reload the data on the view.
@@ -148,7 +148,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 
 	/// Fetch the library items for the current user.
 	@objc private func fetchLibrary() {
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 
 			Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in

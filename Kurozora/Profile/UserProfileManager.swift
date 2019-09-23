@@ -63,9 +63,9 @@ public class UserProfileManager: NSObject {
 //        email: String,
 //        profileImage: UIImage?,
 //        user: User,
-//        loginInWithFacebook: Bool) -> BFTask {
+//        signInInWithFacebook: Bool) -> BFTask {
 //
-//        if !loginInWithFacebook &&
+//        if !signInInWithFacebook &&
 //            !password.validPassword(viewController: viewController) {
 //            return BFTask(error: NSError(
 //                domain: "Kurozora.App",

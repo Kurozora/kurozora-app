@@ -11,16 +11,13 @@
         <!--Welcome View Controller-->
         <scene sceneID="b5C-cf-MYh">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Klu-0O-Ed8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="WelcomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z99-fr-eSh" customClass="WelcomeViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PJX-we-HM3"/>
-                        <viewControllerLayoutGuide type="bottom" id="Lif-yq-sTy"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UBc-FX-H7t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome_wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="liW-fg-TRx">
                                 <rect key="frame" x="0.0" y="-80" width="414" height="1024"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="812" id="YzP-QX-n8O"/>
@@ -399,36 +396,35 @@ Kurozora</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="liW-fg-TRx" secondAttribute="centerY" id="5yk-Sr-zIX"/>
-                            <constraint firstAttribute="centerX" secondItem="liW-fg-TRx" secondAttribute="centerX" id="XKT-86-sT1"/>
-                            <constraint firstItem="liW-fg-TRx" firstAttribute="leading" secondItem="UBc-FX-H7t" secondAttribute="leading" id="YJI-d0-ds3"/>
+                            <constraint firstItem="hLd-sM-BVb" firstAttribute="centerX" secondItem="liW-fg-TRx" secondAttribute="centerX" id="XKT-86-sT1"/>
+                            <constraint firstItem="liW-fg-TRx" firstAttribute="leading" secondItem="hLd-sM-BVb" secondAttribute="leading" id="YJI-d0-ds3"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="trailing" secondItem="UC5-fz-v9B" secondAttribute="trailing" id="a8U-hb-adt"/>
-                            <constraint firstItem="U6d-22-UCL" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="60" id="aDG-c8-twq"/>
+                            <constraint firstItem="U6d-22-UCL" firstAttribute="top" secondItem="hLd-sM-BVb" secondAttribute="top" constant="60" id="aDG-c8-twq"/>
                             <constraint firstItem="U6d-22-UCL" firstAttribute="leading" secondItem="UC5-fz-v9B" secondAttribute="leading" id="dbi-Rg-Lh3"/>
-                            <constraint firstItem="liW-fg-TRx" firstAttribute="top" secondItem="PJX-we-HM3" secondAttribute="bottom" constant="-124" id="kUC-bh-MY8"/>
+                            <constraint firstItem="liW-fg-TRx" firstAttribute="top" secondItem="hLd-sM-BVb" secondAttribute="top" constant="-124" id="kUC-bh-MY8"/>
                             <constraint firstItem="UC5-fz-v9B" firstAttribute="top" secondItem="U6d-22-UCL" secondAttribute="bottom" id="mF1-37-joS"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="top" secondItem="UC5-fz-v9B" secondAttribute="bottom" constant="10" id="oBl-8E-Le7"/>
-                            <constraint firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="rFw-Sx-euo"/>
-                            <constraint firstItem="Lif-yq-sTy" firstAttribute="top" secondItem="liW-fg-TRx" secondAttribute="bottom" constant="-82" id="wlb-j3-uwU"/>
+                            <constraint firstItem="hLd-sM-BVb" firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="rFw-Sx-euo"/>
+                            <constraint firstItem="hLd-sM-BVb" firstAttribute="bottom" secondItem="liW-fg-TRx" secondAttribute="bottom" constant="-82" id="wlb-j3-uwU"/>
                             <constraint firstItem="x1n-dr-1eA" firstAttribute="centerX" secondItem="UC5-fz-v9B" secondAttribute="centerX" id="xRL-4i-8Xv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="WVs-qg-iCP"/>
+                        <viewLayoutGuide key="safeArea" id="hLd-sM-BVb"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="5yk-Sr-zIX"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="uXh-lz-CdI"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="liW-fg-TRx" id="4Ej-cN-D6d"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Klu-0O-Ed8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="488.40579710144931" y="137.27678571428569"/>
         </scene>
     </scenes>
     <resources>
-        <image name="login_wallpaper" width="1920" height="1080"/>
+        <image name="welcome_wallpaper" width="1920" height="1080"/>
     </resources>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

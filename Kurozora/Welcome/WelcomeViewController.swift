@@ -13,7 +13,7 @@ import AuthenticationServices
 class WelcomeViewController: UIViewController {
 	@IBOutlet weak var backgroundImageView: UIImageView!
 
-	var logoutReason: String? = nil
+	var signOutReason: String? = nil
 	var isKiller: Bool?
 	var statusBarShouldBeHidden = true
 
@@ -51,9 +51,9 @@ class WelcomeViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		if let isKiller = isKiller, !isKiller && logoutReason != nil {
-			SCLAlertView().showInfo("You have been logged out", subTitle: logoutReason)
-			self.logoutReason = nil
+		if let isKiller = isKiller, !isKiller && signOutReason != nil {
+			SCLAlertView().showInfo("You have been signed out", subTitle: signOutReason)
+			self.signOutReason = nil
 		}
 	}
 
@@ -69,7 +69,7 @@ class WelcomeViewController: UIViewController {
 		- Returns: a view controller from the relevant storyboard.
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "login", bundle: nil)
+		let storyboard = UIStoryboard(name: "welcome", bundle: nil)
 		return storyboard.instantiateInitialViewController()
 	}
 

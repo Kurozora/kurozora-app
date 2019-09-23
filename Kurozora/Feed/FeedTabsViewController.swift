@@ -111,14 +111,9 @@ class FeedTabsViewController: TabmanViewController {
 	}
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
-		if User.isLoggedIn {
+		WorkflowController.shared.isSignedIn {
 			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
 				self.show(profileTableViewController, sender: nil)
-			}
-		} else {
-			if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
-				let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
-				self.present(kNavigationController)
 			}
 		}
 	}

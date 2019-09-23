@@ -285,14 +285,14 @@ class CustomThreadViewController: ThreadTableViewController {
 //    public override func replyToThreadPressed(sender: AnyObject) {
 //        super.replyToThreadPressed(sender: sender)
 //        
-//        if let thread = thread, User.currentUserLoggedIn() {
+//        if let thread = thread, User.currentUserSignedIn() {
 //            let comment = KDatabaseKit.newPostViewController()
 //            comment.initWith(thread, threadType: threadType, delegate: self)
 //            animator = presentViewControllerModal(comment)
 //        } else if let thread = thread, thread.locked {
 //            presentBasicAlertWithTitle(title: "Thread is locked", message: nil)
 //        } else {
-//            presentBasicAlertWithTitle(title: "Login first", message: "Select 'Me' tab")
+//            presentBasicAlertWithTitle(title: "Sign in first", message: "Select 'Me' tab")
 //        }
 //    }
 //    

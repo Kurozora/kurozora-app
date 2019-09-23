@@ -676,12 +676,12 @@ extension ProfileTableViewController: UITextViewDelegate {
 //    public override func replyToThreadPressed(sender: AnyObject) {
 //        super.replyToThreadPressed(sender: sender)
 //
-//        if let profile = userProfile, User.currentUserLoggedIn() {
+//        if let profile = userProfile, User.currentUserSignedIn() {
 //            let comment = KDatabaseKit.newPostViewController()
 //            comment.initWithTimelinePost(self, postedIn: profile)
 //            animator = presentViewControllerModal(comment)
 //        } else {
-//            presentBasicAlertWithTitle(title: "Login first", message: "Select 'Me' tab")
+//            presentBasicAlertWithTitle(title: "Sign in first", message: "Select 'Me' tab")
 //        }
 //    }
 //

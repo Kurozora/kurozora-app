@@ -1,5 +1,5 @@
 //
-//  LoginCellType.swift
+//  OnboardingCellType.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/09/2019.
@@ -35,8 +35,8 @@ enum OnboardingCellType: Int {
 	/// An array containing all onboarding cell types.
 	static let all: [OnboardingCellType] = [.username, .email, .password, .footer]
 
-	/// An array containing only login onboarding cell types.
-	static let allLogin: [OnboardingCellType] = [.username, .password, .footer]
+	/// An array containing only sign in onboarding cell types.
+	static let allSignIn: [OnboardingCellType] = [.username, .password, .footer]
 
 	/// An array containing only reset password onboarding cell types.
 	static let allReset: [OnboardingCellType] = [.email, .footer]

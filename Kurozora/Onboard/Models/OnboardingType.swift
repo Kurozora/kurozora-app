@@ -13,30 +13,30 @@ import Foundation
 
 	```
 	case register = 0
-	case login = 1
+	case signIn = 1
 	case reset = 2
-```
+	```
 */
 enum OnboardingType: Int {
 	/// Register onboarding.
 	case register = 0
 
-	/// Login onboarding.
-	case login = 1
+	/// Sign in onboarding.
+	case signIn = 1
 
 	/// Reset password onboarding.
 	case reset = 2
 
 	/// An array containing all onboarding types.
-	static let all: [OnboardingType] = [.register, .login, .reset]
+	static let all: [OnboardingType] = [.register, .signIn, .reset]
 
 	/// The onboarding cell type array of an onboarding type.
 	var cellType: [OnboardingCellType] {
 		switch self {
 		case .register:
 			return OnboardingCellType.all
-		case .login:
-			return OnboardingCellType.allLogin
+		case .signIn:
+			return OnboardingCellType.allSignIn
 		case .reset:
 			return OnboardingCellType.allReset
 		}

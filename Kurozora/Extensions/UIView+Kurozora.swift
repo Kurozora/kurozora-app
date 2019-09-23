@@ -32,7 +32,7 @@ extension UIView {
 	/**
 		Bounces the view with the given growth value.
 
-		- Parameter growth: The given float value used to bounce the view. Default is `1.25`.
+		- Parameter growth: The given float value used to bounce the view (default is `1.25`).
 	*/
 	func animateBounce(growth: CGFloat = 1.25) {
 		transform = .identity
@@ -48,13 +48,13 @@ extension UIView {
 	/**
 		Give the view a nice shadow.
 
-		- Parameter shadowColor: The color of the shadow. Default is `.black`.
-		- Parameter shadowOpacity: The opacity of the shadow. Default is `0.2`.
-		- Parameter shadowRadius: The radius of the shadow. Default is `8`.
-		- Parameter shadowOffset: The offset of the shadow. Default is `.zero`.
-		- Parameter shadowPathSize: The path size of the shadow. Default is `nil`.
-		- Parameter shouldRasterize: Whether the shadow should be rasterized for better performance. Default is `true`.
-		- Parameter cornerRadius: The corner radius of the path size. Default is `nil`.
+		- Parameter shadowColor: The color of the shadow (default is `.black`).
+		- Parameter shadowOpacity: The opacity of the shadow (default is `0.2`).
+		- Parameter shadowRadius: The radius of the shadow (default is `8`).
+		- Parameter shadowOffset: The offset of the shadow (default is `.zero`).
+		- Parameter shadowPathSize: The path size of the shadow (default is `nil`).
+		- Parameter shouldRasterize: Whether the shadow should be rasterized for better performance (default is `true`).
+		- Parameter cornerRadius: The corner radius of the path size (default is `nil`).
 	*/
 	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
 

@@ -51,13 +51,13 @@ class WorkflowController {
 
 			let _ = myChannel.bind(eventName: "session.killed", callback: { [weak self] (data: Any?) -> Void in
 				if let data = data as? [String: AnyObject], data.count != 0 {
-					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let logoutReason = data["reason"] as? String {
+					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let signOutReason = data["reason"] as? String {
 						let isKiller = User.currentSessionID == sessionKillerId
 
 						if sessionID == User.currentSessionID, !isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
-							self?.logoutUser(with: logoutReason, whereUser: isKiller)
+							self?.signOut(with: signOutReason, whereUser: isKiller)
 						} else if sessionID == User.currentSessionID, isKiller {
 							pusher.unsubscribeAll()
 							pusher.disconnect()
@@ -73,23 +73,30 @@ class WorkflowController {
 	}
 
 	/**
-		Logout the current user by emptying KDefaults. Also show a message with the reason of the logout if the user's session was terminated from a different device.
+		Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
 
-		- Parameter logoutReason: The reason as to why the user has been logged out.
-		- Parameter isKiller: A boolean indicating whether the current user is the one who initiated the logout.
+		- Parameter completion: Optional completion handler (default is `nil`).
 	*/
-	func logoutUser(with logoutReason: String? = nil, whereUser isKiller: Bool = false) {
+	func isSignedIn(_ completion: (() -> Void)? = nil) {
+		if User.isSignedIn {
+			completion?()
+		} else {
+			if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
+				UIApplication.topViewController?.present(kNavigationController)
+			}
+		}
+	}
+
+	/**
+		Sign out the current user by emptying KDefaults. Also show a message with the reason of the sign out if the user's session was terminated from a different device.
+
+		- Parameter signOutReason: The reason as to why the user has been signed out.
+		- Parameter isKiller: A boolean indicating whether the current user is the one who initiated the sign out.
+	*/
+	func signOut(with signOutReason: String? = nil, whereUser isKiller: Bool = false) {
 		try? Kurozora.shared.KDefaults.removeAll()
-
-//		if let kNavigationController = WelcomeViewController.instantiateFromStoryboard() as? KNavigationController {
-//			if let welcomeViewController = kNavigationController.visibleViewController as? WelcomeViewController {
-//				welcomeViewController.logoutReason = logoutReason
-//				welcomeViewController.isKiller = isKiller
-//			}
-//			UIApplication.topViewController?.present(kNavigationController, animated: true)
-//		}
-
-		NotificationCenter.default.post(name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 	}
 }
 
@@ -117,10 +124,10 @@ extension WorkflowController {
 			let alertType = UserSettings.alertType
 
 			if alertType == 0 || alertType == 1 {
-				var banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
+				var banner = NotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
 
 				if alertType == 0 {
-					banner = NotificationBanner(title: "New login detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
+					banner = NotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
 				}
 
 				// Notification haptic feedback and vibration
@@ -143,7 +150,7 @@ extension WorkflowController {
 					self.showSessions()
 				}
 			} else if alertType == 2 {
-				let statusBanner = StatusBarNotificationBanner(title: "New login detected from " + device, style: .info)
+				let statusBanner = StatusBarNotificationBanner(title: "New sign in detected from " + device, style: .info)
 
 				// Notification haptic feedback and vibration
 				statusBanner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none

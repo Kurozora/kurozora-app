@@ -1,5 +1,5 @@
 //
-//  LoginFooterTableViewCell.swift
+//  OnboardingFooterTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/09/2019.

@@ -1115,15 +1115,15 @@ struct Service {
 // MARK: - Sessions
 // All sessions related endpoints
 	/**
-		Create a new session a.k.a login.
+		Create a new session a.k.a sign in.
 
-		- Parameter username: The username of the user to be logged in.
-		- Parameter password: The password of the user to be logged in.
-		- Parameter device: The name of the device the login is occuring from.
-		- Parameter successHandler: A closure returning a boolean indicating whether login is successful.
-		- Parameter isSuccess: A boolean value indicating whether login is successful.
+		- Parameter username: The username of the user to be signed in.
+		- Parameter password: The password of the user to be signed in.
+		- Parameter device: The name of the device the sign in is occuring from.
+		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
+		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
-	func login(_ username: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	func signIn(_ username: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let username = username else { return }
 		guard let password = password else { return }
 		guard let device = device else { return }
@@ -1160,9 +1160,9 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't login 😔", subTitle: error.message)
+			SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
 			successHandler(false)
-			print("Received login error: \(error)")
+			print("Received sign in error: \(error)")
 		})
 	}
 
@@ -1186,7 +1186,7 @@ struct Service {
 					successHandler(success)
 				}
 			}, failure: { error in
-				WorkflowController.shared.logoutUser()
+				WorkflowController.shared.signOut()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
 				print("Received validate session error: \(error)")
 			})
@@ -1224,12 +1224,12 @@ struct Service {
 	}
 
 	/**
-		Logout the current user by deleting the current session.
+		Sign out the current user by deleting the current session.
 
-		- Parameter successHandler: A closure returning a boolean indicating whether logout is successful.
-		- Parameter isSuccess: A boolean value indicating whether logout is successful.
+		- Parameter successHandler: A closure returning a boolean indicating whether sign out is successful.
+		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
 	*/
-	func logout(withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
+	func signOut(withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
 		guard let sessionID = User.currentSessionID else { return }
 
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
@@ -1241,13 +1241,13 @@ struct Service {
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					WorkflowController.shared.logoutUser()
+					WorkflowController.shared.signOut()
 					successHandler?(success)
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't logout 😔", subTitle: error.message)
-			print("Received logout error: \(error)")
+			SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
+			print("Received sign out error: \(error)")
 		})
 	}
 

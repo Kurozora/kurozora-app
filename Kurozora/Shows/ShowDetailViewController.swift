@@ -497,8 +497,8 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		if User.isLoggedIn {
-			let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: libraryStatus, action: { (title, value)  in
+		WorkflowController.shared.isSignedIn {
+			let action = UIAlertController.actionSheetWithItems(items: [("Planning", "Planning"), ("Watching", "Watching"), ("Completed", "Completed"), ("Dropped", "Dropped"), ("On-Hold", "OnHold")], currentSelection: self.libraryStatus, action: { (title, value)  in
 				guard let showID = self.showID else { return }
 
 				if self.libraryStatus != value {
@@ -517,7 +517,7 @@ class ShowDetailViewController: UIViewController {
 				}
 			})
 
-			if let libraryStatus = libraryStatus, !libraryStatus.isEmpty {
+			if let libraryStatus = self.libraryStatus, !libraryStatus.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
 					Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
 						if success {
@@ -541,11 +541,6 @@ class ShowDetailViewController: UIViewController {
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
 				self.present(action, animated: true, completion: nil)
-			}
-		} else {
-			if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
-				let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
-				self.present(kNavigationController)
 			}
 		}
 	}

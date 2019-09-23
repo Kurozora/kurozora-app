@@ -34,7 +34,7 @@ class SettingsCell: UITableViewCell {
 		didSet {
 			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 			self.profileImageView?.theme_tintColor = KThemePicker.borderColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAccountCell), name: .KUserIsLoggedInDidChange, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAccountCell), name: .KUserIsSignedInDidChange, object: nil)
 		}
 	}
 	@IBOutlet weak var cacheSizeLabel: UILabel? {
@@ -84,10 +84,10 @@ class SettingsCell: UITableViewCell {
 	// MARK: - Functions
 	/// Updates the account cell depending on the user's loggin state.
 	@objc func updateAccountCell() {
-		self.profileImageView?.image = User.isLoggedIn ? User.currentUserProfileImage : #imageLiteral(resourceName: "profile")
-		self.usernameLabel?.text = User.isLoggedIn ? Kurozora.shared.KDefaults["username"] : "Sign in to your Kurozora account"
-		self.cellSubTitle?.text = User.isLoggedIn ? "Kurozora ID" : "Setup Kurozora ID and more."
-		self.chevronImageView?.isHidden = !User.isLoggedIn
+		self.profileImageView?.image = User.isSignedIn ? User.currentUserProfileImage : #imageLiteral(resourceName: "profile")
+		self.usernameLabel?.text = User.isSignedIn ? Kurozora.shared.KDefaults["username"] : "Sign in to your Kurozora account"
+		self.cellSubTitle?.text = User.isSignedIn ? "Kurozora ID" : "Setup Kurozora ID and more."
+		self.chevronImageView?.isHidden = !User.isSignedIn
 	}
 
 	/// Updates the app icon image with the one selected by the user.

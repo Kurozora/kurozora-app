@@ -89,7 +89,7 @@ class HomeCollectionViewController: UICollectionViewController {
 		navigationItem.searchController = searchController
 
         // Validate session
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			Service.shared.validateSession(withSuccess: { (success) in
 				if !success {
 					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {

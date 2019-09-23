@@ -81,12 +81,12 @@ class Kurozora {
 	/**
 		Return a boolean value indicating if the current session is valid.
 
-		- Parameter window: The window on which the login view will be presented in case the session isn't valid.
+		- Parameter window: The window on which the sign in view will be presented in case the session isn't valid.
 
 		- Returns: a boolean value indicating if the current session is valid.
 	*/
 	static func validateSession(window: UIWindow?) -> Bool {
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			Service.shared.validateSession(withSuccess: { (success) in
 				if !success {
 					if window?.rootViewController as? WelcomeViewController == nil {

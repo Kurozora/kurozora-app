@@ -42,7 +42,7 @@ class NotificationsViewController: UITableViewController {
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isLoggedIn {
+		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isSignedIn {
 			let notificationsGrouping = UserSettings.notificationsGrouping
 			grouping = NotificationGroupStyle(rawValue: notificationsGrouping)!
 			fetchNotifications()
@@ -51,7 +51,7 @@ class NotificationsViewController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			oldGrouping = UserSettings.notificationsGrouping
 		}
 	}
@@ -59,7 +59,7 @@ class NotificationsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Search bar
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
@@ -103,7 +103,7 @@ class NotificationsViewController: UITableViewController {
 	/// Setup empty view data.
 	private func setupEmptyView() {
 		tableView.emptyDataSetView { (view) in
-			if User.isLoggedIn {
+			if User.isSignedIn {
 				view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 					.detailLabelString(NSAttributedString(string: "When you have notifications, you will see them here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 					.image(#imageLiteral(resourceName: "empty_notifications"))
@@ -120,8 +120,8 @@ class NotificationsViewController: UITableViewController {
 					.verticalOffset(-60)
 					.verticalSpace(10)
 					.didTapDataButton {
-						if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
-							let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
+						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 							self.present(kNavigationController)
 						}
 				}
@@ -129,11 +129,11 @@ class NotificationsViewController: UITableViewController {
 		}
 	}
 
-	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
+	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		markAllButton.isEnabled = User.isLoggedIn
-		markAllButton.title = User.isLoggedIn ? "Mark all" : ""
-		refreshControl?.isEnabled = User.isLoggedIn
+		markAllButton.isEnabled = User.isSignedIn
+		markAllButton.title = User.isSignedIn ? "Mark all" : ""
+		refreshControl?.isEnabled = User.isSignedIn
 	}
 
 	/// Reload the data on the view.
@@ -144,7 +144,7 @@ class NotificationsViewController: UITableViewController {
 
 	/// Fetch the notifications for the current user.
 	@objc func fetchNotifications() {
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 
 			Service.shared.getNotifications(withSuccess: { (notifications) in

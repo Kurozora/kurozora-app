@@ -9,7 +9,7 @@
 import Foundation
 
 extension Notification.Name {
-	static var KUserIsLoggedInDidChange: NSNotification.Name {
+	static var KUserIsSignedInDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 

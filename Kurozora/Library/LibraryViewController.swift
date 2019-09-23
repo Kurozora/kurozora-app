@@ -38,7 +38,7 @@ class LibraryViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Actions
 		enableActions()
@@ -128,9 +128,9 @@ class LibraryViewController: TabmanViewController {
 		tabmanBarViewIsEnabled()
 	}
 
-	/// Hides or unhides the tabman bar view according to the user's login state.
+	/// Hides or unhides the tabman bar view according to the user's sign in state.
 	private func tabmanBarViewIsEnabled() {
-		if User.isLoggedIn {
+		if User.isSignedIn {
 			if let barItemsCount = bar.items?.count {
 				bar.isHidden = barItemsCount <= 1
 			}
@@ -139,9 +139,9 @@ class LibraryViewController: TabmanViewController {
 		}
 	}
 
-	/// Enables and disables actions such as buttons and the refresh control according to the user login state.
+	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		if !User.isLoggedIn {
+		if !User.isSignedIn {
 			rightBarButtonItems = navigationItem.rightBarButtonItems
 			leftBarButtonItems = navigationItem.leftBarButtonItems
 
@@ -263,7 +263,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = User.isLoggedIn ? librarySections.count : 1
+		let sectionsCount = User.isSignedIn ? librarySections.count : 1
 		initializeViewControllers(with: sectionsCount)
 		return sectionsCount
 	}
@@ -273,7 +273,7 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 	}
 
 	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		return User.isLoggedIn ? .at(index: UserSettings.libraryPage) : nil
+		return User.isSignedIn ? .at(index: UserSettings.libraryPage) : nil
 	}
 }
 

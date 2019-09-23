@@ -51,12 +51,12 @@ public class ForumViewController: AnimeBaseViewController {
 //
 //    @IBAction func createAnimeThread(sender: AnyObject) {
 //
-//        if User.currentUserLoggedIn() {
+//        if User.currentUserSignedIn() {
 //            let comment = KDatabaseKit.newThreadViewController()
 //            comment.initWith(threadType: .Custom, delegate: self, anime: anime)
 //            animator = presentViewControllerModal(comment)
 //        } else {
-//            presentBasicAlertWithTitle(title: "Login first", message: "Select 'Me' tab to login", style: .alert)
+//            presentBasicAlertWithTitle(title: "Sign in first", message: "Select 'Me' tab to sign in", style: .alert)
 //        }
 //    }
 //}

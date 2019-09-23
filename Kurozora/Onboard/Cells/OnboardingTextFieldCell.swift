@@ -1,5 +1,5 @@
 //
-//  LoginTextFieldCell.swift
+//  OnboardingTextFieldCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/09/2019.
@@ -40,7 +40,7 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 				textField.placeholder = "Password: make it super secret 🙊"
 			default: break
 			}
-		case .login:
+		case .signIn:
 			switch textField.textType {
 			case .username:
 				textField.placeholder = "The cool Kurozora ID you claimed 🙌"

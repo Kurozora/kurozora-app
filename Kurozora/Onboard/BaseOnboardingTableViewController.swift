@@ -100,7 +100,7 @@ extension BaseOnboardingTableViewController: UITextFieldDelegate {
 		switch onboardingType {
 		case .register:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .join : .next
-		case .login:
+		case .signIn:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .go : .next
 		case .reset:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .send : .next

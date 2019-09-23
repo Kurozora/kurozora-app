@@ -23,7 +23,7 @@ class SettingsTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsLoggedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 	}
 
     // MARK: - Functions
@@ -57,7 +57,7 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Segue
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		if identifier == "AccountSegue", !User.isLoggedIn {
+		if identifier == "AccountSegue", !User.isSignedIn {
 			return false
 		}
 
@@ -200,12 +200,7 @@ extension SettingsTableViewController {
 
 		switch (indexPath.section, indexPath.row) {
 		case (0, 0):
-			if !User.isLoggedIn {
-				if let loginTableViewController = LoginTableViewController.instantiateFromStoryboard() as? LoginTableViewController {
-					let kNavigationController = KNavigationController(rootViewController: loginTableViewController)
-					self.present(kNavigationController)
-				}
-			}
+			WorkflowController.shared.isSignedIn()
 //		case (1, 0): break
 //		case (2, 0): break
 //		case (3, 0): break
