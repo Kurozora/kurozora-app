@@ -299,9 +299,8 @@ public class ForumsCell: UITableViewCell {
 		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = forumsChildViewController.view
-			popoverController.sourceRect = CGRect(x: forumsChildViewController.view.bounds.midX, y: forumsChildViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.sourceView = moreButton
+			popoverController.sourceRect = moreButton.bounds
 		}
 		forumsChildViewController.present(activityVC, animated: true, completion: nil)
 	}

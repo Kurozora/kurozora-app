@@ -286,9 +286,8 @@ class ReplyCell: UITableViewCell {
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = threadViewController.view
-			popoverController.sourceRect = CGRect(x: threadViewController.view.bounds.midX, y: threadViewController.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.sourceView = moreButton
+			popoverController.sourceRect = moreButton.bounds
 		}
 		threadViewController.present(activityVC, animated: true, completion: nil)
 	}

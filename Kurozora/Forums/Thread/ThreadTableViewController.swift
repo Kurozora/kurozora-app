@@ -316,7 +316,7 @@ class ThreadTableViewController: UITableViewController {
 	}
 
 	/// Presents a share sheet to share the current thread.
-	func shareThread() {
+	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
 		guard let threadID = forumThreadID else { return }
 		let threadUrl = "https://kurozora.app/thread/\(threadID)"
 		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
@@ -328,9 +328,12 @@ class ThreadTableViewController: UITableViewController {
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			if let sender = sender {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			} else {
+				popoverController.barButtonItem = barButtonItem
+			}
 		}
 		self.present(activityVC, animated: true, completion: nil)
 	}
@@ -383,7 +386,7 @@ class ThreadTableViewController: UITableViewController {
 	}
 
 	/// Builds and presents an action sheet.
-	func showActionList() {
+	func showActionList(_ sender: UIBarButtonItem) {
 		guard let forumsThreadElement = forumsThreadElement else { return }
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -451,7 +454,7 @@ class ThreadTableViewController: UITableViewController {
 
 		// Share thread action
 		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
-			self.shareThread()
+			self.shareThread(barButtonItem: sender)
 		})
 		shareAction.setValue(#imageLiteral(resourceName: "share"), forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -469,9 +472,7 @@ class ThreadTableViewController: UITableViewController {
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = self.view
-			popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-			popoverController.permittedArrowDirections = []
+			popoverController.barButtonItem = sender
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -500,11 +501,11 @@ class ThreadTableViewController: UITableViewController {
 	}
 
 	@IBAction func shareThreadButton(_ sender: UIButton) {
-		shareThread()
+		shareThread(sender)
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIBarButtonItem) {
-		showActionList()
+		showActionList(sender)
 	}
 }
 
