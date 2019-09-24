@@ -10,29 +10,34 @@ import UIKit
 import EmptyDataSet_Swift
 import SwiftyJSON
 
-class BadgesTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class BadgesTableViewController: UITableViewController {
 	var badges: [BadgeElement]?
+	var user: UserProfile? {
+		didSet {
+			self.badges = user?.badges
+		}
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
-
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetSource = self
-		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No badges found!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(false)
+			if let username = self.user?.username {
+				let detailLabelString = self.user?.id != User.currentID ? "\(username) has no badges to show." : "Badges you earn show up here."
+				view.titleLabelString(NSAttributedString(string: "No Badges", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+					.image(#imageLiteral(resourceName: "empty_badge"))
+					.imageTintColor(KThemePicker.textColor.colorValue)
+					.verticalOffset(-50)
+					.verticalSpace(10)
+					.isScrollAllowed(true)
+			}
 		}
     }
 

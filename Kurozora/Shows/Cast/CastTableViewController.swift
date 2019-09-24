@@ -71,10 +71,11 @@ class CastCollectionViewController: UICollectionViewController {
 
 		// Setup empty collection view
         collectionView.emptyDataSetView { view in
-            view.titleLabelString(NSAttributedString(string: "No actors found!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
+			view.titleLabelString(NSAttributedString(string: "No Actors", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_actor"))
+				.verticalOffset(-50)
+				.verticalSpace(10)
 				.isScrollAllowed(true)
         }
 
@@ -105,8 +106,9 @@ class CastCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let actorsCount = actors?.count else { return 0 }
-		return actorsCount
+		return 0
+//		guard let actorsCount = actors?.count else { return 0 }
+//		return actorsCount
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

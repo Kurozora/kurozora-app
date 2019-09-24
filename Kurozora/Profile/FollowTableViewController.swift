@@ -9,23 +9,18 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class FollowTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class FollowTableViewController: UITableViewController {
 	var userFollow: [UserProfile]! {
 		didSet {
 			tableView.reloadData()
 		}
 	}
-	var followList: String = "followers"
-	var userID: Int?
+	var followList: String = "Followers"
+	var user: UserProfile?
 
 	// Pagination
 	var currentPage = 1
 	var lastPage = 1
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		title = "\(followList.capitalized) List"
-	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +33,55 @@ class FollowTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetSource = self
-		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No \(self.followList) to show."))
-				.image(#imageLiteral(resourceName: "profile"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(true)
+			if let username = self.user?.username {
+				if self.followList == "Followers" {
+					let detailLabelString = self.user?.id != User.currentID ? "Be the first to follow \(username)!" : "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
+
+					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+						.image(#imageLiteral(resourceName: "empty_follow"))
+						.imageTintColor(KThemePicker.textColor.colorValue)
+						.verticalOffset(-50)
+						.verticalSpace(10)
+						.isScrollAllowed(true)
+
+					if self.user?.id != User.currentID, !(self.user?.following ?? true) {
+						view.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
+							.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
+							.didTapDataButton {
+								self.followUser()
+							}
+					}
+				} else {
+					let detailLabelString = self.user?.id != User.currentID ? "\(username) is not following anyone yet." : "Follow a user and they will show up here!"
+
+					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+						.image(#imageLiteral(resourceName: "empty_follow"))
+						.imageTintColor(KThemePicker.textColor.colorValue)
+						.verticalOffset(-50)
+						.verticalSpace(10)
+						.isScrollAllowed(true)
+				}
+			}
 		}
     }
 
 	// MARK: - Functions
+	/// Sends a request to follow the user whose followers list is being viewed.
+	func followUser() {
+		guard let userID = user?.id else { return }
+		Service.shared.follow(1, user: userID) { (success) in
+			if success {
+				self.fetchFollowList()
+			}
+		}
+	}
+
 	/// Fetch the follow list for the currently viewed profile.
     func fetchFollowList() {
+		guard let userID = user?.id else { return }
 		Service.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
 			DispatchQueue.main.async {
 				self.currentPage = userFollow?.currentPage ?? 1

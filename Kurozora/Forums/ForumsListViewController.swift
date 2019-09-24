@@ -12,10 +12,11 @@ import SCLAlertView
 import SwiftTheme
 import SwiftyJSON
 
-class ForumsListViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class ForumsListViewController: UITableViewController {
+	// MARK: - Properties
 	var refresh = UIRefreshControl()
 
-	var sectionTitle: String?
+	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
 	var forumThreads: [ForumsThreadElement]? {
@@ -29,6 +30,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 	var currentPage = 1
 	var lastPage = 1
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		UserSettings.set(sectionIndex, forKey: .forumsPage)
@@ -38,14 +40,13 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		guard let sectionTitle = sectionTitle else { return }
-
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refresh
 		refresh.theme_tintColor = KThemePicker.tintColor.rawValue
-		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refresh.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
+		// Fetch threads
 		fetchThreads()
 
 		// Setup table view
@@ -53,13 +54,13 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetDelegate = self
-		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: sectionTitle))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
+			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
 	}
@@ -71,7 +72,6 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
-		guard let sectionTitle = sectionTitle else {return}
 		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		currentPage = 0
 		fetchThreads()
@@ -79,7 +79,6 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 
 	/// Fetch threads list for the current section.
 	func fetchThreads() {
-		guard let sectionTitle = sectionTitle else { return }
 		guard let sectionID = sectionID else { return }
 
 		if threadOrder == nil {
@@ -99,7 +98,7 @@ class ForumsListViewController: UITableViewController, EmptyDataSetSource, Empty
 					}
 				}
 
-				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		})
 

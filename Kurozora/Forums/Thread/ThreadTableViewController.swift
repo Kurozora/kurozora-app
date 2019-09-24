@@ -136,10 +136,12 @@ class ThreadTableViewController: UITableViewController {
 
 		// Setup empty table view
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No replies yet. Be the first to reply!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
+			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Be the first to reply on this thread!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
 	}

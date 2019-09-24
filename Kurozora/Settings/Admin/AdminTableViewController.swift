@@ -10,6 +10,7 @@ import UIKit
 import EmptyDataSet_Swift
 
 class AdminTableViewController: UITableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var warningLabel: UILabel! {
 		didSet {
 			warningLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -17,49 +18,24 @@ class AdminTableViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - Properties
 	let kDefaultItems = Kurozora.shared.KDefaults.allItems()
 	let kDefaultKeys = Kurozora.shared.KDefaults.allKeys()
 	var kDefaultCount = Kurozora.shared.KDefaults.allItems().count
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup empty table view
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No badges found!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(false)
-		}
-	}
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		for cell in tableView.visibleCells {
-			guard let indexPath = tableView.indexPath(for: cell) else { return }
-			var rectCorner: UIRectCorner!
-			var roundCorners = true
-			let numberOfRows: Int = tableView.numberOfRows(inSection: indexPath.section)
-
-			if numberOfRows == 1 {
-				// single cell
-				rectCorner = UIRectCorner.allCorners
-			} else if indexPath.row == numberOfRows - 1 {
-				// bottom cell
-				rectCorner = [.bottomLeft, .bottomRight]
-			} else if indexPath.row == 0 {
-				// top cell
-				rectCorner = [.topLeft, .topRight]
-			} else {
-				roundCorners = false
-			}
-
-			if roundCorners {
-				tableView.cellForRow(at: indexPath)?.contentView.roundedCorners(rectCorner, radius: 10)
-			}
+			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_keychain"))
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
 		}
 	}
 }
@@ -77,10 +53,6 @@ extension AdminTableViewController {
 			self.tableView.deleteRows(at: [indexPath], with: .automatic)
 			self.tableView.endUpdates()
 		}
-	}
-
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -9,7 +9,8 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class SeasonsCollectionViewController: UICollectionViewController {
+	// MARK: - Properties
 	var showID: Int?
 	var heroID: String?
 	var seasons: [SeasonsElement]? {
@@ -70,22 +71,23 @@ class SeasonsCollectionViewController: UICollectionViewController, EmptyDataSetS
 	}
 	#endif
 
+	// MARK: - View
 	override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
+		// Fetch seasons
 		fetchSeasons()
 
-		// Setup empty table view
-        collectionView?.emptyDataSetSource = self
-        collectionView?.emptyDataSetDelegate = self
+		// Setup empty collection view
         collectionView?.emptyDataSetView { view in
-            view.titleLabelString(NSAttributedString(string: "No seasons found!"))
-                .image(UIImage(named: ""))
-                .shouldDisplay(true)
-                .shouldFadeIn(true)
-                .isTouchAllowed(true)
-                .isScrollAllowed(false)
+			view.titleLabelString(NSAttributedString(string: "No Seasons", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "This show doesn't have seasons yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_seasons"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
         }
 
 		#if DEBUG

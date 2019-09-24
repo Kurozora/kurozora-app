@@ -13,6 +13,7 @@ import SCLAlertView
 import SwiftTheme
 
 class ProfileTableViewController: UITableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
 	@IBOutlet weak var profileImageView: UIImageView!
@@ -74,6 +75,7 @@ class ProfileTableViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - {Properties}
 	var bannerImageViewHeightConstraint: NSLayoutConstraint?
 	var currentImageView: UIImageView?
 
@@ -102,6 +104,7 @@ class ProfileTableViewController: UITableViewController {
 	var profileImageCache: UIImage?
 	var bannerImageCache: UIImage?
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -140,14 +143,16 @@ class ProfileTableViewController: UITableViewController {
 	// MARK: - Prepare for segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "BadgeSegue" {
-			let vc = segue.destination as! BadgesTableViewController
-			vc.badges = user?.profile?.badges
+			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
+				badgesTableViewController.user = user?.profile
+			}
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
-			followTableViewController.userID = userID ?? User.currentID
+			followTableViewController.user = user?.profile
+
 			if segue.identifier == "FollowingSegue" {
-				followTableViewController.followList = "following"
+				followTableViewController.followList = "Following"
 			} else if segue.identifier == "FollowersSegue" {
-				followTableViewController.followList = "followers"
+				followTableViewController.followList = "Followers"
 			}
 		}
 	}

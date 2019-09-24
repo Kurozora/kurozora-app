@@ -191,7 +191,7 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't get your library 😔", subTitle: error.message)
+			SCLAlertView().showError("Can't get library 😔", subTitle: error.message)
 			print("Received get library error: \(error)")
 		})
 	}
@@ -313,7 +313,7 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't get your notifications 😔", subTitle: error.message)
+			SCLAlertView().showError("Can't get notifications 😔", subTitle: error.message)
 			print("Received get notifications error: \(error)")
 		})
 	}
@@ -392,7 +392,7 @@ struct Service {
 	func getFollow(list: String, for userID: Int?, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
 		guard let userID = userID else { return }
 
-		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/\(list)")
+		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/\(list.lowercased())")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -408,8 +408,8 @@ struct Service {
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't get your \(list) list 😔", subTitle: error.message)
-			print("Received get following \(list) error: \(error)")
+			SCLAlertView().showError("Can't get \(list) list 😔", subTitle: error.message)
+			print("Received get \(list) error: \(error)")
 		})
 	}
 

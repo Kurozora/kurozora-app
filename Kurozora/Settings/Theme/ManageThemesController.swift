@@ -11,7 +11,8 @@ import EmptyDataSet_Swift
 import SCLAlertView
 import SwiftTheme
 
-class ManageThemesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class ManageThemesCollectionViewController: UICollectionViewController {
+	// MARK: - Properties
 	var themes: [ThemesElement]? {
 		didSet {
 			self.collectionView.reloadData()
@@ -63,17 +64,24 @@ class ManageThemesCollectionViewController: UICollectionViewController, EmptyDat
 	}
 	#endif
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		Service.shared.getThemes( withSuccess: { (themes) in
-			self.themes = themes
-		})
+		// Fetch themes
+		fetchThemes()
+
+		// Setup empty collection view
+		collectionView.emptyDataSetView { view in
+			view.titleLabelString(NSAttributedString(string: "No Themes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_themes"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -83,17 +91,14 @@ class ManageThemesCollectionViewController: UICollectionViewController, EmptyDat
 		navigationItem.title = nil
 		navigationItem.titleView = numberOfItemsTextField
 		#endif
+	}
 
-		// Setup empty collection view
-		collectionView.emptyDataSetSource = self
-		collectionView.emptyDataSetDelegate = self
-		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No themes found!"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(true)
-		}
+	// MARK: - Functions
+	/// Fetches themes from the server.
+	func fetchThemes() {
+		Service.shared.getThemes( withSuccess: { (themes) in
+			self.themes = themes
+		})
 	}
 }
 

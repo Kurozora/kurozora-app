@@ -10,13 +10,15 @@ import UIKit
 import EmptyDataSet_Swift
 import SwipeCellKit
 
-class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class EpisodesCollectionViewController: UICollectionViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var goToButton: UIBarButtonItem! {
 		didSet {
 			goToButton.theme_tintColor = KThemePicker.tintColor.rawValue
 		}
 	}
 
+	// MARK: - Properties
     var seasonID: Int?
 	var episodes: [EpisodesElement]? {
 		didSet {
@@ -68,22 +70,24 @@ class EpisodesCollectionViewController: UICollectionViewController, EmptyDataSet
 	}
 	#endif
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-        collectionView?.emptyDataSetSource = self
-        collectionView?.emptyDataSetDelegate = self
-        collectionView?.emptyDataSetView { view in
-            view.titleLabelString(NSAttributedString(string: "No episodes found!"))
-                .image(UIImage(named: ""))
-                .shouldDisplay(true)
-                .shouldFadeIn(true)
-                .isTouchAllowed(true)
-                .isScrollAllowed(true)
-        }
+		// Fetch episodes
+		fetchEpisodes()
 
-        fetchEpisodes()
+		// Setup empty collection view
+        collectionView?.emptyDataSetView { view in
+			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_episodes"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+        }
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"

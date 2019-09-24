@@ -154,7 +154,7 @@ class UserProfile: JSONDecodable {
 //        return true
 //    }
 
-// MARK: - User variables
+// MARK: - Properties
 extension User {
 	/// The object used to start and stop the delivery of location-related events to the app.
 	fileprivate static let locationManager = CLLocationManager()
@@ -282,4 +282,9 @@ extension User {
 		}
 		return false
 	}
+}
+
+// MARK: - Functions
+extension User {
+
 }

@@ -103,22 +103,17 @@ class NotificationsViewController: UITableViewController {
 	/// Setup empty view data.
 	private func setupEmptyView() {
 		tableView.emptyDataSetView { (view) in
-			if User.isSignedIn {
-				view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-					.detailLabelString(NSAttributedString(string: "When you have notifications, you will see them here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-					.image(#imageLiteral(resourceName: "empty_notifications"))
-					.imageTintColor(KThemePicker.textColor.colorValue)
-					.verticalOffset(-60)
-					.verticalSpace(10)
-			} else {
-				view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-					.detailLabelString(NSAttributedString(string: "Notifications is only available to registered Kurozora users.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-					.image(#imageLiteral(resourceName: "empty_notifications"))
-					.imageTintColor(KThemePicker.textColor.colorValue)
-					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
+			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
+			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_notifications"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-60)
+				.verticalSpace(10)
+
+			if !User.isSignedIn {
+				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
 					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
-					.verticalOffset(-60)
-					.verticalSpace(10)
 					.didTapDataButton {
 						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
 							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)

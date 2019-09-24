@@ -9,7 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class GenresTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
+class GenresTableViewController: UITableViewController {
 	var genres: [GenreElement]? {
 		didSet {
 			tableView.reloadData()
@@ -26,20 +26,17 @@ class GenresTableViewController: UITableViewController, EmptyDataSetSource, Empt
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetSource = self
-		tableView.emptyDataSetDelegate = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "The genres list is empty 😢"))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
-				.isScrollAllowed(false)
+			view.titleLabelString(NSAttributedString(string: "No Genres", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_genres"))
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
 		}
 	}
 

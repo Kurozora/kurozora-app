@@ -25,7 +25,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		didSet {
 			collectionView.reloadData {
 				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		}
 	}
@@ -80,7 +80,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl.addTarget(self, action: #selector(reloadData), for: .valueChanged)
 
 		// Observe NotificationCenter for an update
@@ -109,21 +109,18 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	/// Setup empty view data.
 	private func setupEmptyView() {
 		collectionView.emptyDataSetView { (view) in
-			if User.isSignedIn {
-				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-					.detailLabelString(NSAttributedString(string: "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-					.image(#imageLiteral(resourceName: "empty_library"))
-					.verticalOffset(-50)
-					.verticalSpace(10)
-					.isScrollAllowed(true)
-			} else {
-				view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-					.detailLabelString(NSAttributedString(string: "Library is only available to registered Kurozora users.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-					.image(#imageLiteral(resourceName: "empty_library"))
-					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
+			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
+			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_library"))
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+
+			// Not signed in
+			if !User.isSignedIn {
+				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
 					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
-					.verticalOffset(-50)
-					.verticalSpace(10)
 					.isScrollAllowed(false)
 					.didTapDataButton {
 						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {

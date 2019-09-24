@@ -10,8 +10,9 @@ import UIKit
 import EmptyDataSet_Swift
 import SwiftTheme
 
-class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyDataSetDelegate {
-	var sectionTitle: String?
+class FeedTableViewController: UITableViewController {
+	// MARK: - Properties
+	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
 	var feedPostElement: [FeedPostElement]? {
@@ -24,11 +25,10 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 	var totalPages = 0
 	var pageNumber = 0
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
-		guard let sectionTitle = sectionTitle else { return }
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
@@ -37,19 +37,17 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		fetchFeedPosts()
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty table view
-		tableView.emptyDataSetDelegate = self
-		tableView.emptyDataSetSource = self
 		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: sectionTitle))
-				.shouldDisplay(true)
-				.shouldFadeIn(true)
-				.isTouchAllowed(true)
+			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
 	}
@@ -61,7 +59,6 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshFeedsData(_ sender: Any) {
-		guard let sectionTitle = sectionTitle else {return}
 		refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle) feed...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		pageNumber = 0
 		fetchFeedPosts()
@@ -69,7 +66,6 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 
 	// Fetch feed posts for the current section
 	func fetchFeedPosts() {
-		guard let sectionTitle = sectionTitle else { return }
 		guard let sectionID = sectionID else { return }
 
 		Service.shared.getFeedPosts(for: sectionID, page: pageNumber, withSuccess: { (feed) in
@@ -88,7 +84,7 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 					self.pageNumber += 1
 				}
 
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		})
 
@@ -108,9 +104,8 @@ class FeedTableViewController: UITableViewController, EmptyDataSetSource, EmptyD
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 10
-//		guard let threadsCount = feedPosts?.count else { return 0 }
-//		return threadsCount
+		guard let threadsCount = feedPostElement?.count else { return 0 }
+		return threadsCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
