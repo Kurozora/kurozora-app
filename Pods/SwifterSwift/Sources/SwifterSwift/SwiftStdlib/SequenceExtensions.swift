@@ -154,6 +154,56 @@ public extension Sequence {
         return singleElement
     }
 
+    /// SwifterSwift: Remove duplicate elements based on condition.
+    ///
+    ///        [1, 2, 1, 3, 2].withoutDuplicates { $0 } -> [1, 2, 3]
+    ///        [(1, 4), (2, 2), (1, 3), (3, 2), (2, 1)].withoutDuplicates { $0.0 } -> [(1, 4), (2, 2), (3, 2)]
+    ///
+    /// - Parameter transform: A closure that should return the value to be evaluated for repeating elements.
+    /// - Returns: Sequence without repeating elements
+    /// - Complexity: O(*n*), where *n* is the length of the sequence.
+    func withoutDuplicates<T: Hashable>(transform: (Element) throws -> T) rethrows -> [Element] {
+        var set = Set<T>()
+        return try filter { set.insert(try transform($0)).inserted }
+    }
+
+    /// SwifterSwift: Separates all items into 2 lists based on a given predicate.
+    /// The first list contains all items for which the specified condition evaluates to true.
+    /// The second list contains those that don't.
+    ///
+    ///     let (even, odd) = [0, 1, 2, 3, 4, 5].divided { $0 % 2 == 0 }
+    ///     let (minors, adults) = people.divided { $0.age < 18 }
+    ///
+    /// - Parameter condition: condition to evaluate each element against.
+    /// - Returns: A tuple of matched and non-matched items
+    func divided(by condition: (Element) throws -> Bool) rethrows -> (matching: [Element], nonMatching: [Element]) {
+        //Inspired by: http://ruby-doc.org/core-2.5.0/Enumerable.html#method-i-partition
+        var matching = ContiguousArray<Element>()
+        var nonMatching = ContiguousArray<Element>()
+
+        var iterator = self.makeIterator()
+        while let element = iterator.next() {
+            try condition(element) ? matching.append(element) : nonMatching.append(element)
+        }
+        return (Array(matching), Array(nonMatching))
+    }
+
+    /// SwifterSwift: Return a sorted array  based on a keypath and a compare function.
+    ///
+    /// - Parameter path: Key path to sort. The key path type must be Comparable.
+    /// - Parameter compare: Comparation function that will determine the ordering.
+    /// - Returns: The sorted array.
+    func sorted<T>(by keyPath: KeyPath<Element, T>, with compare: (T, T) -> Bool) -> [Element] {
+        return sorted { compare($0[keyPath: keyPath], $1[keyPath: keyPath]) }
+    }
+
+    /// SwifterSwift: Return a sorted array  based on a keypath and a compare function.
+    ///
+    /// - Parameter path: Key path to sort. The key path type must be Comparable.
+    /// - Returns: The sorted array.
+    func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>) -> [Element] {
+        return sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+    }
 }
 
 public extension Sequence where Element: Equatable {
@@ -221,7 +271,7 @@ public extension Sequence where Element: Numeric {
     ///
     /// - Returns: sum of the array's elements.
     func sum() -> Element {
-        return reduce(0, {$0 + $1})
+        return reduce(into: 0, +=)
     }
 
 }

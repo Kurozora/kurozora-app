@@ -12,9 +12,11 @@ import Pageboy
 import SwiftTheme
 
 class FeedTabsViewController: TabmanViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var navigationProfileButton: UIButton!
 
+	// MARK: - Properties
 	var sections: [FeedSectionsElement]? {
 		didSet {
 			self.reloadData()
@@ -26,6 +28,7 @@ class FeedTabsViewController: TabmanViewController {
 
 	let bar = TMBar.ButtonBar()
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -36,6 +39,7 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 
+		// Fetch feed sections
 //		Service.shared.getFeedSections(withSuccess: { (sections) in
 //			DispatchQueue.main.async {
 //				self.sectionsCount = sections?.count
@@ -43,37 +47,11 @@ class FeedTabsViewController: TabmanViewController {
 //			}
 //		})
 
-		// Indicator
-		bar.indicator.weight = .light
-		bar.indicator.cornerStyle = .eliptical
-		bar.indicator.overscrollBehavior = .bounce
-		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
+		// Tabman view controllers
+		dataSource = self
 
-		// State
-		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
-			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
-		}
-
-		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
-		bar.layout.interButtonSpacing = 24.0
-		if UIDevice.isPad {
-			bar.layout.contentMode = .fit
-		}
-
-		// Style
-		bar.fadesContentEdges = true
-
-		// configure the bar
-		let systemBar = bar.systemBar()
-		systemBar.backgroundStyle = .blur(style: .regular)
-		addBar(systemBar, dataSource: self, at: .top)
-
-		if let barItemsCount = bar.items?.count {
-			bar.isHidden = barItemsCount <= 1
-		}
-
+		// Tabman bar
+		initTabmanBarView()
 //		let storyboard = UIStoryboard(name: "editor", bundle: nil)
 //		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
@@ -99,6 +77,44 @@ class FeedTabsViewController: TabmanViewController {
 		self.viewControllers = viewControllers
 	}
 
+	/// Initializes the tabman bar view.
+	private func initTabmanBarView() {
+		// Indicator
+		bar.indicator.weight = .light
+		bar.indicator.cornerStyle = .eliptical
+		bar.indicator.overscrollBehavior = .bounce
+		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		// State
+		bar.buttons.customize { (button) in
+			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
+			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
+		}
+
+		// Layout
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
+		bar.layout.interButtonSpacing = 24.0
+		bar.layout.contentMode = UIDevice.isPad ? .fit : .intrinsic
+
+		// Style
+		bar.fadesContentEdges = true
+
+		// configure the bar
+		let systemBar = bar.systemBar()
+		systemBar.backgroundStyle = .blur(style: .regular)
+		addBar(systemBar, dataSource: self, at: .top)
+
+		// Configure tabman bar visibility
+		tabmanBarViewIsEnabled()
+	}
+
+	/// Hides or unhides the tabman bar view according to the user's sign in state.
+	private func tabmanBarViewIsEnabled() {
+		if let barItemsCount = bar.items?.count {
+			bar.isHidden = barItemsCount <= 1
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func createThreadButton(_ sender: Any) {
 //		kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! FeedTableViewController
@@ -122,12 +138,12 @@ class FeedTabsViewController: TabmanViewController {
 // MARK: - PageboyViewControllerDataSource
 extension FeedTabsViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		if let sectionsCount = sections?.count, sectionsCount != 0 {
-			initializeViewControllers(with: sectionsCount)
-			return sectionsCount
-		}
-//		initializeViewControllers(with: 3)
-		return 0
+//		if let sectionsCount = sections?.count, sectionsCount != 0 {
+//			initializeViewControllers(with: sectionsCount)
+//			return sectionsCount
+//		}
+		initializeViewControllers(with: 1)
+		return 1
 	}
 
 	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {

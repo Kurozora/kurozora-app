@@ -19,8 +19,11 @@ public extension UIApplication {
     /// - testFlight: Application is installed from Test Flight.
     /// - appStore: Application is installed from the App Store.
     enum Environment {
+        /// Application is running in debug mode.
         case debug
+        /// Application is installed from Test Flight.
         case testFlight
+        /// Application is installed from the App Store.
         case appStore
     }
 
@@ -55,17 +58,17 @@ public extension UIApplication {
 
     /// SwifterSwift: Application name (if applicable).
     var displayName: String? {
-        return Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
     }
 
     /// SwifterSwift: App current build number (if applicable).
     var buildNumber: String? {
-        return Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
     }
 
     /// SwifterSwift: App's current version number (if applicable).
     var version: String? {
-        return Bundle.main.infoDictionary?[kCFBundleInfoDictionaryVersionKey as String] as? String
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
 
 }

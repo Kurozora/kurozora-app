@@ -14,12 +14,14 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+	// MARK: - Properties
 	var window: UIWindow?
 	var authenticated = false
 	var authenticationCount = 0
 	var isUnreachable = false
 	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
+	// MARK: - AppDelegate
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		// Override point for customization after application launch.
 		// Initialize theme
@@ -140,7 +142,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
+}
 
+// MARK: - Continuity
+extension AppDelegate {
 	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
 		Kurozora.shared.schemeHandler(app, open: url, options: options)
 		return true
@@ -162,7 +167,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
 		Kurozora.shared.shortcutHandler(application, shortcutItem)
 	}
+}
 
+// MARK: - Push Notifications
+extension AppDelegate {
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
 		let token = tokenParts.joined()
@@ -171,5 +179,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 		print("Failed to register: \(error)")
+	}
+
+	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+		userInfo.forEach({ print("\($0.key): \($0.value)") })
 	}
 }

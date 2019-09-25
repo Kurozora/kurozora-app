@@ -2753,7 +2753,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2762,24 +2762,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-Wl,-U,_JSContextGetGlobalObject",
-					"-Wl,-U,_JSEvaluateScript",
-					"-Wl,-U,_JSGlobalContextCreate",
-					"-Wl,-U,_JSGlobalContextRelease",
-					"-Wl,-U,_JSObjectCallAsFunction",
-					"-Wl,-U,_JSObjectIsFunction",
-					"-Wl,-U,_JSObjectMake",
-					"-Wl,-U,_JSObjectSetProperty",
-					"-Wl,-U,_JSStringCopyCFString",
-					"-Wl,-U,_JSStringCreateWithCFString",
-					"-Wl,-U,_JSStringRelease",
-					"-Wl,-U,_JSValueIsObject",
-					"-Wl,-U,_JSValueIsString",
-					"-Wl,-U,_JSValueMakeString",
-					"-Wl,-U,_JSValueToStringCopy",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KCommonKit;
@@ -2811,7 +2794,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2820,24 +2803,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"-Wl,-U,_JSContextGetGlobalObject",
-					"-Wl,-U,_JSEvaluateScript",
-					"-Wl,-U,_JSGlobalContextCreate",
-					"-Wl,-U,_JSGlobalContextRelease",
-					"-Wl,-U,_JSObjectCallAsFunction",
-					"-Wl,-U,_JSObjectIsFunction",
-					"-Wl,-U,_JSObjectMake",
-					"-Wl,-U,_JSObjectSetProperty",
-					"-Wl,-U,_JSStringCopyCFString",
-					"-Wl,-U,_JSStringCreateWithCFString",
-					"-Wl,-U,_JSStringRelease",
-					"-Wl,-U,_JSValueIsObject",
-					"-Wl,-U,_JSValueIsString",
-					"-Wl,-U,_JSValueMakeString",
-					"-Wl,-U,_JSValueToStringCopy",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KCommonKit;

@@ -36,25 +36,27 @@ PODS:
   - SnapKit (5.0.1)
   - SPStorkController (1.7.9)
   - Starscream (3.0.6)
-  - SwifterSwift (5.0.0):
-    - SwifterSwift/AppKit (= 5.0.0)
-    - SwifterSwift/CoreGraphics (= 5.0.0)
-    - SwifterSwift/CoreLocation (= 5.0.0)
-    - SwifterSwift/Dispatch (= 5.0.0)
-    - SwifterSwift/Foundation (= 5.0.0)
-    - SwifterSwift/MapKit (= 5.0.0)
-    - SwifterSwift/SpriteKit (= 5.0.0)
-    - SwifterSwift/SwiftStdlib (= 5.0.0)
-    - SwifterSwift/UIKit (= 5.0.0)
-  - SwifterSwift/AppKit (5.0.0)
-  - SwifterSwift/CoreGraphics (5.0.0)
-  - SwifterSwift/CoreLocation (5.0.0)
-  - SwifterSwift/Dispatch (5.0.0)
-  - SwifterSwift/Foundation (5.0.0)
-  - SwifterSwift/MapKit (5.0.0)
-  - SwifterSwift/SpriteKit (5.0.0)
-  - SwifterSwift/SwiftStdlib (5.0.0)
-  - SwifterSwift/UIKit (5.0.0)
+  - SwifterSwift (5.1.0):
+    - SwifterSwift/AppKit (= 5.1.0)
+    - SwifterSwift/CoreGraphics (= 5.1.0)
+    - SwifterSwift/CoreLocation (= 5.1.0)
+    - SwifterSwift/Dispatch (= 5.1.0)
+    - SwifterSwift/Foundation (= 5.1.0)
+    - SwifterSwift/MapKit (= 5.1.0)
+    - SwifterSwift/SceneKit (= 5.1.0)
+    - SwifterSwift/SpriteKit (= 5.1.0)
+    - SwifterSwift/SwiftStdlib (= 5.1.0)
+    - SwifterSwift/UIKit (= 5.1.0)
+  - SwifterSwift/AppKit (5.1.0)
+  - SwifterSwift/CoreGraphics (5.1.0)
+  - SwifterSwift/CoreLocation (5.1.0)
+  - SwifterSwift/Dispatch (5.1.0)
+  - SwifterSwift/Foundation (5.1.0)
+  - SwifterSwift/MapKit (5.1.0)
+  - SwifterSwift/SceneKit (5.1.0)
+  - SwifterSwift/SpriteKit (5.1.0)
+  - SwifterSwift/SwiftStdlib (5.1.0)
+  - SwifterSwift/UIKit (5.1.0)
   - SwiftTheme (0.4.6)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.1)
@@ -169,7 +171,7 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
-  SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
+  SwifterSwift: a9e8e144832638c2850b43da5feaf9598c6ad65b
   SwiftTheme: 4b9c8ff2b99d4b5204ccfef97a53d359a3457f48
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
