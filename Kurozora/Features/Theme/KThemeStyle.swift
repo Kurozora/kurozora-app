@@ -89,7 +89,11 @@ enum KThemeStyle: Int {
 	}
 
 	/// Starts automatic dark theme scheduel if it hasn't been started before.
-	static func startAutomaticDarkThemeSchedule() {
+	static func startAutomaticDarkThemeSchedule(_ firstTime: Bool = false) {
+		if firstTime {
+			KThemeStyle.checkAutomaticSchedule()
+		}
+
 		if automaticDarkThemeSchedule == nil {
 			automaticDarkThemeSchedule = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
 				KThemeStyle.checkAutomaticSchedule()

@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
 		if UserSettings.automaticDarkTheme {
-			KThemeStyle.startAutomaticDarkThemeSchedule()
+			KThemeStyle.startAutomaticDarkThemeSchedule(true)
 		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {
 			// If themeID is an integer
 			if let themeID = Int(currentThemeID) {
