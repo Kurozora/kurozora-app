@@ -37,8 +37,8 @@ class UserProfile: JSONDecodable {
 	let proBadge: Bool?
 	let joinDate: String?
 
-	let followerCount: Int?
-	let followingCount: Int?
+	var followerCount: Int?
+	var followingCount: Int?
 	let reputationCount: Int?
 	let postCount: Int?
 

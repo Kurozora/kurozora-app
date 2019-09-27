@@ -23,15 +23,17 @@ enum SearchScope: Int {
 	case show = 0
 
 	/// Search in user's library list.
-	case myLibrary
+	case myLibrary = 1
 
 	/// Search in threads list.
-	case thread
+	case thread = 2
 
 	/// Search in users list.
-	case user
+	case user = 3
+}
 
-	// MARK: - Variables
+// MARK: - Variables
+extension SearchScope {
 	/// The string value of a search scope.
 	var stringValue: String {
 		switch self {
@@ -50,13 +52,13 @@ enum SearchScope: Int {
 	var identifierString: String {
 		switch self {
 		case .show:
-			return "ShowResultCell"
+			return "SearchShowResultsCell"
 		case .myLibrary:
-			return "LibraryResultCell"
+			return "SearchLibraryResultCell"
 		case .thread:
-			return "ThreadResultCell"
+			return "SearchForumsResultsCell"
 		case .user:
-			return "UserResultCell"
+			return "SearchUserResultsCell"
 		}
 	}
 
@@ -71,8 +73,10 @@ enum SearchScope: Int {
 		}
 		return allString
 	}
+}
 
-	// MARK: - Functions
+// MARK: - Functions
+extension SearchScope {
 	/// Returns a SearchScope for a given identifier string.
 	static func scope(from identifier: String) -> SearchScope {
 		switch identifier {

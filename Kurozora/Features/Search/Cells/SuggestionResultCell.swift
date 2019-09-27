@@ -10,9 +10,11 @@ import UIKit
 import Kingfisher
 
 class SuggestionResultCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel?
 	@IBOutlet weak var posterImageView: UIImageView?
 
+	// MARK: - Properties
 	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			configureCell()

@@ -45,7 +45,9 @@ class ShowRatingCell: UITableViewCell {
 		}
 
 		cosmosView.didFinishTouchingCosmos = { rating in
-			self.rateShow(with: rating)
+			WorkflowController.shared.isSignedIn {
+				self.rateShow(with: rating)
+			}
         }
 
 		// Configure average rating

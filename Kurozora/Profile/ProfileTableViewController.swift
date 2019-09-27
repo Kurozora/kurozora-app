@@ -504,16 +504,18 @@ class ProfileTableViewController: UITableViewController {
 	}
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		let follow = user?.profile?.following ?? false ? 0 : 1
+		WorkflowController.shared.isSignedIn {
+			let follow = self.user?.profile?.following ?? false ? 0 : 1
 
-		Service.shared.follow(follow, user: userID) { (success) in
-			if success {
-				if follow == 0 {
-					sender.setTitle("＋ Follow", for: .normal)
-					self.user?.profile?.following = false
-				} else {
-					sender.setTitle("✓ Following", for: .normal)
-					self.user?.profile?.following = true
+			Service.shared.follow(follow, user: self.userID) { (success) in
+				if success {
+					if follow == 0 {
+						sender.setTitle("＋ Follow", for: .normal)
+						self.user?.profile?.following = false
+					} else {
+						sender.setTitle("✓ Following", for: .normal)
+						self.user?.profile?.following = true
+					}
 				}
 			}
 		}

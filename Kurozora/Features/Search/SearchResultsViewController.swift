@@ -16,6 +16,7 @@ protocol SearchResultsTableViewControllerDelegate: class {
 }
 
 class SearchResultsTableViewController: UITableViewController {
+	// MARK: - Properties
 	var statusBarStyle: UIStatusBarStyle {
 		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
 		return .fromString(statusBarStyleString)
@@ -45,7 +46,7 @@ class SearchResultsTableViewController: UITableViewController {
 
 	var timer: Timer?
 	var viaSearchButton: Bool = false
-	var currentScope: Int?
+	var currentScope: Int = 0
 	var suggestions: [ShowDetailsElement] {
 		var suggestionResults = [ShowDetailsElement]()
 		let suggestionResultsArray: [JSON] = [
@@ -69,6 +70,7 @@ class SearchResultsTableViewController: UITableViewController {
 		return statusBarStyle
 	}
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -83,14 +85,8 @@ class SearchResultsTableViewController: UITableViewController {
 		tableView.backgroundView = blurEffectView
 
 		// Setup table view
-		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
 
 	// MARK: - Functions
@@ -149,6 +145,7 @@ class SearchResultsTableViewController: UITableViewController {
 		tableView.reloadData()
 	}
 
+	/// Performs search after the given amount of time has passed.
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
 		if let text = userInfo?["searchText"] as? String, let scope = userInfo?["searchScope"] as? Int {
@@ -175,27 +172,27 @@ class SearchResultsTableViewController: UITableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? SearchResultsCell {
+		if let currentCell = sender as? SearchBaseResultsCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
 				let showDetailTabBarController = segue.destination as? ShowDetailTabBarController
-				showDetailTabBarController?.showDetailsElement = currentCell.showDetailsElement
-			} else if segue.identifier == "ProfileSegue" {
-				// Show user profile for user cell
-				if let kurozoraNavigationController = segue.destination as? KNavigationController {
-					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
-						profileViewController.userID = currentCell.userProfile?.id
-						profileViewController.dismissButtonIsEnabled = true
-					}
-				}
+				showDetailTabBarController?.showDetailsElement = (currentCell as? SearchShowResultsCell)?.showDetailsElement
 			} else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
 					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-						threadViewController.forumsThreadElement = currentCell.forumsThreadElement
+						threadViewController.forumsThreadElement = (currentCell as? SearchForumsResultsCell)?.forumsThreadElement
 						threadViewController.dismissButtonIsEnabled = true
 
 						kurozoraNavigationController.pushViewController(threadViewController)
+					}
+				}
+			} else if segue.identifier == "ProfileSegue" {
+				// Show user profile for user cell
+				if let kurozoraNavigationController = segue.destination as? KNavigationController {
+					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
+						profileViewController.userID = (currentCell as? SearchUserResultsCell)?.userProfile?.id
+						profileViewController.dismissButtonIsEnabled = true
 					}
 				}
 			}
@@ -207,6 +204,87 @@ class SearchResultsTableViewController: UITableViewController {
 			}
 		}
 	}
+}
+
+// MARK: - UITableViewDataSource
+extension SearchResultsTableViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		var resultsCount: Int? = nil
+
+		if let searchScope = SearchScope(rawValue: currentScope) {
+			switch searchScope {
+			case .show:
+				resultsCount = showResults?.count
+			case .thread:
+				resultsCount = threadResults?.count
+			case .user:
+				resultsCount = userResults?.count
+			case .myLibrary: break
+			}
+		}
+		return resultsCount ?? 1
+	}
+
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if showResults != nil || threadResults != nil || userResults != nil {
+			let searchScope = SearchScope(rawValue: currentScope) ?? .show
+			let identifier = searchScope.identifierString
+
+			let searchBaseResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchBaseResultsCell
+			var resultsCount = 1
+
+			// Configure cell
+			switch searchScope {
+			case .show:
+				(searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement = showResults?[indexPath.row]
+				resultsCount = showResults?.count ?? 0
+			case .myLibrary: break
+//				(searchBaseResultsCell as? SearchLibraryResultCell)?.showDetailsElement = showResults?[indexPath.row]
+//				resultsCount = showResults?.count ?? 0
+			case .thread:
+				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement = threadResults?[indexPath.row]
+				resultsCount = threadResults?.count ?? 0
+			case .user:
+				(searchBaseResultsCell as? SearchUserResultsCell)?.userProfile = userResults?[indexPath.row]
+				resultsCount = userResults?.count ?? 0
+			}
+
+			// Configure corner radius
+			if resultsCount == 1 {
+				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+			} else if indexPath.row == 0 {
+				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+			} else if indexPath.row == resultsCount - 1 {
+				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+			} else {
+				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 0
+			}
+
+			// Configure separator
+			if tableView.numberOfRows() == 1 || indexPath.row == tableView.numberOfRows() - 1 {
+				searchBaseResultsCell.separatorView?.isHidden = true
+			} else {
+				searchBaseResultsCell.separatorView?.isHidden = false
+			}
+
+			return searchBaseResultsCell
+		} else {
+			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SearchEmptyResultsCell", for: indexPath) as! SearchEmptyResultsCell
+			searchResultsCell.suggestionElement = suggestions
+			return searchResultsCell
+		}
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension SearchResultsTableViewController {
 }
 
 // MARK: - UISearchResultsUpdating
@@ -254,83 +332,4 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 		emptySearchResults()
 		delegate?.didCancelSearchController()
 	}
-}
-
-// MARK: - UITableViewDataSource
-extension SearchResultsTableViewController {
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let currentScope = currentScope else { return 1 }
-		var resultsCount: Int? = nil
-
-		if let searchScope = SearchScope(rawValue: currentScope) {
-			switch searchScope {
-			case .show:
-				resultsCount = showResults?.count
-			case .thread:
-				resultsCount = threadResults?.count
-			case .user:
-				resultsCount = userResults?.count
-			case .myLibrary: break
-			}
-		}
-		return resultsCount ?? 1
-	}
-
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if showResults != nil || threadResults != nil || userResults != nil {
-			var searchResultsCell = SearchResultsCell()
-			var resultsCount = 1
-
-			// Configure cell
-			if let currentScope = currentScope, let searchScope = SearchScope(rawValue: currentScope) {
-				let identifier = searchScope.identifierString
-				searchResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchResultsCell
-
-				switch searchScope {
-				case .show:
-					searchResultsCell.showDetailsElement = showResults?[indexPath.row]
-					resultsCount = showResults?.count ?? 0
-				case .thread:
-					searchResultsCell.forumsThreadElement = threadResults?[indexPath.row]
-					resultsCount = threadResults?.count ?? 0
-				case .user:
-					searchResultsCell.userProfile = userResults?[indexPath.row]
-					resultsCount = userResults?.count ?? 0
-				case .myLibrary: break
-				}
-			}
-
-			// Configure separator
-			if tableView.numberOfRows() == 1 || indexPath.row == tableView.numberOfRows() - 1 {
-				searchResultsCell.separatorView?.isHidden = true
-			} else {
-				searchResultsCell.separatorView?.isHidden = false
-			}
-
-			// Configure corner radius
-			if resultsCount == 1 {
-				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-			} else if indexPath.row == 0 {
-				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-			} else if indexPath.row == resultsCount - 1 {
-				searchResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-			} else {
-				searchResultsCell.visualEffectView?.layer.cornerRadius = 0
-			}
-
-			searchResultsCell.searchResultsTableViewController = self
-			return searchResultsCell
-		} else {
-			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SuggestionResultCell", for: indexPath) as! SearchResultsCell
-			searchResultsCell.suggestionElement = suggestions
-			return searchResultsCell
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension SearchResultsTableViewController {
 }
