@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTF-rJ-AtF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTF-rJ-AtF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -95,8 +95,8 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <viewLayoutGuide key="safeArea" id="LRe-WI-vOS"/>
                                         <connections>
-                                            <outlet property="authenticationDescriptionLabel" destination="vrA-AR-cki" id="8Iu-04-iVx"/>
                                             <outlet property="authenticationImageView" destination="S7B-cc-bhW" id="8an-YU-6Ex"/>
+                                            <outlet property="authenticationTitleLabel" destination="vrA-AR-cki" id="tol-lV-ecl"/>
                                             <outlet property="bubbleView" destination="X67-2T-iMW" id="rN3-eO-3NL"/>
                                             <outlet property="enabledSwitch" destination="OFc-qj-smH" id="lvS-ul-XDZ"/>
                                         </connections>
@@ -162,8 +162,8 @@
                                         <viewLayoutGuide key="safeArea" id="MFO-3R-2Es"/>
                                         <connections>
                                             <outlet property="authenticationRequireValueLabel" destination="idh-YM-Jj3" id="iqh-5R-zsI"/>
-                                            <outlet property="cellTitle" destination="Nad-PE-BM9" id="wMP-Mh-kEE"/>
                                             <outlet property="chevronImageView" destination="Bwb-FO-ynS" id="nrP-IJ-n5u"/>
+                                            <outlet property="primaryLabel" destination="Nad-PE-BM9" id="440-7u-zKu"/>
                                             <outlet property="selectedView" destination="qnh-ey-GH6" id="7Vl-bl-x2s"/>
                                             <segue destination="S4V-aO-eN0" kind="show" id="2KE-oJ-WEP"/>
                                         </connections>
@@ -242,7 +242,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="sI3-fi-Ora"/>
                                 <connections>
-                                    <outlet property="cellTitle" destination="cgQ-O9-7hB" id="3B0-W5-fp8"/>
+                                    <outlet property="primaryLabel" destination="cgQ-O9-7hB" id="L9i-PA-fV3"/>
                                     <outlet property="selectedImageView" destination="23e-My-92v" id="NlO-vB-de2"/>
                                     <outlet property="selectedView" destination="qge-UM-9hX" id="pZ7-Gm-6iE"/>
                                 </connections>

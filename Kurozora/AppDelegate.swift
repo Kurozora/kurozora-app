@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		// Set authentication status
-		authenticated = User.username != nil
+		authenticated = User.username != ""
 
 		// Prepare home view
 		if #available(iOS 13.0, *) {
@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.window?.rootViewController = customTabBar
 		}
 
-		if User.username != nil {
+		if authenticated {
 			// Check if user should authenticate
 			Kurozora.shared.userHasToAuthenticate()
 		}

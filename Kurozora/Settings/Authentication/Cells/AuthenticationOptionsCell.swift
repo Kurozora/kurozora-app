@@ -35,9 +35,9 @@ class AuthenticationOptionsCell: SettingsCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	override func configureCell() {
 		guard let requireAuthentication = requireAuthentication else { return }
-		cellTitle?.text = requireAuthentication.stringValue
+		primaryLabel?.text = requireAuthentication.stringValue
 
 		if let requireAuthenticationString = try? Kurozora.shared.KDefaults.get("requireAuthentication") {
 			self.isSelected = requireAuthentication.equals(requireAuthenticationString)

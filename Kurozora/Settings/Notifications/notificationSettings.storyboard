@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hdZ-VV-P4Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hdZ-VV-P4Y">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -76,7 +76,7 @@
                                         <viewLayoutGuide key="safeArea" id="4f3-Ek-sDB"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="Ork-Hy-i8n" id="apO-ba-gdP"/>
-                                            <outlet property="cellTitle" destination="8nU-Eg-bdX" id="YTh-IQ-e1x"/>
+                                            <outlet property="primaryLabel" destination="8nU-Eg-bdX" id="YTh-IQ-e1x"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -283,7 +283,7 @@
                                             <outlet property="statusBarNotificationTitleLabel" destination="B68-zh-dSj" id="9u9-AJ-LNu"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="eZb-id-jBm" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" id="eZb-id-jBm" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="356" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eZb-id-jBm" id="Ddr-t0-61i">
@@ -339,8 +339,8 @@
                                         <viewLayoutGuide key="safeArea" id="26k-dA-y5y"/>
                                         <connections>
                                             <outlet property="bannerStyleValueLabel" destination="wU4-Ao-UE7" id="Vew-DP-hjF"/>
-                                            <outlet property="cellTitle" destination="sm6-1W-3fp" id="EKR-OH-T06"/>
                                             <outlet property="chevronImageView" destination="oIx-RT-fOG" id="heZ-Wk-M3O"/>
+                                            <outlet property="primaryLabel" destination="sm6-1W-3fp" id="EKR-OH-T06"/>
                                             <outlet property="selectedView" destination="05Q-RT-jpv" id="bs4-5m-nis"/>
                                             <segue destination="WXe-FI-ifD" kind="show" identifier="bannerStyleSegue" id="ZbV-XO-QiH"/>
                                         </connections>
@@ -402,7 +402,7 @@
                                         <viewLayoutGuide key="safeArea" id="GAa-oW-BsR"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="CCR-dG-aDx" id="Jg5-XB-Rek"/>
-                                            <outlet property="cellTitle" destination="eCT-vt-NF5" id="7Yd-nS-ij7"/>
+                                            <outlet property="primaryLabel" destination="eCT-vt-NF5" id="7Yd-nS-ij7"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="kyI-hH-FWM" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -453,7 +453,7 @@
                                         <viewLayoutGuide key="safeArea" id="LPL-Zb-jVD"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="gDx-JX-1RU" id="bPt-bH-4j0"/>
-                                            <outlet property="cellTitle" destination="Spk-YH-EXE" id="PBj-eM-akh"/>
+                                            <outlet property="primaryLabel" destination="Spk-YH-EXE" id="PBj-eM-akh"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" id="ndg-oq-PYd" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
@@ -504,14 +504,14 @@
                                         <viewLayoutGuide key="safeArea" id="eKq-PE-ZPs"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="1hQ-Lm-G3T" id="MyD-Wg-2SQ"/>
-                                            <outlet property="cellTitle" destination="2Un-39-pw2" id="63k-IC-De8"/>
+                                            <outlet property="primaryLabel" destination="2Un-39-pw2" id="63k-IC-De8"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Options" id="2FB-fu-AnS">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" id="xMa-AK-nre" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" id="xMa-AK-nre" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="675" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xMa-AK-nre" id="e89-Bw-oNf">
@@ -572,9 +572,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <viewLayoutGuide key="safeArea" id="YoP-Zh-euM"/>
                                         <connections>
-                                            <outlet property="cellTitle" destination="9RM-9n-wxa" id="1fZ-IW-3dD"/>
                                             <outlet property="chevronImageView" destination="HDY-BI-Q3W" id="uvf-S5-7Y8"/>
                                             <outlet property="notificationGroupingValueLabel" destination="qzX-ES-5e4" id="dRO-n7-nMu"/>
+                                            <outlet property="primaryLabel" destination="9RM-9n-wxa" id="1fZ-IW-3dD"/>
                                             <outlet property="selectedView" destination="cZu-SV-9yh" id="hyK-Ez-GGd"/>
                                             <segue destination="WXe-FI-ifD" kind="show" identifier="notificationsGroupingSegue" id="sIh-U1-RPb"/>
                                         </connections>
@@ -658,7 +658,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="Xxo-hY-clL"/>
                                 <connections>
-                                    <outlet property="cellTitle" destination="n2F-8z-qcc" id="khb-ei-AJS"/>
+                                    <outlet property="primaryLabel" destination="n2F-8z-qcc" id="gJX-EN-f8x"/>
                                     <outlet property="selectedImageView" destination="uQp-5F-VbL" id="jmB-A8-9c9"/>
                                     <outlet property="selectedView" destination="gb2-yE-gYA" id="3g1-Rg-Qh7"/>
                                 </connections>

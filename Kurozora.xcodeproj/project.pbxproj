@@ -385,6 +385,8 @@
 		66F944AE22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AA22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift */; };
 		66F944AF22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AB22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift */; };
 		66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944B222F0D11B009F1FE2 /* KWebViewController.swift */; };
+		66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DCF233FE9C900A454DD /* SettingsSection.swift */; };
+		66FC6DD32340028D00A454DD /* account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FC6DD22340028D00A454DD /* account.storyboard */; };
 		66FE5CFF215B665200E2844A /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* AdminTableViewController.swift */; };
 		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
@@ -801,6 +803,8 @@
 		66F944AA22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944AB22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944B222F0D11B009F1FE2 /* KWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWebViewController.swift; sourceTree = "<group>"; };
+		66FC6DCF233FE9C900A454DD /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		66FC6DD22340028D00A454DD /* account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = account.storyboard; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1035,6 +1039,7 @@
 				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
 				66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */,
 				6614409521DA417300E54915 /* Cell */,
+				66FC6DD22340028D00A454DD /* account.storyboard */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1493,14 +1498,15 @@
 				66707834208B842E00471FBC /* settings.storyboard */,
 				667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */,
 				66707837208B846C00471FBC /* SettingsTableViewController.swift */,
-				66D75CDF21E2B2C400C20B12 /* Cell */,
+				66D75CDF21E2B2C400C20B12 /* Cells */,
+				66FC6DCE233FE9AA00A454DD /* Models */,
+				6614409321DA413B00E54915 /* About */,
 				6614409221DA411C00E54915 /* Account */,
 				6614409121DA40F300E54915 /* Admin */,
+				6640E19122ADD20700D0F575 /* Authentication */,
+				661049BE22C0425800A2A354 /* Display */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				664133DE21DA42F900CE823A /* Theme */,
-				661049BE22C0425800A2A354 /* Display */,
-				6640E19122ADD20700D0F575 /* Authentication */,
-				6614409321DA413B00E54915 /* About */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1991,7 +1997,7 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
-		66D75CDF21E2B2C400C20B12 /* Cell */ = {
+		66D75CDF21E2B2C400C20B12 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */,
@@ -1999,7 +2005,7 @@
 				665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */,
 				66348C7922AB17710019AB84 /* SettingsCell.swift */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		66D8AA7522F0DDFE00456E75 /* WebBrowser */ = {
@@ -2054,6 +2060,14 @@
 				667C0F11224CC4ED00A8CB56 /* Models */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		66FC6DCE233FE9AA00A454DD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66FC6DCF233FE9C900A454DD /* SettingsSection.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D4A795E40A9FE3FA76278C67 /* Pods */ = {
@@ -2201,6 +2215,7 @@
 				66B216AC21C1681F006E167D /* editor.storyboard in Resources */,
 				664801CD222DE76A0063143A /* App-Icon-iPad-Pro-Yellow@2x.png in Resources */,
 				6640E19722ADD30100D0F575 /* authenticationSettings.storyboard in Resources */,
+				66FC6DD32340028D00A454DD /* account.storyboard in Resources */,
 				6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */,
 				66480195222D16BD0063143A /* App-Icon-iPad-Day@2x.png in Resources */,
 				66D6237F20A1CC1D00304914 /* library.storyboard in Resources */,
@@ -2644,6 +2659,7 @@
 				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldCell.swift in Sources */,
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
+				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,
 				6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */,
 				66D6236C20A09E5400304914 /* ChartController.swift in Sources */,
 				6674A0C320A45E6D00AAB527 /* LinkCell.swift in Sources */,
@@ -2778,6 +2794,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -2819,6 +2836,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -2997,6 +3015,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3031,6 +3050,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.tracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";

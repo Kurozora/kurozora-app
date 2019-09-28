@@ -11,14 +11,14 @@ import UIKit
 class AuthenticationSettingsCell: SettingsCell {
 	@IBOutlet weak var authenticationTitleLabel: UILabel? {
 		didSet {
-			var title = "Passcode"
 			authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 
+			var title = "Lock with Passcode"
 			switch UIDevice.supportedBiomtetric {
 			case .faceID:
-				title = "Face ID & Passcode"
+				title = "Lock with Face ID & Passcode"
 			case .touchID:
-				title = "Touch ID & Passcode"
+				title = "Lock with Touch ID & Passcode"
 			case .none: break
 			}
 			authenticationTitleLabel?.text = title
@@ -37,21 +37,6 @@ class AuthenticationSettingsCell: SettingsCell {
 		}
 	}
 
-	@IBOutlet weak var authenticationDescriptionLabel: UILabel? {
-		didSet {
-			var title = "Lock with Passcode"
-			authenticationDescriptionLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-
-			switch UIDevice.supportedBiomtetric {
-			case .faceID:
-				title = "Lock with Face ID & Passcode"
-			case .touchID:
-				title = "Lock with Touch ID & Passcode"
-			case .none: break
-			}
-			authenticationDescriptionLabel?.text = title
-		}
-	}
 	@IBOutlet weak var enabledSwitch: UISwitch? {
 		didSet {
 			enabledSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue

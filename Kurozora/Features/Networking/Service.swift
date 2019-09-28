@@ -101,10 +101,9 @@ struct Service {
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
 	func updateInformation(withBio bio: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let userID = User.currentID else { return }
 		guard let bio = bio else { return }
 
-		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
+		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(User.currentID)/profile") { (formData) in
 			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
@@ -144,9 +143,7 @@ struct Service {
 		- Parameter userSessions: The returned UserSessions object.
 	*/
 	func getSessions(withSuccess successHandler: @escaping (_ userSessions: UserSessions?) -> Void) {
-		guard let userID = User.currentID else { return }
-
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/sessions")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -173,9 +170,8 @@ struct Service {
 	*/
 	func getLibrary(withStatus status: String?, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
 		guard let status = status else { return }
-		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -207,9 +203,8 @@ struct Service {
 	func addToLibrary(withStatus status: String?, showID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let status = status else { return }
 		guard let showID = showID else { return }
-		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/library")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -240,9 +235,8 @@ struct Service {
 	*/
 	func removeFromLibrary(withID showID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let showID = showID else { return }
-		guard let userID = User.currentID else { return }
 
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/library/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -298,9 +292,7 @@ struct Service {
 		- Parameter userNotifications: The returned UserNotificationsElement array.
 	*/
 	func getNotifications(withSuccess successHandler: @escaping (_ userNotifications: [UserNotificationsElement]?) -> Void) {
-		guard let userID = User.currentID else { return }
-
-		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
+		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/notifications")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -1173,7 +1165,7 @@ struct Service {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		if !User.authToken.isEmpty && User.currentID != nil {
+		if !User.authToken.isEmpty && User.currentID != 0 {
 			guard let sessionID = User.currentSessionID else { return }
 			let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [

@@ -52,11 +52,11 @@ extension NotificationsOptionsViewController {
 
 			switch grouping {
 			case .automatic:
-				notificationsGroupingCell.cellTitle?.text = "Automatic"
+				notificationsGroupingCell.primaryLabel?.text = "Automatic"
 			case .byType:
-				notificationsGroupingCell.cellTitle?.text = "By Type"
+				notificationsGroupingCell.primaryLabel?.text = "By Type"
 			case .off:
-				notificationsGroupingCell.cellTitle?.text = "Off"
+				notificationsGroupingCell.primaryLabel?.text = "Off"
 			}
 
 			if grouping.rawValue == selected {
@@ -68,9 +68,9 @@ extension NotificationsOptionsViewController {
 
 			switch bannerStyle {
 			case .temporary:
-				notificationsGroupingCell.cellTitle?.text = "Temporary"
+				notificationsGroupingCell.primaryLabel?.text = "Temporary"
 			case .persistent:
-				notificationsGroupingCell.cellTitle?.text = "Persistent"
+				notificationsGroupingCell.primaryLabel?.text = "Persistent"
 			}
 
 			if bannerStyle.rawValue == selected {
@@ -99,14 +99,14 @@ extension NotificationsOptionsViewController {
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
 			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			notificationsGroupingCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
 		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
 			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			notificationsGroupingCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			notificationsGroupingCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 }

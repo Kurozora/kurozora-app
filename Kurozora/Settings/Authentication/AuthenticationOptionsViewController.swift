@@ -41,14 +41,14 @@ extension AuthenticationOptionsViewController {
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
 			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			authenticationOptionsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
 		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
 			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			authenticationOptionsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			authenticationOptionsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 }

@@ -11,8 +11,8 @@ import TRON
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
 	func requestFor(socketID: String, channelName: String) -> URLRequest? {
-		guard let userID = User.currentID else { return nil }
-		guard let url = URL(string: "https://kurozora.app/api/v1/users/\(userID)/authenticate-channel") else { return nil }
+		guard User.currentID != 0 else { return nil }
+		guard let url = URL(string: "https://kurozora.app/api/v1/users/\(User.currentID)/authenticate-channel") else { return nil }
 		let authToken = User.authToken
 
 		var request = URLRequest(url: url)

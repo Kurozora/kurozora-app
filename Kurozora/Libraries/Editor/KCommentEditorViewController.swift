@@ -79,12 +79,8 @@ class KCommentEditorViewController: UIViewController {
 			posterUsernameLabel.text = posterUsername
 		}
 
-		let image = User.currentUserProfileImage
-		profileImageView.image = image
-
-		if let currentUsername = User.username {
-			currentUsernameLabel.text = currentUsername
-		}
+		profileImageView.image = User.currentUserProfileImage
+		currentUsernameLabel.text = User.username
 
 		characterCountLabel.text = "240"
 
@@ -123,9 +119,9 @@ class KCommentEditorViewController: UIViewController {
 						"id": replyID,
 						"posted_at": postedAt,
 						"user": [
-							"id": User.currentID!,
-							"username": User.username!,
-							"avatar": User.currentUserProfileImage!
+							"id": User.currentID,
+							"username": User.username,
+							"avatar": User.currentUserProfileImage
 						],
 						"score": 0,
 						"content": comment

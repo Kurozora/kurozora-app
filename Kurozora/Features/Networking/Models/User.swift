@@ -160,15 +160,15 @@ extension User {
 	fileprivate static let locationManager = CLLocationManager()
 
 	/// Returns the username saved in KDefaults
-	static var username: String? {
-		guard let username = Kurozora.shared.KDefaults["username"], !username.isEmpty else { return nil }
+	static var username: String {
+		guard let username = Kurozora.shared.KDefaults["username"], !username.isEmpty else { return "" }
 		return username
 	}
 
 	/// Returns the current User ID saved in KDefaults
-	static var currentID: Int? {
-		guard let userID = Kurozora.shared.KDefaults["user_id"], !userID.isEmpty else { return nil }
-		return Int(userID)
+	static var currentID: Int {
+		guard let userID = Kurozora.shared.KDefaults["user_id"]?.int else { return 0 }
+		return userID
 	}
 
 	/// Returns the Auth Token saved in KDefaults
@@ -208,26 +208,23 @@ extension User {
 	}
 
 	/// Returns the current user profile image from cache if available, otherwise returns default profile image
-	static var currentUserProfileImage: UIImage? {
-		var image = UIImage(named: "default_profile_image")
+	static var currentUserProfileImage: UIImage {
+		var profileImage = #imageLiteral(resourceName: "default_profile_image")
 		let cache = ImageCache.default
 
 		cache.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
 			switch result {
-			case .success(let value):
+			case .success(let cacheResult):
 				// If the `cacheType is `.none`, `image` will be `nil`.
-				if value.cacheType == .none {
-					image = #imageLiteral(resourceName: "default_profile_image")
-				} else {
-					image = value.image
+				if cacheResult.cacheType != .none {
+					profileImage = cacheResult.image ?? #imageLiteral(resourceName: "default_profile_image")
 				}
 			case .failure(let error):
-				print(error)
-				image = #imageLiteral(resourceName: "default_profile_image")
+				print("Received image cache error: \(error.localizedDescription)")
 			}
 		}
 
-		return image
+		return profileImage
 	}
 
 	/// Returns the current Session ID saved in KDefaults
@@ -243,7 +240,7 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is signed in
 	static var isSignedIn: Bool {
-		return User.username != nil
+		return User.username != ""
 	}
 
 	/// Returns a boolean indicating if the current user has purchased PRO
@@ -253,11 +250,11 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is an admin
 	static var isAdmin: Bool {
-		if let userType = Kurozora.shared.KDefaults["user_role"], !userType.isEmpty {
-			guard let userType = Int(userType) else { return false }
-			guard let type: UserType = UserType(rawValue: userType) else { return false }
+		if let userTypeString = Kurozora.shared.KDefaults["user_role"], !userTypeString.isEmpty {
+			guard let userTypeInt = Int(userTypeString) else { return false }
+			guard let userType: UserType = UserType(rawValue: userTypeInt) else { return false }
 
-			switch type {
+			switch userType {
 			case .admin:
 				return true
 			default:

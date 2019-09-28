@@ -12,40 +12,23 @@ import SCLAlertView
 import SwiftTheme
 
 class SettingsTableViewController: UITableViewController {
+	// MARK: - Properties
     let twitterPageDeepLink = "twitter://user?id=991929359052177409"
     let twitterPageURL = "https://www.twitter.com/KurozoraApp"
     let mediumPageDeepLink = "medium://@kurozora"
     let mediumPageURL = "https://medium.com/@kurozora"
 
-	// Section vars
-	let sectionTitles = ["Account", "Admin", "Alerts", "General", "In-App Purchases", "Rate", "Social", "About"]
-
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
+
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
     // MARK: - Functions
-	/**
-		Calculate the amount of data that is cached by the app.
-
-		- Parameter successHandler: A closure that returns a string representing the amount of data that is cached by the app.
-		- Parameter cacheString: The string representing the amount of data that is cached by the app.
-	*/
-	func calculateCache(withSuccess successHandler:@escaping (_ cacheString: String) -> Void) {
-		ImageCache.default.calculateDiskStorageSize { (result) in
-			switch result {
-			case .success(let size):
-				// Convert from bytes to mebibytes (2^20)
-				let sizeInMiB = Double(size) / 1024 / 1024
-				successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
-			case .failure(let error):
-				print("Cache size calculation error: \(error)")
-			}
-		}
-    }
-
 	@objc private func reloadData() {
 		tableView.reloadData()
 	}
@@ -54,60 +37,49 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func dismissPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-
-	// MARK: - Segue
-	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		if identifier == "AccountSegue", !User.isSignedIn {
-			return false
-		} else if identifier == "NotificationSegue", !User.isSignedIn {
-			return false
-		}
-
-		return true
-	}
 }
 
 // MARK: - UITableViewDataSource
 extension SettingsTableViewController {
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let numberOfRows = super.tableView(tableView, numberOfRowsInSection: section)
-		if !User.isAdmin && section == 1 {
-			return numberOfRows - 1
-		}
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return User.isAdmin ? Section.all.count : Section.allUser.count
+	}
 
-		return numberOfRows
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		let numberOfRowsInSection = User.isAdmin ? Section.allRow[Section.all[section]] : Section.allUserRow[Section.allUser[section]]
+		return numberOfRowsInSection?.count ?? 0
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if !User.isAdmin && section == 1 {
-			return	nil
-		}
-
-		return (section != sectionTitles.count - 1) ? sectionTitles[section] : nil
+		let section = User.isAdmin ? Section.all[section] : Section.allUser[section]
+		return section == .about ? nil : section.stringValue
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let settingsCell = super.tableView(tableView, cellForRowAt: indexPath) as! SettingsCell
-
-		switch (indexPath.section, indexPath.row) {
-		case (0, 0):
-			settingsCell.updateAccountCell()
-		default: break
-		}
-
-		if !User.isAdmin && indexPath.section == 1 {
-			return super.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: indexPath.section + 1))
-		}
-
-		if settingsCell.cacheSizeLabel != nil {
-			self.calculateCache(withSuccess: { (cacheSize) in
-				settingsCell.cacheSizeLabel?.text = cacheSize
-			})
-		}
-
+		let identifier = indexPath == [0, 0] ? "AccountCell" : "SettingsCell"
+		let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SettingsCell
+		let sectionRow = User.isAdmin ? Section.allRow[Section.all[indexPath.section]] : Section.allUserRow[Section.allUser[indexPath.section]]
+		settingsCell.sectionRow = sectionRow?[indexPath.row]
 		return settingsCell
 	}
 
+	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		let settingsSection = User.isAdmin ? Section.all : Section.allUser
+
+		switch settingsSection[section] {
+		case .iap:
+			return """
+			Going pro unlocks lots of awesome features and helps us keep improving the app 🚀
+			"""
+		case .about:
+			return """
+			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
+			Kurozora \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1.0.0") (\(Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) ?? "0"))
+			"""
+		default:
+			return nil
+		}
+	}
 //    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 //        switch section {
 //        case 0:
@@ -136,20 +108,6 @@ extension SettingsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension SettingsTableViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		if !User.isAdmin && section == 1 {
-			return	CGFloat.leastNormalMagnitude
-		}
-		return (section != sectionTitles.count - 1) ? 33 : CGFloat.leastNormalMagnitude
-	}
-
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if !User.isAdmin, indexPath.section == 1 {
-			return CGFloat.leastNormalMagnitude
-		}
-		return super.tableView(tableView, heightForRowAt: indexPath)
-	}
-
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let headerView = view as? UITableViewHeaderFooterView {
 			headerView.textLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -164,50 +122,37 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
-			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			authenticationSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
-
-			authenticationSettingsCell.authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		} else if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
 			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
 
-			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let authenticationSettingsCell = tableView.cellForRow(at: indexPath) as? AuthenticationSettingsCell {
-			authenticationSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			authenticationSettingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-
-			authenticationSettingsCell.authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		} else if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
 			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
 
-			settingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell.cellSubTitle?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			settingsCell.usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell.cacheSizeLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as! SettingsCell
+		let sectionRow = User.isAdmin ? Section.allRow[Section.all[indexPath.section]]?[indexPath.row] : Section.allUserRow[Section.allUser[indexPath.section]]?[indexPath.row]
+		var shouldPerformSegue = true
 
-		switch (indexPath.section, indexPath.row) {
-		case (0, 0):
+		switch sectionRow {
+		case .account:
 			WorkflowController.shared.isSignedIn()
-//		case (1, 0): break
-		case (2, 0):
+			shouldPerformSegue = User.isSignedIn
+		case .notifications:
 			WorkflowController.shared.isSignedIn()
-//		case (3, 0): break
-		case (3, 4): // Clear cache
+			shouldPerformSegue = User.isSignedIn
+		case .cache:
 			let alertView = SCLAlertView()
 			alertView.addButton("Clear 🗑", action: {
 				// Clear memory cache right away.
@@ -220,14 +165,12 @@ extension SettingsTableViewController {
 				KingfisherManager.shared.cache.cleanExpiredDiskCache()
 
 				// Refresh cacheSizeLabel
-				self.calculateCache(withSuccess: { (cacheSize) in
-					settingsCell.cacheSizeLabel?.text = cacheSize
-				})
+				tableView.reloadData()
 			})
 
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
-//		case (4, 0): // Unlock features
-//		case (4, 1): // Restore purchases
+			return
+//		case .restoreFeatures:
 //			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
 //				if let _ = task.result {
 //					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
@@ -238,9 +181,7 @@ extension SettingsTableViewController {
 //
 //				return nil
 //			})
-//		case (5, 0): // Rate app
-//			iRate.sharedInstance().openRatingsPageInAppStore()
-		case (6, 0): // Open Twitter
+		case .followTwitter:
 			var url: URL?
 			let twitterScheme = URL(string: "twitter://")!
 
@@ -250,7 +191,8 @@ extension SettingsTableViewController {
 				url = URL(string: twitterPageURL)
 			}
 			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-		case (6, 1): // Open Medium
+			return
+		case .followMedium:
 			var url: URL?
 			let mediumScheme = URL(string: "medium://")!
 
@@ -260,7 +202,13 @@ extension SettingsTableViewController {
 				url = URL(string: mediumPageURL)
 			}
 			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+			return
 		default: break
+		}
+
+		guard let identifierString = sectionRow?.identifierString, !identifierString.isEmpty else { return }
+		if shouldPerformSegue {
+			performSegue(withIdentifier: identifierString, sender: nil)
 		}
 	}
 }

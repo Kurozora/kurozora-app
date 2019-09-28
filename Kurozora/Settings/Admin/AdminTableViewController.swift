@@ -45,7 +45,7 @@ extension AdminTableViewController {
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell
-			guard let key = kDefaultsTableViewCell.cellTitle?.text else {return}
+			guard let key = kDefaultsTableViewCell.primaryLabel?.text else {return}
 
 			self.tableView.beginUpdates()
 			try? Kurozora.shared.KDefaults.remove(key)
@@ -63,7 +63,7 @@ extension AdminTableViewController {
 		let kDefaultsCell = self.tableView.dequeueReusableCell(withIdentifier: "KDefaultsCell", for: indexPath) as! KDefaultsCell
 
 		if let key = kDefaultItems[indexPath.row]["key"] as? String, !key.isEmpty {
-			kDefaultsCell.cellTitle?.text = key
+			kDefaultsCell.primaryLabel?.text = key
 		}
 		if let value = kDefaultItems[indexPath.row]["value"] as? String, !value.isEmpty {
 			kDefaultsCell.valueTextField.text = value

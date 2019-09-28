@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="svG-2R-sWh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -225,11 +225,11 @@
                                         <viewLayoutGuide key="safeArea" id="5La-np-e37"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="VTp-lT-kFi" id="EUS-fp-lFM"/>
-                                            <outlet property="cellTitle" destination="qVG-Ip-C2B" id="w7w-fw-0yZ"/>
                                             <outlet property="enabledAutomaticDarkThemeSwitch" destination="JdA-Em-k7J" id="Y4A-gd-DDt"/>
+                                            <outlet property="primaryLabel" destination="qVG-Ip-C2B" id="Z9s-ih-NNk"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-FK-NCN" customClass="DisplaySettingsCell" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="310.5" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qUb-FK-NCN" id="Hex-fY-tgp">
@@ -284,9 +284,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <viewLayoutGuide key="safeArea" id="Sot-LX-FbY"/>
                                         <connections>
-                                            <outlet property="cellTitle" destination="aSb-K7-bBy" id="iUD-r8-ypo"/>
                                             <outlet property="chevronImageView" destination="HLr-i6-xdk" id="YE3-uT-69q"/>
                                             <outlet property="optionsValueLabel" destination="9gr-0c-sbs" id="u8e-Zu-Ay3"/>
+                                            <outlet property="primaryLabel" destination="aSb-K7-bBy" id="uq1-jM-XlA"/>
                                             <outlet property="selectedView" destination="3un-IH-7HZ" id="AA3-as-ckr"/>
                                             <segue destination="r72-Ak-wXE" kind="show" id="kns-HJ-9w9"/>
                                         </connections>
@@ -347,8 +347,8 @@
                                         <viewLayoutGuide key="safeArea" id="FBp-2b-yDd"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="MLM-vB-q9S" id="vtw-xb-fCv"/>
-                                            <outlet property="cellTitle" destination="BWx-Ky-TvQ" id="Lbz-5S-Rqw"/>
                                             <outlet property="enabledTrueBlackSwitch" destination="NsU-vB-Kuq" id="1nV-9u-Uby"/>
+                                            <outlet property="primaryLabel" destination="BWx-Ky-TvQ" id="BOM-BW-2Ea"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -406,8 +406,8 @@
                                         <viewLayoutGuide key="safeArea" id="GaF-c5-uhA"/>
                                         <connections>
                                             <outlet property="bubbleView" destination="xhC-GQ-TLe" id="aOV-Bo-xY5"/>
-                                            <outlet property="cellTitle" destination="B7h-A4-wen" id="vK1-fb-2tZ"/>
                                             <outlet property="enabledLargeTitlesSwitch" destination="S6w-ZM-ihQ" id="JXz-9A-WVc"/>
+                                            <outlet property="secondaryLabel" destination="B7h-A4-wen" id="Wsc-Oy-sWo"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -509,7 +509,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="k8C-jS-qTE"/>
                                 <connections>
-                                    <outlet property="cellTitle" destination="Gsi-g5-vk1" id="uo0-gg-7oV"/>
+                                    <outlet property="primaryLabel" destination="Gsi-g5-vk1" id="5Jj-qa-Fh9"/>
                                     <outlet property="selectedImageView" destination="PHE-Wb-uCl" id="2pC-CS-Y7d"/>
                                     <outlet property="selectedView" destination="Vxs-MW-Ztg" id="9cI-lT-Wzt"/>
                                 </connections>
@@ -560,8 +560,8 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="cQ9-nW-PBw"/>
                                 <connections>
-                                    <outlet property="cellTitle" destination="dVR-to-nVy" id="Q1t-JN-zm6"/>
                                     <outlet property="dateLabel" destination="HJS-jZ-b10" id="JQB-45-Gy8"/>
+                                    <outlet property="primaryLabel" destination="dVR-to-nVy" id="h0I-52-ohn"/>
                                     <outlet property="selectedView" destination="v6M-B0-z2V" id="ly9-C0-qJZ"/>
                                 </connections>
                             </tableViewCell>

@@ -25,7 +25,7 @@ class KDefaultsCell: SettingsCell {
 	}
 
     @IBAction func valueTextFieldEditingDidEnd(_ sender: Any) {
-        guard let key = cellTitle?.text else {return}
+        guard let key = primaryLabel?.text else {return}
         guard let value = valueTextField.text else {return}
 
         Kurozora.shared.KDefaults[key] = value

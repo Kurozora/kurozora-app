@@ -64,7 +64,7 @@ extension AppearanceOptionsViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 1, let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: "SelectableSettingsCell", for: indexPath) as? SelectableSettingsCell {
-			selectableSettingsCell.cellTitle?.text = automaticOptions[indexPath.row]
+			selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]
 			let darkThemeOption = DarkThemeOption(rawValue: indexPath.item)!
 			let selected = UserSettings.darkThemeOption
 
@@ -80,7 +80,7 @@ extension AppearanceOptionsViewController {
 		}
 
 		let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: "DateSettingsCell", for: indexPath) as! DateSettingsCell
-		dateSettingsCell.cellTitle?.text = customScheduleOptions[indexPath.row]
+		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPath.row]
 		dateSettingsCell.updateText(with: inputDates[indexPath.row])
 		return dateSettingsCell
 	}
@@ -122,14 +122,14 @@ extension AppearanceOptionsViewController {
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
 			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			selectableSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
 		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
 			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			selectableSettingsCell.cellTitle?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 

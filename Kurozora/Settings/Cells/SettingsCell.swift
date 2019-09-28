@@ -7,39 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SettingsCell: UITableViewCell {
-	@IBOutlet weak var appIconImageView: UIImageView? {
+	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
-			updateAppIcon()
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
+			iconImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
-	@IBOutlet weak var cellTitle: UILabel? {
+	@IBOutlet weak var primaryLabel: UILabel? {
 		didSet {
-			self.cellTitle?.theme_textColor = KThemePicker.textColor.rawValue
+			self.primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var cellSubTitle: UILabel? {
+	@IBOutlet weak var secondaryLabel: UILabel? {
 		didSet {
-			self.cellSubTitle?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var usernameLabel: UILabel? {
-		didSet {
-			self.usernameLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var profileImageView: UIImageView? {
-		didSet {
-			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
-			self.profileImageView?.theme_tintColor = KThemePicker.borderColor.rawValue
-			NotificationCenter.default.addObserver(self, selector: #selector(updateAccountCell), name: .KUserIsSignedInDidChange, object: nil)
-		}
-	}
-	@IBOutlet weak var cacheSizeLabel: UILabel? {
-		didSet {
-			self.cacheSizeLabel?.theme_textColor = KThemePicker.separatorColor.rawValue
+			self.secondaryLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 	@IBOutlet weak var selectedView: UIView? {
@@ -76,23 +59,65 @@ class SettingsCell: UITableViewCell {
 		}
 	}
 
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		self.selectionStyle = .none
+	var sectionRow: SettingsTableViewController.Section.Row? {
+		didSet {
+			configureCell()
+		}
 	}
 
 	// MARK: - Functions
-	/// Updates the account cell depending on the user's loggin state.
-	@objc func updateAccountCell() {
-		self.profileImageView?.image = User.isSignedIn ? User.currentUserProfileImage : #imageLiteral(resourceName: "profile")
-		self.usernameLabel?.text = User.isSignedIn ? Kurozora.shared.KDefaults["username"] : "Sign in to your Kurozora account"
-		self.cellSubTitle?.text = User.isSignedIn ? "Kurozora ID" : "Setup Kurozora ID and more."
-		self.chevronImageView?.isHidden = !User.isSignedIn
+	/// Configure the cell with the given details.
+	func configureCell() {
+		iconImageView?.image = sectionRow?.imageValue
+		primaryLabel?.text = sectionRow?.primaryStringValue
+		secondaryLabel?.text = sectionRow?.secondaryStringValue
+
+		switch sectionRow {
+		case .icon:
+			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
+		case .cache:
+			self.calculateCache(withSuccess: { (cacheSize) in
+				self.secondaryLabel?.text = cacheSize
+			})
+		default: break
+		}
+
+		switch sectionRow?.accessoryValue ?? .none {
+		case .none:
+			chevronImageView?.isHidden = true
+			secondaryLabel?.isHidden = reuseIdentifier == "SettingsCell"
+		case .chevron:
+			secondaryLabel?.isHidden = reuseIdentifier == "SettingsCell"
+			chevronImageView?.isHidden = false
+		case .label:
+			chevronImageView?.isHidden = true
+			secondaryLabel?.isHidden = false
+		}
+	}
+
+	/**
+		Calculate the amount of data that is cached by the app.
+
+		- Parameter successHandler: A closure that returns a string representing the amount of data that is cached by the app.
+		- Parameter cacheString: The string representing the amount of data that is cached by the app.
+	*/
+	fileprivate func calculateCache(withSuccess successHandler:@escaping (_ cacheString: String) -> Void) {
+		ImageCache.default.calculateDiskStorageSize { (result) in
+			switch result {
+			case .success(let size):
+				// Convert from bytes to mebibytes (2^20)
+				let sizeInMiB = Double(size) / 1024 / 1024
+				successHandler(String(format: "%.2f", sizeInMiB) + "MiB")
+			case .failure(let error):
+				print("Cache size calculation error: \(error)")
+				successHandler("0.00MiB")
+			}
+		}
 	}
 
 	/// Updates the app icon image with the one selected by the user.
 	@objc func updateAppIcon() {
-		self.appIconImageView?.image = UIImage(named: UserSettings.appIcon)
+		self.iconImageView?.image = UIImage(named: UserSettings.appIcon)
 	}
 
 	/// Updates the notification value labels with the respective options selected by the user.

@@ -30,10 +30,10 @@ class WorkflowController {
 	// swiftlint:disable redundant_discardable_let
 	/// Initialise Pusher and connect to subsequent channels
 	func registerForPusher() {
-		if let currentID = User.currentID, currentID != 0 {
+		if User.currentID != 0 {
 			pusher.connect()
 
-			let myChannel = pusher.subscribe("private-user.\(currentID)")
+			let myChannel = pusher.subscribe("private-user.\(User.currentID)")
 
 			let _ = myChannel.bind(eventName: "session.new", callback: { [weak self] (data: Any?) -> Void in
 				if let data = data as? [String: AnyObject] {
