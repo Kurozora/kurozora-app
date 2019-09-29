@@ -110,7 +110,7 @@ class EpisodesCollectionViewController: UICollectionViewController {
 	// MARK: - Functions
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		Service.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
+		KService.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
 			DispatchQueue.main.async {
 				self.episodes = episodes?.episodes
 			}
@@ -324,7 +324,7 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 				watched = 1
 			}
 
-			Service.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
+			KService.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
 				DispatchQueue.main.async {
 					cell.configureCell(with: watchStatus, shouldUpdate: true, withValue: watchStatus)
 				}

@@ -129,7 +129,7 @@ class ReplyCell: UITableViewCell {
 			guard let threadRepliesElement = self.threadRepliesElement else { return }
 			guard var replyScore = threadRepliesElement.score else { return }
 
-			Service.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
+			KService.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
 				DispatchQueue.main.async {
 					if action == 1 { // upvote
 						replyScore += 1

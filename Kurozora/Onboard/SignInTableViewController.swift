@@ -34,7 +34,7 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 		let password = textFieldArray[1]?.text
 		let device = UIDevice.modelName + " on iOS " + UIDevice.current.systemVersion
 
-		Service.shared.signIn(username, password, device, withSuccess: { (success) in
+		KService.shared.signIn(username, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					WorkflowController.shared.registerForPusher()

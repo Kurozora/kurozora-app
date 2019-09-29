@@ -40,6 +40,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+		KNetworkManager.isReachable { _ in
+			if User.isSignedIn {
+				_ = Kurozora.validateSession(window: self.window)
+			}
+		}
+
         return scene.userActivity
     }
 

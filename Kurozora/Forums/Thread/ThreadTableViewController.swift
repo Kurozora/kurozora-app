@@ -223,7 +223,7 @@ class ThreadTableViewController: UITableViewController {
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
 		if forumsThreadElement == nil {
-			Service.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
+			KService.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
 					self.forumsThreadElement = thread
 					self.updateThreadDetails()
@@ -236,7 +236,7 @@ class ThreadTableViewController: UITableViewController {
 
 	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
-		Service.shared.getReplies(forThread: forumThreadID, order: repliesOrder, page: lastPage) { (replies) in
+		KService.shared.getReplies(forThread: forumThreadID, order: repliesOrder, page: lastPage) { (replies) in
 			DispatchQueue.main.async {
 				self.currentPage = replies?.currentPage ?? 1
 				self.lastPage = replies?.lastPage ?? 1
@@ -262,7 +262,7 @@ class ThreadTableViewController: UITableViewController {
 	func voteForThread(with vote: Int?) {
 		WorkflowController.shared.isSignedIn {
 			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
-			Service.shared.vote(forThread: self.forumThreadID, vote: vote, withSuccess: { (action) in
+			KService.shared.vote(forThread: self.forumThreadID, vote: vote, withSuccess: { (action) in
 				DispatchQueue.main.async {
 					if action == 1 { // upvote
 						threadScore += 1
@@ -402,7 +402,7 @@ class ThreadTableViewController: UITableViewController {
 				}
 
 				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-					Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 						self.isLocked(locked)
 					})
 				})

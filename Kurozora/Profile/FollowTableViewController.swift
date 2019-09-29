@@ -72,7 +72,7 @@ class FollowTableViewController: UITableViewController {
 	/// Sends a request to follow the user whose followers list is being viewed.
 	func followUser() {
 		guard let userID = user?.id else { return }
-		Service.shared.follow(1, user: userID) { (success) in
+		KService.shared.follow(1, user: userID) { (success) in
 			if success {
 				self.fetchFollowList()
 			}
@@ -82,7 +82,7 @@ class FollowTableViewController: UITableViewController {
 	/// Fetch the follow list for the currently viewed profile.
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
-		Service.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
+		KService.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
 			DispatchQueue.main.async {
 				self.currentPage = userFollow?.currentPage ?? 1
 				self.lastPage = userFollow?.lastPage ?? 1

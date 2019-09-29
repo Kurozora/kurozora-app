@@ -223,7 +223,7 @@ class ShowDetailViewController: UIViewController {
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
 		if showDetailsElement == nil {
-			Service.shared.getDetails(forShow: showID) { (showDetailsElement) in
+			KService.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
 					self.updateDetails()
@@ -232,7 +232,7 @@ class ShowDetailViewController: UIViewController {
 			}
 		}
 
-		Service.shared.getCastFor(showID, withSuccess: { (actors) in
+		KService.shared.getCastFor(showID, withSuccess: { (actors) in
 			DispatchQueue.main.async {
 				self.actors = actors
 			}
@@ -502,7 +502,7 @@ class ShowDetailViewController: UIViewController {
 				guard let showID = self.showID else { return }
 
 				if self.libraryStatus != value {
-					Service.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+					KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 						if success {
 							// Update entry in library
 							self.libraryStatus = value
@@ -519,7 +519,7 @@ class ShowDetailViewController: UIViewController {
 
 			if let libraryStatus = self.libraryStatus, !libraryStatus.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					Service.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
+					KService.shared.removeFromLibrary(withID: self.showID, withSuccess: { (success) in
 						if success {
 							self.libraryStatus = ""
 

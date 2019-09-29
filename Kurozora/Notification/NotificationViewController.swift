@@ -142,7 +142,7 @@ class NotificationsViewController: UITableViewController {
 		if User.isSignedIn {
 			refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 
-			Service.shared.getNotifications(withSuccess: { (notifications) in
+			KService.shared.getNotifications(withSuccess: { (notifications) in
 				self.userNotificationsElement = []
 				DispatchQueue.main.async {
 					self.userNotificationsElement = notifications
@@ -213,7 +213,7 @@ class NotificationsViewController: UITableViewController {
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
 	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String?, with status: Int) {
-		Service.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
+		KService.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
 			if indexPaths == nil {
 				for userNotificationElement in self.userNotificationsElement ?? [] {
 					userNotificationElement.read = read
@@ -410,7 +410,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				switch self.grouping {
 				case .automatic, .byType:
 					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-					Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
+					KService.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
 						DispatchQueue.main.async {
 							if success {
 								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
@@ -426,7 +426,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 					})
 				case .off:
 					let notificationID = self.userNotificationsElement?[indexPath.row].id
-					Service.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
+					KService.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
 						if success {
 							self.userNotificationsElement?.remove(at: indexPath.row)
 							tableView.beginUpdates()

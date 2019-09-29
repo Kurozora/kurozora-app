@@ -112,7 +112,7 @@ class KCommentEditorViewController: UIViewController {
 			guard let threadID = forumsThreadElement?.id else { return }
 			guard let comment = commentTextView.text, !comment.isEmpty else { return }
 
-			Service.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
+			KService.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {
 					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 					let replyJSON: JSON = [

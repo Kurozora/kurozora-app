@@ -192,7 +192,7 @@ class ProfileTableViewController: UITableViewController {
 	*/
 	private func fetchUserDetails(for userID: Int?) {
 		guard let userID = userID else { return }
-		Service.shared.getUserProfile(userID, withSuccess: { user in
+		KService.shared.getUserProfile(userID, withSuccess: { user in
 			DispatchQueue.main.async {
 				self.user = user
 			}
@@ -467,7 +467,7 @@ class ProfileTableViewController: UITableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			Service.shared.updateInformation(withBio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (update) in
+			KService.shared.updateInformation(withBio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (update) in
 				if update {
 					self.editMode(!update)
 				}
@@ -507,7 +507,7 @@ class ProfileTableViewController: UITableViewController {
 		WorkflowController.shared.isSignedIn {
 			let follow = self.user?.profile?.following ?? false ? 0 : 1
 
-			Service.shared.follow(follow, user: self.userID) { (success) in
+			KService.shared.follow(follow, user: self.userID) { (success) in
 				if success {
 					if follow == 0 {
 						sender.setTitle("＋ Follow", for: .normal)

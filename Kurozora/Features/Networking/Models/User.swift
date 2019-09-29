@@ -165,13 +165,25 @@ extension User {
 		return username
 	}
 
-	/// Returns the current User ID saved in KDefaults
+	/// Returns the current User ID saved in KDefaults.
 	static var currentID: Int {
 		guard let userID = Kurozora.shared.KDefaults["user_id"]?.int else { return 0 }
 		return userID
 	}
 
-	/// Returns the Auth Token saved in KDefaults
+	/// Returns the current User 'Sign In With Apple' ID saved in KDefaults.
+	static var currentSIWAID: Int {
+		guard let currentSIWAID = Kurozora.shared.KDefaults["SIWA_user"]?.int else { return 0 }
+		return currentSIWAID
+	}
+
+	/// Returns the current User ID Token saved in KDefaults.
+	static var currentIDToken: String {
+		guard let currentIDToken = Kurozora.shared.KDefaults["id_token"], !currentIDToken.isEmpty else { return ""}
+		return currentIDToken
+	}
+
+	/// Returns the Auth Token saved in KDefaults.
 	static var authToken: String {
 		guard let authToken = Kurozora.shared.KDefaults["auth_token"], !authToken.isEmpty else { return "" }
 		return authToken

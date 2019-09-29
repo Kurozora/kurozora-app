@@ -42,7 +42,7 @@ class GenresTableViewController: UITableViewController {
 
 	// MARK: - Functions
 	func fetchGenres() {
-		Service.shared.getGenres { (genres) in
+		KService.shared.getGenres { (genres) in
 			DispatchQueue.main.async {
 				self.genres = genres
 			}

@@ -148,7 +148,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		if User.isSignedIn {
 			refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 
-			Service.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
+			KService.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
 				DispatchQueue.main.async {
 					self.showDetailsElements = showDetailsElements
 				}

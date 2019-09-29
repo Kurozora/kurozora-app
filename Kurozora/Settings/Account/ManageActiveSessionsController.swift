@@ -73,7 +73,7 @@ class ManageActiveSessionsController: UITableViewController {
 
 	// MARK: - Functions
 	private func fetchSessions() {
-		Service.shared.getSessions( withSuccess: { (sessions) in
+		KService.shared.getSessions( withSuccess: { (sessions) in
 			DispatchQueue.main.async {
 				self.sessions = sessions
 			}
@@ -123,7 +123,7 @@ class ManageActiveSessionsController: UITableViewController {
 		alertView.addButton("Yes!", action: {
 			let sessionSecret = otherSessionsCell.sessions?.id
 
-			Service.shared.deleteSession(with: sessionSecret, withSuccess: { (success) in
+			KService.shared.deleteSession(with: sessionSecret, withSuccess: { (success) in
 				if success {
 					// Get index path for cell
 					if let indexPath = self.tableView.indexPath(for: otherSessionsCell) {

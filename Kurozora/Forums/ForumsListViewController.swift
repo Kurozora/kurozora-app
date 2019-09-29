@@ -85,7 +85,7 @@ class ForumsListViewController: UITableViewController {
 			threadOrder = "top"
 		}
 
-		Service.shared.getForumsThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
+		KService.shared.getForumsThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
 			DispatchQueue.main.async {
 				self.currentPage = threads?.currentPage ?? 1
 				self.lastPage = threads?.lastPage ?? 1

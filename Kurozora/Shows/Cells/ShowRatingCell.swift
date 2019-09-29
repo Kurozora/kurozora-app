@@ -69,7 +69,7 @@ class ShowRatingCell: UITableViewCell {
 	func rateShow(with rating: Double) {
 		guard let showID = showDetailsElement?.id else { return }
 
-		Service.shared.rateShow(showID, with: rating, withSuccess: { (success) in
+		KService.shared.rateShow(showID, with: rating, withSuccess: { (success) in
 			if success {
 				let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thanks for your rating.")

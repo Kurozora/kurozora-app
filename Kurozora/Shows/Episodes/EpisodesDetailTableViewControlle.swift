@@ -85,7 +85,7 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 			watched = 1
 		}
 
-		Service.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
+		KService.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
 			DispatchQueue.main.async {
 				self.delegate?.updateWatchedStatus(with: watchStatus)
 				self.updateWatchedStatus(with: watchStatus)

@@ -121,7 +121,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 
 	/// Fetch seasons for the current show.
     fileprivate func fetchSeasons() {
-        Service.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
+        KService.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {
 				self.seasons = seasons
 			}

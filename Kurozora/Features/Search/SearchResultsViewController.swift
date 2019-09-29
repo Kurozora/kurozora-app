@@ -115,20 +115,20 @@ class SearchResultsTableViewController: UITableViewController {
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
-				Service.shared.search(forShow: text) { (showResults) in
+				KService.shared.search(forShow: text) { (showResults) in
 					DispatchQueue.main.async {
 						self.showResults = showResults
 					}
 				}
 			case .myLibrary: break
 			case .thread:
-				Service.shared.search(forThread: text) { (threadResults) in
+				KService.shared.search(forThread: text) { (threadResults) in
 					DispatchQueue.main.async {
 						self.threadResults = threadResults
 					}
 				}
 			case .user:
-				Service.shared.search(forUser: text) { (userResults) in
+				KService.shared.search(forUser: text) { (userResults) in
 					DispatchQueue.main.async {
 						self.userResults = userResults
 					}

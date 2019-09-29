@@ -22,8 +22,8 @@ enum UserType: Int {
 	case normal = 0
 
 	/// Refers to mods with mod permissions enabled.
-	case mod
+	case mod = 1
 
 	/// Refers to admins with all permissions enabled.
-	case admin
+	case admin = 2
 }

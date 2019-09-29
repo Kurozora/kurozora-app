@@ -96,7 +96,7 @@ class ManageThemesCollectionViewController: UICollectionViewController {
 	// MARK: - Functions
 	/// Fetches themes from the server.
 	func fetchThemes() {
-		Service.shared.getThemes( withSuccess: { (themes) in
+		KService.shared.getThemes( withSuccess: { (themes) in
 			self.themes = themes
 		})
 	}

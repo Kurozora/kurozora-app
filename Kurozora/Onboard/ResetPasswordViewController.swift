@@ -36,7 +36,7 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 			return
 		}
 
-		Service.shared.resetPassword(userEmail, withSuccess: { _ in
+		KService.shared.resetPassword(userEmail, withSuccess: { _ in
 			let appearance = SCLAlertView.SCLAppearance(
 				showCloseButton: false
 			)

@@ -40,7 +40,7 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 
 		// Fetch feed sections
-//		Service.shared.getFeedSections(withSuccess: { (sections) in
+//		KService.shared.getFeedSections(withSuccess: { (sections) in
 //			DispatchQueue.main.async {
 //				self.sectionsCount = sections?.count
 //				self.sections = sections

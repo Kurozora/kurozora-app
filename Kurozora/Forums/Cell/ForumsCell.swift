@@ -132,7 +132,7 @@ public class ForumsCell: UITableViewCell {
 			guard let forumThreadsElement = self.forumThreadsElement else { return }
 			guard var threadScore = forumThreadsElement.voteCount else { return }
 
-			Service.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
+			KService.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
 				DispatchQueue.main.async {
 					self.updateVoting(with: action)
 					if action == 1 {
@@ -204,7 +204,7 @@ public class ForumsCell: UITableViewCell {
 				}
 
 				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-					Service.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 						self.isLocked(locked)
 					})
 				})

@@ -50,7 +50,7 @@ class ForumsViewController: TabmanViewController {
 		searchControllerBar.delegate = searchResultsTableViewController
 
 		// Fetch forum sections
-		Service.shared.getForumSections(withSuccess: { (sections) in
+		KService.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
 				self.sectionsCount = sections?.count
 				self.sections = sections

@@ -75,7 +75,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 		let password = textFieldArray[2]?.text
 		let profileImage = profileImageView.image
 
-		Service.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
+		KService.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
 			if success {
 				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
 				alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")

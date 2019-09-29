@@ -94,7 +94,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		WorkflowController.shared.isSignedIn {
 			let shouldFollow = self.userProfile?.following ?? false ? 0 : 1
 
-			Service.shared.follow(shouldFollow, user: self.userProfile?.id) { (success) in
+			KService.shared.follow(shouldFollow, user: self.userProfile?.id) { (success) in
 				if success {
 					if shouldFollow == 0 {
 						sender.setTitle("＋ Follow", for: .normal)

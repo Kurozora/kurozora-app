@@ -97,6 +97,9 @@ class WorkflowController {
 	func signOut(with signOutReason: String? = nil, whereUser isKiller: Bool = false) {
 		try? Kurozora.shared.KDefaults.removeAll()
 		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+		if signOutReason != nil {
+			SCLAlertView().showWarning("Signed out", subTitle: signOutReason)
+		}
 	}
 }
 

@@ -68,7 +68,7 @@ class FeedTableViewController: UITableViewController {
 	func fetchFeedPosts() {
 		guard let sectionID = sectionID else { return }
 
-		Service.shared.getFeedPosts(for: sectionID, page: pageNumber, withSuccess: { (feed) in
+		KService.shared.getFeedPosts(for: sectionID, page: pageNumber, withSuccess: { (feed) in
 			DispatchQueue.main.async {
 				if let feedPages = feed?.feedPages {
 					self.totalPages = feedPages

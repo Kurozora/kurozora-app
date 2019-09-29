@@ -104,7 +104,7 @@ import UIKit
 //		guard let title = titleTextField.text?.trimmed else { return }
 //		guard let content = richEditorView?.contentHTML else { return }
 //
-//		Service.shared.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
+//		KService.shared.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
 //			DispatchQueue.main.async {
 //				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 //				let content = self.richEditorView?.text

@@ -56,7 +56,7 @@ extension AccountTableViewController {
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isSignedIn {
-					Service.shared.signOut(withSuccess: nil)
+					KService.shared.signOut(withSuccess: nil)
 				}
 				self.dismiss(animated: true, completion: nil)
 			})

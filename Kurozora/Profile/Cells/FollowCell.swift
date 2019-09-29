@@ -62,7 +62,7 @@ class FollowCell: UITableViewCell {
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		let follow = userProfile?.following ?? false ? 0 : 1
 
-		Service.shared.follow(follow, user: userProfile?.id) { (success) in
+		KService.shared.follow(follow, user: userProfile?.id) { (success) in
 			if success {
 				if follow == 0 {
 					sender.setTitle("＋ Follow", for: .normal)

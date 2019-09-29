@@ -16,7 +16,6 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Properties
 	var window: UIWindow?
-	var authenticated = false
 	var authenticationCount = 0
 	var isUnreachable = false
 	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
@@ -67,17 +66,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			Kurozora.shared.showOfflinePage(for: nil)
 		}
 
-		// Initialize Pusher
-		WorkflowController.shared.registerForPusher()
-
 		// Max disk cache size
 		ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
 
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
-		// Set authentication status
-		authenticated = User.username != ""
+		// Initialize Pusher
+		if User.isSignedIn {
+			WorkflowController.shared.registerForPusher()
+		}
 
 		// Prepare home view
 		if #available(iOS 13.0, *) {
@@ -86,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.window?.rootViewController = customTabBar
 		}
 
-		if authenticated {
+		if User.isSignedIn {
 			// Check if user should authenticate
 			Kurozora.shared.userHasToAuthenticate()
 		}
@@ -119,7 +117,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillEnterForeground(_ application: UIApplication) {
 		// Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 		KNetworkManager.isReachable { _ in
-			self.authenticated = Kurozora.validateSession(window: self.window)
+			if User.isSignedIn {
+				Kurozora.validateSession(window: self.window)
+			}
 		}
 
 		if UserSettings.automaticDarkTheme {

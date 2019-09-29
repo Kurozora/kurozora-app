@@ -90,7 +90,7 @@ class HomeCollectionViewController: UICollectionViewController {
 
         // Validate session
 		if User.isSignedIn {
-			Service.shared.validateSession(withSuccess: { (success) in
+			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
 					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
 						self.present(welcomeViewController, animated: true, completion: nil)
@@ -99,7 +99,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			})
 		}
 
-        Service.shared.getExplore(withSuccess: { (explore) in
+        KService.shared.getExplore(withSuccess: { (explore) in
 			DispatchQueue.main.async {
 				self.exploreCategories = explore?.categories
 			}

@@ -87,12 +87,9 @@ class Kurozora {
 	*/
 	static func validateSession(window: UIWindow?) -> Bool {
 		if User.isSignedIn {
-			Service.shared.validateSession(withSuccess: { (success) in
+			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
-					if window?.rootViewController as? WelcomeViewController == nil {
-						let welcomeViewController = WelcomeViewController.instantiateFromStoryboard()
-						window?.rootViewController = welcomeViewController
-					}
+					WorkflowController.shared.signOut(with: "Session expired. Please sign in again to continue.", whereUser: false)
 				}
 
 				self.success = success

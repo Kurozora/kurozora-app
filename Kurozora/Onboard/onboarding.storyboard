@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,7 +45,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" rowHeight="60" id="QUD-d6-Uvf" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" id="QUD-d6-Uvf" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="195.5" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QUD-d6-Uvf" id="Yfv-Zi-IPs">
@@ -79,55 +80,54 @@
                                     <outlet property="textField" destination="Y1R-ZD-VFX" id="spa-f1-adm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="305" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="255.5" width="414" height="305"/>
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="255.5" width="414" height="300.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYz-yc-iXY" id="5B2-1M-yaM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="305"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="300.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1">
-                                            <rect key="frame" x="20" y="10" width="374" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="lSn-KU-Bww"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <state key="normal" title="Forgot your password? Time to use your email 📧"/>
-                                            <connections>
-                                                <segue destination="94x-Fc-KWc" kind="presentation" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="7Lt-v8-jGy"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
-                                            <rect key="frame" x="107.5" y="50" width="199.5" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl">
-                                            <rect key="frame" x="20" y="68" width="374" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="sfW-gV-ydE"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <state key="normal" title="New to Kurozora? Let's create a new account 🔥"/>
-                                            <connections>
-                                                <segue destination="PNG-qo-j4c" kind="show" id="Vsw-4g-A6f"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OOy-ag-49a">
+                                            <rect key="frame" x="20" y="10" width="374" height="94"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1">
+                                                    <rect key="frame" x="17" y="0.0" width="340" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal" title="Forgot your password? Time to use your email 📧"/>
+                                                    <connections>
+                                                        <segue destination="94x-Fc-KWc" kind="presentation" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="7Lt-v8-jGy"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
+                                                    <rect key="frame" x="87.5" y="38" width="199.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl">
+                                                    <rect key="frame" x="20" y="64" width="334" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal" title="New to Kurozora? Let's create a new account 🔥"/>
+                                                    <connections>
+                                                        <segue destination="PNG-qo-j4c" kind="show" id="Vsw-4g-A6f"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurozora_services" translatesAutoresizingMaskIntoConstraints="NO" id="Spl-yt-qj9">
-                                            <rect key="frame" x="20" y="148" width="374" height="40"/>
+                                            <rect key="frame" x="20" y="144" width="374" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="6Gs-5M-iy5"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Kurozora ID is the account you use to access all Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C71-jA-gSI">
-                                            <rect key="frame" x="24.5" y="208" width="365" height="36"/>
+                                            <rect key="frame" x="24.5" y="204" width="365" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7x-5a-Rci">
-                                            <rect key="frame" x="20" y="264" width="374" height="41"/>
+                                            <rect key="frame" x="20" y="260" width="374" height="40.5"/>
                                             <state key="normal">
                                                 <attributedString key="attributedTitle">
                                                     <fragment>
@@ -150,30 +150,21 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Uls-SB-5wS" secondAttribute="trailing" id="2Ku-3f-17d"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="4pW-pt-bzj"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="56v-mm-Olh"/>
-                                        <constraint firstItem="Uls-SB-5wS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="94z-eR-vfP"/>
                                         <constraint firstAttribute="bottom" secondItem="F7x-5a-Rci" secondAttribute="bottom" id="9C8-bH-gs7"/>
-                                        <constraint firstItem="bL3-c9-8O1" firstAttribute="centerX" secondItem="5B2-1M-yaM" secondAttribute="centerX" id="CVs-1N-Smm"/>
-                                        <constraint firstItem="Uls-SB-5wS" firstAttribute="centerX" secondItem="bL3-c9-8O1" secondAttribute="centerX" id="FSZ-kZ-090"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="u2b-Lj-jIl" secondAttribute="trailing" id="G9f-lr-uWq"/>
-                                        <constraint firstItem="bL3-c9-8O1" firstAttribute="top" secondItem="5B2-1M-yaM" secondAttribute="top" constant="10" id="HNM-WE-VOD"/>
-                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="u2b-Lj-jIl" secondAttribute="bottom" constant="40" id="HjU-a0-hUL"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="centerX" secondItem="Spl-yt-qj9" secondAttribute="centerX" id="JbC-UJ-dHo"/>
-                                        <constraint firstAttribute="leadingMargin" relation="greaterThanOrEqual" secondItem="u2b-Lj-jIl" secondAttribute="leading" id="M1s-ga-c5h"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="C71-jA-gSI" secondAttribute="trailing" id="Nn7-j7-JFy"/>
-                                        <constraint firstItem="u2b-Lj-jIl" firstAttribute="centerX" secondItem="Uls-SB-5wS" secondAttribute="centerX" id="Rra-tM-2ph"/>
-                                        <constraint firstAttribute="leadingMargin" relation="greaterThanOrEqual" secondItem="bL3-c9-8O1" secondAttribute="leading" id="RwD-BZ-PTS"/>
+                                        <constraint firstItem="OOy-ag-49a" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="T5e-P6-Dky"/>
+                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="OOy-ag-49a" secondAttribute="bottom" constant="40" id="VgP-eI-qwd"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="F7x-5a-Rci" secondAttribute="trailing" id="Xwn-i8-Sbx"/>
                                         <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="20" id="Xyg-3T-SD1"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="bL3-c9-8O1" secondAttribute="trailing" id="YTA-Im-WEf"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
-                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="u2b-Lj-jIl" secondAttribute="centerX" id="eEi-HS-iga"/>
-                                        <constraint firstItem="Uls-SB-5wS" firstAttribute="top" secondItem="bL3-c9-8O1" secondAttribute="bottom" id="hV6-gg-cXy"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="OOy-ag-49a" secondAttribute="trailing" id="ZtL-Sq-pdr"/>
+                                        <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="OOy-ag-49a" secondAttribute="centerX" id="c5q-t1-LH7"/>
                                         <constraint firstItem="C71-jA-gSI" firstAttribute="top" secondItem="Spl-yt-qj9" secondAttribute="bottom" constant="20" id="kEG-1x-To3"/>
-                                        <constraint firstItem="u2b-Lj-jIl" firstAttribute="top" secondItem="Uls-SB-5wS" secondAttribute="bottom" id="vfN-5q-mf2"/>
                                         <constraint firstItem="F7x-5a-Rci" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="xFV-6X-Jx5"/>
+                                        <constraint firstItem="OOy-ag-49a" firstAttribute="top" secondItem="5B2-1M-yaM" secondAttribute="top" constant="10" id="yTY-5X-mhH"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -181,6 +172,7 @@
                                     <outlet property="descriptionLabel" destination="C71-jA-gSI" id="eoa-kp-ERh"/>
                                     <outlet property="forgotPasswordButton" destination="bL3-c9-8O1" id="Zue-aS-Diq"/>
                                     <outlet property="legalButton" destination="F7x-5a-Rci" id="cr8-QX-Gbo"/>
+                                    <outlet property="optionsStackView" destination="OOy-ag-49a" id="jzI-fG-21W"/>
                                     <outlet property="orLabel" destination="Uls-SB-5wS" id="7aM-jD-fh3"/>
                                     <outlet property="promotionalImageView" destination="Spl-yt-qj9" id="evW-lg-V8d"/>
                                     <outlet property="registerPasswordButton" destination="u2b-Lj-jIl" id="ZyS-K2-fkk"/>
