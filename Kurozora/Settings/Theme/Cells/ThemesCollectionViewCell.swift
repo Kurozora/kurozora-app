@@ -161,6 +161,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	/// Handle the redownload process for a downloaded theme.
 	fileprivate func handleRedownloadTheme() {
 		handleRemoveTheme(timeout: 0) { success in
 			if success {

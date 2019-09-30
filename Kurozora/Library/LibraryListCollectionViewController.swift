@@ -24,8 +24,10 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			collectionView.reloadData {
-				self.refreshControl.endRefreshing()
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				DispatchQueue.main.async {
+					self.refreshControl.endRefreshing()
+					self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				}
 			}
 		}
 	}

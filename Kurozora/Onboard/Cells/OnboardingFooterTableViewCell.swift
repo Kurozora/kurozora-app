@@ -8,7 +8,11 @@
 
 import UIKit
 import AuthenticationServices
-import SCLAlertView
+
+@objc protocol OnboardingFooterTableViewCellDelegate: class {
+	@available(iOS 13.0, *)
+	func handleAuthorizationAppleIDButtonPress()
+}
 
 class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
@@ -41,32 +45,16 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		}
 	}
 
+	// MARK: - Properties
+	weak var onboardingFooterTableViewCellDelegate: OnboardingFooterTableViewCellDelegate?
+
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
 		super.configureCell()
 
 		if #available(iOS 13.0, *) {
-			// Create a new 'or label' separator.
-			let orLabel: UILabel = UILabel(text: "—————— or ——————")
-			orLabel.font = .systemFont(ofSize: 15)
-			orLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-
-			// Create and setup Apple ID authorization button
-			let style: ASAuthorizationAppleIDButton.Style = KThemeStyle.isNightTheme() ? .white : .black
-			let authorizationButton = ASAuthorizationAppleIDButton(type: .default, style: style)
-
-			// Add height constraint
-			let heightConstraint = authorizationButton.heightAnchor.constraint(equalToConstant: 40)
-			authorizationButton.addConstraint(heightConstraint)
-
-			// Add width constraint
-			let widthConstraint = authorizationButton.widthAnchor.constraint(equalToConstant: 220)
-			authorizationButton.addConstraint(widthConstraint)
-			authorizationButton.addTarget(self, action: #selector(handleLogInWithAppleIDButtonPress), for: .touchUpInside)
-
-			// Add to stack view
-			optionsStackView?.addArrangedSubviews([orLabel, authorizationButton])
+			setupProviderSignInView()
 		}
 
 		if legalButton != nil {
@@ -80,16 +68,35 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		}
 	}
 
+	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
 	@available(iOS 13.0, *)
-	@objc private func handleLogInWithAppleIDButtonPress() {
-		let appleIDProvider = ASAuthorizationAppleIDProvider()
-		let request = appleIDProvider.createRequest()
-		request.requestedScopes = [.init("username"), .init("email")]
+	func setupProviderSignInView() {
+		// Create a new 'or label' separator.
+		let orLabel: UILabel = UILabel(text: "—————— or ——————")
+		orLabel.font = .systemFont(ofSize: 15)
+		orLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 
-		let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-		authorizationController.delegate = self
-		authorizationController.presentationContextProvider = self
-		authorizationController.performRequests()
+		// Create and setup Apple ID authorization button
+		let style: ASAuthorizationAppleIDButton.Style = KThemeStyle.isNightTheme() ? .white : .black
+		let authorizationButton = ASAuthorizationAppleIDButton(type: .default, style: style)
+
+		// Add height constraint
+		let heightConstraint = authorizationButton.heightAnchor.constraint(equalToConstant: 40)
+		authorizationButton.addConstraint(heightConstraint)
+
+		// Add width constraint
+		let widthConstraint = authorizationButton.widthAnchor.constraint(equalToConstant: 220)
+		authorizationButton.addConstraint(widthConstraint)
+		authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+
+		// Add to stack view
+		optionsStackView?.addArrangedSubviews([orLabel, authorizationButton])
+	}
+
+	/// Handles the Apple ID button press.
+	@available(iOS 13.0, *)
+	@objc func handleAuthorizationAppleIDButtonPress() {
+		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
 	}
 
 	/**
@@ -117,62 +124,5 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 		} else {
 			sender.alpha = 1.0
 		}
-	}
-}
-
-// MARK: - ASAuthorizationControllerDelegate
-@available(iOS 13.0, *)
-extension OnboardingFooterTableViewCell: ASAuthorizationControllerDelegate {
-	func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-//		SCLAlertView().showError("Error", subTitle: error.localizedDescription)
-	}
-
-	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-		if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-			// Create an account in your system.
-			// For the purpose of this demo app, store the these details in the keychain.
-			try? Kurozora.shared.KDefaults.set("\(appleIDCredential.user)", key: "SIWA_user")
-			try? Kurozora.shared.KDefaults.set("Kirito", key: "username")
-			try? Kurozora.shared.KDefaults.set("\(2)", key: "user_role")
-			try? Kurozora.shared.KDefaults.set(appleIDCredential.email ?? "sabonmail", key: "email")
-
-			print("User ID - \(appleIDCredential.user)")
-			print("User Name - \(appleIDCredential.fullName?.description ?? "N/A")")
-			print("User Email - \(appleIDCredential.email ?? "N/A")")
-			print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
-
-			if let authorizationCode = appleIDCredential.authorizationCode,
-				let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) {
-				try? Kurozora.shared.KDefaults.set(authorizationCodeString, key: "auth_token")
-				print("Refresh Token \(authorizationCodeString)")
-			}
-
-			if let identityTokenData = appleIDCredential.identityToken,
-				let identityTokenString = String(data: identityTokenData, encoding: .utf8) {
-				try? Kurozora.shared.KDefaults.set(identityTokenString, key: "id_token")
-				print("Identity Token \(identityTokenString)")
-			}
-
-			//Show Home View Controller
-			self.parentViewController?.dismiss(animated: true, completion: nil)
-		} else if let passwordCredential = authorization.credential as? ASPasswordCredential {
-			// Sign in using an existing iCloud Keychain credential.
-			let username = passwordCredential.user
-			let password = passwordCredential.password
-
-			// For the purpose of this demo app, show the password credential as an alert.
-			DispatchQueue.main.async {
-				let message = "The app has received your selected credential from the keychain. \n\n Username: \(username)\n Password: \(password)"
-				SCLAlertView().showInfo("Keychain Credential Received", subTitle: message)
-			}
-		}
-	}
-}
-
-// MARK: - ASAuthorizationControllerPresentationContextProviding
-@available(iOS 13.0, *)
-extension OnboardingFooterTableViewCell: ASAuthorizationControllerPresentationContextProviding {
-	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-		return self.contentView.window!
 	}
 }

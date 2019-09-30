@@ -141,19 +141,21 @@ class LibraryViewController: TabmanViewController {
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
-		if !User.isSignedIn {
-			rightBarButtonItems = navigationItem.rightBarButtonItems
-			leftBarButtonItems = navigationItem.leftBarButtonItems
+		DispatchQueue.main.async {
+			if !User.isSignedIn {
+				self.rightBarButtonItems = self.navigationItem.rightBarButtonItems
+				self.leftBarButtonItems = self.navigationItem.leftBarButtonItems
 
-			navigationItem.rightBarButtonItems = nil
-			navigationItem.leftBarButtonItems = nil
-		} else {
-			if navigationItem.rightBarButtonItems == nil, rightBarButtonItems != nil {
-				navigationItem.rightBarButtonItems = rightBarButtonItems
-			}
+				self.navigationItem.rightBarButtonItems = nil
+				self.navigationItem.leftBarButtonItems = nil
+			} else {
+				if self.navigationItem.rightBarButtonItems == nil, self.rightBarButtonItems != nil {
+					self.navigationItem.rightBarButtonItems = self.rightBarButtonItems
+				}
 
-			if navigationItem.leftBarButtonItems == nil, leftBarButtonItems != nil {
-				navigationItem.leftBarButtonItems = leftBarButtonItems
+				if self.navigationItem.leftBarButtonItems == nil, self.leftBarButtonItems != nil {
+					self.navigationItem.leftBarButtonItems = self.leftBarButtonItems
+				}
 			}
 		}
 	}
