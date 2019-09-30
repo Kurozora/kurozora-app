@@ -11,6 +11,7 @@ import EmptyDataSet_Swift
 import SwiftyJSON
 
 class BadgesTableViewController: UITableViewController {
+	// MARK: - Properties
 	var badges: [BadgeElement]?
 	var user: UserProfile? {
 		didSet {
@@ -18,15 +19,23 @@ class BadgesTableViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty table view
+		// Setup empty data view
+		setupEmptyDataView()
+    }
+
+	// MARK: - Functions
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			if let username = self.user?.username {
 				let detailLabelString = self.user?.id != User.currentID ? "\(username) has no badges to show." : "Badges you earn show up here."
@@ -39,14 +48,20 @@ class BadgesTableViewController: UITableViewController {
 					.isScrollAllowed(true)
 			}
 		}
-    }
+	}
 
-    // MARK: - Table view data source
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
+	}
+}
+
+// MARK: - UITableViewDataSource
+extension BadgesTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let badgesCount = badges?.count, badgesCount != 0 {
-			return badgesCount
-		}
-        return 0
+		guard let badgesCount = badges?.count else { return 0 }
+        return badgesCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

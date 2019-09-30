@@ -74,20 +74,13 @@ class EpisodesCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Fetch episodes
 		fetchEpisodes()
 
-		// Setup empty collection view
-        collectionView?.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_episodes"))
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
-        }
+		// Setup empty data view
+		setupEmptyDataView()
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -108,6 +101,25 @@ class EpisodesCollectionViewController: UICollectionViewController {
 	}
 
 	// MARK: - Functions
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
+		collectionView?.emptyDataSetView { view in
+			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_episodes"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		collectionView.reloadData()
+	}
+
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
 		KService.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in

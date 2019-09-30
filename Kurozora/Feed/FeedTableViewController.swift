@@ -29,6 +29,7 @@ class FeedTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
@@ -40,16 +41,8 @@ class FeedTableViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty table view
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
-		}
+		// Setup empty data view
+		setupEmptyDataView()
 	}
 
 	// MARK: - Functions
@@ -64,7 +57,26 @@ class FeedTableViewController: UITableViewController {
 		fetchFeedPosts()
 	}
 
-	// Fetch feed posts for the current section
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
+		tableView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
+	}
+
+	/// Fetch feed posts for the current section.
 	func fetchFeedPosts() {
 		guard let sectionID = sectionID else { return }
 

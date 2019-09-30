@@ -78,6 +78,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl
@@ -95,8 +96,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 			fetchLibrary()
 		}
 
-        // Setup empty collection view
-		setupEmptyView()
+        // Setup empty data view
+		setupEmptyDataView()
     }
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -108,8 +109,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	}
 
 	// MARK: - Functions
-	/// Setup empty view data.
-	private func setupEmptyView() {
+	/// Setup empty data view data.
+	func setupEmptyDataView() {
 		collectionView.emptyDataSetView { (view) in
 			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -132,6 +133,12 @@ class LibraryListCollectionViewController: UICollectionViewController {
 					}
 			}
 		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		collectionView.reloadData()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

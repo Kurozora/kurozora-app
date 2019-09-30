@@ -39,6 +39,7 @@ class ForumsListViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refresh
@@ -53,16 +54,8 @@ class ForumsListViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty table view
-		tableView.emptyDataSetView { (view) in
-			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
-				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
-		}
+		// Setup empty data view
+		setupEmptyDataView()
 	}
 
 	// MARK: - Functions
@@ -75,6 +68,25 @@ class ForumsListViewController: UITableViewController {
 		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		currentPage = 0
 		fetchThreads()
+	}
+
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
+		tableView.emptyDataSetView { (view) in
+			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
 	}
 
 	/// Fetch threads list for the current section.

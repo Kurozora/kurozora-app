@@ -118,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
-				Kurozora.validateSession(window: self.window)
+				_ = Kurozora.validateSession(window: self.window)
 			}
 		}
 

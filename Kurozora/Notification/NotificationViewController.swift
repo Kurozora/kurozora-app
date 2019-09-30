@@ -60,6 +60,7 @@ class NotificationsViewController: UITableViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Search bar
 		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
@@ -85,8 +86,8 @@ class NotificationsViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty table view
-		setupEmptyView()
+		// Setup empty data view
+		setupEmptyDataView()
 	}
 
 	// MARK: - Functions
@@ -100,8 +101,8 @@ class NotificationsViewController: UITableViewController {
 		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
 	}
 
-	/// Setup empty view data.
-	private func setupEmptyView() {
+	/// Set up the empty data view.
+	func setupEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -122,6 +123,12 @@ class NotificationsViewController: UITableViewController {
 				}
 			}
 		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

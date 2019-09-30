@@ -27,8 +27,19 @@ class AdminTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
-		// Setup empty table view
+		// Setup table view
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
+
+		// Setup empty data view
+		setupEmptyDataView()
+	}
+
+	// MARK: - Functions
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -37,6 +48,12 @@ class AdminTableViewController: UITableViewController {
 				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
 	}
 }
 

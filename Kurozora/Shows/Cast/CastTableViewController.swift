@@ -68,16 +68,10 @@ class CastCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup empty collection view
-        collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Actors", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_actor"))
-				.verticalOffset(-50)
-				.verticalSpace(10)
-				.isScrollAllowed(true)
-        }
+		setupEmptyDataView()
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -95,6 +89,25 @@ class CastCollectionViewController: UICollectionViewController {
 			return
 		}
 		flowLayout.invalidateLayout()
+	}
+
+	// MARK: - Functions
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
+		collectionView.emptyDataSetView { view in
+			view.titleLabelString(NSAttributedString(string: "No Actors", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_actor"))
+				.verticalOffset(-50)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		collectionView.reloadData()
 	}
 
 	// MARK: - IBActions

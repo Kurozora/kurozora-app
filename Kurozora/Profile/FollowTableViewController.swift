@@ -25,6 +25,7 @@ class FollowTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		fetchFollowList()
 
@@ -32,7 +33,13 @@ class FollowTableViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty table view
+		// Setup empty data view
+		setupEmptyDataView()
+    }
+
+	// MARK: - Functions
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
 			if let username = self.user?.username {
 				if self.followList == "Followers" {
@@ -51,7 +58,7 @@ class FollowTableViewController: UITableViewController {
 							.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 							.didTapDataButton {
 								self.followUser()
-							}
+						}
 					}
 				} else {
 					let detailLabelString = self.user?.id != User.currentID ? "\(username) is not following anyone yet." : "Follow a user and they will show up here!"
@@ -66,9 +73,14 @@ class FollowTableViewController: UITableViewController {
 				}
 			}
 		}
-    }
+	}
 
-	// MARK: - Functions
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
+	}
+
 	/// Sends a request to follow the user whose followers list is being viewed.
 	func followUser() {
 		guard let userID = user?.id else { return }
