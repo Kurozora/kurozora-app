@@ -9,6 +9,7 @@
 import UIKit
 
 class ExploreSectionHeaderCell: UICollectionReusableView {
+	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -25,20 +26,22 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 		}
 	}
 
+	// MARK: - Properties
 	var homeCollectionViewController: HomeCollectionViewController? = nil
 	var category: ExploreCategory? = nil {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 	var title: String? = nil {
 		didSet {
 			category = nil
-			setup()
+			configureCell()
 		}
 	}
 
-	private func setup() {
+	// MARK: - Functions
+	private func configureCell() {
 		if category != nil {
 			titleLabel.text = category?.title
 		} else {
@@ -49,6 +52,7 @@ class ExploreSectionHeaderCell: UICollectionReusableView {
 		seeAllButton.isHidden = (titleLabel.text == "Top Genres") ? false : true
 	}
 
+	// MARK: - IBActions
 	@IBAction func seeAllButtonPressed(_ sender: UIButton) {
 		homeCollectionViewController?.performSegue(withIdentifier: "GenresSegue", sender: self)
 	}

@@ -13,6 +13,7 @@ import SCLAlertView
 import SwiftTheme
 
 class LibraryViewController: TabmanViewController {
+	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutButton: UIBarButtonItem!
 	@IBOutlet var searchButton: UIBarButtonItem!
 
@@ -39,6 +40,7 @@ class LibraryViewController: TabmanViewController {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
 
 		// Actions
 		enableActions()
@@ -137,6 +139,11 @@ class LibraryViewController: TabmanViewController {
 		} else {
 			bar.isHidden = true
 		}
+	}
+
+	/// Reloads the tab bar with the new data.
+	@objc func reloadTabBar() {
+		reloadData()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

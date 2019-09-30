@@ -32,7 +32,7 @@ class FeedTabsViewController: TabmanViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		dataSource = self
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
 
 		navigationProfileButton.setImage(User.currentUserProfileImage, for: .normal)
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
@@ -113,6 +113,11 @@ class FeedTabsViewController: TabmanViewController {
 		if let barItemsCount = bar.items?.count {
 			bar.isHidden = barItemsCount <= 1
 		}
+	}
+
+	/// Reloads the tab bar with the new data.
+	@objc func reloadTabBar() {
+		reloadData()
 	}
 
 	// MARK: - IBActions

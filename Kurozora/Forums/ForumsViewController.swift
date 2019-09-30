@@ -7,16 +7,17 @@
 //
 
 import UIKit
-import SwiftyJSON
 import Tabman
 import Pageboy
 import SCLAlertView
 import SwiftTheme
 
 class ForumsViewController: TabmanViewController {
+	// MARK: - IBOutlets
     @IBOutlet weak var createThreadButton: UIButton!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
+	// MARK: - Properties
 	var sections: [ForumsSectionsElement]? {
 		didSet {
 			self.reloadData()
@@ -31,9 +32,11 @@ class ForumsViewController: TabmanViewController {
 
 	let bar = TMBar.ButtonBar()
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
 		dataSource = self
 
 		// Search bar
@@ -49,14 +52,32 @@ class ForumsViewController: TabmanViewController {
 		let searchControllerBar = searchController.searchBar
 		searchControllerBar.delegate = searchResultsTableViewController
 
+		// Tabman view controllers
+		dataSource = self
+
+		// Tabman bar
+		initTabmanBarView()
+
 		// Fetch forum sections
+		fetchForumsSections()
+
+//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
+//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
+    }
+
+	// MARK: - Functions
+	/// Fetches the forum sections from the server.
+	func fetchForumsSections() {
 		KService.shared.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
 				self.sectionsCount = sections?.count
 				self.sections = sections
 			}
 		})
+	}
 
+	/// Initializes the tabman bar view.
+	private func initTabmanBarView() {
 		// Indicator
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
@@ -84,21 +105,33 @@ class ForumsViewController: TabmanViewController {
 		systemBar.backgroundStyle = .blur(style: .regular)
 		addBar(systemBar, dataSource: self, at: .top)
 
+		// Configure tabman bar visibility
+		tabmanBarViewIsEnabled()
+	}
+
+	/// Hides or unhides the tabman bar view according to the user's sign in state.
+	private func tabmanBarViewIsEnabled() {
 		if let barItemsCount = bar.items?.count {
 			bar.isHidden = barItemsCount <= 1
 		}
+	}
 
-//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
-//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
-    }
+	/// Reloads the tab bar with the new data.
+	@objc func reloadTabBar() {
+		reloadData()
+	}
 
-	// MARK: - Functions
-    private func initializeViewControllers(with count: Int) {
-        let storyboard = UIStoryboard(name: "forums", bundle: nil)
-        var viewControllers = [UIViewController]()
+	/**
+		Initializes the view controllers which will be used for pagination.
 
-        for index in 0 ..< count {
-            let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsListViewController") as! ForumsListViewController
+		- Parameter count: The number of view controller to initialize.
+	*/
+	private func initializeViewControllers(with count: Int) {
+		let storyboard = UIStoryboard(name: "forums", bundle: nil)
+		var viewControllers = [UIViewController]()
+
+		for index in 0 ..< count {
+			let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsListViewController") as! ForumsListViewController
 			guard let sectionTitle = sections?[index].name else { return }
 			viewController.sectionTitle = sectionTitle
 
@@ -106,11 +139,11 @@ class ForumsViewController: TabmanViewController {
 				viewController.sectionID = sectionID
 			}
 			viewController.sectionIndex = index
-            viewControllers.append(viewController)
-        }
+			viewControllers.append(viewController)
+		}
 
-        self.viewControllers = viewControllers
-    }
+		self.viewControllers = viewControllers
+	}
 
 	// MARK: - IBActions
 	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
@@ -203,6 +236,7 @@ extension ForumsViewController: UISearchControllerDelegate {
 	}
 }
 
+// MARK: - SearchResultsTableViewControllerDelegate
 extension ForumsViewController: SearchResultsTableViewControllerDelegate {
 	func didCancelSearchController() {
 		self.navigationItem.searchController = nil

@@ -9,9 +9,10 @@
 import UIKit
 
 class NotificationTitleCell: UITableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var notificationTitleLabel: UILabel! {
 		didSet {
-			notificationTitleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			notificationTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var notificationMarkButton: UIButton! {
