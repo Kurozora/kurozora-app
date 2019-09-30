@@ -140,7 +140,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Handle the removing process for a downloaded theme.
-	fileprivate func handleRemoveTheme() {
+	fileprivate func handleRemoveTheme(timeout: Double = 0.5, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		guard let themeName = themesElement?.name else { return }
 		let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 		let sclAlertView = SCLAlertView(appearance: appearance).showWait("Removing \(themeName)...")
@@ -148,13 +148,23 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		KThemeStyle.removeThemeTask(for: themesElement) { isSuccess in
 			sclAlertView.setTitle(isSuccess ? "Finished removing!" : "Removing failed :(")
 
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) {
 				sclAlertView.close()
 			}
 
 			if isSuccess {
 				self.updateGetThemeButton()
 				self.shouldHideMoreButton()
+			}
+
+			successHandler?(isSuccess)
+		}
+	}
+
+	fileprivate func handleRedownloadTheme() {
+		handleRemoveTheme(timeout: 0) { success in
+			if success {
+				self.handleDownloadTheme()
 			}
 		}
 	}
@@ -180,9 +190,26 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		action.addAction(UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
+
+		let redownloadAction = UIAlertAction(title: "Redownload theme", style: .default, handler: { (_) in
+			self.handleRedownloadTheme()
+		})
+		let removeAction = UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
 			self.handleRemoveTheme()
-		}))
+		})
+
+		// Add image
+		redownloadAction.setValue(#imageLiteral(resourceName: "redownload"), forKey: "image")
+		removeAction.setValue(#imageLiteral(resourceName: "trash"), forKey: "image")
+
+		// Left align title
+		redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+		action.addAction(redownloadAction)
+		action.addAction(removeAction)
+
+		// Add cancel action
 		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
