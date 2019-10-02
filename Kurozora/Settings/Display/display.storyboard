@@ -407,7 +407,7 @@
                                         <connections>
                                             <outlet property="bubbleView" destination="xhC-GQ-TLe" id="aOV-Bo-xY5"/>
                                             <outlet property="enabledLargeTitlesSwitch" destination="S6w-ZM-ihQ" id="JXz-9A-WVc"/>
-                                            <outlet property="secondaryLabel" destination="B7h-A4-wen" id="Wsc-Oy-sWo"/>
+                                            <outlet property="primaryLabel" destination="B7h-A4-wen" id="gsL-9q-Bbz"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
