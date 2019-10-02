@@ -10,17 +10,12 @@ import UIKit
 import SwiftTheme
 
 class SettingsSplitViewController: UISplitViewController {
-	var statusBarStyle: UIStatusBarStyle {
-		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
-		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
-
-		return statusBarStyle
-	}
-
+	// MARK: - Properties
 	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return statusBarStyle
+		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue

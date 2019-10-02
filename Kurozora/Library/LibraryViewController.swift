@@ -40,7 +40,7 @@ class LibraryViewController: TabmanViewController {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
 		// Actions
 		enableActions()
@@ -99,8 +99,11 @@ class LibraryViewController: TabmanViewController {
 	}
 	#endif
 
-	/// Initializes the tabman bar view.
-	private func initTabmanBarView() {
+	/// Applies the the style for the currently enabled theme on the tabman bar.
+	private func styleTabmanBarView() {
+		// Background view
+		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
+
 		// Indicator
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
@@ -114,17 +117,23 @@ class LibraryViewController: TabmanViewController {
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
-		bar.layout.contentMode = UIDevice.isPad ? .fit : .intrinsic
+		if UIDevice.isPad {
+			bar.layout.contentMode = .fit
+		}
 
 		// Style
 		bar.fadesContentEdges = true
+	}
 
-		// Add the bar to the view
-		let systemBar = bar.systemBar()
-		systemBar.backgroundStyle = .blur(style: .regular)
-		addBar(systemBar, dataSource: self, at: .top)
+	/// Initializes the tabman bar view.
+	private func initTabmanBarView() {
+		// Style tabman bar
+		styleTabmanBarView()
+
+		// Add tabman bar to view
+		addBar(bar, dataSource: self, at: .top)
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()
@@ -142,8 +151,8 @@ class LibraryViewController: TabmanViewController {
 	}
 
 	/// Reloads the tab bar with the new data.
-	@objc func reloadTabBar() {
-		reloadData()
+	@objc func reloadTabBarStyle() {
+		styleTabmanBarView()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

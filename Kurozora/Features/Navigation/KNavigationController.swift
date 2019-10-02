@@ -11,16 +11,9 @@ import SwiftTheme
 
 class KNavigationController: UINavigationController {
 	// MARK: - Properties
-	private var statusBarStyle: UIStatusBarStyle {
-		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
-		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
-
-		return statusBarStyle
-	}
 	var searchResultsViewController: SearchResultsTableViewController?
-
 	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return statusBarStyle
+		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
 	// MARK: - View

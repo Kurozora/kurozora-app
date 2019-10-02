@@ -32,7 +32,7 @@ class FeedTabsViewController: TabmanViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
 		navigationProfileButton.setImage(User.currentUserProfileImage, for: .normal)
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
@@ -77,8 +77,11 @@ class FeedTabsViewController: TabmanViewController {
 		self.viewControllers = viewControllers
 	}
 
-	/// Initializes the tabman bar view.
-	private func initTabmanBarView() {
+	/// Applies the the style for the currently enabled theme on the tabman bar.
+	private func styleTabmanBarView() {
+		// Background view
+		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
+
 		// Indicator
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
@@ -87,22 +90,28 @@ class FeedTabsViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
-			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
+			button.selectedTintColor = KThemePicker.tintColor.colorValue
+			button.tintColor = KThemePicker.tintColor.colorValue.withAlphaComponent(0.4)
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 4.0, right: 16.0)
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
 		bar.layout.interButtonSpacing = 24.0
-		bar.layout.contentMode = UIDevice.isPad ? .fit : .intrinsic
+		if UIDevice.isPad {
+			bar.layout.contentMode = .fit
+		}
 
 		// Style
 		bar.fadesContentEdges = true
+	}
 
-		// configure the bar
-		let systemBar = bar.systemBar()
-		systemBar.backgroundStyle = .blur(style: .regular)
-		addBar(systemBar, dataSource: self, at: .top)
+	/// Initializes the tabman bar view.
+	private func initTabmanBarView() {
+		// Style tabman bar
+		styleTabmanBarView()
+
+		// Add tabman bar to view
+		addBar(bar, dataSource: self, at: .top)
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()
@@ -116,8 +125,8 @@ class FeedTabsViewController: TabmanViewController {
 	}
 
 	/// Reloads the tab bar with the new data.
-	@objc func reloadTabBar() {
-		reloadData()
+	@objc func reloadTabBarStyle() {
+		styleTabmanBarView()
 	}
 
 	// MARK: - IBActions

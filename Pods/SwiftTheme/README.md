@@ -16,7 +16,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 <a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat"></a>
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
-<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.6"><img src="https://img.shields.io/badge/release-0.4.6-blue.svg"></a>
+<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.7"><img src="https://img.shields.io/badge/release-0.4.7-blue.svg"></a>
 </p>
 
 ## Screenshot
@@ -272,6 +272,10 @@ NotificationCenter.default.addObserver(
 - var theme_barStyle: ThemeBarStylePicker?
 - var theme_barTintColor: ThemeColorPicker?
 
+##### UISegmentedControl
+- var theme_selectedSegmentTintColor: ThemeColorPicker?
+- func theme_setTitleTextAttributes(_ picker: ThemeStringAttributesPicker?, forState state: UIControl.State)
+
 ##### UISwitch
 - var theme_onTintColor: ThemeColorPicker?
 - var theme_thumbTintColor: ThemeColorPicker?
@@ -300,9 +304,9 @@ NotificationCenter.default.addObserver(
 - var theme_activityIndicatorViewStyle: ThemeActivityIndicatorViewStylePicker?
 
 ##### UIButton
-- func theme_setImage(picker: ThemeImagePicker, forState state: UIControlState)
-- func theme_setBackgroundImage(picker: ThemeImagePicker, forState state: UIControlState)
-- func theme_setTitleColor(picker: ThemeColorPicker, forState state: UIControlState)
+- func theme_setImage(picker: ThemeImagePicker?, forState state: UIControlState)
+- func theme_setBackgroundImage(picker: ThemeImagePicker?, forState state: UIControlState)
+- func theme_setTitleColor(picker: ThemeColorPicker?, forState state: UIControlState)
 
 ##### CALayer
 - var theme_backgroundColor: ThemeCGColorPicker?
@@ -408,11 +412,11 @@ ThemeBarStylePicker.pickerWithKeyPath("someStringKeyPath")
 #### ThemeStatusBarStylePicker
 ```swift
 ①
-ThemeStatusBarStylePicker(styles: .default, .lightContent)
-ThemeStatusBarStylePicker.pickerWithStyles([.default, .lightContent])
-ThemeStatusBarStylePicker.pickerWithStringStyles(["default", "lightContent"])
+ThemeStatusBarStylePicker(styles: .default, .lightContent, .darkContent)
+ThemeStatusBarStylePicker.pickerWithStyles([.default, .lightContent, .darkContent])
+ThemeStatusBarStylePicker.pickerWithStringStyles(["default", "lightContent", "darkContent"])
 ②
-// name the key you like, but the available values are "default" and "lightContent"
+// name the key you like, but the available values are "default", "lightContent" and "darkContent"
 ThemeStatusBarStylePicker(keyPath: "someStringKeyPath")
 ThemeStatusBarStylePicker.pickerWithKeyPath("someStringKeyPath")
 ```

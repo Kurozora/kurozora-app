@@ -67,7 +67,7 @@ import UIKit
 
 		return vibrancyEnabled ? UIVibrancyEffect(blurEffect: uiVisualEffect) : uiVisualEffect
 	}
-    
+
 }
 
 public extension ThemeVisualEffectPicker {

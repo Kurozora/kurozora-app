@@ -13,10 +13,12 @@ import SwiftTheme
 
 class SettingsTableViewController: UITableViewController {
 	// MARK: - Properties
-    let twitterPageDeepLink = "twitter://user?id=991929359052177409"
-    let twitterPageURL = "https://www.twitter.com/KurozoraApp"
-    let mediumPageDeepLink = "medium://@kurozora"
-    let mediumPageURL = "https://medium.com/@kurozora"
+    lazy var twitterPageDeepLink = "twitter://user?id=991929359052177409"
+    lazy var twitterPageURL = "https://www.twitter.com/KurozoraApp"
+    lazy var mediumPageDeepLink = "medium://@kurozora"
+    lazy var mediumPageURL = "https://medium.com/@kurozora"
+	lazy var settingsSection = User.isAdmin ? Section.all : Section.allUser
+	lazy var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -24,11 +26,13 @@ class SettingsTableViewController: UITableViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
+		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
     // MARK: - Functions
+	/// Reload the table view data.
 	@objc private func reloadData() {
 		tableView.reloadData()
 	}
@@ -42,30 +46,34 @@ class SettingsTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension SettingsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return User.isAdmin ? Section.all.count : Section.allUser.count
+		return settingsSection.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let numberOfRowsInSection = User.isAdmin ? Section.allRow[Section.all[section]] : Section.allUserRow[Section.allUser[section]]
+		let numberOfRowsInSection = sectionRow[settingsSection[section]]
 		return numberOfRowsInSection?.count ?? 0
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		let section = User.isAdmin ? Section.all[section] : Section.allUser[section]
+		let section = settingsSection[section]
 		return section == .about ? nil : section.stringValue
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = indexPath == [0, 0] ? "AccountCell" : "SettingsCell"
+		var identifier = "SettingsCell"
+		switch indexPath {
+		case [0, 0]:
+			identifier = "AccountCell"
+		default: break
+		}
+
 		let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SettingsCell
-		let sectionRow = User.isAdmin ? Section.allRow[Section.all[indexPath.section]] : Section.allUserRow[Section.allUser[indexPath.section]]
-		settingsCell.sectionRow = sectionRow?[indexPath.row]
+		let sectionRows = sectionRow[settingsSection[indexPath.section]]
+		settingsCell.sectionRow = sectionRows?[indexPath.row]
 		return settingsCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		let settingsSection = User.isAdmin ? Section.all : Section.allUser
-
 		switch settingsSection[section] {
 		case .iap:
 			return """
@@ -142,10 +150,10 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let sectionRow = User.isAdmin ? Section.allRow[Section.all[indexPath.section]]?[indexPath.row] : Section.allUserRow[Section.allUser[indexPath.section]]?[indexPath.row]
+		let sectionRows = sectionRow[settingsSection[indexPath.section]]?[indexPath.row]
 		var shouldPerformSegue = true
 
-		switch sectionRow {
+		switch sectionRows {
 		case .account:
 			WorkflowController.shared.isSignedIn()
 			shouldPerformSegue = User.isSignedIn
@@ -206,7 +214,7 @@ extension SettingsTableViewController {
 		default: break
 		}
 
-		guard let identifierString = sectionRow?.identifierString, !identifierString.isEmpty else { return }
+		guard let identifierString = sectionRows?.identifierString, !identifierString.isEmpty else { return }
 		if shouldPerformSegue {
 			performSegue(withIdentifier: identifierString, sender: nil)
 		}

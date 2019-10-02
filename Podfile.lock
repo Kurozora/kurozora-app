@@ -8,7 +8,7 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - Cosmos (19.0.3)
+  - Cosmos (20.0.1)
   - CryptoSwift (0.15.0)
   - Down (0.8.6)
   - EmptyDataSet-Swift (5.0.0)
@@ -57,7 +57,7 @@ PODS:
   - SwifterSwift/SpriteKit (5.1.0)
   - SwifterSwift/SwiftStdlib (5.1.0)
   - SwifterSwift/UIKit (5.1.0)
-  - SwiftTheme (0.4.6)
+  - SwiftTheme (0.4.7)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.1)
   - Tabman (2.6.1):
@@ -151,7 +151,7 @@ SPEC CHECKSUMS:
   AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  Cosmos: a6fb17284281fa12cf4c85c2efecd440a215ec44
+  Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
@@ -172,7 +172,7 @@ SPEC CHECKSUMS:
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: a9e8e144832638c2850b43da5feaf9598c6ad65b
-  SwiftTheme: 4b9c8ff2b99d4b5204ccfef97a53d359a3457f48
+  SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db

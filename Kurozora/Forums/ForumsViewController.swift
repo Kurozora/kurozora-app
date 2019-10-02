@@ -36,7 +36,7 @@ class ForumsViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBar), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 		dataSource = self
 
 		// Search bar
@@ -76,8 +76,11 @@ class ForumsViewController: TabmanViewController {
 		})
 	}
 
-	/// Initializes the tabman bar view.
-	private func initTabmanBarView() {
+	/// Applies the the style for the currently enabled theme on the tabman bar.
+	private func styleTabmanBarView() {
+		// Background view
+		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
+
 		// Indicator
 		bar.indicator.weight = .light
 		bar.indicator.cornerStyle = .eliptical
@@ -86,8 +89,8 @@ class ForumsViewController: TabmanViewController {
 
 		// State
 		bar.buttons.customize { (button) in
-			button.selectedTintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)
-			button.tintColor = ThemeManager.color(for: KThemePicker.tintColor.stringValue)?.withAlphaComponent(0.4)
+			button.selectedTintColor = KThemePicker.tintColor.colorValue
+			button.tintColor = KThemePicker.tintColor.colorValue.withAlphaComponent(0.4)
 		}
 
 		// Layout
@@ -99,11 +102,15 @@ class ForumsViewController: TabmanViewController {
 
 		// Style
 		bar.fadesContentEdges = true
+	}
 
-		// configure the bar
-		let systemBar = bar.systemBar()
-		systemBar.backgroundStyle = .blur(style: .regular)
-		addBar(systemBar, dataSource: self, at: .top)
+	/// Initializes the tabman bar view.
+	private func initTabmanBarView() {
+		// Style tabman bar
+		styleTabmanBarView()
+
+		// Add tabman bar to view
+		addBar(bar, dataSource: self, at: .top)
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()
@@ -117,8 +124,8 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	/// Reloads the tab bar with the new data.
-	@objc func reloadTabBar() {
-		reloadData()
+	@objc func reloadTabBarStyle() {
+		styleTabmanBarView()
 	}
 
 	/**

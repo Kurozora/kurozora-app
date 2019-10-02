@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 
 class SettingsCell: UITableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
 			iconImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
@@ -59,7 +60,8 @@ class SettingsCell: UITableViewCell {
 		}
 	}
 
-	var sectionRow: SettingsTableViewController.Section.Row? {
+	// MARK: - Properties
+	var sectionRow: SettingsTableViewController.Row? {
 		didSet {
 			configureCell()
 		}
@@ -77,7 +79,9 @@ class SettingsCell: UITableViewCell {
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAppIcon), name: .KSAppIconDidChange, object: nil)
 		case .cache:
 			self.calculateCache(withSuccess: { (cacheSize) in
-				self.secondaryLabel?.text = cacheSize
+				DispatchQueue.main.async {
+					self.secondaryLabel?.text = cacheSize
+				}
 			})
 		default: break
 		}

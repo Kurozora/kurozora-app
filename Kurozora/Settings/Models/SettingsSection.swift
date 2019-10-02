@@ -47,10 +47,10 @@ extension SettingsTableViewController {
 		static let allUser: [Section] = [.account, .alerts, .general, .iap, .rate, .social, .about]
 
 		/// An array containing all settings rows separated by all settings sections.
-		static let allRow: [Section: [Section.Row]] = [.account: Row.allAccount, .admin: Row.allAdmin, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
+		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .admin: Row.allAdmin, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// An array containing all user settings rows separated by user settings sections.
-		static let allUserRow: [Section: [Section.Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
+		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// The string value of a settings section.
 		var stringValue: String {
@@ -76,7 +76,7 @@ extension SettingsTableViewController {
 	}
 }
 
-extension SettingsTableViewController.Section {
+extension SettingsTableViewController {
 	enum Row {
 		/// The row representing the account cell.
 		case account

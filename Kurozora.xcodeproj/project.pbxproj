@@ -299,7 +299,6 @@
 		66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */; };
 		66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C740232F99440042AB12 /* Array+Kurozora.swift */; };
 		66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */; };
-		66B4F1D8223D145F007C5048 /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */; };
 		66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */; };
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
@@ -399,6 +398,7 @@
 		66FC6DEA2340BD2700A454DD /* KService+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE92340BD2700A454DD /* KService+Theme.swift */; };
 		66FC6DEC2340BD5200A454DD /* KService+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DEB2340BD5200A454DD /* KService+User.swift */; };
 		66FC6DEE2340BDB600A454DD /* KService+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */; };
+		66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
 		66FE5CFF215B665200E2844A /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* AdminTableViewController.swift */; };
 		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
@@ -713,7 +713,6 @@
 		66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNotificationCell.swift; sourceTree = "<group>"; };
 		66B2C740232F99440042AB12 /* Array+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Kurozora.swift"; sourceTree = "<group>"; };
 		66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListStyle.swift; sourceTree = "<group>"; };
-		66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
 		66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseResultsCell.swift; sourceTree = "<group>"; };
 		66B4F1DC223D334D007C5048 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
@@ -829,6 +828,7 @@
 		66FC6DE92340BD2700A454DD /* KService+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Theme.swift"; sourceTree = "<group>"; };
 		66FC6DEB2340BD5200A454DD /* KService+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+User.swift"; sourceTree = "<group>"; };
 		66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Kurozora.swift"; sourceTree = "<group>"; };
+		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1059,11 +1059,11 @@
 		6614409221DA411C00E54915 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
-				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
-				66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */,
-				6614409521DA417300E54915 /* Cell */,
 				66FC6DD22340028D00A454DD /* account.storyboard */,
+				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
+				66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */,
+				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
+				6614409521DA417300E54915 /* Cell */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1785,19 +1785,11 @@
 		66B4F1D5223D141A007C5048 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				66FC6DF52342B91600A454DD /* Extensions */,
 				66AEABD922987A4D00949FD8 /* KThemePicker.swift */,
 				66752632222815C2007C1617 /* KThemeStyle.swift */,
-				66B4F1D6223D1428007C5048 /* Extensions */,
 			);
 			path = Theme;
-			sourceTree = "<group>";
-		};
-		66B4F1D6223D1428007C5048 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				66B4F1D7223D145F007C5048 /* UIStatusBarStyle+Theme.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		66B4F1D9223D1F70007C5048 /* Classes */ = {
@@ -2110,6 +2102,14 @@
 				66FC6DE92340BD2700A454DD /* KService+Theme.swift */,
 				66FC6DE32340BC9800A454DD /* KService+Thread.swift */,
 				66FC6DEB2340BD5200A454DD /* KService+User.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66FC6DF52342B91600A454DD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2742,7 +2742,6 @@
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				6619EE7A216FF31D00655B99 /* Episodes.swift in Sources */,
 				66D6237420A1A8B000304914 /* DayViewController.swift in Sources */,
-				66B4F1D8223D145F007C5048 /* UIStatusBarStyle+Theme.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
 				6674A0C920A45EB700AAB527 /* ForumsCell.swift in Sources */,
 				66058DC2212E97FD0084B79E /* ShowTopicCell.swift in Sources */,
@@ -2799,6 +2798,7 @@
 				66160C3B215C04B900D0D722 /* AccountTableViewController.swift in Sources */,
 				660A642A21D102EA0032FDCF /* BannerCollectionViewFlowLayout.swift in Sources */,
 				6674DBEE22EDB941006455C1 /* ExploreMediumCollectionViewFlowLayout.swift in Sources */,
+				66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */,
 				660B42AB2125AF830051EF66 /* ThemesCollectionViewCell.swift in Sources */,
 				6674A0B720A38E4700AAB527 /* CharactersViewController.swift in Sources */,
 				66754BC42101020800268355 /* KService.swift in Sources */,

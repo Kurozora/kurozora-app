@@ -2,6 +2,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/Cosmos.svg?style=flat)](http://cocoadocs.org/docsets/Cosmos)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![License](https://img.shields.io/cocoapods/l/Cosmos.svg?style=flat)](LICENSE)
 [![Platform](https://img.shields.io/cocoapods/p/Cosmos.svg?style=flat)](http://cocoadocs.org/docsets/Cosmos)
 
@@ -39,7 +40,7 @@ Simply add [CosmosDistrib.swift](https://github.com/evgenyneu/Cosmos/blob/master
 
 #### Setup with Carthage (iOS 8+)
 
-Alternatively, add `github "evgenyneu/Cosmos" ~> 19.0` to your Cartfile and run `carthage update`.
+Alternatively, add `github "evgenyneu/Cosmos" ~> 20.0` to your Cartfile and run `carthage update`.
 
 #### Setup with CocoaPods (iOS 8+)
 
@@ -47,7 +48,18 @@ If you are using CocoaPods add this text to your Podfile and run `pod install`.
 
     use_frameworks!
     target 'Your target name'
-    pod 'Cosmos', '~> 19.0'
+    pod 'Cosmos', '~> 20.0'
+
+
+#### Setup with Swift Package Manager
+
+If you are using [Swift Package Manager](https://swift.org/package-manager/) add the following line:
+
+```swift
+.package(url: "https://github.com/evgenyneu/Cosmos.git", from: "20.0.0")
+```
+
+to the `dependencies` value of your `Package.swift` file and run `swift package resolve`.
 
 
 #### Legacy Swift versions
@@ -165,6 +177,15 @@ Images for the golden star used in the demo app are available in [here](https://
 
 [Here](https://github.com/evgenyneu/Cosmos/wiki/Using-Cosmos-in-a-scroll-view) is how to use Cosmos in a scroll view or a table view.
 
+
+## Using Cosmos in a modal screen
+
+iOS 13 introduced swiping gesture for closing modal screens, which [prevents Cosmos from working properly](https://github.com/evgenyneu/Cosmos/issues/148). The following setting fixes this problem:
+
+```
+cosmosView.settings.disablePanGestures = true
+```
+
 ## Using Cosmos settings from Objective-C
 
 [This manual](https://github.com/evgenyneu/Cosmos/wiki/Using-Cosmos-settings-in-Objective-C) describes how to set/read Cosmos settings in Objective-C apps.
@@ -199,7 +220,7 @@ Here are some other star rating controls for iOS:
 
 We would like to thank the following people for their valuable contributions.
 
-* [jsahoo](https://github.com/jsahoo) for additing ability to customize the Cosmos view from the interface builder with Carthage setup method.
+* [jsahoo](https://github.com/jsahoo) for adding ability to customize the Cosmos view from the interface builder with Carthage setup method.
 * [0x7fffffff](https://github.com/0x7fffffff) for changing `public` access-level modifiers to `open`.
 * [ali-zahedi](https://github.com/ali-zahedi) for updating to the latest version of Swift 3.0.
 * [augmentedworks](https://github.com/augmentedworks) for adding borders to filled stars.
@@ -214,6 +235,8 @@ We would like to thank the following people for their valuable contributions.
 * [chlumik](https://github.com/chlumik) for updating to Swift 4.2.
 * [rebeloper](https://github.com/rebeloper) for creating a [video tutorial](https://www.youtube.com/watch?v=Y4A_y29cy7Q).
 * [yuravake](https://github.com/yuravake) for adding `passTouchesToSuperview` setting.
+* [gcharita](https://github.com/gcharita) for adding Swift Package Manager support.
+* [benpackard](https://github.com/benpackard) for fixing Cosmos when used in a modal screen on iOS 13.
 
 
 

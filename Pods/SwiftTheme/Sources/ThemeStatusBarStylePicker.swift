@@ -50,6 +50,7 @@ final class ThemeStatusBarStylePicker: ThemePicker {}
         switch stringStyle.lowercased() {
         case "default"      : return .default
         case "lightcontent" : return .lightContent
+        case "darkcontent"  : if #available(iOS 13.0, *) { return .darkContent } else { return .default }
         default: return .default
         }
     }

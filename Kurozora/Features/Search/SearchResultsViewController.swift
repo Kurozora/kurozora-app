@@ -17,11 +17,6 @@ protocol SearchResultsTableViewControllerDelegate: class {
 
 class SearchResultsTableViewController: UITableViewController {
 	// MARK: - Properties
-	var statusBarStyle: UIStatusBarStyle {
-		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .lightContent }
-		return .fromString(statusBarStyleString)
-	}
-
 	var showResults: [ShowDetailsElement]? {
 		didSet {
 			if showResults != nil {
@@ -67,7 +62,7 @@ class SearchResultsTableViewController: UITableViewController {
 	weak var delegate: SearchResultsTableViewControllerDelegate?
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return statusBarStyle
+		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
 	// MARK: - View

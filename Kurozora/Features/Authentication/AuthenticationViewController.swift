@@ -10,6 +10,7 @@ import UIKit
 import SwiftTheme
 
 class AuthenticationViewController: UIViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var unlockDescriptionView: UIView!
 	@IBOutlet weak var unlockButton: UIButton! {
@@ -24,17 +25,12 @@ class AuthenticationViewController: UIViewController {
 		}
 	}
 
-	private var statusBarStyle: UIStatusBarStyle {
-		guard let statusBarStyleString = ThemeManager.value(for: "UIStatusBarStyle") as? String else { return .default }
-		let statusBarStyle = UIStatusBarStyle.fromString(statusBarStyleString)
-
-		return statusBarStyle
-	}
-
+	// MARK: - Properties
 	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return statusBarStyle
+		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
+	// MARK: - View
 	override func viewDidAppear(_ animated: Bool) {
 		Kurozora.shared.handleUserAuthentication()
 		unlockDescriptionView.isHidden = true

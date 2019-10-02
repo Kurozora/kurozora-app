@@ -125,8 +125,52 @@ enum KThemePicker: ThemeColorPicker {
 			default:
 				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 			}
+		case .visualEffect:
+			switch KThemePicker.visualEffect.blurValue {
+			case .dark:
+				return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+			case .light, .extraLight:
+				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+			default:
+				return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+			}
 		default:
 			return ThemeManager.color(for: self.stringValue) ?? .kurozora
+		}
+	}
+
+	/// Returns a UIBlurEffect.Style from the currently selected theme.
+	var blurValue: UIBlurEffect.Style {
+		guard let blurEffectStyleString = ThemeManager.value(for: KThemePicker.visualEffect.stringValue) as? String else { return .light }
+
+		switch blurEffectStyleString {
+		case "Dark":
+			return .dark
+		case "Light":
+			return .light
+		case "Extralight":
+			return .extraLight
+		case "Prominent":
+			return .prominent
+		case "Regular":
+			return .regular
+		default:
+			return .light
+		}
+	}
+
+	/// Returns a UIStatusBarStyle from the currently selected theme.
+	var statusBarValue: UIStatusBarStyle {
+		guard let statusBarStyleString = ThemeManager.value(for: KThemePicker.statusBarStyle.stringValue) as? String else { return .default }
+
+		switch statusBarStyleString {
+		case "LightContent":
+			return .lightContent
+		default:
+			if #available(iOS 13, *) {
+				return .darkContent
+			}
+			return .default
 		}
 	}
 }
