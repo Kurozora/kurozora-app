@@ -48,6 +48,10 @@ class ShowRatingCell: UITableViewCell {
 			WorkflowController.shared.isSignedIn {
 				self.rateShow(with: rating)
 			}
+
+			if !User.isSignedIn {
+				self.cosmosView.rating = 0.0
+			}
         }
 
 		// Configure average rating
@@ -71,6 +75,10 @@ class ShowRatingCell: UITableViewCell {
 
 		KService.shared.rateShow(showID, with: rating, withSuccess: { (success) in
 			if success {
+				// Update current rating for the user.
+				self.showDetailsElement?.currentUser?.currentRating = rating
+
+				// Show a success alert thanking the user for rating.
 				let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 				let sclAlertView = SCLAlertView(appearance: appearance).showSuccess("Submitted", subTitle: "Thanks for your rating.")
 

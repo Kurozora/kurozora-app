@@ -27,7 +27,7 @@ class InformationTableViewCell: UITableViewCell {
 		}
 	}
 
-	var indexPathRow: Int?
+	var indexPathRow: Int = 0
 	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			setup()
@@ -36,8 +36,8 @@ class InformationTableViewCell: UITableViewCell {
 
 	fileprivate func setup() {
 		guard let showDetail = showDetailsElement else { return }
-		if !User.isAdmin && indexPathRow == 0 {
-			indexPathRow = 2
+		if !User.isAdmin {
+			indexPathRow += 2
 		}
 
 		switch indexPathRow {

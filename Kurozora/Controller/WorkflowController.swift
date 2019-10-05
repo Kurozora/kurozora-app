@@ -23,7 +23,7 @@ class WorkflowController {
 	/// Returns the singleton WorkflowController instance.
 	static let shared = WorkflowController()
 
-	// MARK: - Initializations
+	// MARK: - Initializer
 	private init() {}
 
 	// MARK: - Functions

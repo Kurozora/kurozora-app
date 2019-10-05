@@ -83,7 +83,6 @@ class ShowDetailViewController: UIViewController {
 
 	// Analytics view
 	@IBOutlet weak var ratingScoreLabel: UILabel!
-	@IBOutlet weak var ratingScoreDecimalLabel: UILabel!
 	@IBOutlet weak var ratingTitleLabel: UILabel!
 	@IBOutlet weak var rankTitleLabel: UILabel!
 	@IBOutlet weak var ageTitleLabel: UILabel!
@@ -264,12 +263,7 @@ class ShowDetailViewController: UIViewController {
 			bannerImageView.image = cell.bannerImageView?.image
 		} else {
 			posterImageView.image = cell.posterImageView?.image
-
-			var decimalScore = cell.scoreButton?.titleForNormal
-			decimalScore?.removeFirst()
-
-			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal?.first ?? "0")"
-			ratingScoreDecimalLabel.text = decimalScore ?? "0"
+			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal ?? "0")"
 		}
 	}
 
@@ -340,17 +334,12 @@ class ShowDetailViewController: UIViewController {
 		// Configure rating
 		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
 			cosmosView.rating = averageRating
-
-			var decimalScore = "\(modf(averageRating).1)"
-			decimalScore.removeFirst()
-
-			ratingScoreLabel.text = "\(modf(averageRating).0)"
-			ratingScoreDecimalLabel.text = "." + decimalScore
+			ratingScoreLabel.text = "\(averageRating)"
 			ratingTitleLabel.text = "\(ratingCount) Ratings"
+			ratingTitleLabel.adjustsFontSizeToFitWidth = true
 		} else {
 			cosmosView.rating = 0.0
-			ratingScoreLabel.text = "0"
-			ratingScoreDecimalLabel.text = ".0"
+			ratingScoreLabel.text = "0.0"
 			ratingTitleLabel.text = "Not enough ratings"
 			ratingTitleLabel.adjustsFontSizeToFitWidth = true
 		}
@@ -592,7 +581,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		return showDetailsElement != nil ? ShowSections.all.count : 0
 	}
 
-	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let showSections = ShowSections(rawValue: section) else { return 0 }
 		var numberOfRows = 0
 
@@ -602,7 +591,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 				numberOfRows = 1
 			}
 		case .information:
-			numberOfRows = User.isAdmin ? 11 : 10
+			numberOfRows = User.isAdmin ? 11 : 9
 		case .rating:
 			numberOfRows = 1
 		case .cast:
@@ -615,7 +604,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		return numberOfRows
 	}
 
-	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let indexPath = indexPath
 
 		switch ShowSections(rawValue: indexPath.section)! {
@@ -646,7 +635,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		}
 	}
 
-	public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let showTitleCell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
 		var title = ""
 
@@ -674,7 +663,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		return showTitleCell.contentView
 	}
 
-	public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? headerHeightInSection : CGFloat.leastNormalMagnitude
 	}
 

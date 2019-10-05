@@ -28,7 +28,7 @@ class Kurozora {
 	/// The base keychain service of the Kurozora App.
 	let KDefaults = Keychain(service: "app.kurozora.anime")
 
-	// MARK: - Initializations
+	// MARK: - Initializer
 	private init() {}
 
 	// MARK: - Functions

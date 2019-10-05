@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="78r-dM-RFq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -131,7 +131,7 @@
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQz-Em-vu3" customClass="CosmosView" customModule="Cosmos">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pQz-Em-vu3" customClass="CosmosView" customModule="Cosmos">
                                             <rect key="frame" x="64.5" y="218" width="95" height="16"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
@@ -235,7 +235,6 @@
         <!--Episode 1-->
         <scene sceneID="hH8-k2-Rzd">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BuW-Ni-7jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="EpisodesDetailTableViewControlle" title="Episode 1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TAm-6J-FKB" customClass="EpisodesDetailTableViewControlle" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="zFl-6D-1Zh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -314,7 +313,7 @@
                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
                                     <rect key="frame" x="62.5" y="214" width="95" height="16"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
@@ -687,6 +686,7 @@
                         <outlet property="shadowImageView" destination="nuH-hZ-tHc" id="xoL-OP-y40"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BuW-Ni-7jn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2337.68115942029" y="-291.29464285714283"/>
         </scene>
@@ -1167,20 +1167,14 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bn9-La-lu4" userLabel="Left View">
                                                                     <rect key="frame" x="0.0" y="0.0" width="124.5" height="40"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYc-Dr-83c">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="13" height="20.5"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYc-Dr-83c">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="31" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=".0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB3-xl-k1Q">
-                                                                            <rect key="frame" x="12" y="2" width="11.5" height="16"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                            <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
                                                                         <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="bne-ZO-PxF" customClass="CosmosView" customModule="Cosmos">
-                                                                            <rect key="frame" x="24.5" y="4" width="100" height="10.5"/>
+                                                                            <rect key="frame" x="39" y="4" width="85.5" height="10.5"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                                                                     <real key="value" value="0.0"/>
@@ -1212,13 +1206,11 @@
                                                                     <gestureRecognizers/>
                                                                     <constraints>
                                                                         <constraint firstItem="hYc-Dr-83c" firstAttribute="top" secondItem="Bn9-La-lu4" secondAttribute="top" id="0yq-az-U6K"/>
-                                                                        <constraint firstItem="lB3-xl-k1Q" firstAttribute="top" secondItem="hYc-Dr-83c" secondAttribute="top" constant="2" id="J8g-cs-Yl0"/>
                                                                         <constraint firstItem="SEj-VM-Hy4" firstAttribute="top" secondItem="hYc-Dr-83c" secondAttribute="bottom" id="NeK-ve-fVZ"/>
                                                                         <constraint firstAttribute="trailing" secondItem="bne-ZO-PxF" secondAttribute="trailing" id="OvM-zn-CVc"/>
+                                                                        <constraint firstItem="bne-ZO-PxF" firstAttribute="leading" secondItem="hYc-Dr-83c" secondAttribute="trailing" constant="8" symbolic="YES" id="T8j-YQ-aD4"/>
                                                                         <constraint firstItem="bne-ZO-PxF" firstAttribute="centerY" secondItem="hYc-Dr-83c" secondAttribute="centerY" constant="-1" id="TUZ-aS-kTZ"/>
-                                                                        <constraint firstItem="bne-ZO-PxF" firstAttribute="leading" secondItem="lB3-xl-k1Q" secondAttribute="trailing" constant="1" id="TjF-UW-1bu"/>
                                                                         <constraint firstItem="SEj-VM-Hy4" firstAttribute="trailing" secondItem="bne-ZO-PxF" secondAttribute="trailing" id="WG7-HH-b2a"/>
-                                                                        <constraint firstItem="lB3-xl-k1Q" firstAttribute="leading" secondItem="hYc-Dr-83c" secondAttribute="trailing" constant="-1" id="Z1g-pt-X5T"/>
                                                                         <constraint firstItem="SEj-VM-Hy4" firstAttribute="leading" secondItem="hYc-Dr-83c" secondAttribute="leading" id="fbc-JC-XWj"/>
                                                                         <constraint firstItem="bne-ZO-PxF" firstAttribute="top" secondItem="Bn9-La-lu4" secondAttribute="top" constant="4" id="kfc-l2-PIZ"/>
                                                                         <constraint firstAttribute="bottom" secondItem="SEj-VM-Hy4" secondAttribute="bottom" id="lqz-4B-hOC"/>
@@ -1998,7 +1990,6 @@
                         <outlet property="posterImageView" destination="edP-dP-QTK" id="hi5-zk-fHh"/>
                         <outlet property="quickDetailsView" destination="6Xf-6s-V2C" id="oKW-7O-LGc"/>
                         <outlet property="rankTitleLabel" destination="Ld7-aX-eJ6" id="muB-0m-UPG"/>
-                        <outlet property="ratingScoreDecimalLabel" destination="lB3-xl-k1Q" id="PP5-14-2l4"/>
                         <outlet property="ratingScoreLabel" destination="hYc-Dr-83c" id="rRE-Dg-Fa3"/>
                         <outlet property="ratingTitleLabel" destination="SEj-VM-Hy4" id="Lf0-Fy-38w"/>
                         <outlet property="reminderButton" destination="rFd-a7-Y7J" id="bVN-cS-AxE"/>
@@ -2378,7 +2369,7 @@
         <image name="more" width="24" height="24"/>
         <image name="placeholder_episode_image" width="1920" height="1080"/>
         <image name="placeholder_poster_image" width="680" height="1000"/>
-        <image name="play" width="22" height="24"/>
+        <image name="play" width="40" height="40"/>
         <image name="shadow_right" width="30" height="6"/>
         <image name="shadow_template" width="6" height="30"/>
         <image name="star_empty" width="48" height="46"/>
