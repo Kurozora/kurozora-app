@@ -17,7 +17,7 @@ class HomeCollectionViewController: UICollectionViewController {
 	var searchController: SearchController!
 	var placeholderTimer: Timer?
 	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
-	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/api/v1"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
+	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
 	let actionButtonList = [["title": "Redeem", "segueId": "IAPSegue"], ["title": "Become a Pro User", "segueId": "IAPSegue"]]
 
 	var exploreCategories: [ExploreCategory]? {
@@ -59,35 +59,11 @@ class HomeCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
-		if WhatsNew.shouldPresent() {
-			let whatsNew = KWhatsNewViewController(items: [
-				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
-				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
-				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
-			])
-			whatsNew.titleText = "What's New"
-			whatsNew.buttonText = "Continue"
-			whatsNew.titleColor = KThemePicker.textColor.colorValue
-			whatsNew.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
-			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
-			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
-			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
-			present(whatsNew, animated: true, completion: nil)
-		}
+		// Show what's new in the app if necessary.
+		showWhatsNew()
 
-		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
-
-		searchController = SearchController(searchResultsController: searchResultsViewController)
-		searchController.delegate = self
-		searchController.searchResultsUpdater = searchResultsViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsViewController
-		startPlaceholderTimer(for: searchControllerBar)
-
-		navigationItem.searchController = searchController
+		// Setup search bar.
+		setupSearchBar()
 
         // Validate session
 		if User.isSignedIn {
@@ -132,6 +108,43 @@ class HomeCollectionViewController: UICollectionViewController {
 		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
 	}
 
+	/// Shows what's new in the app if necessary.
+	fileprivate func showWhatsNew() {
+		if WhatsNew.shouldPresent() {
+			let whatsNew = KWhatsNewViewController(items: [
+				WhatsNewItem.image(title: "Very Sleep", subtitle: "Easy on your eyes with the dark theme.", image: #imageLiteral(resourceName: "darkmode")),
+				WhatsNewItem.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
+				WhatsNewItem.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
+			])
+			whatsNew.titleText = "What's New"
+			whatsNew.buttonText = "Continue"
+			whatsNew.titleColor = KThemePicker.textColor.colorValue
+			whatsNew.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			whatsNew.itemTitleColor = KThemePicker.textColor.colorValue
+			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
+			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
+			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
+			present(whatsNew, animated: true, completion: nil)
+		}
+	}
+
+	/// Sets up the search bar and starts the placeholder timer.
+	fileprivate func setupSearchBar() {
+		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+
+		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController.delegate = self
+		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.viewController = self
+
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsViewController
+		startPlaceholderTimer(for: searchControllerBar)
+
+		navigationItem.searchController = searchController
+	}
+
+	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
 		KService.shared.getExplore(withSuccess: { (explore) in
 			DispatchQueue.main.async {
@@ -145,6 +158,11 @@ class HomeCollectionViewController: UICollectionViewController {
 		fetchExplore()
 	}
 
+	/**
+		Updates the search placeholder with new placeholder string every second.
+
+		- Parameter timer: A `Timer` object containing a reference to the search controller.
+	*/
 	@objc func updateSearchPlaceholder(_ timer: Timer) {
 		if let searchControllerBar = timer.userInfo as? UISearchBar {
 			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
@@ -153,12 +171,18 @@ class HomeCollectionViewController: UICollectionViewController {
 		}
 	}
 
+	/**
+		Starts the placeholder timer for the search bar if no timers are already running.
+
+		- Parameter searchControllerBar: The search bar for which the timer is started.
+	*/
 	func startPlaceholderTimer(for searchControllerBar: UISearchBar) {
 		if placeholderTimer == nil {
 			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder(_:)), userInfo: searchControllerBar, repeats: true)
 		}
 	}
 
+	/// Stops the placeholder timer if one is running.
 	func stopPlacholderTimer() {
 		if placeholderTimer != nil {
 			placeholderTimer?.invalidate()
@@ -166,6 +190,12 @@ class HomeCollectionViewController: UICollectionViewController {
 		}
 	}
 
+	/**
+		Configures the size of the items for each cell and section of the explore page.
+
+		- Parameter exploreCellStyle: A reference to the cell which the item size will depend on.
+		- Parameter section: The section number which the item size will depend on.
+	*/
 	func getItems(forCell exploreCellStyle: ExploreCellStyle? = nil, forSection section: Int? = -1) {
 		guard let exploreCellStyle = exploreCellStyle else {
 			if section == 0 {

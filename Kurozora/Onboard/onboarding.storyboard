@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGH-lg-KeC">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,11 +80,11 @@
                                     <outlet property="textField" destination="Y1R-ZD-VFX" id="spa-f1-adm"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="255.5" width="414" height="300.5"/>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="255.5" width="414" height="318"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYz-yc-iXY" id="5B2-1M-yaM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="300.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="318"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OOy-ag-49a">
@@ -126,23 +126,24 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7x-5a-Rci">
-                                            <rect key="frame" x="20" y="260" width="374" height="40.5"/>
+                                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7x-5a-Rci">
+                                            <rect key="frame" x="20" y="250" width="374" height="68"/>
+                                            <inset key="contentEdgeInsets" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
                                             <state key="normal">
                                                 <attributedString key="attributedTitle">
                                                     <fragment>
                                                         <string key="content">Your Kurozra ID information is used to enable Kurozora services when you sign in. Kurozora services includes the library where you can keep track of the shows you are interested in. </string>
                                                         <attributes>
-                                                            <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" metaFont="label" size="12"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
                                                     </fragment>
                                                     <fragment content="See how your data is managed...">
                                                         <attributes>
-                                                            <color key="NSColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="label" size="12"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            <color key="NSColor" red="1" green="0.57647000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -158,7 +159,7 @@
                                         <constraint firstItem="OOy-ag-49a" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="T5e-P6-Dky"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="OOy-ag-49a" secondAttribute="bottom" constant="40" id="VgP-eI-qwd"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="F7x-5a-Rci" secondAttribute="trailing" id="Xwn-i8-Sbx"/>
-                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="20" id="Xyg-3T-SD1"/>
+                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="10" id="Xyg-3T-SD1"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="OOy-ag-49a" secondAttribute="trailing" id="ZtL-Sq-pdr"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="OOy-ag-49a" secondAttribute="centerX" id="c5q-t1-LH7"/>
