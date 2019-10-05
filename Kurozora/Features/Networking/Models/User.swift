@@ -47,7 +47,7 @@ class UserProfile: JSONDecodable {
 	let active: Bool?
 
 	var following: Bool?
-	let currentRating: Double?
+	var currentRating: Double?
 	var libraryStatus: String?
 
 	let likeAction: Int?
