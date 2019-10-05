@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import StoreKit
+
+protocol SubscriptionButtonTableViewCellDelegate: class {
+	func subscriptionButtonPressed(_ sender: UIButton)
+}
 
 class SubscriptionButtonTableViewCell: UITableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var subscriptionButton: UIButton! {
 		didSet {
 			subscriptionButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
@@ -21,7 +27,10 @@ class SubscriptionButtonTableViewCell: UITableViewCell {
 		}
 	}
 
-	var subscriptionItem: [String: String]? {
+	// MARK: - Properties
+	weak var subscriptionButtonTableViewCellDelegate: SubscriptionButtonTableViewCellDelegate?
+	var subscriptionItem: SKProduct?
+	var subscriptionDetail: [String: String] = [:] {
 		didSet {
 			configureCell()
 		}
@@ -31,7 +40,17 @@ class SubscriptionButtonTableViewCell: UITableViewCell {
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let subscriptionItem = subscriptionItem else { return }
-		subscriptionButton.setTitle(subscriptionItem["title"], for: .normal)
-		subtextLabel.text = subscriptionItem["subtext"]
+
+		if #available(iOS 11.2, *) {
+			subscriptionButton.setTitle("\(subscriptionItem.priceLocaleFormatted) / \(subscriptionItem.subscriptionPeriod?.fullString ?? "Unknown")", for: .normal)
+		} else {
+			subscriptionButton.setTitle("\(subscriptionItem.priceLocaleFormatted) / \(subscriptionDetail["unit"] ?? "Unknown")", for: .normal)
+		}
+		subtextLabel.text = subscriptionDetail["subtext"]
+	}
+
+	// MARK: - IBActions
+	@IBAction func subscriptionButtonPressed(_ sender: UIButton) {
+		subscriptionButtonTableViewCellDelegate?.subscriptionButtonPressed(sender)
 	}
 }

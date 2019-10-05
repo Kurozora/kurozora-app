@@ -9,9 +9,9 @@
 import UIKit
 
 class SubscriptionInfoCell: UITableViewCell {
-	@IBOutlet weak var alreadyPurchasedButton: UIButton! {
+	@IBOutlet weak var restorePurchaseButton: UIButton! {
 		didSet {
-			alreadyPurchasedButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
+			restorePurchaseButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var subscriptionInfoLabel: UILabel! {
@@ -28,5 +28,10 @@ class SubscriptionInfoCell: UITableViewCell {
 		didSet {
 			privacyButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
+	}
+
+	// MARK: - IBActions
+	@IBAction func restorePurchaseButtonPressed(_ sender: UIButton) {
+		KStoreObserver.shared.restorePurchase()
 	}
 }

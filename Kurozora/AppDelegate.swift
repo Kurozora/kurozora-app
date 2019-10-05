@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 import Kingfisher
 import SCLAlertView
 import SwiftTheme
@@ -91,6 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Register the app for receiving push notifications
 		WorkflowController.shared.registerForPushNotifications()
+
+		// Init payment queue
+		SKPaymentQueue.default().add(KStoreObserver.shared)
 		return true
 	}
 
@@ -141,6 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+		SKPaymentQueue.default().remove(KStoreObserver.shared)
 	}
 }
 

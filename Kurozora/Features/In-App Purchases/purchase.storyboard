@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
-    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kAW-tw-WcP">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,37 +12,41 @@
         <scene sceneID="HdS-uI-ed4">
             <objects>
                 <tableViewController id="TcY-0N-W9c" customClass="PurchaseViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="20" id="R4i-m3-AUw">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="R4i-m3-AUw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="qMd-x1-hhp"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="9Os-Nf-PcB"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="Y3k-cc-I3v"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionPreviewTableViewCell" rowHeight="340" id="f8R-hk-9d8" customClass="SubscriptionPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="1024" height="340"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionPreviewTableViewCell" rowHeight="340" id="f8R-hk-9d8" customClass="SubscriptionPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="340"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f8R-hk-9d8" id="h3P-EM-Bwr">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="340"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UMG-zI-Qqu">
-                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="340"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tMk-up-reM">
-                                                <size key="itemSize" width="400" height="325"/>
+                                            <viewLayoutGuide key="safeArea" id="yt7-FK-jvZ"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tMk-up-reM">
+                                                <size key="itemSize" width="413" height="325"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubscriptionPreviewCollectionViewCell" id="Qul-Xz-gmT" customClass="SubscriptionPreviewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="7.5" width="400" height="325"/>
+                                                    <rect key="frame" x="0.0" y="7.5" width="413" height="325"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="325"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="413" height="325"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g4n-D2-RWH">
-                                                                <rect key="frame" x="0.0" y="0.0" width="400" height="325"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="413" height="325"/>
                                                             </imageView>
                                                         </subviews>
                                                     </view>
@@ -52,6 +57,7 @@
                                                         <constraint firstItem="g4n-D2-RWH" firstAttribute="top" secondItem="Qul-Xz-gmT" secondAttribute="top" id="d47-7n-R58"/>
                                                         <constraint firstAttribute="bottom" secondItem="g4n-D2-RWH" secondAttribute="bottom" id="h6E-Gd-yuE"/>
                                                     </constraints>
+                                                    <size key="customSize" width="413" height="325"/>
                                                     <connections>
                                                         <outlet property="previewImageView" destination="g4n-D2-RWH" id="aoV-mA-fQk"/>
                                                     </connections>
@@ -67,26 +73,27 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="zwI-Ty-hGK"/>
                                 <connections>
                                     <outlet property="collectionView" destination="UMG-zI-Qqu" id="gnj-l4-n8h"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionButtonTableViewCell" rowHeight="70" id="sk0-06-hNr" customClass="SubscriptionButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="395.5" width="1024" height="70"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionButtonTableViewCell" rowHeight="70" id="sk0-06-hNr" customClass="SubscriptionButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="395.5" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sk0-06-hNr" id="Jfw-kD-TiJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="NEW-jY-Gjc" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="344.5" y="0.0" width="335" height="44"/>
+                                            <rect key="frame" x="39.5" y="0.0" width="335" height="44"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="0iB-oA-yDn"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="335" id="Far-0a-9A3"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                            <state key="normal" title="$18,94 / 12 Months">
+                                            <state key="normal" title="$18,99 / 12 Months">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
@@ -95,13 +102,16 @@
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="subscriptionButtonPressed:" destination="sk0-06-hNr" eventType="touchUpInside" id="Qe0-T0-NHk"/>
+                                            </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(12 months at $1.58/mo. Save 60%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-ge-HNx">
-                                            <rect key="frame" x="411.5" y="49" width="201" height="16"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(12 months at $1.58/mo. Save 60%)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-ge-HNx">
+                                            <rect key="frame" x="99.5" y="49" width="215.5" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="mz8-fY-NaJ"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -121,45 +131,49 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="99f-nr-3V2"/>
                                 <connections>
                                     <outlet property="subscriptionButton" destination="NEW-jY-Gjc" id="qR1-oq-5fI"/>
                                     <outlet property="subtextLabel" destination="v7G-ge-HNx" id="alr-NG-yNO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionInfoCell" rowHeight="175" id="Yui-6E-7BW" customClass="SubscriptionInfoCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="465.5" width="1024" height="175"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubscriptionInfoCell" rowHeight="175" id="Yui-6E-7BW" customClass="SubscriptionInfoCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="465.5" width="414" height="175"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yui-6E-7BW" id="mEg-GL-t9k">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="175"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5O-ta-W8k">
-                                            <rect key="frame" x="378" y="0.0" width="268" height="29"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                            <rect key="frame" x="65" y="0.0" width="284" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="Already subscribed? Restore Purchases!"/>
+                                            <connections>
+                                                <action selector="restorePurchaseButtonPressed:" destination="Yui-6E-7BW" eventType="touchUpInside" id="r2A-DO-o7s"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9GA-eP-a38">
-                                            <rect key="frame" x="262" y="39" width="500" height="99"/>
+                                            <rect key="frame" x="22" y="40" width="370.5" height="109"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="E8j-qv-MyT"/>
                                             </constraints>
                                             <string key="text">Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRo-VL-3LH">
-                                            <rect key="frame" x="365" y="148" width="294" height="27"/>
+                                            <rect key="frame" x="57.5" y="159" width="299" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For more information, please visit our " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOx-EZ-k2b">
-                                                    <rect key="frame" x="0.0" y="0.0" width="215" height="27"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="215" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Be-Cd-8Ua">
-                                                    <rect key="frame" x="215" y="0.0" width="79" height="27"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <rect key="frame" x="215" y="0.0" width="84" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <state key="normal" title="Privacy Policy"/>
                                                     <connections>
                                                         <segue destination="8ZC-5k-tBw" kind="presentation" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="IRo-wA-59k"/>
@@ -197,10 +211,11 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="JRo-VL-3LH" secondAttribute="bottom" id="zfa-ju-Iw0"/>
                                 </constraints>
+                                <viewLayoutGuide key="safeArea" id="uTn-yD-z9G"/>
                                 <connections>
-                                    <outlet property="alreadyPurchasedButton" destination="z5O-ta-W8k" id="pkZ-15-Iy3"/>
                                     <outlet property="moreInfoLabel" destination="aOx-EZ-k2b" id="EGj-sT-LgB"/>
                                     <outlet property="privacyButton" destination="7Be-Cd-8Ua" id="0yg-x6-psQ"/>
+                                    <outlet property="restorePurchaseButton" destination="z5O-ta-W8k" id="JW6-Vc-rTA"/>
                                     <outlet property="subscriptionInfoLabel" destination="9GA-eP-a38" id="Pps-NZ-3sG"/>
                                 </connections>
                             </tableViewCell>
@@ -211,7 +226,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Become A Pro User" id="VFF-uw-QHB">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Uaq-1j-Qx4">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Uaq-1j-Qx4">
                             <connections>
                                 <action selector="dismissButtonPressed:" destination="TcY-0N-W9c" id="qvj-Ei-Zpy"/>
                             </connections>
@@ -220,7 +235,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l08-P8-GmK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1179.4921875" y="162.95754026354317"/>
+            <point key="canvasLocation" x="1178.2608695652175" y="162.72321428571428"/>
         </scene>
         <!--about-->
         <scene sceneID="6bm-iL-45x">
@@ -236,7 +251,7 @@
                 <navigationController storyboardIdentifier="PurchaseKNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kAW-tw-WcP" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="CHY-06-jkg">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
