@@ -247,44 +247,46 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: libraryStatus, action: { (title, value)  in
-			guard let showID = self.showDetailsElement?.id else {return}
+		WorkflowController.shared.isSignedIn {
+			let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: self.libraryStatus, action: { (title, value)  in
+				guard let showID = self.showDetailsElement?.id else {return}
 
-			KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
-				if success {
-					// Update entry in library
-					self.libraryStatus = value
-					self.showDetailsElement?.currentUser?.libraryStatus = value
-
-					let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
-					NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
-
-					self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
-				}
-			})
-		})
-
-		if let libraryStatus = libraryStatus, !libraryStatus.isEmpty {
-			action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-				KService.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
+				KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
 					if success {
-						self.libraryStatus = ""
+						// Update entry in library
+						self.libraryStatus = value
+						self.showDetailsElement?.currentUser?.libraryStatus = value
 
-						self.libraryStatusButton?.setTitle("ADD", for: .normal)
+						let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
+
+						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
 					}
 				})
-			}))
-		}
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+			})
 
-		// Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = sender.bounds
-		}
+			if let libraryStatus = self.libraryStatus, !libraryStatus.isEmpty {
+				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+					KService.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
+						if success {
+							self.libraryStatus = ""
 
-		if (homeCollectionViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.homeCollectionViewController?.present(action, animated: true, completion: nil)
+							self.libraryStatusButton?.setTitle("ADD", for: .normal)
+						}
+					})
+				}))
+			}
+			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+			// Present the controller
+			if let popoverController = action.popoverPresentationController {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			}
+
+			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.parentViewController?.present(action, animated: true, completion: nil)
+			}
 		}
 	}
 }

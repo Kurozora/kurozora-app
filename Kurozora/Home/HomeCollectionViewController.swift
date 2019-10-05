@@ -57,6 +57,7 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
 		if WhatsNew.shouldPresent() {
 			let whatsNew = KWhatsNewViewController(items: [
@@ -99,11 +100,8 @@ class HomeCollectionViewController: UICollectionViewController {
 			})
 		}
 
-        KService.shared.getExplore(withSuccess: { (explore) in
-			DispatchQueue.main.async {
-				self.exploreCategories = explore?.categories
-			}
-        })
+        // Fetch explore
+		fetchExplore()
 
 		#if DEBUG
 		numberOfItemsTextField.placeholder = "# items for: width, height"
@@ -132,6 +130,19 @@ class HomeCollectionViewController: UICollectionViewController {
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "home", bundle: nil)
 		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
+	}
+
+	fileprivate func fetchExplore() {
+		KService.shared.getExplore(withSuccess: { (explore) in
+			DispatchQueue.main.async {
+				self.exploreCategories = explore?.categories
+			}
+		})
+	}
+
+	/// Reload the data on the view.
+	@objc private func reloadData() {
+		fetchExplore()
 	}
 
 	@objc func updateSearchPlaceholder(_ timer: Timer) {
