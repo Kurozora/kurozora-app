@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -170,31 +170,31 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="236"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYc-zr-1BA">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="0.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="1"/>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="0.5" id="o7n-7k-VUR"/>
+                                                                            <constraint firstAttribute="height" constant="1" id="o7n-7k-VUR"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eH-MB-FV8">
-                                                                        <rect key="frame" x="0.0" y="20.5" width="335" height="215.5"/>
+                                                                        <rect key="frame" x="0.0" y="21" width="335" height="215"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ax0-hM-Q9R">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="215.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="215"/>
                                                                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                             </imageView>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="S8b-uP-sek" userLabel="Shadow">
-                                                                                <rect key="frame" x="0.0" y="121" width="335" height="94.5"/>
+                                                                                <rect key="frame" x="0.0" y="120.5" width="335" height="94.5"/>
                                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ReZero: Kara Hajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q9c-qI-Ysf">
-                                                                                <rect key="frame" x="8" y="171" width="319" height="20.5"/>
+                                                                                <rect key="frame" x="8" y="170.5" width="319" height="20.5"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adventure, Time travel, Fantasy" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0a-Ae-0An">
-                                                                                <rect key="frame" x="8" y="191.5" width="319" height="16"/>
+                                                                                <rect key="frame" x="8" y="191" width="319" height="16"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
@@ -635,7 +635,7 @@
                                             <rect key="frame" x="8" y="43.5" width="357" height="0.5"/>
                                             <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="0.5" id="xzf-9y-Sbt"/>
+                                                <constraint firstAttribute="height" constant="1" id="xzf-9y-Sbt"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -706,14 +706,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwE-CL-nEn">
-                                                    <rect key="frame" x="20" y="0.0" width="333" height="0.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="333" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="yDY-Cq-79b"/>
+                                                        <constraint firstAttribute="height" constant="1" id="yDY-Cq-79b"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohh-0h-6Cr">
-                                                    <rect key="frame" x="20" y="0.5" width="129.5" height="43.5"/>
+                                                    <rect key="frame" x="20" y="1" width="129.5" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -765,13 +765,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Top Anime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYW-C9-dB8">
-                                            <rect key="frame" x="20" y="8.5" width="317" height="41.5"/>
+                                            <rect key="frame" x="20" y="9" width="317" height="41"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zu-du-1th">
-                                            <rect key="frame" x="347" y="8.5" width="47" height="30"/>
+                                            <rect key="frame" x="347" y="9" width="47" height="30"/>
                                             <state key="normal" title="See All"/>
                                             <connections>
                                                 <action selector="seeAllButtonPressed:" destination="5ge-AQ-gGi" eventType="touchUpInside" id="MRH-iJ-3sV"/>
@@ -779,10 +779,10 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcD-7P-dRp">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="0.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="1"/>
                                             <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="0.5" id="saN-Qa-bmc"/>
+                                                <constraint firstAttribute="height" constant="1" id="saN-Qa-bmc"/>
                                             </constraints>
                                         </view>
                                     </subviews>

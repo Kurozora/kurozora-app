@@ -17,6 +17,7 @@ protocol ExploreCollectionViewCellDelegate: class {
 }
 
 class ExploreCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var bannerImageView: UIImageView?
 	@IBOutlet weak var posterImageView: UIImageView?
 	@IBOutlet weak var titleLabel: UILabel?
@@ -41,9 +42,9 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-
 	@IBOutlet weak var videoPlayerContainer: UIView?
 
+	// MARK: - Properties
 	var avPlayerViewController: AVPlayerViewController?
 	var avPlayer: AVPlayer?
 	var avPlayerLayer: AVPlayerLayer?
@@ -70,7 +71,9 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		get { return getVideoThumbnail() }
 	}
 	var avPlayerStatus: NSKeyValueObservation? = nil
+	var avPlayerTimeControl: NSKeyValueObservation? = nil
 
+	// MARK: - Cell
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		avPlayerViewController = AVPlayerViewController()
@@ -219,12 +222,6 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		let avPlayerItem = AVPlayerItem(url: videoUrl)
 
 		self.avPlayer = AVPlayer(playerItem: avPlayerItem)
-		avPlayerStatus = self.avPlayer?.observe(\.status, changeHandler: { (_, _) in
-			if self.avPlayer?.status == AVPlayer.Status.readyToPlay {
-				self.avPlayerViewController?.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
-			}
-		})
-		addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
 		self.avPlayer?.actionAtItemEnd = .none
 		self.avPlayer?.isMuted = true
 		self.avPlayerLayer = AVPlayerLayer(player: self.avPlayer)
@@ -236,6 +233,14 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		avPlayerViewController?.player = avPlayer
 		avPlayerViewController?.exitsFullScreenWhenPlaybackEnds = true
 
+		// Setup video thumbnail and observe play status
+		setupVideoThumbnail()
+		avPlayerTimeControl = self.avPlayer?.observe(\.timeControlStatus, changeHandler: { (_, _) in
+			if self.avPlayer?.timeControlStatus == .playing {
+				self.avPlayerViewController?.contentOverlayView?.removeSubviews()
+			}
+		})
+
 		homeCollectionViewController?.addChild(avPlayerViewController!)
 		avPlayerViewController?.view.frame = videoPlayerContainer!.bounds
 
@@ -243,6 +248,15 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		let avPlayerControllerView = avPlayerViewController!.view
 		videoPlayerContainer?.addSubview(avPlayerControllerView!)
 		avPlayerControllerView?.didMoveToSuperview()
+	}
+
+	/// Sets up the video thumbnail by observing the video player status.
+	fileprivate func setupVideoThumbnail() {
+		avPlayerStatus = self.avPlayer?.observe(\.status, changeHandler: { (_, _) in
+			if self.avPlayer?.status == AVPlayer.Status.readyToPlay {
+				self.avPlayerViewController?.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
+			}
+		})
 	}
 
 	// MARK: - IBActions
