@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bni-5S-KjO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bni-5S-KjO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,7 +29,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="CGY-d5-Mqd">
                                                     <rect key="frame" x="8" y="10" width="18" height="20"/>
-                                                    <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="18" id="aCp-4T-wDq"/>
                                                         <constraint firstAttribute="height" constant="20" id="iAh-u6-eGc"/>
@@ -222,7 +222,7 @@
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="4uB-93-O2C">
                                     <rect key="frame" x="8" y="8" width="18" height="20"/>
-                                    <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="18" id="JYN-jz-8YE"/>
                                         <constraint firstAttribute="height" constant="20" id="KLZ-NK-Gj7"/>
@@ -653,18 +653,11 @@
                         <viewLayoutGuide key="safeArea" id="fVr-X1-qp9"/>
                     </view>
                     <navigationItem key="navigationItem" title="Forums" id="km1-34-9KJ">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="search" id="9vH-y6-ZZs">
-                                <connections>
-                                    <action selector="searchButtonPressed:" destination="Haj-ko-0LW" id="5f9-u0-kSG"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Top" image="sort_top" id="3nN-Eo-w2O">
-                                <connections>
-                                    <action selector="sortingButtonPressed:" destination="Haj-ko-0LW" id="lHJ-IU-joo"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Top" image="sort_top" id="3nN-Eo-w2O">
+                            <connections>
+                                <action selector="sortingButtonPressed:" destination="Haj-ko-0LW" id="lHJ-IU-joo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="createThreadButton" destination="kJ8-Uu-FsA" id="N3a-mB-l5s"/>
