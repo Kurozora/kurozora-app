@@ -1,5 +1,5 @@
 //
-//  PurchasesViewController.swift
+//  PurchaseTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/06/2019.
@@ -10,7 +10,10 @@ import UIKit
 import StoreKit
 import SCLAlertView
 
-class PurchaseViewController: UITableViewController {
+class PurchaseTableViewController: UITableViewController {
+	// MARK: - IBOutlets
+	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem!
+
 	// MARK: - Properties
 	var subscriptionDetails = [["unit": "1 Month", "subtext": "Includes 1 week free trial!"], ["unit": "6 Months", "subtext": "(6 months at $1,99/mo. Save 50%)\nIncludes 2 weeks free trial!"], ["unit": "12 Months", "subtext": "(12 months at $1,58/mo. Save 60%)\nIncludes 2 weeks free trial!"]]
 	var productIDs: [String] = ["20000331KPLUS1M", "20000331KPLUS6M", "20000331KPLUS12M"]
@@ -27,14 +30,25 @@ class PurchaseViewController: UITableViewController {
 			}
 		}
 	}
+	var leftNavigationBarButtonIsHidden: Bool = false {
+		didSet {
+			if leftNavigationBarButtonIsHidden {
+				navigationItem.leftBarButtonItems = nil
+			}
+		}
+	}
 
 	// MARK: - View
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 
 		// Setup subscriptions
 		fetchProductInformation()
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		// Setup table view
 		tableView.rowHeight = UITableView.automaticDimension
@@ -56,13 +70,13 @@ class PurchaseViewController: UITableViewController {
 	}
 
 	// MARK: - IBActions
-	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
+	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
 	}
 }
 
 // MARK: - UITableViewDataSource
-extension PurchaseViewController {
+extension PurchaseTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 3
 	}
@@ -76,24 +90,24 @@ extension PurchaseViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SubscriptionPreviewTableViewCell", for: indexPath) as! SubscriptionPreviewTableViewCell
+			let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchasePreviewTableViewCell", for: indexPath) as! PurchasePreviewTableViewCell
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
-			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SubscriptionButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
-			subscriptionButtonTableViewCell.subscriptionItem = productsArray[indexPath.row]
+			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
+			subscriptionButtonTableViewCell.purchaseItem = productsArray[indexPath.row]
 			subscriptionButtonTableViewCell.subscriptionDetail = subscriptionDetails[indexPath.row]
-			subscriptionButtonTableViewCell.subscriptionButton.tag = indexPath.row
-			subscriptionButtonTableViewCell.subscriptionButtonTableViewCellDelegate = self
+			subscriptionButtonTableViewCell.purchaseButton.tag = indexPath.row
+			subscriptionButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
 			return subscriptionButtonTableViewCell
 		}
 
-		let subscriptionInfoCell = tableView.dequeueReusableCell(withIdentifier: "SubscriptionInfoCell", for: indexPath) as! SubscriptionInfoCell
-		return subscriptionInfoCell
+		let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseInfoTableViewCell", for: indexPath) as! PurchaseInfoTableViewCell
+		return purchaseInfoTableViewCell
 	}
 }
 
 // MARK: -  UITableViewDelegate
-extension PurchaseViewController {
+extension PurchaseTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		if indexPath.section == 0 {
 			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
@@ -108,13 +122,13 @@ extension PurchaseViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 20
+		return 22
 	}
 }
 
 // MARK: - SubscriptionButtonTableViewCellDelegate
-extension PurchaseViewController: SubscriptionButtonTableViewCellDelegate {
-	func subscriptionButtonPressed(_ sender: UIButton) {
+extension PurchaseTableViewController: PurchaseButtonTableViewCellDelegate {
+	func purchaseButtonPressed(_ sender: UIButton) {
 		if self.productsArray.count != 0 {
 			KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { (alert, product, transaction) in
 				if let tran = transaction, let prod = product {

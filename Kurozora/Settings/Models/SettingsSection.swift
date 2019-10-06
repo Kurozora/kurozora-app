@@ -28,11 +28,8 @@ extension SettingsTableViewController {
 		/// The section representing the general group of cells.
 		case general
 
-		/// The section representing the iap group of cells.
-		case iap
-
-		/// The section representing the rate group of cells.
-		case rate
+		/// The section representing the support group of cells.
+		case support
 
 		/// The section representing the social group of cells.
 		case social
@@ -41,16 +38,16 @@ extension SettingsTableViewController {
 		case about
 
 		/// An array containing all settings sections.
-		static let all: [Section] = [.account, .admin, .alerts, .general, .iap, .rate, .social, .about]
+		static let all: [Section] = [.account, .admin, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all normal user settings sections.
-		static let allUser: [Section] = [.account, .alerts, .general, .iap, .rate, .social, .about]
+		static let allUser: [Section] = [.account, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all settings rows separated by all settings sections.
-		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .admin: Row.allAdmin, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
+		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .admin: Row.allAdmin, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// An array containing all user settings rows separated by user settings sections.
-		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .iap: Row.allIAP, .rate: Row.allRate, .social: Row.allSocial, .about: Row.allAbout]
+		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// The string value of a settings section.
 		var stringValue: String {
@@ -63,10 +60,8 @@ extension SettingsTableViewController {
 				return "Alerts"
 			case .general:
 				return "General"
-			case .iap:
-				return "In-App Purchases"
-			case .rate:
-				return "Rate"
+			case .support:
+				return "Support Us"
 			case .social:
 				return "Social"
 			case .about:
@@ -105,14 +100,17 @@ extension SettingsTableViewController {
 		/// The row representing the privacy cell.
 		case privacy
 
+		/// The row representing the rate cell.
+		case rate
+
 		/// The row representing the unlock features cell.
 		case unlockFeatures
 
 		/// The row representing the restore features cell.
 		case restoreFeatures
 
-		/// The row representing the rate cell.
-		case rate
+		/// The row representing the tip jar cell.
+		case tipjar
 
 		/// The row representing the Twitter cell.
 		case followTwitter
@@ -121,10 +119,10 @@ extension SettingsTableViewController {
 		case followMedium
 
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .keychain, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .unlockFeatures, .restoreFeatures, .rate, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .keychain, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all normal user settings rows.
-		static let allUser: [Row] = [.account, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .unlockFeatures, .restoreFeatures, .rate, .followTwitter, .followMedium]
+		static let allUser: [Row] = [.account, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all account section settings rows.
 		static let allAccount: [Row] = [.account]
@@ -138,11 +136,8 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static let allGeneral: [Row] = [.displayBlindness, .theme, .icon, .biometrics, .cache, .privacy]
 
-		/// An array containing all in-app purchases section settings rows.
-		static let allIAP: [Row] = [.unlockFeatures, .restoreFeatures]
-
-		/// An array containing all rate section settings rows.
-		static let allRate: [Row] = [.rate]
+		/// An array containing all support section settings rows.
+		static let allSupport: [Row] = [.rate, .unlockFeatures, .restoreFeatures, .tipjar]
 
 		/// An array containing all social section settings rows.
 		static let allSocial: [Row] = [.followTwitter, .followMedium]
@@ -171,12 +166,14 @@ extension SettingsTableViewController {
 				return "CacheSegue"
 			case .privacy:
 				return "PrivacySegue"
-			case .unlockFeatures:
-				return "IAPSegue"
-			case .restoreFeatures:
-				return ""
 			case .rate:
 				return ""
+			case .unlockFeatures:
+				return "SubscriptionSegue"
+			case .restoreFeatures:
+				return ""
+			case .tipjar:
+				return "TipJarSegue"
 			case .followTwitter:
 				return ""
 			case .followMedium:
@@ -205,12 +202,14 @@ extension SettingsTableViewController {
 				return .label
 			case .privacy:
 				return .none
-			case .unlockFeatures:
-				return .none
-			case .restoreFeatures:
-				return .none
 			case .rate:
 				return .none
+			case .unlockFeatures:
+				return .chevron
+			case .restoreFeatures:
+				return .none
+			case .tipjar:
+				return .chevron
 			case .followTwitter:
 				return .none
 			case .followMedium:
@@ -247,12 +246,14 @@ extension SettingsTableViewController {
 				return "Cache"
 			case .privacy:
 				return "Privacy"
+			case .rate:
+				return "Rate on App Store"
 			case .unlockFeatures:
 				return "Unlock Features"
 			case .restoreFeatures:
 				return "Restore Purchase"
-			case .rate:
-				return "Rate us on the App Store"
+			case .tipjar:
+				return "Tip Jar"
 			case .followTwitter:
 				return "Follow us on Twitter"
 			case .followMedium:
@@ -298,12 +299,14 @@ extension SettingsTableViewController {
 				return #imageLiteral(resourceName: "clear_cache_icon")
 			case .privacy:
 				return #imageLiteral(resourceName: "privacy_icon")
+			case .rate:
+				return #imageLiteral(resourceName: "rate_icon")
 			case .unlockFeatures:
 				return #imageLiteral(resourceName: "unlock_icon")
 			case .restoreFeatures:
 				return #imageLiteral(resourceName: "restore_icon")
-			case .rate:
-				return #imageLiteral(resourceName: "rate_icon")
+			case .tipjar:
+				return #imageLiteral(resourceName: "tipjar_icon")
 			case .followTwitter:
 				return #imageLiteral(resourceName: "twitter_icon")
 			case .followMedium:

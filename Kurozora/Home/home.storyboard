@@ -22,7 +22,7 @@
                 <viewControllerPlaceholder storyboardName="purchase" id="0a7-9G-Fd6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9D-7O-4i7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1434" y="594"/>
+            <point key="canvasLocation" x="1350" y="594"/>
         </scene>
         <!--about-->
         <scene sceneID="TgQ-yC-U46">
@@ -30,7 +30,7 @@
                 <viewControllerPlaceholder storyboardName="about" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1749" y="594"/>
+            <point key="canvasLocation" x="1840" y="594"/>
         </scene>
         <!--Genres-->
         <scene sceneID="cIO-Cu-Zkz">
@@ -808,7 +808,8 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="xX5-6j-hfy"/>
                     <connections>
-                        <segue destination="0a7-9G-Fd6" kind="presentation" identifier="IAPSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="RsP-AQ-HCo"/>
+                        <segue destination="0a7-9G-Fd6" kind="presentation" identifier="SubscriptionSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="RsP-AQ-HCo"/>
+                        <segue destination="SJ2-V2-Ihb" kind="presentation" identifier="RedeemSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="Zt9-u1-TfH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEf-UQ-MwJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -864,6 +865,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2RC-qk-FlI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2560.8000000000002" y="-15.517241379310345"/>
+        </scene>
+        <!--RedeemKNavigationController-->
+        <scene sceneID="zeC-Uz-NjZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="purchase" referencedIdentifier="RedeemKNavigationController" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1588" y="594"/>
         </scene>
     </scenes>
     <resources>

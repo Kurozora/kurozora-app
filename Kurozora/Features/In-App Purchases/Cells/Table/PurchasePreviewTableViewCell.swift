@@ -1,5 +1,5 @@
 //
-//  SubscriptionPreviewTableViewCell.swift
+//  PurchasePreviewTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 31/07/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SubscriptionPreviewTableViewCell: UITableViewCell {
+class PurchasePreviewTableViewCell: UITableViewCell {
 	@IBOutlet weak var collectionView: UICollectionView! {
 		didSet {
 			collectionView.dataSource = self
@@ -19,7 +19,7 @@ class SubscriptionPreviewTableViewCell: UITableViewCell {
 }
 
 // MARK: - UICollectionViewDataSource
-extension SubscriptionPreviewTableViewCell: UICollectionViewDataSource {
+extension PurchasePreviewTableViewCell: UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
@@ -29,18 +29,18 @@ extension SubscriptionPreviewTableViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let subscriptionPreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubscriptionPreviewCollectionViewCell", for: indexPath) as! SubscriptionPreviewCollectionViewCell
-		subscriptionPreviewCollectionViewCell.previewItem = previewItems[indexPath.item]
-		return subscriptionPreviewCollectionViewCell
+		let purchasePreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PurchasePreviewCollectionViewCell", for: indexPath) as! PurchasePreviewCollectionViewCell
+		purchasePreviewCollectionViewCell.previewItem = previewItems[indexPath.item]
+		return purchasePreviewCollectionViewCell
 	}
 }
 
 // MARK: - UICollectionViewDelegate
-extension SubscriptionPreviewTableViewCell: UICollectionViewDelegate {
+extension PurchasePreviewTableViewCell: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension SubscriptionPreviewTableViewCell: UICollectionViewDelegateFlowLayout {
+extension PurchasePreviewTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if UIDevice.isPad {
 			if UIDevice.isLandscape {

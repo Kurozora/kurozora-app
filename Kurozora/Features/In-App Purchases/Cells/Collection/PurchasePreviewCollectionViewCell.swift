@@ -1,5 +1,5 @@
 //
-//  SubscriptionPreviewCollectionViewCell.swift
+//  PurchasePreviewCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 31/07/2019.
@@ -8,9 +8,11 @@
 
 import UIKit
 
-class SubscriptionPreviewCollectionViewCell: UICollectionViewCell {
+class PurchasePreviewCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var previewImageView: UIImageView!
 
+	// MARK: - Properties
 	var previewItem: String? {
 		didSet {
 			configureCell()

@@ -17,8 +17,9 @@ class SettingsTableViewController: UITableViewController {
     lazy var twitterPageURL = "https://www.twitter.com/KurozoraApp"
     lazy var mediumPageDeepLink = "medium://@kurozora"
     lazy var mediumPageURL = "https://medium.com/@kurozora"
-	lazy var settingsSection = User.isAdmin ? Section.all : Section.allUser
-	lazy var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
+	lazy var rateURL = "itms-apps://apps.apple.com/gb/app/id1442061397?action=write-review"
+	var settingsSection = User.isAdmin ? Section.all : Section.allUser
+	var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -41,6 +42,14 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func dismissPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "SubscriptionSegue" {
+			let kNavigationController = segue.destination as? KNavigationController
+			(kNavigationController?.viewControllers.first as? PurchaseTableViewController)?.leftNavigationBarButtonIsHidden = true
+		}
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -75,10 +84,6 @@ extension SettingsTableViewController {
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch settingsSection[section] {
-		case .iap:
-			return """
-			Going pro unlocks lots of awesome features and helps us keep improving the app 🚀
-			"""
 		case .about:
 			return """
 			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
@@ -88,30 +93,6 @@ extension SettingsTableViewController {
 			return nil
 		}
 	}
-//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-//        switch section {
-//        case 0:
-//            return nil
-//        case 1:
-//            var message = ""
-//            if let user = User.currentUser(),
-//                user.hasTrial() &&
-//                    InAppController.purchasedPro() == nil &&
-//                    InAppController.purchasedProPlus() == nil {
-//                message = "** You're on a 15 day PRO trial **\n"
-//            }
-//            message += "Going PRO unlocks all features and help us keep improving the app"
-//            return message
-//        case 2:
-//            return "If you're looking for support drop us a message on Twitter"
-//        case 3:
-//            let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-//            let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-//            return "Created by Anime fans for Anime fans, enjoy!\nKurozora \(version) (\(build))"
-//        default:
-//            return nil
-//        }
-//    }
 }
 
 // MARK: - UITableViewDelegate
@@ -178,38 +159,35 @@ extension SettingsTableViewController {
 
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 			return
-//		case .restoreFeatures:
-//			InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject? in
-//				if let _ = task.result {
-//					let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-//					alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//
-//					self.presentViewController(alert, animated: true, completion: nil)
-//				}
-//
-//				return nil
-//			})
-		case .followTwitter:
-			var url: URL?
-			let twitterScheme = URL(string: "twitter://")!
-
-			if UIApplication.shared.canOpenURL(twitterScheme) {
-				url = URL(string: twitterPageDeepLink)
-			} else {
-				url = URL(string: twitterPageURL)
+		case .rate:
+			if let rateURL = URL(string: rateURL) {
+				UIApplication.shared.open(rateURL, options: [:], completionHandler: nil)
 			}
-			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+			return
+		case .restoreFeatures:
+			KStoreObserver.shared.restorePurchase()
+			return
+		case .tipjar:
+			shouldPerformSegue = true
+		case .followTwitter:
+			if var twitterScheme = URL(string: "twitter://") {
+				if UIApplication.shared.canOpenURL(twitterScheme) {
+					twitterScheme = URL(string: twitterPageDeepLink) ?? twitterScheme
+				} else {
+					twitterScheme = URL(string: twitterPageURL) ?? twitterScheme
+				}
+				UIApplication.shared.open(twitterScheme, options: [:], completionHandler: nil)
+			}
 			return
 		case .followMedium:
-			var url: URL?
-			let mediumScheme = URL(string: "medium://")!
-
-			if UIApplication.shared.canOpenURL(mediumScheme) {
-				url = URL(string: mediumPageDeepLink)
-			} else {
-				url = URL(string: mediumPageURL)
+			if var mediumScheme = URL(string: "medium://") {
+				if UIApplication.shared.canOpenURL(mediumScheme) {
+					mediumScheme = URL(string: mediumPageDeepLink) ?? mediumScheme
+				} else {
+					mediumScheme = URL(string: mediumPageURL) ?? mediumScheme
+				}
+				UIApplication.shared.open(mediumScheme, options: [:], completionHandler: nil)
 			}
-			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
 			return
 		default: break
 		}

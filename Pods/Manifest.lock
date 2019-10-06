@@ -22,8 +22,8 @@ PODS:
   - NotificationBannerSwift (2.5.1):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
-  - Pageboy (3.4.0)
-  - PusherSwift (7.0.0):
+  - Pageboy (3.5.0)
+  - PusherSwift (7.1.0):
     - CryptoSwift (~> 0.9)
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
@@ -60,9 +60,9 @@ PODS:
   - SwiftTheme (0.4.7)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.1)
-  - Tabman (2.6.1):
+  - Tabman (2.6.3):
     - AutoInsetter (~> 1.8.0)
-    - Pageboy (~> 3.4.0)
+    - Pageboy (~> 3.5.0)
   - TRON (5.0.0-rc.1):
     - Alamofire (~> 5.0.0-rc.1)
     - TRON/Core (= 5.0.0-rc.1)
@@ -73,7 +73,7 @@ PODS:
     - SwiftyJSON (~> 5.0)
     - TRON/Core
   - WhatsNew (0.4.6)
-  - WordPress-Aztec-iOS (1.9.0)
+  - WordPress-Aztec-iOS (1.10.1)
 
 DEPENDENCIES:
   - AXPhotoViewer
@@ -163,8 +163,8 @@ SPEC CHECKSUMS:
   Kingfisher: 7e5cef5ee82c0576e7d23035e1710b7e3b0a1e85
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
-  Pageboy: fd23a9b9e8156f4fac62731637f5d6f7d1e1c3aa
-  PusherSwift: d15d6290be0b0b57fd9ac80b03661a6ba24623ec
+  Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
+  PusherSwift: dc00ebecf31e897802e0e011450670971cb9bf63
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RichTextView: 072585daa885ac3c32b394bce31d93e0a3f317c0
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
@@ -175,10 +175,10 @@ SPEC CHECKSUMS:
   SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
-  Tabman: 2a8d767aa8c791617787f1567bdf081caf8835db
+  Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
-  WordPress-Aztec-iOS: e58c7ab55b0bae53418a705876093fed314b6586
+  WordPress-Aztec-iOS: 419ebf7a333fe147da33e4754978f20a5fd08a86
 
 PODFILE CHECKSUM: 3907f88cc79d648cc4abe923de5ac97b7cd0ad4d
 

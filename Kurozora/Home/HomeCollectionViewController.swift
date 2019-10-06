@@ -18,7 +18,7 @@ class HomeCollectionViewController: UICollectionViewController {
 	var placeholderTimer: Timer?
 	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
 	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
-	let actionButtonList = [["title": "Redeem", "segueId": "IAPSegue"], ["title": "Become a Pro User", "segueId": "IAPSegue"]]
+	let actionButtonList = [["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
 
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
@@ -489,7 +489,7 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension HomeCollectionViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
 		searchController.searchBar.showsCancelButton = true
-		
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {

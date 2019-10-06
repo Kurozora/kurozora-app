@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -334,9 +334,10 @@
                         <segue destination="4UV-W6-1yL" kind="showDetail" identifier="IconSegue" id="VrC-nK-bwx"/>
                         <segue destination="GAQ-MX-p4x" kind="presentation" identifier="PrivacySegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="DS0-nx-xBb"/>
                         <segue destination="Qbb-Nv-rmu" kind="showDetail" identifier="ThemeSegue" id="QUV-Rc-9a7"/>
-                        <segue destination="9mD-qe-ThA" kind="presentation" identifier="IAPSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="tmQ-Ga-tgo"/>
+                        <segue destination="9mD-qe-ThA" kind="showDetail" identifier="SubscriptionSegue" id="tmQ-Ga-tgo"/>
                         <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="BiometricsSegue" id="6OH-ww-Ncv"/>
                         <segue destination="41N-ao-yZL" kind="showDetail" identifier="AccountSegue" id="ivv-DR-gda"/>
+                        <segue destination="v7i-U9-USe" kind="showDetail" identifier="TipJarSegue" id="TGi-W3-7pk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -351,13 +352,23 @@
             </objects>
             <point key="canvasLocation" x="-1859" y="-1116"/>
         </scene>
+        <!--TipJarKNavigationController-->
+        <scene sceneID="71c-GG-QAR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="purchase" referencedIdentifier="TipJarKNavigationController" id="v7i-U9-USe" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="qo0-p5-YVW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2C9-JS-U5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1776" y="-846"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chevron_forward" width="13" height="24"/>
         <image name="display_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5fp-aD-46u"/>
+        <segue reference="JqT-i1-ECV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
