@@ -23,7 +23,7 @@ class NotificationsViewController: UITableViewController {
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	var searchResultsViewController: SearchResultsTableViewController!
+	var searchResultsTableViewController: SearchResultsTableViewController!
 	var searchController: SearchController!
 	var grouping: NotificationGroupStyle = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
@@ -62,31 +62,20 @@ class NotificationsViewController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
-		// Search bar
-		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		// Setup search bar.
+		setupSearchBar()
 
-		searchController = SearchController(searchResultsController: searchResultsViewController)
-		searchController.delegate = self
-		searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
-		searchController.searchResultsUpdater = searchResultsViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsViewController
-
-		navigationItem.searchController = searchController
-
-		// Refresh controller
+		// Refresh controller.
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl?.addTarget(self, action: #selector(fetchNotifications), for: .valueChanged)
 		enableActions()
 
-		// Setup table view
+		// Setup table view.
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 
-		// Setup empty data view
+		// Setup empty data view.
 		setupEmptyDataView()
 	}
 
@@ -99,6 +88,22 @@ class NotificationsViewController: UITableViewController {
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "notification", bundle: nil)
 		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
+	}
+
+	/// Sets up the search bar.
+	fileprivate func setupSearchBar() {
+		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+
+		searchController = SearchController(searchResultsController: searchResultsTableViewController)
+		searchController.delegate = self
+		searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
+		searchController.searchResultsUpdater = searchResultsTableViewController
+		searchController.viewController = self
+
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsTableViewController
+
+		navigationItem.searchController = searchController
 	}
 
 	/// Set up the empty data view.
@@ -513,6 +518,8 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 // MARK: - UISearchControllerDelegate
 extension NotificationsViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = true
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
@@ -522,6 +529,8 @@ extension NotificationsViewController: UISearchControllerDelegate {
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = false
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {

@@ -172,7 +172,7 @@ extension KService {
 				}
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
+//			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
 			print("Received show search error: \(error)")
 		})
 	}

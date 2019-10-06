@@ -33,13 +33,42 @@ class ForumsViewController: TabmanViewController {
 	let bar = TMBar.ButtonBar()
 
 	// MARK: - View
-    override func viewDidLoad() {
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		navigationItem.hidesSearchBarWhenScrolling = false
+	}
+
+	override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
+
+		// Setup search bar.
+		setupSearchBar()
+
+		// Tabman view controllers.
 		dataSource = self
 
-		// Search bar
+		// Tabman bar.
+		initTabmanBarView()
+
+		// Fetch forum sections.
+		fetchForumsSections()
+
+//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
+//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
+    }
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		navigationItem.hidesSearchBarWhenScrolling = true
+	}
+
+	// MARK: - Functions
+	/// Sets up the search bar.
+	fileprivate func setupSearchBar() {
 		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 		searchResultsTableViewController?.delegate = self
 
@@ -52,20 +81,9 @@ class ForumsViewController: TabmanViewController {
 		let searchControllerBar = searchController.searchBar
 		searchControllerBar.delegate = searchResultsTableViewController
 
-		// Tabman view controllers
-		dataSource = self
+		navigationItem.searchController = searchController
+	}
 
-		// Tabman bar
-		initTabmanBarView()
-
-		// Fetch forum sections
-		fetchForumsSections()
-
-//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
-//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
-    }
-
-	// MARK: - Functions
 	/// Fetches the forum sections from the server.
 	func fetchForumsSections() {
 		KService.shared.getForumSections(withSuccess: { (sections) in
@@ -188,11 +206,6 @@ class ForumsViewController: TabmanViewController {
 //			}
 		}
 	}
-
-	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-		self.navigationItem.searchController = searchController
-		searchController.searchBar.becomeFirstResponder()
-	}
 }
 
 // MARK: - PageboyViewControllerDataSource
@@ -225,6 +238,8 @@ extension ForumsViewController: TMBarDataSource {
 // MARK: - UISearchControllerDelegate
 extension ForumsViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = true
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
@@ -234,6 +249,8 @@ extension ForumsViewController: UISearchControllerDelegate {
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = false
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
@@ -246,6 +263,6 @@ extension ForumsViewController: UISearchControllerDelegate {
 // MARK: - SearchResultsTableViewControllerDelegate
 extension ForumsViewController: SearchResultsTableViewControllerDelegate {
 	func didCancelSearchController() {
-		self.navigationItem.searchController = nil
+//		self.navigationItem.searchController = nil
 	}
 }

@@ -24,14 +24,12 @@ class SearchController: UISearchController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		searchBar.sizeToFit()
-
-		let searchControllerBar = self.searchBar
-		searchControllerBar.barStyle = .black
-		searchControllerBar.searchBarStyle = .default
-		searchControllerBar.isTranslucent = true
-		searchControllerBar.showsCancelButton = true
-		searchControllerBar.scopeButtonTitles = scopeButtonTitles
-		searchControllerBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
+		searchBar.barStyle = .default
+		searchBar.searchBarStyle = .default
+		searchBar.isTranslucent = true
+		searchBar.showsCancelButton = true
+		searchBar.scopeButtonTitles = scopeButtonTitles
+		searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

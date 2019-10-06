@@ -15,7 +15,6 @@ import SwiftTheme
 class LibraryViewController: TabmanViewController {
 	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutButton: UIBarButtonItem!
-	@IBOutlet var searchButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	lazy var viewControllers = [UIViewController]()
@@ -36,6 +35,12 @@ class LibraryViewController: TabmanViewController {
 	#endif
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		navigationItem.hidesSearchBarWhenScrolling = false
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -45,18 +50,8 @@ class LibraryViewController: TabmanViewController {
 		// Actions
 		enableActions()
 
-		// Search bar
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
-		searchResultsTableViewController?.delegate = self
-
-		searchController = SearchController(searchResultsController: searchResultsTableViewController)
-		searchController.delegate = self
-		searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
-		searchController.searchResultsUpdater = searchResultsTableViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsTableViewController
+		// Setup search bar.
+		setupSearchBar()
 
 		// Tabman view controllers
 		dataSource = self
@@ -73,6 +68,12 @@ class LibraryViewController: TabmanViewController {
 		navigationItem.titleView = numberOfItemsTextField
 		#endif
     }
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		navigationItem.hidesSearchBarWhenScrolling = true
+	}
 
 	// MARK: - Functions
 	#if DEBUG
@@ -98,6 +99,23 @@ class LibraryViewController: TabmanViewController {
 		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
 	}
 	#endif
+
+	/// Sets up the search bar.
+	fileprivate func setupSearchBar() {
+		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		searchResultsTableViewController?.delegate = self
+
+		searchController = SearchController(searchResultsController: searchResultsTableViewController)
+		searchController.delegate = self
+		searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
+		searchController.searchResultsUpdater = searchResultsTableViewController
+		searchController.viewController = self
+
+		let searchControllerBar = searchController.searchBar
+		searchControllerBar.delegate = searchResultsTableViewController
+
+		navigationItem.searchController = searchController
+	}
 
 	/// Applies the the style for the currently enabled theme on the tabman bar.
 	private func styleTabmanBarView() {
@@ -264,11 +282,6 @@ class LibraryViewController: TabmanViewController {
 	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
 		changeLayout()
 	}
-
-	@IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
-		self.navigationItem.searchController = searchController
-		searchController.searchBar.becomeFirstResponder()
-	}
 }
 
 // MARK: - LibraryListViewControllerDelegate
@@ -306,6 +319,8 @@ extension LibraryViewController: TMBarDataSource {
 // MARK: - UISearchControllerDelegate
 extension LibraryViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = true
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
@@ -315,6 +330,8 @@ extension LibraryViewController: UISearchControllerDelegate {
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = false
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {

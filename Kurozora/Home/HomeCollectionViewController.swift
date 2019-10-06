@@ -13,7 +13,7 @@ import WhatsNew
 
 class HomeCollectionViewController: UICollectionViewController {
 	// Search bar controller
-	var searchResultsViewController: SearchResultsTableViewController?
+	var searchResultsTableViewController: SearchResultsTableViewController?
 	var searchController: SearchController!
 	var placeholderTimer: Timer?
 	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
@@ -65,7 +65,7 @@ class HomeCollectionViewController: UICollectionViewController {
 		// Setup search bar.
 		setupSearchBar()
 
-        // Validate session
+        // Validate session.
 		if User.isSignedIn {
 			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
@@ -76,7 +76,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			})
 		}
 
-        // Fetch explore
+        // Fetch explore.
 		fetchExplore()
 
 		#if DEBUG
@@ -130,15 +130,15 @@ class HomeCollectionViewController: UICollectionViewController {
 
 	/// Sets up the search bar and starts the placeholder timer.
 	fileprivate func setupSearchBar() {
-		searchResultsViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 
-		searchController = SearchController(searchResultsController: searchResultsViewController)
+		searchController = SearchController(searchResultsController: searchResultsTableViewController)
 		searchController.delegate = self
-		searchController.searchResultsUpdater = searchResultsViewController
+		searchController.searchResultsUpdater = searchResultsTableViewController
 		searchController.viewController = self
 
 		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsViewController
+		searchControllerBar.delegate = searchResultsTableViewController
 		startPlaceholderTimer(for: searchControllerBar)
 
 		navigationItem.searchController = searchController
@@ -469,12 +469,12 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 		if let exploreCategoriesCount = exploreCategories?.count {
-			if section < exploreCategoriesCount {
-				if section != 0 {
-					if section != 0 {
+			if section < exploreCategoriesCount, section != 0 {
+//				if  {
+//					if section != 0 {
 						return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0) : .zero
-					}
-				}
+//					}
+//				}
 			}
 
 			if section == 0 || section >= exploreCategoriesCount {
@@ -488,6 +488,8 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UISearchControllerDelegate
 extension HomeCollectionViewController: UISearchControllerDelegate {
 	func willPresentSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = true
+		
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
@@ -498,6 +500,8 @@ extension HomeCollectionViewController: UISearchControllerDelegate {
 	}
 
 	func willDismissSearchController(_ searchController: UISearchController) {
+		searchController.searchBar.showsCancelButton = false
+
 		if var tabBarFrame = self.tabBarController?.tabBar.frame {
 			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
 			UIView.animate(withDuration: 0.5, animations: {
