@@ -49,7 +49,11 @@ class KStoreObserver: NSObject {
 	weak var delegate: KStoreObserverDelegate?
 
 	/// Indicates whether payment actions should be logged.
+	#if DEBUG
 	var isLogEnabled: Bool = true
+	#else
+	var isLogEnabled: Bool = false
+	#endif
 
 	//MARK: - Functions
 	/// Sets the product ids.

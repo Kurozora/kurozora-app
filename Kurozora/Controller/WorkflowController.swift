@@ -12,16 +12,12 @@ import NotificationBannerSwift
 import SCLAlertView
 import SwiftyJSON
 
-let optionsWithEndpoint = PusherClientOptions(
-	authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
-	host: .cluster("eu")
-)
-let pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
-
 class WorkflowController {
 	// MARK: - Properties
 	/// Returns the singleton WorkflowController instance.
 	static let shared = WorkflowController()
+	static let optionsWithEndpoint = PusherClientOptions(authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()), host: .cluster("eu"))
+	var pusher: Pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
 
 	// MARK: - Initializer
 	private init() {}
@@ -44,7 +40,7 @@ class WorkflowController {
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id": sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
 						}
 					} else {
-						NSLog("------- Pusher error -------")
+						print("------- Pusher error -------")
 					}
 				}
 			})
@@ -55,18 +51,18 @@ class WorkflowController {
 						let isKiller = User.currentSessionID == sessionKillerId
 
 						if sessionID == User.currentSessionID, !isKiller {
-							pusher.unsubscribeAll()
-							pusher.disconnect()
+							self?.pusher.unsubscribeAll()
+							self?.pusher.disconnect()
 							self?.signOut(with: signOutReason, whereUser: isKiller)
 						} else if sessionID == User.currentSessionID, isKiller {
-							pusher.unsubscribeAll()
-							pusher.disconnect()
+							self?.pusher.unsubscribeAll()
+							self?.pusher.disconnect()
 						} else {
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id": sessionID])
 						}
 					}
 				} else {
-					NSLog("------- Pusher error -------")
+					print("------- Pusher error -------")
 				}
 			})
 		}
@@ -137,7 +133,7 @@ extension WorkflowController {
 				banner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
 
 				// Notification sound feedback
-				//				banner.sound = (UserSettings.notificationsSound) ? .success : .none
+//				banner.sound = (UserSettings.notificationsSound) ? .success : .none
 
 				// Notification persistency
 				if UserSettings.notificationsPersistent == 0 {
@@ -159,7 +155,7 @@ extension WorkflowController {
 				statusBanner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
 
 				// Notification sound feedback
-				//				statusBanner.sound = (UserSettings.notificationsSound) ? .success : .none
+//				statusBanner.sound = (UserSettings.notificationsSound) ? .success : .none
 
 				// Notification persistency
 				if UserSettings.notificationsPersistent == 0 {

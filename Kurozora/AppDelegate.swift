@@ -57,11 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.isUnreachable = true
 		}
 
-		if isUnreachable {
-			Kurozora.shared.showOfflinePage(for: window)
-			return true
-		}
-
 		// Monitor network availability
 		KNetworkManager.shared.reachability.whenUnreachable = { _ in
 			Kurozora.shared.showOfflinePage(for: nil)
@@ -78,6 +73,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			WorkflowController.shared.registerForPusher()
 		}
 
+		// Register the app for receiving push notifications
+		WorkflowController.shared.registerForPushNotifications()
+
+		// Init payment queue
+		SKPaymentQueue.default().add(KStoreObserver.shared)
+
+		// Check network availability
+		if isUnreachable {
+			Kurozora.shared.showOfflinePage(for: window)
+			return true
+		}
+
 		// Prepare home view
 		if #available(iOS 13.0, *) {
 		} else {
@@ -90,11 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			Kurozora.shared.userHasToAuthenticate()
 		}
 
-		// Register the app for receiving push notifications
-		WorkflowController.shared.registerForPushNotifications()
-
-		// Init payment queue
-		SKPaymentQueue.default().add(KStoreObserver.shared)
 		return true
 	}
 

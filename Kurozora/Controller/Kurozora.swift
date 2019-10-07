@@ -40,19 +40,15 @@ class Kurozora {
 	*/
 	func showMainPage(for window: UIWindow?, viewController: UIViewController) {
 		if window?.rootViewController is KurozoraReachabilityViewController {
-			// Initialize Pusher
-			WorkflowController.shared.registerForPusher()
-
-			// Max disk cache size
-			ImageCache.default.diskStorage.config.sizeLimit = 300 * 1024 * 1024
-
-			// Global app tint color
-			window?.theme_tintColor = KThemePicker.tintColor.rawValue
-
 			let customTabBar = KTabBarController()
 			window?.rootViewController = customTabBar
 		} else if viewController is KurozoraReachabilityViewController {
 			viewController.dismiss(animated: true, completion: nil)
+		}
+
+		if User.isSignedIn {
+			// Check if user should authenticate
+			Kurozora.shared.userHasToAuthenticate()
 		}
 	}
 
@@ -71,8 +67,7 @@ class Kurozora {
 			DispatchQueue.main.async {
 				if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() {
 					let topViewController = UIApplication.topViewController
-					topViewController?.modalPresentationStyle = .overFullScreen
-					topViewController?.present(reachabilityViewController, animated: false, completion: nil)
+					topViewController?.present(reachabilityViewController, animated: true, completion: nil)
 				}
 			}
 		}

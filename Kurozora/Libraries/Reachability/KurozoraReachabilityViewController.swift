@@ -7,18 +7,39 @@
 //
 
 import UIKit
+import SwiftTheme
 
 class KurozoraReachabilityViewController: UIViewController {
-	@IBOutlet weak var shadowView: UIView!
+	// MARK: - IBOutlets
+	@IBOutlet weak var blurEffectView: UIVisualEffectView! {
+		didSet {
+			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
+		}
+	}
 	@IBOutlet weak var noSignalImageView: UIImageView!
+	@IBOutlet weak var primaryLabel: UILabel! {
+		didSet {
+			primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var secondaryLabel: UILabel! {
+		didSet {
+			secondaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var reconnectButton: UIButton! {
+		didSet {
+			reconnectButton.theme_tintColor = KThemePicker.tintColor.rawValue
+		}
+	}
 
+	// MARK: - Properties
 	var window: UIWindow?
 	let network = KNetworkManager.shared
 
+	// MARK: - Views
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		self.shadowView.applyShadow()
 
 		// Hide the navigation bar
 		navigationController?.setNavigationBarHidden(true, animated: animated)

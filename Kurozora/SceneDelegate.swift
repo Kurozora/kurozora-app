@@ -11,6 +11,7 @@ import UIKit
 @available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
+	var isUnreachable = false
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -21,6 +22,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		// If the network is unreachable show the offline page
+		KNetworkManager.isUnreachable { _ in
+			self.isUnreachable = true
+		}
+
+		// Check network availability
+		if isUnreachable {
+			Kurozora.shared.showOfflinePage(for: window)
+			return
+		}
 
 		// Initialize home view
 		let customTabBar = KTabBarController()
