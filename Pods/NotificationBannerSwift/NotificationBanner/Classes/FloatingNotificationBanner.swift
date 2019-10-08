@@ -133,7 +133,9 @@ private extension FloatingNotificationBanner {
                              cornerRadius: CGFloat = 0,
                              offset: UIOffset = .zero,
                              edgeInsets: UIEdgeInsets? = nil) {
-        guard blurRadius > 0 else { return }
+
+        guard blurRadius >= 0 else { return }
+
         contentView.layer.shadowColor = color.cgColor
         contentView.layer.shadowOpacity = Float(opacity)
         contentView.layer.shadowRadius = blurRadius
@@ -148,6 +150,9 @@ private extension FloatingNotificationBanner {
             shadowRect.size.height -= (edgeInsets.top + edgeInsets.bottom)
             contentView.layer.shadowPath = UIBezierPath(roundedRect: shadowRect, cornerRadius: cornerRadius).cgPath
         }
+        
+        contentView.layer.rasterizationScale = UIScreen.main.scale
+        contentView.layer.shouldRasterize = true
     }
     
 }

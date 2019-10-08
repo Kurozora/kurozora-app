@@ -15,7 +15,7 @@ class PurchaseTableViewController: UITableViewController {
 	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	var subscriptionDetails = [["unit": "1 Month", "subtext": "Includes 1 week free trial!"], ["unit": "6 Months", "subtext": "(6 months at $1,99/mo. Save 50%)\nIncludes 2 weeks free trial!"], ["unit": "12 Months", "subtext": "(12 months at $1,58/mo. Save 60%)\nIncludes 2 weeks free trial!"]]
+	var subscriptionDetails = [["unit": "1 Month", "trial": "Includes 1 week free trial!"], ["unit": "6 Months", "trial": "Includes 2 weeks free trial!"], ["unit": "12 Months", "trial": "Includes 2 weeks free trial!"]]
 	var productIDs: [String] = ["20000331KPLUS1M", "20000331KPLUS6M", "20000331KPLUS12M"]
 	fileprivate var _productsArray: [SKProduct] {
 		get { return productsArray }
@@ -25,9 +25,7 @@ class PurchaseTableViewController: UITableViewController {
 	}
 	var productsArray: [SKProduct] = [SKProduct]() {
 		didSet {
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.tableView.reloadData()
 		}
 	}
 	var leftNavigationBarButtonIsHidden: Bool = false {
@@ -43,7 +41,7 @@ class PurchaseTableViewController: UITableViewController {
 		super.viewWillAppear(animated)
 
 		// Setup subscriptions
-		fetchProductInformation()
+		self.fetchProductInformation()
 	}
 
 	override func viewDidLoad() {
@@ -61,7 +59,9 @@ class PurchaseTableViewController: UITableViewController {
 		if KStoreObserver.shared.isAuthorizedForPayments {
 			KStoreObserver.shared.setProductIDs(ids: self.productIDs)
 			KStoreObserver.shared.fetchAvailableProducts { products in
-				self._productsArray = products
+				DispatchQueue.main.async {
+					self._productsArray = products
+				}
 			}
 		} else {
 			// Warn the user that they are not allowed to make purchases.
@@ -94,7 +94,8 @@ extension PurchaseTableViewController {
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
 			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
-			subscriptionButtonTableViewCell.purchaseItem = productsArray[indexPath.row]
+			subscriptionButtonTableViewCell.productsArray = productsArray
+			subscriptionButtonTableViewCell.productNumber = indexPath.row
 			subscriptionButtonTableViewCell.subscriptionDetail = subscriptionDetails[indexPath.row]
 			subscriptionButtonTableViewCell.purchaseButton.tag = indexPath.row
 			subscriptionButtonTableViewCell.purchaseButtonTableViewCellDelegate = self

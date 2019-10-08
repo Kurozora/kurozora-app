@@ -12,13 +12,53 @@ import StoreKit
 extension SKProduct {
 	/// Returns the formatted price and price locale. i.e. `€4,99`
 	var priceLocaleFormatted: String {
+		return formattedToLocal(price: self.price)
+	}
+
+	fileprivate func formattedToLocal(price: NSDecimalNumber) -> String {
 		let numberFormatter = NumberFormatter()
 		numberFormatter.formatterBehavior = .behavior10_4
 		numberFormatter.numberStyle = .currency
 		numberFormatter.locale = self.priceLocale
 
-		let formattedPrice = numberFormatter.string(from: self.price)?.replacingOccurrences(of: " ", with: "")
-		return formattedPrice ?? self.price.stringValue
+		let formattedPrice = numberFormatter.string(from: price)?.replacingOccurrences(of: " ", with: "")
+		return formattedPrice ?? price.stringValue
+	}
+
+	/// Returns a decimal number of the price devided by the availability period in months.
+	@available(iOS 11.2, *)
+	var pricePerMonth: NSDecimalNumber {
+		var numberOfUnits = subscriptionPeriod?.numberOfUnits.double ?? 0.00
+		let unitString = subscriptionPeriod?.unitString
+		let behavior = NSDecimalNumberHandler(roundingMode: .down, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+
+		if numberOfUnits == 1, unitString == "Year" {
+			numberOfUnits = 12.0
+		}
+
+		let pricePerMonth = price.dividing(by: NSDecimalNumber(decimal: Decimal(numberOfUnits)), withBehavior: behavior)
+		return pricePerMonth
+	}
+
+	/// Returns a string of the price devided by the availability period in months.
+	@available(iOS 11.2, *)
+	var pricePerMonthString: String {
+		return formattedToLocal(price: pricePerMonth)
+	}
+
+	/**
+		Returns a string of the percentage saved compared to the given price.
+
+		- Parameter price: The price by which the comparision is done.
+
+		- Returns: a string of the percentage saved compared to the given price.
+	*/
+	@available(iOS 11.2, *)
+	func priceSaved(comparedTo price: NSDecimalNumber) -> String {
+		let percentageSaved = 100 - (100 / price.decimalValue * pricePerMonth.decimalValue)
+		let behavior = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+		let decimalNumber = NSDecimalNumber(decimal: percentageSaved)
+		return decimalNumber.rounding(accordingToBehavior: behavior).stringValue + "%"
 	}
 }
 

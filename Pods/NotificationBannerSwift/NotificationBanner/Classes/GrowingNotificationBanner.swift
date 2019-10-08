@@ -70,7 +70,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
                     actualBannerHeight += innerSpacing
                 }
                 
-                return max(actualBannerHeight, minHeight)
+                return heightAdjustment + max(actualBannerHeight, minHeight)
             }
         } set {
             customBannerHeight = newValue
@@ -180,6 +180,10 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func spacerViewHeight() -> CGFloat {
+        return super.spacerViewHeight() + heightAdjustment
     }
 }
 

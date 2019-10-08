@@ -20,13 +20,31 @@ class SubscriptionButtonTableViewCell: PurchaseButtonTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let purchaseItem = purchaseItem else { return }
+		guard let purchaseItem = productsArray?[productNumber] else { return }
+		let trialDuration = subscriptionDetail["trial"] ?? ""
+		let unit = subscriptionDetail["unit"] ?? "Unknown"
 
 		if #available(iOS 11.2, *) {
-			purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(purchaseItem.subscriptionPeriod?.fullString ?? "Unknown")", for: .normal)
+			if let subscriptionPeriod = purchaseItem.subscriptionPeriod, let firstProductPrice = productsArray?.first?.price {
+				// Configure purchase button
+				purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(subscriptionPeriod.fullString)", for: .normal)
+
+				// Configure primary label
+				if productNumber == 0 {
+					primaryLabel.text = trialDuration
+				} else {
+					primaryLabel.text = """
+					\(trialDuration)
+					(\(subscriptionPeriod.fullString.lowercased()) at \(purchaseItem.pricePerMonthString)/mo. Save \(purchaseItem.priceSaved(comparedTo: firstProductPrice)))"
+					"""
+				}
+			}
 		} else {
-			purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(subscriptionDetail["unit"] ?? "Unknown")", for: .normal)
+			// Configure purchase button
+			purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(unit)", for: .normal)
+
+			// Configure primary label
+			primaryLabel.text = trialDuration
 		}
-		primaryLabel.text = subscriptionDetail["subtext"]
 	}
 }

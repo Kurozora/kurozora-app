@@ -19,7 +19,7 @@ PODS:
   - KeychainAccess (3.2.0)
   - Kingfisher (5.6.0)
   - MarqueeLabel (4.0.0)
-  - NotificationBannerSwift (2.5.1):
+  - NotificationBannerSwift (3.0.0):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - Pageboy (3.5.0)
@@ -162,7 +162,7 @@ SPEC CHECKSUMS:
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Kingfisher: 7e5cef5ee82c0576e7d23035e1710b7e3b0a1e85
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
-  NotificationBannerSwift: e55dd801b0d78f1a7bacb10d722a935ec95f94a3
+  NotificationBannerSwift: 842401d30f5c36e4f2eafc152824566f6b3c1bb5
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   PusherSwift: dc00ebecf31e897802e0e011450670971cb9bf63
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3

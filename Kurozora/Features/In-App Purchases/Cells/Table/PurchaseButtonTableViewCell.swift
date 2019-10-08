@@ -34,7 +34,8 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 
 	// MARK: - Properties
 	weak var purchaseButtonTableViewCellDelegate: PurchaseButtonTableViewCellDelegate?
-	var purchaseItem: SKProduct?
+	var productsArray: [SKProduct]?
+	var productNumber: Int = 0
 	var purchaseDetail: String = "" {
 		didSet {
 			configureCell()
@@ -44,7 +45,7 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let purchaseItem = purchaseItem else { return }
+		guard let purchaseItem = productsArray?[productNumber] else { return }
 
 		purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted)", for: .normal)
 		primaryLabel.text = purchaseDetail

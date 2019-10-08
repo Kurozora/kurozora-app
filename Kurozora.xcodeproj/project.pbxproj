@@ -157,6 +157,7 @@
 		664A065C21EA1187008CF4A6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065B21EA1187008CF4A6 /* Genres.swift */; };
 		664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */; };
 		664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */; };
+		664A4040234C922700D29DD5 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 664A403F234C922700D29DD5 /* PassKit.framework */; };
 		664B52D122C03C0900B988B3 /* display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664B52D022C03C0900B988B3 /* display.storyboard */; };
 		664B52D322C03D4C00B988B3 /* DisplaySettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */; };
 		664B6D75230F3A3200F9C726 /* FeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D74230F3A3100F9C726 /* FeedType.swift */; };
@@ -592,6 +593,7 @@
 		664A065B21EA1187008CF4A6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		664A065D21EA1BA7008CF4A6 /* GenresTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresTableViewController.swift; sourceTree = "<group>"; };
 		664A065F21EA2089008CF4A6 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
+		664A403F234C922700D29DD5 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		664B52D022C03C0900B988B3 /* display.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = display.storyboard; sourceTree = "<group>"; };
 		664B52D222C03D4C00B988B3 /* DisplaySettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsCell.swift; sourceTree = "<group>"; };
 		664B6D74230F3A3100F9C726 /* FeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType.swift; sourceTree = "<group>"; };
@@ -866,6 +868,7 @@
 				66BA3B74230189A300C2B11C /* CloudKit.framework in Frameworks */,
 				66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */,
 				73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */,
+				664A4040234C922700D29DD5 /* PassKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,6 +878,7 @@
 		08E5591EE4C9B9016ACCB5C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				664A403F234C922700D29DD5 /* PassKit.framework */,
 				664940992308B22E00C2565C /* AppKit.framework */,
 				66BA3B73230189A300C2B11C /* CloudKit.framework */,
 				66BA3B712301897F00C2B11C /* StoreKit.framework */,
@@ -1663,9 +1667,9 @@
 				669EA9A122C1491600784181 /* purchase.storyboard */,
 				669E89C62345573600092778 /* KStoreObserver.swift */,
 				669EA99F22C1490A00784181 /* PurchaseTableViewController.swift */,
+				66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */,
 				661DBC50234A4E00009292DF /* TipJarTableViewController.swift */,
 				66CDC088234A8278009E799C /* Cells */,
-				66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */,
 			);
 			path = "In-App Purchases";
 			sourceTree = "<group>";

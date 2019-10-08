@@ -22,9 +22,7 @@ class TipJarTableViewController: UITableViewController {
 	}
 	var productsArray: [SKProduct] = [SKProduct]() {
 		didSet {
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.tableView.reloadData()
 		}
 	}
 
@@ -51,7 +49,9 @@ class TipJarTableViewController: UITableViewController {
 		if KStoreObserver.shared.isAuthorizedForPayments {
 			KStoreObserver.shared.setProductIDs(ids: self.productIDs)
 			KStoreObserver.shared.fetchAvailableProducts { products in
-				self._productsArray = products
+				DispatchQueue.main.async {
+					self._productsArray = products
+				}
 			}
 		} else {
 			// Warn the user that they are not allowed to make purchases.
@@ -79,7 +79,8 @@ extension TipJarTableViewController {
 			return purchaseHeaderTableViewCell
 		} else if indexPath.section == 1 {
 			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
-			purchaseButtonTableViewCell.purchaseItem = productsArray[indexPath.row]
+			purchaseButtonTableViewCell.productsArray = productsArray
+			purchaseButtonTableViewCell.productNumber = indexPath.row
 			purchaseButtonTableViewCell.purchaseDetail = purchaseDetails[indexPath.row]
 			purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
 			purchaseButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
