@@ -104,11 +104,11 @@ extension WorkflowController {
 	/// Open the sessions view if the current view is not the sessions view.
 	func showSessions() {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
-			let storyBoard = UIStoryboard(name: "settings", bundle: nil)
-			let manageActiveSessionsController = storyBoard.instantiateViewController(withIdentifier: "ManageActiveSessionsController") as? ManageActiveSessionsController
-			manageActiveSessionsController?.dismissEnabled = true
-			let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController!)
-			UIApplication.topViewController?.present(kurozoraNavigationController)
+			if let manageActiveSessionsController = ManageActiveSessionsController.instantiateFromStoryboard() as? ManageActiveSessionsController {
+				manageActiveSessionsController.dismissEnabled = true
+				let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController)
+				UIApplication.topViewController?.present(kurozoraNavigationController)
+			}
 		}
 	}
 
@@ -121,55 +121,39 @@ extension WorkflowController {
 		// If notifications enabled
 		if UserSettings.notificationsAllowed {
 			let alertType = UserSettings.alertType
+			var banner: BaseNotificationBanner?
+
+			if alertType == 0 {
+				banner = FloatingNotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
+			} else if alertType == 1 {
+				banner = FloatingNotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
+			} else if alertType == 2 {
+				banner = StatusBarNotificationBanner(title: "New sign in detected from " + device, style: .info)
+			}
+
+			// Notification haptic feedback and vibration
+			banner?.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
+
+			// Notification sound feedback
+//			banner?.sound = (UserSettings.notificationsSound) ? .success : .none
+
+			// Notification persistency
+			if UserSettings.notificationsPersistent == 0 {
+				banner?.autoDismiss = true
+			} else {
+				banner?.autoDismiss = false
+				banner?.onSwipeUp = {
+					banner?.dismiss()
+				}
+			}
+			banner?.onTap = {
+				self.showSessions()
+			}
 
 			if alertType == 0 || alertType == 1 {
-				var banner = NotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
-
-				if alertType == 0 {
-					banner = NotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
-				}
-
-				// Notification haptic feedback and vibration
-				banner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
-
-				// Notification sound feedback
-//				banner.sound = (UserSettings.notificationsSound) ? .success : .none
-
-				// Notification persistency
-				if UserSettings.notificationsPersistent == 0 {
-					banner.autoDismiss = true
-				} else {
-					banner.autoDismiss = false
-					banner.onSwipeUp = {
-						banner.dismiss()
-					}
-				}
-				banner.show()
-				banner.onTap = {
-					self.showSessions()
-				}
-			} else if alertType == 2 {
-				let statusBanner = StatusBarNotificationBanner(title: "New sign in detected from " + device, style: .info)
-
-				// Notification haptic feedback and vibration
-				statusBanner.haptic = (UserSettings.notificationsVibration) ? .heavy : .none
-
-				// Notification sound feedback
-//				statusBanner.sound = (UserSettings.notificationsSound) ? .success : .none
-
-				// Notification persistency
-				if UserSettings.notificationsPersistent == 0 {
-					statusBanner.autoDismiss = true
-				} else {
-					statusBanner.autoDismiss = false
-					statusBanner.onSwipeUp = {
-						statusBanner.dismiss()
-					}
-				}
-				statusBanner.show()
-				statusBanner.onTap = {
-					self.showSessions()
-				}
+				(banner as? FloatingNotificationBanner)?.show(cornerRadius: 10, shadowBlurRadius: 15, shadowCornerRadius: 15)
+			} else {
+				banner?.show()
 			}
 		}
 	}

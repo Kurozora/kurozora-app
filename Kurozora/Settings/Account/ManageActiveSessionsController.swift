@@ -10,13 +10,14 @@ import UIKit
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
-import SwifterSwift
 import MapKit
 import CoreLocation
 
 class ManageActiveSessionsController: UITableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var mapView: MKMapView!
 
+	// MARK: - Properties
 	var dismissEnabled: Bool = false
 	var sessions: UserSessions? {
 		didSet {
@@ -28,6 +29,7 @@ class ManageActiveSessionsController: UITableViewController {
 	var pinAnnotationView: MKPinAnnotationView!
 	let locationManager = CLLocationManager()
 
+	// MARK: - Views
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if dismissEnabled {
@@ -64,14 +66,37 @@ class ManageActiveSessionsController: UITableViewController {
 		}
 
 		// Setup table view
-		tableView.tableHeaderView?.height = self.view.frame.height / 3
+		tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+
+		if UIDevice.isLandscape {
+			self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
+		} else {
+			DispatchQueue.main.async {
+				self.tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
+			}
+		}
+	}
+
 	// MARK: - Functions
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyBoard = UIStoryboard(name: "account", bundle: nil)
+		return storyBoard.instantiateViewController(withIdentifier: "ManageActiveSessionsController")
+	}
+
+	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
 		KService.shared.getSessions( withSuccess: { (sessions) in
 			DispatchQueue.main.async {
@@ -80,10 +105,16 @@ class ManageActiveSessionsController: UITableViewController {
 		})
 	}
 
+	/**
+		Dismisses the current view controller.
+
+		- Parameter sender: The object requesting the dismiss of the current view controller.
+	*/
 	@objc func dismiss(_ sender: Any?) {
 		self.dismiss(animated: true, completion: nil)
 	}
 
+	/// Creates annotations and adds them to the map view.
 	private func createAnnotations() {
 		guard let otherSessions = sessions?.otherSessions else { return }
 
@@ -118,6 +149,11 @@ class ManageActiveSessionsController: UITableViewController {
 		locationManager.startUpdatingLocation()
 	}
 
+	/**
+		Removes a session with the given session cell as data source.
+
+		- Parameter otherSessionsCell: The session cell from which the data is fetched to decide which session to remove.
+	*/
 	private func removeSession(_ otherSessionsCell: OtherSessionsCell) {
 		let alertView = SCLAlertView()
 		alertView.addButton("Yes!", action: {
@@ -140,6 +176,11 @@ class ManageActiveSessionsController: UITableViewController {
 		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
 	}
 
+	/**
+		Removes session from the table view with the given notification object.
+
+		- Parameter notification: The notification object from which the data is fetched to decide which session to remove.
+	*/
 	@objc func removeSessionFromTable(_ notification: NSNotification) {
 		if let sessionID = notification.userInfo?["session_id"] as? Int {
 			self.tableView.beginUpdates()
@@ -155,6 +196,11 @@ class ManageActiveSessionsController: UITableViewController {
 		}
 	}
 
+	/**
+		Adds a new session to the table view from the given notification object.
+
+		- Parameter notification: the notification object from which a new notification cell is added to the table view.
+	*/
 	@objc func addSessionToTable(_ notification: NSNotification) {
 		if let sessionID = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
 			guard let sessionsCount = sessions?.otherSessions?.count else { return }
@@ -169,18 +215,6 @@ class ManageActiveSessionsController: UITableViewController {
 				self.sessions?.otherSessions?.append(newSessionElement)
 				self.tableView.insertRows(at: [[1, sessionsCount]], with: .right)
 				self.tableView.endUpdates()
-			}
-		}
-	}
-
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-
-		if UIDevice.isLandscape {
-			self.tableView.tableHeaderView?.height = self.view.frame.height / 3
-		} else {
-			DispatchQueue.main.async {
-				self.tableView.tableHeaderView?.height = self.view.frame.height / 3
 			}
 		}
 	}
@@ -251,6 +285,7 @@ extension ManageActiveSessionsController: OtherSessionsCellDelegate {
 	}
 }
 
+// MARK: - MKMapViewDelegate
 extension ManageActiveSessionsController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if annotation.isEqual(mapView.userLocation) {
@@ -280,6 +315,7 @@ extension ManageActiveSessionsController: MKMapViewDelegate {
 	}
 }
 
+// MARK: - CLLocationManagerDelegate
 extension ManageActiveSessionsController: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Unable to access your current location")

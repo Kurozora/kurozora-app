@@ -54,7 +54,12 @@ class PurchaseTableViewController: UITableViewController {
 	}
 
 	// MARK: - Functions
-	static func instantiateFromStoryBoard() -> UIViewController? {
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
+
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "purchase", bundle: nil)
 		return storyboard.instantiateInitialViewController()
 	}
