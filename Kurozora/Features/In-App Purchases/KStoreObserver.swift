@@ -183,11 +183,12 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 		}
 	}
 
-	/// Logs all transactions that have been removed from the payment queue.
-	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
-		for transaction in transactions {
-			log("\(transaction.payment.productIdentifier) was removed from the payment queue.")
+	func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+		if let purchaseTableViewController = PurchaseTableViewController.instantiateFromStoryBoard() {
+			UIApplication.shared.keyWindow?.rootViewController?.present(purchaseTableViewController)
 		}
+
+		return true
 	}
 
 	func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
@@ -195,6 +196,12 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 			DispatchQueue.main.async {
 				self.delegate?.storeObserverDidReceiveMessage(error.localizedDescription)
 			}
+		}
+	}
+
+	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+		for transaction in transactions {
+			log("\(transaction.payment.productIdentifier) was removed from the payment queue.")
 		}
 	}
 

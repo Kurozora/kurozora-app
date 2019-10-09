@@ -35,7 +35,7 @@ class SubscriptionButtonTableViewCell: PurchaseButtonTableViewCell {
 				} else {
 					primaryLabel.text = """
 					\(trialDuration)
-					(\(subscriptionPeriod.fullString.lowercased()) at \(purchaseItem.pricePerMonthString)/mo. Save \(purchaseItem.priceSaved(comparedTo: firstProductPrice)))"
+					(\(subscriptionPeriod.fullString.lowercased()) at \(purchaseItem.pricePerMonthString)/mo. Save \(purchaseItem.priceSaved(comparedTo: firstProductPrice)))
 					"""
 				}
 			}
