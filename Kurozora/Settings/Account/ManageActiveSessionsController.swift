@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import SwiftyJSON
-import SCLAlertView
-import EmptyDataSet_Swift
-import MapKit
 import CoreLocation
+import MapKit
+import EmptyDataSet_Swift
+import SCLAlertView
+import SwifterSwift
+import SwiftyJSON
 
 class ManageActiveSessionsController: UITableViewController {
 	// MARK: - IBOutlets
