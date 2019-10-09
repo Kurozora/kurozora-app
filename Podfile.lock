@@ -17,7 +17,9 @@ PODS:
   - Hero (1.4.0)
   - iosMath (0.9.4)
   - KeychainAccess (3.2.0)
-  - Kingfisher (5.6.0)
+  - Kingfisher (5.8.3):
+    - Kingfisher/Core (= 5.8.3)
+  - Kingfisher/Core (5.8.3)
   - MarqueeLabel (4.0.0)
   - NotificationBannerSwift (3.0.0):
     - MarqueeLabel (~> 4.0.0)
@@ -82,7 +84,7 @@ DEPENDENCIES:
   - ESTabBarController-swift
   - Hero
   - KeychainAccess
-  - Kingfisher (from `https://github.com/onevcat/Kingfisher.git`, commit `xcode11`)
+  - Kingfisher
   - NotificationBannerSwift
   - PusherSwift
   - RichTextView
@@ -112,6 +114,7 @@ SPEC REPOS:
     - Hero
     - iosMath
     - KeychainAccess
+    - Kingfisher
     - MarqueeLabel
     - NotificationBannerSwift
     - Pageboy
@@ -131,17 +134,11 @@ SPEC REPOS:
     - WordPress-Aztec-iOS
 
 EXTERNAL SOURCES:
-  Kingfisher:
-    :commit: xcode11
-    :git: https://github.com/onevcat/Kingfisher.git
   SCLAlertView:
     :branch: master
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 CHECKOUT OPTIONS:
-  Kingfisher:
-    :commit: xcode11
-    :git: https://github.com/onevcat/Kingfisher.git
   SCLAlertView:
     :commit: f76bb0306b4c73523ca64100b0e3f2ad6896cee2
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
@@ -160,7 +157,7 @@ SPEC CHECKSUMS:
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Kingfisher: 7e5cef5ee82c0576e7d23035e1710b7e3b0a1e85
+  Kingfisher: b7e4cb65ff24c264bd2a1284b75b974d907afd94
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: 842401d30f5c36e4f2eafc152824566f6b3c1bb5
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
@@ -180,6 +177,6 @@ SPEC CHECKSUMS:
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
   WordPress-Aztec-iOS: 419ebf7a333fe147da33e4754978f20a5fd08a86
 
-PODFILE CHECKSUM: 3907f88cc79d648cc4abe923de5ac97b7cd0ad4d
+PODFILE CHECKSUM: 5ed39241e0f2b66a91cd92faccd83978e682e6c6
 
 COCOAPODS: 1.8.0.beta.1

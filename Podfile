@@ -14,7 +14,7 @@ def kurozora_pods
 	pod 'EmptyDataSet-Swift'
 	pod 'Hero'
 	pod 'KeychainAccess'
-	pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher.git', :commit => 'xcode11'
+	pod 'Kingfisher'
 	pod 'NotificationBannerSwift'
 	pod 'PusherSwift'
 	pod 'RichTextView'
