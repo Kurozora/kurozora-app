@@ -291,7 +291,7 @@
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lv-DP-NZ5">
                                             <rect key="frame" x="20" y="30.5" width="374" height="162.5"/>
-                                            <string key="text">Kurozora is made by a small team of 2 students. We rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting us by leaving a tip in our Kurozora Tip Jar. We would like to keep working on and improving Kurozora, so any amount is indredibly appreciated. Please know that even if you don't tip we are still greatful that you use this app.</string>
+                                            <string key="text">Kurozora is made by a small team of 2 students. We rely on your support to develop Kurozora. If you find it to be useful to you, please consider supporting us by leaving a tip in our Kurozora Tip Jar. We would like to keep working on and improving Kurozora, so any amount is indredibly appreciated. Please know that even if you don't tip we are still grateful that you use this app.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
