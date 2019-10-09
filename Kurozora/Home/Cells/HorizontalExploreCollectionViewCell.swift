@@ -9,7 +9,10 @@
 import UIKit
 
 class HorizontalExploreCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var collectionView: UICollectionView!
+
+	// MARK: - Properties
 	var currentlyPlayingIndexPath: IndexPath? = nil
 
 	var cellStyle: ExploreCellStyle! {
@@ -31,6 +34,30 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 	}
 	var homeCollectionViewController: HomeCollectionViewController?
 	var section: Int?
+
+	// MARK: - Functions
+	func makeContextMenu(for show: ShowDetailsElement?) -> UIMenu {
+		let title = show?.title ?? ""
+
+		let share = UIAction(title: "Share \(title)", image: UIImage(systemName: "square.and.pencil")) { _ in
+			guard let showID = show?.id else { return }
+			var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
+
+			if !title.isEmpty {
+				shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
+			}
+
+			let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+
+
+			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.parentViewController?.present(activityVC, animated: true, completion: nil)
+			}
+		}
+
+		// Create our menu with both the edit menu and the share action
+		return UIMenu(title: "Main Menu", children: [share])
+	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -94,6 +121,16 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegate {
 					   animations: {
 						cell?.transform = CGAffineTransform.identity
 		}, completion: nil)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+		if shows != nil {
+			return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
+				return self.makeContextMenu(for: self.shows?[indexPath.row])
+			})
+		}
+
+		return nil
 	}
 }
 
