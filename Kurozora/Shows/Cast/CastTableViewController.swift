@@ -119,9 +119,8 @@ class CastCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 0
-//		guard let actorsCount = actors?.count else { return 0 }
-//		return actorsCount
+		guard let actorsCount = actors?.count else { return 0 }
+		return actorsCount
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
