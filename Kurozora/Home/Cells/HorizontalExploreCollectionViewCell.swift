@@ -36,6 +36,7 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 	var section: Int?
 
 	// MARK: - Functions
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func makeContextMenu(for show: ShowDetailsElement?) -> UIMenu {
 		let title = show?.title ?? ""
 
@@ -48,7 +49,6 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 			}
 
 			let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
-
 
 			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
 				self.parentViewController?.present(activityVC, animated: true, completion: nil)
@@ -85,9 +85,11 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 			exploreCell.genreElement = genres?[indexPath.row]
 		}
 
+		#if !targetEnvironment(macCatalyst)
 		if traitCollection.forceTouchCapability == .available {
 			homeCollectionViewController?.registerForPreviewing(with: exploreCell, sourceView: exploreCell)
 		}
+		#endif
 
 		return exploreCell
 	}
@@ -123,6 +125,7 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegate {
 		}, completion: nil)
 	}
 
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		if shows != nil {
 			return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in

@@ -306,6 +306,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 }
 
 // MARK: - UIViewControllerPreviewingDelegate
+#if !targetEnvironment(macCatalyst)
 extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
@@ -328,3 +329,4 @@ extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 		}
 	}
 }
+#endif

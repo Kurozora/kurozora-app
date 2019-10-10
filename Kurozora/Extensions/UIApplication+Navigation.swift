@@ -40,8 +40,8 @@ extension UIApplication {
 
 	/// The root view controller of the application.
 	static var topViewController: UIViewController? {
-		var base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
-		if #available(iOS 13.0, *) {
+		var base: UIViewController?
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			for scene in UIApplication.shared.connectedScenes where scene.activationState == .foregroundInactive {
 				if let scene = scene as? UIWindowScene {
 					if let sceneDelegate = scene.delegate as? UIWindowSceneDelegate {
@@ -51,6 +51,8 @@ extension UIApplication {
 					}
 				}
 			}
+		} else {
+			base = UIApplication.shared.keyWindow?.rootViewController
 		}
 		return UIApplication.topViewController(base)
 	}

@@ -55,8 +55,12 @@ class KLabel: UILabel {
 			)
 		]
 
-		menuController.setTargetRect(gestureView.frame, in: superView)
-		menuController.setMenuVisible(true, animated: true)
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			menuController.showMenu(from: superView, rect: gestureView.frame)
+		} else {
+			menuController.setTargetRect(gestureView.frame, in: superView)
+			menuController.setMenuVisible(true, animated: true)
+		}
 	}
 
 	@objc internal func handleCopyAction(_ controller: UIMenuController) {
