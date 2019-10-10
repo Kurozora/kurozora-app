@@ -12,15 +12,16 @@ import NotificationBannerSwift
 import SCLAlertView
 import SwiftyJSON
 
-class WorkflowController {
+class WorkflowController: NSObject {
 	// MARK: - Properties
 	/// Returns the singleton WorkflowController instance.
 	static let shared = WorkflowController()
 	static let optionsWithEndpoint = PusherClientOptions(authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()), host: .cluster("eu"))
 	var pusher: Pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
+	let notificationCenter = UNUserNotificationCenter.current()
 
 	// MARK: - Initializer
-	private init() {}
+	private override init() {}
 
 	// MARK: - Functions
 	// swiftlint:disable redundant_discardable_let
@@ -38,6 +39,8 @@ class WorkflowController {
 							self?.notificationsHandler(device)
 
 							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id": sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
+
+							self?.scheduleNotification("New session", body: "New sign in detected from \(device)")
 						}
 					} else {
 						print("------- Pusher error -------")
@@ -161,6 +164,39 @@ extension WorkflowController {
 
 // MARK: - Push Notifications
 extension WorkflowController {
+	func scheduleNotification(_ title: String, body: String) {
+		// Prepare local notification
+		let date = Date()
+		let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+		let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+		let identifier = "Local Notification"
+
+		// Prepare actions for notification
+		let showSessionAction = UNNotificationAction(identifier: "NEW_SESSION", title: "Show", options: [])
+		let sessionActions = "Session Actions"
+		let category = UNNotificationCategory(identifier: sessionActions, actions: [showSessionAction], intentIdentifiers: [], options: [])
+
+		// Create notification content
+		let content = UNMutableNotificationContent()
+		content.title = "\(title)"
+		content.body = "\(body)"
+		content.sound = UNNotificationSound.default
+		content.badge = 1
+		content.categoryIdentifier = sessionActions
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+		// Add notification actions
+		notificationCenter.setNotificationCategories([category])
+		notificationCenter.delegate = self
+
+		// Add notification to notification center
+		notificationCenter.add(request) { (error) in
+			if let error = error {
+				print("Error \(error.localizedDescription)")
+			}
+		}
+	}
+
 	/// Asks the user for permission to register the device for push notifications.
 	func registerForPushNotifications() {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
@@ -182,5 +218,20 @@ extension WorkflowController {
 				UIApplication.shared.registerForRemoteNotifications()
 			}
 		}
+	}
+}
+
+extension WorkflowController: UNUserNotificationCenterDelegate {
+	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		// Perform the task associated with the action.
+		switch response.actionIdentifier {
+		case "NEW_SESSION":
+			self.showSessions()
+		default:
+			break
+		}
+
+		// Always call the completion handler when done.
+		completionHandler()
 	}
 }
