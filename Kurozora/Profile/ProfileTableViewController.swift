@@ -213,26 +213,13 @@ class ProfileTableViewController: UITableViewController {
 		}
 
 		// Setup profile image
-		if let profileImage = user.profile?.profileImage, !profileImage.isEmpty {
-			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!)
-			profileImageView.kf.indicatorType = .activity
-			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
-
-			let cache = ImageCache.default
-			cache.store(profileImageView.image!, forKey: "currentprofileImageView")
-		} else {
-			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
+		if let profileImage = user.profile?.profileImage {
+			profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Setup banner image
-		if let banner = user.profile?.banner, !banner.isEmpty {
-			let banner = URL(string: banner)
-			let resource = ImageResource(downloadURL: banner!)
-			bannerImageView.kf.indicatorType = .activity
-			bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_banner_image"))
-		} else {
-			bannerImageView.image = #imageLiteral(resourceName: "default_banner_image")
+		if let bannerImage = user.profile?.banner {
+			bannerImageView.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "default_banner_image"))
 		}
 
 		// Setup user bio
@@ -451,14 +438,32 @@ class ProfileTableViewController: UITableViewController {
 		- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
-		guard let bioText = bioTextView.text else { return }
-		guard let profileImage = profileImageView.image else { return }
-		guard let bannerImage = bannerImageView.image else { return }
+		let bioText = bioTextView.text
+		var profileImage = profileImageView.image
+		var bannerImage = bannerImageView.image
 		var shouldUpdate = true
+		var shouldUpdateProfileImage = true
 
+		// If everything is the same then dismiss and don't send a request to apply new information.
 		if self.bioTextCache == bioText && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
 			shouldUpdate = false
 			self.editMode(shouldUpdate)
+		}
+
+		// If the bio text is the same, then ignore.
+		if self.bioTextCache == bioText {
+//			bioText = ""
+		}
+
+		// If the profile image the same, then ignore.
+		if self.profileImageCache == profileImage {
+			profileImage = UIImage()
+			shouldUpdateProfileImage = false
+		}
+
+		// If the banner is the same, then ignore.
+		if self.bannerImageCache == bannerImage {
+			bannerImage = UIImage()
 		}
 
 		// User wants to save changes, clear the cache.
@@ -470,6 +475,9 @@ class ProfileTableViewController: UITableViewController {
 			KService.shared.updateInformation(withBio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (update) in
 				if update {
 					self.editMode(!update)
+					if shouldUpdateProfileImage {
+						User.refreshProfileImage(with: profileImage)
+					}
 				}
 			}
 		}

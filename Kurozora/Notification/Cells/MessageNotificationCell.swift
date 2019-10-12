@@ -8,7 +8,6 @@
 
 import UIKit
 import SwipeCellKit
-import Kingfisher
 
 class MessageNotificationCell: BaseNotificationCell {
 	// Body
@@ -27,12 +26,8 @@ class MessageNotificationCell: BaseNotificationCell {
 			notificationTitleLabel.text = title
 		}
 
-		if let profileImage = userNotificationsElement?.data?.profileImage, !profileImage.isEmpty {
-			let profileImageUrl = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImageUrl!)
-			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
-		} else {
-			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
+		if let profileImage = userNotificationsElement?.data?.profileImage {
+			profileImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
 		}
 	}
 }

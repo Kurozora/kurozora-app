@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 protocol ShowCharacterCellDelegate: class {
 	func presentPhoto(withString string: String, from imageView: UIImageView)
@@ -62,13 +61,8 @@ class ShowCharacterCell: UITableViewCell {
 		}
 
 		// Actor image view
-		if let actorImage = actorElement.image, !actorImage.isEmpty {
-			let actorImageUrl = URL(string: actorImage)
-			let resource = ImageResource(downloadURL: actorImageUrl!)
-			self.actorImageView.kf.indicatorType = .activity
-			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person_image"), options: [.transition(.fade(0.2))])
-		} else {
-			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person_image")
+		if let actorImage = actorElement.image {
+			self.actorImageView.setImage(with: actorImage, placeholder: #imageLiteral(resourceName: "placeholder_person_image"))
 		}
 
 		// Actor shadow view
@@ -138,13 +132,8 @@ class ShowCharacterCollectionCell: UICollectionViewCell {
 			self.actorJob.text = actorRole
 		}
 
-		if let actorImage = actorElement.image, !actorImage.isEmpty {
-			let actorImageUrl = URL(string: actorImage)
-			let resource = ImageResource(downloadURL: actorImageUrl!)
-			self.actorImageView.kf.indicatorType = .activity
-			self.actorImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_person_image"), options: [.transition(.fade(0.2))])
-		} else {
-			self.actorImageView.image = #imageLiteral(resourceName: "placeholder_person_image")
+		if let actorImage = actorElement.image {
+			self.actorImageView.setImage(with: actorImage, placeholder: #imageLiteral(resourceName: "placeholder_person_image"))
 		}
 
 		// Actor shadow view

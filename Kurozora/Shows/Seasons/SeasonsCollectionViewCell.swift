@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class SeasonsCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
@@ -74,13 +73,8 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		guard let seasonsElement = seasonsElement else { return }
 
-		if let seasonPosterImage = seasonsElement.poster, !seasonPosterImage.isEmpty {
-			let posterImageUrl = URL(string: seasonPosterImage)
-			let resource = ImageResource(downloadURL: posterImageUrl!)
-
-			self.posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-		} else {
-			self.posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
+		if let seasonPosterImage = seasonsElement.poster {
+			self.posterImageView.setImage(with: seasonPosterImage, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
 
 		// Season number

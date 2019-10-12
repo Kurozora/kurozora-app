@@ -206,9 +206,9 @@ class HomeCollectionViewController: UICollectionViewController {
 					}
 				} else {
 					switch UIDevice.type {
-					case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:	numberOfItems = (1, 2.8)
-					case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:			numberOfItems = (1, 3.4)
-					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:		numberOfItems = (1, 3.0)
+					case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:										numberOfItems = (1, 2.8)
+					case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:												numberOfItems = (1, 3.4)
+					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:											numberOfItems = (1, 3.0)
 					}
 				}
 			}
@@ -284,10 +284,10 @@ class HomeCollectionViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailsSegue" {
             // Show detail for explore cell
-			if let currentCell = sender as? ExploreCollectionViewCell, let showDetailTabBarController = segue.destination as? ShowDetailTabBarController {
-				showDetailTabBarController.exploreCollectionViewCell = currentCell
-				showDetailTabBarController.showDetailsElement = currentCell.showDetailsElement
-				if let showTitle = currentCell.showDetailsElement?.title, let section = currentCell.indexPath?.section {
+			if let selectedCell = sender as? ExploreBaseCollectionViewCell, let showDetailTabBarController = segue.destination as? ShowDetailTabBarController {
+				showDetailTabBarController.exploreBaseCollectionViewCell = selectedCell
+				showDetailTabBarController.showDetailsElement = selectedCell.showDetailsElement
+				if let showTitle = selectedCell.showDetailsElement?.title, let section = selectedCell.indexPath?.section {
 					showDetailTabBarController.heroID = "explore_\(showTitle)_\(section)"
 				}
 			}

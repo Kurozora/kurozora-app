@@ -10,7 +10,6 @@ import UIKit
 import SwiftyJSON
 import SCLAlertView
 import EmptyDataSet_Swift
-import Kingfisher
 import SwiftTheme
 
 protocol LibraryListViewControllerDelegate: class {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class ReplyCell: UITableViewCell {
 	@IBOutlet weak var profileImageView: UIImageView! {
@@ -87,16 +86,15 @@ class ReplyCell: UITableViewCell {
 	fileprivate func configureCell() {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
-		if let profileImage = threadRepliesElement.user?.profileImage, !profileImage.isEmpty {
-			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!)
-			self.profileImageView.kf.indicatorType = .activity
-			self.profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
-		} else {
-			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
+		// Configure profile image
+		if let profileImage = threadRepliesElement.user?.profileImage {
+			profileImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
 		}
 
+		// Configure username
 		usernameLabel?.text = threadRepliesElement.user?.username
+
+		// Configure
 		replyLabel.text = threadRepliesElement.content
 
 		// Set thread stats

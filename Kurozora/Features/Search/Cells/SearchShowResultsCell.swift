@@ -8,7 +8,6 @@
 
 import UIKit
 import Cosmos
-import Kingfisher
 
 class SearchShowResultsCell: SearchBaseResultsCell {
 	// MARK: - IBOutlets
@@ -35,14 +34,8 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 
 		primaryLabel.text = showDetailsElement.title
 
-		if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
-			if let posterThumbnailUrl = URL(string: posterThumbnail) {
-				let resource = ImageResource(downloadURL: posterThumbnailUrl)
-				searchImageView.kf.indicatorType = .activity
-				searchImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-			}
-		} else {
-			searchImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
+		if let posterThumbnail = showDetailsElement.posterThumbnail {
+			searchImageView.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
 
 		statusLabel?.text = showDetailsElement.status ?? "TBA"

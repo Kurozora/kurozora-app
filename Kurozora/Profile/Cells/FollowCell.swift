@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class FollowCell: UITableViewCell {
 	@IBOutlet weak var usernameLabel: UILabel! {
@@ -44,16 +43,15 @@ class FollowCell: UITableViewCell {
 	fileprivate func configureCell() {
 		guard let userProfile = userProfile else { return }
 
+		// Configure username
 		usernameLabel.text = userProfile.username
+
+		// Configure profile image
 		if let profileImage = userProfile.profileImage, !profileImage.isEmpty {
-			let profileImage = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImage!)
-			profileImageView.kf.indicatorType = .activity
-			profileImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
-		} else {
-			profileImageView.image = #imageLiteral(resourceName: "default_profile_image")
+			profileImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
 		}
 
+		// Configure follow button
 		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)
 		followButton.isHidden = userProfile.id == User.currentID
 	}

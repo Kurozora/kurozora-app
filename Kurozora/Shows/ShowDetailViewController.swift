@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 import Cosmos
 import Intents
 import IntentsUI
@@ -125,7 +124,7 @@ class ShowDetailViewController: UIViewController {
 	}
 	weak var delegate: ShowDetailViewControllerDelegate?
 	var libraryStatus: String?
-	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
+	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	var statusBarShouldBeHidden = false
 
@@ -151,9 +150,9 @@ class ShowDetailViewController: UIViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		if exploreCollectionViewCell != nil {
-			guard let exploreCollectionViewCell = exploreCollectionViewCell else { return }
-			configureShowDetails(from: exploreCollectionViewCell)
+		if exploreBaseCollectionViewCell != nil {
+			guard let exploreBaseCollectionViewCell = exploreBaseCollectionViewCell else { return }
+			configureShowDetails(from: exploreBaseCollectionViewCell)
 		} else if libraryCollectionViewCell != nil {
 			guard let libraryCollectionViewCell = libraryCollectionViewCell else { return }
 			configureShowDetails(from: libraryCollectionViewCell)
@@ -257,13 +256,13 @@ class ShowDetailViewController: UIViewController {
 
 		- Parameter cell: The explore cell from which the view should be configured.
 	*/
-	fileprivate func configureShowDetails(from cell: ExploreCollectionViewCell) {
+	fileprivate func configureShowDetails(from cell: ExploreBaseCollectionViewCell) {
 		if cell.bannerImageView != nil {
-			showTitleLabel.text = cell.titleLabel?.text
+			showTitleLabel.text = cell.primaryLabel?.text
 			bannerImageView.image = cell.bannerImageView?.image
 		} else {
 			posterImageView.image = cell.posterImageView?.image
-			ratingScoreLabel.text = "\(cell.scoreButton?.titleForNormal ?? "0")"
+			ratingScoreLabel.text = "\((cell as? ExploreSmallCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
 		}
 	}
 
@@ -353,25 +352,15 @@ class ShowDetailViewController: UIViewController {
 
 		// Configure poster view
 		if posterImageView.image == nil {
-			if let posterThumb = showDetailsElement.posterThumbnail, !posterThumb.isEmpty {
-				let posterThumb = URL(string: posterThumb)
-				let resource = ImageResource(downloadURL: posterThumb!)
-				posterImageView.kf.indicatorType = .activity
-				posterImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-			} else {
-				posterImageView.image = #imageLiteral(resourceName: "placeholder_poster_image")
+			if let posterThumb = showDetailsElement.posterThumbnail {
+				posterImageView.setImage(with: posterThumb, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 			}
 		}
 
 		// Configure banner view
 		if bannerImageView.image == nil {
-			if let bannerImage = showDetailsElement.banner, !bannerImage.isEmpty {
-				let bannerImage = URL(string: bannerImage)
-				let resource = ImageResource(downloadURL: bannerImage!)
-				bannerImageView.kf.indicatorType = .activity
-				bannerImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
-			} else {
-				bannerImageView.image = #imageLiteral(resourceName: "placeholder_banner_image")
+			if let bannerImage = showDetailsElement.banner {
+				bannerImageView.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 			}
 		}
 
@@ -404,7 +393,7 @@ class ShowDetailViewController: UIViewController {
 		posterImageView.hero.id = on ? "\(heroID)_poster" : nil
 		bannerContainerView.hero.id = on ? "\(heroID)_banner" : nil
 
-		if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
+		if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreBaseCollectionViewCell?.bannerImageView != nil {
 			snapshotView.hero.id = on ? nil : "\(heroID)_banner"
 		} else {
 			snapshotView.hero.id = on ? nil : "\(heroID)_poster"

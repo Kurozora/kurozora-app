@@ -295,5 +295,23 @@ extension User {
 
 // MARK: - Functions
 extension User {
+	/**
+		Removes and adds the current user's profile image to the cache.
 
+		- Parameter image: The image to add to the cache.
+	*/
+	static func refreshProfileImage(with image: UIImage?) {
+		// Clear cache for user profile image.
+		removeProfileImage()
+
+		// Add new image to cache.
+		if let profileImage = image {
+			KingfisherManager.shared.cache.store(profileImage, forKey: "currentUserProfileImage")
+		}
+	}
+
+	/// Removes the current user's profile image from the cache.
+	static func removeProfileImage() {
+		KingfisherManager.shared.cache.removeImage(forKey: "currentUserProfileImage")
+	}
 }

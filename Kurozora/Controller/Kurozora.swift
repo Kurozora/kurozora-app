@@ -8,7 +8,6 @@
 
 import UIKit
 import ESTabBarController_swift
-import Kingfisher
 import KeychainAccess
 import LocalAuthentication
 import SCLAlertView

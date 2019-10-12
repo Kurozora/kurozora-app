@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class NotificationsSettingsViewController: UITableViewController {
 	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {

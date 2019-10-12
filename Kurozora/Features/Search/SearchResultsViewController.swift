@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import Kingfisher
 import SwiftTheme
 
 protocol SearchResultsTableViewControllerDelegate: class {

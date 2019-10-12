@@ -8,7 +8,6 @@
 
 import UIKit
 import Cosmos
-import Kingfisher
 import SwipeCellKit
 
 protocol EpisodesCollectionViewCellDelegate: class {
@@ -75,13 +74,8 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	fileprivate func configureCell() {
 		guard let episodesElement = episodesElement else { return }
 
-		if let episodeScreenshot = episodesElement.screenshot, !episodeScreenshot.isEmpty {
-			let episodeScreenshotUrl = URL(string: episodeScreenshot)
-			let resource = ImageResource(downloadURL: episodeScreenshotUrl!)
-
-			self.episodeImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_episode_image"), options: [.transition(.fade(0.2))])
-		} else {
-			self.episodeImageView.image = #imageLiteral(resourceName: "placeholder_episode_image")
+		if let episodeScreenshot = episodesElement.screenshot {
+			self.episodeImageView.setImage(with: episodeScreenshot, placeholder: #imageLiteral(resourceName: "placeholder_episode_image"))
 		}
 
 		if let episodeNumber = episodesElement.number {

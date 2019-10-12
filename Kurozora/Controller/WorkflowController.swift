@@ -95,6 +95,7 @@ class WorkflowController: NSObject {
 	*/
 	func signOut(with signOutReason: String? = nil, whereUser isKiller: Bool = false) {
 		try? Kurozora.shared.KDefaults.removeAll()
+		User.removeProfileImage()
 		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		if signOutReason != nil {
 			SCLAlertView().showWarning("Signed out", subTitle: signOutReason)
@@ -221,6 +222,7 @@ extension WorkflowController {
 	}
 }
 
+// MARK: - UNUserNotificationCenterDelegate
 extension WorkflowController: UNUserNotificationCenterDelegate {
 	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 		// Perform the task associated with the action.

@@ -49,6 +49,7 @@
 		6619EE74216F969B00655B99 /* ForumsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE73216F969B00655B99 /* ForumsListViewController.swift */; };
 		6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE77216FDD3E00655B99 /* Seasons.swift */; };
 		6619EE7A216FF31D00655B99 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE79216FF31D00655B99 /* Episodes.swift */; };
+		661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */; };
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarTableViewController.swift */; };
 		661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */; };
@@ -483,6 +484,7 @@
 		6619EE73216F969B00655B99 /* ForumsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsListViewController.swift; sourceTree = "<group>"; };
 		6619EE77216FDD3E00655B99 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
 		6619EE79216FF31D00655B99 /* Episodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episodes.swift; sourceTree = "<group>"; };
+		661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarTableViewController.swift; sourceTree = "<group>"; };
 		661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonTableViewCell.swift; sourceTree = "<group>"; };
@@ -1036,6 +1038,7 @@
 				66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */,
 				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
 				66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */,
+				661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */,
 				66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */,
 				664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */,
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
@@ -2622,6 +2625,7 @@
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				66FC6DDC2340BC0900A454DD /* KService+Episode.swift in Sources */,
+				661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */,
 				6675263822282B06007C1617 /* Themes.swift in Sources */,
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
 				66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */,

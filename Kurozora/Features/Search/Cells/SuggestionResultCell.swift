@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class SuggestionResultCell: UICollectionViewCell {
 	// MARK: - IBOutlets
@@ -27,13 +26,8 @@ class SuggestionResultCell: UICollectionViewCell {
 		guard let showDetailsElement = showDetailsElement else { return }
 		titleLabel?.text = showDetailsElement.title
 
-		if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
-			let posterThumbnailUrl = URL(string: posterThumbnail)
-			let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-			posterImageView?.kf.indicatorType = .activity
-			posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-		} else {
-			posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
+		if let posterThumbnail = showDetailsElement.posterThumbnail {
+			posterImageView?.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
 	}
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 	@IBOutlet weak var episodeImageView: UIImageView!
@@ -31,13 +30,8 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 		self.userProgressLabel?.text = "TV · ✓ \(showDetailsElement.episodes ?? 0) · ☆ \(showDetailsElement.averageRating ?? 0)"
 
 		self.episodeImageView?.hero.id = "library_\(showTitle)_banner"
-		if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
-			let bannerThumbnailUrl = URL(string: bannerThumbnail)
-			let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
-			self.episodeImageView?.kf.indicatorType = .activity
-			self.episodeImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
-		} else {
-			self.episodeImageView?.image = #imageLiteral(resourceName: "placeholder_banner_image")
+		if let bannerImage = showDetailsElement.banner {
+			self.episodeImageView?.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
 
 		self.contentView.applyShadow()

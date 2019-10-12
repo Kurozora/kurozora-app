@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 import SCLAlertView
 import SwiftTheme
 

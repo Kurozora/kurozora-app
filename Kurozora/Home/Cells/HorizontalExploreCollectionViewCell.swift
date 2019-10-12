@@ -73,11 +73,11 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreCollectionViewCell
-		exploreCell.homeCollectionViewController = homeCollectionViewController
+		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreBaseCollectionViewCell
+//		exploreCell.homeCollectionViewController = homeCollectionViewController
 		exploreCell.indexPath = indexPath
 		exploreCell.delegate = self
-		exploreCell.shouldPlay = self.currentlyPlayingIndexPath == indexPath
+		(exploreCell as? ExploreVideoCollectionViewCell)?.shouldPlay = self.currentlyPlayingIndexPath == indexPath
 
 		if shows != nil {
 			exploreCell.showDetailsElement = shows?[indexPath.row]

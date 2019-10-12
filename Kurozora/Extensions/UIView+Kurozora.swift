@@ -48,6 +48,7 @@ extension UIView {
 	/**
 		Give the view a nice shadow.
 
+		- Parameter withView: The view from which
 		- Parameter shadowColor: The color of the shadow (default is `.black`).
 		- Parameter shadowOpacity: The opacity of the shadow (default is `0.2`).
 		- Parameter shadowRadius: The radius of the shadow (default is `8`).
@@ -56,7 +57,7 @@ extension UIView {
 		- Parameter shouldRasterize: Whether the shadow should be rasterized for better performance (default is `true`).
 		- Parameter cornerRadius: The corner radius of the path size (default is `nil`).
 	*/
-	func applyShadow(shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
+	func applyShadow(withView view: UIView? = nil, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
 
 		let shadowWidth = self.width * 0.77
 		let shadowHeight = self.height * 0.5
@@ -64,7 +65,9 @@ extension UIView {
 		let xTranslate = (self.width - shadowWidth) / 2
 		let yTranslate = (self.height - shadowHeight) + 4
 
-		let shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: xTranslate, y: yTranslate), size: shadowPathSize ?? CGSize(width: shadowWidth, height: shadowHeight)), cornerRadius: cornerRadius ?? self.layer.cornerRadius)
+		let roundedRect = view?.bounds.offsetBy(dx: 0, dy: 5) ?? CGRect(origin: CGPoint(x: xTranslate, y: yTranslate), size: shadowPathSize ?? CGSize(width: shadowWidth, height: shadowHeight))
+		let cornerRadius = view?.layer.cornerRadius ?? cornerRadius ?? self.layer.cornerRadius
+		let shadowPath = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
 
 		self.layer.shadowColor = shadowColor.cgColor
 		self.layer.shadowOpacity = shadowOpacity

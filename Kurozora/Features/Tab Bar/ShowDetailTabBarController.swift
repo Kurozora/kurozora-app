@@ -10,13 +10,15 @@ import UIKit
 import ESTabBarController_swift
 
 class ShowDetailTabBarController: ESTabBarController {
+	// MARK: - Properties
 	var showID: Int? = nil
 	var heroID: String? = nil
 	var showDetailsElement: ShowDetailsElement? = nil
-	var exploreCollectionViewCell: ExploreCollectionViewCell? = nil
+	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	weak var showDetailViewControllerDelegate: ShowDetailViewControllerDelegate?
 
+	// MARK: - Views
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -29,7 +31,7 @@ class ShowDetailTabBarController: ESTabBarController {
 
 		// Instantiate views
 		let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as! ShowDetailViewController
-		showDetailViewController.exploreCollectionViewCell = exploreCollectionViewCell
+		showDetailViewController.exploreBaseCollectionViewCell = exploreBaseCollectionViewCell
 		showDetailViewController.libraryCollectionViewCell = libraryCollectionViewCell
 		showDetailViewController.modalPresentationCapturesStatusBarAppearance = true
 		if showID == nil {
@@ -44,7 +46,7 @@ class ShowDetailTabBarController: ESTabBarController {
 		seasons.modalPresentationCapturesStatusBarAppearance = true
 		seasons.showID = showID ?? showDetailsElement?.id
 		if let heroID = heroID {
-			if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreCollectionViewCell?.bannerImageView != nil {
+			if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreBaseCollectionViewCell?.bannerImageView != nil {
 				seasons.heroID = "\(heroID)_banner"
 			} else {
 				seasons.heroID = "\(heroID)_poster"

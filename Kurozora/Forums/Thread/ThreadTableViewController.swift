@@ -8,7 +8,6 @@
 
 import UIKit
 import EmptyDataSet_Swift
-import Kingfisher
 import RichTextView
 import SwiftyJSON
 import SCLAlertView

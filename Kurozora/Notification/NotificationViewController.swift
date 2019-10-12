@@ -9,7 +9,6 @@
 import UIKit
 import SwiftyJSON
 import SCLAlertView
-import Kingfisher
 import EmptyDataSet_Swift
 import SwipeCellKit
 import SwiftTheme

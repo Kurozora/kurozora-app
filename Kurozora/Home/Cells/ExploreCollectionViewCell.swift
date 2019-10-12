@@ -9,50 +9,25 @@
 import AVKit
 import AVFoundation
 import UIKit
-import Kingfisher
 import Hero
 
 protocol ExploreCollectionViewCellDelegate: class {
 	func playVideoForCell(with indexPath: IndexPath)
 }
 
-class ExploreCollectionViewCell: UICollectionViewCell {
+class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
+	@IBOutlet weak var primaryLabel: UILabel?
+	@IBOutlet weak var secondaryLabel: UILabel?
 	@IBOutlet weak var bannerImageView: UIImageView?
 	@IBOutlet weak var posterImageView: UIImageView?
-	@IBOutlet weak var titleLabel: UILabel?
-	@IBOutlet weak var taglineLabel: UILabel? {
-		didSet {
-			taglineLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var scoreButton: UIButton?
-	@IBOutlet weak var genreLabel: UILabel?
-	@IBOutlet weak var separatorView: UIView? {
-		didSet {
-			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+
 	@IBOutlet weak var shadowView: UIView?
-	@IBOutlet weak var colorOverlayView: UIView?
-	@IBOutlet weak var backgroundColorView: UIView?
-	@IBOutlet weak var libraryStatusButton: UIButton? {
-		didSet {
-			libraryStatusButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var videoPlayerContainer: UIView?
 
 	// MARK: - Properties
-	var avPlayerViewController: AVPlayerViewController?
-	var avPlayer: AVPlayer?
-	var avPlayerLayer: AVPlayerLayer?
-	var indexPath: IndexPath?
 	weak var delegate: ExploreCollectionViewCellDelegate?
-	var shouldPlay = false
-
-	var homeCollectionViewController: HomeCollectionViewController?
+	var indexPath: IndexPath?
+	var showDetailTabBarController: ShowDetailTabBarController?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			configureCell()
@@ -64,158 +39,128 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 			configureCell()
 		}
 	}
-	var libraryStatus: String?
-	var showDetailTabBarController: ShowDetailTabBarController?
 
-	var thumbnailPlaceholder: UIImageView {
-		get { return getVideoThumbnail() }
-	}
-	var avPlayerStatus: NSKeyValueObservation? = nil
-	var avPlayerTimeControl: NSKeyValueObservation? = nil
-
-	// MARK: - Cell
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		avPlayerViewController = AVPlayerViewController()
-	}
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		if shadowView == nil {
-			self.applyShadow()
-		} else {
-			shadowView?.applyShadow()
-		}
-	}
+	// MARK: - View
+//	override func layoutSubviews() {
+//		super.layoutSubviews()
+//		if shadowView == nil {
+//			self.applyShadow(withView: bannerImageView, shadowOpacity: 1, shadowRadius: 0)
+//		} else {
+//			shadowView?.applyShadow(withView: posterImageView, shadowOpacity: 1, shadowRadius: 0)
+//		}
+//	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
-		if showDetailsElement != nil {
-			guard let showDetailsElement = showDetailsElement else { return }
-			guard let showTitle = showDetailsElement.title else { return }
-			guard let section = indexPath?.section else { return }
+	func configureCell() {
+		guard let showDetailsElement = showDetailsElement else { return }
+		guard let showTitle = showDetailsElement.title else { return }
+		guard let section = indexPath?.section else { return }
 
-			self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
+		self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
+		self.primaryLabel?.hero.id = (primaryLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
+		self.primaryLabel?.text = showDetailsElement.title
 
-			if self.taglineLabel != nil {
-				self.configureVideoCell()
-			}
-
-			self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
-			self.titleLabel?.hero.id = (titleLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
-			self.titleLabel?.text = showDetailsElement.title
-
-			if let genres = showDetailsElement.genres, genres.count != 0 {
-				var genreNames = ""
-				for (genreIndex, genreItem) in genres.enumerated() {
-					if let genreName = genreItem.name {
-						genreNames += genreName
-					}
-
-					if genreIndex != genres.endIndex-1 {
-						genreNames += ", "
-					}
+		if let genres = showDetailsElement.genres, genres.count != 0 {
+			var genreNames = ""
+			for (genreIndex, genreItem) in genres.enumerated() {
+				if let genreName = genreItem.name {
+					genreNames += genreName
 				}
 
-				self.genreLabel?.text = genreNames
-			} else {
-				self.genreLabel?.text = ""
-			}
-
-			if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
-				let bannerThumbnailUrl = URL(string: bannerThumbnail)
-				let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
-				self.bannerImageView?.kf.indicatorType = .activity
-				self.bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
-			} else {
-				self.bannerImageView?.image = #imageLiteral(resourceName: "placeholder_banner_image")
-			}
-
-			if let posterThumbnail = showDetailsElement.posterThumbnail, !posterThumbnail.isEmpty {
-				let posterThumbnailUrl = URL(string: posterThumbnail)
-				let resource = ImageResource(downloadURL: posterThumbnailUrl!)
-				self.posterImageView?.kf.indicatorType = .activity
-				self.posterImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-			} else {
-				self.posterImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
-			}
-
-			if let score = showDetailsElement.averageRating, score != 0 {
-				self.scoreButton?.setTitle(" \(score)", for: .normal)
-				// Change color based on score
-				if score >= 2.5 {
-					self.scoreButton?.backgroundColor = .kYellow
-				} else {
-					self.scoreButton?.backgroundColor = .kLightRed
+				if genreIndex != genres.endIndex-1 {
+					genreNames += ", "
 				}
-			} else {
-				self.scoreButton?.setTitle("New", for: .normal)
-				self.scoreButton?.backgroundColor = .kGreen
 			}
-		} else if genreElement != nil {
-			configureGenreCell()
+
+			self.secondaryLabel?.text = genreNames
+		} else {
+			self.secondaryLabel?.text = ""
+		}
+
+		if let bannerThumbnail = showDetailsElement.banner {
+			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+		}
+
+		if let posterThumbnail = showDetailsElement.posterThumbnail {
+			self.posterImageView?.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+		}
+	}
+}
+
+// MARK: - Video
+class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
+	// MARK: - IBOutlets
+	override var primaryLabel: UILabel? {
+		didSet {
+			primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	override var secondaryLabel: UILabel? {
+		didSet {
+			secondaryLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var taglineLabel: UILabel! {
+		didSet {
+			taglineLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var libraryStatusButton: UIButton! {
+		didSet {
+			libraryStatusButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
+			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
+	@IBOutlet weak var videoPlayerContainer: UIView!
+
+	// MARK: - Properties
+	var avPlayer: AVPlayer?
+	var avPlayerLayer: AVPlayerLayer?
+	var avPlayerStatus: NSKeyValueObservation? = nil
+	var avPlayerTimeControl: NSKeyValueObservation? = nil
+	var avPlayerViewController: AVPlayerViewController = AVPlayerViewController()
+	var shouldPlay = false
+
+	var libraryStatus: String?
+
+	var thumbnailPlaceholder: UIImageView {
+		get {
+			let thumbnailPlaceholder = UIImageView(frame: CGRect(origin: .zero, size: videoPlayerContainer?.frame.size ?? .zero))
+			if let bannerThumbnail = showDetailsElement?.banner {
+				thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+			}
+			return thumbnailPlaceholder
 		}
 	}
 
-	/// Configures the video cell with the necessary details.
-	func configureVideoCell() {
-		self.titleLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		self.genreLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+	// MARK: - View
+//	override func awakeFromNib() {
+//		super.awakeFromNib()
+//		avPlayerViewController = AVPlayerViewController()
+//	}
+
+	// MARK: - Functions
+	override func configureCell() {
+		super.configureCell()
+		guard let showDetailsElement = showDetailsElement else { return }
 
 		// Configure tagline
-		self.taglineLabel?.text = showDetailsElement?.tagline
+		self.taglineLabel.text = showDetailsElement.tagline
 
 		// Configure library status
-		if let libraryStatus = showDetailsElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
+		self.libraryStatus = showDetailsElement.currentUser?.libraryStatus
+		if let libraryStatus = showDetailsElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {
 			self.libraryStatusButton?.setTitle("\(libraryStatus.capitalized) ▾", for: .normal)
 		} else {
 			self.libraryStatusButton?.setTitle("ADD", for: .normal)
 		}
 
-		// Configure video
+		// Configure video player
 		configureVideoPlayer()
 	}
 
-	/// Configures the genre cell with the necessary details.
-	func configureGenreCell() {
-		guard let genreElement = genreElement else { return }
-		guard let genreColor = genreElement.color else { return }
-
-		titleLabel?.text = genreElement.name
-		colorOverlayView?.backgroundColor = UIColor(hexString: genreColor)?.withAlphaComponent(0.6)
-		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
-
-		if let symbol = genreElement.symbol, !symbol.isEmpty {
-			let symbolUrl = URL(string: symbol)
-			let resource = ImageResource(downloadURL: symbolUrl!)
-			bannerImageView?.kf.indicatorType = .activity
-			bannerImageView?.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"), options: [.transition(.fade(0.2))])
-		} else {
-			bannerImageView?.image = #imageLiteral(resourceName: "placeholder_poster_image")
-		}
-	}
-
-	/**
-		Return a UIImage object containing a video thumbnail.
-	
-		- Returns: a UIImage object containing a video thumbnail
-	*/
-	func getVideoThumbnail() -> UIImageView {
-		guard let showDetailsElement = showDetailsElement else { return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner_image")) }
-		if let bannerThumbnail = showDetailsElement.banner, !bannerThumbnail.isEmpty {
-			let bannerThumbnailUrl = URL(string: bannerThumbnail)
-			let resource = ImageResource(downloadURL: bannerThumbnailUrl!)
-			let thumbnailPlaceholder = UIImageView(frame: CGRect(origin: .zero, size: videoPlayerContainer?.frame.size ?? .zero))
-			thumbnailPlaceholder.kf.indicatorType = .activity
-			thumbnailPlaceholder.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"), options: [.transition(.fade(0.2))])
-			return thumbnailPlaceholder
-		} else {
-			return UIImageView(image: #imageLiteral(resourceName: "placeholder_banner_image"))
-		}
-	}
-
-	/// Configures the video player with the right settings.
+	/// Configures the video player with the defined settings.
 	func configureVideoPlayer() {
 		guard let videoUrlString = showDetailsElement?.videoUrl else { return }
 		guard let videoUrl = URL(string: videoUrlString) else { return }
@@ -226,26 +171,26 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 		self.avPlayer?.isMuted = true
 		self.avPlayerLayer = AVPlayerLayer(player: self.avPlayer)
 		self.avPlayerLayer?.videoGravity = .resizeAspectFill
-		self.avPlayerLayer?.frame = videoPlayerContainer!.bounds
-		if self.avPlayerViewController == nil {
-			avPlayerViewController = AVPlayerViewController()
-		}
-		avPlayerViewController?.player = avPlayer
-		avPlayerViewController?.exitsFullScreenWhenPlaybackEnds = true
+		self.avPlayerLayer?.frame = videoPlayerContainer.bounds
+//		if self.avPlayerViewController == nil {
+//			avPlayerViewController = AVPlayerViewController()
+//		}
+		avPlayerViewController.player = avPlayer
+		avPlayerViewController.exitsFullScreenWhenPlaybackEnds = true
 
 		// Setup video thumbnail and observe play status
 		setupVideoThumbnail()
 		avPlayerTimeControl = self.avPlayer?.observe(\.timeControlStatus, changeHandler: { (_, _) in
 			if self.avPlayer?.timeControlStatus == .playing {
-				self.avPlayerViewController?.contentOverlayView?.removeSubviews()
+				self.avPlayerViewController.contentOverlayView?.removeSubviews()
 			}
 		})
 
-		homeCollectionViewController?.addChild(avPlayerViewController!)
-		avPlayerViewController?.view.frame = videoPlayerContainer!.bounds
+		self.parentViewController?.addChild(avPlayerViewController)
+		avPlayerViewController.view.frame = videoPlayerContainer!.bounds
 
 		// Add avPlayerViewController view as subview to cell
-		let avPlayerControllerView = avPlayerViewController!.view
+		let avPlayerControllerView = avPlayerViewController.view
 		videoPlayerContainer?.addSubview(avPlayerControllerView!)
 		avPlayerControllerView?.didMoveToSuperview()
 	}
@@ -254,7 +199,7 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	fileprivate func setupVideoThumbnail() {
 		avPlayerStatus = self.avPlayer?.observe(\.status, changeHandler: { (_, _) in
 			if self.avPlayer?.status == AVPlayer.Status.readyToPlay {
-				self.avPlayerViewController?.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
+				self.avPlayerViewController.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
 			}
 		})
 	}
@@ -305,12 +250,67 @@ class ExploreCollectionViewCell: UICollectionViewCell {
 	}
 }
 
+// MARK: - Large
+class ExploreLargeCollectionViewCell: ExploreBaseCollectionViewCell {
+	@IBOutlet weak var separatorView: UIView? {
+		didSet {
+			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+		}
+	}
+}
+
+// MARK: - Medium
+class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var colorOverlayView: UIView?
+	@IBOutlet weak var backgroundColorView: UIView?
+
+	// MARK: - Functions
+	override func configureCell() {
+		guard let genreElement = genreElement else { return }
+		guard let genreColor = genreElement.color else { return }
+
+		primaryLabel?.text = genreElement.name
+		colorOverlayView?.backgroundColor = UIColor(hexString: genreColor)?.withAlphaComponent(0.6)
+		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
+
+		if let symbol = genreElement.symbol {
+			bannerImageView?.setImage(with: symbol, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+		}
+	}
+}
+
+// MARK: - Small
+class ExploreSmallCollectionViewCell: ExploreBaseCollectionViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var scoreButton: UIButton!
+
+	// MARK: - Functions
+	override func configureCell() {
+		super.configureCell()
+		guard let showDetailsElement = showDetailsElement else { return }
+
+		if let score = showDetailsElement.averageRating, score != 0 {
+			self.scoreButton?.setTitle(" \(score)", for: .normal)
+			// Change color based on score
+			if score >= 2.5 {
+				self.scoreButton?.backgroundColor = .kYellow
+			} else {
+				self.scoreButton?.backgroundColor = .kLightRed
+			}
+		} else {
+			self.scoreButton?.setTitle("New", for: .normal)
+			self.scoreButton?.backgroundColor = .kGreen
+		}
+	}
+}
+
 // MARK: - UIViewControllerPreviewingDelegate
 #if !targetEnvironment(macCatalyst)
-extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
+extension ExploreBaseCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
-		showDetailTabBarController?.exploreCollectionViewCell = self
+		showDetailTabBarController?.exploreBaseCollectionViewCell = self
 		showDetailTabBarController?.showDetailsElement = showDetailsElement
 		showDetailTabBarController?.modalPresentationStyle = .overFullScreen
 
@@ -325,7 +325,7 @@ extension ExploreCollectionViewCell: UIViewControllerPreviewingDelegate {
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
 		if let showDetailTabBarController = showDetailTabBarController {
-			homeCollectionViewController?.present(showDetailTabBarController, animated: true, completion: nil)
+			self.parentViewController?.present(showDetailTabBarController, animated: true, completion: nil)
 		}
 	}
 }

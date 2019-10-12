@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class SearchUserResultsCell: SearchBaseResultsCell {
 	// MARK: - Properties
@@ -30,13 +29,8 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		updateFollowStatusLabel()
 
 		// Configure profile image
-		if let profileImage = userProfile.profileImage, !profileImage.isEmpty {
-			let profileImageUrl = URL(string: profileImage)
-			let resource = ImageResource(downloadURL: profileImageUrl!)
-			searchImageView.kf.indicatorType = .activity
-			searchImageView.kf.setImage(with: resource, placeholder: #imageLiteral(resourceName: "default_profile_image"), options: [.transition(.fade(0.2))])
-		} else {
-			searchImageView.image = #imageLiteral(resourceName: "default_profile_image")
+		if let profileImage = userProfile.profileImage {
+			searchImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Configure follow button
