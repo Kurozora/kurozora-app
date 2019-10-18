@@ -387,7 +387,7 @@
 		66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF148E21B728B60080FF14 /* ThreadReply.swift */; };
 		66EF26C6215F960A00FB2B19 /* UIImage+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */; };
 		66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F9449E22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift */; };
-		66F944AC22F0C08E009F1FE2 /* ExploreSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944A822F0C08E009F1FE2 /* ExploreSectionHeaderCell.swift */; };
+		66F944AC22F0C08E009F1FE2 /* ExploreHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944A822F0C08E009F1FE2 /* ExploreHeaderFooterView.swift */; };
 		66F944AD22F0C08E009F1FE2 /* HorizontalExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944A922F0C08E009F1FE2 /* HorizontalExploreCollectionViewCell.swift */; };
 		66F944AE22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AA22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift */; };
 		66F944AF22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F944AB22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift */; };
@@ -826,7 +826,7 @@
 		66EF148E21B728B60080FF14 /* ThreadReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReply.swift; sourceTree = "<group>"; };
 		66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Kurozora.swift"; sourceTree = "<group>"; };
 		66F9449E22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListExploreCollectionViewCell.swift; sourceTree = "<group>"; };
-		66F944A822F0C08E009F1FE2 /* ExploreSectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreSectionHeaderCell.swift; sourceTree = "<group>"; };
+		66F944A822F0C08E009F1FE2 /* ExploreHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreHeaderFooterView.swift; sourceTree = "<group>"; };
 		66F944A922F0C08E009F1FE2 /* HorizontalExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944AA22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66F944AB22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalExploreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2025,7 +2025,7 @@
 				66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */,
 				66F9449E22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift */,
 				66F944AA22F0C08E009F1FE2 /* ExploreCollectionViewCell.swift */,
-				66F944A822F0C08E009F1FE2 /* ExploreSectionHeaderCell.swift */,
+				66F944A822F0C08E009F1FE2 /* ExploreHeaderFooterView.swift */,
 				66F944A922F0C08E009F1FE2 /* HorizontalExploreCollectionViewCell.swift */,
 				66F944AB22F0C08E009F1FE2 /* LegalExploreCollectionViewCell.swift */,
 			);
@@ -2690,7 +2690,7 @@
 				66FC6DD82340BB6A00A454DD /* KService+Show.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */,
-				66F944AC22F0C08E009F1FE2 /* ExploreSectionHeaderCell.swift in Sources */,
+				66F944AC22F0C08E009F1FE2 /* ExploreHeaderFooterView.swift in Sources */,
 				66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */,
 				66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */,
 				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,

@@ -29,10 +29,10 @@ class KLabel: UILabel {
 	private func sharedInit() {
 		isUserInteractionEnabled = true
 		#if targetEnvironment(macCatalyst)
-			let interaction = UIContextMenuInteraction(delegate: self)
-			self.addInteraction(interaction)
+		let interaction = UIContextMenuInteraction(delegate: self)
+		self.addInteraction(interaction)
 		#else
-			addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu(_:))))
+		addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu(_:))))
 		#endif
 	}
 
@@ -44,10 +44,10 @@ class KLabel: UILabel {
 		gestureView.becomeFirstResponder()
 
 		#if targetEnvironment(macCatalyst)
-			menuController.showMenu(from: superView, rect: gestureView.frame)
+		menuController.showMenu(from: superView, rect: gestureView.frame)
 		#else
-			menuController.setTargetRect(gestureView.frame, in: superView)
-			menuController.setMenuVisible(true, animated: true)
+		menuController.setTargetRect(gestureView.frame, in: superView)
+		menuController.setMenuVisible(true, animated: true)
 		#endif
 	}
 
@@ -55,11 +55,11 @@ class KLabel: UILabel {
 	fileprivate func makeContextMenu() -> UIMenu {
 		// Create a UIAction for sharing
 		let copyAction = UIAction(title: "Copy") { action in
-			self.showMenu(sender: action)
+			self.copy(action)
 		}
 
 		// Create and return a UIMenu with the share action
-		return UIMenu(title: "Main Menu", children: [copyAction])
+		return UIMenu(title: "", children: [copyAction])
 	}
 	#endif
 
@@ -71,9 +71,9 @@ class KLabel: UILabel {
 		let menuController = UIMenuController.shared
 
 		#if targetEnvironment(macCatalyst)
-			menuController.hideMenu()
+		menuController.hideMenu()
 		#else
-			menuController.setMenuVisible(false, animated: true)
+		menuController.setMenuVisible(false, animated: true)
 		#endif
 	}
 
