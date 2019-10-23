@@ -11,61 +11,46 @@ import SCLAlertView
 import SwiftyJSON
 import WhatsNew
 
-class HomeCollectionViewController: UICollectionViewController {
-	// Search bar controller
+class HomeCollectionViewController: UITableViewController {
+	// MARK: - Properties
 	var searchResultsTableViewController: SearchResultsTableViewController?
 	var searchController: SearchController!
 	var placeholderTimer: Timer?
 	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
-	let actionUrlList: [[String: String]] = [["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]]
-	let actionButtonList = [["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
+	let actionsArray: [[[String: String]]] = [
+		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
+		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
+	]
 
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
-			collectionView.reloadData()
+			tableView.reloadData()
 		}
 	}
-    var showID: Int?
-	var gap: CGFloat = UIDevice.isPad ? 40 : 20
-	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = (1, 1)
+	var showID: Int?
+	var collectionViewSizeChanged: Bool = false
+	var collectionViewOffsets = [IndexPath: CGFloat]()
 
-	#if DEBUG
-	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
-	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
-		get {
-			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
-			return newNumberOfItems
-		}
-	}
-
-	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: CGPoint(x: 20, y: 0), size: CGSize(width: 100, height: 20)))
-
-	@objc func updateLayout(_ textField: UITextField) {
-		guard let textFieldText = numberOfItemsTextField.text, !textFieldText.isEmpty else { return }
-		newNumberOfItems = getNumbers(textFieldText)
-		collectionView.reloadData()
-	}
-
-	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
-		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
-		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
-		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
-		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
-	}
-	#endif
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	// MARK: - View
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
-		// Show what's new in the app if necessary.
-		showWhatsNew()
+		// Remove top space
+		var frame = CGRect.zero
+		frame.size.height = .leastNormalMagnitude
+		let tableHeaderView = UIView(frame: frame)
+		tableHeaderView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		tableView.tableHeaderView = tableHeaderView
+
+		// Fetch explore details.
+		fetchExplore()
 
 		// Setup search bar.
 		setupSearchBar()
 
-        // Validate session.
+		// Validate session.
 		if User.isSignedIn {
 			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
@@ -75,29 +60,43 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			})
 		}
+	}
 
-        // Fetch explore.
-		fetchExplore()
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 
-		#if DEBUG
-		numberOfItemsTextField.placeholder = "# items for: width, height"
-		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
-		numberOfItemsTextField.textAlignment = .center
-		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
-		navigationItem.title = nil
-		navigationItem.titleView = numberOfItemsTextField
-		#endif
-    }
+		// Show what's new in the app if necessary.
+		showWhatsNew()
+	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
-		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-			return
-		}
-		flowLayout.invalidateLayout()
+
+		collectionViewSizeChanged = true
 	}
 
-    // MARK: - Functions
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
+		if collectionViewSizeChanged {
+			tableView.invalidateIntrinsicContentSize()
+		}
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		if collectionViewSizeChanged {
+			collectionViewSizeChanged = false
+			DispatchQueue.main.async {
+				self.tableView.performBatchUpdates({}) { _ in
+					NotificationCenter.default.post(name: .KEDidInvalidateContentSize, object: nil)
+				}
+			}
+		}
+	}
+
+	// MARK: - Functions
 	/**
 		Instantiates and returns a view controller from the relevant storyboard.
 
@@ -124,7 +123,7 @@ class HomeCollectionViewController: UICollectionViewController {
 			whatsNew.itemSubtitleColor = KThemePicker.subTextColor.colorValue
 			whatsNew.buttonTextColor = KThemePicker.tintedButtonTextColor.colorValue
 			whatsNew.buttonBackgroundColor = KThemePicker.tintColor.colorValue
-			present(whatsNew, animated: true, completion: nil)
+			self.present(whatsNew)
 		}
 	}
 
@@ -190,100 +189,10 @@ class HomeCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	/**
-		Configures the size of the items for each cell and section of the explore page.
-
-		- Parameter exploreCellStyle: A reference to the cell which the item size will depend on.
-		- Parameter section: The section number which the item size will depend on.
-	*/
-	func getItems(forCell exploreCellStyle: ExploreCellStyle? = nil, forSection section: Int? = -1) {
-		guard let exploreCellStyle = exploreCellStyle else {
-			if section == 0 {
-				if UIDevice.isLandscape {
-					switch UIDevice.type {
-					case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS, .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:	numberOfItems = (1, 1.4)
-					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:											numberOfItems = (1, 2.0)
-					}
-				} else {
-					switch UIDevice.type {
-					case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:										numberOfItems = (1, 2.8)
-					case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:												numberOfItems = (1, 3.4)
-					case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:											numberOfItems = (1, 3.0)
-					}
-				}
-			}
-
-			return
-		}
-		switch exploreCellStyle {
-		case .large:
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 2.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 1.8)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			numberOfItems = (1, 2.6)
-				}
-			} else {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 4.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 4.6)
-				case .iPad, .iPadAir3:									numberOfItems = (1, 4.8)
-				case .iPadPro11, .iPadPro12:							numberOfItems = (1, 5.0)
-				}
-			}
-		case .medium:
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 3.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 2.6)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			numberOfItems = (1, 5.0)
-				}
-			} else {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 5.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 6.0)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			numberOfItems = (1, 7.0)
-				}
-			}
-		case .small:
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 2.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 1.6)
-				case .iPad, .iPadAir3, .iPadPro12:						numberOfItems = (1, 3.2)
-				case .iPadPro11:										numberOfItems = (1, 3.0)
-				}
-			} else {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 4.2)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 5.0)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			numberOfItems = (1, 5.2)
-				}
-			}
-		case .video:
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 1.1)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 1.2)
-				case .iPad, .iPadAir3:									numberOfItems = (1, 1.79)
-				case .iPadPro11:										numberOfItems = (1, 1.7)
-				case .iPadPro12:										numberOfItems = (1, 1.9)
-				}
-			} else {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		numberOfItems = (1, 2.0)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				numberOfItems = (1, 2.4)
-				case .iPad, .iPadAir3:									numberOfItems = (1, 3.0)
-				case .iPadPro11, .iPadPro12:							numberOfItems = (1, 3.2)
-				}
-			}
-		}
-	}
-
 	// MARK: - Segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowDetailsSegue" {
-            // Show detail for explore cell
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "ShowDetailsSegue" {
+			// Show detail for explore cell
 			if let selectedCell = sender as? ExploreBaseCollectionViewCell, let showDetailTabBarController = segue.destination as? ShowDetailTabBarController {
 				showDetailTabBarController.exploreBaseCollectionViewCell = selectedCell
 				showDetailTabBarController.showDetailsElement = selectedCell.showDetailsElement
@@ -292,17 +201,17 @@ class HomeCollectionViewController: UICollectionViewController {
 				}
 			}
 		}
-    }
+	}
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - UITableViewDataSource
 extension HomeCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		guard let categoriesCount = exploreCategories?.count else { return 0 }
-		return categoriesCount + 3
+		return categoriesCount + 2
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let exploreCategoriesCount = exploreCategories?.count {
 			if section < exploreCategoriesCount {
 				let categorySection = exploreCategories?[section]
@@ -313,175 +222,98 @@ extension HomeCollectionViewController {
 				}
 				return 0
 			}
-
-			if section == exploreCategoriesCount {
-				if actionUrlList.count != 0 {
-					return actionUrlList.count
-				}
-			}
-
-			if section == exploreCategoriesCount + 1 {
-				if actionButtonList.count != 0 {
-					return actionButtonList.count
-				}
-			}
 		}
 
 		return 1
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if let exploreCategoriesCount = exploreCategories?.count {
 			if indexPath.section < exploreCategoriesCount {
-				if let categoryType = exploreCategories?[indexPath.section].size, var exploreCellStyle = ExploreCellStyle(rawValue: categoryType) {
-					var horizontalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalExploreCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
-
-					if indexPath.section == 0 {
-						horizontalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExploreBannerCollectionViewCell", for: indexPath) as! HorizontalExploreCollectionViewCell
-						horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = BannerCollectionViewFlowLayout()
-						exploreCellStyle = .large
-					}
-
-					horizontalExploreCollectionViewCell.section = indexPath.section
-					horizontalExploreCollectionViewCell.homeCollectionViewController = self
-					horizontalExploreCollectionViewCell.cellStyle = exploreCellStyle
-
-					if indexPath.section != 0 {
-						switch exploreCellStyle {
-						case .large:
-							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreLargeCollectionViewFlowLayout()
-						case .medium:
-							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreMediumCollectionViewFlowLayout()
-						case .small:
-							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreSmallCollectionViewFlowLayout()
-						case .video:
-							horizontalExploreCollectionViewCell.collectionView.collectionViewLayout = ExploreVideoCollectionViewFlowLayout()
-						}
-					}
-
-					if exploreCategories?[indexPath.section].shows?.count != 0 {
-						horizontalExploreCollectionViewCell.shows = exploreCategories?[indexPath.section].shows
-					} else {
-						horizontalExploreCollectionViewCell.genres = exploreCategories?[indexPath.section].genres
-					}
-
-					return horizontalExploreCollectionViewCell
+				if let horizontalCollectionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HorizontalCollectionTableViewCell", for: indexPath) as? HorizontalCollectionTableViewCell {
+					return horizontalCollectionTableViewCell
 				}
 			}
 
 			if indexPath.section == exploreCategoriesCount {
-				let actionListExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActionListExploreCollectionViewCell", for: indexPath) as! ActionListExploreCollectionViewCell
-				actionListExploreCollectionViewCell.actionUrlItem = actionUrlList[indexPath.item]
-				actionListExploreCollectionViewCell.homeCollectionViewController = self
-				return actionListExploreCollectionViewCell
-			}
-
-			if indexPath.section == exploreCategoriesCount + 1 {
-				let actionButtonExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActionButtonExploreCollectionViewCell", for: indexPath) as! ActionButtonExploreCollectionViewCell
-				actionButtonExploreCollectionViewCell.actionButtonItem = actionButtonList[indexPath.item]
-				actionButtonExploreCollectionViewCell.homeCollectionViewController = self
-				return actionButtonExploreCollectionViewCell
+				if let verticalCollectionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "VerticalCollectionTableViewCell", for: indexPath) as? VerticalCollectionTableViewCell {
+					return verticalCollectionTableViewCell
+				}
 			}
 		}
 
-		let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LegalExploreCollectionViewCell", for: indexPath) as! LegalExploreCollectionViewCell
+		if let legalExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LegalExploreTableViewCell", for: indexPath) as? LegalExploreTableViewCell {
+			return legalExploreTableViewCell
+		}
 
-		return legalExploreCollectionViewCell
+		return UITableViewCell()
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let exploreCategoriesCount = exploreCategories?.count {
+			if indexPath.section < exploreCategoriesCount {
+				if let categoryType = exploreCategories?[indexPath.section].size, var exploreCellStyle = HorizontalCollectionCellStyle(rawValue: categoryType),
+					let horizontalCollectionTableViewCell = cell as? HorizontalCollectionTableViewCell {
+
+					if indexPath.section == 0 {
+						exploreCellStyle = .banner
+					}
+
+					horizontalCollectionTableViewCell.cellStyle = exploreCellStyle
+
+					if exploreCategories?[indexPath.section].shows?.count != 0 {
+						horizontalCollectionTableViewCell.shows = exploreCategories?[indexPath.section].shows
+					} else {
+						horizontalCollectionTableViewCell.genres = exploreCategories?[indexPath.section].genres
+					}
+
+					horizontalCollectionTableViewCell.contentOffset = collectionViewOffsets[indexPath] ?? 0
+				}
+			}
+
+			if let verticalCollectionTableViewCell = cell as? VerticalCollectionTableViewCell {
+				verticalCollectionTableViewCell.actionsArray = actionsArray
+			}
+		}
 	}
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UITableViewDelegate
 extension HomeCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.section == collectionView.lastSection, ((collectionView.cellForItem(at: indexPath) as? LegalExploreCollectionViewCell) != nil) {
-			performSegue(withIdentifier: "LegalSegue", sender: nil)
-		}
-	}
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard section != 0 else { return .zero }
 
 		if let exploreCategoriesCount = exploreCategories?.count {
 			if section < exploreCategoriesCount {
 				if section != 0 {
-					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? CGSize(width: collectionView.bounds.width, height: 48) : .zero
+					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? UITableView.automaticDimension : .zero
 				}
 			} else if section == exploreCategoriesCount {
-				return CGSize(width: collectionView.bounds.width, height: 48)
+				return UITableView.automaticDimension
 			}
 		}
 
 		return .zero
 	}
 
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if let exploreCategoriesCount = exploreCategories?.count {
-			if indexPath.section < exploreCategoriesCount {
-				if let categoryType = exploreCategories?[indexPath.section].size {
-					if indexPath.section == 0 {
-						self.getItems(forSection: indexPath.section)
-					} else {
-						self.getItems(forCell: ExploreCellStyle(rawValue: categoryType))
-					}
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		guard let exploreCategoriesCount = exploreCategories?.count else { return nil }
+		guard section <= exploreCategoriesCount else { return nil }
+		guard let exploreSectionTitleCell = tableView.dequeueReusableCell(withIdentifier: "ExploreSectionTitleCell") as? ExploreSectionTitleCell else { return nil }
 
-					#if DEBUG
-					return CGSize(width: (collectionView.bounds.width - gap) / _numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / _numberOfItems.forHeight)
-					#else
-					return CGSize(width: (collectionView.bounds.width - gap) / numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / numberOfItems.forHeight)
-					#endif
-				}
-			}
-
-			if indexPath.section == exploreCategoriesCount || indexPath.section == exploreCategoriesCount + 1 {
-				if UIDevice.isPad {
-					if UIDevice.isLandscape {
-						return CGSize(width: view.frame.width / 3, height: 44.5)
-					}
-					return CGSize(width: view.frame.width / 2, height: 44.5)
-				}
-
-				if UIDevice.isLandscape {
-					return CGSize(width: view.frame.width / 2, height: 44.5)
-				}
-				return CGSize(width: view.frame.width, height: 44.5)
-			}
-		}
-
-		return CGSize(width: view.frame.width, height: 44)
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ExploreSectionHeader", for: indexPath) as? ExploreSectionHeaderCell else {
-			return UICollectionReusableView()
-		}
-
-		if let exploreCategoriesCount = exploreCategories?.count, indexPath.section == exploreCategoriesCount {
-			sectionHeader.title = "Quick Links"
+		if section < exploreCategoriesCount {
+			exploreSectionTitleCell.exploreCategory = exploreCategories?[section]
 		} else {
-			sectionHeader.category = exploreCategories?[indexPath.section]
-			sectionHeader.homeCollectionViewController = self
+			exploreSectionTitleCell.title = "Quick Links"
 		}
 
-		return sectionHeader
+		return exploreSectionTitleCell.contentView
 	}
 
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		if let exploreCategoriesCount = exploreCategories?.count {
-			if section < exploreCategoriesCount, section != 0 {
-//				if  {
-//					if section != 0 {
-						return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0) : .zero
-//					}
-//				}
-			}
-
-			if section == 0 || section >= exploreCategoriesCount {
-				return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-			}
+	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let horizontalCollectionTableViewCell = cell as? HorizontalCollectionTableViewCell {
+			collectionViewOffsets[indexPath] = horizontalCollectionTableViewCell.contentOffset
 		}
-		return .zero
 	}
 }
 

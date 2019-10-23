@@ -48,25 +48,17 @@ extension UIView {
 	/**
 		Give the view a nice shadow.
 
-		- Parameter withView: The view from which
+		- Parameter withView: The view used to set the bounds of the shadow (default is `self`).
 		- Parameter shadowColor: The color of the shadow (default is `.black`).
 		- Parameter shadowOpacity: The opacity of the shadow (default is `0.2`).
 		- Parameter shadowRadius: The radius of the shadow (default is `8`).
 		- Parameter shadowOffset: The offset of the shadow (default is `.zero`).
 		- Parameter shadowPathSize: The path size of the shadow (default is `nil`).
 		- Parameter shouldRasterize: Whether the shadow should be rasterized for better performance (default is `true`).
-		- Parameter cornerRadius: The corner radius of the path size (default is `nil`).
+		- Parameter cornerRadius: The corner radius of the path size (default is `10`).
 	*/
-	func applyShadow(withView view: UIView? = nil, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat? = nil) {
-
-		let shadowWidth = self.width * 0.77
-		let shadowHeight = self.height * 0.5
-
-		let xTranslate = (self.width - shadowWidth) / 2
-		let yTranslate = (self.height - shadowHeight) + 4
-
-		let roundedRect = view?.bounds.offsetBy(dx: 0, dy: 5) ?? CGRect(origin: CGPoint(x: xTranslate, y: yTranslate), size: shadowPathSize ?? CGSize(width: shadowWidth, height: shadowHeight))
-		let cornerRadius = view?.layer.cornerRadius ?? cornerRadius ?? self.layer.cornerRadius
+	func applyShadow(withView view: UIView? = nil, shadowColor: UIColor = .black, shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat = 10) {
+		let roundedRect = (view ?? self).bounds.offsetBy(dx: 0, dy: 10)
 		let shadowPath = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
 
 		self.layer.shadowColor = shadowColor.cgColor

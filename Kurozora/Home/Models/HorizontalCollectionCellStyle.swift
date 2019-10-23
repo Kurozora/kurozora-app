@@ -1,5 +1,5 @@
 //
-//  ExploreCellStyle.swift
+//  HorizontalCollectionCellStyle.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 28/03/2019.
@@ -9,16 +9,20 @@
 import Foundation
 
 /**
-	List of Explore cell styles.
+	List of horizontal explore cell styles.
 
 	```
+	case banner = "BannerExploreCollectionViewCell"
 	case large = "LargeExploreCollectionViewCell"
 	case medium = "MediumExploreCollectionViewCell"
 	case small = "SmallExploreCollectionViewCell"
 	case video = "VideoExploreCollectionViewCell"
 	```
 */
-enum ExploreCellStyle: String {
+enum HorizontalCollectionCellStyle: String {
+	/// Indicates that the cell has the `banner` style.
+	case banner
+
 	/// Indicates that the cell has the `large` style.
 	case large
 
@@ -33,6 +37,8 @@ enum ExploreCellStyle: String {
 
 	var reuseIdentifier: String {
 		switch self {
+		case .banner:
+			return "BannerExploreCollectionViewCell"
 		case .large:
 			return "LargeExploreCollectionViewCell"
 		case .medium:

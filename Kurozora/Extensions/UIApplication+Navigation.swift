@@ -42,7 +42,7 @@ extension UIApplication {
 	static var topViewController: UIViewController? {
 		var base: UIViewController?
 		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			for scene in UIApplication.shared.connectedScenes where scene.activationState == .foregroundInactive {
+			for scene in UIApplication.shared.connectedScenes where scene.activationState == .foregroundActive {
 				if let scene = scene as? UIWindowScene {
 					if let sceneDelegate = scene.delegate as? UIWindowSceneDelegate {
 						if let sceneWindow = sceneDelegate.window {

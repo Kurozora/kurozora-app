@@ -17,8 +17,8 @@ extension UIImageView {
 		- Parameter cacheKey: The string referencing the image in the cache storage. If not specified, the `urlString` is used as the key.
 		- Parameter placeholder: The placeholder to show until the downloaded image is loaded or in case the url is dead.
 	*/
-	func setImage(with urlString: String, cacheKey: String? = nil, placeholder: UIImage) {
-		if let imageURL = URL(string: urlString) {
+	func setImage(with urlString: String, cacheKey: String? = nil, placeholder: UIImage, completionHandler: (() -> Void)? = nil) {
+		if !urlString.isEmpty, let imageURL = URL(string: urlString) {
 			let resource = ImageResource(downloadURL: imageURL, cacheKey: cacheKey ?? urlString)
 			var options: KingfisherOptionsInfo = [.transition(.fade(0.2))]
 
@@ -27,7 +27,11 @@ extension UIImageView {
 			}
 
 			self.kf.indicatorType = .activity
-			self.kf.setImage(with: resource, placeholder: placeholder, options: options)
+			self.kf.setImage(with: resource, placeholder: placeholder, options: options, progressBlock: nil) { _ in
+				completionHandler?()
+			}
+		} else {
+			self.image = placeholder
 		}
 	}
 }

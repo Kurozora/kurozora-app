@@ -1,5 +1,5 @@
 //
-//  HorizontalExploreCollectionViewCell.swift
+//  HorizontalCollectionTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/03/2019.
@@ -8,19 +8,17 @@
 
 import UIKit
 
-class HorizontalExploreCollectionViewCell: UICollectionViewCell {
+class HorizontalCollectionTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var collectionView: UICollectionView! {
+		didSet {
+			NotificationCenter.default.addObserver(self, selector: #selector(invalidateCollectionViewLayout), name: .KEDidInvalidateContentSize, object: nil)
+		}
+	}
 
 	// MARK: - Properties
 	var currentlyPlayingIndexPath: IndexPath? = nil
-
-	var cellStyle: ExploreCellStyle! {
-		didSet {
-			collectionView.dataSource = self
-			collectionView.delegate = self
-		}
-	}
+	var cellStyle: HorizontalCollectionCellStyle!
 	var shows: [ShowDetailsElement]? = nil {
 		didSet {
 			collectionView.reloadData()
@@ -32,15 +30,25 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 			collectionView.reloadData()
 		}
 	}
-	var homeCollectionViewController: HomeCollectionViewController?
-	var section: Int?
+	var contentOffset: CGFloat! {
+		get {
+			return collectionView.contentOffset.x
+		}
+		set {
+			collectionView.setContentOffset(CGPoint(x: newValue >= 0 ? newValue : 0, y: 0), animated: false)
+		}
+	}
 
 	// MARK: - Functions
+	@objc func invalidateCollectionViewLayout() {
+		collectionView.performBatchUpdates({}, completion: nil)
+	}
+
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func makeContextMenu(for show: ShowDetailsElement?) -> UIMenu {
 		let title = show?.title ?? ""
 
-		let share = UIAction(title: "Share \(title)", image: UIImage(systemName: "square.and.pencil")) { _ in
+		let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
 			guard let showID = show?.id else { return }
 			var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
 
@@ -56,12 +64,12 @@ class HorizontalExploreCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Create our menu with both the edit menu and the share action
-		return UIMenu(title: "Main Menu", children: [share])
+		return UIMenu(title: "", children: [share])
 	}
 }
 
 // MARK: - UICollectionViewDataSource
-extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
+extension HorizontalCollectionTableViewCell: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if shows != nil {
 			guard let showsCount = shows?.count else { return 0 }
@@ -74,7 +82,6 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreBaseCollectionViewCell
-//		exploreCell.homeCollectionViewController = homeCollectionViewController
 		exploreCell.indexPath = indexPath
 		exploreCell.delegate = self
 		(exploreCell as? ExploreVideoCollectionViewCell)?.shouldPlay = self.currentlyPlayingIndexPath == indexPath
@@ -87,20 +94,16 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDataSource {
 
 		#if !targetEnvironment(macCatalyst)
 		if traitCollection.forceTouchCapability == .available {
-			homeCollectionViewController?.registerForPreviewing(with: exploreCell, sourceView: exploreCell)
+			self.parentViewController?.registerForPreviewing(with: exploreCell, sourceView: exploreCell)
 		}
 		#endif
 
 		return exploreCell
 	}
-
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1
-	}
 }
 
 // MARK: - UICollectionViewDelegate
-extension HorizontalExploreCollectionViewCell: UICollectionViewDelegate {
+extension HorizontalCollectionTableViewCell: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
 		let cell = collectionView.cellForItem(at: indexPath)
 		UIView.animate(withDuration: 0.5,
@@ -135,41 +138,40 @@ extension HorizontalExploreCollectionViewCell: UICollectionViewDelegate {
 
 		return nil
 	}
+
+	@available(iOS 13.0, macCatalyst 13.0, *)
+	func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+		if let homeTableViewController = self.parentViewController as? HomeCollectionViewController {
+			animator.addCompletion {
+				homeTableViewController.performSegue(withIdentifier: "ShowDetailsSegue", sender: self)
+			}
+		}
+	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension HorizontalExploreCollectionViewCell: UICollectionViewDelegateFlowLayout {
+extension HorizontalCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		var cellCount = 0
+		var size = collectionView.size
 
-		if let showsCount = shows?.count, showsCount != 0 {
-			cellCount = showsCount
-		} else if let genresCount = genres?.count, genresCount != 0 {
-			cellCount = genresCount
+		switch cellStyle {
+		case .banner:
+			size = CGSize(width: self.frame.width - 60, height: self.frame.height - 10)
+		case .medium:
+			size = CGSize(width: 284, height: (self.frame.height / 2) - 15)
+		case .small:
+			return CGSize(width: 284, height: (self.frame.height / 2) - 15)
+		case .video:
+			size = CGSize(width: 284, height: self.frame.height - 10)
+		default: break
 		}
 
-		if let cellStyle = cellStyle, cellCount > 0 {
-			switch cellStyle {
-			case .large:
-				return collectionView.frame.size
-			case .medium:
-				return collectionView.frame.size
-			case .small:
-				return collectionView.frame.size
-			case .video:
-				return collectionView.frame.size
-			}
-		}
-
-		return .zero
-	}
-
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return UIDevice.isPad ? 20 : 20
+		return size
 	}
 }
 
-extension HorizontalExploreCollectionViewCell: ExploreCollectionViewCellDelegate {
+// MARK: - ExploreBaseCollectionViewCellDelegate
+extension HorizontalCollectionTableViewCell: ExploreBaseCollectionViewCellDelegate {
 	func playVideoForCell(with indexPath: IndexPath) {
 		self.currentlyPlayingIndexPath = indexPath
 		self.collectionView.reloadItems(at: [indexPath])

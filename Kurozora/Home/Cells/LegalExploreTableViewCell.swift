@@ -1,5 +1,5 @@
 //
-//  LegalExploreCollectionViewCell.swift
+//  LegalExploreTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 19/04/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LegalExploreCollectionViewCell: UICollectionViewCell {
+class LegalExploreTableViewCell: UITableViewCell {
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue

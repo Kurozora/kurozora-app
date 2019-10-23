@@ -13,11 +13,13 @@ protocol DatePickerSettingsDelegate: class {
 }
 
 class DatePickerSettingsCell: SettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var datePicker: UIDatePicker!
 
-	var indexPath: IndexPath!
+	// MARK: - Properties
 	weak var delegate: DatePickerSettingsDelegate?
 
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
@@ -25,14 +27,16 @@ class DatePickerSettingsCell: SettingsCell {
 		datePicker.setValue(false, forKey: "highlightsToday")
 	}
 
+	// MARK: - Functions
 	func updateCell(with date: Date, for indexPath: IndexPath) {
 		datePicker.setDate(date, animated: true)
-		self.indexPath = indexPath
 	}
 
 	// MARK: - IBActions
 	@IBAction func dateDidChange(_ sender: UIDatePicker) {
-		let indexPathForDisplayDate = IndexPath(row: indexPath.row - 1, section: indexPath.section)
-		delegate?.didChangeDate(date: sender.date, indexPath: indexPathForDisplayDate, datePicker: datePicker)
+		if var indexPathForDisplayDate = indexPath {
+			indexPathForDisplayDate.row -= 1
+			delegate?.didChangeDate(date: sender.date, indexPath: indexPathForDisplayDate, datePicker: datePicker)
+		}
 	}
 }

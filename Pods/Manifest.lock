@@ -16,7 +16,7 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - Hero (1.4.0)
   - iosMath (0.9.4)
-  - KeychainAccess (3.2.0)
+  - KeychainAccess (3.2.1)
   - Kingfisher (5.8.3):
     - Kingfisher/Core (= 5.8.3)
   - Kingfisher/Core (5.8.3)
@@ -25,7 +25,7 @@ PODS:
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - Pageboy (3.5.0)
-  - PusherSwift (7.1.0):
+  - PusherSwift (7.2.0):
     - CryptoSwift (~> 0.9)
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
@@ -156,12 +156,12 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
-  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   Kingfisher: b7e4cb65ff24c264bd2a1284b75b974d907afd94
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: 842401d30f5c36e4f2eafc152824566f6b3c1bb5
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
-  PusherSwift: dc00ebecf31e897802e0e011450670971cb9bf63
+  PusherSwift: a5369a01e8a9106b4897e9186265af1426726062
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   RichTextView: 072585daa885ac3c32b394bce31d93e0a3f317c0
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460

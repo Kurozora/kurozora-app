@@ -9,32 +9,36 @@
 import UIKit
 
 class GenreTableViewCell: UITableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var nameLabel: UILabel! {
 		didSet {
 			nameLabel.theme_textColor = KThemePicker.textColor.rawValue
 			nameLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var nsfwView: UIView!
+	@IBOutlet weak var nsfwButton: UIButton!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
 
+	// MARK: - Properties
 	var genreElement: GenreElement? {
 		didSet {
-			setupCell()
+			configureCell()
 		}
 	}
 
-	fileprivate func setupCell() {
+	// MARK: - Functions
+	/// Configure the cell with the given details.
+	fileprivate func configureCell() {
 		guard let genreElement = genreElement else { return }
 
 		nameLabel.text = genreElement.name
 
 		if let isNsfw = genreElement.nsfw {
-			nsfwView.isHidden = isNsfw ? false : true
+			nsfwButton.isHidden = isNsfw ? false : true
 		}
 	}
 }

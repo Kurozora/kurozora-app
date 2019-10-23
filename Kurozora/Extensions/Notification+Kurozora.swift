@@ -9,6 +9,10 @@
 import Foundation
 
 extension Notification.Name {
+	static var KEDidInvalidateContentSize: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
 	static var KUserIsSignedInDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
