@@ -237,6 +237,7 @@
 		667943632273933400E2D0D0 /* SynopsisTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* SynopsisTableViewCell.swift */; };
 		667943652273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */; };
 		667943672273A46700E2D0D0 /* WatchStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943662273A46700E2D0D0 /* WatchStatus.swift */; };
+		667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNewModel.swift */; };
 		667C0F13224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */; };
 		667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */; };
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
@@ -668,6 +669,7 @@
 		667943622273933400E2D0D0 /* SynopsisTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisTableViewCell.swift; sourceTree = "<group>"; };
 		667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesDetailTableViewControlle.swift; sourceTree = "<group>"; };
 		667943662273A46700E2D0D0 /* WatchStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchStatus.swift; sourceTree = "<group>"; };
+		667B38422361CE6500786EF6 /* KWhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewModel.swift; sourceTree = "<group>"; };
 		667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCellStyle.swift; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
@@ -1628,6 +1630,14 @@
 			path = Plist;
 			sourceTree = "<group>";
 		};
+		667B38412361CE5300786EF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				667B38422361CE6500786EF6 /* KWhatsNewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		667C0F11224CC4ED00A8CB56 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1863,6 +1873,7 @@
 			isa = PBXGroup;
 			children = (
 				66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */,
+				667B38412361CE5300786EF6 /* Models */,
 			);
 			path = WhatsNew;
 			sourceTree = "<group>";
@@ -2707,6 +2718,7 @@
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */,
 				66F944AC22F0C08E009F1FE2 /* ExploreSectionTitleCell.swift in Sources */,
+				667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */,
 				66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */,
 				66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */,
 				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,
