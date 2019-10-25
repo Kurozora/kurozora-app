@@ -12,7 +12,6 @@ def kurozora_pods
 	pod 'Cosmos'
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
-	pod 'Hero'
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	pod 'NotificationBannerSwift'

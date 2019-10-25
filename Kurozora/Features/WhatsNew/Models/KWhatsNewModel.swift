@@ -18,6 +18,6 @@ class KWhatsNewModel {
 	static var v1: [WhatsNewItem] = [
 		.image(title: "Like a Candy", subtitle: "Your app with the colors you like.", image: #imageLiteral(resourceName: "theme_icon")),
 		.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: #imageLiteral(resourceName: "privacy_icon")),
-		.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon")),
+		.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: #imageLiteral(resourceName: "notifications_icon"))
 	]
 }

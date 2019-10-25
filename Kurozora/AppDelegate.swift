@@ -162,9 +162,9 @@ extension AppDelegate {
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
 			let showID = parameters["showID"]
 
-			if let showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
-				showDetailTabBarController.showID = showID
-				UIApplication.topViewController?.present(showDetailTabBarController)
+			if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+				showDetailViewController.showID = showID
+				UIApplication.topViewController?.show(showDetailViewController, sender: nil)
 			}
 		}
 

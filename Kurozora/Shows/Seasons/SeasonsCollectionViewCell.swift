@@ -56,9 +56,9 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 			ratingLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var separatorView: UIView! {
+	@IBOutlet weak var separatorView: UIView? {
 		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
 

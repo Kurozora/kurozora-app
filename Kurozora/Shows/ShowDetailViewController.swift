@@ -29,28 +29,6 @@ class ShowDetailViewController: UIViewController {
 	@IBOutlet weak var closeButton: UIButton!
 	@IBOutlet weak var moreButton: UIButton!
 
-	// Compact detail view
-	@IBOutlet weak var compactDetailsView: UIView! {
-		didSet {
-			compactDetailsView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		}
-	}
-	@IBOutlet weak var compactShowTitleLabel: UILabel! {
-		didSet {
-			compactShowTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var compactTagsLabel: UILabel! {
-		didSet {
-			compactTagsLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var compactCloseButton: UIButton! {
-		didSet {
-			compactCloseButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		}
-	}
-
 	// Action buttons
 	@IBOutlet weak var libraryStatusButton: UIButton! {
 		didSet {
@@ -86,16 +64,12 @@ class ShowDetailViewController: UIViewController {
 	@IBOutlet weak var rankTitleLabel: UILabel!
 	@IBOutlet weak var ageTitleLabel: UILabel!
 
-	// Compact detail vars
-	let headerHeightInSection: CGFloat = 48
+	// MARK: - Properties
+	// Compact detail
 	var headerViewHeight: CGFloat = 390
-	let compactDetailsHeight: CGFloat = 88
 
-	// Snapshot and Stretchy view vars
+	// Stretchy view
 	var headerView: UIView!
-	private var blurView: UIView?
-	private let snapshotView = UIImageView()
-	var shouldSnapshot = true
 	var viewsAreHidden: Bool = false {
 		didSet {
 			self.tableView.alpha = viewsAreHidden ? 0 : 1
@@ -109,12 +83,17 @@ class ShowDetailViewController: UIViewController {
 		}
 	}
 
-	var heroID: String?
+	// Show detail
 	var showID: Int?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			self.showID = showDetailsElement?.id
 			self.libraryStatus = showDetailsElement?.currentUser?.libraryStatus
+		}
+	}
+	var seasons: [SeasonsElement]? {
+		didSet {
+			self.tableView.reloadData()
 		}
 	}
 	var actors: [ActorsElement]? {
@@ -136,29 +115,25 @@ class ShowDetailViewController: UIViewController {
 		return .slide
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+//	override func viewWillAppear(_ animated: Bool) {
+//		super.viewWillAppear(animated)
 
-		// Show the status bar
-		statusBarShouldBeHidden = true
-		UIView.animate(withDuration: 0.3) {
-			self.setNeedsStatusBarAppearanceUpdate()
-		}
-	}
+		// Hide the status bar
+//		statusBarShouldBeHidden = true
+//		UIView.animate(withDuration: 0.3) {
+//			self.setNeedsStatusBarAppearanceUpdate()
+//		}
+//	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		if exploreBaseCollectionViewCell != nil {
-			guard let exploreBaseCollectionViewCell = exploreBaseCollectionViewCell else { return }
 			configureShowDetails(from: exploreBaseCollectionViewCell)
 		} else if libraryCollectionViewCell != nil {
-			guard let libraryCollectionViewCell = libraryCollectionViewCell else { return }
 			configureShowDetails(from: libraryCollectionViewCell)
 		}
-
-		toggleHeroID(on: true)
 
 		// Update view with details
 		if showDetailsElement != nil {
@@ -200,7 +175,10 @@ class ShowDetailViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		// Hide the status bar
+		// Show the navigation bar
+		navigationController?.navigationBar.alpha = 1
+
+		// Show the status bar
 		statusBarShouldBeHidden = false
 		UIView.animate(withDuration: 0.3) {
 			self.setNeedsStatusBarAppearanceUpdate()
@@ -230,6 +208,14 @@ class ShowDetailViewController: UIViewController {
 			}
 		}
 
+		if seasons == nil {
+			KService.shared.getSeasonsFor(showID) { (seasons) in
+				DispatchQueue.main.async {
+					self.seasons = seasons
+				}
+			}
+		}
+
 		KService.shared.getCastFor(showID, withSuccess: { (actors) in
 			DispatchQueue.main.async {
 				self.actors = actors
@@ -237,26 +223,13 @@ class ShowDetailViewController: UIViewController {
 		})
 	}
 
-	/// Prepare the view to be dismissed.
-	fileprivate func willDismiss() {
-		viewsAreHidden = true
-		blurView?.isHidden = true
-		snapshotView.isHidden = false
-		toggleHeroID(on: false)
-	}
-
-	/// Dismisses the view after the view has been prepared for dismissal.
-	fileprivate func dismiss() {
-		willDismiss()
-		dismiss(animated: true, completion: nil)
-	}
-
 	/**
 		Configures the view from the given Explore cell if the details view was requested from the Explore page.
 
 		- Parameter cell: The explore cell from which the view should be configured.
 	*/
-	fileprivate func configureShowDetails(from cell: ExploreBaseCollectionViewCell) {
+	fileprivate func configureShowDetails(from cell: ExploreBaseCollectionViewCell?) {
+		guard let cell = cell else { return }
 		if cell.bannerImageView != nil {
 			showTitleLabel.text = cell.primaryLabel?.text
 			bannerImageView.image = cell.bannerImageView?.image
@@ -271,7 +244,8 @@ class ShowDetailViewController: UIViewController {
 
 		- Parameter cell: The library cell from which the view should be configured.
 	*/
-	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell) {
+	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell?) {
+		guard let cell = cell else { return }
 		showTitleLabel.text = cell.titleLabel?.text
 		bannerImageView.image = (cell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image
 		posterImageView.image = cell.posterView?.image
@@ -291,17 +265,15 @@ class ShowDetailViewController: UIViewController {
 
 		// Configure title label
 		if let title = showDetailsElement.title, !title.isEmpty {
+			self.title = title
 			showTitleLabel.text = title
-			compactShowTitleLabel.text = title
 		} else {
+			self.title = "Unknown"
 			showTitleLabel.text = "Unknown"
-			compactShowTitleLabel.text = "Unknown"
 		}
 
 		// Configure tags label
-		compactTagsLabel.alpha = 0.80
 		tagsLabel.text = showDetailsElement.informationString
-		compactTagsLabel.text = showDetailsElement.informationString
 
 		// Configure status label
 		if let status = showDetailsElement.status, !status.isEmpty {
@@ -381,56 +353,6 @@ class ShowDetailViewController: UIViewController {
 		quickDetailsView.isHidden = false
 	}
 
-	/**
-		Toggle HeroID to turn on and off the transition animation.
-
-		- Parameter on: A boolean value indicating whether the transition should be turned on or off.
-	*/
-	fileprivate func toggleHeroID(on: Bool) {
-		guard let heroID = heroID else { return }
-		showTitleLabel.hero.id = on ? "\(heroID)_title" : nil
-		tagsLabel.hero.id = on ? "\(heroID)_tags" : nil
-		posterImageView.hero.id = on ? "\(heroID)_poster" : nil
-		bannerContainerView.hero.id = on ? "\(heroID)_banner" : nil
-
-		if (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView != nil || exploreBaseCollectionViewCell?.bannerImageView != nil {
-			snapshotView.hero.id = on ? nil : "\(heroID)_banner"
-		} else {
-			snapshotView.hero.id = on ? nil : "\(heroID)_poster"
-		}
-	}
-
-	/// Creates a blur visual effect and adds it as a subview
-	fileprivate func createBlurVisualEffect() {
-		let blurEffectView = UIVisualEffectView()
-		blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
-		blurEffectView.frame = self.view.bounds
-		blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-		self.view.addSubview(blurEffectView)
-		blurView = blurEffectView
-		blurView?.isHidden = true
-	}
-
-	/// Creates a snapshot of the current view and adds it as a subview.
-	fileprivate func createSnapshotOfView() {
-		snapshotView.clipsToBounds = true
-		snapshotView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		snapshotView.isUserInteractionEnabled = true
-
-		snapshotView.layer.shadowColor = UIColor.black.cgColor
-		snapshotView.layer.shadowOpacity = 0.2
-		snapshotView.layer.shadowRadius = 10
-		snapshotView.layer.shadowOffset = CGSize(width: -1, height: 2)
-
-		let snapshotImage = view.createSnapshot()
-		snapshotView.image = snapshotImage
-
-		view.addSubview(snapshotView)
-		snapshotView.frame = view.frame
-		snapshotView.isHidden = true
-	}
-
 	/// Updates the frame of the header view to fix layout issues.
 	fileprivate func updateHeaderView() {
 		var headerRect = CGRect(x: 0, y: -headerViewHeight, width: tableView.bounds.width, height: headerViewHeight)
@@ -449,12 +371,10 @@ class ShowDetailViewController: UIViewController {
 	}
 
 	@IBAction func closeButtonPressed(_ sender: UIButton) {
-		createBlurVisualEffect()
-		createSnapshotOfView()
-		dismiss()
+		self.navigationController?.popViewController(animated: true)
 	}
 
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
+	@IBAction func moreButtonPressed(_ sender: AnyObject) {
 		guard let showID = showID else { return }
 		var shareText: [String] = ["https://kurozora.app/anime/\(showID)\nYou should watch this anime via @KurozoraApp"]
 
@@ -465,8 +385,12 @@ class ShowDetailViewController: UIViewController {
 		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
 		if let popoverController = activityVC.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = sender.bounds
+			if let sender = sender as? UIBarButtonItem {
+				popoverController.barButtonItem = sender
+			} else {
+				popoverController.sourceView = sender as? UIButton
+				popoverController.sourceRect = sender.bounds
+			}
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
@@ -550,15 +474,19 @@ class ShowDetailViewController: UIViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let kNavigationController = segue.destination as? KNavigationController {
-			if segue.identifier == "SynopsisSegue" {
+		if segue.identifier == "SynopsisSegue" {
+			if let kNavigationController = segue.destination as? KNavigationController {
 				if let synopsisViewController = kNavigationController.viewControllers.first as? SynopsisViewController {
 					synopsisViewController.synopsis = showDetailsElement?.synopsis
 				}
-			} else if segue.identifier == "ActorsSegue" {
-				if let castTableViewController = kNavigationController.viewControllers.first as? CastCollectionViewController {
-					castTableViewController.actors = actors
-				}
+			}
+		} else if segue.identifier == "SeasonsSegue" {
+			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
+				seasonsCollectionViewController.seasons = seasons
+			}
+		} else if segue.identifier == "CastSegue" {
+			if let castTableViewController = segue.destination as? CastCollectionViewController {
+				castTableViewController.actors = actors
 			}
 		}
 	}
@@ -583,6 +511,8 @@ extension ShowDetailViewController: UITableViewDataSource {
 			numberOfRows = User.isAdmin ? 11 : 9
 		case .rating:
 			numberOfRows = 1
+		case .seasons:
+			numberOfRows = 1
 		case .cast:
 			if let actorsCount = actors?.count, actorsCount > 0 {
 				numberOfRows = 2
@@ -596,7 +526,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let indexPath = indexPath
 
-		switch ShowSections(rawValue: indexPath.section)! {
+		switch ShowSections(rawValue: indexPath.section) {
 		case .synopsis:
 			let synopsisTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisTableViewCell
 			synopsisTableViewCell.showDetailsElement = showDetailsElement
@@ -610,6 +540,10 @@ extension ShowDetailViewController: UITableViewDataSource {
 			let showRatingCell = tableView.dequeueReusableCell(withIdentifier: "ShowRatingCell") as! ShowRatingCell
 			showRatingCell.showDetailsElement = showDetailsElement
 			return showRatingCell
+		case .seasons:
+			let showSeasonsCell = tableView.dequeueReusableCell(withIdentifier: "ShowSeasonsCell") as! ShowSeasonsCell
+			showSeasonsCell.seasons = seasons
+			return showSeasonsCell
 		case .cast:
 			let showCharacterCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
 			showCharacterCell.actorElement = actors?[indexPath.row]
@@ -621,42 +555,53 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .related:
 			let showRelatedCell = tableView.dequeueReusableCell(withIdentifier: "ShowRelatedCell") as! ShowRelatedCell
 			return showRelatedCell
+		default:
+			return UITableViewCell()
 		}
 	}
 
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let showTitleCell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
-		var title = ""
 
-		if let showSection = ShowSections(rawValue: section) {
-			switch showSection {
-			case .synopsis:
-				if let synopsis = showDetailsElement?.synopsis, !synopsis.isEmpty {
-					title = "Synopsis"
+		return showTitleCell
+	}
+
+	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let showTitleCell = view as? ShowTitleCell {
+			if let showSection = ShowSections(rawValue: section) {
+				var title = showSection.stringValue
+
+				switch showSection {
+				case .synopsis:
+					if let synopsis = showDetailsElement?.synopsis, synopsis.isEmpty {
+						title = ""
+					}
+				case .information: break
+				case .rating: break
+				case .seasons:
+					showTitleCell.seeMoreButton.isHidden = false
+				case .cast:
+					if let castCount = actors?.count {
+						if castCount == 0 {
+							title = ""
+						}
+
+						showTitleCell.seeMoreButton.isHidden = castCount < 2
+					}
+				case .related: break
 				}
-			case .information:
-				title = "Information"
-			case .rating:
-				title = "Ratings"
-			case .cast:
-				if let castCount = actors?.count, castCount != 0 {
-					title = "Actors"
-					showTitleCell.seeMoreActorsButton.isHidden = castCount < 2
-				}
-			case .related:
-				title = "Related"
+
+				showTitleCell.segueID = showSection.segueIdentifier
+				showTitleCell.titleText = title
 			}
 		}
-
-		showTitleCell.titleLabel.text = title
-		return showTitleCell.contentView
 	}
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? headerHeightInSection : CGFloat.leastNormalMagnitude
+		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? UITableView.automaticDimension : .zero
 	}
 
-	// Reload table to fix layout - NEEDS A BETTER FIX IF POSSIBLE
+	// FIXME: - Reload table to fix layout - NEEDS A BETTER FIX IF POSSIBLE
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 		coordinator.animate(alongsideTransition: nil, completion: { _ in
@@ -673,16 +618,11 @@ extension ShowDetailViewController: UITableViewDelegate {
 extension ShowDetailViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		updateHeaderView()
-		if shouldSnapshot && scrollView.isTracking {
-			self.createBlurVisualEffect()
-			self.createSnapshotOfView()
-			shouldSnapshot = false
-		}
 
 		// Variables for showing/hiding compact details view
 		let bannerHeight = bannerImageView.bounds.height
 		let newOffset = bannerHeight - scrollView.contentOffset.y
-		let compactDetailsOffset = newOffset - compactDetailsHeight
+		let compactDetailsOffset = newOffset - (self.navigationController?.navigationBar.height ?? 44)
 
 		// Logic for showing/hiding compact details view
 		if compactDetailsOffset > bannerHeight {
@@ -690,41 +630,21 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 				self.quickDetailsView.alpha = 1
 			}
 
+			statusBarShouldBeHidden = true
 			UIView.animate(withDuration: 0) {
-				self.compactDetailsView.alpha = 0
+				self.navigationController?.navigationBar.alpha = 0
+				self.setNeedsStatusBarAppearanceUpdate()
 			}
 		} else {
 			UIView.animate(withDuration: 0) {
 				self.quickDetailsView.alpha = 0
 			}
 
+			statusBarShouldBeHidden = false
 			UIView.animate(withDuration: 0.5) {
-				self.compactDetailsView.alpha = 1
+				self.setNeedsStatusBarAppearanceUpdate()
+				self.navigationController?.navigationBar.alpha = 1
 			}
-		}
-
-		let yPositionForDismissal: CGFloat = 30
-		let yContentOffset = tableView.contentOffset.y
-		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
-
-		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
-			viewsAreHidden = true
-			snapshotView.isHidden = false
-			blurView?.isHidden = false
-
-			let scale = (300 + newHeaderViewHeight + yContentOffset) / 300
-
-			snapshotView.transform = CGAffineTransform(scaleX: scale, y: scale)
-			snapshotView.layer.cornerRadius = -yContentOffset > yPositionForDismissal ? yPositionForDismissal : -yContentOffset
-
-			if yPositionForDismissal + yContentOffset <= -newHeaderViewHeight + -yPositionForDismissal {
-				scrollView.isScrollEnabled = false
-				dismiss()
-			}
-		} else if snapshotView.transform.a > 0.90 && scrollView.isTracking && scrollView.panGestureRecognizer.translation(in: scrollView.superview).y < 0 {
-			viewsAreHidden = false
-			snapshotView.isHidden = true
-			blurView?.isHidden = true
 		}
 	}
 
@@ -734,8 +654,6 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 
 		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
 			viewsAreHidden = false
-			snapshotView.isHidden = true
-			blurView?.isHidden = true
 		}
 	}
 }

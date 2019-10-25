@@ -65,11 +65,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
-			let showID = parameters["showID"]
-				if let showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
-					showDetailTabBarController.showID = showID
+				let showID = parameters["showID"]
+				if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+					showDetailViewController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
-						tabBarController.present(showDetailTabBarController)
+						tabBarController.present(showDetailViewController)
 						return true
 					}
 				}

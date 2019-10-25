@@ -211,9 +211,9 @@ public class ForumsCell: UITableViewCell {
 				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
 				if locked {
-					lockAction.setValue(#imageLiteral(resourceName: "locked"), forKey: "image")
+					lockAction.setValue(#imageLiteral(resourceName: "lock_fill"), forKey: "image")
 				} else {
-					lockAction.setValue(#imageLiteral(resourceName: "unlocked"), forKey: "image")
+					lockAction.setValue(#imageLiteral(resourceName: "lock_open_fill"), forKey: "image")
 				}
 
 				action.addAction(lockAction)

@@ -128,10 +128,10 @@ class Kurozora {
 		if urlScheme == "anime" || urlScheme == "show" {
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
-				if let showTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController {
-					showTabBarController.showID = Int(showID)
+				if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+					showDetailViewController.showID = Int(showID)
 
-					UIApplication.topViewController?.present(showTabBarController, animated: true)
+					UIApplication.topViewController?.show(showDetailViewController, sender: nil)
 					return
 				}
 			}

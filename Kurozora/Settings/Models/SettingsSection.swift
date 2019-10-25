@@ -145,8 +145,8 @@ extension SettingsTableViewController {
 		/// An array containing all about section settings rows.
 		static let allAbout: [Row] = []
 
-		/// The cell identifier string of a settings row.
-		var identifierString: String {
+		/// The segue identifier string of a settings row.
+		var segueIdentifier: String {
 			switch self {
 			case .account:
 				return "AccountSegue"

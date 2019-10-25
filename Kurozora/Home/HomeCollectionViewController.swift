@@ -110,7 +110,7 @@ class HomeCollectionViewController: UITableViewController {
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
 		if WhatsNew.shouldPresent() {
-			let whatsNew = KWhatsNewViewController(titleText: "What's New", buttonText:  "Continue", items: KWhatsNewModel.current)
+			let whatsNew = KWhatsNewViewController(titleText: "What's New", buttonText: "Continue", items: KWhatsNewModel.current)
 			self.present(whatsNew)
 		}
 	}
@@ -181,12 +181,9 @@ class HomeCollectionViewController: UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ShowDetailsSegue" {
 			// Show detail for explore cell
-			if let selectedCell = sender as? ExploreBaseCollectionViewCell, let showDetailTabBarController = segue.destination as? ShowDetailTabBarController {
-				showDetailTabBarController.exploreBaseCollectionViewCell = selectedCell
-				showDetailTabBarController.showDetailsElement = selectedCell.showDetailsElement
-				if let showTitle = selectedCell.showDetailsElement?.title, let section = selectedCell.indexPath?.section {
-					showDetailTabBarController.heroID = "explore_\(showTitle)_\(section)"
-				}
+			if let selectedCell = sender as? ExploreBaseCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
+				showDetailViewController.exploreBaseCollectionViewCell = selectedCell
+				showDetailViewController.showDetailsElement = selectedCell.showDetailsElement
 			}
 		}
 	}

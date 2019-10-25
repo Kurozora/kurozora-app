@@ -109,11 +109,6 @@ class CastCollectionViewController: UICollectionViewController {
 		setupEmptyDataView()
 		collectionView.reloadData()
 	}
-
-	// MARK: - IBActions
-	@IBAction func dismissPressed(_ sender: AnyObject) {
-		self.dismiss(animated: true, completion: nil)
-	}
 }
 
 // MARK: - UICollectionViewDataSource

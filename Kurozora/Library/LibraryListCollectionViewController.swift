@@ -173,13 +173,10 @@ class LibraryListCollectionViewController: UICollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailTabBarControllerLibrary = segue.destination as? ShowDetailTabBarController {
-			showDetailTabBarControllerLibrary.libraryCollectionViewCell = currentCell
-			showDetailTabBarControllerLibrary.showDetailsElement = currentCell.showDetailsElement
-			if let showTitle = currentCell.showDetailsElement?.title {
-				showDetailTabBarControllerLibrary.heroID = "library_\(showTitle)"
-				showDetailTabBarControllerLibrary.showDetailViewControllerDelegate = self
-			}
+		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
+			showDetailViewController.libraryCollectionViewCell = currentCell
+			showDetailViewController.showDetailsElement = currentCell.showDetailsElement
+			showDetailViewController.delegate = self
 		}
 	}
 }

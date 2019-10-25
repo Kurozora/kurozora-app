@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Hero
 
 protocol ExploreBaseCollectionViewCellDelegate: class {
 	func playVideoForCell(with indexPath: IndexPath)
@@ -30,7 +29,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: ExploreBaseCollectionViewCellDelegate?
 	var indexPath: IndexPath?
-	var showDetailTabBarController: ShowDetailTabBarController?
+	var showDetailViewController: ShowDetailViewController?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			configureCell()
@@ -55,11 +54,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	func configureCell() {
 		guard let showDetailsElement = showDetailsElement else { return }
-		guard let showTitle = showDetailsElement.title else { return }
-		guard let section = indexPath?.section else { return }
 
-		self.hero.id = (posterImageView != nil) ? "explore_\(showTitle)_\(section)_poster" : "explore_\(showTitle)_\(section)_banner"
-		self.primaryLabel?.hero.id = (primaryLabel != nil) ? "explore_\(showTitle)_\(section)_title" : nil
 		self.primaryLabel?.text = showDetailsElement.title
 
 		// Configure genres
@@ -151,23 +146,18 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 #if !targetEnvironment(macCatalyst)
 extension ExploreBaseCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		showDetailTabBarController = ShowDetailTabBarController.instantiateFromStoryboard() as? ShowDetailTabBarController
-		showDetailTabBarController?.exploreBaseCollectionViewCell = self
-		showDetailTabBarController?.showDetailsElement = showDetailsElement
-		showDetailTabBarController?.modalPresentationStyle = .overFullScreen
-
-		if let showTitle = showDetailsElement?.title, let section = indexPath?.section {
-			showDetailTabBarController?.heroID = "explore_\(showTitle)_\(section)"
-		}
+		showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController
+		showDetailViewController?.exploreBaseCollectionViewCell = self
+		showDetailViewController?.showDetailsElement = showDetailsElement
 
 		previewingContext.sourceRect = previewingContext.sourceView.bounds
 
-		return showDetailTabBarController
+		return showDetailViewController
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		if let showDetailTabBarController = showDetailTabBarController {
-			self.parentViewController?.present(showDetailTabBarController, animated: true, completion: nil)
+		if let showDetailViewController = showDetailViewController {
+			self.parentViewController?.show(showDetailViewController, sender: nil)
 		}
 	}
 }

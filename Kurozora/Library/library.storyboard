@@ -36,7 +36,9 @@
         <!--details-->
         <scene sceneID="IYW-xZ-q6d">
             <objects>
-                <viewControllerPlaceholder storyboardName="details" id="sOR-Y4-DCs" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="details" id="sOR-Y4-DCs" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="YjB-V3-khE"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xW6-dk-hMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="796" y="865"/>
@@ -172,7 +174,7 @@
                                     <outlet property="titleLabel" destination="cbC-kq-eg9" id="NV1-xK-EBk"/>
                                     <outlet property="userProgressLabel" destination="wNd-Po-fJX" id="JMN-h5-kdE"/>
                                     <outlet property="watchedButton" destination="O19-L6-mnx" id="oGd-K7-vTz"/>
-                                    <segue destination="sOR-Y4-DCs" kind="presentation" modalPresentationStyle="overFullScreen" id="HPC-Vj-obY">
+                                    <segue destination="sOR-Y4-DCs" kind="show" id="HPC-Vj-obY">
                                         <segue key="commit" inheritsFrom="parent" id="qTp-I9-bBI"/>
                                         <segue key="preview" inheritsFrom="commit" id="ky0-dy-s0L"/>
                                     </segue>
@@ -229,7 +231,7 @@
                                     <outlet property="posterShadowView" destination="eWG-KG-rnm" id="MHd-f0-2lv"/>
                                     <outlet property="posterView" destination="SX5-JO-WGv" id="rXH-aA-3xc"/>
                                     <outlet property="titleLabel" destination="CoK-1X-BBH" id="wKv-gN-7B8"/>
-                                    <segue destination="sOR-Y4-DCs" kind="presentation" modalPresentationStyle="overFullScreen" id="I3g-8e-Hov">
+                                    <segue destination="sOR-Y4-DCs" kind="show" id="I3g-8e-Hov">
                                         <segue key="commit" inheritsFrom="parent" id="nY7-iG-trb"/>
                                         <segue key="preview" inheritsFrom="commit" id="QD0-mW-oqr"/>
                                     </segue>
@@ -241,9 +243,6 @@
                             <outlet property="delegate" destination="YkS-DU-LSm" id="4Ph-dv-x2Z"/>
                         </connections>
                     </collectionView>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WZi-IA-CPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -372,10 +371,10 @@
         <image name="detailed_view_icon" width="30" height="24"/>
         <image name="placeholder_banner_image" width="1920" height="1080"/>
         <image name="placeholder_poster_image" width="680" height="1000"/>
-        <image name="shadow" width="7" height="30"/>
+        <image name="shadow" width="20" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HPC-Vj-obY"/>
+        <segue reference="I3g-8e-Hov"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -192,7 +192,7 @@ extension SettingsTableViewController {
 		default: break
 		}
 
-		guard let identifierString = sectionRows?.identifierString, !identifierString.isEmpty else { return }
+		guard let identifierString = sectionRows?.segueIdentifier, !identifierString.isEmpty else { return }
 		if shouldPerformSegue {
 			performSegue(withIdentifier: identifierString, sender: nil)
 		}

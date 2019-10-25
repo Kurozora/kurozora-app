@@ -39,6 +39,7 @@ enum NotificationType: String {
 		}
 	}
 
+	/// The string value of a notification type cell.
 	var identifierString: String {
 		switch self {
 		case .unknown:

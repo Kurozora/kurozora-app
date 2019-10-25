@@ -169,8 +169,8 @@ class SearchResultsTableViewController: UITableViewController {
 		if let currentCell = sender as? SearchBaseResultsCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showDetailTabBarController = segue.destination as? ShowDetailTabBarController
-				showDetailTabBarController?.showDetailsElement = (currentCell as? SearchShowResultsCell)?.showDetailsElement
+				let showDetailViewController = segue.destination as? ShowDetailViewController
+				showDetailViewController?.showDetailsElement = (currentCell as? SearchShowResultsCell)?.showDetailsElement
 			} else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
 				if let kurozoraNavigationController = segue.destination as? KNavigationController {
@@ -193,8 +193,8 @@ class SearchResultsTableViewController: UITableViewController {
 		} else if let currentCell = sender as? SuggestionResultCell {
 			if segue.identifier == "ShowDetailsSegue" {
 				// Show detail for show cell
-				let showDetailTabBarController = segue.destination as? ShowDetailTabBarController
-				showDetailTabBarController?.showID = currentCell.showDetailsElement?.id
+				let showDetailViewController = segue.destination as? ShowDetailViewController
+				showDetailViewController?.showID = currentCell.showDetailsElement?.id
 			}
 		}
 	}

@@ -12,7 +12,6 @@ import EmptyDataSet_Swift
 class SeasonsCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	var showID: Int?
-	var heroID: String?
 	var seasons: [SeasonsElement]? {
 		didSet {
 			self.collectionView?.reloadData()
@@ -78,7 +77,9 @@ class SeasonsCollectionViewController: UICollectionViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Fetch seasons
-		fetchSeasons()
+		if seasons == nil {
+			fetchSeasons()
+		}
 
 		// Setup empty data view
 		setupEmptyDataView()
@@ -139,17 +140,6 @@ class SeasonsCollectionViewController: UICollectionViewController {
 			}
         })
     }
-
-    // MARK: - IBActions
-    @IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
-		view.hero.id = heroID
-		dismiss(animated: true, completion: nil)
-    }
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		collectionView.collectionViewLayout.invalidateLayout()
-	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
