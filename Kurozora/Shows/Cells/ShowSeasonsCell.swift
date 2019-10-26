@@ -29,7 +29,7 @@ class ShowSeasonsCell: UITableViewCell {
 extension ShowSeasonsCell: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard let seasonsCount = seasons?.count else { return 0 }
-		return seasonsCount
+		return seasonsCount > 5 ? 5 : seasonsCount
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
