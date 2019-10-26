@@ -1,5 +1,5 @@
 //
-//  CastTableViewController.swift
+//  CastCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 01/10/2018.
@@ -119,7 +119,7 @@ extension CastCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCell", for: indexPath) as! ShowCharacterCollectionCell
+		let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCollectionCell", for: indexPath) as! ShowCastCollectionCell
 		castCell.actorElement = actors?[indexPath.row]
 		castCell.delegate = self
 		return castCell
@@ -141,10 +141,14 @@ extension CastCollectionViewController: UICollectionViewDelegateFlowLayout {
 	}
 }
 
-// MARK: - ShowCharacterCellDelegate
-extension CastCollectionViewController: ShowCharacterCellDelegate {
+// MARK: - ShowCastCellDelegate
+extension CastCollectionViewController: ShowCastCellDelegate {
 	func presentPhoto(withString string: String, from imageView: UIImageView) {
 		presentPhotoViewControllerWith(string: string, from: imageView)
+	}
+
+	func presentPhoto(withImage image: UIImage, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(image: image, from: imageView)
 	}
 
 	func presentPhoto(withUrl url: String, from imageView: UIImageView) {

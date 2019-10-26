@@ -13,7 +13,6 @@ class ShowTitleCell: UITableViewCell {
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-			titleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var seeMoreButton: UIButton!

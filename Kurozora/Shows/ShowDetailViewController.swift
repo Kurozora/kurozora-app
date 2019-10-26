@@ -512,10 +512,12 @@ extension ShowDetailViewController: UITableViewDataSource {
 		case .rating:
 			numberOfRows = 1
 		case .seasons:
-			numberOfRows = 1
+			if let seasonsCount = seasons?.count, seasonsCount > 0 {
+				numberOfRows = 1
+			}
 		case .cast:
 			if let actorsCount = actors?.count, actorsCount > 0 {
-				numberOfRows = 2
+				numberOfRows = 1
 			}
 		case .related: break
 		}
@@ -545,13 +547,9 @@ extension ShowDetailViewController: UITableViewDataSource {
 			showSeasonsCell.seasons = seasons
 			return showSeasonsCell
 		case .cast:
-			let showCharacterCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCharacterCell
-			showCharacterCell.actorElement = actors?[indexPath.row]
-			showCharacterCell.delegate = self
-			if indexPath.row == 1 {
-				showCharacterCell.separatorView.isHidden = true
-			}
-			return showCharacterCell
+			let showCastCell = tableView.dequeueReusableCell(withIdentifier: "ShowCastCell") as! ShowCastCell
+			showCastCell.actors = actors
+			return showCastCell
 		case .related:
 			let showRelatedCell = tableView.dequeueReusableCell(withIdentifier: "ShowRelatedCell") as! ShowRelatedCell
 			return showRelatedCell
@@ -658,10 +656,14 @@ extension ShowDetailViewController: UIScrollViewDelegate {
 	}
 }
 
-// MARK: - ShowCharacterCellDelegate
-extension ShowDetailViewController: ShowCharacterCellDelegate {
+// MARK: - ShowCastCellDelegate
+extension ShowDetailViewController: ShowCastCellDelegate {
 	func presentPhoto(withString string: String, from imageView: UIImageView) {
 		presentPhotoViewControllerWith(string: string, from: imageView)
+	}
+
+	func presentPhoto(withImage image: UIImage, from imageView: UIImageView) {
+		presentPhotoViewControllerWith(image: image, from: imageView)
 	}
 
 	func presentPhoto(withUrl url: String, from imageView: UIImageView) {

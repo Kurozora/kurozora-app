@@ -56,7 +56,34 @@ extension UIViewController {
 		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
 
 		// Present the video
-		present(photosViewController, animated: true, completion: nil)
+		self.present(photosViewController, animated: true, completion: nil)
+	}
+
+	/**
+		Present an image in a lightbox.
+
+		- Parameter image: The UIImage of the image view to pass onto the view.
+		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
+	*/
+	public func presentPhotoViewControllerWith(image: UIImage?, from startingImageView: UIImageView) {
+		guard let image = image else { return }
+
+		let photoUrl = [AXPhoto(image: image)]
+
+		// Set datasource
+		let dataSource = AXPhotosDataSource(photos: photoUrl)
+
+		// Transition info
+		let transitionInfo = AXTransitionInfo(interactiveDismissalEnabled: true, startingView: startingImageView) { (_, _) -> UIImageView? in
+			// this closure can be used to adjust your UI before returning an `endingImageView`.
+			return startingImageView
+		}
+
+		// Create an instance of AXPhotosViewController
+		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
+
+		// Present the video
+		self.present(photosViewController, animated: true, completion: nil)
 	}
 
 	/**
@@ -83,7 +110,7 @@ extension UIViewController {
 		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
 
 		// Present the video
-		present(photosViewController, animated: true, completion: nil)
+		self.present(photosViewController, animated: true, completion: nil)
 	}
 
 	/**
@@ -96,7 +123,7 @@ extension UIViewController {
 		let player = AVPlayer(url: videoURL!)
 		let playerViewController = AVPlayerViewController()
 		playerViewController.player = player
-		present(playerViewController, animated: true) {
+		self.present(playerViewController, animated: true) {
 			playerViewController.player!.play()
 		}
 	}
