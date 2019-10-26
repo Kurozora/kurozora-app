@@ -46,7 +46,10 @@ extension ShowSeasonsCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension ShowSeasonsCell: UICollectionViewDelegate {
-
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let seasons = seasons else { return }
+		self.parentViewController?.performSegue(withIdentifier: "EpisodesSegue", sender: seasons[indexPath.row].id)
+	}
 }
 
 extension ShowSeasonsCell: UICollectionViewDelegateFlowLayout {

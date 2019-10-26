@@ -115,16 +115,6 @@ class ShowDetailViewController: UIViewController {
 		return .slide
 	}
 
-//	override func viewWillAppear(_ animated: Bool) {
-//		super.viewWillAppear(animated)
-
-		// Hide the status bar
-//		statusBarShouldBeHidden = true
-//		UIView.animate(withDuration: 0.3) {
-//			self.setNeedsStatusBarAppearanceUpdate()
-//		}
-//	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -487,6 +477,10 @@ class ShowDetailViewController: UIViewController {
 		} else if segue.identifier == "CastSegue" {
 			if let castTableViewController = segue.destination as? CastCollectionViewController {
 				castTableViewController.actors = actors
+			}
+		} else if segue.identifier == "EpisodesSegue" {
+			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
+				episodesCollectionViewController.seasonID = sender as? Int
 			}
 		}
 	}
