@@ -45,7 +45,6 @@ class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
 	var avPlayerStatus: NSKeyValueObservation? = nil
 	var avPlayerTimeControl: NSKeyValueObservation? = nil
 	var avPlayerViewController: AVPlayerViewController = AVPlayerViewController()
-	var shouldPlay = false
 
 	var thumbnailPlaceholder: UIImageView {
 		get {

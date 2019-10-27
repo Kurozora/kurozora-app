@@ -159,7 +159,7 @@
         <scene sceneID="47V-UQ-0DA">
             <objects>
                 <collectionViewController storyboardIdentifier="ManageThemesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vMs-0g-8io" customClass="ManageThemesCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sh8-0V-d7p">
+                    <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sh8-0V-d7p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -170,11 +170,11 @@
                             <size key="itemSize" width="169" height="341"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
+                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemesCollectionViewCell" id="LQw-RA-Vgs" customClass="ThemesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="8" y="28" width="169" height="351.33333333333331"/>
+                                <rect key="frame" x="28" y="28" width="169" height="351.33333333333331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qnv-PM-vhM">
                                     <rect key="frame" x="0.0" y="0.0" width="169" height="351.33333333333331"/>
@@ -257,6 +257,9 @@
                                                     <real key="value" value="10"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="getThemeButtonPressed:" destination="LQw-RA-Vgs" eventType="touchUpInside" id="65x-M6-baQ"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

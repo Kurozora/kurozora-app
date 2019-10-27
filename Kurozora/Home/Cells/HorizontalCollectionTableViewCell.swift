@@ -17,7 +17,6 @@ class HorizontalCollectionTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Properties
-	var currentlyPlayingIndexPath: IndexPath? = nil
 	var cellStyle: HorizontalCollectionCellStyle!
 	var shows: [ShowDetailsElement]? = nil {
 		didSet {
@@ -82,9 +81,6 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreBaseCollectionViewCell
-		exploreCell.indexPath = indexPath
-		exploreCell.delegate = self
-		(exploreCell as? ExploreVideoCollectionViewCell)?.shouldPlay = self.currentlyPlayingIndexPath == indexPath
 
 		if shows != nil {
 			exploreCell.showDetailsElement = shows?[indexPath.row]
@@ -167,13 +163,5 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDelegateFlowLayout 
 		}
 
 		return size
-	}
-}
-
-// MARK: - ExploreBaseCollectionViewCellDelegate
-extension HorizontalCollectionTableViewCell: ExploreBaseCollectionViewCellDelegate {
-	func playVideoForCell(with indexPath: IndexPath) {
-		self.currentlyPlayingIndexPath = indexPath
-		self.collectionView.reloadItems(at: [indexPath])
 	}
 }

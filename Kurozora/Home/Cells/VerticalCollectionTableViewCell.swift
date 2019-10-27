@@ -102,9 +102,9 @@ extension VerticalCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 extension VerticalCollectionTableViewCell: SelfSizingCollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didChageContentSizeFrom oldSize: CGSize, to newSize: CGSize) {
 		if let indexPath = indexPath {
-			tableView?.reloadRows(at: [indexPath], with: .none)
+			parentTableView?.reloadRows(at: [indexPath], with: .none)
 		} else {
-			tableView?.reloadData()
+			parentTableView?.reloadData()
 		}
 	}
 }

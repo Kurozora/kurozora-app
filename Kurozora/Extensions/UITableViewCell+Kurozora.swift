@@ -10,12 +10,12 @@ import UIKit
 
 extension UITableViewCell {
 	/// Returns an instance of the tableView containing the cell.
-	var tableView: UITableView? {
+	var parentTableView: UITableView? {
 		return (next as? UITableView) ?? (parentViewController as? UITableViewController)?.tableView
 	}
 
 	/// Returns the indexPath of the cell.
 	var indexPath: IndexPath? {
-		return tableView?.indexPath(for: self)
+		return parentTableView?.indexPath(for: self)
 	}
 }

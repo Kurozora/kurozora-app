@@ -115,18 +115,18 @@ extension KThemeStyle {
 
 		switch style {
 		case .default:
-			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
 			UserSettings.set("Default", forKey: .currentTheme)
+			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
 		case .day:
-			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
 			UserSettings.set("Day", forKey: .currentTheme)
+			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
 		case .night:
 			if UserSettings.trueBlackEnabled {
-				ThemeManager.setTheme(plistName: "Black", path: .mainBundle)
 				UserSettings.set("Black", forKey: .currentTheme)
+				ThemeManager.setTheme(plistName: "Black", path: .mainBundle)
 			} else {
-				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
 				UserSettings.set("Night", forKey: .currentTheme)
+				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
 			}
 		case .other: break
 		}
@@ -141,8 +141,8 @@ extension KThemeStyle {
 		before  = current
 		current = themeValue(from: themeName)
 
-		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
 		UserSettings.set(themeName, forKey: .currentTheme)
+		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
 	}
 
 	/**
@@ -154,8 +154,8 @@ extension KThemeStyle {
 		before  = current
 		current = .other
 
-		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 		UserSettings.set("\(themeID)", forKey: .currentTheme)
+		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 	}
 
 	/**

@@ -27,12 +27,12 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		didSet {
 			getThemeButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			getThemeButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateGetThemeButton), name: .ThemeUpdateNotification, object: nil)
 		}
 	}
 	@IBOutlet weak var moreButton: UIButton!
 
 	// MARK: - Properties
-	var indexPathItem: Int = 0
 	var themesElement: ThemesElement? {
 		didSet {
 			configureCell()
@@ -51,7 +51,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		guard let themesElement = themesElement else { return }
 
-		switch indexPathItem {
+		switch indexPath?.item {
 		case 0:
 			titleLabel.text = "Default"
 			themeScreenshot.backgroundColor = .kGrayishNavy
@@ -65,10 +65,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			titleLabel.text = themesElement.name
 			themeScreenshot.backgroundColor = UIColor.random
 		}
-
-		// Configure get theme button
-		getThemeButton.tag = indexPathItem
-		getThemeButton.addTarget(self, action: #selector(getThemeButtonPressed(_:)), for: .touchUpInside)
 
 		// Configure buy state
 //		if let themeBought = themesElement.currentUser?.themeBought {
@@ -93,6 +89,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Checks whether to hide or unhide the more button for the current cell.
 	fileprivate func shouldHideMoreButton() {
+		guard let indexPathItem = indexPath?.item else { return }
+
 		switch indexPathItem {
 		case 0...2:
 			moreButton.isHidden = true
@@ -102,9 +100,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	/// Sets the correct title for `getThemeButton`.
-	fileprivate func updateGetThemeButton() {
+	@objc func updateGetThemeButton() {
 		if let currentThemeID = UserSettings.currentTheme {
-			switch indexPathItem {
+			switch indexPath?.item {
 			case 0:
 				if currentThemeID == "Default" {
 					getThemeButton.setTitle("USING", for: .normal)
@@ -164,9 +162,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			}
 
 			if isSuccess {
-				self.updateGetThemeButton()
-				self.shouldHideMoreButton()
 				KThemeStyle.switchTo(theme: themeID)
+				self.shouldHideMoreButton()
 			}
 		}
 	}
@@ -185,7 +182,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			}
 
 			if isSuccess {
-				self.updateGetThemeButton()
 				self.shouldHideMoreButton()
 			}
 
@@ -202,13 +198,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	/**
-		Switches the theme used throught the app to the selected theme.
-
-		- Parameter sender: The button sending the request for switching the theme.
-	*/
-	@objc func getThemeButtonPressed(_ sender: UIButton) {
-		switch sender.tag {
+	// MARK: - IBActions
+	@IBAction func getThemeButtonPressed(_ sender: UIButton) {
+		switch indexPath?.item {
 		case 0:
 			KThemeStyle.switchTo(.default)
 		case 1:
@@ -220,7 +212,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -229,6 +220,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		})
 		let removeAction = UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
 			self.handleRemoveTheme()
+			if UserSettings.currentTheme?.int == self.themesElement?.id {
+				KThemeStyle.switchTo(.default)
+			}
 		})
 
 		// Add image

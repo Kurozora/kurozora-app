@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol ExploreBaseCollectionViewCellDelegate: class {
-	func playVideoForCell(with indexPath: IndexPath)
-}
-
 class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel?
@@ -27,8 +23,6 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	weak var delegate: ExploreBaseCollectionViewCellDelegate?
-	var indexPath: IndexPath?
 	var showDetailViewController: ShowDetailViewController?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
@@ -47,6 +41,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
+
 		shadowView?.applyShadow()
 	}
 
