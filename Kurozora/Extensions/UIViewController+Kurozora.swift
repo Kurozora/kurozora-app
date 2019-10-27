@@ -20,7 +20,7 @@ extension UIViewController {
 		- Parameter controller: The view controller to present
 	*/
 	func present(_ controller: UIViewController) {
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13, *) {
 			self.present(controller, animated: true, completion: nil)
 		} else {
 			let transitioningDelegate = SPStorkTransitioningDelegate()

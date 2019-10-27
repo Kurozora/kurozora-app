@@ -5696,6 +5696,14 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1120;
+				TargetAttributes = {
+					A8A26D58F4832E00EBE5951F0425C233 = {
+						DevelopmentTeam = 2RRQ3G5DSX;
+					};
+					DF5F2C4737E902D72711853B3875FBC5 = {
+						DevelopmentTeam = 2RRQ3G5DSX;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -8164,6 +8172,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iosMath";
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = iosMath;
 				INFOPLIST_FILE = "Target Support Files/iosMath/ResourceBundle-mathFonts-iosMath-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -8624,6 +8633,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iosMath";
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = iosMath;
 				INFOPLIST_FILE = "Target Support Files/iosMath/ResourceBundle-mathFonts-iosMath-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -9315,7 +9325,9 @@
 			baseConfigurationReference = F76D1233B1B6370EB33D883DBC40E498 /* WordPress-Aztec-iOS.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/WordPress-Aztec-iOS";
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = Aztec;
 				INFOPLIST_FILE = "Target Support Files/WordPress-Aztec-iOS/ResourceBundle-WordPress-Aztec-iOS-WordPress-Aztec-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -9333,7 +9345,9 @@
 			baseConfigurationReference = F76D1233B1B6370EB33D883DBC40E498 /* WordPress-Aztec-iOS.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/WordPress-Aztec-iOS";
+				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = Aztec;
 				INFOPLIST_FILE = "Target Support Files/WordPress-Aztec-iOS/ResourceBundle-WordPress-Aztec-iOS-WordPress-Aztec-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

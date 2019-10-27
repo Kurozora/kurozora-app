@@ -10,7 +10,9 @@ import UIKit
 import SCLAlertView
 
 class ThemesCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
     @IBOutlet weak var themeScreenshot: UIImageView!
+	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -29,11 +31,19 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 	@IBOutlet weak var moreButton: UIButton!
 
+	// MARK: - Properties
 	var indexPathItem: Int = 0
 	var themesElement: ThemesElement? {
 		didSet {
 			configureCell()
 		}
+	}
+
+	// MARK: - View
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		shadowView.applyShadow()
 	}
 
 	// MARK: - Functions
@@ -93,11 +103,34 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Sets the correct title for `getThemeButton`.
 	fileprivate func updateGetThemeButton() {
-		switch indexPathItem {
-		case 0...2:
+		if let currentThemeID = UserSettings.currentTheme {
+			switch indexPathItem {
+			case 0:
+				if currentThemeID == "Default" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			case 1:
+				if currentThemeID == "Day" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			case 2:
+				if currentThemeID == "Night" || currentThemeID == "Black" {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				}
+			default:
+				if Int(currentThemeID) == themesElement?.id {
+					getThemeButton.setTitle("USING", for: .normal)
+					return
+				} else if !KThemeStyle.themeExist(for: themesElement?.id) {
+					getThemeButton.setTitle("GET", for: .normal)
+					return
+				}
+			}
+
 			getThemeButton.setTitle("USE", for: .normal)
-		default:
-			getThemeButton.setTitle((KThemeStyle.themeExist(for: themesElement?.id) ? "USE" : "GET"), for: .normal)
 		}
 	}
 

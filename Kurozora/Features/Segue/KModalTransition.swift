@@ -14,7 +14,7 @@ class KModalTransition: UIStoryboardSegue {
 	public var transitioningDelegate: SPStorkTransitioningDelegate?
 
 	override func perform() {
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13, *) {
 			super.perform()
 		} else {
 			transitioningDelegate = transitioningDelegate ?? SPStorkTransitioningDelegate()

@@ -134,7 +134,13 @@ extension SettingsTableViewController {
 		static let allAlerts: [Row] = [.notifications]
 
 		/// An array containing all general section settings rows.
-		static let allGeneral: [Row] = [.displayBlindness, .theme, .icon, .biometrics, .cache, .privacy]
+		static var allGeneral: [Row] {
+			#if targetEnvironment(macCatalyst)
+			return [.displayBlindness, .theme, .biometrics, .cache, .privacy]
+			#else
+			return [.displayBlindness, .theme, .icon, .biometrics, .cache, .privacy]
+			#endif
+		}
 
 		/// An array containing all support section settings rows.
 		static let allSupport: [Row] = [.rate, .unlockFeatures, .restoreFeatures, .tipjar]
