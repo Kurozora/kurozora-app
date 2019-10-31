@@ -126,6 +126,11 @@
 		6641D6F9222EA3DF0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E0222EA3DE0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png */; };
 		6641D6FA222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */; };
 		6641D6FB222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */; };
+		6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */; };
+		6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */; };
+		6646A275236A5F7600DCC0A4 /* browserSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */; };
+		6646A278236B8AE600DCC0A4 /* KBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A277236B8AE600DCC0A4 /* KBrowser.swift */; };
+		6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */; };
 		66480194222D16BD0063143A /* App-Icon-iPad-Day.png in Resources */ = {isa = PBXBuildFile; fileRef = 66480192222D16BC0063143A /* App-Icon-iPad-Day.png */; };
 		66480195222D16BD0063143A /* App-Icon-iPad-Day@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66480193222D16BC0063143A /* App-Icon-iPad-Day@2x.png */; };
 		66480198222D16C50063143A /* App-Icon-iPad-Night@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66480196222D16C40063143A /* App-Icon-iPad-Night@2x.png */; };
@@ -571,6 +576,11 @@
 		6641D6E0222EA3DE0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Orange@2x.png"; sourceTree = "<group>"; };
 		6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Emerald@2x.png"; sourceTree = "<group>"; };
 		6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
+		6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Kurozora.swift"; sourceTree = "<group>"; };
+		6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewController.swift; sourceTree = "<group>"; };
+		6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = browserSettings.storyboard; sourceTree = "<group>"; };
+		6646A277236B8AE600DCC0A4 /* KBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KBrowser.swift; sourceTree = "<group>"; };
+		6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		66480192222D16BC0063143A /* App-Icon-iPad-Day.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Day.png"; sourceTree = "<group>"; };
 		66480193222D16BC0063143A /* App-Icon-iPad-Day@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Day@2x.png"; sourceTree = "<group>"; };
 		66480196222D16C40063143A /* App-Icon-iPad-Night@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Night@2x.png"; sourceTree = "<group>"; };
@@ -1063,6 +1073,7 @@
 				663E341F2360BB06003386D1 /* UITableViewCell+Kurozora.swift */,
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
 				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
+				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1335,6 +1346,33 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
+		6646A26F236A5D1C00DCC0A4 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				6646A279236BAAA400DCC0A4 /* Cells */,
+				6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */,
+				6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */,
+				6646A276236B8AD700DCC0A4 /* Models */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		6646A276236B8AD700DCC0A4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6646A277236B8AE600DCC0A4 /* KBrowser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6646A279236BAAA400DCC0A4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6646A27A236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		66480191222D13A50063143A /* App Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1562,6 +1600,7 @@
 				6614409221DA411C00E54915 /* Account */,
 				6614409121DA40F300E54915 /* Admin */,
 				6640E19122ADD20700D0F575 /* Authentication */,
+				6646A26F236A5D1C00DCC0A4 /* Browser */,
 				661049BE22C0425800A2A354 /* Display */,
 				6614409021DA40AB00E54915 /* Notifications */,
 				664133DE21DA42F900CE823A /* Theme */,
@@ -2420,6 +2459,7 @@
 				66A48FE021A411A900F34085 /* notification.storyboard in Resources */,
 				6641D6F4222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange.png in Resources */,
 				669EA9A222C1491600784181 /* purchase.storyboard in Resources */,
+				6646A275236A5F7600DCC0A4 /* browserSettings.storyboard in Resources */,
 				66ABF5FD23383BAA00795750 /* welcome.storyboard in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
@@ -2537,6 +2577,8 @@
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DTCoreText/DTCoreText.framework",
+				"${BUILT_PRODUCTS_DIR}/DTFoundation/DTFoundation.framework",
 				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
@@ -2571,6 +2613,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTCoreText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
@@ -2641,6 +2685,7 @@
 				667074D523382756008C1A75 /* BaseOnboardingTableViewController.swift in Sources */,
 				666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */,
 				66FC6DDA2340BBB500A454DD /* KService+Season.swift in Sources */,
+				6646A278236B8AE600DCC0A4 /* KBrowser.swift in Sources */,
 				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
 				66FC6DE42340BC9800A454DD /* KService+Thread.swift in Sources */,
 				667943672273A46700E2D0D0 /* WatchStatus.swift in Sources */,
@@ -2664,6 +2709,7 @@
 				6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */,
 				66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */,
 				664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */,
+				6646A27B236BAAB000DCC0A4 /* BrowserSettingsTableViewCell.swift in Sources */,
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				662B9265233E51D9001D49B7 /* SearchEmptyResultsCell.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
@@ -2695,6 +2741,7 @@
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66AEABED2298AC6A00949FD8 /* NotificationOptions.swift in Sources */,
 				66232CDB2310055900C45B5A /* BaseFeedPostsCell.swift in Sources */,
+				6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */,
 				662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */,
 				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
 				665099D322FC22670053C2FD /* UserType.swift in Sources */,
@@ -2884,6 +2931,7 @@
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,
+				6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */,
 				664B6D78230F45F400F9C726 /* DarkThemeOption.swift in Sources */,
 				660B5B662152F47A002D05F3 /* NoSessionsCell.swift in Sources */,
 				663E341C235F7E53003386D1 /* VerticalCollectionTableViewCell.swift in Sources */,

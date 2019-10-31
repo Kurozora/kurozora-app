@@ -10,6 +10,28 @@ import UIKit
 
 extension UIApplication {
 	/**
+		Attempts to open the resource at the specified URL asynchronously in the browser specified by the user or in the corresponding app if a deep link is used.
+
+		- Parameter url: A URL (Universal Resource Locator). The resource identified by this URL may be local to the current app or it may be one that must be provided by a different app. UIKit supports many common schemes, including the http, https, tel, facetime, and mailto schemes. You can also employ custom URL schemes associated with apps installed on the device.
+		- Parameter deepLink: A URL (Universal Resource Locator). The resource identified by this URL may be local to the current app or it may be one that must be provided by a different app. UIKit supports many common schemes, including the http, https, tel, facetime, and mailto schemes. You can also employ custom URL schemes associated with apps installed on the device.
+		- Parameter options: A dictionary of options to use when opening the URL. For a list of possible keys to include in this dictionary, see UIApplication.OpenExternalURLOptionsKey.
+		- Parameter completionHandler: The block to execute with the results. Provide a value for this parameter if you want to be informed of the success or failure of opening the URL. This block is executed asynchronously on your app's main thread. The block has no return value and takes the following parameter:
+		- Parameter success: A Boolean indicating whether the URL was opened successfully.
+	*/
+	func kOpen(_ url: URL?, _ deepLink: URL?, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], completionHandler completion: ((_ success: Bool) -> Void)? = nil) {
+		guard var url = url else { return }
+
+		#if !targetEnvironment(macCatalyst)
+		if let deepLink = URL(string: deepLink?.scheme?.appending("://") ?? ""), UIApplication.shared.canOpenURL(deepLink) {
+			UIApplication.shared.open(deepLink, options: options, completionHandler: completion)
+		}
+		#endif
+
+		url = url.withPreferredScheme()
+		UIApplication.shared.open(url, options: options, completionHandler: completion)
+	}
+
+	/**
 		Return the top (root) view controller of a given view controller.
 
 		If no base view controller is specified then this function returms the application root view controller.

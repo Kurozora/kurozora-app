@@ -13,11 +13,6 @@ import SwiftTheme
 
 class SettingsTableViewController: UITableViewController {
 	// MARK: - Properties
-    lazy var twitterPageDeepLink = "twitter://user?id=991929359052177409"
-    lazy var twitterPageURL = "https://www.twitter.com/KurozoraApp"
-    lazy var mediumPageDeepLink = "medium://@kurozora"
-    lazy var mediumPageURL = "https://medium.com/@kurozora"
-	lazy var rateURL = "itms-apps://apps.apple.com/gb/app/id1442061397?action=write-review"
 	var settingsSection = User.isAdmin ? Section.all : Section.allUser
 	var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
 
@@ -160,9 +155,7 @@ extension SettingsTableViewController {
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 			return
 		case .rate:
-			if let rateURL = URL(string: rateURL) {
-				UIApplication.shared.open(rateURL, options: [:], completionHandler: nil)
-			}
+			UIApplication.shared.kOpen(.rateURL, nil, options: [:], completionHandler: nil)
 			return
 		case .restoreFeatures:
 			KStoreObserver.shared.restorePurchase()
@@ -170,24 +163,10 @@ extension SettingsTableViewController {
 		case .tipjar:
 			shouldPerformSegue = true
 		case .followTwitter:
-			if var twitterScheme = URL(string: "twitter://") {
-				if UIApplication.shared.canOpenURL(twitterScheme) {
-					twitterScheme = URL(string: twitterPageDeepLink) ?? twitterScheme
-				} else {
-					twitterScheme = URL(string: twitterPageURL) ?? twitterScheme
-				}
-				UIApplication.shared.open(twitterScheme, options: [:], completionHandler: nil)
-			}
+			UIApplication.shared.kOpen(.twitterPageURL, .twitterPageDeepLink, options: [:], completionHandler: nil)
 			return
 		case .followMedium:
-			if var mediumScheme = URL(string: "medium://") {
-				if UIApplication.shared.canOpenURL(mediumScheme) {
-					mediumScheme = URL(string: mediumPageDeepLink) ?? mediumScheme
-				} else {
-					mediumScheme = URL(string: mediumPageURL) ?? mediumScheme
-				}
-				UIApplication.shared.open(mediumScheme, options: [:], completionHandler: nil)
-			}
+			UIApplication.shared.kOpen(.mediumPageURL, .mediumPageDeepLink, options: [:], completionHandler: nil)
 			return
 		default: break
 		}

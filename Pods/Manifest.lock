@@ -11,11 +11,28 @@ PODS:
   - Cosmos (20.0.1)
   - CryptoSwift (0.15.0)
   - Down (0.9.0)
+  - DTCoreText (1.6.23):
+    - DTCoreText/Core (= 1.6.23)
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTCoreText/Core (1.6.23):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.14)
+  - DTFoundation/DTAnimatedGIF (1.7.14)
+  - DTFoundation/DTHTMLParser (1.7.14):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.14):
+    - DTFoundation/Core
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - iosMath (0.9.4)
-  - KeychainAccess (3.2.1)
+  - KeychainAccess (4.1.0)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
   - Kingfisher/Core (5.9.0)
@@ -29,8 +46,9 @@ PODS:
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
-  - RichTextView (2.3.5):
+  - RichTextView (2.4.0):
     - Down
+    - DTCoreText
     - iosMath
     - SnapKit
   - SCLAlertView (0.8.1)
@@ -106,6 +124,8 @@ SPEC REPOS:
     - Cosmos
     - CryptoSwift
     - Down
+    - DTCoreText
+    - DTFoundation
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
@@ -148,18 +168,20 @@ SPEC CHECKSUMS:
   Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   Down: 1cdbca4963b542d0ef34ebb3e10ff48382bdf761
+  DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
+  DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   iosMath: f7a6cbadf9d836d2149c2a84c435b1effc244cba
-  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: 842401d30f5c36e4f2eafc152824566f6b3c1bb5
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   PusherSwift: a5369a01e8a9106b4897e9186265af1426726062
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
-  RichTextView: 072585daa885ac3c32b394bce31d93e0a3f317c0
+  RichTextView: 6dd9d8d5124b5deffc2a6db3887a56519a5d36c3
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f

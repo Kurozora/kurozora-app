@@ -9,13 +9,14 @@
 import UIKit
 
 class IconTableViewCell: SelectableSettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var iconTitleLabel: UILabel! {
 		didSet {
 			iconTitleLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
-//	@IBOutlet weak var iconImageView: UIImageView!
 
+	// MARK: - Properties
 	var alternativeIconsElement: AlternativeIconsElement? {
 		didSet {
 			configureCell()

@@ -41,4 +41,5 @@ enum UserSettingsKey: String {
 	// App customization keys
 	case currentTheme
 	case appIcon
+	case defaultBrowser
 }

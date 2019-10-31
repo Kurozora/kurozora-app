@@ -10,14 +10,15 @@ import UIKit
 import SwiftyJSON
 
 class ManageIconTableViewController: UITableViewController {
+	// MARK: - Properties
 	var alternativeIcons: AlternativeIcons? {
 		didSet {
 			tableView.reloadData()
 		}
 	}
-
 	var alternativeIconsArray = JSON()
 
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -66,18 +67,22 @@ extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: "IconTableViewCell", for: indexPath) as! IconTableViewCell
 
-		switch indexPath.section {
-		case 0:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons?[indexPath.row]
-		case 1:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons?[indexPath.row]
-		case 2:
-			iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons?[indexPath.row]
-		default:
-			iconTableViewCell.alternativeIconsElement = nil
-		}
-
 		return iconTableViewCell
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let iconTableViewCell = cell as? IconTableViewCell {
+			switch indexPath.section {
+			case 0:
+				iconTableViewCell.alternativeIconsElement = alternativeIcons?.defaultIcons?[indexPath.row]
+			case 1:
+				iconTableViewCell.alternativeIconsElement = alternativeIcons?.premiumIcons?[indexPath.row]
+			case 2:
+				iconTableViewCell.alternativeIconsElement = alternativeIcons?.limitedIcons?[indexPath.row]
+			default:
+				iconTableViewCell.alternativeIconsElement = nil
+			}
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -104,18 +109,17 @@ extension ManageIconTableViewController {
 // MARK: - UITableViewDelegate
 extension ManageIconTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		let iconTableViewCell = tableView.cellForRow(at: indexPath) as! IconTableViewCell
+		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
+			if indexPath == [0, 0] {
+				KThemeStyle.changeIcon(to: nil)
+			} else {
+				KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+			}
 
-		if indexPath == [0, 0] {
-			KThemeStyle.changeIcon(to: nil)
-		} else {
-			KThemeStyle.changeIcon(to: iconTableViewCell.alternativeIconsElement?.name)
+			UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
+			NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
+			tableView.reloadData()
 		}
-
-		UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
-		NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
-		tableView.reloadData()
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

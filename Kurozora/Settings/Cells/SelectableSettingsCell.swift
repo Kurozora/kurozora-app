@@ -9,12 +9,14 @@
 import UIKit
 
 class SelectableSettingsCell: SettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var selectedImageView: UIImageView! {
 		didSet {
 			self.selectedImageView.image = nil
 		}
 	}
 
+	// MARK: - Properties
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {

@@ -91,6 +91,9 @@ extension SettingsTableViewController {
 		/// The row representing the icon cell.
 		case icon
 
+		/// The row representing the browser cell.
+		case browser
+
 		/// The row representing the biometrics cell.
 		case biometrics
 
@@ -119,10 +122,10 @@ extension SettingsTableViewController {
 		case followMedium
 
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .keychain, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all normal user settings rows.
-		static let allUser: [Row] = [.account, .notifications, .displayBlindness, .theme, .icon, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let allUser: [Row] = [.account, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all account section settings rows.
 		static let allAccount: [Row] = [.account]
@@ -136,9 +139,9 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-			return [.displayBlindness, .theme, .biometrics, .cache, .privacy]
+			return [.displayBlindness, .theme, .browser, .biometrics, .cache, .privacy]
 			#else
-			return [.displayBlindness, .theme, .icon, .biometrics, .cache, .privacy]
+			return [.displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy]
 			#endif
 		}
 
@@ -166,6 +169,8 @@ extension SettingsTableViewController {
 				return "ThemeSegue"
 			case .icon:
 				return "IconSegue"
+			case .browser:
+				return "BroswerSegue"
 			case .biometrics:
 				return "BiometricsSegue"
 			case .cache:
@@ -201,6 +206,8 @@ extension SettingsTableViewController {
 			case .theme:
 				return .chevron
 			case .icon:
+				return .chevron
+			case .browser:
 				return .chevron
 			case .biometrics:
 				return .chevron
@@ -238,6 +245,8 @@ extension SettingsTableViewController {
 				return "Theme"
 			case .icon:
 				return "Icon"
+			case .browser:
+				return "Browser"
 			case .biometrics:
 				var primaryStringValue = "Passcode"
 				switch UIDevice.supportedBiomtetric {
@@ -292,6 +301,8 @@ extension SettingsTableViewController {
 				return #imageLiteral(resourceName: "theme_icon")
 			case .icon:
 				return #imageLiteral(resourceName: UserSettings.appIcon)
+			case .browser:
+				return #imageLiteral(resourceName: "browser_icon")
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
