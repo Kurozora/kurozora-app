@@ -34,7 +34,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get episodes list 😔", subTitle: error.message)
-			print("Received get show episodes error: \(error)")
+			print("Received get show episodes error: \(error.message ?? "No message available")")
 		})
 	}
 }

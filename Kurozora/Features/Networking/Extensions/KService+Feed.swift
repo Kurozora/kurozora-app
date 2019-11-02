@@ -28,7 +28,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get feed sections 😔", subTitle: error.message)
-			print("Received get feed sections error: \(error)")
+			print("Received get feed sections error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -58,7 +58,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get feed posts 😔", subTitle: error.message)
-			print("Received get feed posts error: \(error)")
+			print("Received get feed posts error: \(error.message ?? "No message available")")
 		})
 	}
 }

@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		// Prepare home view
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 		} else {
 			let customTabBar = KTabBarController()
 			self.window?.rootViewController = customTabBar
@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	// Here we tell iOS what scene configuration to use
-	@available(iOS 13.0, *)
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
 		connectingSceneSession.userInfo?["activity"] = options.userActivities.first?.activityType
 		// Based on the name of the configuration iOS will initialize the correct SceneDelegate

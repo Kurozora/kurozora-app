@@ -28,7 +28,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get themes 😔", subTitle: error.message)
-			print("Received get themes error: \(error)")
+			print("Received get themes error: \(error.message ?? "No message available")")
 		})
 	}
 }

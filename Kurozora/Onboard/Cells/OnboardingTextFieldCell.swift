@@ -40,6 +40,12 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 				textField.placeholder = "Password: make it super secret 🙊"
 			default: break
 			}
+		case .siwa:
+			switch textField.textType {
+			case .username:
+				textField.placeholder = "Username: pick a cool one 🙉"
+			default: break
+			}
 		case .signIn:
 			switch textField.textType {
 			case .username:

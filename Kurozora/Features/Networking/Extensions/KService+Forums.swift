@@ -28,7 +28,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
-			print("Received get forum sections error: \(error)")
+			print("Received get forum sections error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -63,7 +63,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
-			print("Received get forum threads error: \(error)")
+			print("Received get forum threads error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -99,7 +99,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
-			print("Received post thread error: \(error)")
+			print("Received post thread error: \(error.message ?? "No message available")")
 		})
 	}
 }

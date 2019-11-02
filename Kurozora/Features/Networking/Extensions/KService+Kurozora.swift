@@ -28,7 +28,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
-			print("Received privacy policy error: \(error)")
+			print("Received privacy policy error: \(error.message ?? "No message available")")
 		})
 	}
 }

@@ -387,7 +387,7 @@ class ThreadTableViewController: UITableViewController {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				if #available(iOS 13.0, *) {
+				if #available(iOS 13.0, macCatalyst 13.0, *) {
 					self.present(kurozoraNavigationController, animated: true, completion: nil)
 				} else {
 					self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)

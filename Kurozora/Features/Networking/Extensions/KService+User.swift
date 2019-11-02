@@ -46,7 +46,45 @@ extension KService {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
-			print("Received reset password error: \(error)")
+			print("Received register account error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
+		Register a new account using the details from Sign In With Apple.
+
+		- Parameter userID: The user's id returned by SIWA.
+		- Parameter email: The user's email returned by SIWA.
+		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
+		- Parameter isSuccess: A boolean value indicating whether registration is successful.
+	*/
+	func register(withAppleUserID userID: String?, email: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let userID = userID else { return }
+		guard let email = email else { return }
+
+		print("Register User ID: \(userID)")
+		print("Register Email: \(email)")
+
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("users/register-siwa")
+		request.headers = headers
+		request.method = .post
+		request.parameters = [
+			"siwa_id": userID,
+			"email": email
+		]
+		request.perform(withSuccess: { reset in
+			if let success = reset.success {
+				if success {
+					try? Kurozora.shared.KDefaults.set("\(userID)", key: "SIWA_user")
+					try? Kurozora.shared.KDefaults.set("\(0)", key: "user_role")
+
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+			UIView().endEditing(true)
+			SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
+			print("Received register account with SIWA error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -75,7 +113,7 @@ extension KService {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't send reset link 😔", subTitle: error.message)
-			print("Received reset password error: \(error)")
+			print("Received reset password error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -88,9 +126,7 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
 		- Parameter isSuccess: A boolean value indicating whether information update is successful.
 	*/
-	func updateInformation(withBio bio: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let bio = bio else { return }
-
+	func updateInformation(for bio: String?, username: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(User.currentID)/profile") { (formData) in
 			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
@@ -105,8 +141,11 @@ extension KService {
 		]
 		request.method = .post
 		request.parameters = [
-			"biography": bio
+			"biography": bio ?? ""
 		]
+		if let username = username, !username.isEmpty {
+			request.parameters["username"] = username
+		}
 
 		request.perform(withSuccess: { (update) in
 			if let success = update.success {
@@ -120,7 +159,7 @@ extension KService {
 		}, failure: { error in
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't update information 😔", subTitle: error.message)
-			print("Received update information error: \(error)")
+			print("Received update information error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -145,7 +184,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get session 😔", subTitle: error.message)
-			print("Received get session error: \(error)")
+			print("Received get session error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -176,7 +215,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get library 😔", subTitle: error.message)
-			print("Received get library error: \(error)")
+			print("Received get library error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -210,7 +249,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't add to your library 😔", subTitle: error.message)
-			print("Received add library error: \(error)")
+			print("Received add library error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -241,7 +280,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.message)
-			print("Received remove library error: \(error)")
+			print("Received remove library error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -269,7 +308,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get user details 😔", subTitle: error.message)
-			print("Received user profile error: \(error)")
+			print("Received user profile error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -294,7 +333,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get notifications 😔", subTitle: error.message)
-			print("Received get notifications error: \(error)")
+			print("Received get notifications error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -325,7 +364,7 @@ extension KService {
 			}
 		}, failure: { error in
 //			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-			print("Received user search error: \(error)")
+			print("Received user search error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -358,7 +397,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't follow user 😔", subTitle: error.message)
-			print("Received follow user error: \(error)")
+			print("Received follow user error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -389,7 +428,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get \(list) list 😔", subTitle: error.message)
-			print("Received get \(list) error: \(error)")
+			print("Received get \(list) error: \(error.message ?? "No message available")")
 		})
 	}
 }

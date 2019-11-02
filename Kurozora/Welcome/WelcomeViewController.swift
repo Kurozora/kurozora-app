@@ -40,7 +40,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
 		backgroundImageView.addParallax()
 
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			let signInWithAppleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .black)
 			signInWithAppleButton.addConstraint(signInWithAppleButton.heightAnchor.constraint(equalToConstant: 40))
 			signInWithAppleButton.cornerRadius = 20
@@ -73,7 +73,7 @@ class WelcomeViewController: UIViewController {
 		return storyboard.instantiateInitialViewController()
 	}
 
-	@objc @available(iOS 13.0, *)
+	@objc @available(iOS 13.0, macCatalyst 13.0, *)
 	func signInWithAppleButtonPressed() {
 		let authorizationRequest = ASAuthorizationAppleIDProvider().createRequest()
 		authorizationRequest.requestedScopes = [.email]
@@ -84,7 +84,7 @@ class WelcomeViewController: UIViewController {
 		authorizationController.performRequests()
 	}
 
-	@objc @available(iOS 13.0, *)
+	@objc @available(iOS 13.0, macCatalyst 13.0, *)
 	func testUserID(userID: String) {
 		let provider = ASAuthorizationAppleIDProvider()
 		provider.getCredentialState(forUserID: userID) { (credentialState, _) in
@@ -114,7 +114,7 @@ class WelcomeViewController: UIViewController {
 }
 
 // MARK: - ASAuthorizationControllerDelegate
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 13.0, *)
 extension WelcomeViewController: ASAuthorizationControllerDelegate {
 	func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
 		if let authorizationCredentials = authorization.credential as? ASAuthorizationAppleIDCredential {
@@ -128,7 +128,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
 }
 
 // MARK: - ASAuthorizationControllerPresentationContextProviding
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 13.0, *)
 extension WelcomeViewController: ASAuthorizationControllerPresentationContextProviding {
 	func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
 		return self.view.window!

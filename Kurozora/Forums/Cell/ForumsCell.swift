@@ -155,7 +155,7 @@ public class ForumsCell: UITableViewCell {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				if #available(iOS 13.0, *) {
+				if #available(iOS 13.0, macCatalyst 13.0, *) {
 					forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
 				} else {
 					forumsChildViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)

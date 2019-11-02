@@ -34,7 +34,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't delete notification 😔", subTitle: error.message)
-			print("Received delete notification error: \(error)")
+			print("Received delete notification error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -67,7 +67,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't update notification 😔", subTitle: error.message)
-			print("Received update notification error: \(error)")
+			print("Received update notification error: \(error.message ?? "No message available")")
 		})
 	}
 }

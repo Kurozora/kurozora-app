@@ -37,7 +37,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)
-			print("Received mark episode error: \(error)")
+			print("Received mark episode error: \(error.message ?? "No message available")")
 		})
 	}
 }

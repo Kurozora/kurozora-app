@@ -59,7 +59,7 @@ extension KService {
 		}, failure: { error in
 			SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
 			successHandler(false)
-			print("Received sign in error: \(error)")
+			print("Received sign in error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -101,7 +101,7 @@ extension KService {
 			}, failure: { error in
 				WorkflowController.shared.signOut()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
-				print("Received validate session error: \(error)")
+				print("Received validate session error: \(error.message ?? "No message available")")
 			})
 		}
 	}
@@ -130,7 +130,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
-			print("Received delete session error: \(error)")
+			print("Received delete session error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -158,7 +158,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
-			print("Received sign out error: \(error)")
+			print("Received sign out error: \(error.message ?? "No message available")")
 		})
 	}
 }

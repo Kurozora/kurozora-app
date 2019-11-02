@@ -10,7 +10,7 @@ import UIKit
 import AuthenticationServices
 
 @objc protocol OnboardingFooterTableViewCellDelegate: class {
-	@available(iOS 13.0, *)
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func handleAuthorizationAppleIDButtonPress()
 }
 
@@ -53,7 +53,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	override func configureCell() {
 		super.configureCell()
 
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			setupProviderSignInView()
 		}
 
@@ -69,7 +69,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	}
 
 	/// Sets up the sign in view by adding an "or" label and the Sign in with Apple ID button.
-	@available(iOS 13.0, *)
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func setupProviderSignInView() {
 		// Create a new 'or label' separator.
 		let orLabel: UILabel = UILabel(text: "—————— or ——————")
@@ -94,7 +94,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	}
 
 	/// Handles the Apple ID button press.
-	@available(iOS 13.0, *)
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	@objc func handleAuthorizationAppleIDButtonPress() {
 		onboardingFooterTableViewCellDelegate?.handleAuthorizationAppleIDButtonPress()
 	}

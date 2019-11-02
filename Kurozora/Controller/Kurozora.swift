@@ -203,7 +203,7 @@ class Kurozora {
 		- Parameter scene: The object that represents one instance of the app's user interface.
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	*/
-	@available(iOS 13.0, *)
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func schemeHandler(scene: UIScene? = nil, open url: URL) {
 		schemeHandler(open: url, options: [:])
 	}

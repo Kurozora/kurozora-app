@@ -472,7 +472,7 @@ class ProfileTableViewController: UITableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.shared.updateInformation(withBio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (update) in
+			KService.shared.updateInformation(for: bioText, username: nil, profileImage: profileImage, bannerImage: bannerImage) { (update) in
 				if update {
 					self.editMode(!update)
 					if shouldUpdateProfileImage {

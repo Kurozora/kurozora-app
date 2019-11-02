@@ -1349,9 +1349,9 @@
 		6646A26F236A5D1C00DCC0A4 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				6646A279236BAAA400DCC0A4 /* Cells */,
 				6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */,
 				6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */,
+				6646A279236BAAA400DCC0A4 /* Cells */,
 				6646A276236B8AD700DCC0A4 /* Models */,
 			);
 			path = Browser;

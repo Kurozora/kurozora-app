@@ -25,11 +25,12 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 
 	// MARK: - Properties
 	lazy var imagePicker = UIImagePickerController()
+	var isSIWA = false
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		onboardingType = .register
+		onboardingType = isSIWA ? .siwa : .register
 
 		// Apply shadow
 		self.shadowView.applyShadow(cornerRadius: profileImageView.bounds.height / 2)
@@ -70,19 +71,31 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		let username = textFieldArray[0]?.trimmedText
-		let email = textFieldArray[1]?.trimmedText
-		let password = textFieldArray[2]?.text
-		let profileImage = profileImageView.image
+		if onboardingType == .register {
+			let username = textFieldArray[0]?.trimmedText
+			let email = textFieldArray[1]?.trimmedText
+			let password = textFieldArray[2]?.text
+			let profileImage = profileImageView.image
 
-		KService.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
-			if success {
-				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-				alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
-				alertController.addButton("Done", action: {
+			KService.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
+				if success {
+					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
+					alertController.addButton("Done", action: {
+						self.navigationController?.popViewController(animated: true)
+						self.dismiss(animated: true, completion: nil)
+					})
+				}
+			}
+		} else if onboardingType == .siwa {
+			let username = textFieldArray[0]?.trimmedText
+			let profileImage = profileImageView.image
+
+			KService.shared.updateInformation(for: nil, username: username, profileImage: profileImage, bannerImage: nil) { (success) in
+				if success {
 					self.navigationController?.popViewController(animated: true)
 					self.dismiss(animated: true, completion: nil)
-				})
+				}
 			}
 		}
 	}

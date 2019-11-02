@@ -28,7 +28,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get genres list 😔", subTitle: error.message)
-			print("Received get genres error: \(error)")
+			print("Received get genres error: \(error.message ?? "No message available")")
 		})
 	}
 }

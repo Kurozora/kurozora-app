@@ -35,6 +35,9 @@ enum OnboardingCellType: Int {
 	/// An array containing all onboarding cell types.
 	static let all: [OnboardingCellType] = [.username, .email, .password, .footer]
 
+	/// An array containing all Sign In With Apple onboarding cell types.
+	static let allSIWA: [OnboardingCellType] = [.username, .footer]
+
 	/// An array containing only sign in onboarding cell types.
 	static let allSignIn: [OnboardingCellType] = [.username, .password, .footer]
 

@@ -34,7 +34,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get thread details 😔", subTitle: error.message)
-			print("Received get thread error: \(error)")
+			print("Received get thread error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -67,7 +67,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't vote on this thread 😔", subTitle: error.message)
-			print("Received vote thread error: \(error)")
+			print("Received vote thread error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -103,7 +103,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get replies 😔", subTitle: error.message)
-			print("Received get replies error: \(error)")
+			print("Received get replies error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -136,7 +136,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't reply 😔", subTitle: error.message)
-			print("Received post reply error: \(error)")
+			print("Received post reply error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -167,7 +167,7 @@ extension KService {
 			}
 		}, failure: { error in
 //			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-			print("Received thread search error: \(error)")
+			print("Received thread search error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -200,7 +200,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't lock thread 😔", subTitle: error.message)
-			print("Received thread lock error: \(error)")
+			print("Received thread lock error: \(error.message ?? "No message available")")
 		})
 	}
 }

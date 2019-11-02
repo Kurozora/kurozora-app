@@ -39,7 +39,7 @@ class KNavigationController: UINavigationController {
 
 		switch style {
 		case .normal:
-			if #available(iOS 13.0, *) {
+			if #available(iOS 13.0, macCatalyst 13.0, *) {
 				let appearance = UINavigationBarAppearance()
 				appearance.backgroundColor = KThemePicker.barTintColor.colorValue
 				appearance.titleTextAttributes = [.foregroundColor: KThemePicker.barTitleTextColor.colorValue]

@@ -31,7 +31,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get explore page 😔", subTitle: error.message)
-			print("Received explore error: \(error)")
+			print("Received explore error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -59,7 +59,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get show details 😔", subTitle: error.message)
-			print("Received get details error: \(error)")
+			print("Received get details error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -84,7 +84,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get casts list 😔", subTitle: error.message)
-			print("Received get cast error: \(error)")
+			print("Received get cast error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -109,7 +109,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't get seasons list 😔", subTitle: error.message)
-			print("Received get show seasons error: \(error)")
+			print("Received get show seasons error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -142,7 +142,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't rate this show 😔", subTitle: error.message)
-			print("Received rating error: \(error)")
+			print("Received rating error: \(error.message ?? "No message available")")
 		})
 	}
 
@@ -173,7 +173,7 @@ extension KService {
 			}
 		}, failure: { error in
 //			SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
-			print("Received show search error: \(error)")
+			print("Received show search error: \(error.message ?? "No message available")")
 		})
 	}
 }

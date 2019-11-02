@@ -39,7 +39,7 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.message)
-			print("Received vote reply error: \(error)")
+			print("Received vote reply error: \(error.message ?? "No message available")")
 		})
 	}
 }
