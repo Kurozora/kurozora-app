@@ -6647,7 +6647,6 @@
 				TargetAttributes = {
 					0C24CB0E87A728A11AA1124CB360D6A1 = {
 						DevelopmentTeam = 2RRQ3G5DSX;
-						ProvisioningStyle = Automatic;
 					};
 					A8A26D58F4832E00EBE5951F0425C233 = {
 						DevelopmentTeam = 2RRQ3G5DSX;
@@ -8756,17 +8755,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC9D79C771AE790279065D3BA3E00612 /* DTCoreText.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DTCoreText";
 				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = DTCoreText;
 				INFOPLIST_FILE = "Target Support Files/DTCoreText/ResourceBundle-Resources-DTCoreText-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = Resources;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -10566,7 +10561,6 @@
 			baseConfigurationReference = B85CE633BF8C41CD4EC5D9F525CCF684 /* WordPress-Aztec-iOS.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/WordPress-Aztec-iOS";
 				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = Aztec;
@@ -10586,7 +10580,6 @@
 			baseConfigurationReference = B85CE633BF8C41CD4EC5D9F525CCF684 /* WordPress-Aztec-iOS.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/WordPress-Aztec-iOS";
 				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = Aztec;
@@ -10798,17 +10791,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC9D79C771AE790279065D3BA3E00612 /* DTCoreText.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DTCoreText";
 				DEVELOPMENT_TEAM = 2RRQ3G5DSX;
 				IBSC_MODULE = DTCoreText;
 				INFOPLIST_FILE = "Target Support Files/DTCoreText/ResourceBundle-Resources-DTCoreText-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = Resources;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;

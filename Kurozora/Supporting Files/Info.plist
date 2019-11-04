@@ -361,13 +361,21 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10638</string>
+	<string>10639</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.lifestyle</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>opera</string>
+		<string>googlechromes</string>
+		<string>googlechrome</string>
+		<string>firefox-focus</string>
+		<string>firefox</string>
+		<string>dolphin</string>
+		<string>brave</string>
+		<string>ddgquicklink</string>
 		<string>medium</string>
 		<string>twitter</string>
 		<string>fb</string>
