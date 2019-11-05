@@ -26,9 +26,7 @@ def kurozora_pods
 	pod 'Tabman'
 	pod 'TRON', '~> 5.0.0-beta.5'
 	pod 'TRON/SwiftyJSON'
-#	pod 'UIImageColors'
 	pod 'WhatsNew'
-	pod "WordPress-Aztec-iOS"
 #	pod 'Zip'
 end
 

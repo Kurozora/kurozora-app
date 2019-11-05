@@ -81,7 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Check network availability
 		if isUnreachable {
-			Kurozora.shared.showOfflinePage(for: window)
 			return true
 		}
 
@@ -135,14 +134,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-		if authenticationCount < 1 {
-			if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
-				Kurozora.shared.prepareForAuthentication()
+		if #available(macCatalyst 13.0, *) {
+		} else {
+			if authenticationCount < 1 {
+				if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
+					Kurozora.shared.prepareForAuthentication()
+				}
+				UIApplication.shared.keyWindow?.viewWithTag(5614325)?.removeFromSuperview()
 			}
-			UIApplication.shared.keyWindow?.viewWithTag(5614325)?.removeFromSuperview()
-		}
 
-		authenticationCount += 1
+			authenticationCount += 1
+		}
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {

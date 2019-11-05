@@ -10,7 +10,6 @@ import UIKit
 import Tabman
 import Pageboy
 import SCLAlertView
-import SwiftTheme
 
 class ForumsViewController: TabmanViewController {
 	// MARK: - IBOutlets
