@@ -192,17 +192,16 @@ class ForumsViewController: TabmanViewController {
 
 	@IBAction func createThreadButton(_ sender: Any) {
 		WorkflowController.shared.isSignedIn {
-//			kRichTextEditorViewController?.delegate = viewControllers[currentIndex!] as! ForumsListViewController
-//			kRichTextEditorViewController?.sectionID = currentIndex! + 1
-//
-//			let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController!)
-//			kurozoraNavigationController.navigationBar.prefersLargeTitles = false
-//
-//			if #available(iOS 13.0, macCatalyst 13.0, *) {
-//				self.present(kurozoraNavigationController, animated: true, completion: nil)
-//			} else {
-//				self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-//			}
+			if let kRichTextEditorViewController = KRichTextEditorViewController.instantiateFromStoryboard() as? KRichTextEditorViewController {
+				if let currentIndex = self.currentIndex {
+					kRichTextEditorViewController.delegate = self.viewControllers[currentIndex] as? ForumsListViewController
+					kRichTextEditorViewController.sectionID = currentIndex + 1
+				}
+
+				let kurozoraNavigationController = KNavigationController.init(rootViewController: kRichTextEditorViewController)
+				kurozoraNavigationController.navigationBar.prefersLargeTitles = false
+				self.present(kurozoraNavigationController)
+			}
 		}
 	}
 }

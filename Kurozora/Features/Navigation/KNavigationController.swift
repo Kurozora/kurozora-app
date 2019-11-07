@@ -21,6 +21,7 @@ class KNavigationController: UINavigationController {
         super.viewDidLoad()
 		NotificationCenter.default.addObserver(self, selector: #selector(updateNormalStyle), name: .ThemeUpdateNotification, object: nil)
 		toggleStyle(.normal)
+		setupToolbarStyle()
     }
 
 	// MARK: - Functions
@@ -77,5 +78,13 @@ class KNavigationController: UINavigationController {
 			self.navigationBar.tintColor = nil
 			self.navigationBar.barTintColor = nil
 		}
+	}
+
+	/// Setup toolbar style with the currently used theme.
+	func setupToolbarStyle() {
+		self.toolbar.backgroundColor = .clear
+		self.toolbar.barStyle = .default
+		self.toolbar.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.toolbar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 	}
 }

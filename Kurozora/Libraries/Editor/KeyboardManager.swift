@@ -7,32 +7,41 @@
 ////
 //
 //import UIKit
-////import RichEditorView
+//import RichTextView
+//
+//class KToolbar: NSObject {
+//	static var youtubeButton = UIBarButtonItem(image: #imageLiteral(resourceName: "play_rectangle"), style: .plain, target: self, action: #selector(youtubeButtonPressed(_:)))
+//	static var all: [UIBarButtonItem] = [youtubeButton]
+//
+//	@objc func youtubeButtonPressed(_ sender: UIBarButtonItem) {
+//
+//	}
+//}
 //
 ///**
-//KeyboardManager is a class that takes care of showing and hiding the RichEditorToolbar when the keyboard is shown.
-//As opposed to having this logic in multiple places, it is encapsulated in here. All that needs to change is the parent view.
+//	KeyboardManager is a class that takes care of showing and hiding the RichEditorToolbar when the keyboard is shown.
+//	As opposed to having this logic in multiple places, it is encapsulated in here. All that needs to change is the parent view.
 //*/
 //@objcMembers class KeyboardManager: NSObject {
 //	/**
-//	The parent view that the toolbar should be added to.
-//	Should normally be the top-level view of a UIViewController
+//		The parent view that the toolbar should be added to.
+//		Should normally be the top-level view of a UIViewController
 //	*/
 //	weak var view: UIView?
 //
 //	/**
-//	The toolbar that will be shown and hidden.
+//		The toolbar that will be shown and hidden.
 //	*/
-//	var toolbar: RichEditorToolbar
+//	var toolbar: UIToolbar
 //
 //	init(view: UIView) {
 //		self.view = view
-//		toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: 44))
-//		toolbar.options = RichEditorDefaultOption.all
+//		toolbar = UIToolbar(frame: CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: 44))
+//		toolbar.items = KToolbar.all
 //	}
 //
 //	/**
-//	Starts monitoring for keyboard notifications in order to show/hide the toolbar
+//		Starts monitoring for keyboard notifications in order to show/hide the toolbar
 //	*/
 //	func beginMonitoring() {
 //		NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillShowOrHide(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -40,7 +49,7 @@
 //	}
 //
 //	/**
-//	Stops monitoring for keyboard notifications
+//		Stops monitoring for keyboard notifications
 //	*/
 //	func stopMonitoring() {
 //		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -48,7 +57,7 @@
 //	}
 //
 //	/**
-//	Called when a keyboard notification is recieved. Takes are of handling the showing or hiding of the toolbar
+//		Called when a keyboard notification is recieved. Takes are of handling the showing or hiding of the toolbar
 //	*/
 //	@objc func keyboardWillShowOrHide(_ notification: Notification) {
 //
@@ -77,4 +86,3 @@
 //		}
 //	}
 //}
-//
