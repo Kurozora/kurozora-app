@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Initialize Pusher
 		if User.isSignedIn {
 			WorkflowController.shared.registerForPusher()
+			WorkflowController.shared.getUserDetails()
 		}
 
 		// Register the app for receiving push notifications

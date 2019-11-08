@@ -8,6 +8,7 @@
 
 import UIKit
 import PusherSwift
+import Kingfisher
 import NotificationBannerSwift
 import SCLAlertView
 import SwiftyJSON
@@ -99,6 +100,28 @@ class WorkflowController: NSObject {
 		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		if signOutReason != nil {
 			SCLAlertView().showWarning("Signed out", subTitle: signOutReason)
+		}
+	}
+}
+
+// MARK: - User
+extension WorkflowController {
+	func getUserDetails() {
+		let dispatchQueue = DispatchQueue(label: "CacheUserProfileImage", qos: .background)
+		dispatchQueue.async {
+			KService.shared.getUserProfile(User.currentID) { user in
+				if let profileImage = user?.profile?.profileImage, let url = URL(string: profileImage) {
+					let downloader = ImageDownloader.default
+					downloader.downloadImage(with: url) { result in
+						switch result {
+						case .success(let value):
+							ImageCache.default.store(value.image, forKey: "currentUserProfileImage")
+						case .failure(let error):
+							print("Error caching image: \(error)")
+						}
+					}
+				}
+			}
 		}
 	}
 }
