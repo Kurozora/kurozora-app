@@ -22,16 +22,19 @@ class ThreadTableViewController: UITableViewController {
 	@IBOutlet weak var voteCountButton: UIButton! {
 		didSet {
 			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			voteCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var commentCountButton: UIButton! {
 		didSet {
 			commentCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			commentCountButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var dateTimeButton: UIButton! {
 		didSet {
 			dateTimeButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			dateTimeButton.theme_setTitleColor(KThemePicker.tableViewCellActionDefaultColor.rawValue, forState: .normal)
 		}
 	}
 	@IBOutlet weak var posterUsernameLabel: UIButton! {
