@@ -47,8 +47,9 @@ class FollowCell: UITableViewCell {
 		usernameLabel.text = userProfile.username
 
 		// Configure profile image
-		if let profileImage = userProfile.profileImage, !profileImage.isEmpty {
-			profileImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+		if let profileImage = userProfile.profileImage {
+			let usernameInitials = userProfile.username?.initials
+			profileImageView.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Configure follow button

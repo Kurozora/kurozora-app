@@ -30,7 +30,7 @@ class ProfileTableViewController: UITableViewController {
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: UITextView! {
 		didSet {
-			bioTextView.theme_textColor = KThemePicker.subTextColor.rawValue
+			bioTextView.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 
@@ -75,9 +75,17 @@ class ProfileTableViewController: UITableViewController {
 		}
 	}
 
-	// MARK: - {Properties}
-	var bannerImageViewHeightConstraint: NSLayoutConstraint?
+	@IBOutlet weak var separatorView: UIView! {
+		didSet {
+			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+		}
+	}
+
+	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
+
+	// MARK: - Properties
 	var currentImageView: UIImageView?
+	var placeholderText = "Describe yourself!"
 
 	var user: User? {
 		didSet {
@@ -108,13 +116,12 @@ class ProfileTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup banner image height
-		self.bannerImageViewHeightConstraint = bannerImageView.heightAnchor.constraint(equalToConstant: view.height / 3)
-		self.bannerImageViewHeightConstraint?.isActive = true
-
-		// Setup biography text delegate
-		self.bioTextView.delegate = self
+		self.bannerImageViewHeightConstraint?.constant = view.height / 3
+		self.view.setNeedsUpdateConstraints()
+		self.view.layoutIfNeeded()
 
 		// Fetch user details
 		fetchUserDetails(for: userID ?? User.currentID)
@@ -127,9 +134,8 @@ class ProfileTableViewController: UITableViewController {
 		// Fetch posts
 		fetchPosts()
 
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
+		// Setup empty data view
+		setupEmptyDataView()
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -166,6 +172,28 @@ class ProfileTableViewController: UITableViewController {
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "profile", bundle: nil)
 		return storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController")
+	}
+
+	/// Sets up the empty data view.
+	func setupEmptyDataView() {
+		tableView.emptyDataSetView { (view) in
+			let detailLabel = self.userID == User.currentID || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
+
+			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_comment"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
+				.verticalSpace(10)
+				.isScrollAllowed(true)
+		}
+	}
+
+	/// Reload the empty data view.
+	@objc func reloadEmptyDataView() {
+		setupEmptyDataView()
+		tableView.reloadData()
 	}
 
 	/**
@@ -214,7 +242,8 @@ class ProfileTableViewController: UITableViewController {
 
 		// Setup profile image
 		if let profileImage = user.profile?.profileImage {
-			profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: #imageLiteral(resourceName: "default_profile_image"))
+			let usernameInitials = user.profile?.username?.initials
+			profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Setup banner image
@@ -278,7 +307,7 @@ class ProfileTableViewController: UITableViewController {
 		}
 
 		// Setup follow button
-		if userID == nil {
+		if self.userID == User.currentID || self.userID == nil {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
@@ -376,7 +405,7 @@ class ProfileTableViewController: UITableViewController {
 
 				// Setup bio text if necessary
 				if self.bioTextView.text.isEmpty {
-					self.bioTextView.text = "Describe yourself!"
+					self.bioTextView.text = self.placeholderText
 				}
 			}
 
@@ -406,7 +435,7 @@ class ProfileTableViewController: UITableViewController {
 				self.tableView.visibleCells.forEach { $0.alpha = 1; $0.isUserInteractionEnabled = true }
 
 				// Reset bio text if necessary
-				if self.bioTextView.text == "Describe yourself!" {
+				if self.bioTextView.text == self.placeholderText {
 					self.bioTextView.text = ""
 				}
 			}
@@ -533,7 +562,7 @@ class ProfileTableViewController: UITableViewController {
 		if let profileImage = user?.profile?.profileImage, !profileImage.isEmpty {
 			presentPhotoViewControllerWith(url: profileImage, from: profileImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "default_profile_image", from: profileImageView)
+			presentPhotoViewControllerWith(image: profileImageView.image, from: profileImageView)
 		}
 	}
 
@@ -549,18 +578,11 @@ class ProfileTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension ProfileTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let postCount = feedPostElement?.count else { return 1 }
+		guard let postCount = feedPostElement?.count else { return 0 }
 		return postCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if feedPostElement == nil {
-			let emptyProfileCell = tableView.dequeueReusableCell(withIdentifier: "EmptyProfileCell") as! EmptyProfileCell
-			let title = userID == User.currentID || userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
-			emptyProfileCell.title = title
-			return emptyProfileCell
-		}
-
 		let feedPostCell = tableView.dequeueReusableCell(withIdentifier: "FeedPostCell") as! FeedPostCell
 		feedPostCell.feedPostElement = feedPostElement?[indexPath.row]
 		return feedPostCell
@@ -659,8 +681,9 @@ extension ProfileTableViewController: UIImagePickerControllerDelegate, UINavigat
 extension ProfileTableViewController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		bioTextCache = textView.text
-		if textView.text == "Describe yourself!" && editingMode {
+		if textView.text == placeholderText && textView.textColor == KThemePicker.textFieldPlaceholderTextColor.colorValue && editingMode {
 			textView.text = ""
+			textView.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 
@@ -671,8 +694,9 @@ extension ProfileTableViewController: UITextViewDelegate {
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		if textView.text == "" && editingMode {
-			textView.text = "Describe yourself!"
+		if textView.text.isEmpty && editingMode {
+			textView.text = placeholderText
+			textView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		}
 	}
 }

@@ -30,7 +30,8 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 
 		// Configure profile image
 		if let profileImage = userProfile.profileImage {
-			searchImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+			let usernameInitials = userProfile.username?.initials
+			searchImageView.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Configure follow button

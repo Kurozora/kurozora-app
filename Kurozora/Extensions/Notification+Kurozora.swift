@@ -9,38 +9,42 @@
 import Foundation
 
 extension Notification.Name {
+	// MARK: - Explore
 	static var KEDidInvalidateContentSize: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
+	// MARK: - User state
 	static var KUserIsSignedInDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
+	// MARK: - Notification settings
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {
 		return Notification.Name(#function)
 	}
-
-	static var KSAppIconDidChange: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
 	static var KSNotificationOptionsValueLabelsNotification: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
+	// MARK: - App settings
+	static var KSAppAppearanceDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+	static var KSAppIconDidChange: NSNotification.Name {
+		return Notification.Name(#function)
+	}
+
+	// MARK: - User settings
 	static var KSAuthenticationRequireTimeoutValueDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 
-	static var KSAppAppearanceDidChange: NSNotification.Name {
+	// MARK: - Theme settings
+	static var ThemeUpdateNotification: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 	static var KSAutomaticDarkThemeDidChange: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
-	static var ThemeUpdateNotification: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 }

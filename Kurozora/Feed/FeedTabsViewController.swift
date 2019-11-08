@@ -14,7 +14,12 @@ import SwiftTheme
 class FeedTabsViewController: TabmanViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var createThreadButton: UIButton!
-	@IBOutlet weak var navigationProfileButton: UIButton!
+	@IBOutlet weak var navigationProfileButton: UIButton! {
+		didSet {
+			let profileImage = User.currentUserProfileImage.withRenderingMode(.alwaysOriginal)
+			self.navigationProfileButton.setImage(profileImage, for: .normal)
+		}
+	}
 
 	// MARK: - Properties
 	var sections: [FeedSectionsElement]? {
@@ -23,18 +28,24 @@ class FeedTabsViewController: TabmanViewController {
 		}
 	}
 	var sectionsCount: Int?
-//	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UITableViewController]()
 
 	let bar = TMBar.ButtonBar()
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		let profileImage = User.currentUserProfileImage.withRenderingMode(.alwaysOriginal)
+		navigationProfileButton.setImage(profileImage, for: .normal)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
-		navigationProfileButton.setImage(User.currentUserProfileImage, for: .normal)
+		// Configure navigation profile button
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
@@ -52,8 +63,6 @@ class FeedTabsViewController: TabmanViewController {
 
 		// Tabman bar
 		initTabmanBarView()
-//		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-//		kRichTextEditorViewController = storyboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
 	}
 
 	// MARK: - Functions

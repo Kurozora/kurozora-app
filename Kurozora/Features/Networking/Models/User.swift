@@ -221,15 +221,14 @@ extension User {
 
 	/// Returns the current user profile image from cache if available, otherwise returns default profile image
 	static var currentUserProfileImage: UIImage {
-		var profileImage = #imageLiteral(resourceName: "default_profile_image")
-		let cache = ImageCache.default
+		var profileImage = username.initials.toImage ?? #imageLiteral(resourceName: "default_profile_image")
 
-		cache.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
+		ImageCache.default.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
 			switch result {
 			case .success(let cacheResult):
 				// If the `cacheType is `.none`, `image` will be `nil`.
 				if cacheResult.cacheType != .none {
-					profileImage = cacheResult.image ?? #imageLiteral(resourceName: "default_profile_image")
+					profileImage = cacheResult.image ?? profileImage
 				}
 			case .failure(let error):
 				print("Received image cache error: \(error.localizedDescription)")

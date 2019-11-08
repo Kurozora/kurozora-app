@@ -30,7 +30,7 @@ class ManageActiveSessionsController: UITableViewController {
 	var pinAnnotationView: MKPinAnnotationView!
 	let locationManager = CLLocationManager()
 
-	// MARK: - Views
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if dismissEnabled {
@@ -46,9 +46,10 @@ class ManageActiveSessionsController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
 
+		// Fetch sessions
 		fetchSessions()
 
-		mapView.delegate = self
+		// Configure map view
 		mapView.showsUserLocation = true
 
 		if CLLocationManager.locationServicesEnabled() == true {
@@ -66,12 +67,8 @@ class ManageActiveSessionsController: UITableViewController {
 			print("Please turn on location services or GPS")
 		}
 
-		// Setup table view
+		// Configure table view height
 		tableView.tableHeaderView?.frame.size.height = self.view.frame.height / 3
-		tableView.dataSource = self
-		tableView.delegate = self
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

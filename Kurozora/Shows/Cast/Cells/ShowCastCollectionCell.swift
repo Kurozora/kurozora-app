@@ -64,7 +64,8 @@ class ShowCastCollectionCell: UICollectionViewCell {
 //		}
 
 		if let actorImage = actorElement.image {
-			self.actorImageView.setImage(with: actorImage, placeholder: #imageLiteral(resourceName: "placeholder_person_image"))
+			let nameInitials = actorElement.name?.initials
+			self.actorImageView.setImage(with: actorImage, placeholder: nameInitials?.toImage ?? #imageLiteral(resourceName: "placeholder_person_image"))
 		}
 
 		self.actorShadowView.applyShadow()
@@ -79,7 +80,8 @@ class ShowCastCollectionCell: UICollectionViewCell {
 			self.characterName?.text = "as \(characterName)"
 		}
 
-		self.characterImageView?.image = #imageLiteral(resourceName: "placeholder_person_image")
+		let nameInitials = actorElement.role?.initials
+		self.characterImageView?.image = nameInitials?.toImage ?? #imageLiteral(resourceName: "placeholder_person_image")
 		self.characterShadowView?.applyShadow()
 
 		if self.characterImageView?.gestureRecognizers?.count ?? 0 == 0 {
