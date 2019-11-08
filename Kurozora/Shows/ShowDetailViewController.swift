@@ -139,12 +139,6 @@ class ShowDetailViewController: UIViewController {
 		tableView.addSubview(headerView)
 		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
 		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
-
-		// Setup table view
-		tableView.delegate = self
-		tableView.dataSource = self
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
 	override func viewDidAppear(_ animated: Bool) {

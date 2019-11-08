@@ -50,10 +50,6 @@ class ForumsListViewController: UITableViewController {
 		// Fetch threads
 		fetchThreads()
 
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
-
 		// Setup empty data view
 		setupEmptyDataView()
 	}

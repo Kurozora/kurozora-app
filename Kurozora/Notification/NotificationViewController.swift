@@ -70,10 +70,6 @@ class NotificationsViewController: UITableViewController {
 		refreshControl?.addTarget(self, action: #selector(fetchNotifications), for: .valueChanged)
 		enableActions()
 
-		// Setup table view.
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
-
 		// Setup empty data view.
 		setupEmptyDataView()
 	}
@@ -178,7 +174,7 @@ class NotificationsViewController: UITableViewController {
 			self.groupedNotifications = []
 			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
 				guard let creationDate = userNotificationsElement.creationDate else { return }
-				let timeKey = creationDate.groupTime()
+				let timeKey = creationDate.groupTime
 
 				result[timeKey, default: []].append(userNotificationsElement)
 			})
@@ -190,7 +186,7 @@ class NotificationsViewController: UITableViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate() ?? Date() > $1.sectionNotifications[0].creationDate?.toDate() ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate ?? Date() > $1.sectionNotifications[0].creationDate?.toDate ?? Date() })
 		case .byType:
 			self.groupedNotifications = []
 
@@ -210,7 +206,7 @@ class NotificationsViewController: UITableViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate() ?? Date() > $1.sectionNotifications[0].creationDate?.toDate() ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate ?? Date() > $1.sectionNotifications[0].creationDate?.toDate ?? Date() })
 		case .off:
 			self.groupedNotifications = []
 		}

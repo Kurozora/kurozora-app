@@ -41,14 +41,11 @@ class ReplyCell: UITableViewCell {
 			voteCountButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
-	@IBOutlet weak var interpunctLabel: UILabel! {
+	@IBOutlet weak var contentTextView: UITextView! {
 		didSet {
-			interpunctLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		}
-	}
-	@IBOutlet weak var replyLabel: UILabel! {
-		didSet {
-			replyLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			contentTextView.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			contentTextView.textContainerInset = .zero
+			contentTextView.textContainer.lineFragmentPadding = 0
 		}
 	}
 	@IBOutlet weak var upvoteButton: UIButton! {
@@ -92,10 +89,12 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Configure username
-		usernameLabel?.text = threadRepliesElement.user?.username
+		usernameLabel?.text = threadRepliesElement.userProfile?.username
 
 		// Configure
-		replyLabel.text = threadRepliesElement.content
+		if let contentText = threadRepliesElement.content {
+			contentTextView.text = contentText
+		}
 
 		// Set thread stats
 		if let replyScore = threadRepliesElement.score {
@@ -103,7 +102,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		if let creationDate = threadRepliesElement.postedAt, !creationDate.isEmpty {
-			dateTimeButton.setTitle(creationDate.timeAgo(), for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
 		}
 
 		// Check if thread is locked
@@ -131,20 +130,13 @@ class ReplyCell: UITableViewCell {
 				DispatchQueue.main.async {
 					if action == 1 { // upvote
 						replyScore += 1
-						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
-						self.voteCountButton.setTitleColor(.kGreen, for: .normal)
-						self.voteCountButton.tintColor = .kGreen
 						self.upvoteButton.tintColor = .kGreen
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 					} else if action == 0 { // no vote
-						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_up_small"), for: .normal)
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 					} else if action == -1 { // downvote
 						replyScore -= 1
-						self.voteCountButton.setImage(#imageLiteral(resourceName: "arrow_down_small"), for: .normal)
-						self.voteCountButton.setTitleColor(.kLightRed, for: .normal)
-						self.voteCountButton.tintColor = .kLightRed
 						self.downvoteButton.tintColor = .kLightRed
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 					}
@@ -163,7 +155,7 @@ class ReplyCell: UITableViewCell {
 
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
-		if let userID = threadRepliesElement?.user?.id, userID != 0 {
+		if let userID = threadRepliesElement?.userProfile?.id, userID != 0 {
 			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
 				profileViewController.userID = userID
 				profileViewController.dismissButtonIsEnabled = true
@@ -232,7 +224,7 @@ class ReplyCell: UITableViewCell {
 		}
 
 		// Username action
-		if let username = threadRepliesElement.user?.username, !username.isEmpty {
+		if let username = threadRepliesElement.userProfile?.username, !username.isEmpty {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
@@ -277,7 +269,7 @@ class ReplyCell: UITableViewCell {
 
 		var shareText: [String] = [""]
 
-		if let replyContent = threadRepliesElement.content, let posterUsername = threadRepliesElement.user?.username {
+		if let replyContent = threadRepliesElement.content, let posterUsername = threadRepliesElement.userProfile?.username {
 			shareText = ["\"\(replyContent)\"-\(posterUsername)"]
 		}
 

@@ -44,7 +44,7 @@ class BaseNotificationCell: SwipeTableViewCell {
 		guard let userNotificationsElement = userNotificationsElement else { return }
 
 		if let creationDate = userNotificationsElement.creationDate {
-			dateLabel.text = creationDate.timeAgo()
+			dateLabel.text = creationDate.timeAgo
 		}
 
 		if let notificationContent = userNotificationsElement.message {

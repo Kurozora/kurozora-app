@@ -22,10 +22,6 @@ class RedeemTableViewController: UITableViewController {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		rightNavigationBarButton.isEnabled = false
-
-		// Setup table view.
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
 	// MARK: - IBActions

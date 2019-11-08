@@ -104,7 +104,7 @@ public class ForumsCell: UITableViewCell {
 		}
 
 		if let creationDate = forumThreadsElement.creationDate, !creationDate.isEmpty {
-			dateTimeButton.setTitle(creationDate.timeAgo(), for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
 		}
 
 		// Thread vote state

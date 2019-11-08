@@ -77,10 +77,6 @@ class SearchResultsTableViewController: UITableViewController {
 		}
 
 		tableView.backgroundView = blurEffectView
-
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
     }
 
 	// MARK: - Functions

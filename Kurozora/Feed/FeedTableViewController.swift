@@ -35,11 +35,8 @@ class FeedTableViewController: UITableViewController {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl?.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
 
+		// Fetch feed posts.
 		fetchFeedPosts()
-
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 
 		// Setup empty data view
 		setupEmptyDataView()

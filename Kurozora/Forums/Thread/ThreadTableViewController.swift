@@ -8,7 +8,6 @@
 
 import UIKit
 import EmptyDataSet_Swift
-import RichTextView
 import SwiftyJSON
 import SCLAlertView
 
@@ -46,9 +45,11 @@ class ThreadTableViewController: UITableViewController {
 		}
 	}
 
-	@IBOutlet weak var richTextView: RichTextView! {
+	@IBOutlet weak var richTextView: UITextView! {
 		didSet {
 			richTextView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			richTextView.textContainerInset = .zero
+			richTextView.textContainer.lineFragmentPadding = 0
 		}
 	}
 	@IBOutlet weak var upvoteButton: UIButton! {
@@ -130,10 +131,6 @@ class ThreadTableViewController: UITableViewController {
 		}
 		fetchDetails()
 
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
-
 		// Setup empty data view
 		setupEmptyDataView()
 	}
@@ -167,11 +164,12 @@ class ThreadTableViewController: UITableViewController {
 	/// Sets up the empty data view.
 	func setupEmptyDataView() {
 		tableView.emptyDataSetView { (view) in
+			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to reply on this thread!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(#imageLiteral(resourceName: "empty_comment"))
 				.imageTintColor(KThemePicker.textColor.colorValue)
-				.verticalOffset(-50)
+				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
 				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
@@ -201,8 +199,8 @@ class ThreadTableViewController: UITableViewController {
 		self.threadTitleLabel.text = forumsThreadElement.title
 
 		// Set thread content
-		if let threadContent = forumsThreadElement.content {
-			self.richTextView.update(input: threadContent, textColor: KThemePicker.tableViewCellSubTextColor.colorValue, completion: nil)
+		if let contentText = forumsThreadElement.content {
+			self.richTextView.text = contentText
 		}
 
 		// Set poster username
@@ -218,7 +216,7 @@ class ThreadTableViewController: UITableViewController {
 		}
 
 		if let creationDate = forumsThreadElement.creationDate {
-			dateTimeButton.setTitle(creationDate.timeAgo() + " · by ", for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo + " · by ", for: .normal)
 		}
 
 		// Thread vote state

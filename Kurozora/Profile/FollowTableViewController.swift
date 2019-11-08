@@ -10,6 +10,7 @@ import UIKit
 import EmptyDataSet_Swift
 
 class FollowTableViewController: UITableViewController {
+	// MARK: - Properties
 	var userFollow: [UserProfile]! {
 		didSet {
 			tableView.reloadData()
@@ -22,18 +23,16 @@ class FollowTableViewController: UITableViewController {
 	var currentPage = 1
 	var lastPage = 1
 
+	// MARK:- Views
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Fetch follow list.
 		fetchFollowList()
 
-		// Setup table view
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
-
-		// Setup empty data view
+		// Setup empty data view.
 		setupEmptyDataView()
     }
 

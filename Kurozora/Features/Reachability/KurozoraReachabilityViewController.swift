@@ -37,7 +37,7 @@ class KurozoraReachabilityViewController: UIViewController {
 	var window: UIWindow?
 	let network = KNetworkManager.shared
 
-	// MARK: - Views
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 

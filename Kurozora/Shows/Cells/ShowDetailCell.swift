@@ -81,10 +81,10 @@ class InformationTableViewCell: UITableViewCell {
 
 			var dateInfo: String = "-"
 			if let startDate = showDetail.startDate {
-				dateInfo = startDate.isEmpty ? "N/A - " : startDate.mediumDate() + " - "
+				dateInfo = startDate.isEmpty ? "N/A - " : startDate.mediumDate + " - "
 			}
 			if let endDate = showDetail.endDate {
-				dateInfo += endDate.isEmpty ? "N/A" : endDate.mediumDate()
+				dateInfo += endDate.isEmpty ? "N/A" : endDate.mediumDate
 			}
 
 			detailLabel.text = dateInfo

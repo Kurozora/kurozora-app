@@ -27,7 +27,8 @@ class MessageNotificationCell: BaseNotificationCell {
 		}
 
 		if let profileImage = userNotificationsElement?.data?.profileImage {
-			profileImageView.setImage(with: profileImage, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+			let usernameInitials = userNotificationsElement?.data?.name?.initials
+			profileImageView.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
 		}
 	}
 }

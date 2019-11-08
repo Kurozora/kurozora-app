@@ -27,7 +27,7 @@ class FeedPostCell: BaseFeedPostCell {
 		postTextView?.text = feedPostElement.content
 
 		// Date time
-		dateTimeLabel?.text = feedPostElement.creationDate?.timeAgo()
+		dateTimeLabel?.text = feedPostElement.creationDate?.timeAgo
 
 		// Post
 		if let postText = feedPostElement.content {
@@ -50,7 +50,8 @@ class FeedPostCell: BaseFeedPostCell {
 
 		// Profile Image
 		if let profileImage = feedPostElement.profileImage {
-			profileImageView?.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: #imageLiteral(resourceName: "default_profile_image"))
+			let usernameInitials = feedPostElement.posterUsername?.initials
+			profileImageView?.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
 		}
 
 		// Other Username
