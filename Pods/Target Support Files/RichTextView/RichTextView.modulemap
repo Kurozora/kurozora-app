@@ -1,6 +1,0 @@
-framework module RichTextView {
-  umbrella header "RichTextView-umbrella.h"
-
-  export *
-  module * { export * }
-}

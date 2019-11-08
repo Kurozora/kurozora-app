@@ -1,6 +1,0 @@
-framework module iosMath {
-  umbrella header "iosMath-umbrella.h"
-
-  export *
-  module * { export * }
-}

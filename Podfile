@@ -16,7 +16,7 @@ def kurozora_pods
 	pod 'Kingfisher'
 	pod 'NotificationBannerSwift'
 	pod 'PusherSwift'
-	pod 'RichTextView'
+#	pod 'RichTextView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 	pod 'SPStorkController'
 #	pod 'SnowGlobe'

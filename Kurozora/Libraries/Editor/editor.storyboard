@@ -58,8 +58,20 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5BB-1p-TAp">
-                                <rect key="frame" x="20" y="118" width="760" height="416"/>
+                                <rect key="frame" x="20" y="118" width="760" height="466"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IuO-8b-A1t">
+                                        <rect key="frame" x="8" y="8" width="744" height="450"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="IuO-8b-A1t" firstAttribute="top" secondItem="5BB-1p-TAp" secondAttribute="top" constant="8" id="7Z0-1I-RNC"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="IuO-8b-A1t" secondAttribute="trailing" id="HoA-jv-5uB"/>
+                                    <constraint firstAttribute="bottom" secondItem="IuO-8b-A1t" secondAttribute="bottom" constant="8" id="LqW-11-SB4"/>
+                                    <constraint firstItem="IuO-8b-A1t" firstAttribute="leading" secondItem="5BB-1p-TAp" secondAttribute="leadingMargin" id="MkN-Fh-ybi"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="7"/>
@@ -87,28 +99,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="5BB-1p-TAp" secondAttribute="trailing" id="jMJ-ez-2ec"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="Photo" image="camera_on_rectangle" id="1TB-Sy-Lfl" userLabel="Image">
-                            <connections>
-                                <action selector="insertImageButtonPressed:" destination="Hhy-HY-4Mq" id="9PP-Db-u2B"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="YouTube" image="play_rectangle" id="aUH-eZ-3B8">
-                            <connections>
-                                <action selector="insertYouTubeButtonPressed:" destination="Hhy-HY-4Mq" id="qrR-ZR-i8L"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Link" image="link" id="hPp-5b-FaH">
-                            <connections>
-                                <action selector="insertLinkButtonPressed:" destination="Hhy-HY-4Mq" id="z9P-Sc-uzh"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Mention" image="at" id="LyL-fc-XpM">
-                            <connections>
-                                <action selector="insertMentionButtonPressed:" destination="Hhy-HY-4Mq" id="Xwc-vh-CPj"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="yqC-Ud-lJQ">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="1zf-Gi-Mdg">
                             <connections>
@@ -122,6 +113,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="richTextView" destination="IuO-8b-A1t" id="0Ci-OY-MYW"/>
                         <outlet property="richTextViewBubbleView" destination="5BB-1p-TAp" id="zKF-bd-Q2O"/>
                         <outlet property="titleTextField" destination="j89-fz-JFL" id="nXu-R9-lsp"/>
                         <outlet property="titleTextFieldBubbleView" destination="6La-NS-Ber" id="Esg-MR-XXa"/>
@@ -129,12 +121,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k0-4G-HKi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="613" y="157"/>
+            <point key="canvasLocation" x="586" y="157"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5nr-DB-Sc1">
             <objects>
-                <navigationController storyboardIdentifier="KRichTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="8Vn-8I-M1E" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="KRichTextEditorKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Vn-8I-M1E" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="s8r-pe-0Hu">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="50"/>
@@ -150,7 +142,6 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="RZM-iw-vlr">
-                        <rect key="frame" x="0.0" y="550" width="800" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.16470588235294117" green="0.1803921568627451" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </toolbar>
@@ -178,25 +169,25 @@
                                 <rect key="frame" x="20" y="66" width="760" height="55.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Photos Taken Right Before Something Tragic Happened" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-UU-0qu">
-                                        <rect key="frame" x="8" y="8" width="744" height="20.5"/>
+                                        <rect key="frame" x="8" y="8" width="449" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JM-0l-wTQ">
-                                        <rect key="frame" x="8" y="30.5" width="744" height="17"/>
+                                        <rect key="frame" x="8" y="30.5" width="35.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="9JM-0l-wTQ" firstAttribute="top" secondItem="XGS-UU-0qu" secondAttribute="bottom" constant="2" id="1lQ-Yl-0QR"/>
-                                    <constraint firstItem="9JM-0l-wTQ" firstAttribute="trailing" secondItem="XGS-UU-0qu" secondAttribute="trailing" id="6K6-2J-TP0"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9JM-0l-wTQ" secondAttribute="trailing" id="6K6-2J-TP0"/>
                                     <constraint firstItem="XGS-UU-0qu" firstAttribute="top" secondItem="vkW-jb-kza" secondAttribute="topMargin" id="DtM-28-Qfy"/>
                                     <constraint firstItem="XGS-UU-0qu" firstAttribute="leading" secondItem="vkW-jb-kza" secondAttribute="leadingMargin" id="H7e-Nx-C7E"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="XGS-UU-0qu" secondAttribute="trailing" id="jrR-z5-YMJ"/>
+                                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="XGS-UU-0qu" secondAttribute="trailing" id="jrR-z5-YMJ"/>
                                     <constraint firstItem="9JM-0l-wTQ" firstAttribute="leading" secondItem="XGS-UU-0qu" secondAttribute="leading" id="jxy-tr-NEk"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="9JM-0l-wTQ" secondAttribute="bottom" id="pjL-BK-vP3"/>
                                 </constraints>
@@ -212,7 +203,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gph-A8-YHR">
                                         <rect key="frame" x="8" y="8" width="35" height="35"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-OE-8Zs">
                                                 <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -251,22 +242,22 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0I-6b-2zo">
-                                        <rect key="frame" x="51" y="8" width="40" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhZ-4v-9Lm">
-                                        <rect key="frame" x="728" y="8" width="24" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-mS-n8Z">
-                                        <rect key="frame" x="8" y="47" width="744" height="399.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Kirito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0I-6b-2zo">
+                                        <rect key="frame" x="51" y="8" width="44.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhZ-4v-9Lm">
+                                        <rect key="frame" x="728" y="8" width="24" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-mS-n8Z">
+                                        <rect key="frame" x="51" y="28.5" width="701" height="418"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
@@ -274,15 +265,16 @@
                                 <constraints>
                                     <constraint firstItem="X0I-6b-2zo" firstAttribute="leading" secondItem="Gph-A8-YHR" secondAttribute="trailing" constant="8" id="6zi-8L-EzI"/>
                                     <constraint firstItem="X0I-6b-2zo" firstAttribute="top" secondItem="Gph-A8-YHR" secondAttribute="top" id="9vA-yR-9ph"/>
+                                    <constraint firstItem="R8d-mS-n8Z" firstAttribute="leading" secondItem="X0I-6b-2zo" secondAttribute="leading" id="DUA-k2-Wb7"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="R8d-mS-n8Z" secondAttribute="trailing" id="IFy-I6-AlV"/>
                                     <constraint firstItem="BhZ-4v-9Lm" firstAttribute="centerY" secondItem="X0I-6b-2zo" secondAttribute="centerY" id="Ljk-Nf-bxl"/>
-                                    <constraint firstItem="R8d-mS-n8Z" firstAttribute="top" secondItem="Gph-A8-YHR" secondAttribute="bottom" constant="4" id="RGA-A3-GOU"/>
                                     <constraint firstItem="BhZ-4v-9Lm" firstAttribute="top" secondItem="X0I-6b-2zo" secondAttribute="top" id="Xsk-98-BOX"/>
                                     <constraint firstAttribute="trailing" secondItem="BhZ-4v-9Lm" secondAttribute="trailing" constant="8" id="fjo-Rh-Q61"/>
                                     <constraint firstItem="Gph-A8-YHR" firstAttribute="leading" secondItem="iuH-90-nho" secondAttribute="leadingMargin" id="p5I-VE-dWt"/>
+                                    <constraint firstItem="R8d-mS-n8Z" firstAttribute="top" secondItem="X0I-6b-2zo" secondAttribute="bottom" id="sfH-PZ-zz2"/>
                                     <constraint firstItem="Gph-A8-YHR" firstAttribute="top" secondItem="iuH-90-nho" secondAttribute="top" constant="8" id="sth-lF-Roi"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="R8d-mS-n8Z" secondAttribute="bottom" id="v8e-oi-Ypy"/>
-                                    <constraint firstItem="R8d-mS-n8Z" firstAttribute="leading" secondItem="iuH-90-nho" secondAttribute="leadingMargin" id="yB7-pm-seQ"/>
+                                    <constraint firstItem="BhZ-4v-9Lm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="X0I-6b-2zo" secondAttribute="trailing" constant="10" id="yY3-bV-K0I"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -303,7 +295,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zPv-bB-rEc">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="rUg-mc-qcP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rUg-mc-qcP">
                             <connections>
                                 <action selector="dismissButtonPressed:" destination="mMj-Q5-bpV" id="rx2-At-siL"/>
                             </connections>
@@ -321,13 +313,13 @@
                         <outlet property="currentUsernameLabel" destination="X0I-6b-2zo" id="keW-Lz-lXU"/>
                         <outlet property="posterUsernameLabel" destination="9JM-0l-wTQ" id="MhL-um-vjU"/>
                         <outlet property="profileImageView" destination="xIW-OE-8Zs" id="DyV-iq-arj"/>
-                        <outlet property="replyToTextLabel" destination="XGS-UU-0qu" id="maQ-jL-aJg"/>
                         <outlet property="replyToUserContainer" destination="vkW-jb-kza" id="hCk-hE-EkR"/>
+                        <outlet property="threadTitleLabel" destination="XGS-UU-0qu" id="dkI-m6-TwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-DL-cSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="612" y="828"/>
+            <point key="canvasLocation" x="585" y="828"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oST-Et-9ob">
@@ -357,11 +349,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="at" width="24" height="24"/>
-        <image name="camera_on_rectangle" width="31" height="24"/>
         <image name="default_profile_image" width="100" height="100"/>
-        <image name="link" width="24" height="24"/>
-        <image name="play_rectangle" width="31" height="24"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
