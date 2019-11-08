@@ -1208,7 +1208,6 @@
 			isa = PBXGroup;
 			children = (
 				6634735A23339885006B7F99 /* Solar */,
-				66B216A921C166B5006E167D /* Editor */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -1811,8 +1810,8 @@
 			isa = PBXGroup;
 			children = (
 				666938AC21B19E3800BA9620 /* editor.storyboard */,
-				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
 				66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */,
+				66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1821,6 +1820,7 @@
 			isa = PBXGroup;
 			children = (
 				6640E18722AD631F00D0F575 /* Authentication */,
+				66B216A921C166B5006E167D /* Editor */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				66B4F1D3223BC906007C5048 /* Networking */,

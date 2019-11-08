@@ -91,7 +91,6 @@ class KCommentEditorViewController: UIViewController {
 
 		characterCountLabel.text = "\(characterLimit)"
 
-		commentTextView.delegate = self
 		commentTextView.text = placeholderText
 		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		commentTextView.becomeFirstResponder()
