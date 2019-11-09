@@ -77,7 +77,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 				}
 			}
 
-			secondaryLabel.text = secondaryLabelText
+			secondaryLabel?.text = secondaryLabelText
 		}
 
 	}

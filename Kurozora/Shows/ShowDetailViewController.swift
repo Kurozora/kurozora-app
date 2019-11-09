@@ -135,13 +135,13 @@ class ShowDetailViewController: UITableViewController {
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
 	var statusBarShouldBeHidden = false
 
-	override var prefersStatusBarHidden: Bool {
-		return statusBarShouldBeHidden
-	}
-
-	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-		return .slide
-	}
+//	override var prefersStatusBarHidden: Bool {
+//		return statusBarShouldBeHidden
+//	}
+//
+//	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+//		return .slide
+//	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -632,8 +632,8 @@ extension ShowDetailViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-extension ShowDetailViewController {
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//extension ShowDetailViewController {
+//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //		// Variables for showing/hiding compact details view
 //		let bannerHeight = bannerImageView.bounds.height
 //		let newOffset = bannerHeight - scrollView.contentOffset.y
@@ -661,17 +661,17 @@ extension ShowDetailViewController {
 //				self.navigationController?.navigationBar.alpha = 1
 //			}
 //		}
-	}
-
-	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//	}
+//
+//	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 //		let yContentOffset = tableView.contentOffset.y
 //		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
 //
 //		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
 //			viewsAreHidden = false
 //		}
-	}
-}
+//	}
+//}
 
 // MARK: - ShowCastCellDelegate
 extension ShowDetailViewController: ShowCastCellDelegate {

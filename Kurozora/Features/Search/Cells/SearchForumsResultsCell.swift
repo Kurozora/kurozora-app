@@ -23,7 +23,7 @@ class SearchForumsResultsCell: SearchBaseResultsCell {
 		guard let forumsThreadElement = forumsThreadElement else { return }
 
 		primaryLabel.text = forumsThreadElement.title
-		secondaryLabel.text = forumsThreadElement.content
+		textView?.text = forumsThreadElement.content
 
 		// Configure lock
 		if let locked = forumsThreadElement.locked {

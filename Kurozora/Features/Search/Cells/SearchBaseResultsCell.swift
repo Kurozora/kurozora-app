@@ -12,7 +12,13 @@ import SwiftTheme
 class SearchBaseResultsCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel!
-	@IBOutlet weak var secondaryLabel: UILabel!
+	@IBOutlet weak var secondaryLabel: UILabel?
+	@IBOutlet weak var textView: UITextView? {
+		didSet {
+			textView?.textContainerInset = .zero
+			textView?.textContainer.lineFragmentPadding = 0
+		}
+	}
 	@IBOutlet weak var actionButton: UIButton? {
 		didSet {
 			actionButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
