@@ -89,7 +89,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 
 		WorkflowController.shared.isSignedIn {
 			guard let libraryStatus = self.showDetailsElement?.currentUser?.libraryStatus else { return }
-			let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: libraryStatus, action: { (title, value)  in
+			let action = UIAlertController.actionSheetWithItems(items: Library.Section.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				guard let showID = self.showDetailsElement?.id else { return }
 
 				if libraryStatus != value {

@@ -316,7 +316,6 @@
 		66B2C73D232D0F350042AB12 /* PostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73C232D0F350042AB12 /* PostType.swift */; };
 		66B2C73F232F95680042AB12 /* BaseNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */; };
 		66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B2C740232F99440042AB12 /* Array+Kurozora.swift */; };
-		66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */; };
 		66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */; };
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
@@ -752,7 +751,6 @@
 		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
 		66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNotificationCell.swift; sourceTree = "<group>"; };
 		66B2C740232F99440042AB12 /* Array+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Kurozora.swift"; sourceTree = "<group>"; };
-		66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListStyle.swift; sourceTree = "<group>"; };
 		66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseResultsCell.swift; sourceTree = "<group>"; };
 		66B4F1DC223D334D007C5048 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
@@ -1893,7 +1891,6 @@
 		66BA740B223DB27500AEB8ED /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */,
 				66BA7409223DB20800AEB8ED /* LibrarySection.swift */,
 			);
 			path = Models;
@@ -2888,7 +2885,6 @@
 				661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */,
 				66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */,
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
-				66B4F1D0223AB7BE007C5048 /* LibraryListStyle.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
 				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,

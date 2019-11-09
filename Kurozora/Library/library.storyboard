@@ -58,7 +58,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailedCell" id="d2U-M3-0Ca" userLabel="CheckIn" customClass="LibraryDetailedColelctionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailedCollectionViewCell" id="d2U-M3-0Ca" customClass="LibraryDetailedColelctionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="28" width="406" height="244"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="o9V-AR-H9i">
@@ -180,7 +180,7 @@
                                     </segue>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CompactCell" id="iU8-MQ-YER" userLabel="Compact" customClass="LibraryCompactColelctionViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CompactCollectionViewCell" id="iU8-MQ-YER" customClass="LibraryCompactColelctionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="8" y="292" width="100" height="140"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NYS-B0-wGk">
@@ -235,6 +235,59 @@
                                         <segue key="commit" inheritsFrom="parent" id="nY7-iG-trb"/>
                                         <segue key="preview" inheritsFrom="commit" id="QD0-mW-oqr"/>
                                     </segue>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ListCollectionViewCell" id="yAt-x8-QAL" customClass="LibraryCompactColelctionViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="128" y="292" width="100" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CxY-He-uSq">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="140"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UK7-KL-BzG">
+                                            <rect key="frame" x="10" y="0.0" width="80" height="118"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="placeholder_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="omZ-0M-NuE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="118"/>
+                                                    <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="omZ-0M-NuE" secondAttribute="trailing" id="1EW-mU-MET"/>
+                                                <constraint firstItem="omZ-0M-NuE" firstAttribute="top" secondItem="UK7-KL-BzG" secondAttribute="top" id="h2K-Eh-rbi"/>
+                                                <constraint firstItem="omZ-0M-NuE" firstAttribute="leading" secondItem="UK7-KL-BzG" secondAttribute="leading" id="poN-om-BN0"/>
+                                                <constraint firstAttribute="bottom" secondItem="omZ-0M-NuE" secondAttribute="bottom" id="vfH-uf-BZ3"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="One Piece" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVi-zY-DBi">
+                                            <rect key="frame" x="0.0" y="123" width="100" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="UK7-KL-BzG" firstAttribute="top" secondItem="CxY-He-uSq" secondAttribute="top" id="2HS-f7-nY6"/>
+                                        <constraint firstItem="qVi-zY-DBi" firstAttribute="top" secondItem="UK7-KL-BzG" secondAttribute="bottom" constant="5" id="2u6-hj-Dqk"/>
+                                        <constraint firstItem="qVi-zY-DBi" firstAttribute="leading" secondItem="CxY-He-uSq" secondAttribute="leading" id="KC8-fn-zvT"/>
+                                        <constraint firstItem="qVi-zY-DBi" firstAttribute="trailing" secondItem="UK7-KL-BzG" secondAttribute="trailing" constant="10" id="QYI-gx-OIx"/>
+                                        <constraint firstAttribute="trailing" secondItem="qVi-zY-DBi" secondAttribute="trailing" id="Rbp-z5-kVX"/>
+                                        <constraint firstAttribute="bottom" secondItem="qVi-zY-DBi" secondAttribute="bottom" id="go1-go-uPL"/>
+                                        <constraint firstItem="UK7-KL-BzG" firstAttribute="leading" secondItem="qVi-zY-DBi" secondAttribute="leading" constant="10" id="mwz-nT-ojw"/>
+                                        <constraint firstItem="UK7-KL-BzG" firstAttribute="centerX" secondItem="qVi-zY-DBi" secondAttribute="centerX" id="ulP-3Z-53x"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="customSize" width="100" height="140"/>
+                                <connections>
+                                    <outlet property="posterShadowView" destination="UK7-KL-BzG" id="1eU-uQ-mgB"/>
+                                    <outlet property="posterView" destination="omZ-0M-NuE" id="tB1-q3-8pa"/>
+                                    <outlet property="titleLabel" destination="qVi-zY-DBi" id="roL-Kw-aOa"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

@@ -97,7 +97,6 @@ class ShowDetailViewController: UITableViewController {
 	var headerViewHeight: CGFloat = 390
 
 	// Stretchy view
-	var headerView: UIView!
 	var viewsAreHidden: Bool = false {
 		didSet {
 			self.tableView.alpha = viewsAreHidden ? 0 : 1
@@ -133,15 +132,31 @@ class ShowDetailViewController: UITableViewController {
 	var libraryStatus: String?
 	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
 	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
-	var statusBarShouldBeHidden = false
 
-//	override var prefersStatusBarHidden: Bool {
-//		return statusBarShouldBeHidden
-//	}
-//
-//	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-//		return .slide
-//	}
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Setup navigation controller with special settings
+		navigationController?.navigationBar.alpha = 0
+		navigationController?.navigationBar.prefersLargeTitles = false
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// Donate suggestion to Siri
+		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
+		if let title = showDetailsElement?.title, let showID = showID {
+			let title = "Open \(title)"
+			userActivity?.title = title
+			userActivity?.userInfo = ["showID": showID]
+			if #available(iOS 12.0, *) {
+				userActivity?.suggestedInvocationPhrase = title
+				userActivity?.isEligibleForPrediction = true
+			}
+			userActivity?.isEligibleForSearch = true
+		}
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -167,41 +182,14 @@ class ShowDetailViewController: UITableViewController {
 		self.bannerImageViewHeightConstraint.constant = view.height / 3
 		self.view.setNeedsUpdateConstraints()
 		self.view.layoutIfNeeded()
-
-		// Make header view stretchable
-//		headerView = tableView.tableHeaderView
-//		tableView.tableHeaderView = nil
-//		tableView.addSubview(headerView)
-//		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
-//		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		// Donate suggestion to Siri
-		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetailsElement?.title, let showID = showID {
-			let title = "Open \(title)"
-			userActivity?.title = title
-			userActivity?.userInfo = ["showID": showID]
-			if #available(iOS 12.0, *) {
-				userActivity?.suggestedInvocationPhrase = title
-				userActivity?.isEligibleForPrediction = true
-			}
-			userActivity?.isEligibleForSearch = true
-		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		// Show the navigation bar
+		// Reset the navigation bar
 		navigationController?.navigationBar.alpha = 1
-
-		// Show the status bar
-		statusBarShouldBeHidden = false
-		UIView.animate(withDuration: 0.3) {
-			self.setNeedsStatusBarAppearanceUpdate()
-		}
+		navigationController?.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -315,19 +303,10 @@ class ShowDetailViewController: UITableViewController {
 			statusButton.backgroundColor = .onHold
 		}
 
-//		if let status = AnimeStatus(rawValue: "not yet aired" /*(show?.status)!*/) {
-//			switch status {
-//			case .currentlyAiring:
-//				statusLabel.text = "Airing"
-//				statusLabel.backgroundColor = .watching()
-//			case .finishedAiring:
-//				statusLabel.text = "Aired"
-//				statusLabel.backgroundColor = UIColor.completed()
-//			case .notYetAired:
-//				statusLabel.text = "Not Aired"
-//				statusLabel.backgroundColor = UIColor.onHold()
-//			}
-//		}
+		if let airingStatus = ShowDetail.AiringStatus(rawValue: showDetailsElement.status ?? "Ended") {
+			statusButton.setTitle(airingStatus.stringValue, for: .normal)
+			statusButton.backgroundColor = airingStatus.colorValue
+		}
 
 		// Configure rating
 		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
@@ -424,7 +403,7 @@ class ShowDetailViewController: UITableViewController {
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: self.libraryStatus, action: { (title, value)  in
+			let action = UIAlertController.actionSheetWithItems(items: Library.Section.alertControllerItems, currentSelection: self.libraryStatus, action: { (title, value)  in
 				guard let showID = self.showID else { return }
 
 				if self.libraryStatus != value {
@@ -434,7 +413,7 @@ class ShowDetailViewController: UITableViewController {
 							self.libraryStatus = value
 							self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
 
-							let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+							let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 							self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
@@ -471,7 +450,7 @@ class ShowDetailViewController: UITableViewController {
 	}
 
 	@IBAction func showRating(_ sender: Any) {
-		tableView.safeScrollToRow(at: IndexPath(row: 0, section: ShowSections.rating.rawValue), at: .top, animated: true)
+		tableView.safeScrollToRow(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .top, animated: true)
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
@@ -523,11 +502,11 @@ class ShowDetailViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension ShowDetailViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return showDetailsElement != nil ? ShowSections.all.count : 0
+		return showDetailsElement != nil ? ShowDetail.Section.all.count : 0
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let showSections = ShowSections(rawValue: section) else { return 0 }
+		guard let showSections = ShowDetail.Section(rawValue: section) else { return 0 }
 		var numberOfRows = 0
 
 		switch showSections {
@@ -556,7 +535,7 @@ extension ShowDetailViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let indexPath = indexPath
 
-		switch ShowSections(rawValue: indexPath.section) {
+		switch ShowDetail.Section(rawValue: indexPath.section) {
 		case .synopsis:
 			let synopsisTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ShowSynopsisCell") as! SynopsisTableViewCell
 			synopsisTableViewCell.showDetailsElement = showDetailsElement
@@ -593,7 +572,7 @@ extension ShowDetailViewController {
 
 	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let showTitleCell = view as? ShowTitleCell {
-			if let showSection = ShowSections(rawValue: section) {
+			if let showSection = ShowDetail.Section(rawValue: section) {
 				var title = showSection.stringValue
 
 				switch showSection {
@@ -645,20 +624,16 @@ extension ShowDetailViewController {
 //				self.quickDetailsView.alpha = 1
 //			}
 //
-//			statusBarShouldBeHidden = true
 //			UIView.animate(withDuration: 0) {
 //				self.navigationController?.navigationBar.alpha = 0
-//				self.setNeedsStatusBarAppearanceUpdate()
 //			}
 //		} else {
 //			UIView.animate(withDuration: 0) {
 //				self.quickDetailsView.alpha = 0
 //			}
 //
-//			statusBarShouldBeHidden = false
 //			UIView.animate(withDuration: 0.5) {
 //				self.setNeedsStatusBarAppearanceUpdate()
-//				self.navigationController?.navigationBar.alpha = 1
 //			}
 //		}
 //	}

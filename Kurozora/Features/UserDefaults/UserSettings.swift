@@ -77,21 +77,21 @@ extension UserSettings {
 
 // MARK: - Library
 extension UserSettings {
-	/// Returns an integer indication the library page the user was on last.
+	/// Returns an integer indicating the library page the user was on last.
 	static var libraryPage: Int {
 		return shared.integer(forKey: #function)
 	}
 
-	/// Returns an integer indication the library page the user was on last.
-	static var libraryLayouts: [String: Any] {
-		guard let libraryLayouts = shared.dictionary(forKey: #function) else { return [:] }
+	/// Returns an array of library sections with the user's preferred cell style for each section.
+	static var libraryCellStyles: [String: Int] {
+		guard let libraryLayouts = shared.dictionary(forKey: #function) as? [String: Int] else { return [:] }
 		return libraryLayouts
 	}
 }
 
 // MARK: - Forums
 extension UserSettings {
-	/// Returns an integer indication the forum page the user was on last.
+	/// Returns an integer indicating the forum page the user was on last.
 	static var forumsPage: Int {
 		return shared.integer(forKey: #function)
 	}

@@ -209,63 +209,55 @@ class LibraryViewController: TabmanViewController {
         var viewControllers = [UIViewController]()
 
         for index in 0 ..< count {
-            let viewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
-			var sectionTitle = LibrarySection.all[index].stringValue
-			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
+            let libraryListCollectionViewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
+			let sectionTitle = Library.Section.all[index].sectionValue
 
 			// Get the user's preferred library layout
-			if let libraryLayouts = UserSettings.libraryLayouts as? [String: String] {
-				let currentLayout = libraryLayouts[sectionTitle] ?? "Detailed"
-				guard let libraryLayout = LibraryListStyle(rawValue: "\(currentLayout)Cell") else { return }
-
-				viewController.libraryLayout = libraryLayout
+			let libraryLayouts = UserSettings.libraryCellStyles
+			let preferredLayout = libraryLayouts[sectionTitle] ?? 0
+			if let libraryCellStyle = Library.CellStyle(rawValue: preferredLayout) {
+				libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
 			}
-			viewController.sectionTitle = sectionTitle
-			viewController.sectionIndex = index
-			viewController.delegate = self
-            viewControllers.append(viewController)
+
+			libraryListCollectionViewController.sectionTitle = sectionTitle
+			libraryListCollectionViewController.sectionIndex = index
+			libraryListCollectionViewController.delegate = self
+            viewControllers.append(libraryListCollectionViewController)
         }
 
         self.viewControllers = viewControllers
     }
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
-	private func updateChangeLayoutButtonIcon(_ layout: LibraryListStyle) {
-		if layout == .compact {
-			changeLayoutButton.title = "Compact"
-			changeLayoutButton.image = #imageLiteral(resourceName: "compact_view_icon")
-		} else if layout == .detailed {
-			changeLayoutButton.title = "Detailed"
-			changeLayoutButton.image = #imageLiteral(resourceName: "detailed_view_icon")
-		}
+	private func updateChangeLayoutButton(_ cellStyle: Library.CellStyle) {
+		changeLayoutButton.tag = cellStyle.rawValue
+		changeLayoutButton.title = cellStyle.stringValue
+		changeLayoutButton.image = cellStyle.imageValue
 	}
 
-	/// Changes the layout between compact and detailed cells.
-	private func changeLayout() {
-		guard let buttonTitle = changeLayoutButton.title else { return }
-		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
+	fileprivate func savePreferredCellStyle(for currentSection: LibraryListCollectionViewController) {
+		let libraryLayouts = UserSettings.libraryCellStyles
+		var newLibraryLayouts = libraryLayouts
+		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutButton.tag
+		UserSettings.set(newLibraryLayouts, forKey: .libraryLayouts)
+	}
 
-		var libraryLayout: LibraryListStyle = .detailed
+	/// Changes the layout between the available library cell styles.
+	private func changeLayout() {
+		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
+		var libraryCellStyle: Library.CellStyle = Library.CellStyle(rawValue: changeLayoutButton.tag) ?? .detailed
 
 		// Change button information
-		if buttonTitle == "Detailed" {
-			libraryLayout = .compact
-			changeLayoutButton.title = "Compact"
-			changeLayoutButton.image = #imageLiteral(resourceName: "compact_view_icon")
-		} else if buttonTitle == "Compact" {
-			changeLayoutButton.title = "Detailed"
-			changeLayoutButton.image = #imageLiteral(resourceName: "detailed_view_icon")
-		}
+		libraryCellStyle = libraryCellStyle.next
+		changeLayoutButton.tag = libraryCellStyle.rawValue
+		changeLayoutButton.title = libraryCellStyle.stringValue
+		changeLayoutButton.image = libraryCellStyle.imageValue
 
-		// Add to UserSettings
-		if let libraryLayouts = UserSettings.libraryLayouts as? [String: String] {
-			var newLibraryLayouts = libraryLayouts
-			newLibraryLayouts[currentSection.sectionTitle] = changeLayoutButton.title
-			UserSettings.set(newLibraryLayouts, forKey: .libraryLayouts)
-		}
+		// Save cell style change to UserSettings
+		savePreferredCellStyle(for: currentSection)
 
 		// Update library list
-		currentSection.libraryLayout = libraryLayout
+		currentSection.libraryCellStyle = libraryCellStyle
 		UIView.animate(withDuration: 0, animations: {
 			guard let flowLayout = currentSection.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
 				return
@@ -284,15 +276,15 @@ class LibraryViewController: TabmanViewController {
 
 // MARK: - LibraryListViewControllerDelegate
 extension LibraryViewController: LibraryListViewControllerDelegate {
-	func updateLayoutChangeButton(current layout: LibraryListStyle) {
-		updateChangeLayoutButtonIcon(layout)
+	func updateChangeLayoutButton(with cellStyle: Library.CellStyle) {
+		updateChangeLayoutButton(cellStyle)
 	}
 }
 
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = User.isSignedIn ? LibrarySection.all.count : 1
+		let sectionsCount = User.isSignedIn ? Library.Section.all.count : 1
 		initializeViewControllers(with: sectionsCount)
 		return sectionsCount
 	}
@@ -309,7 +301,7 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 // MARK: - TMBarDataSource
 extension LibraryViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		let sectionTitle = LibrarySection.all[index].stringValue
+		let sectionTitle = Library.Section.all[index].stringValue
 		return TMBarItem(title: sectionTitle)
 	}
 }

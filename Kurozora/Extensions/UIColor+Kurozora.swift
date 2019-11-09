@@ -76,3 +76,15 @@ extension UIColor {
 	/// Gray color of value `#646464`.
 	static var dropped: UIColor = #colorLiteral(red: 0.3921568627, green: 0.3921568627, blue: 0.3921568627, alpha: 1)
 }
+
+// MARK: - Airing status
+extension UIColor {
+	/// Yellow color of value `#F5B433`.
+	static var toBeAnnounced: UIColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+
+	/// Green color of value `#56FF43`.
+	static var currentlyAiring: UIColor = #colorLiteral(red: 0.337254902, green: 1, blue: 0.262745098, alpha: 1)
+
+	/// Red color of value `#FF4158`.
+	static var finishedAiring: UIColor = #colorLiteral(red: 1, green: 0.2549019608, blue: 0.3450980392, alpha: 1)
+}

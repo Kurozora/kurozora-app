@@ -45,7 +45,7 @@ class FavoriteShowsTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension FavoriteShowsTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return LibrarySection.all.count
+		return Library.Section.all.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,9 +68,12 @@ extension FavoriteShowsTableViewController {
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		guard let exploreSectionTitleCell = tableView.dequeueReusableCell(withIdentifier: "SectionTitleCell") as? ExploreSectionTitleCell else { return nil }
+		return exploreSectionTitleCell
+	}
 
-		exploreSectionTitleCell.title = LibrarySection.all[section].stringValue
-
-		return exploreSectionTitleCell.contentView
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		if let exploreSectionTitleCell = view as? ExploreSectionTitleCell {
+			exploreSectionTitleCell.title = Library.Section.all[section].stringValue
+		}
 	}
 }

@@ -94,7 +94,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBActions
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let action = UIAlertController.actionSheetWithItems(items: [("Watching", "Watching"), ("Planning", "Planning"), ("Completed", "Completed"), ("On-Hold", "OnHold"), ("Dropped", "Dropped")], currentSelection: self.libraryStatus, action: { (title, value)  in
+			let action = UIAlertController.actionSheetWithItems(items: Library.Section.alertControllerItems, currentSelection: self.libraryStatus, action: { (title, value)  in
 				guard let showID = self.showDetailsElement?.id else {return}
 
 				KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
@@ -103,7 +103,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 						self.libraryStatus = value
 						self.showDetailsElement?.currentUser?.libraryStatus = value
 
-						let libraryUpdateNotificationName = Notification.Name("Update\(title)Section")
+						let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
 						NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 						self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
