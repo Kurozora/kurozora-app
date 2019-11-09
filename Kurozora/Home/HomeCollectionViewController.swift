@@ -27,7 +27,6 @@ class HomeCollectionViewController: UITableViewController {
 			tableView.reloadData()
 		}
 	}
-	var showID: Int?
 	var collectionViewSizeChanged: Bool = false
 	var collectionViewOffsets = [IndexPath: CGFloat]()
 
@@ -181,9 +180,13 @@ class HomeCollectionViewController: UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ShowDetailsSegue" {
 			// Show detail for explore cell
-			if let selectedCell = sender as? ExploreBaseCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
-				showDetailViewController.exploreBaseCollectionViewCell = selectedCell
-				showDetailViewController.showDetailsElement = selectedCell.showDetailsElement
+			if let showDetailViewController = segue.destination as? ShowDetailViewController {
+				if let selectedCell = sender as? ExploreBaseCollectionViewCell {
+					showDetailViewController.exploreBaseCollectionViewCell = selectedCell
+					showDetailViewController.showDetailsElement = selectedCell.showDetailsElement
+				} else if let showID = sender as? Int {
+					showDetailViewController.showID = showID
+				}
 			}
 		}
 	}

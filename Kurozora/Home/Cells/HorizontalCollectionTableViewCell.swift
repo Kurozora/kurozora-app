@@ -44,6 +44,19 @@ class HorizontalCollectionTableViewCell: UITableViewCell {
 	}
 
 	@available(iOS 13.0, macCatalyst 13.0, *)
+	private func makeTargetedPreview(for configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+		guard let identifier = configuration.identifier as? [String: Any] else { return nil }
+		guard let indexPath = identifier["IndexPath"] as? IndexPath else { return nil }
+		guard let exploreBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ExploreBaseCollectionViewCell else { return nil }
+
+		let parameters = UIPreviewParameters()
+		parameters.backgroundColor = .clear
+
+		let view = exploreBaseCollectionViewCell.bannerImageView ?? exploreBaseCollectionViewCell.posterImageView ?? exploreBaseCollectionViewCell
+		return UITargetedPreview(view: view, parameters: parameters)
+	}
+
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	func makeContextMenu(for show: ShowDetailsElement?) -> UIMenu {
 		let title = show?.title ?? ""
 
@@ -126,20 +139,33 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDelegate {
 
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		if shows != nil {
-			return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { _ in
-				return self.makeContextMenu(for: self.shows?[indexPath.row])
-			})
-		}
+		guard let selectedShow = self.shows?[indexPath.row] else { return nil }
+		guard let selectedShowID = selectedShow.id else { return nil }
 
-		return nil
+		let identifier = ["IndexPath": indexPath, "ShowID": selectedShowID] as NSCopying
+		return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: { _ in
+			return self.makeContextMenu(for: selectedShow)
+		})
+	}
+
+	@available(iOS 13.0, macCatalyst 13.0, *)
+	func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+		makeTargetedPreview(for: configuration)
+	}
+
+	@available(iOS 13.0, macCatalyst 13.0, *)
+	func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+		makeTargetedPreview(for: configuration)
 	}
 
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+		guard let identifier = configuration.identifier as? [String: Any] else { return }
+		guard let showID = identifier["ShowID"] as? Int else { return }
+
 		if let homeTableViewController = self.parentViewController as? HomeCollectionViewController {
 			animator.addCompletion {
-				homeTableViewController.performSegue(withIdentifier: "ShowDetailsSegue", sender: self)
+				homeTableViewController.performSegue(withIdentifier: "ShowDetailsSegue", sender: showID)
 			}
 		}
 	}
