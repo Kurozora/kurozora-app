@@ -24,7 +24,6 @@ class ForumsViewController: TabmanViewController {
 	}
 	var sectionsCount: Int?
 	var threadSorting: String?
-//	var kRichTextEditorViewController: KRichTextEditorViewController?
 	lazy var viewControllers = [UIViewController]()
 	var searchResultsTableViewController: SearchResultsTableViewController?
 	var searchController: SearchController!
@@ -54,9 +53,6 @@ class ForumsViewController: TabmanViewController {
 
 		// Fetch forum sections.
 		fetchForumsSections()
-
-//		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
-//		kRichTextEditorViewController = editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController") as? KRichTextEditorViewController
     }
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -69,7 +65,6 @@ class ForumsViewController: TabmanViewController {
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
 		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
-		searchResultsTableViewController?.delegate = self
 
 		searchController = SearchController(searchResultsController: searchResultsTableViewController)
 		searchController.delegate = self
@@ -255,12 +250,5 @@ extension ForumsViewController: UISearchControllerDelegate {
 				self.tabBarController?.tabBar.isHidden = false
 			})
 		}
-	}
-}
-
-// MARK: - SearchResultsTableViewControllerDelegate
-extension ForumsViewController: SearchResultsTableViewControllerDelegate {
-	func didCancelSearchController() {
-//		self.navigationItem.searchController = nil
 	}
 }

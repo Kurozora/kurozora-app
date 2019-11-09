@@ -103,7 +103,6 @@ class LibraryViewController: TabmanViewController {
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
 		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
-		searchResultsTableViewController?.delegate = self
 
 		searchController = SearchController(searchResultsController: searchResultsTableViewController)
 		searchController.delegate = self
@@ -338,11 +337,5 @@ extension LibraryViewController: UISearchControllerDelegate {
 				self.tabBarController?.tabBar.isHidden = false
 			})
 		}
-	}
-}
-
-extension LibraryViewController: SearchResultsTableViewControllerDelegate {
-	func didCancelSearchController() {
-		self.navigationItem.searchController = nil
 	}
 }

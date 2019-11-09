@@ -65,6 +65,22 @@ class SearchResultsTableViewController: UITableViewController {
 	}
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		if #available(macCatalyst 13.0, *) {
+			self.navigationController?.navigationItem.searchController?.searchBar.showsScopeBar = true
+		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		if #available(macCatalyst 13.0, *) {
+			self.navigationController?.navigationItem.searchController?.searchBar.showsScopeBar = false
+		}
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

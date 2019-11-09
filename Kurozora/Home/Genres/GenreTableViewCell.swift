@@ -13,7 +13,6 @@ class GenreTableViewCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel! {
 		didSet {
 			nameLabel.theme_textColor = KThemePicker.textColor.rawValue
-			nameLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var nsfwButton: UIButton!
