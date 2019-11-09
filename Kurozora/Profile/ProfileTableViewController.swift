@@ -119,7 +119,7 @@ class ProfileTableViewController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup banner image height
-		self.bannerImageViewHeightConstraint?.constant = view.height / 3
+		self.bannerImageViewHeightConstraint.constant = view.height / 3
 		self.view.setNeedsUpdateConstraints()
 		self.view.layoutIfNeeded()
 
@@ -401,7 +401,10 @@ class ProfileTableViewController: UITableViewController {
 
 				// Stop scrolling
 				self.tableView.isScrollEnabled = false
-				self.tableView.visibleCells.forEach { $0.alpha = 0.5; $0.isUserInteractionEnabled = false }
+				self.tableView.visibleCells.forEach {
+					$0.alpha = 0.5
+					$0.isUserInteractionEnabled = false
+				}
 
 				// Setup bio text if necessary
 				if self.bioTextView.text.isEmpty {
@@ -432,7 +435,10 @@ class ProfileTableViewController: UITableViewController {
 
 				// Enable scrolling
 				self.tableView.isScrollEnabled = true
-				self.tableView.visibleCells.forEach { $0.alpha = 1; $0.isUserInteractionEnabled = true }
+				self.tableView.visibleCells.forEach {
+					$0.alpha = 1
+					$0.isUserInteractionEnabled = true
+				}
 
 				// Reset bio text if necessary
 				if self.bioTextView.text == self.placeholderText {

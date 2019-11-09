@@ -137,8 +137,8 @@ extension UIViewController {
 //        animator.direction = .bottom
 //
 //        tabBarController.animator = animator
-//        tabBarController.transitioningDelegate = animator;
-//        tabBarController.modalPresentationStyle = UIModalPresentationStyle.custom;
+//        tabBarController.transitioningDelegate = animator
+//        tabBarController.modalPresentationStyle = UIModalPresentationStyle.custom
 //
 //        presentViewController(tabBarController, animated: true, completion: nil)
 //

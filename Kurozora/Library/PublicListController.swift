@@ -218,7 +218,7 @@ class PublicListViewController: UIViewController {
 //            headerView.subtitleLabel.text = sectionSubtitles[indexPath.section]
 //
 //
-//            reusableView = headerView;
+//            reusableView = headerView
 //        }
 //
 //        return reusableView

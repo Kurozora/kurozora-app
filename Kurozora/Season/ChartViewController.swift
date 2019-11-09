@@ -265,7 +265,7 @@ class ChartViewController: UIViewController {
 //                    return startDate1.compare(startDate2) == .OrderedAscending
 //                })
 //            default:
-//                break;
+//                break
 //            }
 //            return animeArray
 //        }
@@ -379,7 +379,7 @@ class ChartViewController: UIViewController {
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //
 //        guard selectedList != SelectedList.AllSeasons else {
-//            let reuseIdentifier = "SeasonCell";
+//            let reuseIdentifier = "SeasonCell"
 //            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! BasicCollectionCell
 //            let seasonalChart = chartsDataSource[indexPath.row]
 //            cell.titleLabel.text = seasonalChart.title
@@ -416,7 +416,7 @@ class ChartViewController: UIViewController {
 //            headerView.titleLabel.text = title
 //
 //
-//            reusableView = headerView;
+//            reusableView = headerView
 //        }
 //
 //        return reusableView

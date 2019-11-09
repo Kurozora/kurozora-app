@@ -362,7 +362,7 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 //        }
 //
 //        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-//        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print];
+//        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print]
 //        self.present(activityVC, animated: true, completion: nil)
 //
 //    }

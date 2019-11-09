@@ -16,9 +16,8 @@ protocol ShowDetailViewControllerDelegate: class {
 	func updateShowInLibrary(for cell: LibraryCollectionViewCell?)
 }
 
-class ShowDetailViewController: UIViewController {
+class ShowDetailViewController: UITableViewController {
 	// MARK: - IBoutlet
-	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var shadowImageView: UIImageView! {
 		didSet {
@@ -59,10 +58,39 @@ class ShowDetailViewController: UIViewController {
 	@IBOutlet weak var favoriteButton: UIButton!
 
 	// Analytics view
-	@IBOutlet weak var ratingScoreLabel: UILabel!
-	@IBOutlet weak var ratingTitleLabel: UILabel!
-	@IBOutlet weak var rankTitleLabel: UILabel!
-	@IBOutlet weak var ageTitleLabel: UILabel!
+	@IBOutlet weak var ratingTitleLabel: UILabel! {
+		didSet {
+			ratingTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var rankTitleLabel: UILabel! {
+		didSet {
+			rankTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var ageTitleLabel: UILabel! {
+		didSet {
+			ageTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+
+	@IBOutlet weak var ratingScoreLabel: UILabel! {
+		didSet {
+			ratingScoreLabel.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
+	@IBOutlet weak var rankScoreLabel: UILabel! {
+		didSet {
+			rankScoreLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+	@IBOutlet weak var ageScoreLabel: UILabel! {
+		didSet {
+			ageScoreLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+
+	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
 	// Compact detail
@@ -131,14 +159,21 @@ class ShowDetailViewController: UIViewController {
 				self.updateDetails()
 			}
 		}
+
+		// Fetch show details.
 		self.fetchDetails()
 
+		// Update banner image height constraint.
+		self.bannerImageViewHeightConstraint.constant = view.height / 3
+		self.view.setNeedsUpdateConstraints()
+		self.view.layoutIfNeeded()
+
 		// Make header view stretchable
-		headerView = tableView.tableHeaderView
-		tableView.tableHeaderView = nil
-		tableView.addSubview(headerView)
-		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
-		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
+//		headerView = tableView.tableHeaderView
+//		tableView.tableHeaderView = nil
+//		tableView.addSubview(headerView)
+//		tableView.contentInset = UIEdgeInsets(top: headerViewHeight, left: 0, bottom: 0, right: 0)
+//		tableView.contentOffset = CGPoint(x: 0, y: -headerViewHeight)
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -166,6 +201,14 @@ class ShowDetailViewController: UIViewController {
 		statusBarShouldBeHidden = false
 		UIView.animate(withDuration: 0.3) {
 			self.setNeedsStatusBarAppearanceUpdate()
+		}
+	}
+
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+
+		DispatchQueue.main.async {
+			self.tableView.updateHeaderViewFrame()
 		}
 	}
 
@@ -300,10 +343,13 @@ class ShowDetailViewController: UIViewController {
 		}
 
 		// Configure rank label
-		if let scoreRank = showDetailsElement.rank, scoreRank > 0 {
-			rankTitleLabel.text = "\(scoreRank)"
-		} else {
-			rankTitleLabel.text = "-"
+		if let rankScore = showDetailsElement.rank {
+			rankScoreLabel.text = rankScore > 0 ? "#\(rankScore)" : "-"
+		}
+
+		// Configure age label
+		if let ageScore = showDetailsElement.age {
+			ageScoreLabel.text = !ageScore.isEmpty ? ageScore : "-"
 		}
 
 		// Configure poster view
@@ -335,18 +381,12 @@ class ShowDetailViewController: UIViewController {
 
 		// Display details
 		quickDetailsView.isHidden = false
-	}
 
-	/// Updates the frame of the header view to fix layout issues.
-	fileprivate func updateHeaderView() {
-		var headerRect = CGRect(x: 0, y: -headerViewHeight, width: tableView.bounds.width, height: headerViewHeight)
+		// Setup AutoLayout
+		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
 
-		if tableView.contentOffset.y < -headerViewHeight {
-			headerRect.origin.y = tableView.contentOffset.y
-			headerRect.size.height = -tableView.contentOffset.y
-		}
-
-		headerView.frame = headerRect
+		// First layout update
+		self.tableView.updateHeaderViewFrame()
 	}
 
 	// MARK: - IBActions
@@ -481,12 +521,12 @@ class ShowDetailViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension ShowDetailViewController: UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
+extension ShowDetailViewController {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return showDetailsElement != nil ? ShowSections.all.count : 0
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let showSections = ShowSections(rawValue: section) else { return 0 }
 		var numberOfRows = 0
 
@@ -513,7 +553,7 @@ extension ShowDetailViewController: UITableViewDataSource {
 		return numberOfRows
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let indexPath = indexPath
 
 		switch ShowSections(rawValue: indexPath.section) {
@@ -546,13 +586,12 @@ extension ShowDetailViewController: UITableViewDataSource {
 		}
 	}
 
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let showTitleCell = tableView.dequeueReusableCell(withIdentifier: "ShowTitleCell") as! ShowTitleCell
-
 		return showTitleCell
 	}
 
-	func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 		if let showTitleCell = view as? ShowTitleCell {
 			if let showSection = ShowSections(rawValue: section) {
 				var title = showSection.stringValue
@@ -583,64 +622,54 @@ extension ShowDetailViewController: UITableViewDataSource {
 		}
 	}
 
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? UITableView.automaticDimension : .zero
-	}
-
-	// FIXME: - Reload table to fix layout - NEEDS A BETTER FIX IF POSSIBLE
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-		coordinator.animate(alongsideTransition: nil, completion: { _ in
-			self.tableView.reloadData()
-		})
 	}
 }
 
 // MARK: - UITableViewDelegate
-extension ShowDetailViewController: UITableViewDelegate {
+extension ShowDetailViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-extension ShowDetailViewController: UIScrollViewDelegate {
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		updateHeaderView()
-
-		// Variables for showing/hiding compact details view
-		let bannerHeight = bannerImageView.bounds.height
-		let newOffset = bannerHeight - scrollView.contentOffset.y
-		let compactDetailsOffset = newOffset - (self.navigationController?.navigationBar.height ?? 44)
-
-		// Logic for showing/hiding compact details view
-		if compactDetailsOffset > bannerHeight {
-			UIView.animate(withDuration: 0.5) {
-				self.quickDetailsView.alpha = 1
-			}
-
-			statusBarShouldBeHidden = true
-			UIView.animate(withDuration: 0) {
-				self.navigationController?.navigationBar.alpha = 0
-				self.setNeedsStatusBarAppearanceUpdate()
-			}
-		} else {
-			UIView.animate(withDuration: 0) {
-				self.quickDetailsView.alpha = 0
-			}
-
-			statusBarShouldBeHidden = false
-			UIView.animate(withDuration: 0.5) {
-				self.setNeedsStatusBarAppearanceUpdate()
-				self.navigationController?.navigationBar.alpha = 1
-			}
-		}
+extension ShowDetailViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//		// Variables for showing/hiding compact details view
+//		let bannerHeight = bannerImageView.bounds.height
+//		let newOffset = bannerHeight - scrollView.contentOffset.y
+//		let compactDetailsOffset = newOffset - (self.navigationController?.navigationBar.height ?? 44)
+//
+//		// Logic for showing/hiding compact details view
+//		if compactDetailsOffset > bannerHeight {
+//			UIView.animate(withDuration: 0.5) {
+//				self.quickDetailsView.alpha = 1
+//			}
+//
+//			statusBarShouldBeHidden = true
+//			UIView.animate(withDuration: 0) {
+//				self.navigationController?.navigationBar.alpha = 0
+//				self.setNeedsStatusBarAppearanceUpdate()
+//			}
+//		} else {
+//			UIView.animate(withDuration: 0) {
+//				self.quickDetailsView.alpha = 0
+//			}
+//
+//			statusBarShouldBeHidden = false
+//			UIView.animate(withDuration: 0.5) {
+//				self.setNeedsStatusBarAppearanceUpdate()
+//				self.navigationController?.navigationBar.alpha = 1
+//			}
+//		}
 	}
 
-	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-		let yContentOffset = tableView.contentOffset.y
-		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
-
-		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
-			viewsAreHidden = false
-		}
+	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//		let yContentOffset = tableView.contentOffset.y
+//		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
+//
+//		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
+//			viewsAreHidden = false
+//		}
 	}
 }
 

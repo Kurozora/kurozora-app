@@ -264,7 +264,7 @@ class BrowseViewController: UIViewController {
 //                    let subquery = AnimeDetail.query()!
 //                    subquery.whereKey("classification", equalTo: value)
 //                    query.whereKey("details", matchesQuery: subquery)
-//                default: break;
+//                default: break
 //                }
 //            }
 //        }

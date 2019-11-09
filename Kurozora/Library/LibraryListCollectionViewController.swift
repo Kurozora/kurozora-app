@@ -445,9 +445,9 @@ extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate 
 //                let nextDate2 = anime2.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
 //                return nextDate1.compare(nextDate2) == .OrderedAscending
 //            })
-//            break;
+//            break
 //        default:
-//            break;
+//            break
 //        }
 //
 //        if isViewLoaded {

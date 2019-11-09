@@ -149,8 +149,8 @@
 //
 //            if let youtubeID = anime.details.youtubeID, youtubeID.characters.count > 0 {
 //                trailerButton.isHidden = false
-//                trailerButton.layer.borderWidth = 1.0;
-//                trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor;
+//                trailerButton.layer.borderWidth = 1.0
+//                trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor
 //            } else {
 //                trailerButton.isHidden = true
 //            }
@@ -407,7 +407,7 @@
 //            }
 //
 //            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-//            activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print];
+//            activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print]
 //            self.present(activityVC, animated: true, completion: nil)
 //
 //        }))
@@ -421,7 +421,7 @@
 //    // MARK: - Notifications
 //
 //    func moviePlayerPlaybackDidFinish(notification: NSNotification) {
-//        playerController = nil;
+//        playerController = nil
 //    }
 //
 //

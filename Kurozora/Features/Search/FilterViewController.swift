@@ -181,7 +181,7 @@ class FilterViewController: UIViewController {
 //                }
 //            }
 //
-//            reusableView = headerView;
+//            reusableView = headerView
 //        }
 //
 //        return reusableView
@@ -257,7 +257,7 @@ class FilterViewController: UIViewController {
 //
 //        if filterSection == .FilterTitle {
 //            // Do nothing
-//            return;
+//            return
 //        }
 //
 //        if let expandedSection = expandedSection {

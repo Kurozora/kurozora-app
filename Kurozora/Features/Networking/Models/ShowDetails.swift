@@ -61,6 +61,7 @@ class ShowDetailsElement: JSONDecodable {
 	let popularityRank: Int?
 	let producers: String?
 	let rank: Int?
+	let age: String?
 	let ratingCount: Int?
 	let startDate: String?
 
@@ -114,6 +115,7 @@ class ShowDetailsElement: JSONDecodable {
 		self.popularityRank = json["popularity_rank"].intValue
 		self.producers = json["producers"].stringValue
 		self.rank = json["rank"].intValue
+		self.age = json["age"].stringValue
 		self.ratingCount = json["rating_count"].intValue
 		self.startDate = json["start_date"].stringValue
 
