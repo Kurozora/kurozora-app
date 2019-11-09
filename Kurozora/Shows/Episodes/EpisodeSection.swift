@@ -18,12 +18,12 @@ import Foundation
 	case discussion = 3
 	```
 */
-
 enum EpisodeSection: Int {
 	case synopsis
 	case information
 	case cast
 	case discussion
 
-	static var allSections: [EpisodeSection] = [.synopsis, .information, .cast, .discussion]
+	/// An array containing all episode sections.
+	static let all: [EpisodeSection] = [.synopsis, .information, .cast, .discussion]
 }

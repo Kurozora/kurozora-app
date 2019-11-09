@@ -324,7 +324,7 @@
 		66BA3B7023016BC600C2B11C /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		66BA3B722301897F00C2B11C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B712301897F00C2B11C /* StoreKit.framework */; };
 		66BA3B74230189A300C2B11C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BA3B73230189A300C2B11C /* CloudKit.framework */; };
-		66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */; };
+		66BA740A223DB20800AEB8ED /* LibrarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BA7409223DB20800AEB8ED /* LibrarySection.swift */; };
 		66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */; };
 		66BEA33521BDD01F00BEA42E /* VoteThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEA33421BDD01E00BEA42E /* VoteThread.swift */; };
 		66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC132231711DD0039D683 /* KWhatsNewViewController.swift */; };
@@ -380,7 +380,7 @@
 		66D6237420A1A8B000304914 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237320A1A8B000304914 /* DayViewController.swift */; };
 		66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237620A1BB6600304914 /* LibraryViewController.swift */; };
 		66D6237920A1BEAC00304914 /* LibraryListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */; };
-		66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* PublicListController.swift */; };
+		66D6237B20A1BFD300304914 /* FavoriteShowsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237A20A1BFD300304914 /* FavoriteShowsTableViewController.swift */; };
 		66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */; };
 		66D6237F20A1CC1D00304914 /* library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D6237E20A1CC1D00304914 /* library.storyboard */; };
 		66DEB4A821D248710093725F /* search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* search.storyboard */; };
@@ -760,7 +760,7 @@
 		66BA3B6F23016BC600C2B11C /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		66BA3B712301897F00C2B11C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		66BA3B73230189A300C2B11C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySectionList.swift; sourceTree = "<group>"; };
+		66BA7409223DB20800AEB8ED /* LibrarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySection.swift; sourceTree = "<group>"; };
 		66BB58088C9F6DB65EAAC0DD /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kurozora.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kurozora/Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
 		66BDEC7321C3F0A100D5487B /* KCommentEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCommentEditorViewController.swift; sourceTree = "<group>"; };
 		66BEA33421BDD01E00BEA42E /* VoteThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteThread.swift; sourceTree = "<group>"; };
@@ -828,7 +828,7 @@
 		66D6237320A1A8B000304914 /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		66D6237620A1BB6600304914 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryListCollectionViewController.swift; sourceTree = "<group>"; };
-		66D6237A20A1BFD300304914 /* PublicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicListController.swift; sourceTree = "<group>"; };
+		66D6237A20A1BFD300304914 /* FavoriteShowsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShowsTableViewController.swift; sourceTree = "<group>"; };
 		66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		66D6237E20A1CC1D00304914 /* library.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = library.storyboard; sourceTree = "<group>"; };
 		66DEB4A321D247810093725F /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
@@ -1894,7 +1894,7 @@
 			isa = PBXGroup;
 			children = (
 				66B4F1CF223AB7BE007C5048 /* LibraryListStyle.swift */,
-				66BA7409223DB20800AEB8ED /* LibrarySectionList.swift */,
+				66BA7409223DB20800AEB8ED /* LibrarySection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2119,7 +2119,7 @@
 				66D6237E20A1CC1D00304914 /* library.storyboard */,
 				66D6237820A1BEAC00304914 /* LibraryListCollectionViewController.swift */,
 				66D6237620A1BB6600304914 /* LibraryViewController.swift */,
-				66D6237A20A1BFD300304914 /* PublicListController.swift */,
+				66D6237A20A1BFD300304914 /* FavoriteShowsTableViewController.swift */,
 				66BA740C223DB29E00AEB8ED /* Cells */,
 				66BA740B223DB27500AEB8ED /* Models */,
 			);
@@ -2668,7 +2668,7 @@
 				666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */,
 				66FC6DDA2340BBB500A454DD /* KService+Season.swift in Sources */,
 				6646A278236B8AE600DCC0A4 /* KBrowser.swift in Sources */,
-				66D6237B20A1BFD300304914 /* PublicListController.swift in Sources */,
+				66D6237B20A1BFD300304914 /* FavoriteShowsTableViewController.swift in Sources */,
 				66FC6DE42340BC9800A454DD /* KService+Thread.swift in Sources */,
 				667943672273A46700E2D0D0 /* WatchStatus.swift in Sources */,
 				66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */,
@@ -2800,7 +2800,7 @@
 				66058DC0212E97E90084B79E /* ShowCastCell.swift in Sources */,
 				6674A0BD20A45E2300AAB527 /* InformationCell.swift in Sources */,
 				663F8C4B22F1882F00F1EACB /* PurchasePreviewTableViewCell.swift in Sources */,
-				66BA740A223DB20800AEB8ED /* LibrarySectionList.swift in Sources */,
+				66BA740A223DB20800AEB8ED /* LibrarySection.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,

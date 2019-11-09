@@ -24,7 +24,6 @@ class LibraryViewController: TabmanViewController {
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
-	let librarySections: [LibrarySectionList] = [.watching, .planning, .completed, .onHold, .dropped]
 	let bar = TMBar.ButtonBar()
 
 	#if DEBUG
@@ -211,7 +210,7 @@ class LibraryViewController: TabmanViewController {
 
         for index in 0 ..< count {
             let viewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
-            var sectionTitle = librarySections[index].rawValue
+			var sectionTitle = LibrarySection.all[index].stringValue
 			sectionTitle = (sectionTitle == "On-Hold" ? "OnHold" : sectionTitle)
 
 			// Get the user's preferred library layout
@@ -293,7 +292,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = User.isSignedIn ? librarySections.count : 1
+		let sectionsCount = User.isSignedIn ? LibrarySection.all.count : 1
 		initializeViewControllers(with: sectionsCount)
 		return sectionsCount
 	}
@@ -310,7 +309,7 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 // MARK: - TMBarDataSource
 extension LibraryViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		let sectionTitle = librarySections[index].rawValue
+		let sectionTitle = LibrarySection.all[index].stringValue
 		return TMBarItem(title: sectionTitle)
 	}
 }
