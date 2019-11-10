@@ -106,7 +106,10 @@ extension String {
 			let dateFormatter = DateFormatter()
 			dateFormatter.locale = Locale(identifier: "en_US")
 			dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-			return dateFormatter.date(from: self)!
+
+			if let dateFromString = dateFormatter.date(from: self) {
+				return dateFromString
+			}
 		}
 		return Date()
 	}

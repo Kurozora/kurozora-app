@@ -8,11 +8,11 @@
 
 import UIKit
 
-class LibraryCollectionViewCell: UICollectionViewCell {
+class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var posterShadowView: UIView!
-	@IBOutlet weak var posterView: UIImageView!
+	@IBOutlet weak var posterImageView: UIImageView!
 
 	// MARK: - Properties
 	var showDetailsElement: ShowDetailsElement? {
@@ -29,7 +29,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 		self.titleLabel.text = showDetailsElement.title
 
 		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			self.posterView.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+			self.posterImageView.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
 	}
 }

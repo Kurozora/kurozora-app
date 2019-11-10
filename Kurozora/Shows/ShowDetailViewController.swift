@@ -13,7 +13,7 @@ import IntentsUI
 import SwiftTheme
 
 protocol ShowDetailViewControllerDelegate: class {
-	func updateShowInLibrary(for cell: LibraryCollectionViewCell?)
+	func updateShowInLibrary(for cell: LibraryBaseCollectionViewCell?)
 }
 
 class ShowDetailViewController: UITableViewController {
@@ -131,7 +131,7 @@ class ShowDetailViewController: UITableViewController {
 	weak var delegate: ShowDetailViewControllerDelegate?
 	var libraryStatus: String?
 	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
-	var libraryCollectionViewCell: LibraryCollectionViewCell? = nil
+	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -164,8 +164,8 @@ class ShowDetailViewController: UITableViewController {
 
 		if exploreBaseCollectionViewCell != nil {
 			configureShowDetails(from: exploreBaseCollectionViewCell)
-		} else if libraryCollectionViewCell != nil {
-			configureShowDetails(from: libraryCollectionViewCell)
+		} else if libraryBaseCollectionViewCell != nil {
+			configureShowDetails(from: libraryBaseCollectionViewCell)
 		}
 
 		// Update view with details
@@ -259,11 +259,11 @@ class ShowDetailViewController: UITableViewController {
 
 		- Parameter cell: The library cell from which the view should be configured.
 	*/
-	fileprivate func configureShowDetails(from cell: LibraryCollectionViewCell?) {
+	fileprivate func configureShowDetails(from cell: LibraryBaseCollectionViewCell?) {
 		guard let cell = cell else { return }
 		showTitleLabel.text = cell.titleLabel?.text
-		bannerImageView.image = (cell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image
-		posterImageView.image = cell.posterView?.image
+		bannerImageView.image = (cell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image
+		posterImageView.image = cell.posterImageView?.image
 	}
 
 	/// Updates the view with the details fetched from the server.
@@ -411,7 +411,7 @@ class ShowDetailViewController: UITableViewController {
 						if success {
 							// Update entry in library
 							self.libraryStatus = value
-							self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
 
 							let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
@@ -428,7 +428,7 @@ class ShowDetailViewController: UITableViewController {
 						if success {
 							self.libraryStatus = ""
 
-							self.delegate?.updateShowInLibrary(for: self.libraryCollectionViewCell)
+							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
 
 							self.libraryStatusButton.setTitle("ADD", for: .normal)
 						}

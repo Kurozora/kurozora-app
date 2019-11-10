@@ -1,5 +1,5 @@
 //
-//  LibraryDetailedColelctionViewCell.swift
+//  LibraryDetailedCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 20/08/2019.
@@ -8,11 +8,13 @@
 
 import UIKit
 
-class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
+class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton!
 
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
@@ -25,12 +27,10 @@ class LibraryDetailedColelctionViewCell: LibraryCollectionViewCell {
 		super.configureCell()
 		guard let showDetailsElement = showDetailsElement else { return }
 
-		self.userProgressLabel?.text = "TV · ✓ \(showDetailsElement.episodes ?? 0) · ☆ \(showDetailsElement.averageRating ?? 0)"
+		self.userProgressLabel?.text = showDetailsElement.informationStringShort
 
 		if let bannerImage = showDetailsElement.banner {
 			self.episodeImageView?.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
-
-		self.contentView.applyShadow()
 	}
 }

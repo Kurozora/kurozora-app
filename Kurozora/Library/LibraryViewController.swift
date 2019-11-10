@@ -239,7 +239,7 @@ class LibraryViewController: TabmanViewController {
 		let libraryLayouts = UserSettings.libraryCellStyles
 		var newLibraryLayouts = libraryLayouts
 		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutButton.tag
-		UserSettings.set(newLibraryLayouts, forKey: .libraryLayouts)
+		UserSettings.set(newLibraryLayouts, forKey: .libraryCellStyles)
 	}
 
 	/// Changes the layout between the available library cell styles.

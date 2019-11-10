@@ -131,12 +131,62 @@ class ShowDetailsElement: JSONDecodable {
 		self.currentUser = try? UserProfile(json: json["current_user"])
 	}
 
-	/// Returns a string containing all the necessary information of a show.
+	/**
+		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
+
+		```
+		"TV · TV-MA · 25eps · 25min · 2016"
+		```
+	*/
 	var informationString: String {
-		let episodes = (self.episodes != 0) ? self.episodes : 0
-		let runtime = (self.runtime != 0) ? self.runtime : 0
-		let year = (self.year != 0) ? self.year : 0000
-		return "\(type ?? "Unknown") · \(watchRating ?? "N/A") · \(episodes ?? 0) eps · \(runtime ?? 0) min · \(year ?? 0000)"
+		var informationString = ""
+
+		if let type = self.type, !type.isEmpty {
+			informationString += "\(type)"
+		}
+
+		if let watchRating = self.watchRating, !watchRating.isEmpty {
+			informationString += " · \(watchRating)"
+		}
+
+		if let episodes = self.episodes {
+			informationString += " · \(episodes)ep\(episodes > 1 ? "s" : "")"
+		}
+
+		if let runtime = self.runtime {
+			informationString += " · \(runtime)min"
+		}
+
+		if let year = self.year {
+			informationString += " · \(year)"
+		}
+
+		return informationString
+	}
+
+	/**
+		Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
+
+		```
+		"TV · ✓ 10/25 · ☆ 5"
+		```
+	*/
+	var informationStringShort: String {
+		var informationString = ""
+
+		if let type = self.type, !type.isEmpty {
+			informationString += "\(type)"
+		}
+
+		if let totalEpisodes = self.episodes, let watchedEpisodes = self.currentUser?.watchedEpisodes {
+			informationString += " · ✓ \(watchedEpisodes)/\(totalEpisodes)"
+		}
+
+		if let currentRating = self.currentUser?.currentRating {
+			informationString += " · ☆ \(currentRating)"
+		}
+
+		return informationString
 	}
 
 	/// Create an NSUserActivity from the selected show.

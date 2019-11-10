@@ -15,7 +15,7 @@ enum UserSettingsKey: String {
 
 	// Library keys
 	case libraryPage
-	case libraryLayouts
+	case libraryCellStyles
 
 	// Forums keys
 	case forumsPage

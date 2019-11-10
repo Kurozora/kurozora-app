@@ -41,17 +41,73 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		get {
 			if UIDevice.isLandscape {
 				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:	return (libraryCellStyle == .detailed) ? (2.08, 2.0) : (6, 2.4)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:			return (libraryCellStyle == .detailed) ? (2.32, 1.8) : (8, 2.6)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:		return (libraryCellStyle == .detailed) ? (3.06, 3.8) : (8, 4.2)
+				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:
+					switch libraryCellStyle {
+					case .detailed:
+						return (2.08, 2.0)
+					case .compact:
+						return (6, 2.4)
+					case .list:
+						return (2.08, 2.4)
+					}
+				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
+					switch libraryCellStyle {
+					case .detailed:
+						return (2.32, 1.8)
+					case .compact:
+						return (8, 2.6)
+					case .list:
+						return (2.32, 2.6)
+					}
+				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
+					switch libraryCellStyle {
+					case .detailed:
+						return (3.06, 3.8)
+					case .compact:
+						return (8, 4.2)
+					case .list:
+						return (3.06, 4.2)
+					}
 				}
 			}
 
 			switch UIDevice.type {
-			case .iPhone5SSE:										return (libraryCellStyle == .detailed) ? (1, 3.2) : (2.18, 2.8)
-			case .iPhone66S78, .iPhone66S78PLUS:					return (libraryCellStyle == .detailed) ? (1, 3.2) : (3.34, 4.2)
-			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				return (libraryCellStyle == .detailed) ? (1, 3.8) : (3.34, 5.2)
-			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:			return (libraryCellStyle == .detailed) ? (2, 4.8) : (6.00, 6.0)
+			case .iPhone5SSE:
+				switch libraryCellStyle {
+				case .detailed:
+					return (1, 3.2)
+				case .compact:
+					return (2.18, 2.8)
+				case .list:
+					return (1, 2.8)
+				}
+			case .iPhone66S78, .iPhone66S78PLUS:
+				switch libraryCellStyle {
+				case .detailed:
+					return (1, 3.2)
+				case .compact:
+					return (3.34, 4.2)
+				case .list:
+					return (1, 4.2)
+				}
+			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
+				switch libraryCellStyle {
+				case .detailed:
+					return (1, 3.8)
+				case .compact:
+					return (3.34, 5.2)
+				case .list:
+					return (1, 5.2)
+				}
+			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
+				switch libraryCellStyle {
+				case .detailed:
+					return (2, 4.8)
+				case .compact:
+					return (6, 6)
+				case .list:
+					return (2, 6)
+				}
 			}
 		}
 	}
@@ -173,8 +229,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
-			showDetailViewController.libraryCollectionViewCell = currentCell
+		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
+			showDetailViewController.libraryBaseCollectionViewCell = currentCell
 			showDetailViewController.showDetailsElement = currentCell.showDetailsElement
 			showDetailViewController.delegate = self
 		}
@@ -189,9 +245,9 @@ extension LibraryListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let libraryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryCellStyle.identifierString, for: indexPath) as! LibraryCollectionViewCell
-		libraryCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.item]
-		return libraryCollectionViewCell
+		let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryCellStyle.identifierString, for: indexPath) as! LibraryBaseCollectionViewCell
+		libraryBaseCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.item]
+		return libraryBaseCollectionViewCell
 	}
 }
 
@@ -225,8 +281,10 @@ extension LibraryListCollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//		let cellSize = libraryCellStyle.sizeValue
 		#if DEBUG
 		return CGSize(width: (collectionView.bounds.width - gap) / _numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / _numberOfItems.forHeight)
+//		return CGSize(width: cellSize.width, height: cellSize.height)
 		#else
 		return CGSize(width: (collectionView.bounds.width - gap) / numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / numberOfItems.forHeight)
 		#endif
@@ -236,11 +294,11 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 // MARK: - UICollectionViewDragDelegate
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-		guard let libraryCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryCollectionViewCell else { return [UIDragItem]() }
+		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [UIDragItem]() }
         let selectedShow = show(at: indexPath)
 
 		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
-		let itemProvider = NSItemProvider(object: (libraryCollectionViewCell as? LibraryDetailedColelctionViewCell)?.episodeImageView?.image ?? libraryCollectionViewCell.posterView.image!)
+		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image!)
 		itemProvider.registerObject(userActivity, visibility: .all)
 
         let dragItem = UIDragItem(itemProvider: itemProvider)
@@ -252,7 +310,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 
 // MARK: - ShowDetailViewControllerDelegate
 extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate {
-	func updateShowInLibrary(for libraryCell: LibraryCollectionViewCell?) {
+	func updateShowInLibrary(for libraryCell: LibraryBaseCollectionViewCell?) {
 		guard let libraryCell = libraryCell else { return }
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }
 

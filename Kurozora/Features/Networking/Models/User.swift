@@ -48,6 +48,7 @@ class UserProfile: JSONDecodable {
 
 	var following: Bool?
 	var currentRating: Double?
+	var watchedEpisodes: Int?
 	var libraryStatus: String?
 
 	let likeAction: Int?
@@ -87,6 +88,7 @@ class UserProfile: JSONDecodable {
 
 		self.following = json["current_user", "following"].boolValue
 		self.currentRating = json["given_rating"].doubleValue
+		self.watchedEpisodes = json["watched_episodes"].intValue
 		self.libraryStatus = json["library_status"].stringValue
 
 		self.likeAction = json["like_action"].intValue

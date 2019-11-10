@@ -1,5 +1,5 @@
 //
-//  LibraryCompactColelctionViewCell.swift
+//  LibraryCompactCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 20/08/2019.
@@ -8,13 +8,15 @@
 
 import UIKit
 
-class LibraryCompactColelctionViewCell: LibraryCollectionViewCell {
-	@IBOutlet override var titleLabel: UILabel! {
+class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
+	// MARK: - IBOutlets
+	override var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
