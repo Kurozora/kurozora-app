@@ -657,14 +657,6 @@
             </objects>
             <point key="canvasLocation" x="275" y="483"/>
         </scene>
-        <!--editor-->
-        <scene sceneID="dTh-0J-gzz">
-            <objects>
-                <viewControllerPlaceholder storyboardName="editor" id="7Sh-9I-KwA" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v7O-5W-ON0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="822" y="483"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Symbols/arrow_down_circle_fill" width="24" height="24"/>

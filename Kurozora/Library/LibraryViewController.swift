@@ -14,7 +14,8 @@ import SwiftTheme
 
 class LibraryViewController: TabmanViewController {
 	// MARK: - IBOutlets
-	@IBOutlet var changeLayoutButton: UIBarButtonItem!
+	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
+	@IBOutlet var sortBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	lazy var viewControllers = [UIViewController]()
@@ -229,29 +230,29 @@ class LibraryViewController: TabmanViewController {
     }
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
-	private func updateChangeLayoutButton(_ cellStyle: Library.CellStyle) {
-		changeLayoutButton.tag = cellStyle.rawValue
-		changeLayoutButton.title = cellStyle.stringValue
-		changeLayoutButton.image = cellStyle.imageValue
+	fileprivate func updateChangeLayoutBarButtonItem(_ cellStyle: Library.CellStyle) {
+		changeLayoutBarButtonItem.tag = cellStyle.rawValue
+		changeLayoutBarButtonItem.title = cellStyle.stringValue
+		changeLayoutBarButtonItem.image = cellStyle.imageValue
 	}
 
 	fileprivate func savePreferredCellStyle(for currentSection: LibraryListCollectionViewController) {
 		let libraryLayouts = UserSettings.libraryCellStyles
 		var newLibraryLayouts = libraryLayouts
-		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutButton.tag
+		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutBarButtonItem.tag
 		UserSettings.set(newLibraryLayouts, forKey: .libraryCellStyles)
 	}
 
 	/// Changes the layout between the available library cell styles.
-	private func changeLayout() {
+	fileprivate func changeLayout() {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
-		var libraryCellStyle: Library.CellStyle = Library.CellStyle(rawValue: changeLayoutButton.tag) ?? .detailed
+		var libraryCellStyle: Library.CellStyle = Library.CellStyle(rawValue: changeLayoutBarButtonItem.tag) ?? .detailed
 
 		// Change button information
 		libraryCellStyle = libraryCellStyle.next
-		changeLayoutButton.tag = libraryCellStyle.rawValue
-		changeLayoutButton.title = libraryCellStyle.stringValue
-		changeLayoutButton.image = libraryCellStyle.imageValue
+		changeLayoutBarButtonItem.tag = libraryCellStyle.rawValue
+		changeLayoutBarButtonItem.title = libraryCellStyle.stringValue
+		changeLayoutBarButtonItem.image = libraryCellStyle.imageValue
 
 		// Save cell style change to UserSettings
 		savePreferredCellStyle(for: currentSection)
@@ -268,16 +269,66 @@ class LibraryViewController: TabmanViewController {
 		})
 	}
 
+	/// Builds and presents the sort types in an action sheet.
+	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		for librarySortType in Library.SortType.all {
+			let librarySortTypeAction = UIAlertAction.init(title: librarySortType.stringValue, style: .default, handler: { (_) in
+
+			})
+
+			librarySortTypeAction.setValue(#imageLiteral(resourceName: "Symbols/line_horizontal_3_decrease_circle_fill"), forKey: "image")
+			librarySortTypeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(librarySortTypeAction)
+		}
+
+//		case rating = "Rating"
+//		case popularity = "Popularity"
+//		case title = "Title"
+//		case nextAiringEpisode = "Next Episode to Air"
+//		case nextEpisodeToWatch = "Next Episode to Watch"
+//		case newest = "Newest"
+//		case oldest = "Oldest"
+//		case none = "None"
+//		case myRating = "My Rating"
+
+		// Report thread action
+		let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
+			// Action
+		})
+		stopSortingAction.setValue(#imageLiteral(resourceName: "Symbols/xmark_circle_fill"), forKey: "image")
+		stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(stopSortingAction)
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.barButtonItem = sender
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(action, animated: true, completion: nil)
+		}
+	}
+
 	// MARK: - IBActions
-	@IBAction func changeLayoutButtonPressed(_ sender: UIBarButtonItem) {
+	@IBAction func changeLayoutBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		changeLayout()
+	}
+
+	@IBAction func sortBarButtonItemPressed(_ sender: UIBarButtonItem) {
+		populateSortActions(sender)
 	}
 }
 
 // MARK: - LibraryListViewControllerDelegate
 extension LibraryViewController: LibraryListViewControllerDelegate {
 	func updateChangeLayoutButton(with cellStyle: Library.CellStyle) {
-		updateChangeLayoutButton(cellStyle)
+		updateChangeLayoutBarButtonItem(cellStyle)
 	}
 }
 

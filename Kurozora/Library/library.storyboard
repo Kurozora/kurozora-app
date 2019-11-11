@@ -475,10 +475,14 @@
                         <leftBarButtonItems>
                             <barButtonItem title="Detailed" image="Symbols/rectangle_fill_on_rectangle_fill" id="Dnc-bs-5ES">
                                 <connections>
-                                    <action selector="changeLayoutButtonPressed:" destination="B4w-wJ-4Cf" id="DgA-88-vmZ"/>
+                                    <action selector="changeLayoutBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="QVS-dG-vWc"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Filter" image="Symbols/line_horizontal_3_decrease_circle_fill" id="0uS-C2-wld"/>
+                            <barButtonItem title="Filter" image="Symbols/line_horizontal_3_decrease_circle_fill" id="0uS-C2-wld">
+                                <connections>
+                                    <action selector="sortBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="XUE-7B-Bab"/>
+                                </connections>
+                            </barButtonItem>
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="Favourites" image="Symbols/heart_circle" id="bHY-lK-ES7">
                             <connections>
@@ -487,7 +491,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="changeLayoutButton" destination="Dnc-bs-5ES" id="VvY-Rh-WNJ"/>
+                        <outlet property="changeLayoutBarButtonItem" destination="Dnc-bs-5ES" id="SnK-kE-RhL"/>
+                        <outlet property="sortBarButtonItem" destination="0uS-C2-wld" id="ZbE-pn-CvC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>

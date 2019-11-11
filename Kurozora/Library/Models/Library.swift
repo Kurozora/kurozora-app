@@ -21,6 +21,7 @@ class Library {
 		```
 	*/
 	enum Section: Int {
+		// MARK: - Cases
 		/// The watching list in the user's library.
 		case watching = 0
 
@@ -36,6 +37,7 @@ class Library {
 		/// The dropped list in the user's library.
 		case dropped = 4
 
+		// MARK: - Properties
 		/// An array containing all library sections.
 		static let all: [Section] = [.watching, .planning, .completed, .onHold, .dropped]
 
@@ -85,6 +87,7 @@ class Library {
 		```
 	*/
 	enum CellStyle: Int {
+		// MARK: - Cases
 		/// Indicates that the cell has the `detailed` style.
 		case detailed = 0
 
@@ -94,6 +97,7 @@ class Library {
 		/// Indicates that the cell has the `list` style.
 		case list = 2
 
+		// MARK: - Properties
 		/// An array containing all library cell styles.
 		static let all: [CellStyle] = [.compact, .detailed, .list]
 
@@ -209,6 +213,86 @@ class Library {
 			}
 
 			return cgSize
+		}
+	}
+
+	/**
+		List of all sort types for shows in a user's library.
+
+		```
+		case rating = "Rating"
+		case popularity = "Popularity"
+		case title = "Title"
+		case nextAiringEpisode = "Next Episode to Air"
+		case nextEpisodeToWatch = "Next Episode to Watch"
+		case newest = "Newest"
+		case oldest = "Oldest"
+		case none = "None"
+		case myRating = "My Rating"
+		```
+	*/
+	enum SortType: Int {
+		// MARK: - Cases
+		case alphabetically
+		case popularity
+		case nextAiringEpisode
+		case nextEpisodeToWatch
+		case newest
+		case oldest
+		case rating
+		case myRating
+		case none
+
+		// MARK: - Properties
+		/// An array containing all sort types.
+		static let all: [SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating, .none]
+
+		/// The string value of a sort type.
+		var stringValue: String {
+			switch self {
+			case .alphabetically:
+				return "Alphabetically"
+			case .popularity:
+				return "Popularity"
+			case .nextAiringEpisode:
+				return "Next Episode to Air"
+			case .nextEpisodeToWatch:
+				return "Next Episode to Watch"
+			case .newest:
+				return "Newest"
+			case .oldest:
+				return "Oldest"
+			case .rating:
+				return "Rating"
+			case .myRating:
+				return "My Rating"
+			case .none:
+				return "None"
+			}
+		}
+
+		// MARK: - Functions
+		func performAction() -> [ShowDetailsElement]? {
+			switch self {
+			case .alphabetically:
+				return [ShowDetailsElement]()
+			case .popularity:
+				return [ShowDetailsElement]()
+			case .nextAiringEpisode:
+				return [ShowDetailsElement]()
+			case .nextEpisodeToWatch:
+				return [ShowDetailsElement]()
+			case .newest:
+				return [ShowDetailsElement]()
+			case .oldest:
+				return [ShowDetailsElement]()
+			case .rating:
+				return [ShowDetailsElement]()
+			case .myRating:
+				return [ShowDetailsElement]()
+			case .none:
+				return [ShowDetailsElement]()
+			}
 		}
 	}
 }
