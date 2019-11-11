@@ -13,7 +13,7 @@ import SCLAlertView
 
 class ForumsViewController: TabmanViewController {
 	// MARK: - IBOutlets
-    @IBOutlet weak var createThreadButton: UIButton!
+    @IBOutlet weak var createThreadBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -165,8 +165,8 @@ class ForumsViewController: TabmanViewController {
 	}
 
 	// MARK: - IBActions
-	@IBAction func sortingButtonPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "sort_top")), ("Recent", "recent", #imageLiteral(resourceName: "sort_recent"))], currentSelection: threadSorting, action: { (title, value)  in
+	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
+		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "Symbols/arrow_up_line_horizontal_3_decrease")), ("Recent", "recent", #imageLiteral(resourceName: "Symbols/clock"))], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
 			currentSection?.currentPage = 1
@@ -185,7 +185,7 @@ class ForumsViewController: TabmanViewController {
 		self.present(action, animated: true, completion: nil)
 	}
 
-	@IBAction func createThreadButton(_ sender: Any) {
+	@IBAction func createThreadBarButtonItemPressed(_ sender: Any) {
 		WorkflowController.shared.isSignedIn {
 			if let kRichTextEditorViewController = KRichTextEditorViewController.instantiateFromStoryboard() as? KRichTextEditorViewController {
 				if let currentIndex = self.currentIndex {

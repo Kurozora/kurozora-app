@@ -22,7 +22,7 @@ class SettingsNotificationCell: UICollectionViewCell {
 		didSet {
 			if isSelected {
 				selectImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-				selectImageView.image = #imageLiteral(resourceName: "check_circle")
+				selectImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 
 				placeholder.borderColor = .none
 				placeholder.borderWidth = 0

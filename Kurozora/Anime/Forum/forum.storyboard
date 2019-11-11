@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49J-Fj-Vm3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49J-Fj-Vm3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -85,7 +85,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="gTX-oT-Gch"/>
                     <navigationItem key="navigationItem" id="nMa-Uc-V6O">
-                        <barButtonItem key="rightBarButtonItem" image="create_new" id="Iat-Xx-y8D" userLabel="Create"/>
+                        <barButtonItem key="rightBarButtonItem" image="Symbols/pencil_circle" id="Iat-Xx-y8D" userLabel="Create"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sww-mR-roj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -96,7 +96,7 @@
         <scene sceneID="FlC-1Y-ndf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="49J-Fj-Vm3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="chat" id="Y9i-C6-gRX"/>
+                    <tabBarItem key="tabBarItem" title="" image="Symbols/message_fill" id="Y9i-C6-gRX"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HG7-dZ-ajf">
@@ -114,8 +114,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chat" width="30" height="30"/>
-        <image name="create_new" width="23" height="24"/>
+        <image name="Symbols/message_fill" width="24" height="24"/>
+        <image name="Symbols/pencil_circle" width="24" height="24"/>
     </resources>
     <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
 </document>

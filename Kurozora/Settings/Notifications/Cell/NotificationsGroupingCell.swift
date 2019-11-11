@@ -18,7 +18,7 @@ class NotificationsGroupingCell: SettingsCell {
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				self.selectedImageView.image = #imageLiteral(resourceName: "check")
+				self.selectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark")
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 			} else {
 				self.selectedImageView.image = nil

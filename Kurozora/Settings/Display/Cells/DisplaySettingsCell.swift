@@ -135,13 +135,13 @@ class DisplaySettingsCell: SettingsCell {
 			lightOptionSelectedImageView?.borderWidth = 0
 			darkOptionSelectedImageView?.borderWidth = 2
 
-			lightOptionSelectedImageView?.image = #imageLiteral(resourceName: "check_circle")
+			lightOptionSelectedImageView?.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 			darkOptionSelectedImageView?.image = nil
 		case .dark:
 			darkOptionSelectedImageView?.borderWidth = 0
 			lightOptionSelectedImageView?.borderWidth = 2
 
-			darkOptionSelectedImageView?.image = #imageLiteral(resourceName: "check_circle")
+			darkOptionSelectedImageView?.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 			lightOptionSelectedImageView?.image = nil
 		}
 	}

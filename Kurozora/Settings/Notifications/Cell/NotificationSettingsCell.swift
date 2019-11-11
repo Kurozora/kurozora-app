@@ -100,7 +100,7 @@ class NotificationSettingsCell: SettingsCell {
 			iconNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			basicNotificationSelectedImageView.image = #imageLiteral(resourceName: "check_circle")
+			basicNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 			iconNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 1:
@@ -108,7 +108,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			iconNotificationSelectedImageView.image = #imageLiteral(resourceName: "check_circle")
+			iconNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 			basicNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 2:
@@ -116,7 +116,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			iconNotificationSelectedImageView.borderWidth = 2
 
-			statusBarNotificationSelectedImageView.image = #imageLiteral(resourceName: "check_circle")
+			statusBarNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
 			basicNotificationSelectedImageView.image = nil
 			iconNotificationSelectedImageView.image = nil
 		default: break

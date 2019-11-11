@@ -212,11 +212,11 @@ class ReplyCell: UITableViewCell {
 //				self.replyThread()
 //			})
 
-			upvoteAction.setValue(#imageLiteral(resourceName: "arrow_up"), forKey: "image")
+			upvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_up_circle_fill"), forKey: "image")
 			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			downvoteAction.setValue(#imageLiteral(resourceName: "arrow_down"), forKey: "image")
+			downvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_down_circle_fill"), forKey: "image")
 			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//			replyAction.setValue(#imageLiteral(resourceName: "comment"), forKey: "image")
+//			replyAction.setValue(#imageLiteral(resourceName: "Symbols/message_fill"), forKey: "image")
 //			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
 			action.addAction(upvoteAction)
@@ -229,7 +229,7 @@ class ReplyCell: UITableViewCell {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
-			userAction.setValue(#imageLiteral(resourceName: "profile"), forKey: "image")
+			userAction.setValue(#imageLiteral(resourceName: "Symbols/person_crop_circle_fill"), forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(userAction)
 		}
@@ -238,7 +238,7 @@ class ReplyCell: UITableViewCell {
 		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			self.shareReply()
 		})
-		shareAction.setValue(#imageLiteral(resourceName: "share"), forKey: "image")
+		shareAction.setValue(#imageLiteral(resourceName: "Symbols/square_and_arrow_up_fill"), forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(shareAction)
 
@@ -246,7 +246,7 @@ class ReplyCell: UITableViewCell {
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
 			self.reportThread()
 		})
-		reportAction.setValue(#imageLiteral(resourceName: "info_icon"), forKey: "image")
+		reportAction.setValue(#imageLiteral(resourceName: "Symbols/exclamationmark_circle_fill"), forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(reportAction)
 

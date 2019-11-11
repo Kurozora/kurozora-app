@@ -47,11 +47,11 @@ class KTabBarController: ESTabBarController {
 		let feedViewController = feedStoryboard.instantiateInitialViewController() as! KNavigationController
 
         // Setup animation, title and image
-		homeCollectionViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Explore", image: #imageLiteral(resourceName: "home"), selectedImage: #imageLiteral(resourceName: "home"))
-		libraryViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Library", image: #imageLiteral(resourceName: "list"), selectedImage: #imageLiteral(resourceName: "list"))
-		forumsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "forums"), selectedImage: #imageLiteral(resourceName: "forums"))
-		notificationsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "notification"), selectedImage: #imageLiteral(resourceName: "notification"))
-		feedViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Feed", image: #imageLiteral(resourceName: "profile"), selectedImage: #imageLiteral(resourceName: "profile"))
+		homeCollectionViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Explore", image: #imageLiteral(resourceName: "Symbols/house"), selectedImage: #imageLiteral(resourceName: "Symbols/house_fill"))
+		libraryViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Library", image: #imageLiteral(resourceName: "Symbols/rectangle_stack"), selectedImage: #imageLiteral(resourceName: "Symbols/rectangle_stack_fill"))
+		forumsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Forums", image: #imageLiteral(resourceName: "Symbols/doc_plaintext"), selectedImage: #imageLiteral(resourceName: "Symbols/doc_plaintext_fill"))
+		notificationsViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Notifications", image: #imageLiteral(resourceName: "Symbols/app_badge"), selectedImage: #imageLiteral(resourceName: "Symbols/app_badge_fill"))
+		feedViewController.tabBarItem = ESTabBarItem.init(BounceAnimation(), title: "Feed", image: #imageLiteral(resourceName: "Symbols/person_crop_circle"), selectedImage: #imageLiteral(resourceName: "Symbols/person_crop_circle_fill"))
 
         // Initialize views
 		viewControllers = [homeCollectionViewController, libraryViewController, forumsViewController, notificationsViewController, feedViewController]

@@ -255,7 +255,7 @@ class NotificationsViewController: UITableViewController {
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", with: 1)
 		})
-		markAllAsRead.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
+		markAllAsRead.setValue(#imageLiteral(resourceName: "Symbols/checkmark_circle_fill"), forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(markAllAsRead)
 
@@ -263,7 +263,7 @@ class NotificationsViewController: UITableViewController {
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", with: 0)
 		})
-		markAllAsUnread.setValue(#imageLiteral(resourceName: "check_circle"), forKey: "image")
+		markAllAsUnread.setValue(#imageLiteral(resourceName: "Symbols/checkmark_circle"), forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(markAllAsUnread)
 

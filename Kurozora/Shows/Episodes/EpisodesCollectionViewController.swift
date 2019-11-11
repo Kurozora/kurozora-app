@@ -156,14 +156,14 @@ class EpisodesCollectionViewController: UICollectionViewController {
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
 		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = #imageLiteral(resourceName: "go_down")
+		goToButton.image = #imageLiteral(resourceName: "Symbols/chevron_down_circle")
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
 		guard let episodes = episodes else { return }
 		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = #imageLiteral(resourceName: "go_up")
+		goToButton.image = #imageLiteral(resourceName: "Symbols/chevron_up_circle")
 	}
 
 	/// Goes to the last watched episode in the presented collection view.

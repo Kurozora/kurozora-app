@@ -125,11 +125,11 @@ class Library {
 		var imageValue: UIImage {
 			switch self {
 			case .detailed:
-				return #imageLiteral(resourceName: "detailed_view_icon")
+				return #imageLiteral(resourceName: "Symbols/rectangle_fill_on_rectangle_fill")
 			case .compact:
-				return #imageLiteral(resourceName: "compact_view_icon")
+				return #imageLiteral(resourceName: "Symbols/rectangle_grid_3x2_fill")
 			case .list:
-				return #imageLiteral(resourceName: "sort_top")
+				return #imageLiteral(resourceName: "Symbols/rectangle_grid_1x2_fill")
 			}
 		}
 

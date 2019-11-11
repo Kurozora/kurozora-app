@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -189,7 +189,7 @@
                                                 <constraint firstAttribute="width" constant="30" id="k8I-Nd-zGD"/>
                                                 <constraint firstAttribute="height" constant="25" id="pFa-Km-GNe"/>
                                             </constraints>
-                                            <state key="normal" image="ellipsis"/>
+                                            <state key="normal" image="Symbols/ellipsis"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -233,7 +233,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Loading..." id="yd3-6r-ffK">
-                        <barButtonItem key="rightBarButtonItem" image="create_new" id="gka-aA-OvO" userLabel="Create"/>
+                        <barButtonItem key="rightBarButtonItem" image="Symbols/pencil_circle" id="gka-aA-OvO" userLabel="Create"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -246,9 +246,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="create_new" width="23" height="24"/>
-        <image name="ellipsis" width="24" height="24"/>
-        <image name="play" width="40" height="40"/>
+        <image name="Symbols/ellipsis" width="24" height="24"/>
+        <image name="Symbols/pencil_circle" width="24" height="24"/>
+        <image name="play" width="22" height="24"/>
     </resources>
     <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
 </document>
