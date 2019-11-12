@@ -241,11 +241,10 @@ class Library {
 		case oldest
 		case rating
 		case myRating
-		case none
 
 		// MARK: - Properties
 		/// An array containing all sort types.
-		static let all: [SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating, .none]
+		static let all: [SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating]
 
 		/// The string value of a sort type.
 		var stringValue: String {
@@ -266,8 +265,28 @@ class Library {
 				return "Rating"
 			case .myRating:
 				return "My Rating"
-			case .none:
-				return "None"
+			}
+		}
+
+		/// The image value of a sort type.
+		var imageValue: UIImage {
+			switch self {
+			case .alphabetically:
+				return #imageLiteral(resourceName: "Symbols/textformat_abc")
+			case .popularity:
+				return #imageLiteral(resourceName: "Symbols/flame_fill")
+			case .nextAiringEpisode:
+				return #imageLiteral(resourceName: "Symbols/tv_arrowshape_turn_up_right_fill")
+			case .nextEpisodeToWatch:
+				return #imageLiteral(resourceName: "Symbols/tv_eye_fill")
+			case .newest:
+				return #imageLiteral(resourceName: "Symbols/calendar_badge_arrowshape_turn_up_right")
+			case .oldest:
+				return #imageLiteral(resourceName: "Symbols/calendar_badge_arrowshape_turn_up_left")
+			case .rating:
+				return #imageLiteral(resourceName: "Symbols/star_fill")
+			case .myRating:
+				return #imageLiteral(resourceName: "Symbols/person_crop_circle_fill_badge_star")
 			}
 		}
 
@@ -289,8 +308,6 @@ class Library {
 			case .rating:
 				return [ShowDetailsElement]()
 			case .myRating:
-				return [ShowDetailsElement]()
-			case .none:
 				return [ShowDetailsElement]()
 			}
 		}

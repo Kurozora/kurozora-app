@@ -278,7 +278,7 @@ class LibraryViewController: TabmanViewController {
 
 			})
 
-			librarySortTypeAction.setValue(#imageLiteral(resourceName: "Symbols/line_horizontal_3_decrease_circle_fill"), forKey: "image")
+			librarySortTypeAction.setValue(librarySortType.imageValue, forKey: "image")
 			librarySortTypeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(librarySortTypeAction)
 		}
