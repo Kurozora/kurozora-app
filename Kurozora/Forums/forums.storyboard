@@ -12,7 +12,7 @@
         <scene sceneID="Tqb-xm-fnT">
             <objects>
                 <tableViewController storyboardIdentifier="ForumsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0BH-dQ-UPb" customClass="ForumsListViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="vDh-24-9OG">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="50" contentViewInsetsToSafeArea="NO" id="vDh-24-9OG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -628,10 +628,24 @@
         <scene sceneID="ojo-nC-5dI">
             <objects>
                 <viewController storyboardIdentifier="ForumsViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Haj-ko-0LW" customClass="ForumsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="BaG-JS-iS2">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="BaG-JS-iS2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iV4-7A-6C8">
+                                <rect key="frame" x="20" y="810" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="cBk-EP-BCI"/>
+                                    <constraint firstAttribute="width" constant="374" placeholder="YES" id="ulC-3F-zpT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="iV4-7A-6C8" secondAttribute="trailing" id="JxV-9C-jKX"/>
+                            <constraint firstItem="fVr-X1-qp9" firstAttribute="bottom" secondItem="iV4-7A-6C8" secondAttribute="bottom" constant="8" id="PP2-25-uDn"/>
+                            <constraint firstItem="iV4-7A-6C8" firstAttribute="leading" secondItem="BaG-JS-iS2" secondAttribute="leadingMargin" id="vu2-t0-2kl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fVr-X1-qp9"/>
                     </view>
                     <navigationItem key="navigationItem" title="Forums" id="km1-34-9KJ">
@@ -649,13 +663,14 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomBarView" destination="iV4-7A-6C8" id="vHB-aY-YJ7"/>
                         <outlet property="createThreadBarButtonItem" destination="sdf-e9-Vms" id="d6z-I8-tVd"/>
                         <outlet property="sortingBarButtonItem" destination="3nN-Eo-w2O" id="1D0-ip-ty8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfp-Yv-lzg" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="275" y="483"/>
+            <point key="canvasLocation" x="273.91304347826087" y="482.8125"/>
         </scene>
     </scenes>
     <resources>

@@ -12,10 +12,92 @@ import Pageboy
 import SCLAlertView
 import SwiftTheme
 
+extension TMBar {
+	/// Kurozora style bar, very reminiscent of the iOS 13 Photos app bottom tab bar. It consists
+	/// of a horizontal layout containing label bar buttons, and a line indicator at the bottom.
+	typealias KBar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, KFillBarIndicator>
+}
+
+/// Simple indicator that displays as a horizontal line.
+class KFillBarIndicator: TMBarIndicator {
+	// MARK: Properties
+	private var topConstraint: NSLayoutConstraint?
+	private var bottomConstraint: NSLayoutConstraint?
+
+	// MARK: Types
+	public enum CornerStyle {
+		case square
+		case rounded
+		case eliptical
+	}
+
+	// MARK: Properties
+	open override var displayMode: TMBarIndicator.DisplayMode {
+		return .fill
+	}
+
+	// MARK: Customization
+	/// Corner style for the indicator.
+	///
+	/// Options:
+	/// - square: Corners are squared off.
+	/// - rounded: Corners are rounded.
+	/// - eliptical: Corners are completely circular.
+	///
+	/// Default: `.square`.
+	open var cornerStyle: CornerStyle = .eliptical {
+		didSet {
+			setNeedsLayout()
+		}
+	}
+
+	// MARK: Lifecycle
+	open override func layout(in view: UIView) {
+		super.layout(in: view)
+
+		let topConstraint = topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
+		topConstraint.isActive = true
+		self.topConstraint = topConstraint
+
+		let bottomConstraint = bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
+		bottomConstraint.isActive = true
+		self.bottomConstraint = bottomConstraint
+
+		self.theme_tintColor = KThemePicker.tintColor.rawValue
+		self.backgroundColor = tintColor.withAlphaComponent(0.25)
+		self.overscrollBehavior = .bounce
+		self.transitionStyle = .progressive
+	}
+
+	open override func layoutSubviews() {
+		super.layoutSubviews()
+
+		superview?.layoutIfNeeded()
+		layer.cornerRadius = cornerStyle.cornerRadius(for: bounds)
+	}
+}
+
+private extension KFillBarIndicator.CornerStyle {
+	func cornerRadius(for frame: CGRect) -> CGFloat {
+		switch self {
+		case .square:
+			return 0.0
+		case .rounded:
+			return frame.size.height / 6.0
+		case .eliptical:
+			return frame.size.height / 2.0
+		}
+	}
+}
+
+
+
 class LibraryViewController: TabmanViewController {
 	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
 	@IBOutlet var sortBarButtonItem: UIBarButtonItem!
+	@IBOutlet var bottomBarView: UIView!
+	@IBOutlet weak var scrollView: UIScrollView!
 
 	// MARK: - Properties
 	lazy var viewControllers = [UIViewController]()
@@ -25,7 +107,7 @@ class LibraryViewController: TabmanViewController {
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
-	let bar = TMBar.ButtonBar()
+	let bar = TMBar.KBar()
 
 	#if DEBUG
 	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = {
@@ -55,6 +137,9 @@ class LibraryViewController: TabmanViewController {
 
 		// Tabman view controllers
 		dataSource = self
+
+		// Prepare scroll view
+		view.sendSubviewToBack(scrollView)
 
 		// Tabman bar
 		initTabmanBarView()
@@ -122,20 +207,21 @@ class LibraryViewController: TabmanViewController {
 		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
 
 		// Indicator
-		bar.indicator.weight = .light
-		bar.indicator.cornerStyle = .eliptical
-		bar.indicator.overscrollBehavior = .bounce
-		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
+		bar.indicator.layout(in: bar)
+
+		// Scrolling
+		bar.scrollMode = .interactive
 
 		// State
 		bar.buttons.customize { (button) in
+			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
 			button.selectedTintColor = KThemePicker.tintColor.colorValue
-			button.tintColor = KThemePicker.tintColor.colorValue.withAlphaComponent(0.4)
+			button.tintColor = button.selectedTintColor.withAlphaComponent(0.25)
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
-		bar.layout.interButtonSpacing = 24.0
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 8.0)
+		bar.layout.interButtonSpacing = 0.0
 		if UIDevice.isPad {
 			bar.layout.contentMode = .fit
 		}
@@ -150,7 +236,18 @@ class LibraryViewController: TabmanViewController {
 		styleTabmanBarView()
 
 		// Add tabman bar to view
-		addBar(bar, dataSource: self, at: .top)
+		addBar(bar, dataSource: self, at: .custom(view: bottomBarView, layout: { bar in
+			bar.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				bar.topAnchor.constraint(equalTo: self.bottomBarView.topAnchor),
+				bar.bottomAnchor.constraint(equalTo: self.bottomBarView.bottomAnchor),
+				bar.leftAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.leftAnchor),
+				bar.rightAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.rightAnchor),
+				bar.centerXAnchor.constraint(equalTo: self.bottomBarView.centerXAnchor)
+			])
+		}))
+
+		bar.cornerRadius = bar.height / 2
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()

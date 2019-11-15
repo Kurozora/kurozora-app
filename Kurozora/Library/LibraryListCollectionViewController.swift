@@ -144,9 +144,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		// Observe NotificationCenter for an update
 		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(sectionTitle)Section"), object: nil)
 
-		// Setup collection view
-		collectionView.dragDelegate = self
-
+		// Fetch library if user is signed in
 		if User.isSignedIn {
 			fetchLibrary()
 		}
@@ -320,6 +318,14 @@ extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate 
 		})
 
 		collectionView.reloadData()
+	}
+}
+
+extension LibraryListCollectionViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if let parent = self.pageboyParent as? LibraryViewController {
+			parent.scrollView.contentOffset = scrollView.contentOffset
+		}
 	}
 }
 

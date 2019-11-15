@@ -15,6 +15,7 @@ class ForumsViewController: TabmanViewController {
 	// MARK: - IBOutlets
     @IBOutlet weak var createThreadBarButtonItem: UIBarButtonItem!
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
+	@IBOutlet weak var bottomBarView: UIView!
 
 	// MARK: - Properties
 	var sections: [ForumsSectionsElement]? {
@@ -28,7 +29,7 @@ class ForumsViewController: TabmanViewController {
 	var searchResultsTableViewController: SearchResultsTableViewController?
 	var searchController: SearchController!
 
-	let bar = TMBar.ButtonBar()
+	let bar = TMBar.KBar()
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -94,20 +95,21 @@ class ForumsViewController: TabmanViewController {
 		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
 
 		// Indicator
-		bar.indicator.weight = .light
-		bar.indicator.cornerStyle = .eliptical
-		bar.indicator.overscrollBehavior = .bounce
-		bar.indicator.theme_tintColor = KThemePicker.tintColor.rawValue
+		bar.indicator.layout(in: bar)
+
+		// Scrolling
+		bar.scrollMode = .interactive
 
 		// State
 		bar.buttons.customize { (button) in
+			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
 			button.selectedTintColor = KThemePicker.tintColor.colorValue
-			button.tintColor = KThemePicker.tintColor.colorValue.withAlphaComponent(0.4)
+			button.tintColor = button.selectedTintColor.withAlphaComponent(0.25)
 		}
 
 		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
-		bar.layout.interButtonSpacing = 24.0
+		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 8.0)
+		bar.layout.interButtonSpacing = 0.0
 		if UIDevice.isPad {
 			bar.layout.contentMode = .fit
 		}
@@ -122,7 +124,18 @@ class ForumsViewController: TabmanViewController {
 		styleTabmanBarView()
 
 		// Add tabman bar to view
-		addBar(bar, dataSource: self, at: .top)
+		addBar(bar, dataSource: self, at: .custom(view: bottomBarView, layout: { bar in
+			bar.translatesAutoresizingMaskIntoConstraints = false
+			NSLayoutConstraint.activate([
+				bar.topAnchor.constraint(equalTo: self.bottomBarView.topAnchor),
+				bar.bottomAnchor.constraint(equalTo: self.bottomBarView.bottomAnchor),
+				bar.leftAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.leftAnchor),
+				bar.rightAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.rightAnchor),
+				bar.centerXAnchor.constraint(equalTo: self.bottomBarView.centerXAnchor)
+			])
+		}))
+
+		bar.cornerRadius = bar.height / 2
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()
