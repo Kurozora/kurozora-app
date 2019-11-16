@@ -12,92 +12,15 @@ import Pageboy
 import SCLAlertView
 import SwiftTheme
 
-extension TMBar {
-	/// Kurozora style bar, very reminiscent of the iOS 13 Photos app bottom tab bar. It consists
-	/// of a horizontal layout containing label bar buttons, and a line indicator at the bottom.
-	typealias KBar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, KFillBarIndicator>
+protocol LibraryViewControllerDelegate: class {
+	func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem)
 }
-
-/// Simple indicator that displays as a horizontal line.
-class KFillBarIndicator: TMBarIndicator {
-	// MARK: Properties
-	private var topConstraint: NSLayoutConstraint?
-	private var bottomConstraint: NSLayoutConstraint?
-
-	// MARK: Types
-	public enum CornerStyle {
-		case square
-		case rounded
-		case eliptical
-	}
-
-	// MARK: Properties
-	open override var displayMode: TMBarIndicator.DisplayMode {
-		return .fill
-	}
-
-	// MARK: Customization
-	/// Corner style for the indicator.
-	///
-	/// Options:
-	/// - square: Corners are squared off.
-	/// - rounded: Corners are rounded.
-	/// - eliptical: Corners are completely circular.
-	///
-	/// Default: `.square`.
-	open var cornerStyle: CornerStyle = .eliptical {
-		didSet {
-			setNeedsLayout()
-		}
-	}
-
-	// MARK: Lifecycle
-	open override func layout(in view: UIView) {
-		super.layout(in: view)
-
-		let topConstraint = topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
-		topConstraint.isActive = true
-		self.topConstraint = topConstraint
-
-		let bottomConstraint = bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
-		bottomConstraint.isActive = true
-		self.bottomConstraint = bottomConstraint
-
-		self.theme_tintColor = KThemePicker.tintColor.rawValue
-		self.backgroundColor = tintColor.withAlphaComponent(0.25)
-		self.overscrollBehavior = .bounce
-		self.transitionStyle = .progressive
-	}
-
-	open override func layoutSubviews() {
-		super.layoutSubviews()
-
-		superview?.layoutIfNeeded()
-		layer.cornerRadius = cornerStyle.cornerRadius(for: bounds)
-	}
-}
-
-private extension KFillBarIndicator.CornerStyle {
-	func cornerRadius(for frame: CGRect) -> CGFloat {
-		switch self {
-		case .square:
-			return 0.0
-		case .rounded:
-			return frame.size.height / 6.0
-		case .eliptical:
-			return frame.size.height / 2.0
-		}
-	}
-}
-
-
 
 class LibraryViewController: TabmanViewController {
 	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
-	@IBOutlet var sortBarButtonItem: UIBarButtonItem!
+	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
 	@IBOutlet var bottomBarView: UIView!
-	@IBOutlet weak var scrollView: UIScrollView!
 
 	// MARK: - Properties
 	lazy var viewControllers = [UIViewController]()
@@ -108,6 +31,8 @@ class LibraryViewController: TabmanViewController {
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
 	let bar = TMBar.KBar()
+
+	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
 	#if DEBUG
 	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = {
@@ -137,9 +62,6 @@ class LibraryViewController: TabmanViewController {
 
 		// Tabman view controllers
 		dataSource = self
-
-		// Prepare scroll view
-		view.sendSubviewToBack(scrollView)
 
 		// Tabman bar
 		initTabmanBarView()
@@ -310,6 +232,13 @@ class LibraryViewController: TabmanViewController {
             let libraryListCollectionViewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
 			let sectionTitle = Library.Section.all[index].sectionValue
 
+			// Get the user's preferred sort type
+			let librarySortTypes = UserSettings.librarySortTypes
+			let preferredSortType = librarySortTypes[sectionTitle] ?? 0
+			if let librarySortType = Library.SortType(rawValue: preferredSortType) {
+				libraryListCollectionViewController.librarySortType = librarySortType
+			}
+
 			// Get the user's preferred library layout
 			let libraryLayouts = UserSettings.libraryCellStyles
 			let preferredLayout = libraryLayouts[sectionTitle] ?? 0
@@ -333,11 +262,33 @@ class LibraryViewController: TabmanViewController {
 		changeLayoutBarButtonItem.image = cellStyle.imageValue
 	}
 
+	/// Updates the sort type button icon to reflect the current sort type when switching between views.
+	fileprivate func updateSortTypeBarButtonItem(_ sortType: Library.SortType) {
+		sortTypeBarButtonItem.tag = sortType.rawValue
+		sortTypeBarButtonItem.title = sortType.stringValue
+		sortTypeBarButtonItem.image = sortType.imageValue
+	}
+
 	fileprivate func savePreferredCellStyle(for currentSection: LibraryListCollectionViewController) {
 		let libraryLayouts = UserSettings.libraryCellStyles
 		var newLibraryLayouts = libraryLayouts
 		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutBarButtonItem.tag
 		UserSettings.set(newLibraryLayouts, forKey: .libraryCellStyles)
+	}
+
+	/// Changes the layout between the available library cell styles.
+	fileprivate func changeSortType() {
+		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
+
+		// Update library list
+		UIView.animate(withDuration: 0, animations: {
+			guard let flowLayout = currentSection.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+				return
+			}
+			flowLayout.invalidateLayout()
+		}, completion: { _ in
+			currentSection.collectionView.reloadData()
+		})
 	}
 
 	/// Changes the layout between the available library cell styles.
@@ -368,48 +319,7 @@ class LibraryViewController: TabmanViewController {
 
 	/// Builds and presents the sort types in an action sheet.
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-		for librarySortType in Library.SortType.all {
-			let librarySortTypeAction = UIAlertAction.init(title: librarySortType.stringValue, style: .default, handler: { (_) in
-
-			})
-
-			librarySortTypeAction.setValue(librarySortType.imageValue, forKey: "image")
-			librarySortTypeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(librarySortTypeAction)
-		}
-
-//		case rating = "Rating"
-//		case popularity = "Popularity"
-//		case title = "Title"
-//		case nextAiringEpisode = "Next Episode to Air"
-//		case nextEpisodeToWatch = "Next Episode to Watch"
-//		case newest = "Newest"
-//		case oldest = "Oldest"
-//		case none = "None"
-//		case myRating = "My Rating"
-
-		// Report thread action
-		let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
-			// Action
-		})
-		stopSortingAction.setValue(#imageLiteral(resourceName: "Symbols/xmark_circle_fill"), forKey: "image")
-		stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(stopSortingAction)
-
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
-
-		//Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(action, animated: true, completion: nil)
-		}
+		libraryViewControllerDelegate?.sortTypeBarButtonItemPressed(sender)
 	}
 
 	// MARK: - IBActions
@@ -417,7 +327,7 @@ class LibraryViewController: TabmanViewController {
 		changeLayout()
 	}
 
-	@IBAction func sortBarButtonItemPressed(_ sender: UIBarButtonItem) {
+	@IBAction func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		populateSortActions(sender)
 	}
 }
@@ -426,6 +336,11 @@ class LibraryViewController: TabmanViewController {
 extension LibraryViewController: LibraryListViewControllerDelegate {
 	func updateChangeLayoutButton(with cellStyle: Library.CellStyle) {
 		updateChangeLayoutBarButtonItem(cellStyle)
+	}
+
+	func updateSortTypeButton(with sortType: Library.SortType) {
+		updateSortTypeBarButtonItem(sortType)
+		changeSortType()
 	}
 }
 

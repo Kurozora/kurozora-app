@@ -87,6 +87,12 @@ extension UserSettings {
 		guard let libraryLayouts = shared.dictionary(forKey: #function) as? [String: Int] else { return [:] }
 		return libraryLayouts
 	}
+
+	/// Returns an array of library sort types with the user's preferred sort type for each section.
+	static var librarySortTypes: [String: Int] {
+		guard let librarySortTypes = shared.dictionary(forKey: #function) as? [String: Int] else { return [:] }
+		return librarySortTypes
+	}
 }
 
 // MARK: - Forums

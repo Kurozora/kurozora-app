@@ -64,6 +64,8 @@
 		662B9263233E515E001D49B7 /* SearchUserResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */; };
 		662B9265233E51D9001D49B7 /* SearchEmptyResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9264233E51D9001D49B7 /* SearchEmptyResultsCell.swift */; };
 		662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */; };
+		662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */; };
+		662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */; };
 		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
 		662F706F22A45D0F00C3599D /* SessionNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */; };
 		66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
@@ -514,6 +516,8 @@
 		662B9262233E515E001D49B7 /* SearchUserResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserResultsCell.swift; sourceTree = "<group>"; };
 		662B9264233E51D9001D49B7 /* SearchEmptyResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmptyResultsCell.swift; sourceTree = "<group>"; };
 		662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSessionCell.swift; sourceTree = "<group>"; };
+		662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFillBarIndicator.swift; sourceTree = "<group>"; };
+		662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tabman+Kurozora.swift"; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* SessionNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotificationCell.swift; sourceTree = "<group>"; };
 		66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1076,6 +1080,7 @@
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
 				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
 				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
+				662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1879,6 +1884,7 @@
 			isa = PBXGroup;
 			children = (
 				66D1358C228087920079438C /* KButton.swift */,
+				662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */,
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
 				663E341D2360BA8E003386D1 /* SelfSizingCollectionView.swift */,
 				6638C002235CA16500C7B094 /* UIImageColors.swift */,
@@ -2713,6 +2719,7 @@
 				661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */,
 				663E34292360D34C003386D1 /* ExploreSmallCollectionViewCell.swift in Sources */,
 				6614ABE4215F65D100A3A0C9 /* KLabel.swift in Sources */,
+				662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */,
 				660E9FC721455F3100F6813C /* Cast.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
 				664133E121DA64C800CE823A /* SettingsNotificationCell.swift in Sources */,
@@ -2781,6 +2788,7 @@
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,
 				6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */,
 				66CF6D5B20A9775C00F98375 /* ForumViewController.swift in Sources */,
+				662DB4DB237EF3CC00B7FE7E /* KFillBarIndicator.swift in Sources */,
 				66AEABE62298A9C100949FD8 /* NotificationBannerStyle.swift in Sources */,
 				66AEABE92298AA8D00949FD8 /* NotificationGroupStyle.swift in Sources */,
 				666938B021B1D4D800BA9620 /* PostCell.swift in Sources */,

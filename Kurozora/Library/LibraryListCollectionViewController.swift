@@ -14,6 +14,7 @@ import SwiftTheme
 
 protocol LibraryListViewControllerDelegate: class {
 	func updateChangeLayoutButton(with cellStyle: Library.CellStyle)
+	func updateSortTypeButton(with sortType: Library.SortType)
 }
 
 class LibraryListCollectionViewController: UICollectionViewController {
@@ -32,6 +33,12 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	}
 	var sectionTitle: String = ""
 	var sectionIndex: Int?
+	var librarySortType: Library.SortType = .none {
+		didSet {
+			self.delegate?.updateSortTypeButton(with: librarySortType)
+			self.savePreferredSortType()
+		}
+	}
 	var libraryCellStyle: Library.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
 	var gap: CGFloat {
@@ -125,8 +132,14 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		// Save current page index
 		UserSettings.set(sectionIndex, forKey: .libraryPage)
+
+		// Update change layout button to reflect user settings
 		delegate?.updateChangeLayoutButton(with: libraryCellStyle)
+
+		// Update sort type button to reflect user settings
+		delegate?.updateSortTypeButton(with: librarySortType)
 	}
 
     override func viewDidLoad() {
@@ -134,6 +147,9 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
+		// Setup library view controller delegate
+		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
 
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl
@@ -210,7 +226,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		if User.isSignedIn {
 			refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 
-			KService.shared.getLibrary(withStatus: sectionTitle, withSuccess: { (showDetailsElements) in
+			KService.shared.getLibrary(forStatus: sectionTitle, withSortType: librarySortType.rawValue, withSuccess: { (showDetailsElements) in
 				DispatchQueue.main.async {
 					self.showDetailsElements = showDetailsElements
 				}
@@ -221,9 +237,47 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	func show(at indexPath: IndexPath) -> ShowDetailsElement? {
+	/// Returns a ShowDetailsElemenet for the selected show at the given index path.
+	func selectedShow(at indexPath: IndexPath) -> ShowDetailsElement? {
 		return showDetailsElements?[indexPath.row]
     }
+
+	fileprivate func savePreferredSortType() {
+		let librarySortTypes = UserSettings.librarySortTypes
+		var newLibrarySortTypes = librarySortTypes
+		newLibrarySortTypes[sectionTitle] = librarySortType.rawValue
+		UserSettings.set(newLibrarySortTypes, forKey: .librarySortTypes)
+	}
+
+	/// Builds and presents the sort types in an action sheet.
+	func populateSortActions(_ sender: UIBarButtonItem) {
+		let action = UIAlertController.actionSheetWithItems(items: Library.SortType.alertControllerItems) { (_, value) in
+			self.librarySortType = value
+			self.fetchLibrary()
+		}
+
+		if librarySortType != .none {
+			// Report thread action
+			let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
+				self.librarySortType = .none
+				self.fetchLibrary()
+			})
+			stopSortingAction.setValue(#imageLiteral(resourceName: "Symbols/xmark_circle_fill"), forKey: "image")
+			stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(stopSortingAction)
+		}
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.barButtonItem = sender
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(action, animated: true, completion: nil)
+		}
+	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -293,7 +347,7 @@ extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayou
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
 		guard let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell else { return [UIDragItem]() }
-        let selectedShow = show(at: indexPath)
+		let selectedShow = self.selectedShow(at: indexPath)
 
 		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
 		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image!)
@@ -321,11 +375,10 @@ extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate 
 	}
 }
 
-extension LibraryListCollectionViewController {
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if let parent = self.pageboyParent as? LibraryViewController {
-			parent.scrollView.contentOffset = scrollView.contentOffset
-		}
+// MARK: - LibraryViewControllerDelegate
+extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
+	func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
+		populateSortActions(sender)
 	}
 }
 

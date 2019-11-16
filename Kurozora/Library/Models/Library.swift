@@ -220,31 +220,32 @@ class Library {
 		List of all sort types for shows in a user's library.
 
 		```
-		case rating = "Rating"
-		case popularity = "Popularity"
-		case title = "Title"
-		case nextAiringEpisode = "Next Episode to Air"
-		case nextEpisodeToWatch = "Next Episode to Watch"
-		case newest = "Newest"
-		case oldest = "Oldest"
-		case none = "None"
-		case myRating = "My Rating"
+		case none = 0
+		case alphabetically = 1
+		case popularity = 2
+		case nextAiringEpisode = 3
+		case nextEpisodeToWatch = 4
+		case newest = 5
+		case oldest = 6
+		case rating = 7
+		case myRating = 8
 		```
 	*/
 	enum SortType: Int {
 		// MARK: - Cases
-		case alphabetically
-		case popularity
-		case nextAiringEpisode
-		case nextEpisodeToWatch
-		case newest
-		case oldest
-		case rating
-		case myRating
+		case none = 0
+		case alphabetically = 1
+		case popularity = 2
+		case nextAiringEpisode = 3
+		case nextEpisodeToWatch = 4
+		case newest = 5
+		case oldest = 6
+		case rating = 7
+		case myRating = 8
 
 		// MARK: - Properties
 		/// An array containing all sort types.
-		static let all: [SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating]
+		static let all: [Library.SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating]
 
 		/// The string value of a sort type.
 		var stringValue: String {
@@ -265,6 +266,8 @@ class Library {
 				return "Rating"
 			case .myRating:
 				return "My Rating"
+			case .none:
+				return "None"
 			}
 		}
 
@@ -287,6 +290,8 @@ class Library {
 				return #imageLiteral(resourceName: "Symbols/star_fill")
 			case .myRating:
 				return #imageLiteral(resourceName: "Symbols/person_crop_circle_fill_badge_star")
+			case .none:
+				return #imageLiteral(resourceName: "Symbols/line_horizontal_3_decrease_circle_fill")
 			}
 		}
 
@@ -309,7 +314,18 @@ class Library {
 				return [ShowDetailsElement]()
 			case .myRating:
 				return [ShowDetailsElement]()
+			case .none:
+				return nil
 			}
+		}
+
+		/// An array containing all library sort type string value and its equivalent raw value.
+		static var alertControllerItems: [(String, Library.SortType, UIImage)] {
+			var items = [(String, Library.SortType, UIImage)]()
+			for sortType in SortType.all {
+				items.append((sortType.stringValue, sortType, sortType.imageValue))
+			}
+			return items
 		}
 	}
 }

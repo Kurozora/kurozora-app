@@ -471,25 +471,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-Oo-8WS">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l3M-4i-l2K">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="l3M-4i-l2K" firstAttribute="centerX" secondItem="MdU-Oo-8WS" secondAttribute="centerX" id="0w4-nA-5QB"/>
-                                    <constraint firstItem="l3M-4i-l2K" firstAttribute="top" secondItem="MdU-Oo-8WS" secondAttribute="top" id="Jr5-uz-v50"/>
-                                    <constraint firstItem="l3M-4i-l2K" firstAttribute="leading" secondItem="MdU-Oo-8WS" secondAttribute="leading" id="WVI-nL-eRt"/>
-                                    <constraint firstItem="l3M-4i-l2K" firstAttribute="centerY" secondItem="MdU-Oo-8WS" secondAttribute="centerY" id="pKq-HO-Az0"/>
-                                    <constraint firstAttribute="trailing" secondItem="l3M-4i-l2K" secondAttribute="trailing" id="pXK-Kk-Sj7"/>
-                                    <constraint firstAttribute="bottom" secondItem="l3M-4i-l2K" secondAttribute="bottom" id="zh8-5a-Ss1"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="5ti-Pd-7Vm"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="AaO-QO-2YI"/>
-                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeV-PO-okM">
                                 <rect key="frame" x="20" y="810" width="374" height="44"/>
                                 <constraints>
@@ -500,11 +481,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="trailing" secondItem="MdU-Oo-8WS" secondAttribute="trailing" id="4ru-Zn-kbF"/>
-                            <constraint firstItem="MdU-Oo-8WS" firstAttribute="leading" secondItem="66t-RL-IQm" secondAttribute="leading" id="Enc-CM-3BH"/>
-                            <constraint firstItem="MdU-Oo-8WS" firstAttribute="top" secondItem="66t-RL-IQm" secondAttribute="top" id="T4M-r3-oAB"/>
                             <constraint firstItem="JeV-PO-okM" firstAttribute="leading" secondItem="mUg-UP-NVd" secondAttribute="leadingMargin" id="Uae-7L-uBe"/>
-                            <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="MdU-Oo-8WS" secondAttribute="bottom" id="XEh-nv-2xB"/>
                             <constraint firstItem="66t-RL-IQm" firstAttribute="bottom" secondItem="JeV-PO-okM" secondAttribute="bottom" constant="8" id="pQ5-V8-eO5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeV-PO-okM" secondAttribute="trailing" id="y1E-ur-s5u"/>
                         </constraints>
@@ -519,7 +496,7 @@
                             </barButtonItem>
                             <barButtonItem title="Filter" image="Symbols/line_horizontal_3_decrease_circle_fill" id="0uS-C2-wld">
                                 <connections>
-                                    <action selector="sortBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="XUE-7B-Bab"/>
+                                    <action selector="sortTypeBarButtonItemPressed:" destination="B4w-wJ-4Cf" id="iLY-kv-BBQ"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -532,8 +509,7 @@
                     <connections>
                         <outlet property="bottomBarView" destination="JeV-PO-okM" id="87a-eg-BSy"/>
                         <outlet property="changeLayoutBarButtonItem" destination="Dnc-bs-5ES" id="SnK-kE-RhL"/>
-                        <outlet property="scrollView" destination="MdU-Oo-8WS" id="eV9-re-hef"/>
-                        <outlet property="sortBarButtonItem" destination="0uS-C2-wld" id="ZbE-pn-CvC"/>
+                        <outlet property="sortTypeBarButtonItem" destination="0uS-C2-wld" id="pgJ-HN-nHY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mIX-KF-4qF" sceneMemberID="firstResponder"/>
