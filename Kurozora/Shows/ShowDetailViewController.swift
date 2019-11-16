@@ -93,23 +93,6 @@ class ShowDetailViewController: UITableViewController {
 	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
-	// Compact detail
-	var headerViewHeight: CGFloat = 390
-
-	// Stretchy view
-	var viewsAreHidden: Bool = false {
-		didSet {
-			self.tableView.alpha = viewsAreHidden ? 0 : 1
-			self.tabBarController?.tabBar.alpha = viewsAreHidden ? 0 : 1
-
-			if viewsAreHidden {
-				view.backgroundColor = .clear
-			} else {
-				view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-			}
-		}
-	}
-
 	// Show detail
 	var showID: Int?
 	var showDetailsElement: ShowDetailsElement? = nil {
@@ -132,12 +115,17 @@ class ShowDetailViewController: UITableViewController {
 	var libraryStatus: String?
 	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
+	var statusBarIsHidden = true
+
+	override var prefersStatusBarHidden: Bool {
+		return statusBarIsHidden
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Setup navigation controller with special settings
-		navigationController?.navigationBar.alpha = 0
+		self.viewsAreHidden(true)
 		navigationController?.navigationBar.prefersLargeTitles = false
 	}
 
@@ -179,16 +167,14 @@ class ShowDetailViewController: UITableViewController {
 		self.fetchDetails()
 
 		// Update banner image height constraint.
-		self.bannerImageViewHeightConstraint.constant = view.height / 3
-		self.view.setNeedsUpdateConstraints()
-		self.view.layoutIfNeeded()
+		self.updateBannerImageViewHeight()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
 		// Reset the navigation bar
-		navigationController?.navigationBar.alpha = 1
+		self.viewsAreHidden(false)
 		navigationController?.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
@@ -196,6 +182,7 @@ class ShowDetailViewController: UITableViewController {
 		super.viewWillTransition(to: size, with: coordinator)
 
 		DispatchQueue.main.async {
+			self.updateBannerImageViewHeight()
 			self.tableView.updateHeaderViewFrame()
 		}
 	}
@@ -366,6 +353,29 @@ class ShowDetailViewController: UITableViewController {
 
 		// First layout update
 		self.tableView.updateHeaderViewFrame()
+	}
+
+	/// Updates the banner image view height.
+	fileprivate func updateBannerImageViewHeight() {
+		var viewHeight = view.height
+		if UIDevice.isPhone && UIDevice.isLandscape {
+			viewHeight = view.width
+		}
+		self.bannerImageViewHeightConstraint.constant = viewHeight / 3
+		self.view.setNeedsUpdateConstraints()
+		self.view.layoutIfNeeded()
+	}
+
+	/**
+		Hides and unhides some views according to the given parameter.
+
+		- Parameter isHidden: The boolean indicating whether to hide or unhide the views.
+	*/
+	fileprivate func viewsAreHidden(_ isHidden: Bool) {
+		self.quickDetailsView.alpha = isHidden.int.cgFloat
+		self.navigationController?.setNavigationBarHidden(isHidden, animated: true)
+		self.statusBarIsHidden = isHidden
+		self.navigationController?.setNeedsStatusBarAppearanceUpdate()
 	}
 
 	// MARK: - IBActions
@@ -611,42 +621,19 @@ extension ShowDetailViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-//extension ShowDetailViewController {
-//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//		// Variables for showing/hiding compact details view
-//		let bannerHeight = bannerImageView.bounds.height
-//		let newOffset = bannerHeight - scrollView.contentOffset.y
-//		let compactDetailsOffset = newOffset - (self.navigationController?.navigationBar.height ?? 44)
-//
-//		// Logic for showing/hiding compact details view
-//		if compactDetailsOffset > bannerHeight {
-//			UIView.animate(withDuration: 0.5) {
-//				self.quickDetailsView.alpha = 1
-//			}
-//
-//			UIView.animate(withDuration: 0) {
-//				self.navigationController?.navigationBar.alpha = 0
-//			}
-//		} else {
-//			UIView.animate(withDuration: 0) {
-//				self.quickDetailsView.alpha = 0
-//			}
-//
-//			UIView.animate(withDuration: 0.5) {
-//				self.setNeedsStatusBarAppearanceUpdate()
-//			}
-//		}
-//	}
-//
-//	override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//		let yContentOffset = tableView.contentOffset.y
-//		let newHeaderViewHeight = headerViewHeight + view.safeAreaInsets.top
-//
-//		if yContentOffset < -newHeaderViewHeight && scrollView.isTracking {
-//			viewsAreHidden = false
-//		}
-//	}
-//}
+extension ShowDetailViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView.bounds.contains(quickDetailsView.center) {
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.viewsAreHidden(true)
+			}, completion: nil)
+		} else {
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.viewsAreHidden(false)
+			}, completion: nil)
+		}
+	}
+}
 
 // MARK: - ShowCastCellDelegate
 extension ShowDetailViewController: ShowCastCellDelegate {

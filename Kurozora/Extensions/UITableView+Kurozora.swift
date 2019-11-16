@@ -30,7 +30,7 @@ extension UITableView {
 		// Update the size of the header based on its internal content.
 		headerView.layoutIfNeeded()
 
-		// ***Trigger table view to know that header should be updated.
+		// Trigger table view to know that header should be updated.
 		let header = self.tableHeaderView
 		self.tableHeaderView = header
 	}
