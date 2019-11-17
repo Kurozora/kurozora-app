@@ -49,9 +49,6 @@ class ForumsViewController: TabmanViewController {
 		// Tabman view controllers.
 		dataSource = self
 
-		// Tabman bar.
-		initTabmanBarView()
-
 		// Fetch forum sections.
 		fetchForumsSections()
     }
@@ -85,6 +82,9 @@ class ForumsViewController: TabmanViewController {
 			DispatchQueue.main.async {
 				self.sectionsCount = sections?.count
 				self.sections = sections
+
+				// Tabman bar.
+				self.initTabmanBarView()
 			}
 		})
 	}
@@ -135,7 +135,11 @@ class ForumsViewController: TabmanViewController {
 			])
 		}))
 
+		print("Corner radius before: \(bar.cornerRadius)")
+		print("Bar height before: \(bar.height)")
 		bar.cornerRadius = bar.height / 2
+		print("Corner radius after: \(bar.cornerRadius)")
+		print("Bar height after: \(bar.height)")
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()

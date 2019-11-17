@@ -61,6 +61,13 @@ class SeasonsCollectionViewCell: UICollectionViewCell {
 			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
+	@IBOutlet var separatorViewLight: [UIView]? {
+		didSet {
+			for separatorView in separatorViewLight ?? [] {
+				separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
+			}
+		}
+	}
 
 	var seasonsElement: SeasonsElement? = nil {
 		didSet {

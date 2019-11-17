@@ -58,6 +58,6 @@ extension ShowCastCell: UICollectionViewDelegate {
 
 extension ShowCastCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: 374, height: 148)
+		return CGSize(width: 374, height: 130)
 	}
 }

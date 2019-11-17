@@ -460,7 +460,7 @@ class ShowDetailViewController: UITableViewController {
 	}
 
 	@IBAction func showRating(_ sender: Any) {
-		tableView.safeScrollToRow(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .top, animated: true)
+		tableView.safeScrollToRow(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .middle, animated: true)
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
