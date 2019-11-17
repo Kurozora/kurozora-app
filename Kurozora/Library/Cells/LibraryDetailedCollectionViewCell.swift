@@ -18,7 +18,6 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		self.applyShadow()
 		posterShadowView?.applyShadow()
 	}
 
@@ -32,5 +31,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		if let bannerImage = showDetailsElement.banner {
 			self.episodeImageView?.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
+
+		self.applyShadow()
 	}
 }

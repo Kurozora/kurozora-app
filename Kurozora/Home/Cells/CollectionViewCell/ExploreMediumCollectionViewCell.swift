@@ -25,5 +25,7 @@ class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
 		if let symbol = genreElement.symbol {
 			bannerImageView?.setImage(with: symbol, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
+
+		shadowView?.applyShadow()
 	}
 }

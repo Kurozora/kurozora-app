@@ -26,7 +26,7 @@ class SelfSizingCollectionView: UICollectionView {
 		return contentSize
 	}
 
-	// MARK: = View
+	// MARK: - View
 	override func awakeFromNib() {
 		super.awakeFromNib()
 

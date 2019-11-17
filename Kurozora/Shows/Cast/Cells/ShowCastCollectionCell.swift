@@ -67,7 +67,6 @@ class ShowCastCollectionCell: UICollectionViewCell {
 			let nameInitials = actorElement.name?.initials
 			self.actorImageView.setImage(with: actorImage, placeholder: nameInitials?.toImage ?? #imageLiteral(resourceName: "placeholder_person_image"))
 		}
-
 		self.actorShadowView.applyShadow()
 
 		if self.actorImageView.gestureRecognizers?.count ?? 0 == 0 {

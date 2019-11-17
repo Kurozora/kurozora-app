@@ -34,12 +34,6 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	var timer: Timer?
 
 	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		posterShadowView?.applyShadow()
-	}
-
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -57,6 +51,8 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		} else {
 			self.estimatedAiringLabel.text = ""
 		}
+
+		posterShadowView?.applyShadow()
 	}
 
 	@objc func updateEstimatedAiringLabel() {

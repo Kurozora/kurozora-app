@@ -38,13 +38,6 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	var updateBannerBackgroundColor = false
 	var libraryStatus: String?
 
-	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		shadowView?.applyShadow()
-	}
-
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
@@ -89,6 +82,9 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 		} else {
 			self.libraryStatusButton?.setTitle("ADD", for: .normal)
 		}
+
+		// Add shadow
+		shadowView?.applyShadow()
 	}
 
 	// MARK: - IBActions

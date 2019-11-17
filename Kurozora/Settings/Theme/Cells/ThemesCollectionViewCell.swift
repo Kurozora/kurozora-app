@@ -39,13 +39,6 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		shadowView.applyShadow()
-	}
-
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
@@ -85,6 +78,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 		shouldHideMoreButton()
 		updateGetThemeButton()
+		shadowView.applyShadow()
 	}
 
 	/// Checks whether to hide or unhide the more button for the current cell.
