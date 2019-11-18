@@ -138,11 +138,11 @@ extension SettingsTableViewController {
 
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
-			if #available(macCatalyst 13.0, *) {
+			#if targetEnvironment(macCatalyst)
 				return [.displayBlindness, .theme, .cache, .privacy]
-			} else {
+			#else
 				return [.displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy]
-			}
+			#endif
 		}
 
 		/// An array containing all support section settings rows.
