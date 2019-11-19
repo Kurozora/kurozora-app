@@ -10,14 +10,19 @@ import UIKit
 
 class HorizontalCollectionTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var collectionView: UICollectionView! {
-		didSet {
-			NotificationCenter.default.addObserver(self, selector: #selector(invalidateCollectionViewLayout), name: .KEDidInvalidateContentSize, object: nil)
-		}
-	}
+	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties
-	var cellStyle: HorizontalCollectionCellStyle!
+	var cellStyle: HorizontalCollectionCellStyle! {
+		didSet {
+			guard let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+			let contentSize = calculateCellStyleSize(for: collectionViewLayout)
+			collectionViewHeightConstraint.constant = contentSize.height + 10
+			self.setNeedsUpdateConstraints()
+			self.layoutIfNeeded()
+		}
+	}
 	var shows: [ShowDetailsElement]? = nil {
 		didSet {
 			collectionView.reloadData()
@@ -39,10 +44,6 @@ class HorizontalCollectionTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Functions
-	@objc func invalidateCollectionViewLayout() {
-		collectionView.performBatchUpdates({}, completion: nil)
-	}
-
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	private func makeTargetedPreview(for configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
 		guard let identifier = configuration.identifier as? [String: Any] else { return nil }
@@ -93,7 +94,7 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.reuseIdentifier, for: indexPath) as! ExploreBaseCollectionViewCell
+		let exploreCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellStyle.identifierString, for: indexPath) as! ExploreBaseCollectionViewCell
 
 		if shows != nil {
 			exploreCell.showDetailsElement = shows?[indexPath.row]
@@ -174,20 +175,23 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HorizontalCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		var size = collectionView.size
+		guard let collectionViewLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+		var cellStyleSize = cellStyle.sizeValue
 
-		switch cellStyle {
-		case .banner:
-			size = CGSize(width: self.frame.width - 60, height: self.frame.height - 10)
-		case .medium:
-			size = CGSize(width: 284, height: (self.frame.height / 2) - 15)
-		case .small:
-			return CGSize(width: 284, height: (self.frame.height / 2) - 15)
-		case .video:
-			size = CGSize(width: 284, height: self.frame.height - 10)
-		default: break
+		cellStyleSize = calculateCellStyleSize(for: collectionViewLayout)
+
+		return cellStyleSize
+	}
+
+	func calculateCellStyleSize(for collectionViewLayout: UICollectionViewFlowLayout) -> CGSize {
+		var cellStyleSize = cellStyle.sizeValue
+
+		if UIScreen.main.nativeBounds.size.width < cellStyleSize.width {
+			let sizeWidth = self.frame.width - collectionViewLayout.minimumInteritemSpacing - collectionViewLayout.sectionInset.left
+			let sizeHeight = self.frame.height - collectionViewLayout.sectionInset.bottom
+			cellStyleSize = CGSize(width: sizeWidth, height: sizeHeight)
 		}
 
-		return size
+		return cellStyleSize
 	}
 }

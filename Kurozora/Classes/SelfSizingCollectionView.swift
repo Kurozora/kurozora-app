@@ -8,13 +8,14 @@
 
 import UIKit
 
-protocol SelfSizingCollectionViewDelegate: class {
+@objc protocol SelfSizingCollectionViewDelegate: class {
 	func collectionView(_ collectionView: UICollectionView, didChageContentSizeFrom oldSize: CGSize, to newSize: CGSize)
 }
 
 class SelfSizingCollectionView: UICollectionView {
 	// MARK: - Properties
-	weak var selfSizingDelegate: SelfSizingCollectionViewDelegate?
+	@IBOutlet weak var selfSizingDelegate: SelfSizingCollectionViewDelegate?
+
 	override open var contentSize: CGSize {
 		didSet {
 			guard bounds.size.height != contentSize.height else { return }
@@ -22,6 +23,7 @@ class SelfSizingCollectionView: UICollectionView {
 			selfSizingDelegate?.collectionView(self, didChageContentSizeFrom: oldValue, to: contentSize)
 		}
 	}
+
 	override open var intrinsicContentSize: CGSize {
 		return contentSize
 	}

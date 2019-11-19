@@ -6,7 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /**
 	List of horizontal explore cell styles.
@@ -35,7 +35,8 @@ enum HorizontalCollectionCellStyle: String {
 	/// Indicates that the cell has the `video` style.
 	case video
 
-	var reuseIdentifier: String {
+	/// The cell identifier string of a horizontal collection cell style.
+	var identifierString: String {
 		switch self {
 		case .banner:
 			return "BannerExploreCollectionViewCell"
@@ -47,6 +48,22 @@ enum HorizontalCollectionCellStyle: String {
 			return "SmallExploreCollectionViewCell"
 		case .video:
 			return "VideoExploreCollectionViewCell"
+		}
+	}
+
+	/// The size value of a horizontal collection cell style.
+	var sizeValue: CGSize {
+		switch self {
+		case .banner:
+			return CGSize(width: 375, height: 235)
+		case .medium:
+			return CGSize(width: 375, height: 211)
+		case .small:
+			return CGSize(width: 375, height: 211)
+		case .video:
+			return CGSize(width: 375, height: 390)
+		default:
+			return .zero
 		}
 	}
 }

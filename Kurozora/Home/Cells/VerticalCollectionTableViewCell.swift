@@ -28,11 +28,6 @@ class VerticalCollectionTableViewCell: UITableViewCell {
 	override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
 		return collectionView.frame.size
 	}
-
-	// MARK: - Functions
-	@objc func invalidateCollectionViewLayout() {
-		collectionView.reloadData()
-	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -48,7 +43,7 @@ extension VerticalCollectionTableViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if let identifier = VerticalCollectionCellStyle(rawValue: indexPath.section)?.reuseIdentifier {
+		if let identifier = VerticalCollectionCellStyle(rawValue: indexPath.section)?.identifierString {
 			if let actionListExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? ActionBaseExploreCollectionViewCell {
 				return actionListExploreCollectionViewCell
 			}

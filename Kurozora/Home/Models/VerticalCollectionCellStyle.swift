@@ -23,7 +23,8 @@ enum VerticalCollectionCellStyle: Int {
 	/// Indicates that the cell has the `actionButton` style.
 	case actionButton = 1
 
-	var reuseIdentifier: String {
+	/// The cell identifier string of a vertical collection cell style.
+	var identifierString: String {
 		switch self {
 		case .actionList:
 			return "ActionListExploreCollectionViewCell"
