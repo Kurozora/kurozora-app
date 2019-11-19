@@ -582,14 +582,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="DiscussionsCell" id="t1u-tF-MMs" customClass="DiscussionsCell">
-                                <rect key="frame" x="0.0" y="787" width="414" height="109.66666412353516"/>
+                                <rect key="frame" x="0.0" y="787" width="414" height="85.666664123535156"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t1u-tF-MMs" id="ctT-td-nQG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="109.66666412353516"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="85.666664123535156"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-nM-KJ9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="109.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="85.666666666666671"/>
                                             <subviews>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re:Zero kara Hajimeru Break Time Episode 1 Discussion" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ezT-gY-JOt" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="40.666666666666664"/>
@@ -598,35 +598,35 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="47w-su-K62">
-                                                    <rect key="frame" x="20" y="50.666666666666657" width="27.666666666666671" height="48"/>
+                                                    <rect key="frame" x="20" y="50.666666666666664" width="27.666666666666671" height="23.999999999999993"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-0B-pCA">
-                                                    <rect key="frame" x="50.666666666666657" y="50.666666666666657" width="48" height="48"/>
+                                                    <rect key="frame" x="50.666666666666664" y="50.666666666666664" width="23.999999999999993" height="23.999999999999993"/>
                                                     <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="Symbols/heart_fill"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pK-Ks-mhX">
-                                                    <rect key="frame" x="108.66666666666667" y="50.666666666666657" width="27.333333333333329" height="48"/>
+                                                    <rect key="frame" x="84.666666666666671" y="50.666666666666664" width="27.333333333333329" height="23.999999999999993"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-WS-dua">
-                                                    <rect key="frame" x="139" y="50.666666666666657" width="48" height="48"/>
+                                                    <rect key="frame" x="115" y="50.666666666666664" width="24" height="23.999999999999993"/>
                                                     <color key="tintColor" red="0.21568627450980393" green="0.82745098039215681" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="Symbols/message_fill"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02-26-19, 5:13 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9l-nY-U3L">
-                                                    <rect key="frame" x="265" y="50.666666666666657" width="129" height="48"/>
+                                                    <rect key="frame" x="265" y="50.666666666666664" width="129" height="23.999999999999993"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tgY-Yp-nYz" userLabel="Separator">
-                                                    <rect key="frame" x="8" y="108.66666666666667" width="398" height="1"/>
+                                                    <rect key="frame" x="8" y="84.666666666666671" width="398" height="1"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="Rkd-dc-KyL"/>
@@ -1590,27 +1590,27 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowSeasonsCell" id="Ele-ME-Coz" customClass="ShowSeasonsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="839.33333206176758" width="414" height="174"/>
+                                <rect key="frame" x="0.0" y="839.33333206176758" width="414" height="148"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ele-ME-Coz" id="DHf-gh-akA">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="174"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ele-ME-Coz" id="DHf-gh-akA">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jfS-cd-dqT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="174"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="148"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="174" id="64W-AS-v8c"/>
+                                                <constraint firstAttribute="height" constant="148" id="64W-AS-v8c"/>
                                             </constraints>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="40" minimumInteritemSpacing="40" id="2Ef-kJ-a7U">
                                                 <size key="itemSize" width="374" height="170"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeasonsCollectionViewCell" id="AlD-fR-d3B" customClass="SeasonsCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="22" width="374" height="130"/>
+                                                    <rect key="frame" x="0.0" y="9" width="374" height="130"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gBI-Li-Zao">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="130"/>
@@ -1803,8 +1803,8 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="jfS-cd-dqT" secondAttribute="bottom" id="YU8-ic-jLJ"/>
                                         <constraint firstItem="jfS-cd-dqT" firstAttribute="top" secondItem="DHf-gh-akA" secondAttribute="top" id="a9s-YF-alT"/>
-                                        <constraint firstItem="jfS-cd-dqT" firstAttribute="leading" secondItem="DHf-gh-akA" secondAttribute="leading" id="kz5-fj-szL"/>
-                                        <constraint firstAttribute="trailing" secondItem="jfS-cd-dqT" secondAttribute="trailing" id="lyu-aK-DMr"/>
+                                        <constraint firstItem="jfS-cd-dqT" firstAttribute="leading" secondItem="DHf-gh-akA" secondAttribute="leadingMargin" id="kz5-fj-szL"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="jfS-cd-dqT" secondAttribute="trailing" id="lyu-aK-DMr"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1814,14 +1814,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowCastCell" id="nyK-M7-grR" customClass="ShowCastCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1013.3333320617676" width="414" height="148"/>
+                                <rect key="frame" x="0.0" y="987.33333206176758" width="414" height="148"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyK-M7-grR" id="p3V-ah-V1B">
+                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nyK-M7-grR" id="p3V-ah-V1B">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="whk-xy-IPB">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="148"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="148" id="3zj-aJ-tNa"/>
@@ -1830,24 +1830,24 @@
                                                 <size key="itemSize" width="374" height="148"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowCastCollectionCell" id="X5i-Ts-F7a" customClass="ShowCastCollectionCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="9" width="374" height="130"/>
+                                                    <rect key="frame" x="0.0" y="9" width="374" height="130"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jP2-rU-sPR">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="130"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Jj-bZ-qsW" userLabel="Actor View">
-                                                                <rect key="frame" x="0.0" y="0.0" width="232" height="130"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="230.66666666666666" height="130"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5wG-KB-YpV">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="89.333333333333329" height="130"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="88" height="130"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OH5-t6-Nqn">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="89.333333333333329" height="130"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="88" height="130"/>
                                                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -1859,14 +1859,14 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" secondItem="OH5-t6-Nqn" secondAttribute="bottom" id="0fA-4f-ApS"/>
                                                                             <constraint firstItem="OH5-t6-Nqn" firstAttribute="top" secondItem="5wG-KB-YpV" secondAttribute="top" id="86N-Wt-iKj"/>
-                                                                            <constraint firstAttribute="width" secondItem="5wG-KB-YpV" secondAttribute="height" multiplier="11:16" id="Lh0-XF-ze7"/>
+                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="130" id="9c3-gw-51t"/>
                                                                             <constraint firstAttribute="width" constant="88" id="Mzt-Og-GwT"/>
                                                                             <constraint firstItem="OH5-t6-Nqn" firstAttribute="leading" secondItem="5wG-KB-YpV" secondAttribute="leading" id="se9-5a-jcx"/>
                                                                             <constraint firstAttribute="trailing" secondItem="OH5-t6-Nqn" secondAttribute="trailing" id="xhY-iX-4gl"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yūsuke Kobayashi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mZ2-Ry-6gc" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                        <rect key="frame" x="99.333333333333329" y="0.0" width="132.66666666666669" height="18"/>
+                                                                        <rect key="frame" x="97.999999999999986" y="0.0" width="132.66666666666663" height="18"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <gestureRecognizers/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1874,7 +1874,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label hidden="YES" contentMode="left" text="Voice actor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWD-SX-GOA" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                        <rect key="frame" x="99.333333333333314" y="18" width="64" height="14.333333333333336"/>
+                                                                        <rect key="frame" x="98" y="18" width="64" height="14.333333333333336"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1893,19 +1893,19 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cC7-Rz-UlC" userLabel="Character View">
-                                                                <rect key="frame" x="167" y="0.0" width="207" height="130"/>
+                                                                <rect key="frame" x="166" y="0.0" width="208" height="130"/>
                                                                 <subviews>
                                                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="as Subaru Natsuki" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qBL-yn-jke" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="32.333333333333336" width="107.66666666666667" height="15.666666666666664"/>
+                                                                        <rect key="frame" x="0.0" y="32.333333333333336" width="110" height="15.666666666666664"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Cu-sU-5tb">
-                                                                        <rect key="frame" x="117.66666666666669" y="0.0" width="89.333333333333314" height="130"/>
+                                                                        <rect key="frame" x="120" y="0.0" width="88" height="130"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Aiv-rD-jlh">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="89.333333333333329" height="130"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="88" height="130"/>
                                                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -1919,8 +1919,8 @@
                                                                             <constraint firstItem="Aiv-rD-jlh" firstAttribute="leading" secondItem="6Cu-sU-5tb" secondAttribute="leading" id="ILK-f4-ACZ"/>
                                                                             <constraint firstAttribute="width" constant="88" id="Jf2-72-h96"/>
                                                                             <constraint firstAttribute="trailing" secondItem="Aiv-rD-jlh" secondAttribute="trailing" id="Nmq-aT-tR5"/>
-                                                                            <constraint firstAttribute="width" secondItem="6Cu-sU-5tb" secondAttribute="height" multiplier="11:16" id="gyP-2q-RiT"/>
                                                                             <constraint firstItem="Aiv-rD-jlh" firstAttribute="top" secondItem="6Cu-sU-5tb" secondAttribute="top" id="hbn-Sx-PdV"/>
+                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="130" id="i9L-2Z-EAw"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
@@ -1968,8 +1968,8 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="whk-xy-IPB" secondAttribute="bottom" id="85g-Fw-7ht"/>
                                         <constraint firstItem="whk-xy-IPB" firstAttribute="top" secondItem="p3V-ah-V1B" secondAttribute="top" id="DW6-9V-zKt"/>
-                                        <constraint firstItem="whk-xy-IPB" firstAttribute="leading" secondItem="p3V-ah-V1B" secondAttribute="leading" id="adL-YC-Y73"/>
-                                        <constraint firstAttribute="trailing" secondItem="whk-xy-IPB" secondAttribute="trailing" id="dPe-ao-Pgx"/>
+                                        <constraint firstItem="whk-xy-IPB" firstAttribute="leading" secondItem="p3V-ah-V1B" secondAttribute="leadingMargin" id="adL-YC-Y73"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="whk-xy-IPB" secondAttribute="trailing" id="dPe-ao-Pgx"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1979,7 +1979,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShowRelatedCell" id="4ve-cH-S7R" customClass="ShowRelatedCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1161.3333320617676" width="414" height="142.66667175292969"/>
+                                <rect key="frame" x="0.0" y="1135.3333320617676" width="414" height="142.66667175292969"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4ve-cH-S7R" id="3MA-xd-ii6">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="142.66667175292969"/>
