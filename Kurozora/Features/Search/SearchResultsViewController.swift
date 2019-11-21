@@ -153,37 +153,6 @@ class SearchResultsTableViewController: UITableViewController {
 //			}, completion: nil)
 //		}
 //	}
-
-	// MARK: - Segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? SearchBaseResultsCell {
-			if segue.identifier == "ShowDetailsSegue" {
-				// Show detail for show cell
-				let showDetailViewController = segue.destination as? ShowDetailViewController
-				showDetailViewController?.showDetailsElement = (currentCell as? SearchShowResultsCell)?.showDetailsElement
-			} else if segue.identifier == "ThreadSegue" {
-				// Show detail for thread cell
-				if let threadTableViewController = segue.destination as? ThreadTableViewController {
-					threadTableViewController.forumsThreadElement = (currentCell as? SearchForumsResultsCell)?.forumsThreadElement
-					threadTableViewController.dismissButtonIsEnabled = true
-				}
-			} else if segue.identifier == "ProfileSegue" {
-				// Show user profile for user cell
-				if let kurozoraNavigationController = segue.destination as? KNavigationController {
-					if let profileViewController = kurozoraNavigationController.topViewController as? ProfileTableViewController {
-						profileViewController.userID = (currentCell as? SearchUserResultsCell)?.userProfile?.id
-						profileViewController.dismissButtonIsEnabled = true
-					}
-				}
-			}
-		} else if let currentCell = sender as? SuggestionResultCell {
-			if segue.identifier == "ShowDetailsSegue" {
-				// Show detail for show cell
-				let showDetailViewController = segue.destination as? ShowDetailViewController
-				showDetailViewController?.showID = currentCell.showDetailsElement?.id
-			}
-		}
-	}
 }
 
 // MARK: - UITableViewDataSource
@@ -263,6 +232,31 @@ extension SearchResultsTableViewController {
 
 // MARK: - UITableViewDelegate
 extension SearchResultsTableViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if showResults != nil || threadResults != nil || userResults != nil {
+			guard let searchScope = SearchScope(rawValue: currentScope) else { return }
+			let searchBaseResultsCell = tableView.cellForRow(at: indexPath) as? SearchBaseResultsCell
+
+			switch searchScope {
+			case .show:
+				if let showDetailsViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+					showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
+					presentingViewController?.show(showDetailsViewController, sender: nil)
+				}
+			case .myLibrary: break
+			case .thread:
+				if let threadTableViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
+					threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
+					presentingViewController?.show(threadTableViewController, sender: nil)
+				}
+			case .user:
+				if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+					profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
+					presentingViewController?.show(profileTableViewController, sender: nil)
+				}
+			}
+		}
+	}
 }
 
 // MARK: - UISearchResultsUpdating

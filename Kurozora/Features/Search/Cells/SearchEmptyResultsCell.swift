@@ -23,8 +23,6 @@ class SearchEmptyResultsCell: SearchBaseResultsCell {
 	override func configureCell() {
 		super.configureCell()
 
-		collectionView.dataSource = self
-		collectionView.delegate = self
 		collectionView.reloadData()
 	}
 }
@@ -45,6 +43,13 @@ extension SearchEmptyResultsCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension SearchEmptyResultsCell: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let suggestionResultCell = collectionView.cellForItem(at: indexPath) as? SuggestionResultCell
+		if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+			showDetailViewController.showID = suggestionResultCell?.showDetailsElement?.id
+			parentViewController?.presentingViewController?.show(showDetailViewController, sender: nil)
+		}
+	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

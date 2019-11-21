@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PsB-hK-0R2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LvW-Sg-g0V">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,16 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--details-->
-        <scene sceneID="sEx-ch-J5e">
-            <objects>
-                <viewControllerPlaceholder storyboardName="details" id="kWy-vp-aKx" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="NsQ-Dq-AlM"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xVz-Yf-Prr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2551.1999999999998" y="96.798029556650249"/>
-        </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="lfD-Or-ghU">
             <objects>
@@ -230,7 +220,6 @@
                                     <outlet property="showRatingLabel" destination="tf7-4y-5GK" id="fyg-yf-Ygb"/>
                                     <outlet property="statusLabel" destination="5DJ-DG-2rQ" id="5R3-3N-v3c"/>
                                     <outlet property="visualEffectView" destination="4WE-mR-MBh" id="NtH-Nq-1Qt"/>
-                                    <segue destination="kWy-vp-aKx" kind="show" identifier="ShowDetailsSegue" id="ID5-St-BcV"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchForumsResultsCell" id="FFj-SU-PHZ" customClass="SearchForumsResultsCell" customModule="Kurozora" customModuleProvider="target">
@@ -283,7 +272,7 @@
                                                 <blurEffect style="dark"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/lock_fill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qv-q2-Yj2">
+                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/lock_fill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qv-q2-Yj2">
                                             <rect key="frame" x="24" y="10" width="18" height="18"/>
                                             <color key="tintColor" red="1" green="0.25490196079999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -327,7 +316,6 @@
                                     <outlet property="separatorView" destination="Cyw-FG-BUa" id="999-Zu-ADv"/>
                                     <outlet property="textView" destination="27I-Cf-LRs" id="8HQ-Ju-HLo"/>
                                     <outlet property="visualEffectView" destination="ogJ-ZT-hRh" id="9i4-fH-Ike"/>
-                                    <segue destination="AEz-xT-jfB" kind="show" identifier="ThreadSegue" id="BaG-fd-y2x"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchUserResultsCell" id="W2J-mV-8es" customClass="SearchUserResultsCell" customModule="Kurozora" customModuleProvider="target">
@@ -453,7 +441,6 @@
                                     <outlet property="secondaryLabel" destination="Wnq-q2-XbH" id="Git-e7-Ihu"/>
                                     <outlet property="separatorView" destination="VOb-mx-QHO" id="UqU-GK-drn"/>
                                     <outlet property="visualEffectView" destination="HMC-e7-QjX" id="hiP-vb-YsT"/>
-                                    <segue destination="sGa-wM-2xH" kind="show" identifier="ProfileSegue" id="0Au-n1-TGs"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchEmptyResultsCell" id="KbH-tf-QLk" customClass="SearchEmptyResultsCell" customModule="Kurozora" customModuleProvider="target">
@@ -527,7 +514,6 @@
                                                     <connections>
                                                         <outlet property="posterImageView" destination="8uh-1S-zh5" id="9fY-nb-nlR"/>
                                                         <outlet property="titleLabel" destination="s1g-Jn-4Kv" id="JXk-vu-SP5"/>
-                                                        <segue destination="kWy-vp-aKx" kind="show" identifier="ShowDetailsSegue" id="sr9-R1-Ogy"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -536,6 +522,10 @@
                                                     <real key="value" value="10"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <outlet property="dataSource" destination="KbH-tf-QLk" id="cth-Ko-8Bt"/>
+                                                <outlet property="delegate" destination="KbH-tf-QLk" id="gcd-7K-RX3"/>
+                                            </connections>
                                         </collectionView>
                                     </subviews>
                                     <constraints>
@@ -558,49 +548,10 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="3E2-1M-MQ0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vN-z7-S7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1983.2" y="150.73891625615764"/>
-        </scene>
-        <!--ThreadTableViewController-->
-        <scene sceneID="4hh-j3-mcN">
-            <objects>
-                <viewControllerPlaceholder storyboardName="forums" referencedIdentifier="ThreadTableViewController" id="AEz-xT-jfB" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="GyW-Yf-BKh"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bv8-00-ReG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2650.4000000000001" y="150.73891625615764"/>
-        </scene>
-        <!--profile-->
-        <scene sceneID="ww2-I0-p6Y">
-            <objects>
-                <viewControllerPlaceholder storyboardName="profile" id="sGa-wM-2xH" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="sT1-MZ-OBm"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Qx-9L-HCG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2550.4000000000001" y="205.41871921182266"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="wpG-nt-B1o">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PsB-hK-0R2" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="g74-TC-xEz">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="LvW-Sg-g0V" kind="relationship" relationship="rootViewController" id="sJx-Qf-Byf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A7F-ak-cjy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1040.8" y="150.73891625615764"/>
         </scene>
     </scenes>
     <resources>
@@ -608,8 +559,5 @@
         <image name="star_empty" width="48" height="46"/>
         <image name="star_filled" width="48" height="46"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="ID5-St-BcV"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

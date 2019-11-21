@@ -131,7 +131,7 @@
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pQz-Em-vu3" customClass="CosmosView" customModule="Cosmos">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQz-Em-vu3" customClass="CosmosView" customModule="Cosmos">
                                             <rect key="frame" x="82.666666666666686" y="216" width="95" height="18"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
@@ -313,7 +313,7 @@
                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
                                     <rect key="frame" x="80.666666666666686" y="212" width="95" height="18"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
@@ -2173,7 +2173,6 @@
                             <outlet property="delegate" destination="1EW-qW-NuS" id="00I-NB-jSc"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="ageScoreLabel" destination="skQ-Sb-VHs" id="iYa-L1-si7"/>
                         <outlet property="ageTitleLabel" destination="CTb-yF-1bf" id="c3x-C2-V1l"/>

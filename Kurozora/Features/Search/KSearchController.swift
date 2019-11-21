@@ -21,7 +21,7 @@ class KSearchController: UISearchController {
 
 	// MARK: - Initializer
 	override init(searchResultsController: UIViewController?) {
-		super.init(searchResultsController: searchResultsTableViewController)
+		super.init(searchResultsController: searchResultsController)
 	}
 
 	init() {

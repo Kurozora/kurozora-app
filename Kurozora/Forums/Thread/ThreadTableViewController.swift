@@ -97,16 +97,6 @@ class ThreadTableViewController: UITableViewController {
 	var replyID: Int?
 	var newReplyID: Int!
 	var threadInformation: String?
-	var dismissButtonIsEnabled = false {
-		didSet {
-			// If presented modally, show a dismiss button instead of the default "back" button
-			if dismissButtonIsEnabled {
-				navigationItem.leftBarButtonItems = nil
-				let stopItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissPressed(_:)))
-				navigationItem.leftBarButtonItem = stopItem
-			}
-		}
-	}
 
 	// Reply variables
 	var replies: [ThreadRepliesElement]?
