@@ -68,10 +68,21 @@ class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
 		configureVideoPlayer()
 	}
 
+	func configureBannerView() {
+		videoPlayerContainer.removeSubviews()
+		videoPlayerContainer.addSubview(self.thumbnailPlaceholder)
+	}
+
 	/// Configures the video player with the defined settings.
 	func configureVideoPlayer() {
-		guard let videoUrlString = showDetailsElement?.videoUrl else { return }
-		guard let videoUrl = URL(string: videoUrlString) else { return }
+		guard let videoUrlString = showDetailsElement?.videoUrl else {
+			configureBannerView()
+			return
+		}
+		guard let videoUrl = URL(string: videoUrlString) else {
+			configureBannerView()
+			return
+		}
 
 		let avPlayerItem = AVPlayerItem(url: videoUrl)
 		if !(self.avPlayer.currentItem?.isEqual(self.avPlayerItem) ?? false) {
@@ -95,6 +106,7 @@ class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
 
 			// Add avPlayerViewController view as subview to cell
 			let avPlayerControllerView = avPlayerViewController.view
+			videoPlayerContainer.removeSubviews()
 			videoPlayerContainer.addSubview(avPlayerControllerView!)
 			avPlayerControllerView?.didMoveToSuperview()
 		}
