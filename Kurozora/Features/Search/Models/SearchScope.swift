@@ -30,10 +30,20 @@ enum SearchScope: Int {
 
 	/// Search in users list.
 	case user = 3
-}
 
-// MARK: - Variables
-extension SearchScope {
+	// MARK: - Variables
+	/// An array containing all search scopes.
+	static let all: [SearchScope] = [.show, .myLibrary, .thread, .user]
+
+	/// An array containing the string value of all search scopes.
+	static var allString: [String] {
+		var allString: [String] = []
+		for scope in all {
+			allString.append(scope.stringValue)
+		}
+		return allString
+	}
+
 	/// The string value of a search scope.
 	var stringValue: String {
 		switch self {
@@ -62,34 +72,20 @@ extension SearchScope {
 		}
 	}
 
-	/// An array containing all search scopes.
-	static let all: [SearchScope] = [.show, .myLibrary, .thread, .user]
-
-	/// An array containing the string value of all search scopes.
-	static var allString: [String] {
-		var allString: [String] = []
-		for scope in all {
-			allString.append(scope.stringValue)
+	/// An array containing the placeholder array of a search scope.
+	fileprivate var placeholderArray: [String] {
+		switch self {
+		case .show, .myLibrary:
+			return ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
+		case .thread:
+			return ["Perferendis est eveniet.", "Dolor eveniet cupiditate.", "Ab corporis fugit."]
+		case .user:
+			return ["Kirito", "Usopp"]
 		}
-		return allString
 	}
-}
 
-// MARK: - Functions
-extension SearchScope {
-	/// Returns a SearchScope for a given identifier string.
-	static func scope(from identifier: String) -> SearchScope {
-		switch identifier {
-		case "ShowResultCell":
-			return .show
-		case "LibraryResultCell":
-			return .myLibrary
-		case "ThreadResultCell":
-			return .thread
-		case "UserResultCell":
-			return .user
-		default:
-			return .show
-		}
+	/// A random placeholder string value of a search scope.
+	var placeholderString: String? {
+		return placeholderArray.randomElement()
 	}
 }

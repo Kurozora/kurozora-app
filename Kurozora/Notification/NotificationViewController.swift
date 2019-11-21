@@ -19,11 +19,11 @@ protocol NotificationsViewControllerDelegate: class {
 }
 
 class NotificationsViewController: UITableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
 	// MARK: - Properties
-	var searchResultsTableViewController: SearchResultsTableViewController!
-	var searchController: SearchController!
+	var kSearchController: KSearchController = KSearchController()
 	var grouping: NotificationGroupStyle = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
 	var userNotificationsElement: [UserNotificationsElement]? {
@@ -87,18 +87,12 @@ class NotificationsViewController: UITableViewController {
 
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		// Configure search bar
+		kSearchController.searchScope = .user
+		kSearchController.viewController = self
 
-		searchController = SearchController(searchResultsController: searchResultsTableViewController)
-		searchController.delegate = self
-		searchController.searchBar.selectedScopeButtonIndex = SearchScope.user.rawValue
-		searchController.searchResultsUpdater = searchResultsTableViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsTableViewController
-
-		navigationItem.searchController = searchController
+		// Add search bar to navigation controller
+		navigationItem.searchController = kSearchController
 	}
 
 	/// Set up the empty data view.
@@ -507,30 +501,5 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 		options.buttonSpacing = 4
 		options.backgroundColor = .clear
 		return options
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension NotificationsViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = true
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = true
-			})
-		}
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = false
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = false
-			})
-		}
 	}
 }

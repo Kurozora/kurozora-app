@@ -11,7 +11,6 @@ import SwiftTheme
 
 class KNavigationController: UINavigationController {
 	// MARK: - Properties
-	var searchResultsViewController: SearchResultsTableViewController?
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return KThemePicker.statusBarStyle.statusBarValue
 	}

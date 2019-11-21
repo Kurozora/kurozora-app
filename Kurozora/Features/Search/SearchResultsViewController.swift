@@ -185,13 +185,10 @@ class SearchResultsTableViewController: UITableViewController {
 				showDetailViewController?.showDetailsElement = (currentCell as? SearchShowResultsCell)?.showDetailsElement
 			} else if segue.identifier == "ThreadSegue" {
 				// Show detail for thread cell
-				if let kurozoraNavigationController = segue.destination as? KNavigationController {
-					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-						threadViewController.forumsThreadElement = (currentCell as? SearchForumsResultsCell)?.forumsThreadElement
-						threadViewController.dismissButtonIsEnabled = true
-
-						kurozoraNavigationController.pushViewController(threadViewController)
-					}
+				if let threadTableViewController = segue.destination as? ThreadTableViewController {
+					threadTableViewController.forumsThreadElement = (currentCell as? SearchForumsResultsCell)?.forumsThreadElement
+					threadTableViewController.dismissButtonIsEnabled = true
+//					self.navigationController?.pushViewController(threadTableViewController)
 				}
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
@@ -225,11 +222,11 @@ extension SearchResultsTableViewController {
 			switch searchScope {
 			case .show:
 				resultsCount = showResults?.count
+			case .myLibrary: break
 			case .thread:
 				resultsCount = threadResults?.count
 			case .user:
 				resultsCount = userResults?.count
-			case .myLibrary: break
 			}
 		}
 		return resultsCount ?? 1

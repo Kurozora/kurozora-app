@@ -24,8 +24,7 @@ class LibraryViewController: TabmanViewController {
 
 	// MARK: - Properties
 	lazy var viewControllers = [UIViewController]()
-	var searchResultsTableViewController: SearchResultsTableViewController?
-	var searchController: SearchController!
+	var kSearchController: KSearchController = KSearchController()
 
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
@@ -42,12 +41,6 @@ class LibraryViewController: TabmanViewController {
 	#endif
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		navigationItem.hidesSearchBarWhenScrolling = false
-	}
-
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -109,18 +102,12 @@ class LibraryViewController: TabmanViewController {
 
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		// Configure search controller
+		kSearchController.searchScope = .myLibrary
+		kSearchController.viewController = self
 
-		searchController = SearchController(searchResultsController: searchResultsTableViewController)
-		searchController.delegate = self
-		searchController.searchBar.selectedScopeButtonIndex = SearchScope.myLibrary.rawValue
-		searchController.searchResultsUpdater = searchResultsTableViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsTableViewController
-
-		navigationItem.searchController = searchController
+		// Add search bar to navigation controller
+		navigationItem.searchController = kSearchController
 	}
 
 	/// Applies the the style for the currently enabled theme on the tabman bar.
@@ -366,30 +353,5 @@ extension LibraryViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		let sectionTitle = Library.Section.all[index].stringValue
 		return TMBarItem(title: sectionTitle)
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension LibraryViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = true
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = true
-			})
-		}
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = false
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = false
-			})
-		}
 	}
 }

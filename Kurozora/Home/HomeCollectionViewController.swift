@@ -13,10 +13,7 @@ import WhatsNew
 
 class HomeCollectionViewController: UITableViewController {
 	// MARK: - Properties
-	var searchResultsTableViewController: SearchResultsTableViewController?
-	var searchController: SearchController!
-	var placeholderTimer: Timer?
-	let placeholderArray: [String] = ["One Piece", "Shaman Asakaura", "a young girl with big ambitions", "massively multiplayer online role-playing game", "vampires"]
+	var kSearchController: KSearchController = KSearchController()
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
@@ -116,18 +113,12 @@ class HomeCollectionViewController: UITableViewController {
 
 	/// Sets up the search bar and starts the placeholder timer.
 	fileprivate func setupSearchBar() {
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		// Configure search bar
+		kSearchController.viewController = self
+		kSearchController.searchScope = .show
 
-		searchController = SearchController(searchResultsController: searchResultsTableViewController)
-		searchController.delegate = self
-		searchController.searchResultsUpdater = searchResultsTableViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsTableViewController
-		startPlaceholderTimer(for: searchControllerBar)
-
-		navigationItem.searchController = searchController
+		// Add search bar to navigation controller
+		navigationItem.searchController = kSearchController
 	}
 
 	/// Fetches the explore page from the server.
@@ -142,38 +133,6 @@ class HomeCollectionViewController: UITableViewController {
 	/// Reload the data on the view.
 	@objc private func reloadData() {
 		fetchExplore()
-	}
-
-	/**
-		Updates the search placeholder with new placeholder string every second.
-
-		- Parameter timer: A `Timer` object containing a reference to the search controller.
-	*/
-	@objc func updateSearchPlaceholder(_ timer: Timer) {
-		if let searchControllerBar = timer.userInfo as? UISearchBar {
-			UIView.animate(withDuration: 1, delay: 0, options: .transitionCrossDissolve, animations: {
-				searchControllerBar.placeholder = self.placeholderArray.randomElement()
-			}, completion: nil)
-		}
-	}
-
-	/**
-		Starts the placeholder timer for the search bar if no timers are already running.
-
-		- Parameter searchControllerBar: The search bar for which the timer is started.
-	*/
-	func startPlaceholderTimer(for searchControllerBar: UISearchBar) {
-		if placeholderTimer == nil {
-			placeholderTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updateSearchPlaceholder(_:)), userInfo: searchControllerBar, repeats: true)
-		}
-	}
-
-	/// Stops the placeholder timer if one is running.
-	func stopPlacholderTimer() {
-		if placeholderTimer != nil {
-			placeholderTimer?.invalidate()
-			placeholderTimer = nil
-		}
 	}
 
 	// MARK: - Segue
@@ -302,32 +261,5 @@ extension HomeCollectionViewController {
 		if let horizontalCollectionTableViewCell = cell as? HorizontalCollectionTableViewCell {
 			collectionViewOffsets[indexPath] = horizontalCollectionTableViewCell.contentOffset
 		}
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension HomeCollectionViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = true
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = true
-			})
-		}
-		self.stopPlacholderTimer()
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = false
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = false
-			})
-		}
-		self.startPlaceholderTimer(for: searchController.searchBar)
 	}
 }

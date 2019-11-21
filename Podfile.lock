@@ -14,9 +14,9 @@ PODS:
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - KeychainAccess (4.1.0)
-  - Kingfisher (5.10.0):
-    - Kingfisher/Core (= 5.10.0)
-  - Kingfisher/Core (5.10.0)
+  - Kingfisher (5.10.1):
+    - Kingfisher/Core (= 5.10.1)
+  - Kingfisher/Core (5.10.1)
   - MarqueeLabel (4.0.0)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
@@ -138,7 +138,7 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  Kingfisher: 0bf6eae7c2193f15719915fecb7c2c1c03855f3d
+  Kingfisher: eb36b7dfcc78d60877051c92c119a2865972961a
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb

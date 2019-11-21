@@ -26,22 +26,17 @@ class ForumsViewController: TabmanViewController {
 	var sectionsCount: Int?
 	var threadSorting: String?
 	lazy var viewControllers = [UIViewController]()
-	var searchResultsTableViewController: SearchResultsTableViewController?
-	var searchController: SearchController!
+	var kSearchController: KSearchController = KSearchController()
 
 	let bar = TMBar.KBar()
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		navigationItem.hidesSearchBarWhenScrolling = false
-	}
-
 	override func viewDidLoad() {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
+
+		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Setup search bar.
 		setupSearchBar()
@@ -53,27 +48,15 @@ class ForumsViewController: TabmanViewController {
 		fetchForumsSections()
     }
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
-		navigationItem.hidesSearchBarWhenScrolling = true
-	}
-
 	// MARK: - Functions
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		// Configure search bar
+		kSearchController.searchScope = .thread
+		kSearchController.viewController = self
 
-		searchController = SearchController(searchResultsController: searchResultsTableViewController)
-		searchController.delegate = self
-		searchController.searchBar.selectedScopeButtonIndex = SearchScope.thread.rawValue
-		searchController.searchResultsUpdater = searchResultsTableViewController
-		searchController.viewController = self
-
-		let searchControllerBar = searchController.searchBar
-		searchControllerBar.delegate = searchResultsTableViewController
-
-		navigationItem.searchController = searchController
+		// Add search bar to navigation controller
+		navigationItem.searchController = kSearchController
 	}
 
 	/// Fetches the forum sections from the server.
@@ -135,11 +118,7 @@ class ForumsViewController: TabmanViewController {
 			])
 		}))
 
-		print("Corner radius before: \(bar.cornerRadius)")
-		print("Bar height before: \(bar.height)")
 		bar.cornerRadius = bar.height / 2
-		print("Corner radius after: \(bar.cornerRadius)")
-		print("Bar height after: \(bar.height)")
 
 		// Configure tabman bar visibility
 		tabmanBarViewIsEnabled()
@@ -242,30 +221,5 @@ extension ForumsViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
-	}
-}
-
-// MARK: - UISearchControllerDelegate
-extension ForumsViewController: UISearchControllerDelegate {
-	func willPresentSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = true
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height + (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = true
-			})
-		}
-	}
-
-	func willDismissSearchController(_ searchController: UISearchController) {
-		searchController.searchBar.showsCancelButton = false
-
-		if var tabBarFrame = self.tabBarController?.tabBar.frame {
-			tabBarFrame.origin.y = self.view.frame.size.height - (tabBarFrame.size.height)
-			UIView.animate(withDuration: 0.5, animations: {
-				self.tabBarController?.tabBar.isHidden = false
-			})
-		}
 	}
 }

@@ -389,7 +389,7 @@
 		66DEB4A821D248710093725F /* search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66DEB4A721D248710093725F /* search.storyboard */; };
 		66DEB4AA21D26FBC0093725F /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A921D26FBC0093725F /* Search.swift */; };
 		66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsViewController.swift */; };
-		66DEB4B221D419420093725F /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* SearchController.swift */; };
+		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
 		66E1B8692090AFC600D7AC1A /* KAtarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1B8682090AFC600D7AC1A /* KAtarashii.swift */; };
 		66E1B86C20911F4A00D7AC1A /* browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E1B86B20911F4A00D7AC1A /* browse.storyboard */; };
@@ -843,7 +843,7 @@
 		66DEB4A621D247820093725F /* FilterViewControllerBakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewControllerBakup.swift; sourceTree = "<group>"; };
 		66DEB4A721D248710093725F /* search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = search.storyboard; sourceTree = "<group>"; };
 		66DEB4A921D26FBC0093725F /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
-		66DEB4B121D419420093725F /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
 		66E1B8682090AFC600D7AC1A /* KAtarashii.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KAtarashii.swift; sourceTree = "<group>"; };
 		66E1B86B20911F4A00D7AC1A /* browse.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = browse.storyboard; sourceTree = "<group>"; };
@@ -1851,7 +1851,7 @@
 				66DEB4A721D248710093725F /* search.storyboard */,
 				66DEB4A321D247810093725F /* BrowseViewController.swift */,
 				66DEB4A621D247820093725F /* FilterViewControllerBakup.swift */,
-				66DEB4B121D419420093725F /* SearchController.swift */,
+				66DEB4B121D419420093725F /* KSearchController.swift */,
 				66DEB4A421D247810093725F /* SearchResultsViewController.swift */,
 				66DEB4AE21D28B6A0093725F /* Cells */,
 				66B4F1DE223D336C007C5048 /* Models */,
@@ -2797,7 +2797,7 @@
 				6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */,
 				66244D8F230B76F800EC33E0 /* LibraryCompactCollectionViewCell.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
-				66DEB4B221D419420093725F /* SearchController.swift in Sources */,
+				66DEB4B221D419420093725F /* KSearchController.swift in Sources */,
 				663E34252360D2F2003386D1 /* ExploreBannerCollectionViewCell.swift in Sources */,
 				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				660A642E21D175110032FDCF /* EpisodesWatched.swift in Sources */,

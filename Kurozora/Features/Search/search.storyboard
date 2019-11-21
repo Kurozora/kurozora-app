@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LvW-Sg-g0V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LvW-Sg-g0V">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +15,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVz-Yf-Prr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1609" y="113"/>
+            <point key="canvasLocation" x="1609" y="98"/>
         </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="lfD-Or-ghU">
@@ -563,15 +563,15 @@
             </objects>
             <point key="canvasLocation" x="1040.8" y="150.73891625615764"/>
         </scene>
-        <!--forums-->
+        <!--ThreadTableViewController-->
         <scene sceneID="4hh-j3-mcN">
             <objects>
-                <viewControllerPlaceholder storyboardName="forums" id="AEz-xT-jfB" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="forums" referencedIdentifier="ThreadTableViewController" id="AEz-xT-jfB" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="GyW-Yf-BKh"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bv8-00-ReG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1610" y="155"/>
+            <point key="canvasLocation" x="1708" y="151"/>
         </scene>
         <!--profile-->
         <scene sceneID="ww2-I0-p6Y">
@@ -581,7 +581,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Qx-9L-HCG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1608" y="194"/>
+            <point key="canvasLocation" x="1608" y="197"/>
         </scene>
     </scenes>
     <resources>
