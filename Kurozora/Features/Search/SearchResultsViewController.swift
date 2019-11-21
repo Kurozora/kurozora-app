@@ -10,10 +10,6 @@ import UIKit
 import SwiftyJSON
 import SwiftTheme
 
-protocol SearchResultsTableViewControllerDelegate: class {
-	func didCancelSearchController()
-}
-
 class SearchResultsTableViewController: UITableViewController {
 	// MARK: - Properties
 	var showResults: [ShowDetailsElement]? {
@@ -39,7 +35,6 @@ class SearchResultsTableViewController: UITableViewController {
 	}
 
 	var timer: Timer?
-	var viaSearchButton: Bool = false
 	var currentScope: Int = 0
 	var suggestions: [ShowDetailsElement] {
 		var suggestionResults = [ShowDetailsElement]()
@@ -58,29 +53,12 @@ class SearchResultsTableViewController: UITableViewController {
 		}
 		return suggestionResults
 	}
-	weak var delegate: SearchResultsTableViewControllerDelegate?
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		if #available(macCatalyst 13.0, *) {
-			self.navigationController?.navigationItem.searchController?.searchBar.showsScopeBar = true
-		}
-	}
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-
-		if #available(macCatalyst 13.0, *) {
-			self.navigationController?.navigationItem.searchController?.searchBar.showsScopeBar = false
-		}
-	}
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -188,7 +166,6 @@ class SearchResultsTableViewController: UITableViewController {
 				if let threadTableViewController = segue.destination as? ThreadTableViewController {
 					threadTableViewController.forumsThreadElement = (currentCell as? SearchForumsResultsCell)?.forumsThreadElement
 					threadTableViewController.dismissButtonIsEnabled = true
-//					self.navigationController?.pushViewController(threadTableViewController)
 				}
 			} else if segue.identifier == "ProfileSegue" {
 				// Show user profile for user cell
@@ -246,8 +223,6 @@ extension SearchResultsTableViewController {
 				(searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement = showResults?[indexPath.row]
 				resultsCount = showResults?.count ?? 0
 			case .myLibrary: break
-//				(searchBaseResultsCell as? SearchLibraryResultCell)?.showDetailsElement = showResults?[indexPath.row]
-//				resultsCount = showResults?.count ?? 0
 			case .thread:
 				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement = threadResults?[indexPath.row]
 				resultsCount = threadResults?.count ?? 0
@@ -333,6 +308,5 @@ extension SearchResultsTableViewController: UISearchBarDelegate {
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		emptySearchResults()
-		delegate?.didCancelSearchController()
 	}
 }

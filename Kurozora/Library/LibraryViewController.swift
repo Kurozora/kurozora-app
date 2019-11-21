@@ -47,6 +47,8 @@ class LibraryViewController: TabmanViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
+		navigationItem.hidesSearchBarWhenScrolling = false
+
 		// Actions
 		enableActions()
 
@@ -68,12 +70,6 @@ class LibraryViewController: TabmanViewController {
 		navigationItem.titleView = numberOfItemsTextField
 		#endif
     }
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
-		navigationItem.hidesSearchBarWhenScrolling = true
-	}
 
 	// MARK: - Functions
 	#if DEBUG
