@@ -30,30 +30,32 @@ class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
 	@IBOutlet weak var videoPlayerContainer: UIView!
 
 	// MARK: - Properties
-	var avPlayer: AVPlayer = {
-		let avPlayer = AVPlayer()
-		avPlayer.actionAtItemEnd = .none
-		avPlayer.isMuted = true
-		return avPlayer
-	}()
-	var avPlayerLayer: AVPlayerLayer = {
-		let avPlayerLayer = AVPlayerLayer()
-		avPlayerLayer.videoGravity = .resizeAspectFill
-		return avPlayerLayer
-	}()
-	var avPlayerItem: AVPlayerItem? = nil
 	var avPlayerStatus: NSKeyValueObservation? = nil
 	var avPlayerTimeControl: NSKeyValueObservation? = nil
-	var avPlayerViewController: AVPlayerViewController = AVPlayerViewController()
+	var avPlayerViewController: AVPlayerViewController = {
+		let avPlayerViewController = AVPlayerViewController()
+		avPlayerViewController.exitsFullScreenWhenPlaybackEnds = true
+		avPlayerViewController.player = AVPlayer()
+		avPlayerViewController.player?.actionAtItemEnd = .none
+		avPlayerViewController.player?.isMuted = true
+		return avPlayerViewController
+	}()
+	var thumbnailPlaceholder: UIImageView = UIImageView()
 
-	var thumbnailPlaceholder: UIImageView {
-		get {
-			let thumbnailPlaceholder = UIImageView(frame: CGRect(origin: .zero, size: videoPlayerContainer.frame.size))
-			if let bannerThumbnail = showDetailsElement?.banner {
-				thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
-			}
-			return thumbnailPlaceholder
-		}
+	// MARK: - View
+	override func awakeFromNib() {
+		super.awakeFromNib()
+
+		videoPlayerContainer.addSubview(avPlayerViewController.view)
+		avPlayerViewController.view.fillToSuperview()
+		setupAVPlayerControllerThumbnail()
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		avPlayerViewController.player?.pause()
+		avPlayerViewController.player = AVPlayer()
 	}
 
 	// MARK: - Functions
@@ -64,59 +66,54 @@ class ExploreVideoCollectionViewCell: ExploreBaseCollectionViewCell {
 		// Configure tagline
 		self.taglineLabel?.text = showDetailsElement.tagline
 
+		if let bannerThumbnail = showDetailsElement.banner {
+			thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+		}
+
 		// Configure video player
 		configureVideoPlayer()
 	}
 
-	func configureBannerView() {
-		videoPlayerContainer.removeSubviews()
-		videoPlayerContainer.addSubview(self.thumbnailPlaceholder)
-	}
-
 	/// Configures the video player with the defined settings.
 	func configureVideoPlayer() {
-		guard let videoUrlString = showDetailsElement?.videoUrl else {
-			configureBannerView()
-			return
-		}
-		guard let videoUrl = URL(string: videoUrlString) else {
-			configureBannerView()
-			return
-		}
-
-		let avPlayerItem = AVPlayerItem(url: videoUrl)
-		if !(self.avPlayer.currentItem?.isEqual(self.avPlayerItem) ?? false) {
-			self.avPlayerItem = avPlayerItem
-			self.avPlayer.replaceCurrentItem(with: avPlayerItem)
-			self.avPlayerLayer.player = self.avPlayer
-			self.avPlayerLayer.frame = videoPlayerContainer.bounds
-			self.avPlayerViewController.player = avPlayer
-			self.avPlayerViewController.exitsFullScreenWhenPlaybackEnds = true
-
-			// Setup video thumbnail and observe play status
-			setupVideoThumbnail()
-			avPlayerTimeControl = self.avPlayer.observe(\.timeControlStatus, changeHandler: { (_, _) in
-				if self.avPlayer.timeControlStatus == .playing {
-					self.avPlayerViewController.contentOverlayView?.removeSubviews()
-				}
-			})
-
-			self.parentViewController?.addChild(avPlayerViewController)
-			self.avPlayerViewController.view.frame = videoPlayerContainer.bounds
-
-			// Add avPlayerViewController view as subview to cell
-			let avPlayerControllerView = avPlayerViewController.view
-			videoPlayerContainer.removeSubviews()
-			videoPlayerContainer.addSubview(avPlayerControllerView!)
-			avPlayerControllerView?.didMoveToSuperview()
+		if let videoUrlString = showDetailsElement?.videoUrl, !videoUrlString.isEmpty {
+			if let videoUrl = URL(string: videoUrlString) {
+				let avPlayerItem = AVPlayerItem(url: videoUrl)
+				self.avPlayerViewController.player?.replaceCurrentItem(with: avPlayerItem)
+			}
+		} else {
+			addThumbnailPlaceholder()
+			self.avPlayerViewController.showsPlaybackControls = false
 		}
 	}
 
-	/// Sets up the video thumbnail by observing the video player status.
-	fileprivate func setupVideoThumbnail() {
-		avPlayerStatus = self.avPlayer.observe(\.status, changeHandler: { (_, _) in
-			if self.avPlayer.status == AVPlayer.Status.readyToPlay {
-				self.avPlayerViewController.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
+	/// Sets up the necessary AVPlayerController observers to add and remove the video thumbnail.
+	func setupAVPlayerControllerThumbnail() {
+		addThumbnailToAVPlayerController()
+		observeAVPlayerControllerPlayStatus()
+	}
+
+	func addThumbnailPlaceholder() {
+		self.avPlayerViewController.contentOverlayView?.removeSubviews()
+		self.avPlayerViewController.contentOverlayView?.addSubview(self.thumbnailPlaceholder)
+		self.thumbnailPlaceholder.fillToSuperview()
+	}
+
+	/// Adds a thumbnail to the video player.
+	fileprivate func addThumbnailToAVPlayerController() {
+		avPlayerStatus = self.avPlayerViewController.player?.observe(\.status, changeHandler: { (_, _) in
+			if self.avPlayerViewController.player?.status == .readyToPlay {
+				self.addThumbnailPlaceholder()
+				self.avPlayerViewController.showsPlaybackControls = true
+			}
+		})
+	}
+
+	/// Observes and removes the video thumbnail when the video is playing.
+	fileprivate func observeAVPlayerControllerPlayStatus() {
+		avPlayerTimeControl = self.avPlayerViewController.player?.observe(\.timeControlStatus, changeHandler: { (_, _) in
+			if self.avPlayerViewController.player?.timeControlStatus == .playing {
+				self.avPlayerViewController.contentOverlayView?.removeSubviews()
 			}
 		})
 	}
