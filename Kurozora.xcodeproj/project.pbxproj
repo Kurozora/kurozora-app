@@ -1582,11 +1582,11 @@
 		66707833208B836500471FBC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				668F63842098681C003B1C1D /* Fonts */,
-				66647B5C2084995E00CF624F /* Assets.xcassets */,
-				66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */,
 				6614408E21DA387800E54915 /* Settings.bundle */,
+				66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */,
 				66647B612084995E00CF624F /* Info.plist */,
+				66647B5C2084995E00CF624F /* Assets.xcassets */,
+				668F63842098681C003B1C1D /* Fonts */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";

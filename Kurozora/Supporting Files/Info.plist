@@ -361,7 +361,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10782</string>
+	<string>10784</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -394,7 +394,7 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses Face ID or your device’s passcode so only you can access the app.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© Copyright Kurozora B.V. All Rights reserved.</string>
+	<string>Copyright © 2018 Kurozora B.V. All rights reserved.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce yout battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

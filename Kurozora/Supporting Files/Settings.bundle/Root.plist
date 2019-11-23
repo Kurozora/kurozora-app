@@ -9,27 +9,25 @@
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+			<key>FooterText</key>
+			<string>Copyright © 2018 Kurozora B.V. All rights reserved.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>ABOUT</string>
+			<string>License</string>
+			<key>File</key>
+			<string>License</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
+			<key>DefaultValue</key>
+			<string>1.0.0</string>
 			<key>Title</key>
 			<string>Version</string>
 			<key>Key</key>
-			<string>version_preference</string>
-			<key>DefaultValue</key>
-			<string>1.0.0</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Title</key>
-			<string>Copyright</string>
-			<key>Key</key>
-			<string>copyright_preference</string>
-			<key>DefaultValue</key>
 			<string>Kurozora B.V.</string>
 		</dict>
 	</array>
