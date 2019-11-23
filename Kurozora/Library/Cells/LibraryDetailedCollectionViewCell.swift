@@ -18,7 +18,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		posterShadowView?.applyShadow()
+		self.applyShadow()
 	}
 
 	// MARK: - Functions
@@ -32,6 +32,6 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 			self.episodeImageView?.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
 
-		self.applyShadow()
+		posterShadowView?.applyShadow()
 	}
 }

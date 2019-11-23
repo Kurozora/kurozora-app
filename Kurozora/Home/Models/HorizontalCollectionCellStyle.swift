@@ -55,15 +55,23 @@ enum HorizontalCollectionCellStyle: String {
 	var sizeValue: CGSize {
 		switch self {
 		case .banner:
+			#if targetEnvironment(macCatalyst)
+			return CGSize(width: 710, height: 445)
+			#else
+			return CGSize(width: 355, height: 222)
+			#endif
+		case .large:
+			#if targetEnvironment(macCatalyst)
 			return CGSize(width: 375, height: 235)
+			#else
+			return CGSize(width: 355, height: 222)
+			#endif
 		case .medium:
-			return CGSize(width: 375, height: 211)
+			return CGSize(width: 355, height: 200)
 		case .small:
-			return CGSize(width: 375, height: 211)
+			return CGSize(width: 355, height: 200)
 		case .video:
-			return CGSize(width: 375, height: 390)
-		default:
-			return .zero
+			return CGSize(width: 355, height: 378)
 		}
 	}
 }

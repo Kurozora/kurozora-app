@@ -20,13 +20,18 @@ class KSearchController: UISearchController {
 	var searchResultsTableViewController: SearchResultsTableViewController?
 
 	// MARK: - Initializer
-	override init(searchResultsController: UIViewController?) {
-		super.init(searchResultsController: searchResultsController)
-	}
 
 	init() {
 		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
 		super.init(searchResultsController: searchResultsTableViewController)
+	}
+
+	override init(searchResultsController: UIViewController?) {
+		super.init(searchResultsController: searchResultsController)
+	}
+
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 
 	required init?(coder: NSCoder) {

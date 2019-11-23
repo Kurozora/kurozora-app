@@ -17,8 +17,8 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	// MARK: - Functions
-	override func configureCell() {
-		super.configureCell()
+	override func layoutSubviews() {
+		super.layoutSubviews()
 
 		posterShadowView?.applyShadow()
 	}

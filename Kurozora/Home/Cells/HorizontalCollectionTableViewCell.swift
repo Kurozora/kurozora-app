@@ -42,6 +42,7 @@ class HorizontalCollectionTableViewCell: UITableViewCell {
 			collectionView.setContentOffset(CGPoint(x: newValue >= 0 ? newValue : 0, y: 0), animated: false)
 		}
 	}
+	var contentSize: CGSize?
 
 	// MARK: - Functions
 	@available(iOS 13.0, macCatalyst 13.0, *)
@@ -184,14 +185,17 @@ extension HorizontalCollectionTableViewCell: UICollectionViewDelegateFlowLayout 
 	}
 
 	func calculateCellStyleSize(for collectionViewLayout: UICollectionViewFlowLayout) -> CGSize {
-		var cellStyleSize = cellStyle.sizeValue
+		var cellStyleSize = contentSize ?? cellStyle.sizeValue
 
-		if UIScreen.main.nativeBounds.size.width < cellStyleSize.width {
-			let sizeWidth = self.frame.width - collectionViewLayout.minimumInteritemSpacing - collectionViewLayout.sectionInset.left
-			let sizeHeight = self.frame.height - collectionViewLayout.sectionInset.bottom
-			cellStyleSize = CGSize(width: sizeWidth, height: sizeHeight)
+		if cellStyleSize != contentSize {
+			if UIScreen.main.bounds.size.width < cellStyleSize.width {
+				let sizeWidth = self.frame.width - collectionViewLayout.minimumInteritemSpacing - collectionViewLayout.sectionInset.left - collectionViewLayout.sectionInset.right
+				let sizeHeight = (cellStyleSize.height / cellStyleSize.width) * sizeWidth + collectionViewLayout.sectionInset.bottom
+				cellStyleSize = CGSize(width: sizeWidth, height: sizeHeight)
+			}
 		}
 
+		contentSize = cellStyleSize
 		return cellStyleSize
 	}
 }
