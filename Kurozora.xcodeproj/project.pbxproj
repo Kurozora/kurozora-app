@@ -2290,7 +2290,7 @@
 				EADEF8E9DAFBA77C64EB699E /* [CP] Embed Pods Frameworks */,
 				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
 				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
-				66C243A12389D39B00802C27 /* Licenses */,
+				66022EAE238B287900B5286A /* Add Acknowledgements */,
 			);
 			buildRules = (
 			);
@@ -2501,6 +2501,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		66022EAE238B287900B5286A /* Add Acknowledgements */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Add Acknowledgements";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Copy pods acknowledgements file to Settings.bundle\n\nPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n      break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n";
+		};
 		66334A12231AB2E500FC46D3 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2532,24 +2550,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run. \n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
-		};
-		66C243A12389D39B00802C27 /* Licenses */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Licenses;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Using pull request ID #120 for the --export-all-to-root flag.\n \nif which license-plist >/usr/local/bin/license-plist; then\n  cd $SRCROOT\n  license-plist --prefix License --output-path \"${PRODUCT_NAME}/Supporting Files/Settings.bundle\" --force --export-all-to-root\nelse\n # echo \"warning: LicensePlist not installed, download from https://github.com/mono0926/LicensePlist\"\nfi\n";
 		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
