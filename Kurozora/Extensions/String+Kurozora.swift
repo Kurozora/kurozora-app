@@ -72,7 +72,7 @@ extension String {
 		struct Static {
 			static let instance: DateFormatter = {
 				let formatter = DateFormatter()
-				formatter.dateStyle = DateFormatter.Style.medium
+				formatter.dateStyle = .medium
 				return formatter
 			}()
 		}

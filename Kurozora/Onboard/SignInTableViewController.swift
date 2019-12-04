@@ -60,7 +60,6 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 		KService.shared.signIn(username, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
-					WorkflowController.shared.registerForPusher()
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 					self.dismiss(animated: true, completion: nil)
 				}

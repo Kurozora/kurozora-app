@@ -63,7 +63,11 @@ class ShowDetailsElement: JSONDecodable {
 	let rank: Int?
 	let age: String?
 	let ratingCount: Int?
+
+	// Schedule
 	let startDate: String?
+	let airTime: String?
+	var airDay = DateComponents().weekday
 
 	// Extra's
 	let englishTitles: String?
@@ -117,7 +121,11 @@ class ShowDetailsElement: JSONDecodable {
 		self.rank = json["rank"].intValue
 		self.age = json["age"].stringValue
 		self.ratingCount = json["rating_count"].intValue
-		self.startDate = json["start_date"].stringValue
+
+		// Schedule
+		self.startDate = json["first_aired"].stringValue
+		self.airTime = json["air_time"].stringValue
+		self.airDay = json["air_time"].intValue
 
 		// Extra's
 		self.englishTitles = json["english_titles"].stringValue
@@ -187,6 +195,18 @@ class ShowDetailsElement: JSONDecodable {
 		}
 
 		return informationString
+	}
+
+	var fullAirDate: String? {
+		guard let airDate = self.airDate?.toDate else { return nil }
+		guard let airTime = self.airTime?.toDate else { return nil }
+
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeStyle = .none
+		let airDateString = dateFormatter.string(from: airDate)
+
+		print("------ \(airDateString)")
+		return "\(airDateString) \(airTime)"
 	}
 
 	/// Create an NSUserActivity from the selected show.

@@ -68,9 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
-		// Initialize Pusher
+		// Fetch user details
 		if User.isSignedIn {
-			WorkflowController.shared.registerForPusher()
 			WorkflowController.shared.getUserDetails()
 		}
 

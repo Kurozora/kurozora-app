@@ -252,7 +252,6 @@
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
 		667F9ADD21B5F354003F6629 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */; };
-		66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */; };
 		66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66112348208F6ACE00E6033A /* WorkflowController.swift */; };
 		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
 		668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638620986849003B1C1D /* Aller_Rg.ttf */; };
@@ -695,7 +694,6 @@
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
 		667F9ADC21B5F354003F6629 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRichTextEditorViewController.swift; sourceTree = "<group>"; };
-		66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestBuilder.swift; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
 		668F63872098684B003B1C1D /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
@@ -1862,7 +1860,6 @@
 		66B4F1D3223BC906007C5048 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				66825BF521B3243600A2F602 /* AuthRequestBuilder.swift */,
 				6613F02320F6423000071CAE /* KService.swift */,
 				66FC6DD62340BB5100A454DD /* Extensions */,
 				660923E921355EC30082F02E /* Models */,
@@ -2599,7 +2596,6 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
@@ -2608,12 +2604,10 @@
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -2629,7 +2623,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
@@ -2638,12 +2631,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -2786,7 +2777,6 @@
 				660A642821D01CEA0032FDCF /* ThreadReplies.swift in Sources */,
 				66F944AC22F0C08E009F1FE2 /* ExploreSectionTitleCell.swift in Sources */,
 				667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */,
-				66825BF621B3243600A2F602 /* AuthRequestBuilder.swift in Sources */,
 				66B69BD821454618007154BD /* PrivacyPolicy.swift in Sources */,
 				66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */,
 				66BEC13723191E6D0039D683 /* ShowRatingCell.swift in Sources */,

@@ -10,7 +10,6 @@ import UIKit
 
 class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var colorOverlayView: UIView?
 	@IBOutlet weak var backgroundColorView: UIView?
 
 	// MARK: - Functions
@@ -19,11 +18,10 @@ class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
 		guard let genreColor = genreElement.color else { return }
 
 		primaryLabel?.text = genreElement.name
-		colorOverlayView?.backgroundColor = UIColor(hexString: genreColor)?.withAlphaComponent(0.6)
 		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
 
 		if let symbol = genreElement.symbol {
-			bannerImageView?.setImage(with: symbol, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+			bannerImageView?.setImage(with: symbol, placeholder: #imageLiteral(resourceName: "kurozora_icon"))
 		}
 
 		shadowView?.applyShadow()

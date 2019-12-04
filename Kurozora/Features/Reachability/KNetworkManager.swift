@@ -15,11 +15,11 @@ class KNetworkManager: NSObject {
 	// Create a singleton instance
 	static let shared: KNetworkManager = { return KNetworkManager() }()
 
-	override init() {
+	override private init() {
 		super.init()
 
 		// Initialise reachability
-		reachability = Reachability()!
+		reachability = try? Reachability()
 
 		// Register an observer for the network status
 		NotificationCenter.default.addObserver(
@@ -52,14 +52,14 @@ class KNetworkManager: NSObject {
 
 	// Network is reachable
 	static func isReachable(completed: @escaping (KNetworkManager) -> Void) {
-		if (shared.reachability).connection != .none {
+		if (shared.reachability).connection != .unavailable {
 			completed(shared)
 		}
 	}
 
 	// Network is unreachable
 	static func isUnreachable(completed: @escaping (KNetworkManager) -> Void) {
-		if (shared.reachability).connection == .none {
+		if (shared.reachability).connection == .unavailable {
 			completed(shared)
 		}
 	}

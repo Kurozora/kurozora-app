@@ -9,7 +9,6 @@ PODS:
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
   - Cosmos (20.0.1)
-  - CryptoSwift (0.15.0)
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
@@ -22,15 +21,10 @@ PODS:
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - Pageboy (3.5.0)
-  - PusherSwift (7.2.0):
-    - CryptoSwift (~> 0.9)
-    - ReachabilitySwift (= 4.3.0)
-    - Starscream (~> 3.0.5)
-  - ReachabilitySwift (4.3.0)
+  - ReachabilitySwift (5.0.0)
   - SCLAlertView (0.8.1)
   - SnapKit (5.0.1)
   - SPStorkController (1.7.9)
-  - Starscream (3.0.6)
   - SwifterSwift (5.1.0):
     - SwifterSwift/AppKit (= 5.1.0)
     - SwifterSwift/CoreGraphics (= 5.1.0)
@@ -77,7 +71,7 @@ DEPENDENCIES:
   - KeychainAccess
   - Kingfisher
   - NotificationBannerSwift
-  - PusherSwift
+  - ReachabilitySwift
   - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - SPStorkController
   - SwifterSwift
@@ -95,7 +89,6 @@ SPEC REPOS:
     - AXPhotoViewer
     - AXStateButton
     - Cosmos
-    - CryptoSwift
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
@@ -104,11 +97,9 @@ SPEC REPOS:
     - MarqueeLabel
     - NotificationBannerSwift
     - Pageboy
-    - PusherSwift
     - ReachabilitySwift
     - SnapKit
     - SPStorkController
-    - Starscream
     - SwifterSwift
     - SwiftTheme
     - SwiftyJSON
@@ -133,7 +124,6 @@ SPEC CHECKSUMS:
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
-  CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -142,12 +132,10 @@ SPEC CHECKSUMS:
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
-  PusherSwift: a5369a01e8a9106b4897e9186265af1426726062
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SPStorkController: 36bd84206267232747b19d48852659bd71ede28f
-  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: a9e8e144832638c2850b43da5feaf9598c6ad65b
   SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
@@ -156,6 +144,6 @@ SPEC CHECKSUMS:
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 1caef5002caa69f6907256a9ccf1b75c3c7a6e2c
+PODFILE CHECKSUM: 384b3e70c3d29b445ed8f6f63cd8b3ee0dedbff7
 
 COCOAPODS: 1.8.3

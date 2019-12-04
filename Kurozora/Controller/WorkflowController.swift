@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PusherSwift
 import Kingfisher
 import NotificationBannerSwift
 import SCLAlertView
@@ -17,61 +16,12 @@ class WorkflowController: NSObject {
 	// MARK: - Properties
 	/// Returns the singleton WorkflowController instance.
 	static let shared = WorkflowController()
-	static let optionsWithEndpoint = PusherClientOptions(authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()), host: .cluster("eu"))
-	var pusher: Pusher = Pusher(key: "edc954868bb006959e45", options: optionsWithEndpoint)
 	let notificationCenter = UNUserNotificationCenter.current()
 
 	// MARK: - Initializer
 	private override init() {}
 
 	// MARK: - Functions
-	// swiftlint:disable redundant_discardable_let
-	/// Initialise Pusher and connect to subsequent channels
-	func registerForPusher() {
-		if User.currentID != 0 {
-			pusher.connect()
-
-			let myChannel = pusher.subscribe("private-user.\(User.currentID)")
-
-			let _ = myChannel.bind(eventName: "session.new", callback: { [weak self] (data: Any?) -> Void in
-				if let data = data as? [String: AnyObject] {
-					if let sessionID = data["id"] as? Int, let device = data["device"] as? String, let ip = data["ip"] as? String, let lastValidated = data["last_validated"] as? String {
-						if sessionID != User.currentSessionID {
-							self?.notificationsHandler(device)
-
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil, userInfo: ["id": sessionID, "ip": ip, "device": device, "last_validated": lastValidated])
-
-							self?.scheduleNotification("New session", body: "New sign in detected from \(device)")
-						}
-					} else {
-						print("------- Pusher error -------")
-					}
-				}
-			})
-
-			let _ = myChannel.bind(eventName: "session.killed", callback: { [weak self] (data: Any?) -> Void in
-				if let data = data as? [String: AnyObject], data.count != 0 {
-					if let sessionID = data["session_id"] as? Int, let sessionKillerId = data["killer_session_id"] as? Int, let signOutReason = data["reason"] as? String {
-						let isKiller = User.currentSessionID == sessionKillerId
-
-						if sessionID == User.currentSessionID, !isKiller {
-							self?.pusher.unsubscribeAll()
-							self?.pusher.disconnect()
-							self?.signOut(with: signOutReason, whereUser: isKiller)
-						} else if sessionID == User.currentSessionID, isKiller {
-							self?.pusher.unsubscribeAll()
-							self?.pusher.disconnect()
-						} else {
-							NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil, userInfo: ["session_id": sessionID])
-						}
-					}
-				} else {
-					print("------- Pusher error -------")
-				}
-			})
-		}
-	}
-
 	/**
 		Checks whether the current user is signed in. If the user is signed in then a success block is run. Otherwise the user is asked to sign in.
 

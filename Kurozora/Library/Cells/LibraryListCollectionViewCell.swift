@@ -52,21 +52,19 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		guard let showDetailsElement = showDetailsElement else { return }
 		self.informationLabel.text = showDetailsElement.informationStringShort
 
-		if let airDate = showDetailsElement.airDate, !airDate.isEmpty {
-			timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
-		} else {
-			self.estimatedAiringLabel.text = ""
-		}
-	}
-
-	@objc func updateEstimatedAiringLabel() {
-		guard let airDate = showDetailsElement?.airDate?.toDate else {
+		guard showDetailsElement.fullAirDate != nil else {
 			self.estimatedAiringLabel.text = ""
 			return
 		}
-//		let airDate = "2019-12-31 23:59:59".toDate
-		let intervalSinceNow = airDate.timeIntervalSinceNow.toString
-		let estimatedAiringString = "Episode 1 - \(intervalSinceNow)"
+
+		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateEstimatedAiringLabel), userInfo: nil, repeats: true)
+	}
+
+	@objc func updateEstimatedAiringLabel() {
+		guard let fullAirDate = showDetailsElement?.fullAirDate else { return }
+		let fullAirDateValue = fullAirDate.toDate
+		let intervalSinceNow = fullAirDateValue.timeIntervalSinceNow.toString
+		let estimatedAiringString = "Episode # - \(intervalSinceNow)"
 		self.estimatedAiringLabel.text = estimatedAiringString
 		print(estimatedAiringString)
 	}
