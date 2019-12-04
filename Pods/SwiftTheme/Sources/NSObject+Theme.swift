@@ -41,7 +41,7 @@ extension NSObject {
     
     func performThemePicker(selector: String, picker: ThemePicker?) {
         let sel = Selector(selector)
-        
+
         guard responds(to: sel)           else { return }
         guard let value = picker?.value() else { return }
         
@@ -117,6 +117,12 @@ extension NSObject {
         themePickers.forEach { selector, picker in
             UIView.animate(withDuration: ThemeManager.animationDuration) {
                 self.performThemePicker(selector: selector, picker: picker)
+                // For iOS 13, force an update of the nav bar when the theme changes.
+                if #available(iOS 13.0, *) {
+                    if let navBar = self as? UINavigationBar {
+                        navBar.setNeedsLayout()
+                    }
+                }
             }
         }
     }

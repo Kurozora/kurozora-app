@@ -16,7 +16,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 <a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat"></a>
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
-<a href="https://github.com/wxxsw/SwiftTheme/tree/0.4.7"><img src="https://img.shields.io/badge/release-0.4.7-blue.svg"></a>
+<a href="https://github.com/wxxsw/SwiftTheme/tree/0.5.0"><img src="https://img.shields.io/badge/release-0.5.0-blue.svg"></a>
 </p>
 
 ## Screenshot
@@ -376,7 +376,9 @@ ThemeCGColorPicker.pickerWithKeyPath("someStringKeyPath")
 ThemeFontPicker(fonts: UIFont.systemFont(ofSize: 10), UIFont.systemFont(ofSize: 11))
 ThemeFontPicker.pickerWithFonts([UIFont.systemFont(ofSize: 10), UIFont.systemFont(ofSize: 11)])
 ②
-// Reading font from plist is not supported now
+// name the key you like, but the available values format like this: "PingFangSC-Regular,16"
+ThemeFontPicker(keyPath: "someStringKeyPath")
+ThemeFontPicker.pickerWithKeyPath("someStringKeyPath")
 ```
 
 #### ThemeDictionaryPicker
@@ -463,6 +465,7 @@ Download this project and find more. There are four demo targets:
 
 - `Demo` shows how to use index mode and how to save the last selection of themes and other general usages.
 - `PlistDemo` shows how to use plist mode and how to download themes that packaged in zip files.
+- `JsonDemo` is like `PlistDemo`, but use `json`.
 - `OCDemo` is `Demo`'s Objective-c version.
 - `TVOSDemo` is used to test tvos compatibility.
 

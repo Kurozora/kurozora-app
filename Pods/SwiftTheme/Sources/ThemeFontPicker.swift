@@ -18,6 +18,10 @@ import UIKit
         self.init(v: { ThemeManager.element(for: fonts) })
     }
     
+    public required convenience init(stringLiteral value: String) {
+        self.init(v: { ThemeManager.font(for: value) })
+    }
+    
     public required convenience init(arrayLiteral elements: UIFont...) {
         self.init(v: { ThemeManager.element(for: elements) })
     }
@@ -37,3 +41,5 @@ import UIKit
 }
 
 extension ThemeFontPicker: ExpressibleByArrayLiteral {}
+extension ThemeFontPicker: ExpressibleByStringLiteral {}
+

@@ -24,6 +24,21 @@ import Foundation
         setTheme(plistName: plistName, path: .sandbox(path))
     }
     
+    
+    /**
+       extension for Objective-C, Use setTheme(jsonName: String, path: ThemePath) in Swift
+    */
+    public class func setThemeWithJsonInMainBundle(_ jsonName: String) {
+        setTheme(jsonName: jsonName, path: .mainBundle)
+    }
+    
+    /**
+       extension for Objective-C, Use setTheme(jsonName: String, path: ThemePath) in Swift
+    */
+    public class func setThemeWithJsonInSandbox(_ jsonName: String, path: URL) {
+        setTheme(jsonName: jsonName, path: .sandbox(path))
+    }
+
     /**
         extension for Objective-C, Use setTheme(dict: NSDictionary, path: ThemePath) in Swift
      */

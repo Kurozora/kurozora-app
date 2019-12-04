@@ -64,4 +64,23 @@ import UIKit
         }
     }
     
+    public class func font(for keyPath: String) -> UIFont? {
+        guard let fontstr = string(for: keyPath) else { return nil }
+        return font(from: fontstr)
+    }
+    
+    internal class func font(from string: String) -> UIFont {
+        let elements = string.components(separatedBy: ",")
+        if elements.count == 2 {
+            return UIFont(name: elements[0], size: CGFloat(Float(elements[1])!))!
+        }
+        
+        if let fontSize = Float(string), fontSize > 0 {
+            return UIFont.systemFont(ofSize: CGFloat(fontSize))
+        }
+        
+        let value = "UICTFontTextStyle" + string.capitalized
+        return UIFont.preferredFont(forTextStyle: UIFont.TextStyle(rawValue: value))
+    }
+    
 }
