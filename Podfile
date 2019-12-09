@@ -10,6 +10,7 @@ use_frameworks!
 def kurozora_pods
 	pod 'AXPhotoViewer'
 	pod 'Cosmos'
+	pod 'DiffableDataSources'
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
 	pod 'IBPCollectionViewCompositionalLayout'

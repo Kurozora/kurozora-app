@@ -16,31 +16,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" sectionInsetReference="layoutMargins" id="5EK-F5-iRe">
-                            <size key="itemSize" width="414" height="244"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="5EK-F5-iRe">
+                            <size key="itemSize" width="374" height="210"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EpisodesCollectionViewCell" id="t9Z-yZ-ezZ" customClass="EpisodesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="244"/>
+                                <rect key="frame" x="20" y="18" width="374" height="210"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ere-5v-hwr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2h-ax-4un" userLabel="Shadow View">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qrx-LK-co9" userLabel="Corner View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_episode_image" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-hw-Zcg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="244"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_template" translatesAutoresizingMaskIntoConstraints="NO" id="qlf-0i-I9W">
-                                                            <rect key="frame" x="0.0" y="122" width="414" height="122"/>
+                                                            <rect key="frame" x="0.0" y="105" width="374" height="105"/>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </imageView>
                                                     </subviews>
@@ -93,7 +93,7 @@
                                             </connections>
                                         </button>
                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJj-1t-BsY" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="370" y="10" width="34" height="34"/>
+                                            <rect key="frame" x="330" y="10" width="34" height="34"/>
                                             <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="34" id="6ve-Sd-8LO"/>
@@ -114,25 +114,25 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 1" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-kn-wou">
-                                            <rect key="frame" x="10" y="150" width="394" height="20.333333333333343"/>
+                                            <rect key="frame" x="10" y="116" width="354" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The End of the Beginning and the Beginning of the End" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYz-ju-hcx">
-                                            <rect key="frame" x="10" y="170.33333333333334" width="394" height="40.666666666666657"/>
+                                            <rect key="frame" x="10" y="136.33333333333334" width="354" height="40.666666666666657"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY RATING" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MjU-vE-GYl" userLabel="MY RATING">
-                                            <rect key="frame" x="10" y="216" width="67.666666666666671" height="18"/>
+                                            <rect key="frame" x="10" y="182" width="67.666666666666671" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQz-Em-vu3" customClass="CosmosView" customModule="Cosmos">
-                                            <rect key="frame" x="82.666666666666686" y="216" width="95" height="18"/>
+                                            <rect key="frame" x="82.666666666666686" y="182" width="95" height="18"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
@@ -161,7 +161,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 2, 2016 5:00 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0YP-aj-5YN">
-                                            <rect key="frame" x="262.66666666666669" y="216" width="141.33333333333331" height="18"/>
+                                            <rect key="frame" x="222.66666666666663" y="182" width="141.33333333333337" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
@@ -193,7 +193,6 @@
                                         <constraint firstItem="SYz-ju-hcx" firstAttribute="top" secondItem="g9L-kn-wou" secondAttribute="bottom" id="x9g-Ry-xtS"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="414" height="244"/>
                                 <connections>
                                     <outlet property="cosmosView" destination="pQz-Em-vu3" id="3Vu-dZ-u9n"/>
                                     <outlet property="episodeFirstAiredLabel" destination="0YP-aj-5YN" id="Ge9-yY-f7S"/>
@@ -230,7 +229,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kyz-a1-D3Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2371" y="-320"/>
+            <point key="canvasLocation" x="2369.5652173913045" y="-320.08928571428572"/>
         </scene>
         <!--Episode 1-->
         <scene sceneID="hH8-k2-Rzd">
@@ -313,7 +312,7 @@
                                     <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MpL-XR-mxW" customClass="CosmosView" customModule="Cosmos">
                                     <rect key="frame" x="80.666666666666686" y="212" width="95" height="18"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
@@ -1525,7 +1524,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="j8v-Bm-cvj" customClass="CosmosView" customModule="Cosmos">
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j8v-Bm-cvj" customClass="CosmosView" customModule="Cosmos">
                                             <rect key="frame" x="229" y="10" width="165" height="25"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -1547,7 +1546,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="2.000 Ratings" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDK-3o-z6w">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" ambiguous="YES" text="2.000 Ratings" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDK-3o-z6w">
                                             <rect key="frame" x="298.66666666666669" y="40" width="95.333333333333314" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

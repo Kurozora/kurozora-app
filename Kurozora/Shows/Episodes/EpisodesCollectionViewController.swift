@@ -25,50 +25,51 @@ class EpisodesCollectionViewController: UICollectionViewController {
 			self.collectionView?.reloadData()
 		}
 	}
-	var gap: CGFloat = UIDevice.isPad ? 40 : 20
-	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
-		get {
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:	return (2.08, 1.8)
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:			return (2.28, 1.8)
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:		return (3.08, 3.6)
-				}
-			}
+	func columnCount(for width: CGFloat) -> Int {
+		let columnCount = (width / 374).int
+		return columnCount > 0 ? columnCount : 1
+	}
 
-			switch UIDevice.type {
-			case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:		return (1, 3)
-			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:				return (1, 3.8)
-			case .iPad, .iPadAir3:									return (2, 4.4)
-			case .iPadPro11, .iPadPro12:							return (2, 4.6)
-			}
+	func groupHeightFraction(for column: Int) -> CGFloat {
+		switch column {
+		case 2:
+			return 0.30
+		case 3:
+			return 0.20
+		case 4:
+			return 0.15
+		case 5:
+			return 0.13
+		default:
+			return 0.60
 		}
+
+//		let newHeight = (233 / 374) * width
+//		print("----- new height: \(newHeight)")
+//		let newFraction = (newHeight / width) * 0.50
+//		print("----- new fraction: \(newFraction)")
+//		return newFraction
 	}
 
-	#if DEBUG
-	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
-	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
-		get {
-			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
-			return newNumberOfItems
+	func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+			let heightFraction = self.groupHeightFraction(for: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let section = NSCollectionLayoutSection(group: group)
+			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+			return section
 		}
+		return layout
 	}
-
-	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 20)))
-
-	@objc func updateLayout(_ textField: UITextField) {
-		guard let textFieldText = numberOfItemsTextField.text, !textFieldText.isEmpty else { return }
-		newNumberOfItems = getNumbers(textFieldText)
-		collectionView.reloadData()
-	}
-
-	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
-		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
-		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
-		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
-		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
-	}
-	#endif
 
 	// MARK: - View
     override func viewDidLoad() {
@@ -76,29 +77,14 @@ class EpisodesCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		collectionView.collectionViewLayout = createLayout()
+
 		// Fetch episodes
 		fetchEpisodes()
 
 		// Setup empty data view
 		setupEmptyDataView()
-
-		#if DEBUG
-		numberOfItemsTextField.placeholder = "# items for: width, height"
-		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
-		numberOfItemsTextField.textAlignment = .center
-		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
-		navigationItem.title = nil
-		navigationItem.titleView = numberOfItemsTextField
-		#endif
     }
-
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-			return
-		}
-		flowLayout.invalidateLayout()
-	}
 
 	// MARK: - Functions
 	/// Sets up the empty data view.
@@ -242,7 +228,6 @@ extension EpisodesCollectionViewController {
 		episodesCollectionViewCell.episodesDelegate = self
 		episodesCollectionViewCell.delegate = self
 		episodesCollectionViewCell.episodesElement = episodes?[indexPath.row]
-
 		return episodesCollectionViewCell
 	}
 }
@@ -304,17 +289,6 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 		options.backgroundColor = .clear
 
 		return options
-	}
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension EpisodesCollectionViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		#if DEBUG
-		return CGSize(width: (collectionView.bounds.width - gap) / _numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / _numberOfItems.forHeight)
-		#else
-		return CGSize(width: (collectionView.bounds.width - gap) / numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / numberOfItems.forHeight)
-		#endif
 	}
 }
 

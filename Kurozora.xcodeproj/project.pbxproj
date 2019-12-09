@@ -248,6 +248,7 @@
 		667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNewModel.swift */; };
 		667B38462362531B00786EF6 /* ShowSeasonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B384423623D2000786EF6 /* ShowSeasonsCell.swift */; };
 		667C0F13224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */; };
+		667C2C47239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift */; };
 		667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */; };
 		667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */; };
 		667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */; };
@@ -689,6 +690,7 @@
 		667B38422361CE6500786EF6 /* KWhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewModel.swift; sourceTree = "<group>"; };
 		667B384423623D2000786EF6 /* ShowSeasonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeasonsCell.swift; sourceTree = "<group>"; };
 		667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCellStyle.swift; sourceTree = "<group>"; };
+		667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBPCollectionViewCompositionalLayoutInteroperability.swift; sourceTree = "<group>"; };
 		667F9AD321B47E6D003F6629 /* BadgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTableViewCell.swift; sourceTree = "<group>"; };
 		667F9AD821B47FA4003F6629 /* BadgesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesTableViewController.swift; sourceTree = "<group>"; };
 		667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1211,14 +1213,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		66160C3C215C26F300D0D722 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				6634735A23339885006B7F99 /* Solar */,
-			);
-			path = Libraries;
-			sourceTree = "<group>";
-		};
 		661F9F872087383500CF4153 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1251,14 +1245,6 @@
 				66B2C73E232F95680042AB12 /* BaseNotificationCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		6634735A23339885006B7F99 /* Solar */ = {
-			isa = PBXGroup;
-			children = (
-				6634735B233398AF006B7F99 /* Solar.swift */,
-			);
-			path = Solar;
 			sourceTree = "<group>";
 		};
 		663E34212360D2AA003386D1 /* CollectionViewCell */ = {
@@ -1536,7 +1522,6 @@
 				66112343208F6A8E00E6033A /* Controller */,
 				66B4F1D9223D1F70007C5048 /* Classes */,
 				6611234C208F70B500E6033A /* Extensions */,
-				66160C3C215C26F300D0D722 /* Libraries */,
 				66ABF5FB23383B8B00795750 /* Welcome */,
 				661F9F872087383500CF4153 /* Onboard */,
 				66E748BA20987E1A0039A105 /* Home */,
@@ -1880,6 +1865,8 @@
 		66B4F1D9223D1F70007C5048 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6634735B233398AF006B7F99 /* Solar.swift */,
+				667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift */,
 				66D1358C228087920079438C /* KButton.swift */,
 				662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */,
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
@@ -2596,6 +2583,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/DiffableDataSources/DiffableDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
@@ -2624,6 +2613,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DiffableDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
@@ -2840,6 +2831,7 @@
 				663E34202360BB06003386D1 /* UITableViewCell+Kurozora.swift in Sources */,
 				664A066021EA2089008CF4A6 /* GenreTableViewCell.swift in Sources */,
 				6619EE78216FDD3F00655B99 /* Seasons.swift in Sources */,
+				667C2C47239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift in Sources */,
 				66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */,
 				66FC6DEC2340BD5200A454DD /* KService+User.swift in Sources */,
 				66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */,

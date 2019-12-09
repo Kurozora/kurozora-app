@@ -9,6 +9,12 @@ PODS:
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
   - Cosmos (20.0.1)
+  - DiffableDataSources (0.2.0):
+    - DifferenceKit/AppKitExtension (~> 1.1)
+    - DifferenceKit/UIKitExtension (~> 1.1)
+  - DifferenceKit/Core (1.1.3)
+  - DifferenceKit/UIKitExtension (1.1.3):
+    - DifferenceKit/Core
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
@@ -67,6 +73,7 @@ PODS:
 DEPENDENCIES:
   - AXPhotoViewer
   - Cosmos
+  - DiffableDataSources
   - EmptyDataSet-Swift
   - ESTabBarController-swift
   - IBPCollectionViewCompositionalLayout
@@ -91,6 +98,8 @@ SPEC REPOS:
     - AXPhotoViewer
     - AXStateButton
     - Cosmos
+    - DiffableDataSources
+    - DifferenceKit
     - EmptyDataSet-Swift
     - ESTabBarController-swift
     - FLAnimatedImage
@@ -127,6 +136,8 @@ SPEC CHECKSUMS:
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
+  DiffableDataSources: d67c7fe103c0eb2077fbaa73d9a231721455988e
+  DifferenceKit: 5018791b6c1fc839921a3c171a0a539ace6ea60c
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -148,6 +159,6 @@ SPEC CHECKSUMS:
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 385043e5a4a8d9ffe9734959cd85c95223048367
+PODFILE CHECKSUM: 24d1cb45860aa971e27f4a1bc9005b565db2f1bb
 
 COCOAPODS: 1.8.4
