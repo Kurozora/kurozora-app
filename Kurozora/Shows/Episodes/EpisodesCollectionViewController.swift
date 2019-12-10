@@ -25,51 +25,6 @@ class EpisodesCollectionViewController: UICollectionViewController {
 			self.collectionView?.reloadData()
 		}
 	}
-	func columnCount(for width: CGFloat) -> Int {
-		let columnCount = (width / 374).int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	func groupHeightFraction(for column: Int) -> CGFloat {
-		switch column {
-		case 2:
-			return 0.30
-		case 3:
-			return 0.20
-		case 4:
-			return 0.15
-		case 5:
-			return 0.13
-		default:
-			return 0.60
-		}
-
-//		let newHeight = (233 / 374) * width
-//		print("----- new height: \(newHeight)")
-//		let newFraction = (newHeight / width) * 0.50
-//		print("----- new fraction: \(newFraction)")
-//		return newFraction
-	}
-
-	func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-
-			let heightFraction = self.groupHeightFraction(for: columns)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
-			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-
-			let section = NSCollectionLayoutSection(group: group)
-			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-			return section
-		}
-		return layout
-	}
 
 	// MARK: - View
     override func viewDidLoad() {
@@ -113,6 +68,58 @@ class EpisodesCollectionViewController: UICollectionViewController {
 				self.episodes = episodes?.episodes
 			}
 		})
+	}
+
+	/**
+		Reutrns the number of columns the collection view should present.
+
+		Number of columns is calculated by deviding the max width of the cell with the total width of the collection view.
+
+		- Parameter width: The width of the collection view used to calculate the number of columns.
+
+		- Returns: the number of columns the collection view should present.
+	*/
+	func columnCount(for width: CGFloat) -> Int {
+		let columnCount = (width / 374).int
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	/**
+		Returns the CGFloat value of the collection view group height fraction.
+
+		Fractional height is calculated by deviding the fractional height for one column with the number of column the collection view is currenlty presenting.
+
+		- Parameter column: The number of columns used to determin the fractional height value.
+
+		- Returns: the CGFloat value of the collection view group height fraction.
+	*/
+	func groupHeightFraction(for column: Int) -> CGFloat {
+		return (0.60 / column.double).cgFloat
+	}
+
+	/**
+		Returns the layout that should be used for the collection view.
+
+		- Returns: the layout that should be used for the collection view.
+	*/
+	func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+			let heightFraction = self.groupHeightFraction(for: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let section = NSCollectionLayoutSection(group: group)
+			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+			return section
+		}
+		return layout
 	}
 
 	/**

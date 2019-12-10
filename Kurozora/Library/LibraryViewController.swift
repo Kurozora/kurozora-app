@@ -33,13 +33,6 @@ class LibraryViewController: TabmanViewController {
 
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
-	#if DEBUG
-	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) = {
-		return LibraryListCollectionViewController().numberOfItems
-	}()
-	var numberOfItemsTextField: UITextField = UITextField(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 20)))
-	#endif
-
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,42 +53,9 @@ class LibraryViewController: TabmanViewController {
 
 		// Tabman bar
 		initTabmanBarView()
-
-		#if DEBUG
-		numberOfItemsTextField.placeholder = "# items for: width, height"
-		numberOfItemsTextField.text = "\(numberOfItems.forWidth), \(numberOfItems.forHeight)"
-		numberOfItemsTextField.textAlignment = .center
-		numberOfItemsTextField.addTarget(self, action: #selector(updateLayout(_:)), for: .editingDidEnd)
-		navigationItem.title = nil
-		navigationItem.titleView = numberOfItemsTextField
-		#endif
     }
 
 	// MARK: - Functions
-	#if DEBUG
-	/// Updates the layout using the data from the given textfield.
-	@objc func updateLayout(_ textField: UITextField) {
-		guard let textFieldText = numberOfItemsTextField.text else { return }
-		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
-
-		if textFieldText.isEmpty {
-			currentSection.newNumberOfItems = nil
-		} else {
-			currentSection.newNumberOfItems = getNumbers(textFieldText)
-		}
-
-		currentSection.collectionView.reloadData()
-	}
-
-	/// Returns the width and height from the given string.
-	func getNumbers(_ text: String) -> (forWidth: CGFloat, forHeight: CGFloat) {
-		let stringArray = text.withoutSpacesAndNewLines.components(separatedBy: ",")
-		let width = (stringArray.count > 1) ? Double(stringArray[0])?.cgFloat : numberOfItems.forWidth
-		let height = (stringArray.count > 1) ? Double(stringArray[1])?.cgFloat : numberOfItems.forHeight
-		return (width ?? numberOfItems.forWidth, height ?? numberOfItems.forHeight)
-	}
-	#endif
-
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
 		// Configure search controller

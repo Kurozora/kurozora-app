@@ -41,93 +41,6 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	}
 	var libraryCellStyle: Library.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
-	var gap: CGFloat {
-		return UIDevice.isPad ? 40 : 20
-	}
-	var numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
-		get {
-			if UIDevice.isLandscape {
-				switch UIDevice.type {
-				case .iPhone5SSE, .iPhone66S78, .iPhone66S78PLUS:
-					switch libraryCellStyle {
-					case .detailed:
-						return (2.08, 2.0)
-					case .compact:
-						return (6, 2.4)
-					case .list:
-						return (2.08, 2.4)
-					}
-				case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
-					switch libraryCellStyle {
-					case .detailed:
-						return (2.32, 1.8)
-					case .compact:
-						return (8, 2.6)
-					case .list:
-						return (2.32, 2.6)
-					}
-				case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
-					switch libraryCellStyle {
-					case .detailed:
-						return (3.06, 3.8)
-					case .compact:
-						return (8, 4.2)
-					case .list:
-						return (3.06, 4.2)
-					}
-				}
-			}
-
-			switch UIDevice.type {
-			case .iPhone5SSE:
-				switch libraryCellStyle {
-				case .detailed:
-					return (1, 3.2)
-				case .compact:
-					return (2.18, 2.8)
-				case .list:
-					return (1, 2.8)
-				}
-			case .iPhone66S78, .iPhone66S78PLUS:
-				switch libraryCellStyle {
-				case .detailed:
-					return (1, 3.2)
-				case .compact:
-					return (3.34, 4.2)
-				case .list:
-					return (1, 4.2)
-				}
-			case .iPhoneXr, .iPhoneXXs, .iPhoneXsMax:
-				switch libraryCellStyle {
-				case .detailed:
-					return (1, 3.8)
-				case .compact:
-					return (3.34, 5.2)
-				case .list:
-					return (1, 5.2)
-				}
-			case .iPad, .iPadAir3, .iPadPro11, .iPadPro12:
-				switch libraryCellStyle {
-				case .detailed:
-					return (2, 4.8)
-				case .compact:
-					return (6, 6)
-				case .list:
-					return (2, 6)
-				}
-			}
-		}
-	}
-
-	#if DEBUG
-	var newNumberOfItems: (forWidth: CGFloat, forHeight: CGFloat)?
-	var _numberOfItems: (forWidth: CGFloat, forHeight: CGFloat) {
-		get {
-			guard let newNumberOfItems = newNumberOfItems else { return numberOfItems }
-			return newNumberOfItems
-		}
-	}
-	#endif
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +60,8 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
+		collectionView.collectionViewLayout = createLayout()
 
 		// Setup library view controller delegate
 		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
@@ -235,6 +150,74 @@ class LibraryListCollectionViewController: UICollectionViewController {
 			self.showDetailsElements = nil
 			collectionView.reloadData()
 		}
+	}
+
+	/**
+		Reutrns the number of columns the collection view should present.
+
+		Number of columns is calculated by deviding the max width of the cell with the total width of the collection view.
+
+		- Parameter width: The width of the collection view used to calculate the number of columns.
+
+		- Returns: the number of columns the collection view should present.
+	*/
+	func columnCount(for width: CGFloat) -> Int {
+		switch libraryCellStyle {
+		case .compact:
+			var columnCount = (width / 125).int
+			if columnCount < 0 {
+				columnCount = 3
+			} else if columnCount > 10 {
+				columnCount = 10
+			}
+			return columnCount
+		case .detailed, .list:
+			let columnCount = (width / 374).int
+			return columnCount > 0 ? columnCount : 1
+		}
+	}
+
+	/**
+		Returns the CGFloat value of the collection view group height fraction.
+
+		When the width of the cell is longer than the height, the fractional height is calculated by deviding the fractional height for one column with the number of columns the collection view is currenlty presenting.
+
+		- Parameter column: The number of columns used to determin the fractional height value.
+
+		- Returns: the CGFloat value of the collection view group height fraction.
+	*/
+	func groupHeightFraction(for column: Int, or width: CGFloat = 0) -> CGFloat {
+		switch libraryCellStyle {
+		case .compact:
+			return (1.44 / column.double).cgFloat
+		case .detailed, .list:
+			return (0.60 / column.double).cgFloat
+		}
+	}
+
+	/**
+		Returns the layout that should be used for the collection view.
+
+		- Returns: the layout that should be used for the collection view.
+	*/
+	func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+			let heightFraction = self.groupHeightFraction(for: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let section = NSCollectionLayoutSection(group: group)
+			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+			return section
+		}
+		return layout
 	}
 
 	/// Returns a ShowDetailsElemenet for the selected show at the given index path.
@@ -330,19 +313,6 @@ extension LibraryListCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension LibraryListCollectionViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//		let cellSize = libraryCellStyle.sizeValue
-		#if DEBUG
-		return CGSize(width: (collectionView.bounds.width - gap) / _numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / _numberOfItems.forHeight)
-//		return CGSize(width: cellSize.width, height: cellSize.height)
-		#else
-		return CGSize(width: (collectionView.bounds.width - gap) / numberOfItems.forWidth, height: (collectionView.bounds.height - gap) / numberOfItems.forHeight)
-		#endif
-	}
-}
-
 // MARK: - UICollectionViewDragDelegate
 extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -350,7 +320,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 		let selectedShow = self.selectedShow(at: indexPath)
 
 		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
-		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image!)
+		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? #imageLiteral(resourceName: "placeholder_poster_image"))
 		itemProvider.registerObject(userActivity, visibility: .all)
 
         let dragItem = UIDragItem(itemProvider: itemProvider)
