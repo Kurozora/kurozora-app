@@ -9,21 +9,21 @@ PODS:
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
   - Cosmos (20.0.1)
-  - DiffableDataSources (0.2.0):
+  - DiffableDataSources (0.3.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
-  - DifferenceKit/Core (1.1.3)
-  - DifferenceKit/UIKitExtension (1.1.3):
+  - DifferenceKit/Core (1.1.4)
+  - DifferenceKit/UIKitExtension (1.1.4):
     - DifferenceKit/Core
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
   - FLAnimatedImage (1.0.12)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.1.0)
-  - Kingfisher (5.11.0):
-    - Kingfisher/Core (= 5.11.0)
-  - Kingfisher/Core (5.11.0)
-  - MarqueeLabel (4.0.0)
+  - Kingfisher (5.12.0):
+    - Kingfisher/Core (= 5.12.0)
+  - Kingfisher/Core (5.12.0)
+  - MarqueeLabel (4.0.1)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
@@ -136,15 +136,15 @@ SPEC CHECKSUMS:
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
-  DiffableDataSources: d67c7fe103c0eb2077fbaa73d9a231721455988e
-  DifferenceKit: 5018791b6c1fc839921a3c171a0a539ace6ea60c
+  DiffableDataSources: e87e630432a8a1f497064e299b83c0e6311517ae
+  DifferenceKit: d7e8a7edd2ae706f1e1f05c8103d4cf858e04b78
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  Kingfisher: 4569606189149e19c7d9439f47e885d0679b7a90
-  MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
+  Kingfisher: dc6e0f53bb5b12c3e75bedb0e01bbd7a640eea69
+  MarqueeLabel: d24e821159667c93064ea3042ccf1875ca94db6b
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825

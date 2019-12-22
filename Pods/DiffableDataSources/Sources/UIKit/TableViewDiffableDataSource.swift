@@ -36,14 +36,18 @@ open class TableViewDiffableDataSource<SectionIdentifierType: Hashable, ItemIden
     ///   - snapshot: A snapshot object to be applied to data model.
     ///   - animatingDifferences: A Boolean value indicating whether to update with
     ///                           diffing animation.
-    public func apply(_ snapshot: DiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>, animatingDifferences: Bool = true) {
+    ///   - completion: An optional completion block which is called when the complete
+    ///                 performing updates.
+    public func apply(_ snapshot: DiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>, animatingDifferences: Bool = true, completion: (() -> Void)? = nil) {
         core.apply(
             snapshot,
             view: tableView,
             animatingDifferences: animatingDifferences,
             performUpdates: { tableView, changeset, setSections in
                 tableView.reload(using: changeset, with: self.defaultRowAnimation, setData: setSections)
-        })
+        },
+            completion: completion
+        )
     }
 
     /// Returns a new snapshot object of current state.
@@ -92,6 +96,28 @@ open class TableViewDiffableDataSource<SectionIdentifierType: Hashable, ItemIden
     /// - Returns: The number of items in the specified section.
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return core.numberOfItems(inSection: section)
+    }
+
+    /// Returns the title for the specified section's header.
+    ///
+    /// - Parameters:
+    ///   - tableView: A table view instance managed by `self`.
+    ///   - section: An index of section.
+    ///
+    /// - Returns: The title for the specified section's header, or `nil` for no title.
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+
+    /// Returns the title for the specified section's footer.
+    ///
+    /// - Parameters:
+    ///   - tableView: A table view instance managed by `self`.
+    ///   - section: An index of section.
+    ///
+    /// - Returns: The title for the specified section's footer, or `nil` for no title.
+    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return nil
     }
 
     /// Returns a cell for row at specified index path.
