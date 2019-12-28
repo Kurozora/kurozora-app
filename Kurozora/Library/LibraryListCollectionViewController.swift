@@ -172,8 +172,13 @@ class LibraryListCollectionViewController: UICollectionViewController {
 			}
 			return columnCount
 		case .detailed, .list:
-			let columnCount = (width / 374).int
-			return columnCount > 0 ? columnCount : 1
+			var columnCount = (width / 374).int
+			if columnCount < 0 {
+				columnCount = 1
+			} else if columnCount > 5 {
+				columnCount = 5
+			}
+			return columnCount
 		}
 	}
 
@@ -186,7 +191,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 
 		- Returns: the CGFloat value of the collection view group height fraction.
 	*/
-	func groupHeightFraction(for column: Int, or width: CGFloat = 0) -> CGFloat {
+	func groupHeightFraction(for column: Int) -> CGFloat {
 		switch libraryCellStyle {
 		case .compact:
 			return (1.44 / column.double).cgFloat

@@ -11,7 +11,7 @@ import SCLAlertView
 import SwiftyJSON
 import WhatsNew
 
-class HomeCollectionViewController: UITableViewController {
+class HomeCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
 	let actionsArray: [[[String: String]]] = [
@@ -19,13 +19,12 @@ class HomeCollectionViewController: UITableViewController {
 		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
 	]
 
+	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
-			tableView.reloadData()
+			configureDataSource()
 		}
 	}
-	var collectionViewSizeChanged: Bool = false
-	var collectionViewOffsets = [IndexPath: CGFloat]()
 
 	// MARK: - View
 	override func viewDidLoad() {
@@ -33,12 +32,8 @@ class HomeCollectionViewController: UITableViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
-		// Remove top space
-		var frame = CGRect.zero
-		frame.size.height = .leastNormalMagnitude
-		let tableHeaderView = UIView(frame: frame)
-		tableHeaderView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		tableView.tableHeaderView = tableHeaderView
+		// Create colelction view layout
+		collectionView.collectionViewLayout = createLayout()
 
 		// Fetch explore details.
 		fetchExplore()
@@ -65,33 +60,6 @@ class HomeCollectionViewController: UITableViewController {
 		showWhatsNew()
 	}
 
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-
-		collectionViewSizeChanged = true
-	}
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-
-		if collectionViewSizeChanged {
-			tableView.invalidateIntrinsicContentSize()
-		}
-	}
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-
-		if collectionViewSizeChanged {
-			collectionViewSizeChanged = false
-			DispatchQueue.main.async {
-				self.tableView.performBatchUpdates({}) { _ in
-					NotificationCenter.default.post(name: .KEDidInvalidateContentSize, object: nil)
-				}
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Instantiates and returns a view controller from the relevant storyboard.
@@ -108,6 +76,99 @@ class HomeCollectionViewController: UITableViewController {
 		if WhatsNew.shouldPresent() {
 			let whatsNew = KWhatsNewViewController(titleText: "What's New", buttonText: "Continue", items: KWhatsNewModel.current)
 			self.present(whatsNew)
+		}
+	}
+
+	func gridSection(for cellStyle: HorizontalCollectionCellStyle, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = cellStyle.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+											  heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		item.contentInsets = cellStyle.itemContentInsets
+
+		let heightFraction = cellStyle.groupHeightFraction(for: columns)
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
+											   heightDimension: .fractionalWidth(heightFraction))
+		let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+													   subitem: item, count: columns)
+		let section = NSCollectionLayoutSection(group: group)
+		section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		section.contentInsets = cellStyle.sectionContentInsets
+		return section
+	}
+
+	func listSection(for cellStyle: VerticalCollectionCellStyle, layoutEnvironment: NSCollectionLayoutEnvironment, numberOfItems: Int) -> NSCollectionLayoutSection {
+		let columns = cellStyle.columnCount(for: layoutEnvironment.container.effectiveContentSize.width, numberOfItems: numberOfItems)
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+											  heightDimension: .fractionalHeight(1.0))
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		item.contentInsets = cellStyle.itemContentInsets
+
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+											   heightDimension: .absolute(55))
+		let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+													   subitem: item, count: columns)
+		let section = NSCollectionLayoutSection(group: group)
+		section.contentInsets = cellStyle.sectionContentInsets(for: layoutEnvironment.container.effectiveContentSize.width, numberOfItems: numberOfItems)
+		return section
+	}
+
+	/**
+		Returns the layout that should be used for the collection view.
+
+		- Returns: the layout that should be used for the collection view.
+	*/
+	func createLayout() -> UICollectionViewLayout {
+		return UICollectionViewCompositionalLayout { section, layoutEnvironment -> NSCollectionLayoutSection? in
+			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+			switch section {
+			case let section where section < exploreCategoriesCount:
+				// Configure section.
+				let horizontalCollectionCellStyleString = self.exploreCategories?[section].size ?? "small"
+				let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = section != 0 ? HorizontalCollectionCellStyle(rawValue: horizontalCollectionCellStyleString) ?? .small : .banner
+				let gridSection = self.gridSection(for: horizontalCollectionCellStyle, layoutEnvironment: layoutEnvironment)
+
+				// If it's the first section (featured shows) then return without adding a header view.
+				guard section != 0 else {
+					return gridSection
+				}
+
+				// Add header supplementary view.
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+															  heightDimension: .estimated(44))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+					layoutSize: headerFooterSize,
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				gridSection.boundarySupplementaryItems = [sectionHeader]
+
+				return gridSection
+			default:
+				var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
+				switch section {
+				case let section where section == exploreCategoriesCount + 1:
+					verticalCollectionCellStyle = .actionButton
+				case let section where section == exploreCategoriesCount + 2:
+					verticalCollectionCellStyle = .legal
+				default: break
+				}
+
+				let numberOfItems = self.collectionView.numberOfItems(inSection: section)
+				let listSection = self.listSection(for: verticalCollectionCellStyle, layoutEnvironment: layoutEnvironment, numberOfItems: numberOfItems)
+
+				// Lists are 3 sections. This makes sure that only the top most section gets a header view (Quick Links).
+				guard section == exploreCategoriesCount else {
+					return listSection
+				}
+
+				// Add header supplementary view.
+				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+															  heightDimension: .estimated(44))
+				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+					layoutSize: headerFooterSize,
+					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+				listSection.boundarySupplementaryItems = [sectionHeader]
+				return listSection
+			}
 		}
 	}
 
@@ -151,115 +212,113 @@ class HomeCollectionViewController: UITableViewController {
 	}
 }
 
-// MARK: - UITableViewDataSource
 extension HomeCollectionViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		guard let categoriesCount = exploreCategories?.count else { return 0 }
-		return categoriesCount + 2
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let exploreCategoriesCount = exploreCategories?.count {
-			if section < exploreCategoriesCount {
-				let categorySection = exploreCategories?[section]
-				if categorySection?.shows?.count != 0 {
-					return 1
-				} else if categorySection?.genres?.count != 0 {
-					return 1
-				}
-				return 0
+	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
+		switch verticalCollectionCellStyle {
+		case .legal:
+			guard let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? LegalExploreCollectionViewCell else {
+				fatalError("Cannot create new \(verticalCollectionCellStyle.identifierString)")
 			}
+			return legalExploreCollectionViewCell
+		default:
+			guard let actionBaseExploreCollectionViewCell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? ActionBaseExploreCollectionViewCell else {
+					fatalError("Cannot create new \(verticalCollectionCellStyle.identifierString)")
+			}
+			return actionBaseExploreCollectionViewCell
 		}
-
-		return 1
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let exploreCategoriesCount = exploreCategories?.count {
+	func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
+			if indexPath.section < self.exploreCategories?.count ?? 0 {
+				// Get a cell of the desired kind.
+				let cellStyle = self.exploreCategories?[indexPath.section].size ?? "small"
+				var horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
+				if indexPath.section == 0 {
+					horizontalCollectionCellStyle = .banner
+				}
+				guard let exploreBaseCollectionViewCell = collectionView.dequeueReusableCell(
+					withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? ExploreBaseCollectionViewCell
+					else { fatalError("Cannot create new \(horizontalCollectionCellStyle.identifierString)") }
+
+				// Populate the cell with our item description.
+				let exploreCategoriesSection = self.exploreCategories?[indexPath.section]
+				if let shows = exploreCategoriesSection?.shows, shows.count != 0 {
+					exploreBaseCollectionViewCell.showDetailsElement = shows[indexPath.row]
+				} else {
+					exploreBaseCollectionViewCell.genreElement = exploreCategoriesSection?.genres?[indexPath.row]
+				}
+
+				// Return the cell.
+				return exploreBaseCollectionViewCell
+			}
+
+			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
+			var actionsArray = self.actionsArray[0]
+
+			switch indexPath.section {
+			case let section where section == collectionView.numberOfSections - 1: // If last section
+				return self.createExploreCell(with: .legal, for: indexPath)
+			case let section where section == collectionView.numberOfSections - 2: // If before last section
+				verticalCollectionCellStyle = .actionButton
+				actionsArray = self.actionsArray[1]
+			default: break
+			}
+
+			let actionBaseExploreCollectionViewCell = self.createExploreCell(with: verticalCollectionCellStyle, for: indexPath) as? ActionBaseExploreCollectionViewCell
+			actionBaseExploreCollectionViewCell?.actionItem = actionsArray[indexPath.item]
+			return actionBaseExploreCollectionViewCell
+		}
+		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+
+			// Get a supplementary view of the desired kind.
+			guard let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ExploreSectionTitleCell", for: indexPath) as? ExploreSectionTitleCell else {
+				fatalError("Cannot create new ExploreSectionTitleCell")
+			}
+
 			if indexPath.section < exploreCategoriesCount {
-				if let horizontalCollectionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HorizontalCollectionTableViewCell", for: indexPath) as? HorizontalCollectionTableViewCell {
-					return horizontalCollectionTableViewCell
+				exploreSectionTitleCell.exploreCategory = self.exploreCategories?[indexPath.section]
+			} else {
+				exploreSectionTitleCell.title = "Quick Links"
+			}
+
+			// Return the view.
+			return exploreSectionTitleCell
+		}
+
+		let numberOfSections: Int = {
+			let exploreCategoriesCount = exploreCategories?.count ?? 0
+			return exploreCategoriesCount + 2
+		}()
+
+		// Initialize data
+		var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
+		var identifierOffset = 0
+		var itemsPerSection = 0
+
+		for section in 0...numberOfSections {
+			if section < exploreCategories?.count ?? 0 {
+				let exploreCategoriesSection = exploreCategories?[section]
+				itemsPerSection = exploreCategoriesSection?.shows?.count ?? 0
+				if itemsPerSection == 0 {
+					itemsPerSection = exploreCategoriesSection?.genres?.count ?? 0
 				}
+			} else if section == numberOfSections - 2 {
+				itemsPerSection = actionsArray[0].count
+			} else if section == numberOfSections - 1 {
+				itemsPerSection = actionsArray[1].count
+			} else {
+				itemsPerSection = 1
 			}
 
-			if indexPath.section == exploreCategoriesCount {
-				if let verticalCollectionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "VerticalCollectionTableViewCell", for: indexPath) as? VerticalCollectionTableViewCell {
-					return verticalCollectionTableViewCell
-				}
-			}
+			snapshot.appendSections([section])
+			let maxIdentifier = identifierOffset + itemsPerSection
+			snapshot.appendItems(Array(identifierOffset..<maxIdentifier))
+			identifierOffset += itemsPerSection
 		}
 
-		if let legalExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LegalExploreTableViewCell", for: indexPath) as? LegalExploreTableViewCell {
-			return legalExploreTableViewCell
-		}
-
-		return UITableViewCell()
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let exploreCategoriesCount = exploreCategories?.count {
-			if indexPath.section < exploreCategoriesCount {
-				if let categoryType = exploreCategories?[indexPath.section].size, var exploreCellStyle = HorizontalCollectionCellStyle(rawValue: categoryType),
-					let horizontalCollectionTableViewCell = cell as? HorizontalCollectionTableViewCell {
-
-					if indexPath.section == 0 {
-						exploreCellStyle = .banner
-					}
-
-					horizontalCollectionTableViewCell.cellStyle = exploreCellStyle
-
-					if exploreCategories?[indexPath.section].shows?.count != 0 {
-						horizontalCollectionTableViewCell.shows = exploreCategories?[indexPath.section].shows
-					} else {
-						horizontalCollectionTableViewCell.genres = exploreCategories?[indexPath.section].genres
-					}
-
-					horizontalCollectionTableViewCell.contentOffset = collectionViewOffsets[indexPath] ?? 0
-				}
-			}
-
-			if let verticalCollectionTableViewCell = cell as? VerticalCollectionTableViewCell {
-				verticalCollectionTableViewCell.actionsArray = actionsArray
-			}
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension HomeCollectionViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard section != 0 else { return .zero }
-
-		if let exploreCategoriesCount = exploreCategories?.count {
-			if section < exploreCategoriesCount {
-				if section != 0 {
-					return (exploreCategories?[section].shows?.count != 0 || exploreCategories?[section].genres?.count != 0) ? UITableView.automaticDimension : .zero
-				}
-			} else if section == exploreCategoriesCount {
-				return UITableView.automaticDimension
-			}
-		}
-
-		return .zero
-	}
-
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		guard let exploreCategoriesCount = exploreCategories?.count else { return nil }
-		guard section <= exploreCategoriesCount else { return nil }
-		guard let exploreSectionTitleCell = tableView.dequeueReusableCell(withIdentifier: "ExploreSectionTitleCell") as? ExploreSectionTitleCell else { return nil }
-
-		if section < exploreCategoriesCount {
-			exploreSectionTitleCell.exploreCategory = exploreCategories?[section]
-		} else {
-			exploreSectionTitleCell.title = "Quick Links"
-		}
-
-		return exploreSectionTitleCell.contentView
-	}
-
-	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if let horizontalCollectionTableViewCell = cell as? HorizontalCollectionTableViewCell {
-			collectionViewOffsets[indexPath] = horizontalCollectionTableViewCell.contentOffset
-		}
+		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 }

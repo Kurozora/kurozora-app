@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIView {
-
 	/**
 		Adds parallax effect to the view.
 
@@ -58,15 +57,15 @@ extension UIView {
 		- Parameter cornerRadius: The corner radius of the path size (default is `10`).
 	*/
 	func applyShadow(withView view: UIView? = nil, shadowColor: UIColor = .black, shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 8, shadowOffset: CGSize = .zero, shadowPathSize: CGSize? = nil, shouldRasterize: Bool = true, cornerRadius: CGFloat = 10) {
-		let roundedRect = (view ?? self).bounds.offsetBy(dx: 0, dy: 10)
-		let shadowPath = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
+//		let roundedRect = (view ?? self).bounds.offsetBy(dx: 0, dy: 10)
+//		let shadowPath = UIBezierPath(roundedRect: roundedRect, cornerRadius: cornerRadius)
 
 		self.layer.shadowColor = shadowColor.cgColor
 		self.layer.shadowOpacity = shadowOpacity
 		self.layer.shadowRadius = shadowRadius
 		self.layer.shadowOffset = shadowOffset
 		self.layer.masksToBounds = false
-		self.layer.shadowPath = shadowPath.cgPath
+//		self.layer.shadowPath = shadowPath.cgPath
 
 		if shouldRasterize {
 			self.layer.shouldRasterize = true
@@ -100,5 +99,4 @@ extension UIView {
 		layer.cornerRadius = radius
 		layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
 	}
-
 }

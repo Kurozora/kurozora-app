@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LegalExploreTableViewCell: UITableViewCell {
+class LegalExploreCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue

@@ -10,6 +10,11 @@ import UIKit
 
 class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
 	// MARK: - IBOutlets
+	override var primaryLabel: UILabel? {
+		didSet {
+			primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var backgroundColorView: UIView?
 
 	// MARK: - Functions

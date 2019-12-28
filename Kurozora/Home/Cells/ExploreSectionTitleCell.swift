@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreSectionTitleCell: UITableViewCell {
+class ExploreSectionTitleCell: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
