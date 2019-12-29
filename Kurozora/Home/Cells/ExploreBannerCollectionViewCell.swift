@@ -15,18 +15,4 @@ class ExploreBannerCollectionViewCell: ExploreBaseCollectionViewCell {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
-	@IBOutlet weak var backgroundColorView: UIView!
-	override var updateBannerBackgroundColor: Bool {
-		didSet {
-			if updateBannerBackgroundColor {
-				updateImageColor()
-			}
-		}
-	}
-
-	// MARK: - Functions
-	/// Updates the background color of the image.
-	func updateImageColor() {
-		backgroundColorView.backgroundColor = self.bannerImageView?.image?.getColors(quality: .lowest)?.background
-	}
 }

@@ -35,7 +35,6 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 			configureCell()
 		}
 	}
-	var updateBannerBackgroundColor = false
 	var libraryStatus: String?
 
 	// MARK: - Functions
@@ -65,9 +64,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 
 		// Configure banner
 		if let bannerThumbnail = showDetailsElement.banner {
-			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image")) {
-				self.updateBannerBackgroundColor = true
-			}
+			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 		}
 
 		// Configure poster

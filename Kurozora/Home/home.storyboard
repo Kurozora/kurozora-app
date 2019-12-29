@@ -73,7 +73,8 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="QKq-Oi-I0m">
-                                                            <rect key="frame" x="0.0" y="168" width="374" height="42"/>
+                                                            <rect key="frame" x="0.0" y="105" width="374" height="105"/>
+                                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="One Piece" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZZ-GK-XnK">
                                                             <rect key="frame" x="142.66666666666666" y="178" width="89" height="24"/>
@@ -107,13 +108,14 @@
                                                         <constraint firstItem="QKq-Oi-I0m" firstAttribute="leading" secondItem="rci-tv-aw2" secondAttribute="leading" id="GY4-A3-jCt"/>
                                                         <constraint firstItem="g2K-gj-J4F" firstAttribute="top" secondItem="rci-tv-aw2" secondAttribute="top" id="KCM-sN-1bu"/>
                                                         <constraint firstItem="g2K-gj-J4F" firstAttribute="leading" secondItem="rci-tv-aw2" secondAttribute="leading" id="KNp-Uv-d1A"/>
+                                                        <constraint firstItem="QKq-Oi-I0m" firstAttribute="top" secondItem="kgJ-PC-M0b" secondAttribute="centerY" id="ZXG-Sw-pEe"/>
                                                         <constraint firstAttribute="trailing" secondItem="QKq-Oi-I0m" secondAttribute="trailing" id="bea-K1-Pq8"/>
                                                         <constraint firstItem="DZZ-GK-XnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rci-tv-aw2" secondAttribute="leadingMargin" id="bvf-en-YoK"/>
                                                         <constraint firstAttribute="trailing" secondItem="g2K-gj-J4F" secondAttribute="trailing" id="cg3-oZ-7GU"/>
                                                         <constraint firstItem="QKq-Oi-I0m" firstAttribute="bottom" secondItem="kgJ-PC-M0b" secondAttribute="bottom" id="cm0-zM-dt5"/>
                                                         <constraint firstItem="kgJ-PC-M0b" firstAttribute="top" secondItem="rci-tv-aw2" secondAttribute="top" id="gUN-BE-tLx"/>
                                                         <constraint firstAttribute="bottom" secondItem="kgJ-PC-M0b" secondAttribute="bottom" id="grs-MZ-p0g"/>
-                                                        <constraint firstItem="DZZ-GK-XnK" firstAttribute="top" secondItem="QKq-Oi-I0m" secondAttribute="top" constant="10" id="lpJ-we-dv5"/>
+                                                        <constraint firstItem="DZZ-GK-XnK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QKq-Oi-I0m" secondAttribute="top" constant="10" id="lpJ-we-dv5"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -142,7 +144,6 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="374" height="231"/>
                                 <connections>
-                                    <outlet property="backgroundColorView" destination="rci-tv-aw2" id="WBW-6x-zKb"/>
                                     <outlet property="bannerImageView" destination="kgJ-PC-M0b" id="MTw-Ki-Tg6"/>
                                     <outlet property="primaryLabel" destination="DZZ-GK-XnK" id="DcM-bc-THB"/>
                                     <outlet property="separatorView" destination="k7C-EH-ea4" id="YKj-NO-1Sm"/>
@@ -982,7 +983,7 @@
     <resources>
         <image name="Symbols/chevron_right" width="24" height="24"/>
         <image name="placeholder_banner_image" width="1920" height="1080"/>
-        <image name="shadow" width="20" height="90"/>
+        <image name="shadow" width="6" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="L04-SO-xkr"/>
