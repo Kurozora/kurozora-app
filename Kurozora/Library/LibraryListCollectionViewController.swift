@@ -152,79 +152,6 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	/**
-		Reutrns the number of columns the collection view should present.
-
-		Number of columns is calculated by deviding the max width of the cell with the total width of the collection view.
-
-		- Parameter width: The width of the collection view used to calculate the number of columns.
-
-		- Returns: the number of columns the collection view should present.
-	*/
-	func columnCount(for width: CGFloat) -> Int {
-		switch libraryCellStyle {
-		case .compact:
-			var columnCount = (width / 125).int
-			if columnCount < 0 {
-				columnCount = 3
-			} else if columnCount > 10 {
-				columnCount = 10
-			}
-			return columnCount
-		case .detailed, .list:
-			var columnCount = (width / 374).int
-			if columnCount < 0 {
-				columnCount = 1
-			} else if columnCount > 5 {
-				columnCount = 5
-			}
-			return columnCount
-		}
-	}
-
-	/**
-		Returns the CGFloat value of the collection view group height fraction.
-
-		When the width of the cell is longer than the height, the fractional height is calculated by deviding the fractional height for one column with the number of columns the collection view is currenlty presenting.
-
-		- Parameter column: The number of columns used to determin the fractional height value.
-
-		- Returns: the CGFloat value of the collection view group height fraction.
-	*/
-	func groupHeightFraction(for column: Int) -> CGFloat {
-		switch libraryCellStyle {
-		case .compact:
-			return (1.44 / column.double).cgFloat
-		case .detailed, .list:
-			return (0.60 / column.double).cgFloat
-		}
-	}
-
-	/**
-		Returns the layout that should be used for the collection view.
-
-		- Returns: the layout that should be used for the collection view.
-	*/
-	func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-
-			let heightFraction = self.groupHeightFraction(for: columns)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
-			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-
-			let section = NSCollectionLayoutSection(group: group)
-			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-			return section
-		}
-		return layout
-	}
-
 	/// Returns a ShowDetailsElemenet for the selected show at the given index path.
 	func selectedShow(at indexPath: IndexPath) -> ShowDetailsElement? {
 		return showDetailsElements?[indexPath.row]
@@ -354,6 +281,67 @@ extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate 
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		populateSortActions(sender)
+	}
+}
+
+extension LibraryListCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		switch libraryCellStyle {
+		case .compact:
+			var columnCount = (width / 125).int
+			if columnCount < 0 {
+				columnCount = 3
+			} else if columnCount > 10 {
+				columnCount = 10
+			}
+			return columnCount
+		case .detailed, .list:
+			var columnCount = (width / 374).int
+			if columnCount < 0 {
+				columnCount = 1
+			} else if columnCount > 5 {
+				columnCount = 5
+			}
+			return columnCount
+		}
+	}
+
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+		switch libraryCellStyle {
+		case .compact:
+			return (1.44 / columnsCount.double).cgFloat
+		case .detailed, .list:
+			return (0.60 / columnsCount.double).cgFloat
+		}
+	}
+
+	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+			return layoutSection
+		}
+		return layout
 	}
 }
 

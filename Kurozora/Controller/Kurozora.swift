@@ -235,7 +235,7 @@ extension Kurozora {
 	func prepareView() {
 		let blurEffect = UIBlurEffect(style: .dark)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-		blurEffectView.frame = UIApplication.shared.keyWindow!.frame
+		blurEffectView.frame = UIApplication.shared.keyWindow?.frame ?? .zero
 		blurEffectView.tag = 5614325
 		UIApplication.shared.keyWindow?.addSubview(blurEffectView)
 

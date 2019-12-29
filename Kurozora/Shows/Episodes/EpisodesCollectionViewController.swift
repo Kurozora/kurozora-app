@@ -71,58 +71,6 @@ class EpisodesCollectionViewController: UICollectionViewController {
 	}
 
 	/**
-		Reutrns the number of columns the collection view should present.
-
-		Number of columns is calculated by deviding the max width of the cell with the total width of the collection view.
-
-		- Parameter width: The width of the collection view used to calculate the number of columns.
-
-		- Returns: the number of columns the collection view should present.
-	*/
-	func columnCount(for width: CGFloat) -> Int {
-		let columnCount = (width / 374).int
-		return columnCount > 0 ? columnCount : 1
-	}
-
-	/**
-		Returns the CGFloat value of the collection view group height fraction.
-
-		Fractional height is calculated by deviding the fractional height for one column with the number of column the collection view is currenlty presenting.
-
-		- Parameter column: The number of columns used to determin the fractional height value.
-
-		- Returns: the CGFloat value of the collection view group height fraction.
-	*/
-	func groupHeightFraction(for column: Int) -> CGFloat {
-		return (0.60 / column.double).cgFloat
-	}
-
-	/**
-		Returns the layout that should be used for the collection view.
-
-		- Returns: the layout that should be used for the collection view.
-	*/
-	func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
-			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
-			let item = NSCollectionLayoutItem(layoutSize: itemSize)
-			item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-
-			let heightFraction = self.groupHeightFraction(for: columns)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
-			let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
-
-			let section = NSCollectionLayoutSection(group: group)
-			section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-			return section
-		}
-		return layout
-	}
-
-	/**
 		Populate an action sheet for the given episode.
 
 		- Parameter episode: The episode for which the action sheet should be populated
@@ -135,6 +83,7 @@ class EpisodesCollectionViewController: UICollectionViewController {
 			self.episodesCellWatchedButtonPressed(for: cell)
 		}))
 		action.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+		action.addAction(UIAlertAction(title: "Share", style: .default, handler: nil))
 		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
@@ -291,10 +240,8 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 		options.expansionStyle = .selection
 		options.transitionStyle = .reveal
 		options.expansionDelegate = ScaleAndAlphaExpansion.default
-
 		options.buttonSpacing = 5
 		options.backgroundColor = .clear
-
 		return options
 	}
 }
@@ -326,28 +273,47 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
     }
 }
 
-//    func episodeCellMorePressed(cell: EpisodeCell) {
-//        let indexPath = collectionView.indexPath(for: cell)!
-//        let episode = dataSource[indexPath.row]
-//        var textToShare = ""
-//
-//        if anime.episodes == indexPath.row + 1 {
-//            textToShare = "Finished watching \(anime.title!) via #KurozoraApp"
-//        } else {
-//            textToShare = "Just watched \(anime.title!) ep \(episode.number) via #KurozoraApp"
-//        }
-//
-//        var objectsToShare: [AnyObject] = [textToShare as AnyObject]
-//        if let image = cell.screenshotImageView.image {
-//            objectsToShare.append( image )
-//        }
-//
-//        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-//        activityVC.excludedActivityTypes = [UIActivityType.assignToContact, UIActivityType.copyToPasteboard, UIActivityType.addToReadingList,UIActivityType.print]
-//        self.present(activityVC, animated: true, completion: nil)
-//
-//    }
-//
+// MARK: - KCollectionViewDelegateLayout
+extension EpisodesCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let columnCount = (width / 374).int
+		return columnCount > 0 ? columnCount : 1
+	}
+
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+		return (0.60 / columnsCount.double).cgFloat
+	}
+
+	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+			return layoutSection
+		}
+		return layout
+	}
+}
+
 //extension EpisodesViewController: DropDownListDelegate {
 //    func selectedAction(sender trigger: UIView, action: String, indexPath: IndexPath) {
 //        if dataSource.isEmpty {
