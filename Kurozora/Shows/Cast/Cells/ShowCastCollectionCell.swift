@@ -37,7 +37,7 @@ class ShowCastCollectionCell: UICollectionViewCell {
 	}
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
-			self.separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
+			self.separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
 

@@ -14,7 +14,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 	var showID: Int?
 	var seasons: [SeasonsElement]? {
 		didSet {
-
+			self.collectionView?.reloadData()
 		}
 	}
 
@@ -23,6 +23,8 @@ class SeasonsCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
+		collectionView.collectionViewLayout = createLayout()
 
 		// Fetch seasons
 		if seasons == nil {
@@ -107,14 +109,14 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
-		return (0.60 / columnsCount.double).cgFloat
-	}
-
-	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return (0.50 / columnsCount.double).cgFloat
 	}
 
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 	}
 

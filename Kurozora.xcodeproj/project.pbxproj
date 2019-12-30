@@ -955,11 +955,10 @@
 		66058DC3212E984F0084B79E /* Episodes */ = {
 			isa = PBXGroup;
 			children = (
-				66AEABF022994F4600949FD8 /* EpisodeSection.swift */,
-				667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */,
-				667943662273A46700E2D0D0 /* WatchStatus.swift */,
 				663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */,
-				6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */,
+				667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */,
+				66FDDB7523B97F8B00364886 /* Cells */,
+				66FDDB7623B97F9F00364886 /* Models */,
 			);
 			path = Episodes;
 			sourceTree = "<group>";
@@ -1906,7 +1905,7 @@
 			isa = PBXGroup;
 			children = (
 				66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */,
-				66C86403216DFB850054EE16 /* SeasonsCollectionViewCell.swift */,
+				66FDDB7423B97F6300364886 /* Cells */,
 			);
 			path = Seasons;
 			sourceTree = "<group>";
@@ -2204,6 +2203,31 @@
 				66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66FDDB7423B97F6300364886 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				66C86403216DFB850054EE16 /* SeasonsCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		66FDDB7523B97F8B00364886 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		66FDDB7623B97F9F00364886 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66AEABF022994F4600949FD8 /* EpisodeSection.swift */,
+				667943662273A46700E2D0D0 /* WatchStatus.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D4A795E40A9FE3FA76278C67 /* Pods */ = {
