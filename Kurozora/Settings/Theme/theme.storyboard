@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xyg-hs-K1N">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -166,25 +166,25 @@
                         <viewLayoutGuide key="safeArea" id="ZJ1-3f-Wlz"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="iSF-Fg-ZNW"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="VRk-KC-9e2"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="20" minimumInteritemSpacing="20" sectionInsetReference="layoutMargins" id="uLH-Bd-wlF">
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="uLH-Bd-wlF">
                             <size key="itemSize" width="169" height="341"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemesCollectionViewCell" id="LQw-RA-Vgs" customClass="ThemesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="28" y="28" width="169" height="351.33333333333331"/>
+                                <rect key="frame" x="18" y="18" width="170" height="351.33333333333331"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qnv-PM-vhM">
-                                    <rect key="frame" x="0.0" y="0.0" width="169" height="351.33333333333331"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="170" height="351.33333333333331"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eia-Cs-y4M">
-                                            <rect key="frame" x="0.0" y="0.0" width="169" height="300"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="170" height="300"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="M8r-MS-gaT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="169" height="300"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="300"/>
                                                     <color key="backgroundColor" red="0.0" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -193,7 +193,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boX-Aw-VdH" userLabel="More Button" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="135" y="8" width="26" height="26"/>
+                                                    <rect key="frame" x="136" y="8" width="26" height="26"/>
                                                     <color key="backgroundColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="26" id="E7F-4C-yMP"/>
@@ -220,8 +220,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="M8r-MS-gaT" secondAttribute="bottom" id="4CL-4m-64q"/>
+                                                <constraint firstAttribute="width" secondItem="Eia-Cs-y4M" secondAttribute="height" multiplier="17:30" id="6Xq-Xi-jxo"/>
                                                 <constraint firstItem="boX-Aw-VdH" firstAttribute="top" secondItem="M8r-MS-gaT" secondAttribute="top" constant="8" id="As6-51-Paj"/>
-                                                <constraint firstAttribute="width" constant="169" id="Ca5-3H-JMB"/>
                                                 <constraint firstItem="M8r-MS-gaT" firstAttribute="trailing" secondItem="boX-Aw-VdH" secondAttribute="trailing" constant="8" id="D2s-ft-06V"/>
                                                 <constraint firstAttribute="trailing" secondItem="M8r-MS-gaT" secondAttribute="trailing" id="LHW-pl-bMg"/>
                                                 <constraint firstAttribute="height" constant="300" id="dyp-Kl-W54"/>
@@ -242,7 +242,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="120" y="320" width="49" height="20"/>
+                                            <rect key="frame" x="121" y="320" width="49" height="20"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="TUA-Ju-URN"/>

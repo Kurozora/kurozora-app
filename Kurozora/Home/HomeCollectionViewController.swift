@@ -153,6 +153,7 @@ class HomeCollectionViewController: UICollectionViewController {
 	}
 }
 
+// MARK: - Helper functions
 extension HomeCollectionViewController {
 	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
 		switch verticalCollectionCellStyle {
@@ -266,54 +267,6 @@ extension HomeCollectionViewController {
 
 // MARK: - KCollectionViewDelegateLayout
 extension HomeCollectionViewController {
-	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-	}
-
-	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-		let exploreCategoriesCount = self.exploreCategories?.count ?? 0
-
-		switch section {
-		case let section where section < exploreCategoriesCount:
-			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
-		default:
-			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
-			switch section {
-			case let section where section == exploreCategoriesCount + 1:
-				verticalCollectionCellStyle = .actionButton
-			case let section where section == exploreCategoriesCount + 2:
-				verticalCollectionCellStyle = .legal
-			default: break
-			}
-
-			var numberOfItems = self.collectionView.numberOfItems(inSection: section)
-			numberOfItems = numberOfItems > 0 ? numberOfItems : 1
-
-			switch verticalCollectionCellStyle {
-			case .actionButton:
-				if width > 828 {
-					let itemsWidth = (414 * numberOfItems + 20 * numberOfItems).cgFloat
-					var leadingInset: CGFloat = (width - itemsWidth) / 2
-					var trailingInset: CGFloat = 0
-
-					if leadingInset < 10 {
-						leadingInset = 10
-						trailingInset = 10
-					} else if width < 1240 {
-						trailingInset = leadingInset
-					}
-
-					return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
-				}
-
-				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
-			default:
-				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
-			}
-		}
-	}
-
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		var columnCount = 0
@@ -415,6 +368,54 @@ extension HomeCollectionViewController {
 				return (0.75 / columnsCount.double).cgFloat
 			}
 			return (0.92 / columnsCount.double).cgFloat
+		}
+	}
+
+	override func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+		let exploreCategoriesCount = self.exploreCategories?.count ?? 0
+
+		switch section {
+		case let section where section < exploreCategoriesCount:
+			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+		default:
+			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
+			switch section {
+			case let section where section == exploreCategoriesCount + 1:
+				verticalCollectionCellStyle = .actionButton
+			case let section where section == exploreCategoriesCount + 2:
+				verticalCollectionCellStyle = .legal
+			default: break
+			}
+
+			var numberOfItems = self.collectionView.numberOfItems(inSection: section)
+			numberOfItems = numberOfItems > 0 ? numberOfItems : 1
+
+			switch verticalCollectionCellStyle {
+			case .actionButton:
+				if width > 828 {
+					let itemsWidth = (414 * numberOfItems + 20 * numberOfItems).cgFloat
+					var leadingInset: CGFloat = (width - itemsWidth) / 2
+					var trailingInset: CGFloat = 0
+
+					if leadingInset < 10 {
+						leadingInset = 10
+						trailingInset = 10
+					} else if width < 1240 {
+						trailingInset = leadingInset
+					}
+
+					return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
+				}
+
+				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+			default:
+				return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+			}
 		}
 	}
 
