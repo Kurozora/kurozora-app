@@ -1,5 +1,5 @@
 //
-//  SearchResultsTableViewController.swift
+//  SearchResultsCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 25/04/2018.
@@ -10,26 +10,26 @@ import UIKit
 import SwiftyJSON
 import SwiftTheme
 
-class SearchResultsTableViewController: UITableViewController {
+class SearchResultsCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	var showResults: [ShowDetailsElement]? {
 		didSet {
 			if showResults != nil {
-				self.tableView.reloadData()
+				self.collectionView.reloadData()
 			}
 		}
 	}
 	var threadResults: [ForumsThreadElement]? {
 		didSet {
 			if threadResults != nil {
-				self.tableView.reloadData()
+				self.collectionView.reloadData()
 			}
 		}
 	}
 	var userResults: [UserProfile]? {
 		didSet {
 			if userResults != nil {
-				self.tableView.reloadData()
+				self.collectionView.reloadData()
 			}
 		}
 	}
@@ -62,6 +62,8 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		collectionView.collectionViewLayout = createLayout()
+
 		// Blurred table view background
 		let blurEffect = UIBlurEffect(style: .regular)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -70,7 +72,7 @@ class SearchResultsTableViewController: UITableViewController {
 			subview.backgroundColor = nil
 		}
 
-		tableView.backgroundView = blurEffectView
+		collectionView.backgroundView = blurEffectView
     }
 
 	// MARK: - Functions
@@ -81,7 +83,7 @@ class SearchResultsTableViewController: UITableViewController {
 	*/
 	static func instantiateFromStoryboard() -> UIViewController? {
 		let storyboard = UIStoryboard(name: "search", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "SearchResultsTableViewController")
+		return storyboard.instantiateViewController(withIdentifier: "SearchResultsCollectionViewController")
 	}
 
 	/**
@@ -126,7 +128,7 @@ class SearchResultsTableViewController: UITableViewController {
 		showResults = nil
 		threadResults = nil
 		userResults = nil
-		tableView.reloadData()
+		collectionView.reloadData()
 	}
 
 	/// Performs search after the given amount of time has passed.
@@ -155,119 +157,179 @@ class SearchResultsTableViewController: UITableViewController {
 //	}
 }
 
-// MARK: - UITableViewDataSource
-extension SearchResultsTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
+// MARK: - UICollectionViewDataSource
+extension SearchResultsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		var resultsCount = suggestions.count
 
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		var resultsCount: Int? = nil
-
-		if let searchScope = SearchScope(rawValue: currentScope) {
-			switch searchScope {
-			case .show:
-				resultsCount = showResults?.count
-			case .myLibrary: break
-			case .thread:
-				resultsCount = threadResults?.count
-			case .user:
-				resultsCount = userResults?.count
+		if showResults != nil || threadResults != nil || userResults != nil {
+			if let searchScope = SearchScope(rawValue: currentScope) {
+				switch searchScope {
+				case .show:
+					resultsCount = showResults?.count ?? 0
+				case .myLibrary: break
+				case .thread:
+					resultsCount = threadResults?.count ?? 0
+				case .user:
+					resultsCount = userResults?.count ?? 0
+				}
 			}
 		}
-		return resultsCount ?? 1
+
+		return resultsCount
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if showResults != nil || threadResults != nil || userResults != nil {
 			let searchScope = SearchScope(rawValue: currentScope) ?? .show
 			let identifier = searchScope.identifierString
 
-			let searchBaseResultsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SearchBaseResultsCell
-			var resultsCount = 1
-
-			// Configure cell
-			switch searchScope {
-			case .show:
-				(searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement = showResults?[indexPath.row]
-				resultsCount = showResults?.count ?? 0
-			case .myLibrary: break
-			case .thread:
-				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement = threadResults?[indexPath.row]
-				resultsCount = threadResults?.count ?? 0
-			case .user:
-				(searchBaseResultsCell as? SearchUserResultsCell)?.userProfile = userResults?[indexPath.row]
-				resultsCount = userResults?.count ?? 0
-			}
-
+			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! SearchBaseResultsCell
+//			var resultsCount = 1
 			// Configure corner radius
-			if resultsCount == 1 {
-				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-			} else if indexPath.row == 0 {
-				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-			} else if indexPath.row == resultsCount - 1 {
-				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-			} else {
-				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 0
-			}
+//			if resultsCount == 1 {
+//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+//			} else if indexPath.row == 0 {
+//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//			} else if indexPath.row == resultsCount - 1 {
+//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
+//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+//			} else {
+//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 0
+//			}
 
 			// Configure separator
-			if tableView.numberOfRows() == 1 || indexPath.row == tableView.numberOfRows() - 1 {
-				searchBaseResultsCell.separatorView?.isHidden = true
-			} else {
-				searchBaseResultsCell.separatorView?.isHidden = false
-			}
+//			if collectionView.numberOfItems() == 1 || indexPath.row == collectionView.numberOfItems() - 1 {
+//				searchBaseResultsCell.separatorView?.isHidden = true
+//			} else {
+//				searchBaseResultsCell.separatorView?.isHidden = false
+//			}
 
 			return searchBaseResultsCell
+		}
+
+		let searchResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchSuggestionResultCell", for: indexPath) as! SearchSuggestionResultCell
+		return searchResultsCell
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if showResults != nil {
+			(cell as? SearchShowResultsCell)?.showDetailsElement = showResults?[indexPath.row]
+		} else if threadResults != nil {
+			(cell as? SearchForumsResultsCell)?.forumsThreadElement = threadResults?[indexPath.row]
+		} else if userResults != nil {
+			(cell as? SearchUserResultsCell)?.userProfile = userResults?[indexPath.row]
 		} else {
-			let searchResultsCell = tableView.dequeueReusableCell(withIdentifier: "SearchEmptyResultsCell", for: indexPath) as! SearchEmptyResultsCell
-			searchResultsCell.suggestionElement = suggestions
-			return searchResultsCell
+			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestions[indexPath.row]
 		}
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension SearchResultsTableViewController {
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if showResults != nil || threadResults != nil || userResults != nil {
-			guard let searchScope = SearchScope(rawValue: currentScope) else { return }
-			let searchBaseResultsCell = tableView.cellForRow(at: indexPath) as? SearchBaseResultsCell
-
-			switch searchScope {
-			case .show:
-				if let showDetailsViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
-					showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
-					presentingViewController?.show(showDetailsViewController, sender: nil)
-				}
-			case .myLibrary: break
-			case .thread:
-				if let threadTableViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-					threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
-					presentingViewController?.show(threadTableViewController, sender: nil)
-				}
-			case .user:
-				if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
-					profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
-					presentingViewController?.show(profileTableViewController, sender: nil)
-				}
+// MARK: - UICollectionViewDelegate
+extension SearchResultsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
+		if showResults != nil {
+			if let showDetailsViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
+				presentingViewController?.show(showDetailsViewController, sender: nil)
+			}
+		} else if threadResults != nil {
+			if let threadTableViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
+				threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
+				presentingViewController?.show(threadTableViewController, sender: nil)
+			}
+		} else if userResults != nil {
+			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+				profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
+				presentingViewController?.show(profileTableViewController, sender: nil)
 			}
 		}
+	}
+}
+
+// MARK: - KCollectionViewDelegateLayout
+extension SearchResultsCollectionViewController {
+	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
+		if showResults != nil || threadResults != nil || userResults != nil {
+			return 1
+		}
+
+		let width = layoutEnvironment.container.contentSize.width
+		var columnCount = (width / 110).int
+		if columnCount < 0 {
+			columnCount = 1
+		} else if columnCount > 5 {
+			columnCount = 5
+		}
+		return columnCount
+	}
+
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+		if showResults != nil {
+			return 0.25
+		} else if threadResults != nil {
+			return 0.15
+		} else if userResults != nil {
+			return 0.20
+		}
+		return (1.50 / columnsCount.double).cgFloat
+	}
+
+	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+	}
+
+	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		let leadingInset = collectionView.directionalLayoutMargins.leading
+		let trailingInset = collectionView.directionalLayoutMargins.trailing
+		return NSDirectionalEdgeInsets(top: 20, leading: leadingInset, bottom: 20, trailing: trailingInset)
+	}
+
+	override func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
+		let leadingInset = collectionView.directionalLayoutMargins.leading
+		let trailingInset = collectionView.directionalLayoutMargins.trailing
+		return NSDirectionalEdgeInsets(top: 20, leading: leadingInset, bottom: 20, trailing: trailingInset)
+	}
+
+	override func createLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												  heightDimension: .fractionalHeight(1.0))
+			let item = NSCollectionLayoutItem(layoutSize: itemSize)
+			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												   heightDimension: .fractionalWidth(heightFraction))
+			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+
+			let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+			sectionBackgroundDecoration.contentInsets = self.contentInset(forBackgroundInSection: section, layout: layoutEnvironment)
+			layoutSection.decorationItems = [sectionBackgroundDecoration]
+
+			return layoutSection
+		}
+		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+		return layout
 	}
 }
 
 // MARK: - UISearchResultsUpdating
-extension SearchResultsTableViewController: UISearchResultsUpdating {
+extension SearchResultsCollectionViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		searchController.searchResultsController?.view.isHidden = false
 	}
 }
 
 // MARK: - UISearchBarDelegate
-extension SearchResultsTableViewController: UISearchBarDelegate {
+extension SearchResultsCollectionViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 		guard let text = searchBar.text else { return }

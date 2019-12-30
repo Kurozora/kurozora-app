@@ -9,7 +9,7 @@
 import UIKit
 import SwiftTheme
 
-class SearchBaseResultsCell: UITableViewCell {
+class SearchBaseResultsCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel!
 	@IBOutlet weak var secondaryLabel: UILabel?
@@ -26,17 +26,14 @@ class SearchBaseResultsCell: UITableViewCell {
 		}
 	}
 	@IBOutlet weak var searchImageView: UIImageView!
-	@IBOutlet weak var separatorView: UIView?
-	@IBOutlet weak var visualEffectView: UIVisualEffectView! {
-		didSet {
-			visualEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: true)
-			visualEffectView.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: UIVisualEffectView?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
+		if let numberOfItems = parentCollectionView?.numberOfItems() {
+			separatorView?.isHidden = indexPath?.item == numberOfItems - 1
+		}
 	}
 
 	// MARK: - IBActions

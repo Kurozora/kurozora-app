@@ -1,5 +1,5 @@
 //
-//  SuggestionResultCell.swift
+//  SearchSuggestionResultCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/08/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SuggestionResultCell: UICollectionViewCell {
+class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel?
 	@IBOutlet weak var posterImageView: UIImageView?

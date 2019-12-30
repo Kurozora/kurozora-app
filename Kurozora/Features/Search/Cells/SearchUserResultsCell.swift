@@ -17,6 +17,16 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 			}
 		}
 	}
+	var searchImageViewSize: CGSize = .zero
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		if searchImageView.size != searchImageViewSize {
+			searchImageViewSize = searchImageView.size
+			searchImageView.cornerRadius = searchImageView.height / 2
+		}
+	}
 
 	// MARK: - Functions
 	override func configureCell() {
@@ -30,8 +40,10 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 
 		// Configure profile image
 		if let profileImage = userProfile.profileImage {
-			let usernameInitials = userProfile.username?.initials
-			searchImageView.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
+			if let usernameInitials = userProfile.username?.initials {
+				let placeholderImage = usernameInitials.toImage(withFrameSize: searchImageView.frame, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				searchImageView.setImage(with: profileImage, placeholder: placeholderImage)
+			}
 		}
 
 		// Configure follow button
@@ -79,7 +91,6 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 
 			secondaryLabel?.text = secondaryLabelText
 		}
-
 	}
 
 	// MARK: - IBActions

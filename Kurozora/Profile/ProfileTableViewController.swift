@@ -242,8 +242,10 @@ class ProfileTableViewController: UITableViewController {
 
 		// Setup profile image
 		if let profileImage = user.profile?.profileImage {
-			let usernameInitials = user.profile?.username?.initials
-			profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
+			if let usernameInitials = user.profile?.username?.initials {
+				let placeholderImage = usernameInitials.toImage(placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
+			}
 		}
 
 		// Setup banner image

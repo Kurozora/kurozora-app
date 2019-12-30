@@ -50,8 +50,10 @@ class FeedPostCell: BaseFeedPostCell {
 
 		// Profile Image
 		if let profileImage = feedPostElement.profileImage {
-			let usernameInitials = feedPostElement.posterUsername?.initials
-			profileImageView?.setImage(with: profileImage, placeholder: usernameInitials?.toImage ?? #imageLiteral(resourceName: "default_profile_image"))
+			if let usernameInitials = feedPostElement.posterUsername?.initials {
+				let placeholderImage = usernameInitials.toImage(placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				profileImageView?.setImage(with: profileImage, placeholder: placeholderImage)
+			}
 		}
 
 		// Other Username

@@ -223,7 +223,7 @@ extension User {
 
 	/// Returns the current user profile image from cache if available, otherwise returns default profile image
 	static var currentUserProfileImage: UIImage {
-		var profileImage = username.initials.toImage ?? #imageLiteral(resourceName: "default_profile_image")
+		var profileImage = username.initials.toImage(placeholder: #imageLiteral(resourceName: "default_profile_image"))
 
 		ImageCache.default.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
 			switch result {

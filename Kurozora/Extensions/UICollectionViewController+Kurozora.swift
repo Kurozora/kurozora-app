@@ -14,6 +14,7 @@ import UIKit
 @objc protocol KCollectionViewDelegateLayout: class {
 	@objc optional func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int
 	@objc optional func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat
+	@objc optional func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets
 	@objc optional func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets
 	@objc optional func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets
 	@objc optional func createLayout() -> UICollectionViewLayout
@@ -45,6 +46,22 @@ extension UICollectionViewController: KCollectionViewDelegateLayout {
 		- Returns: The group's height fraction value.
 	*/
 	func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+		return .zero
+	}
+
+	/**
+		Tells your KCollectionViewDelegateLayout the margins to apply to the background decoration in the specified section.
+
+		If you do not implement this method, the layout uses the default value of `NSDirectionalEdgeInsets.zero` instead. Your implementation of this method can return a fixed set of margin sizes or return different margin sizes for each section.
+
+		Background decoration insets are margins applied only to the decoration in the section. They represent the distance between the top and the bottom of the decoration and the section it is in. They also indicate the spacing on either side of the items. They do not affect the size of the section and the items themselves.
+
+		- Parameter section: The index number of the section whose decoration spacing is needed.
+		- Parameter layoutEnvironment: The layout environment of the specified item.
+
+		- Returns: The margins to apply to background decoration in the section.
+	*/
+	func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
 		return .zero
 	}
 

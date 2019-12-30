@@ -17,12 +17,12 @@ class KSearchController: UISearchController {
 			self.startPlaceholderTimer()
 		}
 	}
-	var searchResultsTableViewController: SearchResultsTableViewController?
+	var searchResultsTableViewController: SearchResultsCollectionViewController?
 
 	// MARK: - Initializer
 
 	init() {
-		searchResultsTableViewController = SearchResultsTableViewController.instantiateFromStoryboard() as? SearchResultsTableViewController
+		searchResultsTableViewController = SearchResultsCollectionViewController.instantiateFromStoryboard() as? SearchResultsCollectionViewController
 		super.init(searchResultsController: searchResultsTableViewController)
 	}
 
