@@ -23,7 +23,7 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	var showDetailViewController: ShowDetailViewController?
+	var showDetailCollectionViewController: ShowDetailCollectionViewController?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			configureCell()
@@ -134,18 +134,18 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 #if !targetEnvironment(macCatalyst)
 extension ExploreBaseCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController
-		showDetailViewController?.exploreBaseCollectionViewCell = self
-		showDetailViewController?.showDetailsElement = showDetailsElement
+		showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController
+		showDetailCollectionViewController?.exploreBaseCollectionViewCell = self
+		showDetailCollectionViewController?.showDetailsElement = showDetailsElement
 
 		previewingContext.sourceRect = previewingContext.sourceView.bounds
 
-		return showDetailViewController
+		return showDetailCollectionViewController
 	}
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		if let showDetailViewController = showDetailViewController {
-			self.parentViewController?.show(showDetailViewController, sender: nil)
+		if let showDetailCollectionViewController = showDetailCollectionViewController {
+			self.parentViewController?.show(showDetailCollectionViewController, sender: nil)
 		}
 	}
 }

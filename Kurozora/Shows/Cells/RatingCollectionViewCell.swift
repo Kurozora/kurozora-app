@@ -1,5 +1,5 @@
 //
-//  ShowRatingCell.swift
+//  RatingCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 30/08/2019.
@@ -10,7 +10,7 @@ import UIKit
 import Cosmos
 import SCLAlertView
 
-class ShowRatingCell: UITableViewCell {
+class RatingCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var cosmosView: CosmosView!
 	@IBOutlet weak var cosmosDetailLabel: UILabel! {
 		didSet {

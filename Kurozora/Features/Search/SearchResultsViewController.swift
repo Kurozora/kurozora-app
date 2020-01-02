@@ -232,7 +232,7 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if showResults != nil {
-			if let showDetailsViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
+			if let showDetailsViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
 				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
 				presentingViewController?.show(showDetailsViewController, sender: nil)
 			}

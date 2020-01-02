@@ -1,5 +1,5 @@
 //
-//  ShowCastCollectionCell.swift
+//  CastCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 26/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShowCastCollectionCell: UICollectionViewCell {
+class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var characterImageView: UIImageView?
 	@IBOutlet weak var characterShadowView: UIView?

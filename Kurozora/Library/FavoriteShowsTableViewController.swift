@@ -1,5 +1,5 @@
 //
-//  FavoriteShowsTableViewController.swift
+//  FavoriteShowsCollectionViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/05/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteShowsTableViewController: UITableViewController {
+class FavoriteShowsCollectionViewController: UICollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
@@ -24,7 +24,7 @@ class FavoriteShowsTableViewController: UITableViewController {
 	// MARK: - Properties
 	var shows: [[ShowDetailsElement]]? {
 		didSet {
-			self.tableView.reloadData()
+			self.collectionView.reloadData()
 		}
 	}
 
@@ -42,38 +42,33 @@ class FavoriteShowsTableViewController: UITableViewController {
 	}
 }
 
-// MARK: - UITableViewDataSource
-extension FavoriteShowsTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
+// MARK: - UICollectionViewDataSource
+extension FavoriteShowsCollectionViewController {
+	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return Library.Section.all.count
 	}
 
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard let showsCount = shows?[section].count else { return 0 }
 		return showsCount
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "", for: indexPath)
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "", for: indexPath)
 		return cell
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension FavoriteShowsTableViewController {
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		guard let showSectionItemsCount = shows?[section].count else { return .zero }
-		return showSectionItemsCount != 0 ? UITableView.automaticDimension : .zero
+// MARK: - UICollectionViewDelegate
+extension FavoriteShowsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		guard let sectionHeaderReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderReusableView", for: indexPath) as? SectionHeaderReusableView else { fatalError("Cannot dequeueReusableCell withIdentifier SectionHeaderReusableView") }
+		return sectionHeaderReusableView
 	}
 
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		guard let exploreSectionTitleCell = tableView.dequeueReusableCell(withIdentifier: "SectionTitleCell") as? ExploreSectionTitleCell else { return nil }
-		return exploreSectionTitleCell
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		if let exploreSectionTitleCell = view as? ExploreSectionTitleCell {
-			exploreSectionTitleCell.title = Library.Section.all[section].stringValue
+	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+		if let sectionHeaderReusableView = view as? SectionHeaderReusableView {
+			sectionHeaderReusableView.title = Library.Section.all[indexPath.section].stringValue
 		}
 	}
 }

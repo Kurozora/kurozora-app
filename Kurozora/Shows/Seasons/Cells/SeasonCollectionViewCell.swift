@@ -1,5 +1,5 @@
 //
-//  SeasonsCollectionViewCell.swift
+//  SeasonCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/10/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SeasonsCollectionViewCell: UICollectionViewCell {
+class SeasonCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var countLabel: UILabel! {

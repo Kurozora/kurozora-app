@@ -1,5 +1,5 @@
 //
-//  ShowSections.swift
+//  ShowDetail.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 27/04/2019.
@@ -13,34 +13,38 @@ class ShowDetail {
 		List of show sections.
 
 		```
-		case synopsis = 0
-		case information = 1
+		case header = 0
+		case synopsis = 1
 		case rating = 2
-		case seasons = 3
-		case cast = 4
-		case related = 5
+		case information = 3
+		case seasons = 4
+		case cast = 5
+		case related = 6
 		```
 	*/
 	enum Section: Int {
-		case synopsis = 0
-		case information = 1
+		case header = 0
+		case synopsis = 1
 		case rating = 2
-		case seasons = 3
-		case cast = 4
-		case related = 5
+		case information = 3
+		case seasons = 4
+		case cast = 5
+		case related = 6
 
 		/// An array containing all show sections.
-		static let all: [Section] = [.synopsis, .information, .rating, .seasons, .cast, .related]
+		static let all: [Section] = [.header, .synopsis, .rating, .information, .seasons, .cast, .related]
 
 		/// The string value of a show section.
 		var stringValue: String {
 			switch self {
+			case .header:
+				return "Header"
 			case .synopsis:
 				return "Synopsis"
-			case .information:
-				return "Information"
 			case .rating:
 				return "Ratings"
+			case .information:
+				return "Information"
 			case .seasons:
 				return "Seasons"
 			case .cast:
@@ -50,17 +54,39 @@ class ShowDetail {
 			}
 		}
 
+		/// The cell identifier string of a show section.
+		var identifierString: String {
+			switch self {
+			case .header:
+				return "ShowDetailHeaderCollectionViewCell"
+			case .synopsis:
+				return "SynopsisCollectionViewCell"
+			case .rating:
+				return "RatingCollectionViewCell"
+			case .information:
+				return "InformationCollectionViewCell"
+			case .seasons:
+				return "SeasonCollectionViewCell"
+			case .cast:
+				return "CastCollectionViewCell"
+			case .related:
+				return "RelatedShowCollectionViewCell"
+			}
+		}
+
 		/// The string value of a show section segue identifier.
 		var segueIdentifier: String {
 			switch self {
+			case .header:
+				return ""
 			case .synopsis:
-				return "SynopsisSegue"
-			case .information:
-				return "InformationSegue"
+				return ""
 			case .rating:
-				return "RatingsSegue"
+				return ""
+			case .information:
+				return ""
 			case .seasons:
-				return "SeasonsSegue"
+				return "SeasonSegue"
 			case .cast:
 				return "CastSegue"
 			case .related:

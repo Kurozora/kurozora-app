@@ -1,5 +1,5 @@
 //
-//  ShowRelatedCell.swift
+//  RelatedShowCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 04/03/2019.
@@ -8,5 +8,5 @@
 
 import UIKit
 
-class ShowRelatedCell: UITableViewCell {
+class RelatedShowCollectionViewCell: UICollectionViewCell {
 }

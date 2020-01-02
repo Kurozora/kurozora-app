@@ -1,5 +1,5 @@
 //
-//  SynopsisTableViewCell.swift
+//  SynopsisCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/08/2018.
@@ -9,7 +9,8 @@
 import UIKit
 import SwiftTheme
 
-class SynopsisTableViewCell: UITableViewCell {
+class SynopsisCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var synopsisTextView: UITextView! {
 		didSet {
 			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
@@ -28,23 +29,25 @@ class SynopsisTableViewCell: UITableViewCell {
 	}
 	@IBOutlet weak var moreSynopsisView: UIView?
 
+	// MARK: - Properties
 	weak var showDetailsElement: ShowDetailsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
-	fileprivate func setup() {
+	// MARK: - Functions
+	fileprivate func configureCell() {
 		guard let showDetails = showDetailsElement else { return }
 		synopsisTextView.text = showDetails.synopsis
 
 		if moreSynopsisView != nil {
 			// Synopsis text
-			synopsisTextView.textContainer.maximumNumberOfLines = 8
+			synopsisTextView.textContainer.maximumNumberOfLines = 4
 			synopsisTextView.textContainer.lineBreakMode = .byWordWrapping
 
 			// Synopsis background
-			moreSynopsisView?.isHidden = !(synopsisTextView.layoutManager.numberOfLines > 8)
+			moreSynopsisView?.isHidden = !(synopsisTextView.layoutManager.numberOfLines > 4)
 
 		}
 	}

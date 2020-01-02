@@ -20,6 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: windowScene)
 		window?.makeKeyAndVisible()
 
+		#if targetEnvironment(macCatalyst)
+		if let titlebar = windowScene.titlebar {
+			titlebar.titleVisibility = .hidden
+			titlebar.toolbar = nil
+		}
+		#endif
+
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
@@ -66,10 +73,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
 				let showID = parameters["showID"]
-				if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
-					showDetailViewController.showID = showID
+				if let showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+					showDetailCollectionViewController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
-						tabBarController.present(showDetailViewController)
+						tabBarController.present(showDetailCollectionViewController)
 						return true
 					}
 				}

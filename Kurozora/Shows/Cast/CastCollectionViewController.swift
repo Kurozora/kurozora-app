@@ -70,10 +70,10 @@ extension CastCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCollectionCell", for: indexPath) as! ShowCastCollectionCell
-		castCell.actorElement = actors?[indexPath.row]
-		castCell.delegate = self
-		return castCell
+		let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CastCollectionViewCell", for: indexPath) as! CastCollectionViewCell
+		castCollectionViewCell.actorElement = actors?[indexPath.row]
+		castCollectionViewCell.delegate = self
+		return castCollectionViewCell
 	}
 }
 

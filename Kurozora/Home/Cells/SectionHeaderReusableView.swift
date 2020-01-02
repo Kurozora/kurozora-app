@@ -1,5 +1,5 @@
 //
-//  ExploreSectionTitleCell.swift
+//  SectionHeaderReusableView.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/03/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreSectionTitleCell: UICollectionReusableView {
+class SectionHeaderReusableView: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
@@ -27,29 +27,27 @@ class ExploreSectionTitleCell: UICollectionReusableView {
 	}
 
 	// MARK: - Properties
-	var exploreCategory: ExploreCategory? = nil {
-		didSet {
-			configureCell()
-		}
-	}
 	var title: String? = nil {
 		didSet {
-			exploreCategory = nil
 			configureCell()
 		}
 	}
+	var segueID: String?
 
 	// MARK: - Functions
 	private func configureCell() {
 		// Configure title
-		primaryLabel.text = exploreCategory?.title ?? title
+		self.primaryLabel.text = title
 
 		// Show or hide see all button
-		actionButton.isHidden = exploreCategory?.genres?.isEmpty ?? true
+		if let segueID = segueID {
+			self.actionButton.isHidden = segueID.isEmpty
+		}
 	}
 
 	// MARK: - IBActions
 	@IBAction func seeAllButtonPressed(_ sender: UIButton) {
-		self.parentViewController?.performSegue(withIdentifier: "GenresSegue", sender: self)
+		guard let segueID = segueID else { return }
+		self.parentViewController?.performSegue(withIdentifier: segueID, sender: self)
 	}
 }

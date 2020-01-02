@@ -196,10 +196,9 @@ class LibraryListCollectionViewController: UICollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailViewController = segue.destination as? ShowDetailViewController {
-			showDetailViewController.libraryBaseCollectionViewCell = currentCell
-			showDetailViewController.showDetailsElement = currentCell.showDetailsElement
-			showDetailViewController.delegate = self
+		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+			showDetailCollectionViewController.libraryBaseCollectionViewCell = currentCell
+			showDetailCollectionViewController.showDetailsElement = currentCell.showDetailsElement
 		}
 	}
 }
@@ -324,8 +323,8 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
     }
 }
 
-// MARK: - ShowDetailViewControllerDelegate
-extension LibraryListCollectionViewController: ShowDetailViewControllerDelegate {
+// MARK: - ShowDetailCollectionViewControllerDelegate
+extension LibraryListCollectionViewController: ShowDetailCollectionViewControllerDelegate {
 	func updateShowInLibrary(for libraryCell: LibraryBaseCollectionViewCell?) {
 		guard let libraryCell = libraryCell else { return }
 		guard let indexPath = collectionView.indexPath(for: libraryCell) else { return }

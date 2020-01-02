@@ -39,14 +39,13 @@ extension ShowCastCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let showCastCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCollectionCell", for: indexPath) as? ShowCastCollectionCell else { return UICollectionViewCell() }
+		guard let showCastCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShowCastCollectionCell", for: indexPath) as? CastCollectionViewCell else { return UICollectionViewCell() }
 		return showCastCollectionCell
 	}
 
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let showCastCollectionCell = cell as? ShowCastCollectionCell {
+		if let showCastCollectionCell = cell as? CastCollectionViewCell {
 			showCastCollectionCell.actorElement = actors?[indexPath.row]
-			showCastCollectionCell.delegate = parentViewController as? ShowDetailViewController
 		}
 	}
 }

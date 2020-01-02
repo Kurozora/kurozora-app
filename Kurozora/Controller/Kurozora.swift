@@ -128,10 +128,10 @@ class Kurozora {
 		if urlScheme == "anime" || urlScheme == "show" {
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
-				if let showDetailViewController = ShowDetailViewController.instantiateFromStoryboard() as? ShowDetailViewController {
-					showDetailViewController.showID = Int(showID)
+				if let showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+					showDetailCollectionViewController.showID = Int(showID)
 
-					UIApplication.topViewController?.show(showDetailViewController, sender: nil)
+					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
 					return
 				}
 			}

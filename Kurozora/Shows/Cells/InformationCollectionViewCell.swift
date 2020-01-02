@@ -1,5 +1,5 @@
 //
-//  InformationTableViewCell.swift
+//  InformationCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 13/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InformationTableViewCell: UITableViewCell {
+class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.tintColor.rawValue
@@ -39,6 +39,9 @@ class InformationTableViewCell: UITableViewCell {
 		if !User.isAdmin {
 			indexPathRow += 2
 		}
+
+		// Reset separator view visibility
+		separatorView.isHidden = false
 
 		switch indexPathRow {
 		case 0:

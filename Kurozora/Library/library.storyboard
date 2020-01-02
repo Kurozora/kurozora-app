@@ -403,7 +403,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SectionTitleCell" id="tbH-Op-Qaf" customClass="ExploreSectionTitleCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SectionTitleCell" id="tbH-Op-Qaf">
                                 <rect key="frame" x="0.0" y="145.33333206176758" width="414" height="63.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tbH-Op-Qaf" id="2jE-b7-17p">
@@ -441,11 +441,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="actionButton" destination="aQL-1L-fDO" id="S8E-er-rki"/>
-                                    <outlet property="primaryLabel" destination="GKz-Hn-Q7f" id="sey-hi-jDz"/>
-                                    <outlet property="separatorView" destination="kuS-Kv-nkK" id="nOE-Yr-6fC"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

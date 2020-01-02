@@ -33,13 +33,13 @@ extension ShowSeasonsCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let seasonsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonsCollectionViewCell", for: indexPath) as? SeasonsCollectionViewCell else { return UICollectionViewCell() }
-		return seasonsCollectionViewCell
+		guard let seasonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCollectionViewCell", for: indexPath) as? SeasonCollectionViewCell else { return UICollectionViewCell() }
+		return seasonCollectionViewCell
 	}
 
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let seasonsCollectionViewCell = cell as? SeasonsCollectionViewCell {
-			seasonsCollectionViewCell.seasonsElement = seasons?[indexPath.row]
+		if let seasonCollectionViewCell = cell as? SeasonCollectionViewCell {
+			seasonCollectionViewCell.seasonsElement = seasons?[indexPath.row]
 		}
 	}
 }
@@ -48,7 +48,7 @@ extension ShowSeasonsCell: UICollectionViewDataSource {
 extension ShowSeasonsCell: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let seasons = seasons else { return }
-		self.parentViewController?.performSegue(withIdentifier: "EpisodesSegue", sender: seasons[indexPath.row].id)
+		self.parentViewController?.performSegue(withIdentifier: "EpisodeSegue", sender: seasons[indexPath.row].id)
 	}
 }
 

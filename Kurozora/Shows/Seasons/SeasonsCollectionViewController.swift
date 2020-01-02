@@ -76,8 +76,8 @@ class SeasonsCollectionViewController: UICollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodesSegue", let cell = sender as? SeasonsCollectionViewCell {
-			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: cell) {
+		if segue.identifier == "EpisodeSegue", let seasonCollectionViewCell = sender as? SeasonCollectionViewCell {
+			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: seasonCollectionViewCell) {
 				episodesCollectionViewController.seasonID = seasons?[indexPath.item].id
 			}
 		}
@@ -92,11 +92,9 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let seasonsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonsCollectionViewCell", for: indexPath) as! SeasonsCollectionViewCell
-
-		seasonsCollectionViewCell.seasonsElement = seasons?[indexPath.row]
-
-		return seasonsCollectionViewCell
+		let seasonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCollectionViewCell", for: indexPath) as! SeasonCollectionViewCell
+		seasonCollectionViewCell.seasonsElement = seasons?[indexPath.row]
+		return seasonCollectionViewCell
 	}
 }
 

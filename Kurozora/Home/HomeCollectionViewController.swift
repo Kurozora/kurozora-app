@@ -141,12 +141,12 @@ class HomeCollectionViewController: UICollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "ShowDetailsSegue" {
 			// Show detail for explore cell
-			if let showDetailViewController = segue.destination as? ShowDetailViewController {
+			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
 				if let selectedCell = sender as? ExploreBaseCollectionViewCell {
-					showDetailViewController.exploreBaseCollectionViewCell = selectedCell
-					showDetailViewController.showDetailsElement = selectedCell.showDetailsElement
+					showDetailCollectionViewController.exploreBaseCollectionViewCell = selectedCell
+					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
 				} else if let showID = sender as? Int {
-					showDetailViewController.showID = showID
+					showDetailCollectionViewController.showID = showID
 				}
 			}
 		}
@@ -216,12 +216,13 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
 
 			// Get a supplementary view of the desired kind.
-			guard let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ExploreSectionTitleCell", for: indexPath) as? ExploreSectionTitleCell else {
-				fatalError("Cannot create new ExploreSectionTitleCell")
+			guard let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderReusableView", for: indexPath) as? SectionHeaderReusableView else {
+				fatalError("Cannot create new SectionHeaderReusableView")
 			}
 
 			if indexPath.section < exploreCategoriesCount {
-				exploreSectionTitleCell.exploreCategory = self.exploreCategories?[indexPath.section]
+				exploreSectionTitleCell.segueID = "GenresSegue"
+				exploreSectionTitleCell.title = self.exploreCategories?[indexPath.section].title
 			} else {
 				exploreSectionTitleCell.title = "Quick Links"
 			}
