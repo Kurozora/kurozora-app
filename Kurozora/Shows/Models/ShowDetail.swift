@@ -31,6 +31,7 @@ class ShowDetail {
 		case cast = 5
 		case related = 6
 
+		// MARK: - Properties
 		/// An array containing all show sections.
 		static let all: [Section] = [.header, .synopsis, .rating, .information, .seasons, .cast, .related]
 
@@ -114,6 +115,7 @@ class ShowDetail {
 		/// The show finished airing all of its episodes.
 		case finishedAiring = "Ended"
 
+		// MARK: - Properties
 		/// An array containing all airing statuses.
 		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
 
@@ -142,6 +144,107 @@ class ShowDetail {
 		}
 	}
 
+	/**
+		List of informations.
+
+		```
+		case id = 0
+		case type = 1
+		case seasonsCount = 2
+		case episodesCount = 3
+		case aireDates = 4
+		case network = 5
+		case duration = 6
+		case rating = 8
+		case languages = 9
+		case genres = 10
+		```
+	*/
+	enum Information: Int {
+		case id = 0
+		case type = 1
+		case seasonsCount = 2
+		case episodesCount = 3
+		case aireDates = 4
+		case network = 5
+		case duration = 6
+		case rating = 8
+		case languages = 9
+		case genres = 10
+
+		// MARK: - Properties
+		/// An array containing all informations.
+		static let all: [Information] = [.id, .type, .seasonsCount, .episodesCount, .aireDates, .network, .duration, .rating, .languages, .genres]
+
+		/// The string value of an informations.
+		var stringValue: String {
+			switch self {
+			case .id:
+				return "ID"
+			case .type:
+				return "Type"
+			case .seasonsCount:
+				return "Seasons"
+			case .episodesCount:
+				return "Episodes"
+			case .aireDates:
+				return "Aired"
+			case .network:
+				return "Network"
+			case .duration:
+				return "Duration"
+			case .rating:
+				return "Rating"
+			case .languages:
+				return "Languages"
+			case .genres:
+				return "Genres"
+			}
+		}
+	}
+
+	/**
+		List of extenral sites.
+
+		```
+		case aniDB = 0
+		case aniList = 1
+		case imdb = 2
+		case kitsu = 3
+		case mal = 4
+		case tvdb = 5
+		```
+	*/
+	enum ExternalSite: Int {
+		case aniDB = 0
+		case aniList = 1
+		case imdb = 2
+		case kitsu = 3
+		case mal = 4
+		case tvdb = 5
+
+		// MARK: - Properties
+		/// An array containing all external sites.
+		static let all: [ExternalSite] = [.aniDB, .aniList, .imdb, .kitsu, .mal, .tvdb]
+
+		/// The string value of an external site.
+		var stringValue: String {
+			switch self {
+			case .aniDB:
+				return "AniDB"
+			case .aniList:
+				return "AniList"
+			case .imdb:
+				return "IMDB"
+			case .kitsu:
+				return "Kitsu"
+			case .mal:
+				return "MyAnimeList"
+			case .tvdb:
+				return "TheTVDB"
+			}
+		}
+	}
 	//	enum AiringStatus: Int {
 	//		/// No airing date has been announced.
 	//		case toBeAnnounced = 0

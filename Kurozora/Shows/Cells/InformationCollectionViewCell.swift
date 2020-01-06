@@ -37,51 +37,41 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	fileprivate func setup() {
 		guard let showDetail = showDetailsElement else { return }
 		if !User.isAdmin {
-			indexPathRow += 2
+			indexPathRow += 1
 		}
+		guard let showDetailInformation = ShowDetail.Information(rawValue: indexPathRow) else { return }
+
+		titleLabel.text = showDetailInformation.stringValue
 
 		// Reset separator view visibility
 		separatorView.isHidden = false
 
-		switch indexPathRow {
-		case 0:
-			titleLabel.text = "ID"
+		switch showDetailInformation {
+		case .id:
 			if let showID = showDetail.id, showID > 0 {
 				detailLabel.text = "\(showID)"
 			} else {
 				detailLabel.text = "No show id found"
 			}
-		case 1:
-			titleLabel.text = "IMDB ID"
-			if let imdbId = showDetail.imdbID, !imdbId.isEmpty {
-				detailLabel.text = imdbId
-			} else {
-				detailLabel.text = "No IMDB ID found"
-			}
-		case 2:
-			titleLabel.text = "Type"
+		case .type:
 			if let type = showDetail.type, !type.isEmpty {
 				detailLabel.text = type
 			} else {
 				detailLabel.text = "-"
 			}
-		case 3:
-			titleLabel.text = "Seasons"
+		case .seasonsCount:
 			if let seasons = showDetail.seasons, seasons > 0 {
 				detailLabel.text = seasons.description
 			} else {
 				detailLabel.text = "-"
 			}
-		case 4:
-			titleLabel.text = "Episodes"
+		case .episodesCount:
 			if let episode = showDetail.episodes, episode > 0 {
 				detailLabel.text = episode.description
 			} else {
 				detailLabel.text = "-"
 			}
-		case 5:
-			titleLabel.text = "Aired"
-
+		case .aireDates:
 			var dateInfo: String = "-"
 			if let startDate = showDetail.startDate {
 				dateInfo = startDate.isEmpty ? "N/A - " : startDate.mediumDate + " - "
@@ -91,36 +81,31 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			}
 
 			detailLabel.text = dateInfo
-		case 6:
-			titleLabel.text = "Network"
+		case .network:
 			if let network = showDetail.network, !network.isEmpty {
 				detailLabel.text = network
 			} else {
 				detailLabel.text = "-"
 			}
-		case 7:
-			titleLabel.text = "Duration"
+		case .duration:
 			if let duration = showDetail.runtime, duration > 0 {
 				detailLabel.text = "\(duration) min"
 			} else {
 				detailLabel.text = "-"
 			}
-		case 8:
-			titleLabel.text = "Rating"
+		case .rating:
 			if let watchRating = showDetail.watchRating, !watchRating.isEmpty {
 				detailLabel.text = watchRating
 			} else {
 				detailLabel.text = "-"
 			}
-		case 9:
-			titleLabel.text = "Languages"
+		case .languages:
 			if let languages = showDetail.languages, !languages.isEmpty {
 				detailLabel.text = languages
 			} else {
 				detailLabel.text = "Japanese"
 			}
-		case 10:
-			titleLabel.text = "Genres"
+		case .genres:
 			if let genres = showDetail.genres, !genres.isEmpty {
 				var genreText = ""
 				for (index, genre) in genres.enumerated() {
@@ -158,7 +143,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
 //                } else {
 //                    cell.detailLabel.text = "-"
 //                }
-		default: break
 		}
 	}
 }
