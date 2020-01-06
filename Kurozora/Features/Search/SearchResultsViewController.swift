@@ -138,23 +138,6 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 			performSearch(forText: text, searchScope: scope)
 		}
 	}
-
-	// MARK: - IBActions
-//	@IBAction func showMoreButtonPressed(_ sender: UIButton) {
-//		if sender.title(for: .normal) == "Show More" {
-//			sender.setTitle("Show Less", for: .normal)
-//			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant * 2
-//			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-//				self.view.layoutIfNeeded()
-//			}, completion: nil)
-//		} else {
-//			sender.setTitle("Show More", for: .normal)
-//			self.suggestionsCollctionViewHeight.constant = self.suggestionsCollctionViewHeight.constant / 2
-//			UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-//				self.view.layoutIfNeeded()
-//			}, completion: nil)
-//		}
-//	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -183,30 +166,7 @@ extension SearchResultsCollectionViewController {
 		if showResults != nil || threadResults != nil || userResults != nil {
 			let searchScope = SearchScope(rawValue: currentScope) ?? .show
 			let identifier = searchScope.identifierString
-
 			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! SearchBaseResultsCell
-//			var resultsCount = 1
-			// Configure corner radius
-//			if resultsCount == 1 {
-//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-//			} else if indexPath.row == 0 {
-//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//			} else if indexPath.row == resultsCount - 1 {
-//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 10
-//				searchBaseResultsCell.visualEffectView?.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-//			} else {
-//				searchBaseResultsCell.visualEffectView?.layer.cornerRadius = 0
-//			}
-
-			// Configure separator
-//			if collectionView.numberOfItems() == 1 || indexPath.row == collectionView.numberOfItems() - 1 {
-//				searchBaseResultsCell.separatorView?.isHidden = true
-//			} else {
-//				searchBaseResultsCell.separatorView?.isHidden = false
-//			}
-
 			return searchBaseResultsCell
 		}
 
@@ -245,6 +205,11 @@ extension SearchResultsCollectionViewController {
 			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
 				profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
 				presentingViewController?.show(profileTableViewController, sender: nil)
+			}
+		} else {
+			if let showDetailsViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchSuggestionResultCell)?.showDetailsElement
+				presentingViewController?.show(showDetailsViewController, sender: nil)
 			}
 		}
 	}
