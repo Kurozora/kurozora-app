@@ -74,18 +74,6 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		collectionView.collectionViewLayout = createLayout()
-//		if exploreBaseCollectionViewCell != nil {
-//			configureShowDetails(from: exploreBaseCollectionViewCell)
-//		} else if libraryBaseCollectionViewCell != nil {
-//			configureShowDetails(from: libraryBaseCollectionViewCell)
-//		}
-
-		// Update view with details
-//		if showDetailsElement != nil {
-//			DispatchQueue.main.async {
-//				self.updateDetails()
-//			}
-//		}
 
 		// Fetch show details.
 		self.fetchDetails()
@@ -193,7 +181,10 @@ extension ShowDetailCollectionViewController {
 		case .rating:
 			numberOfRows = 1
 		case .information:
-			numberOfRows = User.isAdmin ? 11 : 9
+			numberOfRows = ShowDetail.Information.all.count
+			if User.isAdmin {
+				numberOfRows -= 1
+			}
 		case .seasons:
 			if let seasonsCount = seasons?.count {
 				numberOfRows = seasonsCount >= 10 ? 10 : seasonsCount
