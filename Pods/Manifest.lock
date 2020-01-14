@@ -11,8 +11,8 @@ PODS:
   - DiffableDataSources (0.3.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
-  - DifferenceKit/Core (1.1.4)
-  - DifferenceKit/UIKitExtension (1.1.4):
+  - DifferenceKit/Core (1.1.5)
+  - DifferenceKit/UIKitExtension (1.1.5):
     - DifferenceKit/Core
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.7)
@@ -133,7 +133,7 @@ SPEC CHECKSUMS:
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
   DiffableDataSources: e87e630432a8a1f497064e299b83c0e6311517ae
-  DifferenceKit: d7e8a7edd2ae706f1e1f05c8103d4cf858e04b78
+  DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -155,6 +155,6 @@ SPEC CHECKSUMS:
   TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 24d1cb45860aa971e27f4a1bc9005b565db2f1bb
+PODFILE CHECKSUM: 50aa948c3ed8a8e64c8f50c837378b8b9189d405
 
 COCOAPODS: 1.8.4

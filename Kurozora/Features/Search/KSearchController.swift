@@ -17,13 +17,11 @@ class KSearchController: UISearchController {
 			self.startPlaceholderTimer()
 		}
 	}
-	var searchResultsTableViewController: SearchResultsCollectionViewController?
 
 	// MARK: - Initializer
-
 	init() {
-		searchResultsTableViewController = SearchResultsCollectionViewController.instantiateFromStoryboard() as? SearchResultsCollectionViewController
-		super.init(searchResultsController: searchResultsTableViewController)
+		let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiateFromStoryboard() as? SearchResultsCollectionViewController
+		super.init(searchResultsController: searchResultsCollectionViewController)
 	}
 
 	override init(searchResultsController: UIViewController?) {
@@ -58,7 +56,10 @@ class KSearchController: UISearchController {
 		searchBar.scopeButtonTitles = SearchScope.allString
 		searchBar.selectedScopeButtonIndex = searchScope.rawValue
 		searchBar.textField?.theme_textColor = KThemePicker.textColor.rawValue
-		searchBar.delegate = searchResultsTableViewController
+
+		if let searchResultsCollectionViewController = searchResultsController as? SearchResultsCollectionViewController {
+			searchBar.delegate = searchResultsCollectionViewController
+		}
 
 		delegate = self
 	}
