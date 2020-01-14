@@ -100,8 +100,7 @@ class LibraryListCollectionViewController: UICollectionViewController {
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(#imageLiteral(resourceName: "empty_library"))
-				.verticalOffset(-50)
-				.verticalSpace(10)
+				.verticalSpace(5)
 				.isScrollAllowed(true)
 
 			// Not signed in

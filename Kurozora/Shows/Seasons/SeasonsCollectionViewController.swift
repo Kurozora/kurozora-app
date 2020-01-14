@@ -54,7 +54,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 				.image(#imageLiteral(resourceName: "empty_seasons"))
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
-				.verticalSpace(10)
+				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
 	}

@@ -279,31 +279,31 @@ extension HomeCollectionViewController {
 
 			switch horizontalCollectionCellStyle {
 			case .banner:
-				if width > 414 {
+				if width >= 414 {
 					columnCount = (width / 562).int
 				} else {
 					columnCount = (width / 374).int
 				}
 			case .large:
-				if width > 414 {
+				if width >= 414 {
 					columnCount = (width / 500).int
 				} else {
 					columnCount = (width / 324).int
 				}
 			case .medium:
-				if width > 414 {
+				if width >= 414 {
 					columnCount = (width / 384).int
 				} else {
 					columnCount = (width / 284).int
 				}
 			case .small:
-				if width > 414 {
+				if width >= 414 {
 					columnCount = (width / 384).int
 				} else {
 					columnCount = (width / 284).int
 				}
 			case .video:
-				if width > 414 {
+				if width >= 414 {
 					columnCount = (width / 500).int
 				} else {
 					columnCount = (width / 360).int
@@ -324,9 +324,9 @@ extension HomeCollectionViewController {
 
 			switch verticalCollectionCellStyle {
 			case .actionList:
-				if width < 414 {
+				if width <= 414 {
 					columnCount = 1
-				} else if width < 828 {
+				} else if width <= 828 {
 					columnCount = 2
 				} else {
 					if numberOfItems < 5 {
@@ -336,9 +336,9 @@ extension HomeCollectionViewController {
 					}
 				}
 			case .actionButton:
-				if width < 414 {
+				if width <= 414 {
 					columnCount = 1
-				} else if width < 828 {
+				} else if width <= 828 {
 					columnCount = 2
 				} else {
 					columnCount = (width / 414).int
@@ -435,7 +435,7 @@ extension HomeCollectionViewController {
 
 				// Add header supplementary view.
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-															  heightDimension: .estimated(44))
+															  heightDimension: .estimated(52))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -452,7 +452,7 @@ extension HomeCollectionViewController {
 
 				// Add header supplementary view.
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-															  heightDimension: .estimated(44))
+															  heightDimension: .estimated(52))
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)

@@ -104,7 +104,7 @@ class NotificationsViewController: UITableViewController {
 				.image(#imageLiteral(resourceName: "empty_notifications"))
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-60)
-				.verticalSpace(10)
+				.verticalSpace(5)
 
 			if !User.isSignedIn {
 				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)

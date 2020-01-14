@@ -41,7 +41,7 @@ class CastCollectionViewController: UICollectionViewController {
 				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(#imageLiteral(resourceName: "empty_actor"))
 				.verticalOffset(-50)
-				.verticalSpace(10)
+				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
 	}

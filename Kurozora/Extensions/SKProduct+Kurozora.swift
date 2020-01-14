@@ -26,7 +26,6 @@ extension SKProduct {
 	}
 
 	/// Returns a decimal number of the price devided by the availability period in months.
-	@available(iOS 11.2, *)
 	var pricePerMonth: NSDecimalNumber {
 		var numberOfUnits = subscriptionPeriod?.numberOfUnits.double ?? 0.00
 		let unitString = subscriptionPeriod?.unitString
@@ -41,7 +40,6 @@ extension SKProduct {
 	}
 
 	/// Returns a string of the price devided by the availability period in months.
-	@available(iOS 11.2, *)
 	var pricePerMonthString: String {
 		return formattedToLocal(price: pricePerMonth)
 	}
@@ -53,7 +51,6 @@ extension SKProduct {
 
 		- Returns: a string of the percentage saved compared to the given price.
 	*/
-	@available(iOS 11.2, *)
 	func priceSaved(comparedTo price: NSDecimalNumber) -> String {
 		let percentageSaved = 100 - (100 / price.decimalValue * pricePerMonth.decimalValue)
 		let behavior = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
@@ -62,7 +59,6 @@ extension SKProduct {
 	}
 }
 
-@available(iOS 11.2, *)
 extension SKProduct.PeriodUnit {
 	/// Returns the string value of a `PeriodUnit`.
 	var stringValue: String {
@@ -81,7 +77,6 @@ extension SKProduct.PeriodUnit {
 	}
 }
 
-@available(iOS 11.2, *)
 extension SKProductSubscriptionPeriod {
 	/// Returns a `PeriodUnit stringValue` in pluralized form if required.
 	var unitString: String {

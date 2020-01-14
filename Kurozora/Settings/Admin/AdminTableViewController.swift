@@ -41,7 +41,7 @@ class AdminTableViewController: UITableViewController {
 				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(#imageLiteral(resourceName: "empty_keychain"))
 				.verticalOffset(-50)
-				.verticalSpace(10)
+				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
 	}

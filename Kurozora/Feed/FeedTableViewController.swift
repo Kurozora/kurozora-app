@@ -62,7 +62,7 @@ class FeedTableViewController: UITableViewController {
 				.image(#imageLiteral(resourceName: "empty_comment"))
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
-				.verticalSpace(10)
+				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
 	}

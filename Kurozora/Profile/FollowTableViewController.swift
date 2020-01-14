@@ -49,7 +49,7 @@ class FollowTableViewController: UITableViewController {
 						.image(#imageLiteral(resourceName: "empty_follow"))
 						.imageTintColor(KThemePicker.textColor.colorValue)
 						.verticalOffset(-50)
-						.verticalSpace(10)
+						.verticalSpace(5)
 						.isScrollAllowed(true)
 
 					if self.user?.id != User.currentID, !(self.user?.following ?? true) {
@@ -67,7 +67,7 @@ class FollowTableViewController: UITableViewController {
 						.image(#imageLiteral(resourceName: "empty_follow"))
 						.imageTintColor(KThemePicker.textColor.colorValue)
 						.verticalOffset(-50)
-						.verticalSpace(10)
+						.verticalSpace(5)
 						.isScrollAllowed(true)
 				}
 			}

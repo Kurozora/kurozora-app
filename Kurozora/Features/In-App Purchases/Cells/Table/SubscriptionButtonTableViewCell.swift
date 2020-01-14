@@ -22,29 +22,20 @@ class SubscriptionButtonTableViewCell: PurchaseButtonTableViewCell {
 	fileprivate func configureCell() {
 		guard let purchaseItem = productsArray?[productNumber] else { return }
 		let trialDuration = subscriptionDetail["trial"] ?? ""
-		let unit = subscriptionDetail["unit"] ?? "Unknown"
 
-		if #available(iOS 11.2, *) {
-			if let subscriptionPeriod = purchaseItem.subscriptionPeriod, let firstProductPrice = productsArray?.first?.price {
-				// Configure purchase button
-				purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(subscriptionPeriod.fullString)", for: .normal)
-
-				// Configure primary label
-				if productNumber == 0 {
-					primaryLabel.text = trialDuration
-				} else {
-					primaryLabel.text = """
-					\(trialDuration)
-					(\(subscriptionPeriod.fullString.lowercased()) at \(purchaseItem.pricePerMonthString)/mo. Save \(purchaseItem.priceSaved(comparedTo: firstProductPrice)))
-					"""
-				}
-			}
-		} else {
+		if let subscriptionPeriod = purchaseItem.subscriptionPeriod, let firstProductPrice = productsArray?.first?.price {
 			// Configure purchase button
-			purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(unit)", for: .normal)
+			purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted) / \(subscriptionPeriod.fullString)", for: .normal)
 
 			// Configure primary label
-			primaryLabel.text = trialDuration
+			if productNumber == 0 {
+				primaryLabel.text = trialDuration
+			} else {
+				primaryLabel.text = """
+				\(trialDuration)
+				(\(subscriptionPeriod.fullString.lowercased()) at \(purchaseItem.pricePerMonthString)/mo. Save \(purchaseItem.priceSaved(comparedTo: firstProductPrice)))
+				"""
+			}
 		}
 	}
 }

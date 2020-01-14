@@ -282,7 +282,7 @@ extension ShowDetailCollectionViewController {
 			return 1
 		case .rating:
 			if width > 828 {
-				let columnCount = (width / 414).int
+				let columnCount = (width / 375).int
 				if columnCount >= 3 {
 					return 3
 				} else if columnCount > 0 {

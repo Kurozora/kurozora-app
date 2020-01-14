@@ -345,28 +345,15 @@ extension Kurozora {
 	fileprivate func evaluatePolicyFailErrorMessageForLA(errorCode: Int) -> String {
 		var message = ""
 
-		if #available(iOS 11.0, macOS 10.13, *) {
-			switch errorCode {
-			case LAError.biometryNotAvailable.rawValue:
-				message = "Authentication could not start because the device does not support biometric authentication."
-			case LAError.biometryLockout.rawValue:
-				message = "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
-			case LAError.biometryNotEnrolled.rawValue:
-				message = "Authentication could not start because the user has not enrolled in biometric authentication."
-			default:
-				message = "Did not find error code on LAError object"
-			}
-		} else {
-			switch errorCode {
-			case LAError.touchIDLockout.rawValue:
-				message = "Too many failed attempts."
-			case LAError.touchIDNotAvailable.rawValue:
-				message = "TouchID is not available on the device"
-			case LAError.touchIDNotEnrolled.rawValue:
-				message = "TouchID is not enrolled on the device"
-			default:
-				message = "Did not find error code on LAError object"
-			}
+		switch errorCode {
+		case LAError.biometryNotAvailable.rawValue:
+			message = "Authentication could not start because the device does not support biometric authentication."
+		case LAError.biometryLockout.rawValue:
+			message = "Authentication could not continue because the user has been locked out of biometric authentication, due to failing authentication too many times."
+		case LAError.biometryNotEnrolled.rawValue:
+			message = "Authentication could not start because the user has not enrolled in biometric authentication."
+		default:
+			message = "Did not find error code on LAError object"
 		}
 
 		return message
