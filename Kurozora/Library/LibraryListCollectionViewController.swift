@@ -252,8 +252,10 @@ extension LibraryListCollectionViewController {
 			var columnCount = (width / 125).int
 			if columnCount < 0 {
 				columnCount = 3
-			} else if columnCount > 10 {
-				columnCount = 10
+			} else if columnCount > 8 {
+				columnCount = 8
+			} else {
+				columnCount = abs(columnCount.double/1.5).int
 			}
 			return columnCount
 		case .detailed, .list:

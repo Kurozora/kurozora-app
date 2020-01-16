@@ -89,6 +89,9 @@ extension CastCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		let columnCount = (width / 374).int
+		if columnCount > 5 {
+			return 5
+		}
 		return columnCount > 0 ? columnCount : 1
 	}
 
