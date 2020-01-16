@@ -16,13 +16,11 @@ protocol ShowDetailCollectionViewControllerDelegate: class {
 }
 
 class ShowDetailCollectionViewController: UICollectionViewController {
-	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
-
 	// MARK: - Properties
-	// Show detail
 	var showID: Int?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
+			self.title = showDetailsElement?.title
 			self.showID = showDetailsElement?.id
 		}
 	}
@@ -38,17 +36,11 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 	}
 	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
-	var statusBarIsHidden = true
-
-	override var prefersStatusBarHidden: Bool {
-		return statusBarIsHidden
-	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Setup navigation controller with special settings
-		self.viewsAreHidden(true)
 		navigationController?.navigationBar.prefersLargeTitles = false
 	}
 
@@ -83,7 +75,7 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 		super.viewWillDisappear(animated)
 
 		// Reset the navigation bar
-		self.viewsAreHidden(false)
+		self.navigationController?.navigationBar.alpha = 1.0
 		navigationController?.navigationBar.prefersLargeTitles = UserSettings.largeTitlesEnabled
 	}
 
@@ -122,17 +114,6 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 				self.actors = actors
 			}
 		})
-	}
-
-	/**
-		Hides and unhides some views according to the given parameter.
-
-		- Parameter isHidden: The boolean indicating whether to hide or unhide the views.
-	*/
-	fileprivate func viewsAreHidden(_ isHidden: Bool) {
-		self.navigationController?.setNavigationBarHidden(isHidden, animated: true)
-		self.statusBarIsHidden = isHidden
-		self.navigationController?.setNeedsStatusBarAppearanceUpdate()
 	}
 
 	// MARK: - Segue
@@ -174,6 +155,8 @@ extension ShowDetailCollectionViewController {
 		switch showSections {
 		case .header:
 			numberOfRows = 1
+		case .badge:
+			numberOfRows = 1
 		case .synopsis:
 			if let synopsis = showDetailsElement?.synopsis, !synopsis.isEmpty {
 				numberOfRows = 1
@@ -206,6 +189,9 @@ extension ShowDetailCollectionViewController {
 		case .header:
 			let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! ShowDetailHeaderCollectionViewCell
 			return showDetailHeaderCollectionViewCell
+		case .badge:
+			let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! BadgeCollectionViewCell
+			return badgeCollectionViewCell
 		case .synopsis:
 			let synopsisCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! SynopsisCollectionViewCell
 			return synopsisCollectionViewCell
@@ -241,6 +227,9 @@ extension ShowDetailCollectionViewController {
 		case .header:
 			let showDetailHeaderCollectionViewCell = cell as? ShowDetailHeaderCollectionViewCell
 			showDetailHeaderCollectionViewCell?.showDetailsElement = showDetailsElement
+		case .badge:
+			let badgeCollectionViewCell = cell as? BadgeCollectionViewCell
+			badgeCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .synopsis:
 			let synopsisCollectionViewCell = cell as? SynopsisCollectionViewCell
 			synopsisCollectionViewCell?.showDetailsElement = showDetailsElement
@@ -278,11 +267,11 @@ extension ShowDetailCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
 		switch showSections {
-		case .header, .synopsis:
+		case .header, .badge, .synopsis:
 			return 1
 		case .rating:
 			if width > 828 {
-				let columnCount = (width / 375).int
+				let columnCount = (width / 374).int
 				if columnCount >= 3 {
 					return 3
 				} else if columnCount > 0 {
@@ -290,15 +279,25 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
+		case .cast:
+			let columnCount = (width / 374).int
+			if columnCount > 5 {
+				return 5
+			}
+			return columnCount > 0 ? columnCount : 1
 		default:
 			let columnCount = (width / 374).int
 			return columnCount > 0 ? columnCount : 1
 		}
 	}
 
-	func heightDimension(forSection section: Int, with columnsCount: Int) -> NSCollectionLayoutDimension {
+	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
 		guard let showSections = ShowDetail.Section(rawValue: section) else { return .absolute(0) }
 		switch showSections {
+		case .header:
+			return .fractionalHeight(0.90)
+		case .badge:
+			return .absolute(50)
 		case .synopsis:
 			return .absolute(110)
 		case .rating:
@@ -314,8 +313,6 @@ extension ShowDetailCollectionViewController {
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
 		guard let showSections = ShowDetail.Section(rawValue: section) else { return .zero }
 		switch showSections {
-		case .header:
-			return 0.5
 		case .seasons:
 			if let seasonsCount = seasons?.count, seasonsCount != 0 {
 				return (0.50 / columnsCount.double).cgFloat
@@ -360,6 +357,9 @@ extension ShowDetailCollectionViewController {
 			case .header:
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
+			case .badge:
+				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = fullSection
 			case .synopsis:
 				if let synopsis = self.showDetailsElement?.synopsis, !synopsis.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
@@ -391,7 +391,7 @@ extension ShowDetailCollectionViewController {
 
 			if hasSectionHeader {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-															  heightDimension: .estimated(44))
+															  heightDimension: .estimated(50))
 
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
@@ -411,7 +411,7 @@ extension ShowDetailCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
@@ -428,7 +428,7 @@ extension ShowDetailCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
@@ -446,7 +446,7 @@ extension ShowDetailCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
@@ -460,16 +460,14 @@ extension ShowDetailCollectionViewController {
 // MARK: - UIScrollViewDelegate
 extension ShowDetailCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if let collectionViewCell = collectionView.cellForItem(at: IndexPath(item: 1, section: 0)) {
-			if scrollView.bounds.contains(collectionViewCell.center) {
-				UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-					self.viewsAreHidden(true)
-				}, completion: nil)
-			} else {
-				UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-					self.viewsAreHidden(false)
-				}, completion: nil)
-			}
+		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.navigationController?.navigationBar.alpha = 1.0
+			}, completion: nil)
+		} else {
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.navigationController?.navigationBar.alpha = 0.0
+			}, completion: nil)
 		}
 	}
 }

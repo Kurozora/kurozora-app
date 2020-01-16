@@ -71,9 +71,16 @@ extension CastCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CastCollectionViewCell", for: indexPath) as! CastCollectionViewCell
-		castCollectionViewCell.actorElement = actors?[indexPath.row]
-		castCollectionViewCell.delegate = self
 		return castCollectionViewCell
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension CastCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if let castCollectionViewCell = cell as? CastCollectionViewCell {
+			castCollectionViewCell.actorElement = actors?[indexPath.row]
+		}
 	}
 }
 
@@ -115,20 +122,5 @@ extension CastCollectionViewController {
 			return layoutSection
 		}
 		return layout
-	}
-}
-
-// MARK: - ShowCastCellDelegate
-extension CastCollectionViewController: ShowCastCellDelegate {
-	func presentPhoto(withString string: String, from imageView: UIImageView) {
-		presentPhotoViewControllerWith(string: string, from: imageView)
-	}
-
-	func presentPhoto(withImage image: UIImage, from imageView: UIImageView) {
-		presentPhotoViewControllerWith(image: image, from: imageView)
-	}
-
-	func presentPhoto(withUrl url: String, from imageView: UIImageView) {
-		presentPhotoViewControllerWith(url: url, from: imageView)
 	}
 }

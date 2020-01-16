@@ -47,7 +47,6 @@ class CastCollectionViewCell: UICollectionViewCell {
 			configureCell()
 		}
 	}
-	weak var delegate: ShowCastCellDelegate?
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
@@ -101,10 +100,10 @@ class CastCollectionViewCell: UICollectionViewCell {
 	@objc func showImage(_ tap: UITapGestureRecognizer) {
 		guard let imageView = tap.view as? UIImageView else { return }
 
-		if let imageUrl = imageView.image {
-			delegate?.presentPhoto(withImage: imageUrl, from: imageView)
+		if let image = imageView.image {
+			parentViewController?.presentPhotoViewControllerWith(image: image, from: imageView)
 		} else {
-			delegate?.presentPhoto(withString: "placeholder_person_image", from: actorImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_person_image", from: actorImageView)
 		}
 	}
 }

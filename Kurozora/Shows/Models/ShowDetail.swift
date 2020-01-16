@@ -14,32 +14,36 @@ class ShowDetail {
 
 		```
 		case header = 0
-		case synopsis = 1
-		case rating = 2
-		case information = 3
-		case seasons = 4
-		case cast = 5
-		case related = 6
+		case badge = 1
+		case synopsis = 2
+		case rating = 3
+		case information = 4
+		case seasons = 5
+		case cast = 6
+		case related = 7
 		```
 	*/
 	enum Section: Int {
 		case header = 0
-		case synopsis = 1
-		case rating = 2
-		case information = 3
-		case seasons = 4
-		case cast = 5
-		case related = 6
+		case badge = 1
+		case synopsis = 2
+		case rating = 3
+		case information = 4
+		case seasons = 5
+		case cast = 6
+		case related = 7
 
 		// MARK: - Properties
 		/// An array containing all show sections.
-		static let all: [Section] = [.header, .synopsis, .rating, .information, .seasons, .cast, .related]
+		static let all: [Section] = [.header, .badge, .synopsis, .rating, .information, .seasons, .cast, .related]
 
 		/// The string value of a show section.
 		var stringValue: String {
 			switch self {
 			case .header:
 				return "Header"
+			case .badge:
+				return "Badges"
 			case .synopsis:
 				return "Synopsis"
 			case .rating:
@@ -60,6 +64,8 @@ class ShowDetail {
 			switch self {
 			case .header:
 				return "ShowDetailHeaderCollectionViewCell"
+			case .badge:
+				return "BadgeCollectionViewCell"
 			case .synopsis:
 				return "SynopsisCollectionViewCell"
 			case .rating:
@@ -79,6 +85,8 @@ class ShowDetail {
 		var segueIdentifier: String {
 			switch self {
 			case .header:
+				return ""
+			case .badge:
 				return ""
 			case .synopsis:
 				return ""

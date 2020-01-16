@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Cosmos
+import SwiftTheme
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBoutlet
@@ -17,9 +17,10 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			bannerImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
-	@IBOutlet weak var shadowImageView: UIImageView! {
+	@IBOutlet weak var visualEffectView: UIVisualEffectView! {
 		didSet {
-			shadowImageView.theme_tintColor = KThemePicker.backgroundColor.rawValue
+			visualEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
+			visualEffectView.cornerRadius = 10
 		}
 	}
 	@IBOutlet weak var bannerContainerView: UIView!
@@ -33,16 +34,11 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			libraryStatusButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var cosmosView: CosmosView!
 	@IBOutlet weak var reminderButton: UIButton!
 
 	// Quick details view
 	@IBOutlet weak var quickDetailsView: UIView!
-	@IBOutlet weak var showTitleLabel: UILabel! {
-		didSet {
-			showTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var showTitleLabel: UILabel!
 	@IBOutlet weak var tagsLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
@@ -52,52 +48,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			posterImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
-	@IBOutlet weak var trailerButton: UIButton!
-	@IBOutlet weak var trailerLabel: UILabel! {
-		didSet {
-			trailerLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
 	@IBOutlet weak var favoriteButton: UIButton!
-
-	// Analytics view
-	@IBOutlet weak var ratingView: UIView! {
-		didSet {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showRating(_:)))
-			ratingView.addGestureRecognizer(gestureRecognizer)
-		}
-	}
-	@IBOutlet weak var ratingTitleLabel: UILabel! {
-		didSet {
-			ratingTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var rankTitleLabel: UILabel! {
-		didSet {
-			rankTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var ageTitleLabel: UILabel! {
-		didSet {
-			ageTitleLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-
-	@IBOutlet weak var ratingScoreLabel: UILabel! {
-		didSet {
-			ratingScoreLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var rankScoreLabel: UILabel! {
-		didSet {
-			rankScoreLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-	@IBOutlet weak var ageScoreLabel: UILabel! {
-		didSet {
-			ageScoreLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
 
 	// MARK: - Properties
 	weak var delegate: ShowDetailCollectionViewControllerDelegate?
@@ -114,9 +65,9 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	/**
-	Configures the view from the given Explore cell if the details view was requested from the Explore page.
+		Configures the view from the given Explore cell if the details view was requested from the Explore page.
 
-	- Parameter cell: The explore cell from which the view should be configured.
+		- Parameter cell: The explore cell from which the view should be configured.
 	*/
 	fileprivate func configureShowDetails(from cell: ExploreBaseCollectionViewCell?) {
 		guard let cell = cell else { return }
@@ -125,14 +76,14 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			bannerImageView.image = cell.bannerImageView?.image
 		} else {
 			posterImageView.image = cell.posterImageView?.image
-			ratingScoreLabel.text = "\((cell as? ExploreSmallCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
+//			ratingScoreLabel.text = "\((cell as? ExploreSmallCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
 		}
 	}
 
 	/**
-	Configures the view from the given Library cell if the details view was requested from the Library page.
+		Configures the view from the given Library cell if the details view was requested from the Library page.
 
-	- Parameter cell: The library cell from which the view should be configured.
+		- Parameter cell: The library cell from which the view should be configured.
 	*/
 	fileprivate func configureShowDetails(from cell: LibraryBaseCollectionViewCell?) {
 		guard let cell = cell else { return }
@@ -181,29 +132,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			statusButton.backgroundColor = airingStatus.colorValue
 		}
 
-		// Configure rating
-		if let averageRating = showDetailsElement.averageRating, let ratingCount = showDetailsElement.ratingCount, averageRating > 0.00 {
-			cosmosView.rating = averageRating
-			ratingScoreLabel.text = "\(averageRating)"
-			ratingTitleLabel.text = "\(ratingCount) Ratings"
-			ratingTitleLabel.adjustsFontSizeToFitWidth = true
-		} else {
-			cosmosView.rating = 0.0
-			ratingScoreLabel.text = "0.0"
-			ratingTitleLabel.text = "Not enough ratings"
-			ratingTitleLabel.adjustsFontSizeToFitWidth = true
-		}
-
-		// Configure rank label
-		if let rankScore = showDetailsElement.rank {
-			rankScoreLabel.text = rankScore > 0 ? "#\(rankScore)" : "-"
-		}
-
-		// Configure age label
-		if let ageScore = showDetailsElement.age {
-			ageScoreLabel.text = !ageScore.isEmpty ? ageScore : "-"
-		}
-
 		// Configure poster view
 		if posterImageView.image == nil {
 			if let posterThumb = showDetailsElement.posterThumbnail {
@@ -216,14 +144,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			if let bannerImage = showDetailsElement.banner {
 				bannerImageView.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
 			}
-		}
-
-		if let videoUrl = showDetailsElement.videoUrl, !videoUrl.isEmpty {
-			trailerButton.isHidden = false
-			trailerLabel.isHidden = false
-		} else {
-			trailerButton.isHidden = true
-			trailerLabel.isHidden = true
 		}
 
 		// Configure shadows
@@ -316,10 +236,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	@objc func showRating(_ gestureRecognizer: UIGestureRecognizer) {
-		parentCollectionView?.safeScrollToItem(at: IndexPath(row: 0, section: ShowDetail.Section.rating.rawValue), at: .centeredVertically, animated: true)
-	}
-
 	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
@@ -334,26 +250,5 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		} else {
 			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_poster_image", from: posterImageView)
 		}
-	}
-
-	@IBAction func playTrailerPressed(_ sender: UIButton) {
-		if let videoUrl = showDetailsElement?.videoUrl, !videoUrl.isEmpty {
-			parentViewController?.presentVideoViewControllerWith(string: videoUrl)
-		}
-	}
-}
-
-// MARK: - ShowCastCellDelegate
-extension ShowDetailHeaderCollectionViewCell: ShowCastCellDelegate {
-	func presentPhoto(withString string: String, from imageView: UIImageView) {
-		parentViewController?.presentPhotoViewControllerWith(string: string, from: imageView)
-	}
-
-	func presentPhoto(withImage image: UIImage, from imageView: UIImageView) {
-		parentViewController?.presentPhotoViewControllerWith(image: image, from: imageView)
-	}
-
-	func presentPhoto(withUrl url: String, from imageView: UIImageView) {
-		parentViewController?.presentPhotoViewControllerWith(url: url, from: imageView)
 	}
 }
