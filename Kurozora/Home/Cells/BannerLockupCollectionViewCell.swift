@@ -1,5 +1,5 @@
 //
-//  ExploreBannerCollectionViewCell.swift
+//  BannerLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreBannerCollectionViewCell: ExploreBaseCollectionViewCell {
+class BannerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {

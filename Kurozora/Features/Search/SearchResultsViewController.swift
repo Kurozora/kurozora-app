@@ -223,7 +223,7 @@ extension SearchResultsCollectionViewController {
 		}
 
 		let width = layoutEnvironment.container.contentSize.width
-		var columnCount = (width / 110).int
+		var columnCount = (width / 110).rounded().int
 		if columnCount < 0 {
 			columnCount = 1
 		} else if columnCount > 5 {

@@ -73,7 +73,7 @@ class ShowDetail {
 			case .information:
 				return "InformationCollectionViewCell"
 			case .seasons:
-				return "SeasonCollectionViewCell"
+				return "LockupCollectionViewCell"
 			case .cast:
 				return "CastCollectionViewCell"
 			case .related:
@@ -163,9 +163,9 @@ class ShowDetail {
 		case aireDates = 4
 		case network = 5
 		case duration = 6
-		case rating = 8
-		case languages = 9
-		case genres = 10
+		case rating = 7
+		case languages = 8
+		case genres = 9
 		```
 	*/
 	enum Information: Int {
@@ -176,9 +176,9 @@ class ShowDetail {
 		case aireDates = 4
 		case network = 5
 		case duration = 6
-		case rating = 8
-		case languages = 9
-		case genres = 10
+		case rating = 7
+		case languages = 8
+		case genres = 9
 
 		// MARK: - Properties
 		/// An array containing all informations.

@@ -249,17 +249,17 @@ extension LibraryListCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 		switch libraryCellStyle {
 		case .compact:
-			var columnCount = (width / 125).int
+			var columnCount = (width / 125).rounded().int
 			if columnCount < 0 {
 				columnCount = 3
 			} else if columnCount > 8 {
 				columnCount = 8
 			} else {
-				columnCount = abs(columnCount.double/1.5).int
+				columnCount = abs(columnCount.double/1.5).rounded().int
 			}
 			return columnCount
 		case .detailed, .list:
-			var columnCount = (width / 374).int
+			var columnCount = (width / 374).rounded().int
 			if columnCount < 0 {
 				columnCount = 1
 			} else if columnCount > 5 {

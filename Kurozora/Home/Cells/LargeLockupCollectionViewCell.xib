@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LargeLockupCollectionViewCell" id="BtA-gW-wmN" customClass="LargeLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vwC-Y4-HcF">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0L8-OM-foT">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZ6-ms-pn5" userLabel="Rounded Corners View">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JMj-aK-jKd">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="UvI-WJ-zk0" userLabel="Shadow">
+                                        <rect key="frame" x="0.0" y="117" width="374" height="94"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ReZero: Kara Hajimeru Isekai Seikatsu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUB-2t-OCx">
+                                        <rect key="frame" x="8" y="167" width="358" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adventure, Time travel, Fantasy" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nv8-uF-ul2">
+                                        <rect key="frame" x="8" y="187" width="358" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZP-Up-kXD" userLabel="Border View">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="211"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="nv8-uF-ul2" firstAttribute="leading" secondItem="xUB-2t-OCx" secondAttribute="leading" id="0lA-ob-ndQ"/>
+                                    <constraint firstItem="UvI-WJ-zk0" firstAttribute="trailing" secondItem="JMj-aK-jKd" secondAttribute="trailing" id="0vT-ac-gpl"/>
+                                    <constraint firstAttribute="trailing" secondItem="JMj-aK-jKd" secondAttribute="trailing" id="4r4-QR-HwP"/>
+                                    <constraint firstItem="oZP-Up-kXD" firstAttribute="leading" secondItem="rZ6-ms-pn5" secondAttribute="leading" id="8Ii-67-CJ4"/>
+                                    <constraint firstAttribute="bottom" secondItem="JMj-aK-jKd" secondAttribute="bottom" id="FB9-PW-kNb"/>
+                                    <constraint firstAttribute="trailing" secondItem="oZP-Up-kXD" secondAttribute="trailing" id="NwV-kB-Ew3"/>
+                                    <constraint firstItem="oZP-Up-kXD" firstAttribute="top" secondItem="rZ6-ms-pn5" secondAttribute="top" id="Pki-Dj-7en"/>
+                                    <constraint firstItem="UvI-WJ-zk0" firstAttribute="trailingMargin" secondItem="xUB-2t-OCx" secondAttribute="trailing" id="RNo-0I-OeV"/>
+                                    <constraint firstItem="JMj-aK-jKd" firstAttribute="top" secondItem="rZ6-ms-pn5" secondAttribute="top" id="XQD-iT-XXg"/>
+                                    <constraint firstItem="JMj-aK-jKd" firstAttribute="leading" secondItem="rZ6-ms-pn5" secondAttribute="leading" id="Zd4-1C-Nyb"/>
+                                    <constraint firstAttribute="bottom" secondItem="oZP-Up-kXD" secondAttribute="bottom" id="a7T-HL-cQv"/>
+                                    <constraint firstItem="xUB-2t-OCx" firstAttribute="top" secondItem="UvI-WJ-zk0" secondAttribute="top" constant="50" id="aWj-Oq-MEJ"/>
+                                    <constraint firstItem="nv8-uF-ul2" firstAttribute="top" secondItem="xUB-2t-OCx" secondAttribute="bottom" id="avw-cx-hdP"/>
+                                    <constraint firstItem="UvI-WJ-zk0" firstAttribute="bottom" secondItem="JMj-aK-jKd" secondAttribute="bottom" id="dF7-9y-P0d"/>
+                                    <constraint firstItem="nv8-uF-ul2" firstAttribute="trailing" secondItem="xUB-2t-OCx" secondAttribute="trailing" id="emJ-HA-I46"/>
+                                    <constraint firstItem="UvI-WJ-zk0" firstAttribute="bottom" secondItem="nv8-uF-ul2" secondAttribute="bottom" constant="8" id="mas-Hj-l35"/>
+                                    <constraint firstItem="UvI-WJ-zk0" firstAttribute="leading" secondItem="JMj-aK-jKd" secondAttribute="leading" id="rMR-sE-Q5w"/>
+                                    <constraint firstItem="xUB-2t-OCx" firstAttribute="leading" secondItem="UvI-WJ-zk0" secondAttribute="leadingMargin" id="xRw-5L-unf"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="rZ6-ms-pn5" secondAttribute="bottom" id="OFi-Js-2MI"/>
+                            <constraint firstItem="rZ6-ms-pn5" firstAttribute="leading" secondItem="0L8-OM-foT" secondAttribute="leading" id="SbK-yq-2od"/>
+                            <constraint firstItem="rZ6-ms-pn5" firstAttribute="top" secondItem="0L8-OM-foT" secondAttribute="top" id="pWu-tZ-gIr"/>
+                            <constraint firstAttribute="trailing" secondItem="rZ6-ms-pn5" secondAttribute="trailing" id="yUe-V0-AvH"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="0L8-OM-foT" secondAttribute="trailing" id="7jd-vw-7fG"/>
+                    <constraint firstAttribute="bottom" secondItem="0L8-OM-foT" secondAttribute="bottom" id="BMI-lj-44v"/>
+                    <constraint firstItem="0L8-OM-foT" firstAttribute="top" secondItem="vwC-Y4-HcF" secondAttribute="top" id="Ik8-PO-ayz"/>
+                    <constraint firstItem="0L8-OM-foT" firstAttribute="leading" secondItem="vwC-Y4-HcF" secondAttribute="leading" id="YRl-eX-r03"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <size key="customSize" width="374" height="211"/>
+            <connections>
+                <outlet property="bannerImageView" destination="JMj-aK-jKd" id="TD7-CD-KmN"/>
+                <outlet property="primaryLabel" destination="xUB-2t-OCx" id="cKP-R1-Q81"/>
+                <outlet property="secondaryLabel" destination="nv8-uF-ul2" id="eRO-fA-GSX"/>
+                <outlet property="shadowView" destination="0L8-OM-foT" id="gxK-Oq-byh"/>
+            </connections>
+            <point key="canvasLocation" x="807" y="153"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="shadow" width="6" height="30"/>
+    </resources>
+</document>

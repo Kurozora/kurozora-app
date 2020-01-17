@@ -34,7 +34,7 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 			self.collectionView.reloadData()
 		}
 	}
-	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
+	var baseLockupCollectionViewCell: BaseLockupCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +66,9 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		collectionView.collectionViewLayout = createLayout()
+		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
+		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
+		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
 
 		// Fetch show details.
 		self.fetchDetails()
@@ -134,8 +137,8 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 			}
 		} else if segue.identifier == "EpisodeSegue" {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
-				if let seasonCollectionViewCell = sender as? SeasonCollectionViewCell {
-					episodesCollectionViewController.seasonID = seasonCollectionViewCell.seasonsElement?.id
+				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
+					episodesCollectionViewController.seasonID = lockupCollectionViewCell.seasonsElement?.id
 				}
 			}
 		}
@@ -165,7 +168,7 @@ extension ShowDetailCollectionViewController {
 			numberOfRows = 1
 		case .information:
 			numberOfRows = ShowDetail.Information.all.count
-			if User.isAdmin {
+			if !User.isAdmin {
 				numberOfRows -= 1
 			}
 		case .seasons:
@@ -202,8 +205,8 @@ extension ShowDetailCollectionViewController {
 			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
 			return informationCollectionViewCell
 		case .seasons:
-			let seasonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! SeasonCollectionViewCell
-			return seasonCollectionViewCell
+			let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! LockupCollectionViewCell
+			return lockupCollectionViewCell
 		case .cast:
 			let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! CastCollectionViewCell
 			return castCollectionViewCell
@@ -214,13 +217,27 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let showTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderReusableView", for: indexPath) as! SectionHeaderReusableView
-		return showTitleCell
+		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: SectionHeaderReusableView.self, for: indexPath)
+		return supplementaryView
 	}
 }
 
 // MARK: - UICollectionDelegate
 extension ShowDetailCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		var segueIdentifier = ""
+
+		switch showDetailSection {
+		case .seasons:
+			segueIdentifier = "EpisodeSegue"
+		default: return
+		}
+
+		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
+	}
+
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
 		switch showDetailSection {
@@ -241,8 +258,8 @@ extension ShowDetailCollectionViewController {
 			informationCollectionViewCell?.indexPathRow = indexPath.row
 			informationCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .seasons:
-			let seasonCollectionViewCell = cell as? SeasonCollectionViewCell
-			seasonCollectionViewCell?.seasonsElement = seasons?[indexPath.item]
+			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
+			lockupCollectionViewCell?.seasonsElement = seasons?[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = cell as? CastCollectionViewCell
 			castCollectionViewCell?.actorElement = actors?[indexPath.item]
@@ -257,6 +274,7 @@ extension ShowDetailCollectionViewController {
 
 		sectionHeaderReusableView.segueID = showSection.segueIdentifier
 		sectionHeaderReusableView.title = showSection.stringValue
+		sectionHeaderReusableView.indexPath = indexPath
 	}
 }
 
@@ -271,7 +289,7 @@ extension ShowDetailCollectionViewController {
 			return 1
 		case .rating:
 			if width > 828 {
-				let columnCount = (width / 374).int
+				let columnCount = (width / 374).rounded().int
 				if columnCount >= 3 {
 					return 3
 				} else if columnCount > 0 {
@@ -279,14 +297,14 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
-		case .cast:
-			let columnCount = (width / 374).int
+		case .seasons, .cast, .related:
+			let columnCount = (width / 374).rounded().int
 			if columnCount > 5 {
 				return 5
 			}
 			return columnCount > 0 ? columnCount : 1
 		default:
-			let columnCount = (width / 374).int
+			let columnCount = (width / 374).rounded().int
 			return columnCount > 0 ? columnCount : 1
 		}
 	}
@@ -297,7 +315,7 @@ extension ShowDetailCollectionViewController {
 		case .header:
 			return .fractionalHeight(0.90)
 		case .badge:
-			return .absolute(50)
+			return .absolute(55)
 		case .synopsis:
 			return .absolute(110)
 		case .rating:

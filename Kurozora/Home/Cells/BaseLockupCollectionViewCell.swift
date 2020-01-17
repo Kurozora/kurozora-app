@@ -1,5 +1,5 @@
 //
-//  ExploreBaseCollectionViewCell.swift
+//  BaseLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 08/03/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreBaseCollectionViewCell: UICollectionViewCell {
+class BaseLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel?
 	@IBOutlet weak var secondaryLabel: UILabel?
@@ -132,10 +132,10 @@ class ExploreBaseCollectionViewCell: UICollectionViewCell {
 
 // MARK: - UIViewControllerPreviewingDelegate
 #if !targetEnvironment(macCatalyst)
-extension ExploreBaseCollectionViewCell: UIViewControllerPreviewingDelegate {
+extension BaseLockupCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController
-		showDetailCollectionViewController?.exploreBaseCollectionViewCell = self
+		showDetailCollectionViewController?.baseLockupCollectionViewCell = self
 		showDetailCollectionViewController?.showDetailsElement = showDetailsElement
 
 		previewingContext.sourceRect = previewingContext.sourceView.bounds

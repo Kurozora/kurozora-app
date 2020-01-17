@@ -77,7 +77,7 @@ extension ManageThemesCollectionViewController {
 extension ManageThemesCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 170).int
+		let columnCount = (width / 170).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 

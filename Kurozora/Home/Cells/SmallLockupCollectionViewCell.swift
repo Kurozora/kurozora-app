@@ -1,5 +1,5 @@
 //
-//  ExploreSmallCollectionViewCell.swift
+//  SmallLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreSmallCollectionViewCell: ExploreBaseCollectionViewCell {
+class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	override var primaryLabel: UILabel? {
 		didSet {

@@ -1,5 +1,5 @@
 //
-//  ExploreLargeCollectionViewCell.swift
+//  LargeLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/10/2019.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class ExploreLargeCollectionViewCell: ExploreBaseCollectionViewCell {
+class LargeLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 }

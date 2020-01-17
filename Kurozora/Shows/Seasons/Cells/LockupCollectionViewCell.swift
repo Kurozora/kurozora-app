@@ -1,5 +1,5 @@
 //
-//  SeasonCollectionViewCell.swift
+//  LockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 10/10/2018.
@@ -8,57 +8,53 @@
 
 import UIKit
 
-class SeasonCollectionViewCell: UICollectionViewCell {
+class LockupCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var countLabel: UILabel! {
 		didSet {
 			countLabel.theme_textColor = KThemePicker.textColor.rawValue
-			countLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
-			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-			titleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		titleLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var startDateTitleLabel: UILabel! {
 		didSet {
-			startDateTitleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			startDateTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
 	@IBOutlet weak var startDateLabel: UILabel! {
 		didSet {
 			startDateLabel.theme_textColor = KThemePicker.textColor.rawValue
-			startDateLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var episodeCountTitleLabel: UILabel! {
 		didSet {
-			episodeCountTitleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			episodeCountTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
 	@IBOutlet weak var episodesCountLabel: UILabel! {
 		didSet {
 			episodesCountLabel.theme_textColor = KThemePicker.textColor.rawValue
-			episodesCountLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var ratingTitleLabel: UILabel! {
 		didSet {
-			ratingTitleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+			ratingTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
-	}
+}
 	@IBOutlet weak var ratingLabel: UILabel! {
 		didSet {
 			ratingLabel.theme_textColor = KThemePicker.textColor.rawValue
-			ratingLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var separatorView: UIView? {
+	@IBOutlet weak var separatorView: UIView! {
 		didSet {
-			separatorView?.theme_backgroundColor = KThemePicker.separatorColor.rawValue
+			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
 		}
 	}
 	@IBOutlet var separatorViewLight: [UIView]? {
@@ -69,15 +65,21 @@ class SeasonCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	// MARK: - Properties
 	var seasonsElement: SeasonsElement? = nil {
 		didSet {
-			configureCell()
+			configureSeasonCell()
 		}
 	}
+//	var relatedShowElement: RelatedShowElement? = nil {
+//		didSet {
+//			configureRelatedShowCell()
+//		}
+//	}
 
 	// MARK: - Functions
-	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	/// Configure the cell with the season's details.
+	fileprivate func configureSeasonCell() {
 		guard let seasonsElement = seasonsElement else { return }
 
 		if let seasonPosterImage = seasonsElement.poster {
@@ -109,6 +111,12 @@ class SeasonCollectionViewCell: UICollectionViewCell {
 		// Season rating
 		self.ratingLabel.text = "0.00"
 
+		// Apply shadow to shadow view
+		self.shadowView.applyShadow()
+	}
+
+	/// Configure the cell with the related show's details.
+	fileprivate func configureRelatedShowCell() {
 		// Apply shadow to shadow view
 		self.shadowView.applyShadow()
 	}

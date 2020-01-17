@@ -25,6 +25,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		collectionView.collectionViewLayout = createLayout()
+		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
 
 		// Fetch seasons
 		if seasons == nil {
@@ -76,8 +77,8 @@ class SeasonsCollectionViewController: UICollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeSegue", let seasonCollectionViewCell = sender as? SeasonCollectionViewCell {
-			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: seasonCollectionViewCell) {
+		if segue.identifier == "EpisodeSegue", let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
+			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
 				episodesCollectionViewController.seasonID = seasons?[indexPath.item].id
 			}
 		}
@@ -92,9 +93,28 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let seasonCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCollectionViewCell", for: indexPath) as! SeasonCollectionViewCell
-		seasonCollectionViewCell.seasonsElement = seasons?[indexPath.row]
-		return seasonCollectionViewCell
+		let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LockupCollectionViewCell", for: indexPath) as! LockupCollectionViewCell
+		return lockupCollectionViewCell
+	}
+}
+
+// MARK: - UICollectionViewDelegate
+extension SeasonsCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		self.performSegue(withIdentifier: "EpisodeSegue", sender: collectionViewCell)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if let lockupCollectionViewCell = cell as? LockupCollectionViewCell {
+			lockupCollectionViewCell.seasonsElement = seasons?[indexPath.row]
+
+			if collectionView.indexPathForLastItem == indexPath {
+				lockupCollectionViewCell.separatorView.isHidden = true
+			} else {
+				lockupCollectionViewCell.separatorView.isHidden = false
+			}
+		}
 	}
 }
 
@@ -102,7 +122,7 @@ extension SeasonsCollectionViewController {
 extension SeasonsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).int
+		let columnCount = (width / 374).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 

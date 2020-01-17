@@ -1,5 +1,5 @@
 //
-//  ExploreMediumCollectionViewCell.swift
+//  MediumLockupCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreMediumCollectionViewCell: ExploreBaseCollectionViewCell {
+class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
 	override var primaryLabel: UILabel? {
 		didSet {

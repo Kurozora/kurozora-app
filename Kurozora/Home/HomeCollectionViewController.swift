@@ -34,6 +34,12 @@ class HomeCollectionViewController: UICollectionViewController {
 
 		// Create colelction view layout
 		collectionView.collectionViewLayout = createLayout()
+		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
+		collectionView.register(nibWithCellClass: SmallLockupCollectionViewCell.self)
+		collectionView.register(nibWithCellClass: MediumLockupCollectionViewCell.self)
+		collectionView.register(nibWithCellClass: LargeLockupCollectionViewCell.self)
+		collectionView.register(nibWithCellClass: VideoLockupCollectionViewCell.self)
+		collectionView.register(nibWithCellClass: LegalCollectionViewCell.self)
 
 		// Fetch explore details.
 		fetchExplore()
@@ -142,11 +148,17 @@ class HomeCollectionViewController: UICollectionViewController {
 		if segue.identifier == "ShowDetailsSegue" {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-				if let selectedCell = sender as? ExploreBaseCollectionViewCell {
-					showDetailCollectionViewController.exploreBaseCollectionViewCell = selectedCell
+				if let selectedCell = sender as? BaseLockupCollectionViewCell {
+					showDetailCollectionViewController.baseLockupCollectionViewCell = selectedCell
 					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
 				} else if let showID = sender as? Int {
 					showDetailCollectionViewController.showID = showID
+				}
+			}
+		} else if segue.identifier == "ShowsListSegue" {
+			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
+				if let indexPath = sender as? IndexPath {
+					showsListCollectionViewController.exploreCategory = exploreCategories?[indexPath.section]
 				}
 			}
 		}
@@ -158,7 +170,7 @@ extension HomeCollectionViewController {
 	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
 		switch verticalCollectionCellStyle {
 		case .legal:
-			guard let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? LegalExploreCollectionViewCell else {
+			guard let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? LegalCollectionViewCell else {
 				fatalError("Cannot create new \(verticalCollectionCellStyle.identifierString)")
 			}
 			return legalExploreCollectionViewCell
@@ -180,20 +192,20 @@ extension HomeCollectionViewController {
 				if indexPath.section == 0 {
 					horizontalCollectionCellStyle = .banner
 				}
-				guard let exploreBaseCollectionViewCell = collectionView.dequeueReusableCell(
-					withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? ExploreBaseCollectionViewCell
+				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(
+					withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot create new \(horizontalCollectionCellStyle.identifierString)") }
 
 				// Populate the cell with our item description.
 				let exploreCategoriesSection = self.exploreCategories?[indexPath.section]
 				if let shows = exploreCategoriesSection?.shows, shows.count != 0 {
-					exploreBaseCollectionViewCell.showDetailsElement = shows[indexPath.row]
+					baseLockupCollectionViewCell.showDetailsElement = shows[indexPath.row]
 				} else {
-					exploreBaseCollectionViewCell.genreElement = exploreCategoriesSection?.genres?[indexPath.row]
+					baseLockupCollectionViewCell.genreElement = exploreCategoriesSection?.genres?[indexPath.row]
 				}
 
 				// Return the cell.
-				return exploreBaseCollectionViewCell
+				return baseLockupCollectionViewCell
 			}
 
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
@@ -216,14 +228,19 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
 
 			// Get a supplementary view of the desired kind.
-			guard let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderReusableView", for: indexPath) as? SectionHeaderReusableView else {
-				fatalError("Cannot create new SectionHeaderReusableView")
-			}
+			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: SectionHeaderReusableView.self, for: indexPath)
+			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {
-				exploreSectionTitleCell.segueID = "GenresSegue"
+				let sectionTitle = self.exploreCategories?[indexPath.section].title ?? ""
+				if sectionTitle.contains("categories", caseSensitive: false) || sectionTitle.contains("genres", caseSensitive: false) {
+					exploreSectionTitleCell.segueID = "GenresSegue"
+				} else {
+					exploreSectionTitleCell.segueID = "ShowsListSegue"
+				}
 				exploreSectionTitleCell.title = self.exploreCategories?[indexPath.section].title
 			} else {
+				exploreSectionTitleCell.segueID = ""
 				exploreSectionTitleCell.title = "Quick Links"
 			}
 
@@ -280,33 +297,33 @@ extension HomeCollectionViewController {
 			switch horizontalCollectionCellStyle {
 			case .banner:
 				if width >= 414 {
-					columnCount = (width / 562).int
+					columnCount = (width / 562).rounded().int
 				} else {
-					columnCount = (width / 374).int
+					columnCount = (width / 374).rounded().int
 				}
 			case .large:
 				if width >= 414 {
-					columnCount = (width / 500).int
+					columnCount = (width / 500).rounded().int
 				} else {
-					columnCount = (width / 324).int
+					columnCount = (width / 324).rounded().int
 				}
 			case .medium:
 				if width >= 414 {
-					columnCount = (width / 384).int
+					columnCount = (width / 384).rounded().int
 				} else {
-					columnCount = (width / 284).int
+					columnCount = (width / 284).rounded().int
 				}
 			case .small:
 				if width >= 414 {
-					columnCount = (width / 384).int
+					columnCount = (width / 384).rounded().int
 				} else {
-					columnCount = (width / 284).int
+					columnCount = (width / 284).rounded().int
 				}
 			case .video:
 				if width >= 414 {
-					columnCount = (width / 500).int
+					columnCount = (width / 500).rounded().int
 				} else {
-					columnCount = (width / 360).int
+					columnCount = (width / 360).rounded().int
 				}
 			}
 		default:
@@ -341,7 +358,7 @@ extension HomeCollectionViewController {
 				} else if width <= 828 {
 					columnCount = 2
 				} else {
-					columnCount = (width / 414).int
+					columnCount = (width / 414).rounded().int
 				}
 			case .legal:
 				columnCount = 1

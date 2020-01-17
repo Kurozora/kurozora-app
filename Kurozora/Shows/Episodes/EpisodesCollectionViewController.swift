@@ -192,7 +192,7 @@ extension EpisodesCollectionViewController {
 extension EpisodesCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).int
+		let columnCount = (width / 374).rounded().int
 		return columnCount > 0 ? columnCount : 1
 	}
 

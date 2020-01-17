@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SectionHeaderReusableView" id="rHV-gQ-Mla" customClass="SectionHeaderReusableView" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W66-bd-jiH" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AD9-4t-lIw">
+                            <rect key="frame" x="8" y="0.0" width="398" height="1"/>
+                            <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="l29-MH-mGU"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Anime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29t-DP-Pht">
+                            <rect key="frame" x="8" y="10" width="133.5" height="32"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEB-Ut-zmv">
+                            <rect key="frame" x="359" y="10" width="47" height="30"/>
+                            <state key="normal" title="See All"/>
+                            <connections>
+                                <action selector="seeAllButtonPressed:" destination="rHV-gQ-Mla" eventType="touchUpInside" id="GPj-1C-V9k"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailingMargin" secondItem="AD9-4t-lIw" secondAttribute="trailing" id="0ya-Qm-oMh"/>
+                        <constraint firstItem="XEB-Ut-zmv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="29t-DP-Pht" secondAttribute="trailing" constant="10" id="8gc-sN-XuI"/>
+                        <constraint firstItem="XEB-Ut-zmv" firstAttribute="top" secondItem="29t-DP-Pht" secondAttribute="top" id="N3F-7Y-L7I"/>
+                        <constraint firstItem="XEB-Ut-zmv" firstAttribute="trailing" secondItem="AD9-4t-lIw" secondAttribute="trailing" id="Xfp-et-sEr"/>
+                        <constraint firstItem="29t-DP-Pht" firstAttribute="leading" secondItem="AD9-4t-lIw" secondAttribute="leading" id="Xha-uQ-zhP"/>
+                        <constraint firstItem="AD9-4t-lIw" firstAttribute="top" secondItem="W66-bd-jiH" secondAttribute="top" id="Yoh-hv-doc"/>
+                        <constraint firstItem="29t-DP-Pht" firstAttribute="top" secondItem="W66-bd-jiH" secondAttribute="top" constant="10" id="o9y-vf-aYo"/>
+                        <constraint firstItem="AD9-4t-lIw" firstAttribute="leading" secondItem="W66-bd-jiH" secondAttribute="leadingMargin" id="oAg-gh-k0a"/>
+                        <constraint firstAttribute="bottom" secondItem="29t-DP-Pht" secondAttribute="bottom" constant="20" id="uut-v9-y7q"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="W66-bd-jiH" secondAttribute="trailing" id="NPU-GU-Az2"/>
+                <constraint firstItem="W66-bd-jiH" firstAttribute="leading" secondItem="rHV-gQ-Mla" secondAttribute="leading" id="acA-BB-GkG"/>
+                <constraint firstAttribute="bottom" secondItem="W66-bd-jiH" secondAttribute="bottom" id="l6C-bg-Xes"/>
+                <constraint firstItem="W66-bd-jiH" firstAttribute="top" secondItem="rHV-gQ-Mla" secondAttribute="top" id="oA0-0R-2fk"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="c5T-ez-yfa"/>
+            <connections>
+                <outlet property="actionButton" destination="XEB-Ut-zmv" id="rx0-EQ-kKz"/>
+                <outlet property="primaryLabel" destination="29t-DP-Pht" id="pfV-rp-vtt"/>
+                <outlet property="separatorView" destination="AD9-4t-lIw" id="SWG-5C-VfE"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="520"/>
+        </collectionReusableView>
+    </objects>
+</document>

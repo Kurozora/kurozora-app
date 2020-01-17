@@ -12,11 +12,11 @@ import UIKit
 	List of horizontal explore cell styles.
 
 	```
-	case banner = "BannerExploreCollectionViewCell"
-	case large = "LargeExploreCollectionViewCell"
-	case medium = "MediumExploreCollectionViewCell"
-	case small = "SmallExploreCollectionViewCell"
-	case video = "VideoExploreCollectionViewCell"
+	case banner = "BannerLockupCollectionViewCell"
+	case large = "LargeLockupCollectionViewCell"
+	case medium = "MediumLockupCollectionViewCell"
+	case small = "SmallLockupCollectionViewCell"
+	case video = "VideoLockupCollectionViewCell"
 	```
 */
 enum HorizontalCollectionCellStyle: String {
@@ -148,15 +148,31 @@ extension HorizontalCollectionCellStyle {
 	var identifierString: String {
 		switch self {
 		case .banner:
-			return "BannerExploreCollectionViewCell"
+			return "BannerLockupCollectionViewCell"
 		case .large:
-			return "LargeExploreCollectionViewCell"
+			return "LargeLockupCollectionViewCell"
 		case .medium:
-			return "MediumExploreCollectionViewCell"
+			return "MediumLockupCollectionViewCell"
 		case .small:
-			return "SmallExploreCollectionViewCell"
+			return "SmallLockupCollectionViewCell"
 		case .video:
-			return "VideoExploreCollectionViewCell"
+			return "VideoLockupCollectionViewCell"
+		}
+	}
+
+	/// The class associated with the specified horizontal collection cell style.
+	var classValue: BaseLockupCollectionViewCell.Type {
+		switch self {
+		case .banner:
+			return BannerLockupCollectionViewCell.self
+		case .large:
+			return LargeLockupCollectionViewCell.self
+		case .medium:
+			return MediumLockupCollectionViewCell.self
+		case .small:
+			return SmallLockupCollectionViewCell.self
+		case .video:
+			return VideoLockupCollectionViewCell.self
 		}
 	}
 }

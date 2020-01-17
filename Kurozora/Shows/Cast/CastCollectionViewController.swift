@@ -23,6 +23,7 @@ class CastCollectionViewController: UICollectionViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		collectionView.collectionViewLayout = createLayout()
+		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
 
 		// Fetch actors
 		if actors == nil {
@@ -80,6 +81,12 @@ extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if let castCollectionViewCell = cell as? CastCollectionViewCell {
 			castCollectionViewCell.actorElement = actors?[indexPath.row]
+
+			if collectionView.indexPathForLastItem == indexPath {
+				castCollectionViewCell.separatorView.isHidden = true
+			} else {
+				castCollectionViewCell.separatorView.isHidden = false
+			}
 		}
 	}
 }
@@ -88,7 +95,7 @@ extension CastCollectionViewController {
 extension CastCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).int
+		let columnCount = (width / 374).rounded().int
 		if columnCount > 5 {
 			return 5
 		}

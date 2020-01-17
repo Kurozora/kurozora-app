@@ -53,7 +53,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - Properties
 	weak var delegate: ShowDetailCollectionViewControllerDelegate?
 
-	var exploreBaseCollectionViewCell: ExploreBaseCollectionViewCell? = nil
+	var baseLockupCollectionViewCell: BaseLockupCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 	var showDetailsElement: ShowDetailsElement? {
 		didSet {
@@ -69,14 +69,14 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 		- Parameter cell: The explore cell from which the view should be configured.
 	*/
-	fileprivate func configureShowDetails(from cell: ExploreBaseCollectionViewCell?) {
+	fileprivate func configureShowDetails(from cell: BaseLockupCollectionViewCell?) {
 		guard let cell = cell else { return }
 		if cell.bannerImageView != nil {
 			showTitleLabel.text = cell.primaryLabel?.text
 			bannerImageView.image = cell.bannerImageView?.image
 		} else {
 			posterImageView.image = cell.posterImageView?.image
-//			ratingScoreLabel.text = "\((cell as? ExploreSmallCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
+//			ratingScoreLabel.text = "\((cell as? SmallLockupCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
 		}
 	}
 

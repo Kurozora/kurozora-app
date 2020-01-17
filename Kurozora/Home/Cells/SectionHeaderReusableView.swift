@@ -12,7 +12,7 @@ class SectionHeaderReusableView: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
-			primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+			primaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var actionButton: UIButton! {
@@ -27,12 +27,14 @@ class SectionHeaderReusableView: UICollectionReusableView {
 	}
 
 	// MARK: - Properties
+	static let reuseIdentifier = "SectionHeaderReusableView"
 	var title: String? = nil {
 		didSet {
 			configureCell()
 		}
 	}
 	var segueID: String?
+	var indexPath: IndexPath?
 
 	// MARK: - Functions
 	private func configureCell() {
@@ -48,6 +50,6 @@ class SectionHeaderReusableView: UICollectionReusableView {
 	// MARK: - IBActions
 	@IBAction func seeAllButtonPressed(_ sender: UIButton) {
 		guard let segueID = segueID else { return }
-		self.parentViewController?.performSegue(withIdentifier: segueID, sender: self)
+		self.parentViewController?.performSegue(withIdentifier: segueID, sender: indexPath)
 	}
 }

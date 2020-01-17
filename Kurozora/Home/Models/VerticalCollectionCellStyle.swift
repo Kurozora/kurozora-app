@@ -38,7 +38,7 @@ extension VerticalCollectionCellStyle {
 		case .actionButton:
 			return "ActionButtonExploreCollectionViewCell"
 		case .legal:
-			return "LegalExploreCollectionViewCell"
+			return "LegalCollectionViewCell"
 		}
 	}
 }
