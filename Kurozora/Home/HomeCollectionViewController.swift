@@ -18,10 +18,18 @@ class HomeCollectionViewController: UICollectionViewController {
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
 	]
+	let activityIndicatorView: UIActivityIndicatorView = {
+		let activityIndicatorView = UIActivityIndicatorView(style: .large)
+		activityIndicatorView.theme_color = KThemePicker.tintColor.rawValue
+		activityIndicatorView.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
+		activityIndicatorView.hidesWhenStopped = true
+		return activityIndicatorView
+	}()
 
 	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
+			self.activityIndicatorView.stopAnimating()
 			configureDataSource()
 		}
 	}
@@ -41,8 +49,14 @@ class HomeCollectionViewController: UICollectionViewController {
 		collectionView.register(nibWithCellClass: VideoLockupCollectionViewCell.self)
 		collectionView.register(nibWithCellClass: LegalCollectionViewCell.self)
 
+		self.view.addSubview(activityIndicatorView)
+		self.activityIndicatorView.center = self.view.center
+		self.activityIndicatorView.startAnimating()
+
 		// Fetch explore details.
-		fetchExplore()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchExplore()
+		}
 
 		// Setup search bar.
 		setupSearchBar()
@@ -161,6 +175,18 @@ class HomeCollectionViewController: UICollectionViewController {
 					showsListCollectionViewController.exploreCategory = exploreCategories?[indexPath.section]
 				}
 			}
+		}
+	}
+}
+
+extension HomeCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
+			if exploreCategories?[indexPath.section].genres?.count == 0 {
+				performSegue(withIdentifier: "ShowDetailsSegue", sender: baseLockupCollectionViewCell)
+			}
+		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
+			performSegue(withIdentifier: "LegalSegue", sender: legalCollectionViewCell)
 		}
 	}
 }

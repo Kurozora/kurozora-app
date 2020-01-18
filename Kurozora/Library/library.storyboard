@@ -184,7 +184,7 @@
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCompactCollectionViewCell" id="qr0-Oa-TLT" customClass="LibraryCompactCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="144.66666666666666" y="254" width="125" height="178"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3nc-An-Bcp">
+                                <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3nc-An-Bcp">
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="178"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
