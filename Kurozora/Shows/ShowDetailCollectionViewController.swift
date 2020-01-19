@@ -15,13 +15,15 @@ protocol ShowDetailCollectionViewControllerDelegate: class {
 	func updateShowInLibrary(for cell: LibraryBaseCollectionViewCell?)
 }
 
-class ShowDetailCollectionViewController: UICollectionViewController {
+class ShowDetailCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int?
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.title = showDetailsElement?.title
 			self.showID = showDetailsElement?.id
+			self.collectionView.reloadData()
 		}
 	}
 	var seasons: [SeasonsElement]? {
@@ -37,6 +39,17 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 	var baseLockupCollectionViewCell: BaseLockupCollectionViewCell? = nil
 	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -63,15 +76,22 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
+		// Stop activity indicator in case user doesn't need to fetch show details.
+		if showDetailsElement != nil {
+			_prefersActivityIndicatorHidden = true
+		}
+
+		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
 		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
 
 		// Fetch show details.
-		self.fetchDetails()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchDetails()
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -99,7 +119,6 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 			KService.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
-					self.collectionView.reloadData()
 				}
 			}
 		}
@@ -129,11 +148,11 @@ class ShowDetailCollectionViewController: UICollectionViewController {
 			}
 		} else if segue.identifier == "SeasonSegue" {
 			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
-				seasonsCollectionViewController.seasons = seasons
+				seasonsCollectionViewController.seasonsElements = seasons
 			}
 		} else if segue.identifier == "CastSegue" {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
-				castCollectionViewController.actors = actors
+				castCollectionViewController.actorsElements = actors
 			}
 		} else if segue.identifier == "EpisodeSegue" {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {

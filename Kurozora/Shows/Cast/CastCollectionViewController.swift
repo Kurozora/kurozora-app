@@ -9,25 +9,45 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class CastCollectionViewController: UICollectionViewController {
+class CastCollectionViewController: KCollectionViewController {
+	// MARK: - Properties
 	var showID: Int?
-	var actors: [ActorsElement]? {
+	var actorsElements: [ActorsElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.collectionView?.reloadData()
 		}
 	}
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Stop activity indicator in case user doesn't need to fetch actors details.
+		if actorsElements != nil {
+			_prefersActivityIndicatorHidden = true
+		}
+
+		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
 
 		// Fetch actors
-		if actors == nil {
-			fetchActors()
+		if actorsElements == nil {
+			DispatchQueue.global(qos: .background).async {
+				self.fetchActors()
+			}
 		}
 
 		// Setup empty collection view
@@ -57,7 +77,7 @@ class CastCollectionViewController: UICollectionViewController {
 	fileprivate func fetchActors() {
 		KService.shared.getCastFor(showID, withSuccess: { (actors) in
 			DispatchQueue.main.async {
-				self.actors = actors
+				self.actorsElements = actors
 			}
 		})
 	}
@@ -66,7 +86,7 @@ class CastCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let actorsCount = actors?.count else { return 0 }
+		guard let actorsCount = actorsElements?.count else { return 0 }
 		return actorsCount
 	}
 
@@ -80,7 +100,7 @@ extension CastCollectionViewController {
 extension CastCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if let castCollectionViewCell = cell as? CastCollectionViewCell {
-			castCollectionViewCell.actorElement = actors?[indexPath.row]
+			castCollectionViewCell.actorElement = actorsElements?[indexPath.row]
 
 			if collectionView.indexPathForLastItem == indexPath {
 				castCollectionViewCell.separatorView.isHidden = true

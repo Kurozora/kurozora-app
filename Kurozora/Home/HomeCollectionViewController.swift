@@ -11,34 +11,41 @@ import SCLAlertView
 import SwiftyJSON
 import WhatsNew
 
-class HomeCollectionViewController: UICollectionViewController {
+class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
 	]
-	let activityIndicatorView: UIActivityIndicatorView = {
-		let activityIndicatorView = UIActivityIndicatorView(style: .large)
-		activityIndicatorView.theme_color = KThemePicker.tintColor.rawValue
-		activityIndicatorView.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
-		activityIndicatorView.hidesWhenStopped = true
-		return activityIndicatorView
-	}()
 
 	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
 	var exploreCategories: [ExploreCategory]? {
 		didSet {
-			self.activityIndicatorView.stopAnimating()
+			_prefersActivityIndicatorHidden = true
 			configureDataSource()
 		}
 	}
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		fetchExplore()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 
 		// Create colelction view layout
 		collectionView.collectionViewLayout = createLayout()
@@ -48,10 +55,6 @@ class HomeCollectionViewController: UICollectionViewController {
 		collectionView.register(nibWithCellClass: LargeLockupCollectionViewCell.self)
 		collectionView.register(nibWithCellClass: VideoLockupCollectionViewCell.self)
 		collectionView.register(nibWithCellClass: LegalCollectionViewCell.self)
-
-		self.view.addSubview(activityIndicatorView)
-		self.activityIndicatorView.center = self.view.center
-		self.activityIndicatorView.startAnimating()
 
 		// Fetch explore details.
 		DispatchQueue.global(qos: .background).async {
@@ -150,11 +153,6 @@ class HomeCollectionViewController: UICollectionViewController {
 				self.exploreCategories = explore?.categories
 			}
 		})
-	}
-
-	/// Reload the data on the view.
-	@objc private func reloadData() {
-		fetchExplore()
 	}
 
 	// MARK: - Segue

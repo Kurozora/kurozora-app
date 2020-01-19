@@ -11,6 +11,18 @@ import AVKit
 import AXPhotoViewer
 import SPStorkController
 
+// MARK: - View
+extension UIViewController {
+	/**
+		Notifies the view controller that its view is about to be reloaded.
+
+		This method is called when there has been a change in the user's sign in status. You can override this method to perform custom tasks associated with displaying the view. For example, you might use this method to change the data presented by the view or style of the view being presented. If you override this method, you must call super at some point in your implementation.
+	*/
+	@objc func viewWillReload() {
+	}
+}
+
+// MARK: - Present
 extension UIViewController {
 	/**
 		Modally present the given view controller.

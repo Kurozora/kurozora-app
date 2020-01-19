@@ -10,7 +10,7 @@ import UIKit
 import EmptyDataSet_Swift
 import SwipeCellKit
 
-class EpisodesCollectionViewController: UICollectionViewController {
+class EpisodesCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var goToButton: UIBarButtonItem! {
 		didSet {
@@ -22,20 +22,32 @@ class EpisodesCollectionViewController: UICollectionViewController {
     var seasonID: Int?
 	var episodes: [EpisodesElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.collectionView?.reloadData()
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		collectionView.collectionViewLayout = createLayout()
 
 		// Fetch episodes
-		fetchEpisodes()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchEpisodes()
+		}
 
 		// Setup empty data view
 		setupEmptyDataView()

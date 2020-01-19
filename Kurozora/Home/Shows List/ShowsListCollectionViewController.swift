@@ -8,18 +8,28 @@
 
 import UIKit
 
-class ShowsListCollectionViewController: UICollectionViewController {
+class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var exploreCategory: ExploreCategory? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			collectionView.reloadData()
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		title = exploreCategory?.title
 
 		let cellStyle = exploreCategory?.size ?? "small"

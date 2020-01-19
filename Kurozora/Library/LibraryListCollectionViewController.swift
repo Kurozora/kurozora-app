@@ -17,18 +17,15 @@ protocol LibraryListViewControllerDelegate: class {
 	func updateSortTypeButton(with sortType: Library.SortType)
 }
 
-class LibraryListCollectionViewController: UICollectionViewController {
+class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	private let refreshControl = UIRefreshControl()
 
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
-			collectionView.reloadData {
-				DispatchQueue.main.async {
-					self.refreshControl.endRefreshing()
-					self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
-				}
-			}
+			collectionView.reloadData()
+			self.refreshControl.endRefreshing()
+			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		}
 	}
 	var sectionTitle: String = ""
@@ -41,6 +38,10 @@ class LibraryListCollectionViewController: UICollectionViewController {
 	}
 	var libraryCellStyle: Library.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
+
+	override var prefersActivityIndicatorHidden: Bool {
+		return true
+	}
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +56,18 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		delegate?.updateSortTypeButton(with: librarySortType)
 	}
 
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.enableActions()
+		self.fetchLibrary()
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 
 		// Setup library view controller delegate
@@ -70,14 +77,16 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		collectionView.refreshControl = refreshControl
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
-		refreshControl.addTarget(self, action: #selector(reloadData), for: .valueChanged)
+		refreshControl.addTarget(self, action: #selector(viewWillReload), for: .valueChanged)
 
 		// Observe NotificationCenter for an update
 		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(sectionTitle)Section"), object: nil)
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
-			fetchLibrary()
+			DispatchQueue.global(qos: .background).async {
+				self.fetchLibrary()
+			}
 		}
 
         // Setup empty data view
@@ -129,16 +138,12 @@ class LibraryListCollectionViewController: UICollectionViewController {
 		refreshControl.isEnabled = User.isSignedIn
 	}
 
-	/// Reload the data on the view.
-	@objc private func reloadData() {
-		enableActions()
-		fetchLibrary()
-	}
-
 	/// Fetch the library items for the current user.
 	@objc private func fetchLibrary() {
 		if User.isSignedIn {
-			refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			DispatchQueue.main.async {
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			}
 
 			KService.shared.getLibrary(forStatus: sectionTitle, withSortType: librarySortType.rawValue, withSuccess: { (showDetailsElements) in
 				DispatchQueue.main.async {

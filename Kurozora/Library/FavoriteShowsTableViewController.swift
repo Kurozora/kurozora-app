@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteShowsCollectionViewController: UICollectionViewController {
+class FavoriteShowsCollectionViewController: KCollectionViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
@@ -24,16 +24,28 @@ class FavoriteShowsCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
 	var shows: [[ShowDetailsElement]]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.collectionView.reloadData()
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - Views
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		fetchUserLibrary()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchUserLibrary()
+		}
 	}
 
 	// MARK: - Functions

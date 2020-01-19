@@ -9,27 +9,45 @@
 import UIKit
 import EmptyDataSet_Swift
 
-class SeasonsCollectionViewController: UICollectionViewController {
+class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int?
-	var seasons: [SeasonsElement]? {
+	var seasonsElements: [SeasonsElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.collectionView?.reloadData()
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Stop activity indicator in case user doesn't need to fetch actors details.
+		if seasonsElements != nil {
+			_prefersActivityIndicatorHidden = true
+		}
+
+		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
 
 		// Fetch seasons
-		if seasons == nil {
-			fetchSeasons()
+		if seasonsElements == nil {
+			DispatchQueue.global(qos: .background).async {
+				self.fetchSeasons()
+			}
 		}
 
 		// Setup empty data view
@@ -70,7 +88,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
     fileprivate func fetchSeasons() {
         KService.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {
-				self.seasons = seasons
+				self.seasonsElements = seasons
 			}
         })
     }
@@ -79,7 +97,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "EpisodeSegue", let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
-				episodesCollectionViewController.seasonID = seasons?[indexPath.item].id
+				episodesCollectionViewController.seasonID = seasonsElements?[indexPath.item].id
 			}
 		}
 	}
@@ -88,7 +106,7 @@ class SeasonsCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension SeasonsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let seasonsCount = seasons?.count else { return 0 }
+		guard let seasonsCount = seasonsElements?.count else { return 0 }
 		return seasonsCount
 	}
 
@@ -107,7 +125,7 @@ extension SeasonsCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if let lockupCollectionViewCell = cell as? LockupCollectionViewCell {
-			lockupCollectionViewCell.seasonsElement = seasons?[indexPath.row]
+			lockupCollectionViewCell.seasonsElement = seasonsElements?[indexPath.row]
 
 			if collectionView.indexPathForLastItem == indexPath {
 				lockupCollectionViewCell.separatorView.isHidden = true
