@@ -7,31 +7,35 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SwiftyJSON
 
-class BadgesTableViewController: UITableViewController {
+class BadgesTableViewController: KTableViewController {
 	// MARK: - Properties
 	var badges: [BadgeElement]?
 	var user: UserProfile? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.badges = user?.badges
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
-
-		// Setup empty data view
-		setupEmptyDataView()
     }
 
 	// MARK: - Functions
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			if let username = self.user?.username {
 				let detailLabelString = self.user?.id != User.currentID ? "\(username) has no badges to show." : "Badges you earn show up here."
@@ -44,12 +48,6 @@ class BadgesTableViewController: UITableViewController {
 					.isScrollAllowed(true)
 			}
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 }
 

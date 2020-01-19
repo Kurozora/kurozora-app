@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
-class AdminTableViewController: UITableViewController {
+class AdminTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var warningLabel: UILabel! {
 		didSet {
@@ -23,19 +22,25 @@ class AdminTableViewController: UITableViewController {
 	let kDefaultKeys = Kurozora.shared.KDefaults.allKeys()
 	var kDefaultCount = Kurozora.shared.KDefaults.allItems().count
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
-		// Setup empty data view
-		setupEmptyDataView()
+		_prefersActivityIndicatorHidden = true
 	}
 
 	// MARK: - Functions
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -44,12 +49,6 @@ class AdminTableViewController: UITableViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 }
 

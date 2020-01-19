@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EmptyDataSet_Swift
 
 /**
 	A supercharged view controller that specializes in managing a collection view.
@@ -57,8 +58,14 @@ class KCollectionViewController: UICollectionViewController {
 		// Observe user sign-in status.
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
+		// Observe theme update notification.
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
 		// Start activity indicator view.
 		setupActivityIndicator()
+
+		// Setup empty data view.
+		setupEmptyDataSetView()
 	}
 }
 
@@ -94,5 +101,22 @@ extension KCollectionViewController {
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
 		prefersActivityIndicatorHiddenToggle()
+	}
+}
+
+// MARK: - EmptyDataSet
+extension KCollectionViewController {
+	/**
+		Shows a view to indicate the collection view has no data to show.
+
+		Use this method to show a beautiful and informative view when the collection view is empty.
+	*/
+	@objc func setupEmptyDataSetView() { }
+
+	/**
+		Reloads the empty data set of the collection view.
+	*/
+	@objc func reloadEmptyDataView() {
+		collectionView.reloadEmptyDataSet()
 	}
 }

@@ -7,16 +7,16 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SwiftTheme
 
-class FeedTableViewController: UITableViewController {
+class FeedTableViewController: KTableViewController {
 	// MARK: - Properties
 	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var feedPostElement: [FeedPostElement]? {
+	var feedPostElements: [FeedPostElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
@@ -25,21 +25,31 @@ class FeedTableViewController: UITableViewController {
 	var totalPages = 0
 	var pageNumber = 0
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
+		// Turn off activity indicator for now
+		_prefersActivityIndicatorHidden = true
 
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl?.addTarget(self, action: #selector(refreshFeedsData(_:)), for: .valueChanged)
 
 		// Fetch feed posts.
-		fetchFeedPosts()
-
-		// Setup empty data view
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchFeedPosts()
+		}
 	}
 
 	// MARK: - Functions
@@ -54,8 +64,7 @@ class FeedTableViewController: UITableViewController {
 		fetchFeedPosts()
 	}
 
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -65,12 +74,6 @@ class FeedTableViewController: UITableViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 
 	/// Fetch feed posts for the current section.
@@ -84,11 +87,11 @@ class FeedTableViewController: UITableViewController {
 				}
 
 				if self.pageNumber == 0 {
-					self.feedPostElement = feed?.posts
+					self.feedPostElements = feed?.posts
 					self.pageNumber += 1
 				} else if self.pageNumber <= self.totalPages - 1 {
 					for feedPostsElement in (feed?.posts)! {
-						self.feedPostElement?.append(feedPostsElement)
+						self.feedPostElements?.append(feedPostsElement)
 					}
 					self.pageNumber += 1
 				}
@@ -113,7 +116,7 @@ class FeedTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let threadsCount = feedPostElement?.count else { return 0 }
+		guard let threadsCount = feedPostElements?.count else { return 0 }
 		return threadsCount
 	}
 
@@ -126,7 +129,7 @@ extension FeedTableViewController {
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: "ThreadSegue", sender: feedPostElement?[indexPath.row])
+		performSegue(withIdentifier: "ThreadSegue", sender: feedPostElements?[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

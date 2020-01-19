@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EmptyDataSet_Swift
 
 /**
 	A supercharged view controller that specializes in managing a collection view.
@@ -57,8 +58,14 @@ class KTableViewController: UITableViewController {
 		// Observe user sign-in status.
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
 
+		// Observe theme update notification.
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
 		// Start activity indicator view.
 		setupActivityIndicator()
+
+		// Setup empty data view.
+		setupEmptyDataSetView()
 	}
 }
 
@@ -94,5 +101,22 @@ extension KTableViewController {
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
 		prefersActivityIndicatorHiddenToggle()
+	}
+}
+
+// MARK: - EmptyDataSet
+extension KTableViewController {
+	/**
+		Shows a view to indicate the table view has no data to show.
+
+		Use this method to show a beautiful and informative view when the table view is empty.
+	*/
+	@objc func setupEmptyDataSetView() { }
+
+	/**
+		Reloads the empty data set of the table view.
+	*/
+	@objc func reloadEmptyDataView() {
+		tableView.reloadEmptyDataSet()
 	}
 }

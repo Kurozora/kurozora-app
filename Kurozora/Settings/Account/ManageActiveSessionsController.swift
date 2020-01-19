@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 import MapKit
-import EmptyDataSet_Swift
 import SCLAlertView
 import SwifterSwift
 import SwiftyJSON

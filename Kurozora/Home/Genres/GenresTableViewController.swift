@@ -8,30 +8,36 @@
 
 import UIKit
 
-class GenresTableViewController: UITableViewController {
-	var genres: [GenreElement]? {
+class GenresTableViewController: KTableViewController {
+	// MARK: - Properties
+	var genresElements: [GenreElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		fetchGenres()
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
-		// Setup empty data view
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchGenres()
+		}
 	}
 
 	// MARK: - Functions
-	/// Sets up the empty data view/
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Genres", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -42,17 +48,11 @@ class GenresTableViewController: UITableViewController {
 		}
 	}
 
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
-	}
-
 	/// Fetches genres from the server.
 	func fetchGenres() {
 		KService.shared.getGenres { (genres) in
 			DispatchQueue.main.async {
-				self.genres = genres
+				self.genresElements = genres
 			}
 		}
 	}
@@ -66,20 +66,20 @@ class GenresTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension GenresTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let genresCount = genres?.count else { return 0 }
+		guard let genresCount = genresElements?.count else { return 0 }
 		return genresCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let genreTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GenreTableViewCell", for: indexPath) as! GenreTableViewCell
 
-		genreTableViewCell.genreElement = genres?[indexPath.row]
+		genreTableViewCell.genreElement = genresElements?[indexPath.row]
 
 		return genreTableViewCell
 	}
 }
 
-// MARK - UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension GenresTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableView.automaticDimension

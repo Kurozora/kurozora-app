@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
 class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -32,7 +31,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - View
 	override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Stop activity indicator in case user doesn't need to fetch actors details.
 		if seasonsElements != nil {
@@ -49,9 +47,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 				self.fetchSeasons()
 			}
 		}
-
-		// Setup empty data view
-		setupEmptyDataView()
     }
 
 	// MARK: - Functions
@@ -65,8 +60,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		return storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController")
 	}
 
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		collectionView?.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Seasons", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "This show doesn't have seasons yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -76,12 +70,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		collectionView.reloadData()
 	}
 
 	/// Fetch seasons for the current show.

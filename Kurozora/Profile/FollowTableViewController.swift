@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
-class FollowTableViewController: UITableViewController {
+class FollowTableViewController: KTableViewController {
 	// MARK: - Properties
 	var userFollow: [UserProfile]! {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
@@ -23,22 +23,30 @@ class FollowTableViewController: UITableViewController {
 	var currentPage = 1
 	var lastPage = 1
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK:- Views
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
+
+		self.title = followList
 
 		// Fetch follow list.
-		fetchFollowList()
-
-		// Setup empty data view.
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchFollowList()
+		}
     }
 
 	// MARK: - Functions
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			if let username = self.user?.username {
 				if self.followList == "Followers" {
@@ -72,12 +80,6 @@ class FollowTableViewController: UITableViewController {
 				}
 			}
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 
 	/// Sends a request to follow the user whose followers list is being viewed.

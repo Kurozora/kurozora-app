@@ -7,20 +7,20 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SCLAlertView
 import SwiftTheme
 import SwiftyJSON
 
-class ForumsListViewController: UITableViewController {
+class ForumsListViewController: KTableViewController {
 	// MARK: - Properties
-	var refresh = UIRefreshControl()
+	var refreshController = UIRefreshControl()
 
 	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var forumThreads: [ForumsThreadElement]? {
+	var forumThreadsElements: [ForumsThreadElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
@@ -30,6 +30,16 @@ class ForumsListViewController: UITableViewController {
 	var currentPage = 1
 	var lastPage = 1
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -38,20 +48,17 @@ class ForumsListViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Add Refresh Control to Table View
-		tableView.refreshControl = refresh
-		refresh.theme_tintColor = KThemePicker.tintColor.rawValue
-		refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		refresh.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
+		tableView.refreshControl = refreshController
+		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue
+		refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshController.addTarget(self, action: #selector(refreshThreadsData(_:)), for: .valueChanged)
 
 		// Fetch threads
-		fetchThreads()
-
-		// Setup empty data view
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchThreads()
+		}
 	}
 
 	// MARK: - Functions
@@ -61,13 +68,12 @@ class ForumsListViewController: UITableViewController {
 		- Parameter sender: The object requesting the refresh.
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
-		refresh.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshController.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 		currentPage = 0
 		fetchThreads()
 	}
 
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -77,12 +83,6 @@ class ForumsListViewController: UITableViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 
 	/// Fetch threads list for the current section.
@@ -99,18 +99,20 @@ class ForumsListViewController: UITableViewController {
 				self.lastPage = threads?.lastPage ?? 1
 
 				if self.currentPage == 1 {
-					self.forumThreads = threads?.threads
+					self.forumThreadsElements = threads?.threads
 				} else {
 					for forumThreadElement in threads?.threads ?? [] {
-						self.forumThreads?.append(forumThreadElement)
+						self.forumThreadsElements?.append(forumThreadElement)
 					}
 				}
 
-				self.refresh.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 		})
 
-		self.refresh.endRefreshing()
+		DispatchQueue.main.async {
+			self.refreshController.endRefreshing()
+		}
 	}
 
 	// MARK: - Segue
@@ -126,13 +128,13 @@ class ForumsListViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let threadsCount = forumThreads?.count else { return 0 }
+		guard let threadsCount = forumThreadsElements?.count else { return 0 }
 		return threadsCount
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let forumsCell = tableView.dequeueReusableCell(withIdentifier: "ForumsCell") as! ForumsCell
-		forumsCell.forumThreadsElement = forumThreads?[indexPath.row]
+		forumsCell.forumThreadsElement = forumThreadsElements?[indexPath.row]
 		forumsCell.forumsChildViewController = self
 		return forumsCell
 	}
@@ -141,7 +143,7 @@ extension ForumsListViewController {
 // MARK: - UITableViewDelegate
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: "ThreadSegue", sender: forumThreads?[indexPath.row])
+		performSegue(withIdentifier: "ThreadSegue", sender: forumThreadsElements?[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -163,10 +165,10 @@ extension ForumsListViewController: KRichTextEditorViewDelegate {
 
 	func updateThreadsList(with thread: ForumsThreadElement) {
 		DispatchQueue.main.async {
-			if self.forumThreads == nil {
-				self.forumThreads = [thread]
+			if self.forumThreadsElements == nil {
+				self.forumThreadsElements = [thread]
 			} else {
-				self.forumThreads?.prepend(thread)
+				self.forumThreadsElements?.prepend(thread)
 			}
 		}
 	}

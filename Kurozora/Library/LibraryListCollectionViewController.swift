@@ -9,7 +9,6 @@
 import UIKit
 import SwiftyJSON
 import SCLAlertView
-import EmptyDataSet_Swift
 import SwiftTheme
 
 protocol LibraryListViewControllerDelegate: class {
@@ -65,7 +64,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
@@ -88,9 +86,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				self.fetchLibrary()
 			}
 		}
-
-        // Setup empty data view
-		setupEmptyDataView()
     }
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -102,14 +97,12 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
-	/// Setup empty data view data.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { (view) in
 			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(#imageLiteral(resourceName: "empty_library"))
-				.verticalSpace(5)
 				.isScrollAllowed(true)
 
 			// Not signed in
@@ -125,12 +118,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 					}
 			}
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		collectionView.reloadData()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.

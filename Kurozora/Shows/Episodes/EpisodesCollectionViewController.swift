@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SwipeCellKit
 
 class EpisodesCollectionViewController: KCollectionViewController {
@@ -40,7 +39,6 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		collectionView.collectionViewLayout = createLayout()
 
@@ -48,14 +46,10 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.fetchEpisodes()
 		}
-
-		// Setup empty data view
-		setupEmptyDataView()
     }
 
 	// MARK: - Functions
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		collectionView?.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -65,12 +59,6 @@ class EpisodesCollectionViewController: KCollectionViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		collectionView.reloadData()
 	}
 
 	/// Fetches the episodes from the server.

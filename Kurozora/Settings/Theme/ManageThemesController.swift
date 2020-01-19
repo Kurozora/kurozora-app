@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SCLAlertView
 import SwiftTheme
 

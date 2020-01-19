@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 import SwiftyJSON
 import SCLAlertView
 
-class ThreadTableViewController: UITableViewController {
+class ThreadTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var discussionLabel: UILabel! {
@@ -91,6 +90,7 @@ class ThreadTableViewController: UITableViewController {
 	var forumThreadID: Int?
 	var forumsThreadElement: ForumsThreadElement? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.forumThreadID = forumsThreadElement?.id
 		}
 	}
@@ -106,26 +106,31 @@ class ThreadTableViewController: UITableViewController {
 	var currentPage = 1
 	var lastPage = 1
 
-	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Fetch thread details
 		if forumsThreadElement != nil {
+			_prefersActivityIndicatorHidden = true
 			DispatchQueue.main.async {
 				self.updateThreadDetails()
 			}
 		}
-		fetchDetails()
 
-		// Setup empty data view
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchDetails()
+		}
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -154,8 +159,7 @@ class ThreadTableViewController: UITableViewController {
 		return storyboard.instantiateViewController(withIdentifier: "ThreadTableViewController")
 	}
 
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -166,12 +170,6 @@ class ThreadTableViewController: UITableViewController {
 				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 
 	/**

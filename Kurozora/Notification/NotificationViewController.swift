@@ -9,7 +9,6 @@
 import UIKit
 import SwiftyJSON
 import SCLAlertView
-import EmptyDataSet_Swift
 import SwipeCellKit
 import SwiftTheme
 
@@ -18,7 +17,7 @@ protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerClearedAllNotifications()
 }
 
-class NotificationsViewController: UITableViewController {
+class NotificationsViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var markAllButton: UIBarButtonItem!
 
@@ -30,6 +29,8 @@ class NotificationsViewController: UITableViewController {
 		didSet {
 			self.groupNotifications(userNotificationsElement)
 
+			_prefersActivityIndicatorHidden = true
+
 			self.tableView.reloadData {
 				self.refreshControl?.endRefreshing()
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications list!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
@@ -38,14 +39,34 @@ class NotificationsViewController: UITableViewController {
 	} // Grouping type: Off
 	var groupedNotifications = [GroupedNotifications]() // Grouping type: Automatic, ByType
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isSignedIn {
 			let notificationsGrouping = UserSettings.notificationsGrouping
 			grouping = NotificationGroupStyle(rawValue: notificationsGrouping)!
-			fetchNotifications()
+
+			DispatchQueue.global(qos: .background).async {
+				self.fetchNotifications()
+			}
 		}
+	}
+
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		enableActions()
+		fetchNotifications()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -57,9 +78,6 @@ class NotificationsViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup search bar.
 		setupSearchBar()
@@ -69,9 +87,6 @@ class NotificationsViewController: UITableViewController {
 		refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your notifications!", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl?.addTarget(self, action: #selector(fetchNotifications), for: .valueChanged)
 		enableActions()
-
-		// Setup empty data view.
-		setupEmptyDataView()
 	}
 
 	// MARK: - Functions
@@ -95,8 +110,7 @@ class NotificationsViewController: UITableViewController {
 		navigationItem.searchController = kSearchController
 	}
 
-	/// Set up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -119,12 +133,6 @@ class NotificationsViewController: UITableViewController {
 		}
 	}
 
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
-	}
-
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
 	private func enableActions() {
 		markAllButton.isEnabled = User.isSignedIn
@@ -132,16 +140,12 @@ class NotificationsViewController: UITableViewController {
 		refreshControl?.isEnabled = User.isSignedIn
 	}
 
-	/// Reload the data on the view.
-	@objc func reloadView() {
-		enableActions()
-		fetchNotifications()
-	}
-
 	/// Fetch the notifications for the current user.
 	@objc func fetchNotifications() {
 		if User.isSignedIn {
-			refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			DispatchQueue.main.async {
+				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			}
 
 			KService.shared.getNotifications(withSuccess: { (notifications) in
 				self.userNotificationsElement = []
@@ -152,7 +156,9 @@ class NotificationsViewController: UITableViewController {
 		} else {
 			self.userNotificationsElement = nil
 			self.groupedNotifications = []
-			tableView.reloadData()
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
 		}
 	}
 

@@ -12,7 +12,7 @@ import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
-class ProfileTableViewController: UITableViewController {
+class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
@@ -90,6 +90,7 @@ class ProfileTableViewController: UITableViewController {
 	var user: User? {
 		didSet {
 			self.configureProfile()
+			_prefersActivityIndicatorHidden = true
 			self.tableView.reloadData()
 		}
 	}
@@ -112,11 +113,19 @@ class ProfileTableViewController: UITableViewController {
 	var profileImageCache: UIImage?
 	var bannerImageCache: UIImage?
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Setup banner image height
 		self.bannerImageViewHeightConstraint.constant = view.height / 3
@@ -132,10 +141,9 @@ class ProfileTableViewController: UITableViewController {
 		refreshControl?.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
 
 		// Fetch posts
-		fetchPosts()
-
-		// Setup empty data view
-		setupEmptyDataView()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchPosts()
+		}
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -174,8 +182,7 @@ class ProfileTableViewController: UITableViewController {
 		return storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController")
 	}
 
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			let detailLabel = self.userID == User.currentID || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
@@ -188,12 +195,6 @@ class ProfileTableViewController: UITableViewController {
 				.verticalSpace(10)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		tableView.reloadData()
 	}
 
 	/**
@@ -209,8 +210,10 @@ class ProfileTableViewController: UITableViewController {
 
 	/// Fetches posts for the user whose page is being viewed.
 	private func fetchPosts() {
-		self.tableView.reloadData()
-		self.refreshControl?.endRefreshing()
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+			self.refreshControl?.endRefreshing()
+		}
 	}
 
 	/**

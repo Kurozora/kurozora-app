@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EmptyDataSet_Swift
 
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
@@ -32,7 +31,6 @@ class CastCollectionViewController: KCollectionViewController {
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
 		// Stop activity indicator in case user doesn't need to fetch actors details.
 		if actorsElements != nil {
@@ -49,14 +47,10 @@ class CastCollectionViewController: KCollectionViewController {
 				self.fetchActors()
 			}
 		}
-
-		// Setup empty collection view
-		setupEmptyDataView()
     }
 
 	// MARK: - Functions
-	/// Sets up the empty data view.
-	func setupEmptyDataView() {
+	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Actors", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -65,12 +59,6 @@ class CastCollectionViewController: KCollectionViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	/// Reload the empty data view.
-	@objc func reloadEmptyDataView() {
-		setupEmptyDataView()
-		collectionView.reloadData()
 	}
 
 	/// Fetch actors for the current show.
