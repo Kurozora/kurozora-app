@@ -1,0 +1,3589 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/CharactersViewController.swift",
+      "line": 11,
+      "symbol": "CharacterSection",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/CharactersViewController.swift",
+      "line": 18,
+      "symbol": "CharactersViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Controllers/ReminderController.swift",
+      "line": 13,
+      "symbol": "ReminderController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/DismissableTabBar/AnimeBaseViewController.swift",
+      "line": 23,
+      "symbol": "AnimeBaseViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Forum/ForumViewController.swift",
+      "line": 14,
+      "symbol": "ForumViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Thread/CustomThreadViewController.swift",
+      "line": 12,
+      "symbol": "CustomThreadViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Thread/NotificationThreadViewController.swift",
+      "line": 12,
+      "symbol": "NotificationThreadViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Views/CharacterCell.swift",
+      "line": 11,
+      "symbol": "CharacterCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Views/InformationCell.swift",
+      "line": 11,
+      "symbol": "InformationCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Views/LinkCell.swift",
+      "line": 11,
+      "symbol": "SimpleLinkCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Views/ReviewCell.swift",
+      "line": 11,
+      "symbol": "ReviewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Anime/Views/TitleCell.swift",
+      "line": 11,
+      "symbol": "TitleCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/AppDelegate.swift",
+      "line": 17,
+      "symbol": "AppDelegate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/AppDelegate.swift",
+      "line": 157,
+      "symbol": "AppDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/AppDelegate.swift",
+      "line": 182,
+      "symbol": "AppDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/BrowseViewController.swift",
+      "line": 12,
+      "symbol": "BrowseType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/BrowseViewController.swift",
+      "line": 39,
+      "symbol": "BrowseViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/FilterViewController.swift",
+      "line": 12,
+      "symbol": "FilterSection",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/FilterViewController.swift",
+      "line": 24,
+      "symbol": "SortType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/FilterViewController.swift",
+      "line": 36,
+      "symbol": "LayoutType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/FilterViewController.swift",
+      "line": 41,
+      "symbol": "Configuration",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Browse/FilterViewController.swift",
+      "line": 47,
+      "symbol": "FilterViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 5,
+      "symbol": "NSCollectionLayoutAnchor",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 6,
+      "symbol": "NSCollectionLayoutBoundarySupplementaryItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 7,
+      "symbol": "NSCollectionLayoutDecorationItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 8,
+      "symbol": "NSCollectionLayoutDimension",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 9,
+      "symbol": "NSCollectionLayoutEdgeSpacing",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 10,
+      "symbol": "NSCollectionLayoutEnvironment",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 11,
+      "symbol": "NSCollectionLayoutGroup",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 12,
+      "symbol": "NSCollectionLayoutGroupCustomItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 13,
+      "symbol": "NSCollectionLayoutItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 14,
+      "symbol": "NSCollectionLayoutSection",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 15,
+      "symbol": "NSCollectionLayoutSize",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 16,
+      "symbol": "NSCollectionLayoutSpacing",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 17,
+      "symbol": "NSCollectionLayoutSupplementaryItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 18,
+      "symbol": "NSCollectionLayoutVisibleItem",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 19,
+      "symbol": "NSDirectionalEdgeInsets",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 20,
+      "symbol": "UICollectionLayoutSectionOrthogonalScrollingBehavior",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 21,
+      "symbol": "UICollectionViewCompositionalLayout",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 22,
+      "symbol": "UICollectionViewCompositionalLayoutConfiguration",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 23,
+      "symbol": "NSDiffableDataSourceSnapshot",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 24,
+      "symbol": "UICollectionViewDiffableDataSource",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/IBPCollectionViewCompositionalLayoutInteroperability.swift",
+      "line": 27,
+      "symbol": "IBPNSDirectionalEdgeInsets.zero",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KButton.swift",
+      "line": 11,
+      "symbol": "KButton",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KCollectionViewController.swift",
+      "line": 52,
+      "symbol": "KCollectionViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KFillBarIndicator.swift",
+      "line": 19,
+      "symbol": "KFillBarIndicator.CornerStyle",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KFillBarIndicator.swift",
+      "line": 46,
+      "symbol": "KFillBarIndicator.layout(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KFillBarIndicator.swift",
+      "line": 63,
+      "symbol": "KFillBarIndicator.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KLabel.swift",
+      "line": 11,
+      "symbol": "KLabel",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KLabel.swift",
+      "line": 87,
+      "symbol": "KLabel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KTableViewController.swift",
+      "line": 30,
+      "symbol": "KTableViewController.activityIndicatorView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/KTableViewController.swift",
+      "line": 52,
+      "symbol": "KTableViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/Solar.swift",
+      "line": 29,
+      "symbol": "Solar",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/Solar.swift",
+      "line": 194,
+      "symbol": "Solar",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/Solar.swift",
+      "line": 224,
+      "symbol": "Double.degreesToRadians",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/Solar.swift",
+      "line": 228,
+      "symbol": "Double.radiansToDegrees",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/UIImageColors.swift",
+      "line": 15,
+      "symbol": "UIImageColors",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/UIImageColors.swift",
+      "line": 29,
+      "symbol": "UIImageColorsQuality",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/UIImageColors.swift",
+      "line": 205,
+      "symbol": "UIImage.getColors(quality:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Classes/UIImageColors.swift",
+      "line": 214,
+      "symbol": "UIImage.getColors(quality:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/Kurozora.swift",
+      "line": 15,
+      "symbol": "Kurozora",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/Kurozora.swift",
+      "line": 213,
+      "symbol": "Kurozora",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/WorkflowController.swift",
+      "line": 15,
+      "symbol": "WorkflowController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/WorkflowController.swift",
+      "line": 58,
+      "symbol": "WorkflowController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/WorkflowController.swift",
+      "line": 80,
+      "symbol": "WorkflowController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/WorkflowController.swift",
+      "line": 140,
+      "symbol": "WorkflowController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Controller/WorkflowController.swift",
+      "line": 199,
+      "symbol": "WorkflowController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 13,
+      "symbol": "Notification.Name.KEDidInvalidateContentSize",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 18,
+      "symbol": "Notification.Name.KUserIsSignedInDidChange",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 23,
+      "symbol": "Notification.Name.KSNotificationsBadgeIsOn",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 26,
+      "symbol": "Notification.Name.KSNotificationOptionsValueLabelsNotification",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 31,
+      "symbol": "Notification.Name.KSAppAppearanceDidChange",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 34,
+      "symbol": "Notification.Name.KSAppIconDidChange",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 39,
+      "symbol": "Notification.Name.KSAuthenticationRequireTimeoutValueDidChange",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 44,
+      "symbol": "Notification.Name.ThemeUpdateNotification",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/Notification+Kurozora.swift",
+      "line": 47,
+      "symbol": "Notification.Name.KSAutomaticDarkThemeDidChange",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/TimeInterval+String.swift",
+      "line": 12,
+      "symbol": "TimeInterval.toString",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 15,
+      "symbol": "KCollectionViewDelegateLayout.columnCount(forSection:layout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 16,
+      "symbol": "KCollectionViewDelegateLayout.groupHeightFraction(forSection:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 17,
+      "symbol": "KCollectionViewDelegateLayout.contentInset(forBackgroundInSection:layout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 18,
+      "symbol": "KCollectionViewDelegateLayout.contentInset(forItemInSection:layout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 19,
+      "symbol": "KCollectionViewDelegateLayout.contentInset(forSection:layout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UICollectionViewController+Kurozora.swift",
+      "line": 20,
+      "symbol": "KCollectionViewDelegateLayout.createLayout()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UIDevice+Kurozora.swift",
+      "line": 199,
+      "symbol": "UIDevice.Type",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UIDevice+Kurozora.swift",
+      "line": 215,
+      "symbol": "UIDevice.type",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UITextField+Kurozora.swift",
+      "line": 14,
+      "symbol": "UITextField.focusRingType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/UITextView+Kurozora.swift",
+      "line": 14,
+      "symbol": "UITextView.focusRingType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/URL+Kurozora.swift",
+      "line": 12,
+      "symbol": "URL.twitterPageDeepLink",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/URL+Kurozora.swift",
+      "line": 13,
+      "symbol": "URL.twitterPageURL",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/URL+Kurozora.swift",
+      "line": 14,
+      "symbol": "URL.mediumPageDeepLink",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/URL+Kurozora.swift",
+      "line": 15,
+      "symbol": "URL.mediumPageURL",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Extensions/URL+Kurozora.swift",
+      "line": 16,
+      "symbol": "URL.rateURL",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Authentication/AuthenticationViewController.swift",
+      "line": 12,
+      "symbol": "AuthenticationViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KCommentEditorViewController.swift",
+      "line": 13,
+      "symbol": "KCommentEditorViewDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KCommentEditorViewController.swift",
+      "line": 17,
+      "symbol": "KCommentEditorViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KCommentEditorViewController.swift",
+      "line": 151,
+      "symbol": "KCommentEditorViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KRichTextEditorViewController.swift",
+      "line": 14,
+      "symbol": "KRichTextEditorViewDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KRichTextEditorViewController.swift",
+      "line": 18,
+      "symbol": "KRichTextEditorViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Editor/KRichTextEditorViewController.swift",
+      "line": 172,
+      "symbol": "KRichTextEditorViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Collection/PurchasePreviewCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "PurchasePreviewCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchaseButtonTableViewCell.swift",
+      "line": 12,
+      "symbol": "PurchaseButtonTableViewCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchaseButtonTableViewCell.swift",
+      "line": 16,
+      "symbol": "PurchaseButtonTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchaseHeaderTableViewCell.swift",
+      "line": 11,
+      "symbol": "PurchaseHeaderTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchaseInfoTableViewCell.swift",
+      "line": 11,
+      "symbol": "PurchaseInfoTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchasePreviewTableViewCell.swift",
+      "line": 11,
+      "symbol": "PurchasePreviewTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchasePreviewTableViewCell.swift",
+      "line": 22,
+      "symbol": "PurchasePreviewTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchasePreviewTableViewCell.swift",
+      "line": 39,
+      "symbol": "PurchasePreviewTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchasePreviewTableViewCell.swift",
+      "line": 43,
+      "symbol": "PurchasePreviewTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/PurchaseRedeemTableViewCell.swift",
+      "line": 13,
+      "symbol": "PurchaseRedeemTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/Cells/Table/SubscriptionButtonTableViewCell.swift",
+      "line": 12,
+      "symbol": "SubscriptionButtonTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/KStoreObserver.swift",
+      "line": 12,
+      "symbol": "KStoreObserverDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/KStoreObserver.swift",
+      "line": 20,
+      "symbol": "KStoreObserver",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/KStoreObserver.swift",
+      "line": 153,
+      "symbol": "KStoreObserver",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/KStoreObserver.swift",
+      "line": 166,
+      "symbol": "KStoreObserver",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/KStoreObserver.swift",
+      "line": 222,
+      "symbol": "KStoreObserver",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/PurchaseTableViewController.swift",
+      "line": 13,
+      "symbol": "PurchaseTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/PurchaseTableViewController.swift",
+      "line": 85,
+      "symbol": "PurchaseTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/PurchaseTableViewController.swift",
+      "line": 117,
+      "symbol": "PurchaseTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/PurchaseTableViewController.swift",
+      "line": 137,
+      "symbol": "PurchaseTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/RedeemTableViewController.swift",
+      "line": 13,
+      "symbol": "RedeemTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/RedeemTableViewController.swift",
+      "line": 49,
+      "symbol": "RedeemTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/RedeemTableViewController.swift",
+      "line": 80,
+      "symbol": "RedeemTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/RedeemTableViewController.swift",
+      "line": 100,
+      "symbol": "RedeemTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/TipJarTableViewController.swift",
+      "line": 13,
+      "symbol": "TipJarTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/TipJarTableViewController.swift",
+      "line": 60,
+      "symbol": "TipJarTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/In-App Purchases/TipJarTableViewController.swift",
+      "line": 97,
+      "symbol": "TipJarTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Navigation/KNavigationController.swift",
+      "line": 12,
+      "symbol": "KNavigationController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 12,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/KService.swift",
+      "line": 13,
+      "symbol": "KService",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/BadgeElement.swift",
+      "line": 12,
+      "symbol": "BadgeElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Cast.swift",
+      "line": 12,
+      "symbol": "Actors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Cast.swift",
+      "line": 33,
+      "symbol": "ActorsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Episodes.swift",
+      "line": 12,
+      "symbol": "Episodes",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Episodes.swift",
+      "line": 33,
+      "symbol": "EpisodesElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Episodes.swift",
+      "line": 55,
+      "symbol": "EpisodesUserDetails",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Episodes.swift",
+      "line": 65,
+      "symbol": "EpisodesSeason",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Explore.swift",
+      "line": 12,
+      "symbol": "Explore",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Explore.swift",
+      "line": 30,
+      "symbol": "ExploreCategory",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/FeedPosts.swift",
+      "line": 12,
+      "symbol": "FeedPosts",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/FeedPosts.swift",
+      "line": 35,
+      "symbol": "FeedPostElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/FeedSections.swift",
+      "line": 12,
+      "symbol": "FeedSections",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/FeedSections.swift",
+      "line": 30,
+      "symbol": "FeedSectionsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ForumsSections.swift",
+      "line": 12,
+      "symbol": "ForumsSections",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ForumsSections.swift",
+      "line": 30,
+      "symbol": "ForumsSectionsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ForumsThread.swift",
+      "line": 12,
+      "symbol": "ForumsThread",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ForumsThread.swift",
+      "line": 36,
+      "symbol": "ForumsThreadElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Genres.swift",
+      "line": 12,
+      "symbol": "Genres",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Genres.swift",
+      "line": 30,
+      "symbol": "GenreElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/JSONError.swift",
+      "line": 13,
+      "symbol": "JSONError",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/PrivacyPolicy.swift",
+      "line": 12,
+      "symbol": "PrivacyPolicy",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/PrivacyPolicy.swift",
+      "line": 22,
+      "symbol": "PrivacyPolicyElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Search.swift",
+      "line": 12,
+      "symbol": "Search",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Seasons.swift",
+      "line": 12,
+      "symbol": "Seasons",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Seasons.swift",
+      "line": 30,
+      "symbol": "SeasonsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Session.swift",
+      "line": 12,
+      "symbol": "UserSessions",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Session.swift",
+      "line": 33,
+      "symbol": "UserSessionsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Session.swift",
+      "line": 49,
+      "symbol": "UserSessionsLocation",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ShowDetails.swift",
+      "line": 12,
+      "symbol": "ShowDetails",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ShowDetails.swift",
+      "line": 32,
+      "symbol": "ShowDetailsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Themes.swift",
+      "line": 12,
+      "symbol": "Themes",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/Themes.swift",
+      "line": 31,
+      "symbol": "ThemesElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ThreadPost.swift",
+      "line": 12,
+      "symbol": "ThreadPost",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ThreadReplies.swift",
+      "line": 12,
+      "symbol": "ThreadReplies",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ThreadReplies.swift",
+      "line": 36,
+      "symbol": "ThreadRepliesElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/ThreadReply.swift",
+      "line": 12,
+      "symbol": "ThreadReply",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/User.swift",
+      "line": 14,
+      "symbol": "User",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/User.swift",
+      "line": 26,
+      "symbol": "UserProfile",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/User.swift",
+      "line": 160,
+      "symbol": "User",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/User.swift",
+      "line": 298,
+      "symbol": "User",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/UserFollow.swift",
+      "line": 12,
+      "symbol": "UserFollow",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/UserNotification.swift",
+      "line": 12,
+      "symbol": "UserNotification",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/UserNotification.swift",
+      "line": 33,
+      "symbol": "UserNotificationsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/UserNotification.swift",
+      "line": 53,
+      "symbol": "UserNotificationData",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Networking/Models/VoteThread.swift",
+      "line": 12,
+      "symbol": "VoteThread",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Reachability/KNetworkManager.swift",
+      "line": 12,
+      "symbol": "KNetworkManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Reachability/KurozoraReachabilityViewController.swift",
+      "line": 12,
+      "symbol": "KurozoraReachabilityViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SearchBaseResultsCell.swift",
+      "line": 12,
+      "symbol": "SearchBaseResultsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SearchForumsResultsCell.swift",
+      "line": 11,
+      "symbol": "SearchForumsResultsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SearchShowResultsCell.swift",
+      "line": 12,
+      "symbol": "SearchShowResultsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SearchSuggestionResultCell.swift",
+      "line": 11,
+      "symbol": "SearchSuggestionResultCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SearchUserResultsCell.swift",
+      "line": 11,
+      "symbol": "SearchUserResultsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/Cells/SectionBackgroundDecorationView.swift",
+      "line": 12,
+      "symbol": "SectionBackgroundDecorationView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/KSearchController.swift",
+      "line": 11,
+      "symbol": "KSearchController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/KSearchController.swift",
+      "line": 99,
+      "symbol": "KSearchController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 13,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 144,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 191,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 219,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 290,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Search/SearchResultsViewController.swift",
+      "line": 297,
+      "symbol": "SearchResultsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Segue/KModalTransition.swift",
+      "line": 12,
+      "symbol": "KModalTransition",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Tab Bar/BasicTabBarItemContentView.swift",
+      "line": 13,
+      "symbol": "BasicTabBarItemContentView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Tab Bar/BounceAnimation.swift",
+      "line": 11,
+      "symbol": "BounceAnimation",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Tab Bar/KTabBarController.swift",
+      "line": 12,
+      "symbol": "KTabBarController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 25,
+      "symbol": "KThemePicker.statusBarStyle",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 26,
+      "symbol": "KThemePicker.visualEffect",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 29,
+      "symbol": "KThemePicker.backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 30,
+      "symbol": "KThemePicker.tintedBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 31,
+      "symbol": "KThemePicker.barTintColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 32,
+      "symbol": "KThemePicker.barTitleTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 33,
+      "symbol": "KThemePicker.blurBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 34,
+      "symbol": "KThemePicker.borderColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 35,
+      "symbol": "KThemePicker.textColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 36,
+      "symbol": "KThemePicker.textFieldBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 37,
+      "symbol": "KThemePicker.textFieldTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 38,
+      "symbol": "KThemePicker.textFieldPlaceholderTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 39,
+      "symbol": "KThemePicker.tintColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 40,
+      "symbol": "KThemePicker.tintedButtonTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 41,
+      "symbol": "KThemePicker.separatorColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 42,
+      "symbol": "KThemePicker.separatorColorLight",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 43,
+      "symbol": "KThemePicker.subTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 46,
+      "symbol": "KThemePicker.tableViewCellBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 47,
+      "symbol": "KThemePicker.tableViewCellTitleTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 48,
+      "symbol": "KThemePicker.tableViewCellSubTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 49,
+      "symbol": "KThemePicker.tableViewCellChevronColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 50,
+      "symbol": "KThemePicker.tableViewCellSelectedBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 51,
+      "symbol": "KThemePicker.tableViewCellSelectedTitleTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 52,
+      "symbol": "KThemePicker.tableViewCellSelectedSubTextColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 53,
+      "symbol": "KThemePicker.tableViewCellSelectedChevronColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/Theme/KThemePicker.swift",
+      "line": 54,
+      "symbol": "KThemePicker.tableViewCellActionDefaultColor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 14,
+      "symbol": "UserSettingsKey.collapsedSections",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 17,
+      "symbol": "UserSettingsKey.libraryPage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 18,
+      "symbol": "UserSettingsKey.libraryCellStyles",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 19,
+      "symbol": "UserSettingsKey.librarySortTypes",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 22,
+      "symbol": "UserSettingsKey.forumsPage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 25,
+      "symbol": "UserSettingsKey.notificationsAllowed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 26,
+      "symbol": "UserSettingsKey.notificationsGrouping",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 27,
+      "symbol": "UserSettingsKey.notificationsPersistent",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 28,
+      "symbol": "UserSettingsKey.notificationsSound",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 29,
+      "symbol": "UserSettingsKey.notificationsVibration",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 30,
+      "symbol": "UserSettingsKey.notificationsBadge",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 31,
+      "symbol": "UserSettingsKey.alertType",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 34,
+      "symbol": "UserSettingsKey.appearanceOption",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 35,
+      "symbol": "UserSettingsKey.automaticDarkTheme",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 36,
+      "symbol": "UserSettingsKey.darkThemeOption",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 37,
+      "symbol": "UserSettingsKey.darkThemeOptionStart",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 38,
+      "symbol": "UserSettingsKey.darkThemeOptionEnd",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 39,
+      "symbol": "UserSettingsKey.trueBlackEnabled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 40,
+      "symbol": "UserSettingsKey.largeTitlesEnabled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 43,
+      "symbol": "UserSettingsKey.currentTheme",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 44,
+      "symbol": "UserSettingsKey.appIcon",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/Models/UserSettingsKey.swift",
+      "line": 45,
+      "symbol": "UserSettingsKey.defaultBrowser",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 11,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 26,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 36,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 79,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 99,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 107,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/UserDefaults/UserSettings.swift",
+      "line": 145,
+      "symbol": "UserSettings",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/WebBrowser/KWebViewController.swift",
+      "line": 12,
+      "symbol": "KWebViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/WebBrowser/KWebViewController.swift",
+      "line": 69,
+      "symbol": "KWebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/WhatsNew/KWhatsNewViewController.swift",
+      "line": 13,
+      "symbol": "KWhatsNewViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Features/WhatsNew/Models/KWhatsNewModel.swift",
+      "line": 11,
+      "symbol": "KWhatsNewModel",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTableViewController.swift",
+      "line": 12,
+      "symbol": "FeedTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTableViewController.swift",
+      "line": 117,
+      "symbol": "FeedTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTableViewController.swift",
+      "line": 130,
+      "symbol": "FeedTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTabsViewController.swift",
+      "line": 14,
+      "symbol": "FeedTabsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTabsViewController.swift",
+      "line": 162,
+      "symbol": "FeedTabsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Feed/FeedTabsViewController.swift",
+      "line": 182,
+      "symbol": "FeedTabsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Cell/ForumsCell.swift",
+      "line": 12,
+      "symbol": "ForumsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Cell/ReplyCell.swift",
+      "line": 11,
+      "symbol": "ReplyCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsListViewController.swift",
+      "line": 14,
+      "symbol": "ForumsListViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsListViewController.swift",
+      "line": 129,
+      "symbol": "ForumsListViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsListViewController.swift",
+      "line": 144,
+      "symbol": "ForumsListViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsListViewController.swift",
+      "line": 162,
+      "symbol": "ForumsListViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsViewController.swift",
+      "line": 14,
+      "symbol": "ForumsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsViewController.swift",
+      "line": 201,
+      "symbol": "ForumsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/ForumsViewController.swift",
+      "line": 220,
+      "symbol": "ForumsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Models/ForumsSortingStyle.swift",
+      "line": 20,
+      "symbol": "ForumsSortingStyle.top",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Models/ForumsSortingStyle.swift",
+      "line": 21,
+      "symbol": "ForumsSortingStyle.recent",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Thread/ThreadTableViewController.swift",
+      "line": 13,
+      "symbol": "ThreadTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Thread/ThreadTableViewController.swift",
+      "line": 513,
+      "symbol": "ThreadTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Thread/ThreadTableViewController.swift",
+      "line": 537,
+      "symbol": "ThreadTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Forums/Thread/ThreadTableViewController.swift",
+      "line": 551,
+      "symbol": "ThreadTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/ActionBaseExploreCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "ActionBaseExploreCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/ActionButtonExploreCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "ActionButtonExploreCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/ActionListExploreCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "ActionListExploreCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/BannerLockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "BannerLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/BaseLockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "BaseLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/LargeLockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LargeLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/LegalExploreTableViewCell.swift",
+      "line": 11,
+      "symbol": "LegalCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/MediumLockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "MediumLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/SectionHeaderReusableView.swift",
+      "line": 11,
+      "symbol": "SectionHeaderReusableView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/SmallLockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "SmallLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Cells/VideoLockupCollectionViewCell.swift",
+      "line": 13,
+      "symbol": "VideoLockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Genres/Cells/GenreTableViewCell.swift",
+      "line": 11,
+      "symbol": "GenreTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Genres/GenresTableViewController.swift",
+      "line": 11,
+      "symbol": "GenresTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Genres/GenresTableViewController.swift",
+      "line": 67,
+      "symbol": "GenresTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Genres/GenresTableViewController.swift",
+      "line": 83,
+      "symbol": "GenresTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/HomeCollectionViewController.swift",
+      "line": 14,
+      "symbol": "HomeCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/HomeCollectionViewController.swift",
+      "line": 180,
+      "symbol": "HomeCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/HomeCollectionViewController.swift",
+      "line": 193,
+      "symbol": "HomeCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/HomeCollectionViewController.swift",
+      "line": 311,
+      "symbol": "HomeCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Shows List/ShowsListCollectionViewController.swift",
+      "line": 11,
+      "symbol": "ShowsListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Shows List/ShowsListCollectionViewController.swift",
+      "line": 60,
+      "symbol": "ShowsListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Shows List/ShowsListCollectionViewController.swift",
+      "line": 82,
+      "symbol": "ShowsListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Home/Shows List/ShowsListCollectionViewController.swift",
+      "line": 90,
+      "symbol": "ShowsListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/In-App Purchases/InAppPurchaseViewController.swift",
+      "line": 12,
+      "symbol": "InAppPurchaseViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/In-App Purchases/InAppTransactionController.swift",
+      "line": 11,
+      "symbol": "PurchasedProNotification",
+      "symbol_kind": "source.lang.swift.decl.var.global",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/In-App Purchases/InAppTransactionController.swift",
+      "line": 13,
+      "symbol": "InAppTransactionController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/Cells/LibraryCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LibraryBaseCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/Cells/LibraryCompactCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LibraryCompactCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/Cells/LibraryDetailedCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LibraryDetailedCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/Cells/LibraryListCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LibraryListCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/FavoriteShowsTableViewController.swift",
+      "line": 11,
+      "symbol": "FavoriteShowsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/FavoriteShowsTableViewController.swift",
+      "line": 58,
+      "symbol": "FavoriteShowsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/FavoriteShowsTableViewController.swift",
+      "line": 75,
+      "symbol": "FavoriteShowsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 14,
+      "symbol": "LibraryListViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 19,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 198,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 212,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 239,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 303,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 320,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryListCollectionViewController.swift",
+      "line": 335,
+      "symbol": "LibraryListCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryViewController.swift",
+      "line": 15,
+      "symbol": "LibraryViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryViewController.swift",
+      "line": 19,
+      "symbol": "LibraryViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryViewController.swift",
+      "line": 279,
+      "symbol": "LibraryViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryViewController.swift",
+      "line": 291,
+      "symbol": "LibraryViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/LibraryViewController.swift",
+      "line": 308,
+      "symbol": "LibraryViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Library/Models/Library.swift",
+      "line": 11,
+      "symbol": "Library",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Cells/BaseNotificationCell.swift",
+      "line": 12,
+      "symbol": "BaseNotificationCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Cells/MessageNotificationCell.swift",
+      "line": 12,
+      "symbol": "MessageNotificationCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Cells/NotificationTitleCell.swift",
+      "line": 11,
+      "symbol": "NotificationTitleCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Cells/SessionNotificationCell.swift",
+      "line": 11,
+      "symbol": "SessionNotificationCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Models/GroupedNotifications.swift",
+      "line": 20,
+      "symbol": "GroupedNotifications.sectionTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/Models/GroupedNotifications.swift",
+      "line": 21,
+      "symbol": "GroupedNotifications.sectionNotifications",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/NotificationViewController.swift",
+      "line": 15,
+      "symbol": "NotificationsViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/NotificationViewController.swift",
+      "line": 20,
+      "symbol": "NotificationsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/NotificationViewController.swift",
+      "line": 329,
+      "symbol": "NotificationsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/NotificationViewController.swift",
+      "line": 396,
+      "symbol": "NotificationsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Notification/NotificationViewController.swift",
+      "line": 412,
+      "symbol": "NotificationsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/BaseOnboardingTableViewController.swift",
+      "line": 12,
+      "symbol": "BaseOnboardingTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/BaseOnboardingTableViewController.swift",
+      "line": 48,
+      "symbol": "BaseOnboardingTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/BaseOnboardingTableViewController.swift",
+      "line": 85,
+      "symbol": "BaseOnboardingTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/Cells/OnboardingBaseTableViewCell.swift",
+      "line": 11,
+      "symbol": "OnboardingBaseTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/Cells/OnboardingFooterTableViewCell.swift",
+      "line": 12,
+      "symbol": "OnboardingFooterTableViewCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/Cells/OnboardingFooterTableViewCell.swift",
+      "line": 17,
+      "symbol": "OnboardingFooterTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/Cells/OnboardingTextFieldCell.swift",
+      "line": 12,
+      "symbol": "OnboardingTextFieldCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/RegisterViewController.swift",
+      "line": 12,
+      "symbol": "RegisterTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/RegisterViewController.swift",
+      "line": 129,
+      "symbol": "RegisterTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/ResetPasswordViewController.swift",
+      "line": 12,
+      "symbol": "ResetPasswordTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/SignInTableViewController.swift",
+      "line": 13,
+      "symbol": "SignInTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/SignInTableViewController.swift",
+      "line": 73,
+      "symbol": "SignInTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/SignInTableViewController.swift",
+      "line": 89,
+      "symbol": "SignInTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Onboard/SignInTableViewController.swift",
+      "line": 142,
+      "symbol": "SignInTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Badges/BadgeTableViewCell.swift",
+      "line": 11,
+      "symbol": "BadgeTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Badges/BadgesTableViewController.swift",
+      "line": 12,
+      "symbol": "BadgesTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Badges/BadgesTableViewController.swift",
+      "line": 55,
+      "symbol": "BadgesTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Cells/BaseFeedPostsCell.swift",
+      "line": 11,
+      "symbol": "BaseFeedPostCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Cells/FollowCell.swift",
+      "line": 11,
+      "symbol": "FollowCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/FollowTableViewController.swift",
+      "line": 11,
+      "symbol": "FollowTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/FollowTableViewController.swift",
+      "line": 127,
+      "symbol": "FollowTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/FollowTableViewController.swift",
+      "line": 141,
+      "symbol": "FollowTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 25,
+      "symbol": "PostType.text",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 26,
+      "symbol": "PostType.image",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 27,
+      "symbol": "PostType.image2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 28,
+      "symbol": "PostType.image3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 29,
+      "symbol": "PostType.image4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 30,
+      "symbol": "PostType.image5",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Models/PostType.swift",
+      "line": 31,
+      "symbol": "PostType.video",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/CommentCell.swift",
+      "line": 11,
+      "symbol": "CommentCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/PostCell.swift",
+      "line": 11,
+      "symbol": "PostCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/PostCell.swift",
+      "line": 19,
+      "symbol": "PostCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/PostLinkCell.swift",
+      "line": 11,
+      "symbol": "LinkCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/PostLinkCell.swift",
+      "line": 15,
+      "symbol": "LinkCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/ShowMoreCell.swift",
+      "line": 11,
+      "symbol": "ShowMoreCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/TimelinePostCell.swift",
+      "line": 11,
+      "symbol": "FeedPostCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/Posts/WriteACommentCell.swift",
+      "line": 11,
+      "symbol": "WriteACommentCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/ProfileTableViewController.swift",
+      "line": 15,
+      "symbol": "ProfileTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/ProfileTableViewController.swift",
+      "line": 590,
+      "symbol": "ProfileTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/ProfileTableViewController.swift",
+      "line": 608,
+      "symbol": "ProfileTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Profile/ProfileTableViewController.swift",
+      "line": 692,
+      "symbol": "ProfileTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/SceneDelegate.swift",
+      "line": 12,
+      "symbol": "SceneDelegate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Season/CalendarViewController.swift",
+      "line": 12,
+      "symbol": "CalendarViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Season/ChartController.swift",
+      "line": 11,
+      "symbol": "ChartController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Season/ChartViewController.swift",
+      "line": 11,
+      "symbol": "ChartViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Season/DayViewController.swift",
+      "line": 11,
+      "symbol": "DayViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/About/LegalViewController.swift",
+      "line": 11,
+      "symbol": "LegalViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/About/LegalViewController.swift",
+      "line": 82,
+      "symbol": "LegalViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/AccountTableViewController.swift",
+      "line": 13,
+      "symbol": "AccountTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/AccountTableViewController.swift",
+      "line": 48,
+      "symbol": "AccountTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/AccountTableViewController.swift",
+      "line": 70,
+      "symbol": "AccountTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/Cell/CurrentSessionCell.swift",
+      "line": 11,
+      "symbol": "CurrentSessionCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/Cell/NoSessionsCell.swift",
+      "line": 11,
+      "symbol": "NoSessionsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/Cell/OtherSessionsCell.swift",
+      "line": 11,
+      "symbol": "OtherSessionsCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/Cell/OtherSessionsCell.swift",
+      "line": 15,
+      "symbol": "OtherSessionsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ImageAnnotation.swift",
+      "line": 12,
+      "symbol": "ImageAnnotation",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ImageAnnotation.swift",
+      "line": 28,
+      "symbol": "ImageAnnotationView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 16,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 221,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 269,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 279,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 286,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Account/ManageActiveSessionsController.swift",
+      "line": 316,
+      "symbol": "ManageActiveSessionsController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Admin/AdminTableViewController.swift",
+      "line": 11,
+      "symbol": "AdminTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Admin/AdminTableViewController.swift",
+      "line": 56,
+      "symbol": "AdminTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Admin/Cell/KDefaultsCell.swift",
+      "line": 12,
+      "symbol": "KDefaultsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationOptionsViewController.swift",
+      "line": 11,
+      "symbol": "AuthenticationOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationOptionsViewController.swift",
+      "line": 19,
+      "symbol": "AuthenticationOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationOptionsViewController.swift",
+      "line": 32,
+      "symbol": "AuthenticationOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationTableViewController.swift",
+      "line": 11,
+      "symbol": "AuthenticationTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationTableViewController.swift",
+      "line": 32,
+      "symbol": "AuthenticationTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/AuthenticationTableViewController.swift",
+      "line": 57,
+      "symbol": "AuthenticationTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/Cells/AuthenticationOptionsCell.swift",
+      "line": 11,
+      "symbol": "AuthenticationOptionsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Authentication/Cells/AuthenticationSettingsCell.swift",
+      "line": 11,
+      "symbol": "AuthenticationSettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Browser/BrowserSettingsTableViewController.swift",
+      "line": 11,
+      "symbol": "BrowserSettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Browser/BrowserSettingsTableViewController.swift",
+      "line": 21,
+      "symbol": "BrowserSettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Browser/BrowserSettingsTableViewController.swift",
+      "line": 51,
+      "symbol": "BrowserSettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Browser/Cells/BrowserSettingsTableViewCell.swift",
+      "line": 11,
+      "symbol": "BrowserSettingsTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Browser/Models/KBrowser.swift",
+      "line": 11,
+      "symbol": "KBrowser",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/DatePickerSettingsCell.swift",
+      "line": 11,
+      "symbol": "DatePickerSettingsDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/DatePickerSettingsCell.swift",
+      "line": 15,
+      "symbol": "DatePickerSettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/DateSettingsCell.swift",
+      "line": 11,
+      "symbol": "DateSettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/DateSettingsCell.swift",
+      "line": 25,
+      "symbol": "Date.convertToAMPM()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/SelectableSettingsCell.swift",
+      "line": 11,
+      "symbol": "SelectableSettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Cells/SettingsCell.swift",
+      "line": 12,
+      "symbol": "SettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/AppearanceOptionsViewController.swift",
+      "line": 11,
+      "symbol": "AppearanceOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/AppearanceOptionsViewController.swift",
+      "line": 32,
+      "symbol": "AppearanceOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/AppearanceOptionsViewController.swift",
+      "line": 97,
+      "symbol": "AppearanceOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/AppearanceOptionsViewController.swift",
+      "line": 152,
+      "symbol": "AppearanceOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/Cells/DisplaySettingsCell.swift",
+      "line": 11,
+      "symbol": "DisplaySettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/DisplayTableViewController.swift",
+      "line": 11,
+      "symbol": "DisplayTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/DisplayTableViewController.swift",
+      "line": 19,
+      "symbol": "DisplayTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Display/DisplayTableViewController.swift",
+      "line": 46,
+      "symbol": "DisplayTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/Cell/NotificationSettingsCell.swift",
+      "line": 11,
+      "symbol": "NotificationSettingsCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/Cell/NotificationsGroupingCell.swift",
+      "line": 11,
+      "symbol": "NotificationsGroupingCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/Cell/SettingsNotificationCell.swift",
+      "line": 11,
+      "symbol": "SettingsNotificationCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsOptionsViewController.swift",
+      "line": 11,
+      "symbol": "NotificationsOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsOptionsViewController.swift",
+      "line": 36,
+      "symbol": "NotificationsOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsOptionsViewController.swift",
+      "line": 86,
+      "symbol": "NotificationsOptionsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsSettingsViewController.swift",
+      "line": 11,
+      "symbol": "NotificationsSettingsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsSettingsViewController.swift",
+      "line": 86,
+      "symbol": "NotificationsSettingsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Notifications/NotificationsSettingsViewController.swift",
+      "line": 102,
+      "symbol": "NotificationsSettingsViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsSplitViewController.swift",
+      "line": 12,
+      "symbol": "SettingsSplitViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsSplitViewController.swift",
+      "line": 29,
+      "symbol": "SettingsSplitViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsTableViewController.swift",
+      "line": 11,
+      "symbol": "SettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsTableViewController.swift",
+      "line": 14,
+      "symbol": "SettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsTableViewController.swift",
+      "line": 47,
+      "symbol": "SettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsTableViewController.swift",
+      "line": 74,
+      "symbol": "SettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/SettingsTableViewController.swift",
+      "line": 90,
+      "symbol": "SettingsTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/Cells/IconTableViewCell.swift",
+      "line": 11,
+      "symbol": "IconTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/Cells/ThemesCollectionViewCell.swift",
+      "line": 12,
+      "symbol": "ThemesCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageIconTableViewController.swift",
+      "line": 12,
+      "symbol": "ManageIconTableViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageIconTableViewController.swift",
+      "line": 46,
+      "symbol": "ManageIconTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageIconTableViewController.swift",
+      "line": 110,
+      "symbol": "ManageIconTableViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageThemesController.swift",
+      "line": 13,
+      "symbol": "ManageThemesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageThemesController.swift",
+      "line": 53,
+      "symbol": "ManageThemesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/ManageThemesController.swift",
+      "line": 76,
+      "symbol": "ManageThemesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/Models/AlternativeIcons.swift",
+      "line": 12,
+      "symbol": "AlternativeIcons",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Settings/Theme/Models/AlternativeIcons.swift",
+      "line": 50,
+      "symbol": "AlternativeIconsElement",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cast/CastCollectionViewController.swift",
+      "line": 11,
+      "symbol": "CastCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cast/CastCollectionViewController.swift",
+      "line": 75,
+      "symbol": "CastCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cast/CastCollectionViewController.swift",
+      "line": 88,
+      "symbol": "CastCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cast/CastCollectionViewController.swift",
+      "line": 103,
+      "symbol": "CastCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cast/Cells/CastCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "CastCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/BadgeCollectionViewCell.swift",
+      "line": 12,
+      "symbol": "BadgeCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/InformationCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "InformationCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/RatingCollectionViewCell.swift",
+      "line": 13,
+      "symbol": "RatingCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/RelatedShowCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "RelatedShowCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/ReviewCollectionViewCell.swift",
+      "line": 12,
+      "symbol": "ReviewCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/ShowDetailHeaderCollectionViewCell.swift",
+      "line": 12,
+      "symbol": "ShowDetailHeaderCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Cells/SynopsisCollectionViewCell.swift",
+      "line": 12,
+      "symbol": "SynopsisCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Cells/EpisodesCollectionViewCell.swift",
+      "line": 13,
+      "symbol": "EpisodesCollectionViewCellDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Cells/EpisodesCollectionViewCell.swift",
+      "line": 18,
+      "symbol": "EpisodesCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Cells/EpisodesCollectionViewCell.swift",
+      "line": 105,
+      "symbol": "EpisodesCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesCollectionViewController.swift",
+      "line": 12,
+      "symbol": "EpisodesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesCollectionViewController.swift",
+      "line": 176,
+      "symbol": "EpisodesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesCollectionViewController.swift",
+      "line": 192,
+      "symbol": "EpisodesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesCollectionViewController.swift",
+      "line": 233,
+      "symbol": "EpisodesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesCollectionViewController.swift",
+      "line": 291,
+      "symbol": "EpisodesCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesDetailTableViewControlle.swift",
+      "line": 12,
+      "symbol": "EpisodesDetailTableViewControlleDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesDetailTableViewControlle.swift",
+      "line": 16,
+      "symbol": "EpisodesDetailTableViewControlle",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesDetailTableViewControlle.swift",
+      "line": 116,
+      "symbol": "EpisodesDetailTableViewControlle",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/EpisodesDetailTableViewControlle.swift",
+      "line": 127,
+      "symbol": "EpisodesDetailTableViewControlle",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/EpisodeSection.swift",
+      "line": 22,
+      "symbol": "EpisodeSection.synopsis",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/EpisodeSection.swift",
+      "line": 23,
+      "symbol": "EpisodeSection.information",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/EpisodeSection.swift",
+      "line": 24,
+      "symbol": "EpisodeSection.cast",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/EpisodeSection.swift",
+      "line": 25,
+      "symbol": "EpisodeSection.discussion",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/WatchStatus.swift",
+      "line": 19,
+      "symbol": "WatchStatus.disabled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/WatchStatus.swift",
+      "line": 20,
+      "symbol": "WatchStatus.watched",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Episodes/Models/WatchStatus.swift",
+      "line": 21,
+      "symbol": "WatchStatus.notWatched",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Models/ShowDetail.swift",
+      "line": 11,
+      "symbol": "ShowDetail",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Seasons/Cells/LockupCollectionViewCell.swift",
+      "line": 11,
+      "symbol": "LockupCollectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Seasons/SeasonsCollectionViewController.swift",
+      "line": 11,
+      "symbol": "SeasonsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Seasons/SeasonsCollectionViewController.swift",
+      "line": 95,
+      "symbol": "SeasonsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Seasons/SeasonsCollectionViewController.swift",
+      "line": 108,
+      "symbol": "SeasonsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Seasons/SeasonsCollectionViewController.swift",
+      "line": 128,
+      "symbol": "SeasonsCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 14,
+      "symbol": "ShowDetailCollectionViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 18,
+      "symbol": "ShowDetailCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 168,
+      "symbol": "ShowDetailCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 245,
+      "symbol": "ShowDetailCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 301,
+      "symbol": "ShowDetailCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/ShowDetailCollectionViewController.swift",
+      "line": 498,
+      "symbol": "ShowDetailCollectionViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Shows/Synopsis/SynopsisViewController.swift",
+      "line": 11,
+      "symbol": "SynopsisViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/View/AnimeCell.swift",
+      "line": 12,
+      "symbol": "AnimeCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/View/AnimeCell.swift",
+      "line": 186,
+      "symbol": "AnimeCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Welcome/WelcomeViewController.swift",
+      "line": 13,
+      "symbol": "WelcomeViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Welcome/WelcomeViewController.swift",
+      "line": 118,
+      "symbol": "WelcomeViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/kirito/Docs/kurozora-app/Kurozora/Welcome/WelcomeViewController.swift",
+      "line": 132,
+      "symbol": "WelcomeViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/kirito/Docs/kurozora-app"
+}
