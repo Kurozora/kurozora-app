@@ -1,4 +1,5 @@
 # Xcode
+*.entitlements
 
 ## Build generated
 build/

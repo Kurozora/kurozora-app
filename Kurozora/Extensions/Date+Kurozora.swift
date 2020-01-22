@@ -28,4 +28,32 @@ extension Date {
 		}
 		return uptime
 	}
+
+	public func etaForDate() -> (days: Int?, hours: Int?, minutes: Int?) {
+		let now = Date()
+		let cal = Calendar.current
+		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute])
+		let components = cal.dateComponents(unitFlags, from: now, to: self)
+
+		return (components.day, components.hour, components.minute)
+	}
+
+	public func etaStringForDate(short: Bool = false) -> String {
+		return etaForDateWithString(short: short).etaString
+	}
+
+	public func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
+		let (days, hours, minutes) = etaForDate()
+
+		var etaTime = ""
+		if days != 0 {
+			etaTime = short ? "\(String(describing: days))d \(String(describing: hours))h" : "\(String(describing: days))d \(String(describing: hours))h \(String(describing: minutes))m"
+		} else if hours != 0 {
+			etaTime = "\(String(describing: hours))h \(String(describing: minutes))m"
+		} else {
+			etaTime = "\(String(describing: minutes))m"
+		}
+
+		return (days, hours, minutes, etaTime)
+	}
 }

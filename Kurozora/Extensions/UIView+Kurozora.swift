@@ -29,6 +29,34 @@ extension UIView {
 	}
 
 	/**
+		Fade in view.
+
+		- Parameter duration: animation duration in seconds (default is 0.80 second).
+		- Parameter completion: optional completion handler to run with animation finishes (default is nil)
+	*/
+	func animateFadeIn(duration: TimeInterval = 0.80, completion: ((Bool) -> Void)? = nil) {
+		alpha = 0.0
+		transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
+		UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [.allowUserInteraction, .curveEaseOut], animations: { () -> Void in
+			self.alpha = 1.0
+			self.transform = .identity
+		}, completion: completion)
+	}
+
+	/**
+		Fade out view.
+
+		- Parameter duration: animation duration in seconds (default is 0.25 second).
+		- Parameter completion: optional completion handler to run with animation finishes (default is nil)
+	*/
+	func animateFadeOut(duration: TimeInterval = 0.25, completion: ((Bool) -> Void)? = nil) {
+		UIView.animate(withDuration: duration, animations: { () -> Void in
+			self.alpha = 0.0
+			self.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
+		}, completion: completion)
+	}
+
+	/**
 		Bounces the view with the given growth value.
 
 		- Parameter growth: The given float value used to bounce the view (default is `1.25`).

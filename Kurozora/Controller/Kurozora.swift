@@ -21,9 +21,6 @@ class Kurozora {
 	/// Returns the singleton Kurozora instance.
 	static let shared = Kurozora()
 
-	/// The base url of the Kurozora API.
-	let baseUrlString = "https://kurozora.app/api/v1/"
-
 	/// The base keychain service of the Kurozora App.
 	let KDefaults = Keychain(service: "app.kurozora.anime")
 

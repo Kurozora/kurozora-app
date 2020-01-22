@@ -36,8 +36,8 @@ class KLabel: UILabel {
 		#endif
 	}
 
-	@objc func showMenu(_ gesture: UILongPressGestureRecognizer) {
-		guard let gestureView = gesture.view, let superView = gestureView.superview else { return }
+	@objc func showMenu(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		guard let gestureView = gestureRecognizer.view, let superView = gestureView.superview else { return }
 		let menuController = UIMenuController.shared
 		guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else { return }
 

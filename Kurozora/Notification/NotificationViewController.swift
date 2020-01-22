@@ -79,6 +79,9 @@ class NotificationsViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		// Unhide activity indicator if user is signed in.
+		_prefersActivityIndicatorHidden = User.isSignedIn
+
 		// Setup search bar.
 		setupSearchBar()
 
