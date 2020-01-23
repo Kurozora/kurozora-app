@@ -15,7 +15,7 @@ protocol KRichTextEditorViewDelegate: class {
 	func updateThreadsList(with thread: ForumsThreadElement)
 }
 
-class KRichTextEditorViewController: UIViewController {
+class KRichTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleTextField: UITextField! {
 		didSet {
@@ -55,7 +55,6 @@ class KRichTextEditorViewController: UIViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		richTextView.text = placeholderText
 		richTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue

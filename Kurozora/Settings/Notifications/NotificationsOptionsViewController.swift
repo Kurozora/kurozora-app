@@ -8,10 +8,22 @@
 
 import UIKit
 
-class NotificationsOptionsViewController: UITableViewController {
+class NotificationsOptionsViewController: KTableViewController {
+	// MARK: - Properties
 	var notificationSegueIdentifier: NotificationSegueIdentifier = .bannerStyle
 	var segueIdentifier: String!
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if let notificationSegueIdentifier = NotificationSegueIdentifier(rawValue: segueIdentifier) {
@@ -21,7 +33,9 @@ class NotificationsOptionsViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
 
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:

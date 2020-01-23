@@ -9,7 +9,7 @@
 import UIKit
 import SwiftTheme
 
-class AuthenticationViewController: UIViewController {
+class AuthenticationViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var unlockDescriptionView: UIView!
@@ -39,7 +39,6 @@ class AuthenticationViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		unlockDescriptionView.isHidden = true
 		lockImageView.isHidden = false

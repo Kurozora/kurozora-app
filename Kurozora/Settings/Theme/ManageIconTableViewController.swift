@@ -9,35 +9,45 @@
 import UIKit
 import SwiftyJSON
 
-class ManageIconTableViewController: UITableViewController {
+class ManageIconTableViewController: KTableViewController {
 	// MARK: - Properties
 	var alternativeIcons: AlternativeIcons? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
 	var alternativeIconsArray = JSON()
 
-	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		self.alternativeIcons = try? AlternativeIcons(json: alternativeIconsArray)
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
-		if let path = Bundle.main.path(forResource: "app-icons", ofType: "json") {
-			do {
-				let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-				alternativeIconsArray = try JSON(data: data)
-			} catch let error {
-				print("parse error: \(error.localizedDescription)")
+		DispatchQueue.global(qos: .background).async {
+			if let path = Bundle.main.path(forResource: "app-icons", ofType: "json") {
+				do {
+					let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
+					self.alternativeIconsArray = try JSON(data: data)
+
+					DispatchQueue.main.async {
+						self.alternativeIcons = try? AlternativeIcons(json: self.alternativeIconsArray)
+					}
+				} catch let error {
+					print("Parse error: \(error.localizedDescription)")
+				}
+			} else {
+				print("Invalid filename/path.")
 			}
-		} else {
-			print("Invalid filename/path.")
 		}
 	}
 }

@@ -10,25 +10,49 @@ import UIKit
 import SCLAlertView
 import SwiftTheme
 
-class ManageThemesCollectionViewController: UICollectionViewController {
+class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var themes: [ThemesElement]? {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.collectionView.reloadData()
 		}
+	}
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		collectionView.collectionViewLayout = createLayout()
 
 		// Fetch themes
-		fetchThemes()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchThemes()
+		}
+	}
 
-		// Setup empty collection view
+	// MARK: - Functions
+	/// Fetches themes from the server.
+	func fetchThemes() {
+		KService.shared.getThemes( withSuccess: { (themes) in
+			DispatchQueue.main.async {
+				self.themes = themes
+			}
+		})
+	}
+
+	override func setupEmptyDataSetView() {
+		super.setupEmptyDataSetView()
 		collectionView.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Themes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
@@ -38,14 +62,6 @@ class ManageThemesCollectionViewController: UICollectionViewController {
 				.verticalSpace(5)
 				.isScrollAllowed(true)
 		}
-	}
-
-	// MARK: - Functions
-	/// Fetches themes from the server.
-	func fetchThemes() {
-		KService.shared.getThemes( withSuccess: { (themes) in
-			self.themes = themes
-		})
 	}
 }
 

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NotificationsSettingsViewController: UITableViewController {
+class NotificationsSettingsViewController: KTableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {
 		didSet {
 			allowNotificationsSwitch.theme_onTintColor = KThemePicker.tintColor.rawValue
@@ -30,19 +31,30 @@ class NotificationsSettingsViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - Properties
 	var numberOfSections = 4
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
 
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed
 		soundsSwitch.isOn = UserSettings.notificationsSound
 		vibrationsSwitch.isOn = UserSettings.notificationsVibration
 		badgeSwitch.isOn = UserSettings.notificationsBadge
-
-		tableView.delegate = self
-		tableView.dataSource = self
 
 		if !allowNotificationsSwitch.isOn {
 			numberOfSections = 1

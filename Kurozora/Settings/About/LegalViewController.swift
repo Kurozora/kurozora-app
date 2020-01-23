@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LegalViewController: UIViewController {
+class LegalViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var navigationTitleView: UIView!
 	@IBOutlet weak var navigationTitleLabel: UILabel! {
@@ -58,7 +58,6 @@ class LegalViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 	}
 
 	// MARK: - Functions

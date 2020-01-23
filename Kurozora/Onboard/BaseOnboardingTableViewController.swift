@@ -9,7 +9,7 @@
 import UIKit
 import SCLAlertView
 
-class BaseOnboardingTableViewController: UITableViewController {
+class BaseOnboardingTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
@@ -27,10 +27,23 @@ class BaseOnboardingTableViewController: UITableViewController {
 	var textFieldArray: [UITextField?] = []
 	var onboardingType: OnboardingType = .register
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
+
 		rightNavigationBarButton.isEnabled = false
 	}
 

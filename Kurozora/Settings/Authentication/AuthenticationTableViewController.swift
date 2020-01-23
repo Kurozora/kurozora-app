@@ -8,7 +8,19 @@
 
 import UIKit
 
-class AuthenticationTableViewController: UITableViewController {
+class AuthenticationTableViewController: KTableViewController {
+	// MARK: - Properties
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -24,7 +36,9 @@ class AuthenticationTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
 	}
 }
 

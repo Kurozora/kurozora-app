@@ -13,7 +13,7 @@ import SCLAlertView
 import SwifterSwift
 import SwiftyJSON
 
-class ManageActiveSessionsController: UITableViewController {
+class ManageActiveSessionsController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var mapView: MKMapView!
 
@@ -22,12 +22,23 @@ class ManageActiveSessionsController: UITableViewController {
 	var sessions: UserSessions? {
 		didSet {
 			createAnnotations()
+			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
 	var pointAnnotation: MKPointAnnotation!
 	var pinAnnotationView: MKPinAnnotationView!
 	let locationManager = CLLocationManager()
+
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -40,13 +51,13 @@ class ManageActiveSessionsController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-
 		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
 
 		// Fetch sessions
-		fetchSessions()
+		DispatchQueue.global(qos: .background).async {
+			self.fetchSessions()
+		}
 
 		// Configure map view
 		mapView.showsUserLocation = true

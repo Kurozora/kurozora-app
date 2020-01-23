@@ -8,17 +8,32 @@
 
 import UIKit
 
-class AppearanceOptionsViewController: UITableViewController {
+class AppearanceOptionsViewController: KTableViewController {
+	// MARK: - Properties
 	var datePickerIndexPath: IndexPath?
 	var inputDates: [Date] = [UserSettings.darkThemeOptionStart, UserSettings.darkThemeOptionEnd]
 	let customScheduleOptions: [String] = ["Light Appearance", "Dark Appearance"]
 	let automaticOptions: [String] = ["Sunset to Sunrise", "Custom Schedule"]
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
+	}
+
+	// MARK: - Functions
 	func indexPathToInsertDatePicker(indexPath: IndexPath) -> IndexPath {
 		if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row < indexPath.row {
 			return indexPath

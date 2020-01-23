@@ -11,22 +11,31 @@ import Kingfisher
 import SCLAlertView
 import SwiftTheme
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties
 	var settingsSection = User.isAdmin ? Section.all : Section.allUser
 	var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
 
-	// MARK: - View
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .KUserIsSignedInDidChange, object: nil)
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
-    // MARK: - Functions
-	/// Reload the table view data.
-	@objc private func reloadData() {
+	// MARK: - View
+	override func viewWillReload() {
 		tableView.reloadData()
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
 	}
 
     // MARK: - IBActions

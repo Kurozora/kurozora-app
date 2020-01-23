@@ -13,7 +13,8 @@ protocol EpisodesDetailTableViewControlleDelegate: class {
 	func updateWatchedStatus(with watchStatus: Bool)
 }
 
-class EpisodesDetailTableViewControlle: UITableViewController {
+class EpisodesDetailTableViewControlle: KTableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var screenshotImageView: UIImageView?
 	@IBOutlet weak var shadowImageView: UIImageView? {
 		didSet {
@@ -27,18 +28,31 @@ class EpisodesDetailTableViewControlle: UITableViewController {
 	@IBOutlet weak var episodeMoreButton: UIButton!
 	@IBOutlet weak var cosmosView: CosmosView!
 
+	// MARK: - Properties
 	var episodeCell: EpisodesCollectionViewCell?
-	var episodeElement: EpisodesElement?
+	var episodeElement: EpisodesElement? {
+		didSet {
+			_prefersActivityIndicatorHidden = true
+			tableView.reloadData()
+		}
+	}
 	weak var delegate: EpisodesDetailTableViewControlleDelegate?
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		configureEpisodeDetails(from: episodeCell)
-
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
 	}
 
 	// MARK: - Functions
@@ -125,7 +139,4 @@ extension EpisodesDetailTableViewControlle {
 
 // MARK: - UITableViewDelegate
 extension EpisodesDetailTableViewControlle {
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return UITableView.automaticDimension
-	}
 }

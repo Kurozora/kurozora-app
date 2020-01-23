@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SynopsisViewController: UIViewController {
+class SynopsisViewController: KViewController {
 	@IBOutlet weak var synopsisTextView: UITextView! {
 		didSet {
 			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
@@ -19,7 +19,6 @@ class SynopsisViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		synopsisTextView.text = synopsis
 	}

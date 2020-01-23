@@ -10,7 +10,8 @@ import UIKit
 import SCLAlertView
 import SwiftTheme
 
-class AccountTableViewController: UITableViewController {
+class AccountTableViewController: KTableViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
 			self.profileImageView?.image = User.currentUserProfileImage
@@ -29,6 +30,18 @@ class AccountTableViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - Properties
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
+	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
@@ -40,7 +53,9 @@ class AccountTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
 	}
 }
 

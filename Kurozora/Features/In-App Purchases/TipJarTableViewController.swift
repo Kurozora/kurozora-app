@@ -10,7 +10,7 @@ import UIKit
 import StoreKit
 import SCLAlertView
 
-class TipJarTableViewController: UITableViewController {
+class TipJarTableViewController: KTableViewController {
 	// MARK: - Properties
 	var purchaseDetails = ["Wolf tip 🐺", "Tiger tip 🐯", "Demon tip 👺", "Dragon tip 🐲", "God tip 🙏"]
 	var productIDs: [String] = ["20000331KTIPWOLF", "20000331KTIPTIGER", "20000331KTIPDEMON", "20000331KTIPDRAGON", "20000331KTIPGOD"]
@@ -22,21 +22,29 @@ class TipJarTableViewController: UITableViewController {
 	}
 	var productsArray: [SKProduct] = [SKProduct]() {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.tableView.reloadData()
 		}
 	}
 
-	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Setup tip jar.
-		fetchProductInformation()
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		DispatchQueue.global(qos: .background).async {
+			// Fetch in-app purchases.
+			self.fetchProductInformation()
+		}
 	}
 
 	// MARK: - Functions

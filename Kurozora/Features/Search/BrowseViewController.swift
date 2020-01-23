@@ -37,7 +37,6 @@ enum BrowseType: String {
 }
 
 class BrowseViewController: UIViewController {
-
 	//    var currentBrowseType: BrowseType = .TopAnime
 	//    var animator: ZFModalTransitionAnimator!
 	////    var loadingView: LoaderView!

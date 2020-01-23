@@ -10,7 +10,7 @@ import UIKit
 import StoreKit
 import SCLAlertView
 
-class PurchaseTableViewController: UITableViewController {
+class PurchaseTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem!
 
@@ -25,6 +25,7 @@ class PurchaseTableViewController: UITableViewController {
 	}
 	var productsArray: [SKProduct] = [SKProduct]() {
 		didSet {
+			_prefersActivityIndicatorHidden = true
 			self.tableView.reloadData()
 		}
 	}
@@ -36,17 +37,24 @@ class PurchaseTableViewController: UITableViewController {
 		}
 	}
 
-	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Setup subscriptions
-		self.fetchProductInformation()
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
 	}
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		DispatchQueue.global(qos: .background).async {
+			// Fetch subscriptions.
+			self.fetchProductInformation()
+		}
 	}
 
 	// MARK: - Functions
@@ -70,8 +78,10 @@ class PurchaseTableViewController: UITableViewController {
 				}
 			}
 		} else {
-			// Warn the user that they are not allowed to make purchases.
-			SCLAlertView().showWarning("Can't Purchase", subTitle: KStoreObserver.AlertType.disabled.message)
+			DispatchQueue.main.async {
+				// Warn the user that they are not allowed to make purchases.
+				SCLAlertView().showWarning("Can't Purchase", subTitle: KStoreObserver.AlertType.disabled.message)
+			}
 		}
 	}
 

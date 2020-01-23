@@ -10,11 +10,14 @@ import UIKit
 import WebKit
 
 class KWebViewController: UIViewController {
+	// MARK: - IBOutlets
 	@IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
 
+	// MARK: - Properties
 	var webView: WKWebView!
 	var url: String?
 
+	// MARK: - View
 	override func loadView() {
 		super.loadView()
 

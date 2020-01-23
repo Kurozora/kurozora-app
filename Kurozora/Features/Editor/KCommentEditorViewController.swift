@@ -14,7 +14,7 @@ protocol KCommentEditorViewDelegate: class {
 	func updateReplies(with threadRepliesElement: ThreadRepliesElement)
 }
 
-class KCommentEditorViewController: UIViewController {
+class KCommentEditorViewController: KViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var threadTitleLabel: UILabel! {
 		didSet {
@@ -70,13 +70,8 @@ class KCommentEditorViewController: UIViewController {
 	weak var delegate: KCommentEditorViewDelegate?
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 
 		if let threadTitle = forumsThreadElement?.title {
 			threadTitleLabel.text = threadTitle

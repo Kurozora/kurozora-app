@@ -10,17 +10,30 @@ import UIKit
 import StoreKit
 import SCLAlertView
 
-class RedeemTableViewController: UITableViewController {
+class RedeemTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
 
+	// Activity indicator
+	var _prefersActivityIndicatorHidden = false {
+		didSet {
+			self.setNeedsActivityIndicatorAppearanceUpdate()
+		}
+	}
+	override var prefersActivityIndicatorHidden: Bool {
+		return _prefersActivityIndicatorHidden
+	}
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+
+		// Stop activity indicator as it's not needed for now.
+		_prefersActivityIndicatorHidden = true
+
 		rightNavigationBarButton.isEnabled = false
 	}
 

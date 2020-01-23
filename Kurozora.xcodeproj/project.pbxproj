@@ -298,6 +298,7 @@
 		66AC260622F0E58A0064541B /* webbrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66AC260522F0E58A0064541B /* webbrowser.storyboard */; };
 		66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */; };
 		66AC3D2023D90A2F00D28EE6 /* ShowAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614DF692089391600B0BC69 /* ShowAttributes.swift */; };
+		66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC3D2123D923ED00D28EE6 /* KViewController.swift */; };
 		66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */; };
 		66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABD922987A4D00949FD8 /* KThemePicker.swift */; };
 		66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */; };
@@ -715,6 +716,7 @@
 		66AC260322F0E5350064541B /* ActionButtonExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		66AC260522F0E58A0064541B /* webbrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = webbrowser.storyboard; sourceTree = "<group>"; };
 		66AC3D1E23D8FB0800D28EE6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		66AC3D2123D923ED00D28EE6 /* KViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KViewController.swift; sourceTree = "<group>"; };
 		66ACA19122C2627000FAEF08 /* AppearanceOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsViewController.swift; sourceTree = "<group>"; };
 		66AEABD922987A4D00949FD8 /* KThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemePicker.swift; sourceTree = "<group>"; };
 		66AEABDB2298A92500949FD8 /* NotificationAlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertStyle.swift; sourceTree = "<group>"; };
@@ -1762,13 +1764,14 @@
 		66B4F1D9223D1F70007C5048 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6614DF692089391600B0BC69 /* ShowAttributes.swift */,
 				667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift */,
 				66D1358C228087920079438C /* KButton.swift */,
 				665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */,
 				662DB4DA237EF3CC00B7FE7E /* KFillBarIndicator.swift */,
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
 				665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */,
+				66AC3D2123D923ED00D28EE6 /* KViewController.swift */,
+				6614DF692089391600B0BC69 /* ShowAttributes.swift */,
 				6634735B233398AF006B7F99 /* Solar.swift */,
 				6638C002235CA16500C7B094 /* UIImageColors.swift */,
 			);
@@ -2742,6 +2745,7 @@
 				66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */,
 				66F944B322F0D11B009F1FE2 /* KWebViewController.swift in Sources */,
 				66F944AE22F0C08E009F1FE2 /* BaseLockupCollectionViewCell.swift in Sources */,
+				66AC3D2223D923ED00D28EE6 /* KViewController.swift in Sources */,
 				66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */,
 				66EF148F21B728B60080FF14 /* ThreadReply.swift in Sources */,
 				6611234E208F70CB00E6033A /* UIViewController+Kurozora.swift in Sources */,
