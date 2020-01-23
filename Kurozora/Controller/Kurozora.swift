@@ -21,8 +21,11 @@ class Kurozora {
 	/// Returns the singleton Kurozora instance.
 	static let shared = Kurozora()
 
-	/// The base keychain service of the Kurozora App.
-	let KDefaults = Keychain(service: "app.kurozora.anime")
+	/// The app's identifier prefix.
+	static let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
+
+	/// The app's base keychain service.
+	let KDefaults = Keychain(service: "Kurozora", accessGroup: "\(appIdentifierPrefix)app.kurozora.shared" ).synchronizable(true).accessibility(.afterFirstUnlock)
 
 	// MARK: - Initializer
 	private init() {}
