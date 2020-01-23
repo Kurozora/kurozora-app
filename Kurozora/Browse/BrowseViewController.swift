@@ -39,7 +39,7 @@ enum BrowseType: String {
 class BrowseViewController: UIViewController {
     //    var currentBrowseType: BrowseType = .TopAnime
     //    var animator: ZFModalTransitionAnimator!
-    ////    var loadingView: LoaderView!
+    //    var loadingView: LoaderView!
     //    var currentConfiguration: Configuration =
     //        [
     //            (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.Newest.rawValue, SortType.Oldest.rawValue]),

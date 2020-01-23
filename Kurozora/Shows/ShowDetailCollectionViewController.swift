@@ -334,7 +334,7 @@ extension ShowDetailCollectionViewController {
 		case .header:
 			return .fractionalHeight(0.90)
 		case .badge:
-			return .absolute(55)
+			return .absolute(80)
 		case .synopsis:
 			return .absolute(110)
 		case .rating:
