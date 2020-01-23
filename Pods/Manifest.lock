@@ -7,7 +7,7 @@ PODS:
     - FLAnimatedImage (>= 1.0.0)
     - FLAnimatedImage-tvOS (>= 1.0.16)
   - AXStateButton (1.1.4)
-  - Cosmos (20.0.1)
+  - Cosmos (21.0.0)
   - DiffableDataSources (0.3.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
@@ -15,7 +15,7 @@ PODS:
   - DifferenceKit/UIKitExtension (1.1.5):
     - DifferenceKit/Core
   - EmptyDataSet-Swift (5.0.0)
-  - ESTabBarController-swift (2.7)
+  - ESTabBarController-swift (2.8.0)
   - FLAnimatedImage (1.0.12)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.1.0)
@@ -131,11 +131,11 @@ SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
-  Cosmos: b47fddf2102bb48580cd3025d9ce0a5c658a65da
+  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   DiffableDataSources: e87e630432a8a1f497064e299b83c0e6311517ae
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
-  ESTabBarController-swift: 4fb52ad03d94d0717ef97bc9eb09a5abfdded0a2
+  ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
