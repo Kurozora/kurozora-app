@@ -31,16 +31,16 @@ class UserNotification: JSONDecodable {
 }
 
 class UserNotificationsElement: JSONDecodable {
-	let id: Int?
-	let userID: Int?
+	let id: String?
 	let type: String?
 	var read: Bool?
 	let data: UserNotificationData?
 	let message: String?
 	let creationDate: String?
+	let userID: Int?
 
 	required init(json: JSON) throws {
-		self.id = json["id"].intValue
+		self.id = json["id"].stringValue
 		self.userID = json["user_id"].intValue
 		self.type = json["type"].stringValue
 		self.read = json["read"].boolValue

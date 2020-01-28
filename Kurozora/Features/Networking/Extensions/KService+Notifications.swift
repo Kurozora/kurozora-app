@@ -17,10 +17,10 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func deleteNotification(with notificationID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	func deleteNotification(with notificationID: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 
-		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("user-notifications/\(notificationID)/delete")
+		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("notifications/\(notificationID)/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
 			"kuro-auth": User.authToken
@@ -46,11 +46,11 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func updateNotification(for notificationID: String?, withStatus read: Int?, withSuccess successHandler: @escaping (Bool) -> Void) {
+	func updateNotification(_ notificationID: String?, withStatus read: Int?, withSuccess successHandler: @escaping (Bool) -> Void) {
 		guard let notificationID = notificationID else { return }
 		guard let read = read else { return }
 
-		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request("user-notifications/update")
+		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request("notifications/update")
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",

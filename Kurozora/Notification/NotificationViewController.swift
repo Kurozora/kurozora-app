@@ -223,7 +223,7 @@ class NotificationsViewController: KTableViewController {
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
 	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String?, with status: Int) {
-		KService.shared.updateNotification(for: notificationID, withStatus: status) { (read) in
+		KService.shared.updateNotification(notificationID, withStatus: status) { (read) in
 			if indexPaths == nil {
 				for userNotificationElement in self.userNotificationsElement ?? [] {
 					userNotificationElement.read = read
@@ -303,10 +303,10 @@ class NotificationsViewController: KTableViewController {
 				}
 				if row == groupedNotifications[section].sectionNotifications.count - 1 {
 					if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
-						notificationIDs += notificationID.string
+						notificationIDs += "\(notificationID)"
 					}
 				} else if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
-					notificationIDs += notificationID.string + ", "
+					notificationIDs += "\(notificationID),"
 				}
 			case .off:
 				if let notificationStatus = userNotificationsElement?[row].read, notificationStatus {
@@ -314,10 +314,10 @@ class NotificationsViewController: KTableViewController {
 				}
 				if let userNotificationsElementCount = userNotificationsElement?.count, row == userNotificationsElementCount - 1 {
 					if let notificationID = userNotificationsElement?[row].id {
-						notificationIDs += notificationID.string
+						notificationIDs += "\(notificationID)"
 					}
 				} else if let notificationID = userNotificationsElement?[row].id {
-					notificationIDs += notificationID.string + ", "
+					notificationIDs += "\(notificationID),"
 				}
 			}
 
@@ -377,13 +377,13 @@ extension NotificationsViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		// Prepare necessary information for setting up the correct cell
-		var notificationType: NotificationType?
-		var notificationCellIdentifier: String = "MessageNotificationCell"
+		var notificationType: NotificationType = .other
+		var notificationCellIdentifier: String = notificationType.identifierString
 
 		let notifications = (self.grouping == .off) ? userNotificationsElement?[indexPath.row] : groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
 		if let notificationsType = notifications?.type, !notificationsType.isEmpty {
-			notificationType = NotificationType(rawValue: notificationsType)
-			notificationCellIdentifier = notificationType?.identifierString ?? notificationCellIdentifier
+			notificationType = NotificationType(rawValue: notificationsType) ?? notificationType
+			notificationCellIdentifier = notificationType.identifierString
 		}
 
 		// Setup cell
@@ -403,7 +403,7 @@ extension NotificationsViewController {
 		if baseNotificationCell?.notificationType == .session {
 			// Change notification status to read
 			let notificationID = baseNotificationCell?.userNotificationsElement?.id
-			self.updateNotification(at: [indexPath], for: notificationID?.string, with: 1)
+			self.updateNotification(at: [indexPath], for: notificationID, with: 1)
 
 			// Show sessions view
 			WorkflowController.shared.showSessions()
@@ -466,20 +466,20 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			}
 
 			let markedAction = SwipeAction(style: .default, title: "") { _, indexPath in
-				var notificationID = 0
+				var notificationID = ""
 
 				switch self.grouping {
 				case .automatic, .byType:
-					if let id = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
-						notificationID = id
+					if let userNotificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id {
+						notificationID = userNotificationID
 					}
 				case .off:
-					if let id = self.userNotificationsElement?[indexPath.row].id {
-						notificationID = id
+					if let userNotificationID = self.userNotificationsElement?[indexPath.row].id {
+						notificationID = userNotificationID
 					}
 				}
 
-				self.updateNotification(at: [indexPath], for: notificationID.string, with: isRead ? 0 : 1)
+				self.updateNotification(at: [indexPath], for: notificationID, with: isRead ? 0 : 1)
 			}
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"

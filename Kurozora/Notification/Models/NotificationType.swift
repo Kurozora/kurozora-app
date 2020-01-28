@@ -18,36 +18,36 @@ import Foundation
 	```
 */
 enum NotificationType: String {
-	/// Indicates that the notification has no specific type and thus has the default style.
-	case unknown = "TYPE_UNKNOWN"
-
 	/// Indicates that the notification has a `session` type and thus has the sessions style.
-	case session = "TYPE_NEW_SESSION"
+	case session = "NewSession"
 
 	/// Indicates that the notification has a `follower` type and thus has the follower style.
-	case follower = "TYPE_NEW_FOLLOWER"
+	case follower = "NewFollower"
+
+	/// Indicates that the notification has no specific type and thus has the default style.
+	case other
 
 	/// The string value of a notification type.
 	var stringValue: String {
 		switch self {
-		case .unknown:
-			return ""
 		case .session:
 			return "Sessions"
 		case .follower:
 			return "Messages"
+		case .other:
+			return "Other"
 		}
 	}
 
 	/// The string value of a notification type cell.
 	var identifierString: String {
 		switch self {
-		case .unknown:
-			return ""
 		case .session:
 			return "SessionNotificationCell"
 		case .follower:
 			return "MessageNotificationCell"
+		case .other:
+			return "BaseNotificationCell"
 		}
 	}
 }
