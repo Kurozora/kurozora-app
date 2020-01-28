@@ -28,7 +28,10 @@ import EmptyDataSet_Swift
 class KTableViewController: UITableViewController {
 	// MARK: - Properties
 	let activityIndicatorView: UIActivityIndicatorView = {
-		let activityIndicatorView = UIActivityIndicatorView(style: .large)
+		let activityIndicatorView = UIActivityIndicatorView()
+		if #available(iOS 13.0, *) {
+			activityIndicatorView.style = .large
+		}
 		activityIndicatorView.theme_color = KThemePicker.tintColor.rawValue
 		activityIndicatorView.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
 		activityIndicatorView.hidesWhenStopped = true
