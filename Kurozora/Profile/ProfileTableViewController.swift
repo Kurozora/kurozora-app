@@ -412,9 +412,7 @@ class ProfileTableViewController: KTableViewController {
 				}
 
 				// Setup bio text if necessary
-				if self.bioTextView.text.isEmpty {
-					self.bioTextView.text = self.placeholderText
-				}
+				self.textViewDidEndEditing(self.bioTextView)
 			}
 
 			// Enable bio editing
@@ -488,11 +486,6 @@ class ProfileTableViewController: KTableViewController {
 		if self.bioTextCache == bioText && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
 			shouldUpdate = false
 			self.editMode(shouldUpdate)
-		}
-
-		// If the bio text is the same, then ignore.
-		if self.bioTextCache == bioText {
-//			bioText = ""
 		}
 
 		// If the profile image the same, then ignore.
