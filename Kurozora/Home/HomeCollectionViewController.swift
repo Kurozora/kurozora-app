@@ -115,7 +115,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
 													   subitem: item, count: columns)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}

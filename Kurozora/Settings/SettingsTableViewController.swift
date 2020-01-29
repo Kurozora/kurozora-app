@@ -13,8 +13,17 @@ import SwiftTheme
 
 class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties
-	var settingsSection = User.isAdmin ? Section.all : Section.allUser
-	var sectionRow = User.isAdmin ? Section.allRow : Section.allUserRow
+	#if DEBUG
+	var settingsSection = Section.all
+	#else
+	var settingsSection = Section.allUser
+	#endif
+
+	#if DEBUG
+	var sectionRow = Section.allRow
+	#else
+	var sectionRow = Section.allUserRow
+	#endif
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {

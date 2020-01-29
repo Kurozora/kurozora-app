@@ -19,8 +19,8 @@ extension SettingsTableViewController {
 		/// The section representing the account group of cells.
 		case account
 
-		/// The section representing the admin group of cells.
-		case admin
+		/// The section representing the debug group of cells.
+		case debug
 
 		/// The section representing the alerts group of cells.
 		case alerts
@@ -38,13 +38,13 @@ extension SettingsTableViewController {
 		case about
 
 		/// An array containing all settings sections.
-		static let all: [Section] = [.account, .admin, .alerts, .general, .support, .social, .about]
+		static let all: [Section] = [.account, .debug, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all normal user settings sections.
 		static let allUser: [Section] = [.account, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all settings rows separated by all settings sections.
-		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .admin: Row.allAdmin, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
+		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .debug: Row.alldebug, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// An array containing all user settings rows separated by user settings sections.
 		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
@@ -54,8 +54,8 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return "Account"
-			case .admin:
-				return "Admin"
+			case .debug:
+				return "Debug"
 			case .alerts:
 				return "Alerts"
 			case .general:
@@ -130,8 +130,8 @@ extension SettingsTableViewController {
 		/// An array containing all account section settings rows.
 		static let allAccount: [Row] = [.account]
 
-		/// An array containing all admin section settings rows.
-		static let allAdmin: [Row] = [.keychain]
+		/// An array containing all debug section settings rows.
+		static let alldebug: [Row] = [.keychain]
 
 		/// An array containing all alerts section settings rows.
 		static let allAlerts: [Row] = [.notifications]
