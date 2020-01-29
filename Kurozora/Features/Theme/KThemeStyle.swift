@@ -117,9 +117,15 @@ extension KThemeStyle {
 		case .default:
 			UserSettings.set("Default", forKey: .currentTheme)
 			ThemeManager.setTheme(plistName: "Default", path: .mainBundle)
+			if #available(iOS 13.0, *) {
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+			}
 		case .day:
 			UserSettings.set("Day", forKey: .currentTheme)
 			ThemeManager.setTheme(plistName: "Day", path: .mainBundle)
+			if #available(iOS 13.0, *) {
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
+			}
 		case .night:
 			if UserSettings.trueBlackEnabled {
 				UserSettings.set("Black", forKey: .currentTheme)
@@ -128,7 +134,14 @@ extension KThemeStyle {
 				UserSettings.set("Night", forKey: .currentTheme)
 				ThemeManager.setTheme(plistName: "Night", path: .mainBundle)
 			}
-		case .other: break
+
+			if #available(iOS 13.0, *) {
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+			}
+		case .other:
+			if #available(iOS 13.0, *) {
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
+			}
 		}
 	}
 
@@ -143,6 +156,17 @@ extension KThemeStyle {
 
 		UserSettings.set(themeName, forKey: .currentTheme)
 		ThemeManager.setTheme(plistName: themeName, path: .mainBundle)
+
+		if #available(iOS 13.0, *) {
+			switch current {
+			case .day:
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
+			case .night, .default:
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+			default:
+				UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
+			}
+		}
 	}
 
 	/**

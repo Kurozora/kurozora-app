@@ -234,11 +234,11 @@ extension SearchResultsCollectionViewController {
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
 		if showResults != nil {
-			return 0.25
+			return UIDevice.isPhone && UIDevice.isPortrait ? 0.40 : 0.25
 		} else if threadResults != nil {
-			return 0.15
+			return UIDevice.isPhone && UIDevice.isPortrait ? 0.30 : 0.15
 		} else if userResults != nil {
-			return 0.20
+			return UIDevice.isPhone && UIDevice.isPortrait ? 0.25 : 0.20
 		}
 		return (1.50 / columnsCount.double).cgFloat
 	}
