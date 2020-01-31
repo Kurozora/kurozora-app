@@ -44,7 +44,7 @@ extension SettingsTableViewController {
 		static let allUser: [Section] = [.account, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all settings rows separated by all settings sections.
-		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .debug: Row.alldebug, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
+		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .debug: Row.allDebug, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
 
 		/// An array containing all user settings rows separated by user settings sections.
 		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
@@ -131,7 +131,7 @@ extension SettingsTableViewController {
 		static let allAccount: [Row] = [.account]
 
 		/// An array containing all debug section settings rows.
-		static let alldebug: [Row] = [.keychain]
+		static let allDebug: [Row] = [.keychain]
 
 		/// An array containing all alerts section settings rows.
 		static let allAlerts: [Row] = [.notifications]
@@ -214,7 +214,7 @@ extension SettingsTableViewController {
 			case .cache:
 				return .label
 			case .privacy:
-				return .none
+				return .chevron
 			case .rate:
 				return .none
 			case .unlockFeatures:

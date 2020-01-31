@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,18 +43,20 @@
             </objects>
             <point key="canvasLocation" x="-4014" y="-998"/>
         </scene>
-        <!--admin-->
+        <!--debug-->
         <scene sceneID="KHN-hJ-St3">
             <objects>
-                <viewControllerPlaceholder storyboardName="admin" id="ajC-l5-hFm" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="debug" id="ajC-l5-hFm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR6-vZ-0nY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1862" y="-1100"/>
+            <point key="canvasLocation" x="-1870" y="-1100"/>
         </scene>
-        <!--about-->
+        <!--privacy-->
         <scene sceneID="IwF-zp-Lsq">
             <objects>
-                <viewControllerPlaceholder storyboardName="about" id="GAQ-MX-p4x" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="privacy" id="GAQ-MX-p4x" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Zml-UG-V8D"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcs-zt-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1864" y="-915"/>
@@ -65,7 +67,7 @@
                 <viewControllerPlaceholder storyboardName="theme" id="Qbb-Nv-rmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybs-tm-6iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1862" y="-1034"/>
+            <point key="canvasLocation" x="-1869" y="-1035"/>
         </scene>
         <!--ManageIconKNavigationController-->
         <scene sceneID="pCk-tB-aID">
@@ -73,7 +75,7 @@
                 <viewControllerPlaceholder storyboardName="theme" referencedIdentifier="ManageIconKNavigationController" id="4UV-W6-1yL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG6-sO-F3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1742" y="-1005"/>
+            <point key="canvasLocation" x="-1746" y="-1005"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CPk-At-3ge">
@@ -107,7 +109,7 @@
                 <viewControllerPlaceholder storyboardName="notificationSettings" id="vBk-eI-Fsp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55C-FF-ltq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1801" y="-1066"/>
+            <point key="canvasLocation" x="-1810" y="-1066"/>
         </scene>
         <!--authenticationSettings-->
         <scene sceneID="EBP-ej-D5t">
@@ -115,7 +117,7 @@
                 <viewControllerPlaceholder storyboardName="authenticationSettings" id="Q1h-nG-Q6g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpI-Fa-DLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1791" y="-948"/>
+            <point key="canvasLocation" x="-1796" y="-948"/>
         </scene>
         <!--display-->
         <scene sceneID="RdJ-ak-oTj">
@@ -133,7 +135,7 @@
                 <viewControllerPlaceholder storyboardName="purchase" id="9mD-qe-ThA" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-5h-YRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1851" y="-881"/>
+            <point key="canvasLocation" x="-1856" y="-881"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Rdk-Mk-c4g">
@@ -332,7 +334,7 @@
                         <segue destination="vBk-eI-Fsp" kind="showDetail" identifier="NotificationSegue" id="iJu-bZ-4lW"/>
                         <segue destination="urf-Ka-1Pe" kind="showDetail" identifier="DisplaySegue" id="JqT-i1-ECV"/>
                         <segue destination="4UV-W6-1yL" kind="showDetail" identifier="IconSegue" id="VrC-nK-bwx"/>
-                        <segue destination="GAQ-MX-p4x" kind="presentation" identifier="PrivacySegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="DS0-nx-xBb"/>
+                        <segue destination="GAQ-MX-p4x" kind="showDetail" identifier="PrivacySegue" id="DS0-nx-xBb"/>
                         <segue destination="Qbb-Nv-rmu" kind="showDetail" identifier="ThemeSegue" id="QUV-Rc-9a7"/>
                         <segue destination="9mD-qe-ThA" kind="showDetail" identifier="SubscriptionSegue" id="tmQ-Ga-tgo"/>
                         <segue destination="Q1h-nG-Q6g" kind="showDetail" identifier="BiometricsSegue" id="6OH-ww-Ncv"/>
@@ -351,7 +353,7 @@
                 <viewControllerPlaceholder storyboardName="browserSettings" id="B3o-ew-EQQ" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NVr-Wp-8Sl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1817" y="-978"/>
+            <point key="canvasLocation" x="-1824" y="-978"/>
         </scene>
         <!--account-->
         <scene sceneID="nbd-fu-5TH">
@@ -359,7 +361,7 @@
                 <viewControllerPlaceholder storyboardName="account" id="41N-ao-yZL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRz-7w-VBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1857" y="-1135"/>
+            <point key="canvasLocation" x="-1862" y="-1134"/>
         </scene>
         <!--TipJarKNavigationController-->
         <scene sceneID="71c-GG-QAR">
@@ -369,7 +371,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2C9-JS-U5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1776" y="-846"/>
+            <point key="canvasLocation" x="-1772" y="-847"/>
         </scene>
     </scenes>
     <resources>

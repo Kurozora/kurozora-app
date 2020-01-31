@@ -26,11 +26,11 @@
             </objects>
             <point key="canvasLocation" x="1614" y="595"/>
         </scene>
-        <!--about-->
+        <!--legal-->
         <scene sceneID="TgQ-yC-U46">
             <objects>
+                <viewControllerPlaceholder storyboardName="legal" id="iCt-dj-RF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qr2-al-HuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewControllerPlaceholder storyboardName="about" id="iCt-dj-RF4" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="1750" y="595"/>
         </scene>

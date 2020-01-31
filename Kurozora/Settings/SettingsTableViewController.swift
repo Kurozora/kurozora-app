@@ -169,7 +169,7 @@ extension SettingsTableViewController {
 			alertView.showWarning("Clear all cache?", subTitle: "All of your caches will be cleared and Kurozora will restart.", closeButtonTitle: "Cancel")
 			return
 		case .rate:
-			UIApplication.shared.kOpen(.rateURL, nil, options: [:], completionHandler: nil)
+			UIApplication.shared.kOpen(.rateURL)
 			return
 		case .restoreFeatures:
 			KStoreObserver.shared.restorePurchase()
@@ -177,10 +177,10 @@ extension SettingsTableViewController {
 		case .tipjar:
 			shouldPerformSegue = true
 		case .followTwitter:
-			UIApplication.shared.kOpen(.twitterPageURL, .twitterPageDeepLink, options: [:], completionHandler: nil)
+			UIApplication.shared.kOpen(.twitterPageURL, .twitterPageDeepLink)
 			return
 		case .followMedium:
-			UIApplication.shared.kOpen(.mediumPageURL, .mediumPageDeepLink, options: [:], completionHandler: nil)
+			UIApplication.shared.kOpen(.mediumPageURL, .mediumPageDeepLink)
 			return
 		default: break
 		}

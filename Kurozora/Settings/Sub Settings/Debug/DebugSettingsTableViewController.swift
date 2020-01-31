@@ -1,5 +1,5 @@
 //
-//  AdminTableViewController.swift
+//  DebugSettingsTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 26/09/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AdminTableViewController: KTableViewController {
+class DebugSettingsTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var warningLabel: UILabel! {
 		didSet {
@@ -53,7 +53,7 @@ class AdminTableViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension AdminTableViewController {
+extension DebugSettingsTableViewController {
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			let kDefaultsTableViewCell = self.tableView.cellForRow(at: indexPath) as! KDefaultsCell

@@ -363,7 +363,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10902</string>
+	<string>10905</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -398,9 +398,9 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Kurozora B.V. All rights reserved.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce yout battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce yout battery life.</string>
+	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes. Please note that the "Always" option is not necessary for $(PRODUCT_NAME) to work and will reduce your battery life.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses your location to show you where a sign in has come from on the map in the settings. Your location is also used to allow automatic switching between light and dark themes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -408,7 +408,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your photo library to save images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile image or share your images in the app.</string>
+	<string>$(PRODUCT_NAME) requires access to your photo library so you can choose your profile picture or share your images in the app.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>AddAnimeIntent</string>
