@@ -124,6 +124,7 @@
 		6641D6F9222EA3DF0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E0222EA3DE0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png */; };
 		6641D6FA222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */; };
 		6641D6FB222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */; };
+		6645D5EB23E496940042B4E0 /* FavoriteShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5EA23E496940042B4E0 /* FavoriteShow.swift */; };
 		6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */; };
 		6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */; };
 		6646A275236A5F7600DCC0A4 /* browserSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */; };
@@ -557,6 +558,7 @@
 		6641D6E0222EA3DE0067BD3A /* App-Icon-iPad-Pro-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Orange@2x.png"; sourceTree = "<group>"; };
 		6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Emerald@2x.png"; sourceTree = "<group>"; };
 		6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
+		6645D5EA23E496940042B4E0 /* FavoriteShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShow.swift; sourceTree = "<group>"; };
 		6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Kurozora.swift"; sourceTree = "<group>"; };
 		6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewController.swift; sourceTree = "<group>"; };
 		6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = browserSettings.storyboard; sourceTree = "<group>"; };
@@ -941,6 +943,7 @@
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
 				660A642D21D175110032FDCF /* EpisodesWatched.swift */,
 				66938FD5211CD3A800ADA5D6 /* Explore.swift */,
+				6645D5EA23E496940042B4E0 /* FavoriteShow.swift */,
 				66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */,
 				66CBA53A22BCED5300FBEC13 /* FeedSections.swift */,
 				6619EE6F216F86C500655B99 /* ForumsSections.swift */,
@@ -2645,6 +2648,7 @@
 				660C042323CFE40D0040C749 /* BadgeCollectionViewCell.swift in Sources */,
 				66714F4A226FA84C006113DA /* SynopsisViewController.swift in Sources */,
 				6638C003235CA16500C7B094 /* UIImageColors.swift in Sources */,
+				6645D5EB23E496940042B4E0 /* FavoriteShow.swift in Sources */,
 				66CF5D8221E7E90D00969BBB /* UserFollow.swift in Sources */,
 				66752633222815C2007C1617 /* KThemeStyle.swift in Sources */,
 				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,

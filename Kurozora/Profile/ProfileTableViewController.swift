@@ -40,6 +40,12 @@ class ProfileTableViewController: KTableViewController {
 			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
+	@IBOutlet weak var moreButton: UIButton! {
+		didSet {
+			moreButton.theme_tintColor = KThemePicker.tintColor.rawValue
+			moreButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
+		}
+	}
 
 	@IBOutlet weak var buttonsStackView: UIStackView!
 	@IBOutlet weak var reputationButton: UIButton! {
@@ -154,23 +160,6 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	// MARK: - Prepare for segue
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "BadgeSegue" {
-			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
-				badgesTableViewController.user = user?.profile
-			}
-		} else if let followTableViewController = segue.destination as? FollowTableViewController {
-			followTableViewController.user = user?.profile
-
-			if segue.identifier == "FollowingSegue" {
-				followTableViewController.followList = "Following"
-			} else if segue.identifier == "FollowersSegue" {
-				followTableViewController.followList = "Followers"
-			}
-		}
-	}
-
 	// MARK: - Functions
 	/**
 		Instantiates and returns a view controller from the relevant storyboard.
@@ -235,6 +224,9 @@ class ProfileTableViewController: KTableViewController {
 		guard let user = user else { return }
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
+
+		// Setup more button
+		moreButton.isHidden = !User.isSignedIn // If user is signed in then don't hide button
 
 		// Setup username
 		if let username = user.profile?.username, !username.isEmpty {
@@ -534,6 +526,41 @@ class ProfileTableViewController: KTableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
+	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
+	fileprivate func showFavoriteShowsList() {
+		if let favoriteShowsCollectionViewController = FavoriteShowsCollectionViewController.instantiateFromStoryboard() as? FavoriteShowsCollectionViewController {
+			favoriteShowsCollectionViewController.userID = userID
+			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
+
+			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)
+			self.present(kNavigationViewController)
+		}
+	}
+
+	/// Builds and presents an action sheet.
+	fileprivate func showActionList() {
+		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		// Go to last watched episode
+		let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
+			self.showFavoriteShowsList()
+		})
+		showFavoriteShowsList.setValue(#imageLiteral(resourceName: "Symbols/heart_circle"), forKey: "image")
+		showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+		action.addAction(showFavoriteShowsList)
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.sourceView = moreButton
+			popoverController.sourceRect = moreButton.bounds
+		}
+
+		self.present(action, animated: true, completion: nil)
+	}
+
 	// MARK: - IBActions
 	@IBAction func editProfileButtonPressed(_ sender: UIButton) {
 		// Cache current profile data
@@ -562,6 +589,10 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
+	@IBAction func moreButtonPressed(_ sender: UIButton) {
+		showActionList()
+	}
+
 	@IBAction func showProfileImage(_ sender: AnyObject) {
 		if let profileImage = user?.profile?.profileImage, !profileImage.isEmpty {
 			presentPhotoViewControllerWith(url: profileImage, from: profileImageView)
@@ -575,6 +606,23 @@ class ProfileTableViewController: KTableViewController {
 			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "default_banner_image", from: bannerImageView)
+		}
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "BadgeSegue" {
+			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
+				badgesTableViewController.user = user?.profile
+			}
+		} else if let followTableViewController = segue.destination as? FollowTableViewController {
+			followTableViewController.user = user?.profile
+
+			if segue.identifier == "FollowingSegue" {
+				followTableViewController.followList = "Following"
+			} else if segue.identifier == "FollowersSegue" {
+				followTableViewController.followList = "Followers"
+			}
 		}
 	}
 }

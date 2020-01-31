@@ -7,6 +7,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--FavoriteShowsCollectionViewController-->
+        <scene sceneID="dSu-ot-U5F">
+            <objects>
+                <viewControllerPlaceholder storyboardName="library" referencedIdentifier="FavoriteShowsCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1596" y="-1492"/>
+        </scene>
         <!--Follow Table View Controller-->
         <scene sceneID="JNH-Id-RWd">
             <objects>
@@ -262,13 +270,30 @@
                                                 <constraint firstItem="wJX-ls-ZaG" firstAttribute="top" secondItem="PR0-Kq-mbS" secondAttribute="top" id="xH6-T0-e9n"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fLr-h5-O9N">
+                                            <rect key="frame" x="325" y="51" width="34" height="34"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="34" id="MMZ-CG-hO8"/>
+                                                <constraint firstAttribute="width" constant="34" id="nF7-ZW-Qmh"/>
+                                            </constraints>
+                                            <state key="normal" image="Symbols/ellipsis_circle"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="17"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="moreButtonPressed:" destination="zlF-Vo-yv3" eventType="touchUpInside" id="LDB-zj-R6h"/>
+                                            </connections>
+                                        </button>
                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-1Z-yJM" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="284" y="55.333333333333343" width="67" height="25"/>
+                                            <rect key="frame" x="245" y="51" width="72" height="34"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="WHj-Jg-99m"/>
+                                                <constraint firstAttribute="height" constant="34" id="WHj-Jg-99m"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                             <state key="normal" title="Follow">
@@ -276,7 +301,7 @@
                                             </state>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="12.5"/>
+                                                    <real key="value" value="17"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
@@ -285,12 +310,12 @@
                                             </connections>
                                         </button>
                                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EtH-JN-qoL" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="303" y="55.333333333333343" width="48" height="25"/>
+                                            <rect key="frame" x="265" y="51" width="52" height="34"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="iDf-IJ-PTB"/>
+                                                <constraint firstAttribute="height" constant="34" id="iDf-IJ-PTB"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                             <state key="normal" title="Edit">
@@ -298,7 +323,7 @@
                                             </state>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="12.5"/>
+                                                    <real key="value" value="17"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
@@ -313,12 +338,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKV-6f-pSz">
-                                            <rect key="frame" x="96" y="78" width="35" height="20"/>
+                                            <rect key="frame" x="96" y="78" width="39" height="20"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="fwi-4u-pBt"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                             <state key="normal" title="PRO">
                                                 <color key="titleColor" red="1" green="0.84207815669999997" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
@@ -340,12 +365,16 @@
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="3HD-ij-bhm"/>
                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="centerY" secondItem="Ak5-fH-5eB" secondAttribute="centerY" id="3J5-Z0-oKA"/>
                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="5Oy-qg-5oa"/>
+                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="top" secondItem="fLr-h5-O9N" secondAttribute="top" id="Gmi-u3-uqf"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="centerY" secondItem="bkn-1Z-yJM" secondAttribute="centerY" id="Iy1-oE-bVA"/>
+                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="top" secondItem="bkn-1Z-yJM" secondAttribute="top" id="Nni-n8-lMe"/>
+                                        <constraint firstAttribute="trailing" secondItem="fLr-h5-O9N" secondAttribute="trailing" id="Nq0-Wr-dpD"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="trailing" secondItem="bkn-1Z-yJM" secondAttribute="trailing" id="Pmw-vr-VSr"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="bkn-1Z-yJM" secondAttribute="trailing" id="Rvz-5p-QqU"/>
+                                        <constraint firstItem="fLr-h5-O9N" firstAttribute="centerY" secondItem="EtH-JN-qoL" secondAttribute="centerY" id="TZi-2i-UcE"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="Whk-A3-nGc"/>
                                         <constraint firstItem="Ak5-fH-5eB" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="trailing" constant="8" symbolic="YES" id="f21-Gx-KX8"/>
                                         <constraint firstItem="PR0-Kq-mbS" firstAttribute="top" secondItem="L3e-NK-2YU" secondAttribute="top" id="gbb-eF-UPj"/>
+                                        <constraint firstItem="fLr-h5-O9N" firstAttribute="leading" secondItem="bkn-1Z-yJM" secondAttribute="trailing" constant="8" symbolic="YES" id="m7m-W4-uqG"/>
                                         <constraint firstAttribute="height" constant="98" id="msY-bC-Ipb"/>
                                         <constraint firstItem="bKV-6f-pSz" firstAttribute="leading" secondItem="Ak5-fH-5eB" secondAttribute="leading" id="wrH-Oi-mOH"/>
                                         <constraint firstAttribute="bottom" secondItem="bKV-6f-pSz" secondAttribute="bottom" id="wro-nS-cHU"/>
@@ -375,14 +404,14 @@
                                                             <fragment content="0 ">
                                                                 <attributes>
                                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content="Reputation">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588240000004" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
@@ -396,14 +425,14 @@
                                                             <fragment content="0 ">
                                                                 <attributes>
                                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content="Badges">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588240000004" green="0.76862745099999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
@@ -417,17 +446,19 @@
                                                     <rect key="frame" x="174" y="0.0" width="82" height="40"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
-                                                            <fragment content="0 ">
+                                                            <fragment>
+                                                                <string key="content">0
+</string>
                                                                 <attributes>
                                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content="Following">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588235294112" green="0.76862745098039209" blue="0.792156862745098" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <font key="NSOriginalFont" metaFont="menu" size="14"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
@@ -448,21 +479,21 @@
                                                             <fragment content="0">
                                                                 <attributes>
                                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content=" ">
                                                                 <attributes>
                                                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content="Followers">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.76470588235294112" green="0.76862745098039209" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <font key="NSFont" size="14" name="SFProText-Regular"/>
+                                                                    <font key="NSFont" size="15" name="SFProText-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -701,6 +732,7 @@
                         <outlet property="followButton" destination="bkn-1Z-yJM" id="13G-xZ-1KA"/>
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="0tj-jo-lQ8"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
+                        <outlet property="moreButton" destination="fLr-h5-O9N" id="OCR-f4-iMM"/>
                         <outlet property="proBadgeButton" destination="bKV-6f-pSz" id="HdW-4t-lxJ"/>
                         <outlet property="profileBorderView" destination="wJX-ls-ZaG" id="hOw-07-B1J"/>
                         <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
@@ -711,6 +743,7 @@
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="tagBadgeButton" destination="acZ-hU-RmT" id="p1c-Zj-CB1"/>
                         <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="D24-4f-G7c"/>
+                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoriteShowsSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="q0e-Li-wfz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFh-8K-gm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -920,14 +953,15 @@
     </scenes>
     <resources>
         <image name="Symbols/ellipsis" width="24" height="24"/>
+        <image name="Symbols/ellipsis_circle" width="24" height="24"/>
         <image name="Symbols/heart_fill_small" width="24" height="24"/>
         <image name="Symbols/message_fill" width="24" height="24"/>
         <image name="default_banner_image" width="1130" height="706"/>
         <image name="default_profile_image" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4rF-DK-5Qi"/>
-        <segue reference="xRc-mP-Blz"/>
+        <segue reference="Uy1-s4-x1D"/>
+        <segue reference="QET-aj-S7i"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

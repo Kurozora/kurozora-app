@@ -38,7 +38,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 			searchImageView.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
 		}
 
-		statusLabel?.text = showDetailsElement.status ?? "TBA"
+		statusLabel?.text = showDetailsElement.airStatus ?? "TBA"
 
 		// Configure library status
 		if let libraryStatus = showDetailsElement.currentUser?.libraryStatus, !libraryStatus.isEmpty {

@@ -46,7 +46,7 @@ class ShowDetailsElement: JSONDecodable {
 	let runtime: Int?
 	let screenshots: [String]?
 	let seasons: Int?
-	let status: String?
+	let airStatus: String?
 	let synopsis: String?
 	let tagline: String?
 	let type: String?
@@ -104,7 +104,7 @@ class ShowDetailsElement: JSONDecodable {
 		self.runtime = json["runtime"].intValue
 		self.screenshots = json["screenshots"].rawValue as? [String]
 		self.seasons = json["seasons"].intValue
-		self.status = json["status"].stringValue
+		self.airStatus = json["status"].stringValue
 		self.synopsis = json["synopsis"].stringValue
 		self.tagline = json["tagline"].stringValue
 		self.type = json["type"].stringValue

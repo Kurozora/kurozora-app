@@ -358,7 +358,7 @@
         <!--My Favorites-->
         <scene sceneID="tyf-Rh-hHi">
             <objects>
-                <collectionViewController id="nkf-Xz-CCp" customClass="FavoriteShowsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="FavoriteShowsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nkf-Xz-CCp" customClass="FavoriteShowsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="HCp-1D-WKn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -416,9 +416,6 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="My Favorites" id="6D3-vz-S9g"/>
-                    <connections>
-                        <segue destination="QE5-9K-gce" kind="show" identifier="LibraryListSegue" id="8cC-ov-mQP"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMD-gD-RNs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

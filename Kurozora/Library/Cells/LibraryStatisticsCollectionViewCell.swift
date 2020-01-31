@@ -9,6 +9,7 @@
 import UIKit
 
 class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {
 			primaryLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
@@ -17,7 +18,29 @@ class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var secondaryLabel: UILabel! {
 		didSet {
 			secondaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-			secondaryLabel.text = "\(69) TV · \(31) Movie · \(5) OVA/ONA/Specials"
 		}
+	}
+
+	// MARK: - Properties
+	var showDetailsElements: [ShowDetailsElement]? {
+		didSet {
+			configureCell()
+		}
+	}
+
+	// MARK: - Functions
+	/// Configure the cell with the given details.
+	fileprivate func configureCell() {
+		let tvCount = getOccurancesOf(string: "Tv")
+		let movieCount = getOccurancesOf(string: "Movie")
+		let undefinedCount = getOccurancesOf(string: "undefined")
+		secondaryLabel.text = "\(tvCount) TV · \(movieCount) Movie · \(undefinedCount) OVA/ONA/Specials"
+	}
+
+	/// Gets number of occurances of the given string in the showDetailesElements array.
+	func getOccurancesOf(string: String) -> Int {
+		return showDetailsElements?.filter({ (showDetailElement) -> Bool in
+			showDetailElement.type == string
+		}).count ?? 0
 	}
 }

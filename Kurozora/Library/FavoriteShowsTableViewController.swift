@@ -10,10 +10,18 @@ import UIKit
 
 class FavoriteShowsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var shows: [[ShowDetailsElement]]? {
+	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.collectionView.reloadData()
+		}
+	}
+	var userID: Int? = nil
+	var dismissButtonIsEnabled: Bool = false {
+		didSet {
+			if dismissButtonIsEnabled {
+				enableDismissButton()
+			}
 		}
 	}
 
@@ -37,30 +45,57 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		// Create colelction view layout
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
+		collectionView.register(nibWithCellClass: SmallLockupCollectionViewCell.self)
 
 		DispatchQueue.global(qos: .background).async {
-			self.fetchUserLibrary()
+			self.fetchFavoritesList()
 		}
 	}
 
 	// MARK: - Functions
-	func fetchUserLibrary() {
+	/**
+		Instantiates and returns a view controller from the relevant storyboard.
 
+		- Returns: a view controller from the relevant storyboard.
+	*/
+	static func instantiateFromStoryboard() -> UIViewController? {
+		let storyboard = UIStoryboard(name: "library", bundle: nil)
+		return storyboard.instantiateViewController(withIdentifier: "FavoriteShowsCollectionViewController")
+	}
+
+	/// Enable and show the dismiss button.
+	func enableDismissButton() {
+		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))
+		self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+	}
+
+	/// Dismiss the view. Used by the dismiss button when viewing other users' profile.
+	@objc fileprivate func dismissButtonPressed() {
+		dismiss(animated: true, completion: nil)
+	}
+
+	/// Fetches the user's favorite list.
+	fileprivate func fetchFavoritesList() {
+		KService.shared.getFavourites(forUser: userID) { (showDetailsElements) in
+			DispatchQueue.main.async {
+				self.showDetailsElements = showDetailsElements
+			}
+		}
 	}
 }
 
 // MARK: - UICollectionViewDataSource
 extension FavoriteShowsCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return Library.Section.all.count + 1
+		return 2
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
 			return 1
 		}
-		guard let showsCount = shows?[section - 1].count else { return 0 }
-		return showsCount
+		guard let showDetailsElementsCount = showDetailsElements?.count else { return 0 }
+		return showDetailsElementsCount
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,22 +103,18 @@ extension FavoriteShowsCollectionViewController {
 			let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LibraryStatisticsCollectionViewCell", for: indexPath)
 			return libraryStatisticsCollectionViewCell
 		}
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "", for: indexPath)
-		return cell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: SectionHeaderReusableView.self, for: indexPath)
-		return supplementaryView
+		let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
+		return smallLockupCollectionViewCell
 	}
 }
 
 // MARK: - UICollectionViewDelegate
 extension FavoriteShowsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-		if let sectionHeaderReusableView = view as? SectionHeaderReusableView {
-			sectionHeaderReusableView.title = Library.Section.all[indexPath.section - 1].stringValue
-			sectionHeaderReusableView.segueID = "LibraryListSegue"
+	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if let libraryStatisticsCollectionViewCell = cell as? LibraryStatisticsCollectionViewCell {
+			libraryStatisticsCollectionViewCell.showDetailsElements = showDetailsElements
+		} else if let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell {
+			smallLockupCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.row]
 		}
 	}
 }
@@ -137,19 +168,6 @@ extension FavoriteShowsCollectionViewController {
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
-
-			// If it's the first section (statistics) then return without adding a header view.
-			guard section != 0 else {
-				return layoutSection
-			}
-
-			// Add header supplementary view.
-			let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-														  heightDimension: .estimated(52))
-			let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-				layoutSize: headerFooterSize,
-				elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-			layoutSection.boundarySupplementaryItems = [sectionHeader]
 
 			return layoutSection
 		}

@@ -9,6 +9,7 @@
 import UIKit
 
 class InformationCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.tintColor.rawValue
@@ -27,14 +28,17 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	// MARK: - Properties
 	var indexPathRow: Int = 0
 	var showDetailsElement: ShowDetailsElement? {
 		didSet {
-			setup()
+			configureCell()
 		}
 	}
 
-	fileprivate func setup() {
+	// MARK: - Functions
+	/// Configure the cell with the given details.
+	fileprivate func configureCell() {
 		guard let showDetail = showDetailsElement else { return }
 		if !User.isAdmin {
 			indexPathRow += 1

@@ -62,8 +62,10 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	var libraryStatus: String?
+}
 
-	// MARK: - Functions
+// MARK: - Functions
+extension ShowDetailHeaderCollectionViewCell {
 	/**
 		Configures the view from the given Explore cell if the details view was requested from the Explore page.
 
@@ -114,8 +116,8 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		// Configure tags label
 		tagsLabel.text = showDetailsElement.informationString
 
-		// Configure status label
-		if let status = showDetailsElement.status, !status.isEmpty {
+		// Configure airStatus label
+		if let status = showDetailsElement.airStatus, !status.isEmpty {
 			statusButton.setTitle(status, for: .normal)
 			if status == "Ended" {
 				statusButton.backgroundColor = .dropped
@@ -127,7 +129,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			statusButton.backgroundColor = .onHold
 		}
 
-		if let airingStatus = ShowDetail.AiringStatus(rawValue: showDetailsElement.status ?? "Ended") {
+		if let airingStatus = ShowDetail.AiringStatus(rawValue: showDetailsElement.airStatus ?? "Ended") {
 			statusButton.setTitle(airingStatus.stringValue, for: .normal)
 			statusButton.backgroundColor = airingStatus.colorValue
 		}
@@ -146,6 +148,9 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			}
 		}
 
+		// Configre favorite status
+		updateFavoriteStatus(with: showDetailsElement)
+
 		// Configure shadows
 		shadowView.applyShadow()
 		reminderButton.applyShadow()
@@ -155,11 +160,33 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		quickDetailsView.isHidden = false
 	}
 
-	// MARK: - IBActions
-	@IBAction func favoriteButtonPressed(_ sender: Any) {
-
+	func updateFavoriteStatus(with showDetailsElement: ShowDetailsElement? = nil, withInt isFavorite: Int? = 0) {
+		let showIsFavorite = showDetailsElement?.currentUser?.isFavorite ?? (isFavorite == 1)
+		self.showDetailsElement?.currentUser?.isFavorite = showIsFavorite
+		let favoriteImage = showIsFavorite ? #imageLiteral(resourceName: "Symbols/heart_fill") : #imageLiteral(resourceName: "Symbols/heart")
+		favoriteButton.tag = showIsFavorite ? 1 : 0
+		favoriteButton.setImage(favoriteImage, for: .normal)
 	}
 
+	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
+		if let banner = showDetailsElement?.banner, !banner.isEmpty {
+			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
+		} else {
+			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_banner_image", from: bannerImageView)
+		}
+	}
+
+	@objc func showPoster(_ gestureRecognizer: UIGestureRecognizer) {
+		if let poster = showDetailsElement?.poster, !poster.isEmpty {
+			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
+		} else {
+			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_poster_image", from: posterImageView)
+		}
+	}
+}
+
+// MARK: - IBActions
+extension ShowDetailHeaderCollectionViewCell {
 	@IBAction func closeButtonPressed(_ sender: UIButton) {
 		self.parentViewController?.navigationController?.popViewController(animated: true)
 	}
@@ -236,19 +263,18 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
-		if let banner = showDetailsElement?.banner, !banner.isEmpty {
-			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
-		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_banner_image", from: bannerImageView)
-		}
-	}
+	@IBAction func favoriteButtonPressed(_ sender: UIButton) {
+		WorkflowController.shared.isSignedIn {
+			guard let showID = self.showDetailsElement?.id else { return }
+			var isFavoriteBoolValue = self.showDetailsElement?.currentUser?.isFavorite ?? false
+			isFavoriteBoolValue = !isFavoriteBoolValue
+			let isFavorite = isFavoriteBoolValue.int
 
-	@objc func showPoster(_ gestureRecognizer: UIGestureRecognizer) {
-		if let poster = showDetailsElement?.poster, !poster.isEmpty {
-			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
-		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_poster_image", from: posterImageView)
+			KService.shared.updateFavoriteStatus(forShow: showID, isFavorite: isFavorite) { (isFavorite) in
+				DispatchQueue.main.async {
+					self.updateFavoriteStatus(withInt: isFavorite)
+				}
+			}
 		}
 	}
 }

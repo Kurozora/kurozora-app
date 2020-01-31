@@ -286,6 +286,68 @@ extension KService {
 	}
 
 	/**
+		Fetch the favorite shows list for the given user. Fetches the current user's list if no `userID` is given.
+
+		- Parameter userID: The id of the user whose favorite list will be fetched.
+		- Parameter successHandler: A closure returning a ShowDetailsElement array.
+		- Parameter favorites: The returned ShowDetailsElement array.
+	*/
+	func getFavourites(forUser userID: Int?, withSuccess successHandler: @escaping (_ favorites: [ShowDetailsElement]?) -> Void) {
+		let userID = userID ?? User.currentID
+
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/favorite-anime")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.method = .get
+		request.perform(withSuccess: { showDetails in
+			if let success = showDetails.success {
+				if success {
+					successHandler(showDetails.showDetailsElements)
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Can't get favorites list 😔", subTitle: error.message)
+			print("Received get favorites error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
+		Update the `isFavorite` value of a show in the current user's library.
+
+		- Parameter show_id: The show whose favorite status will be updated.
+		- Parameter isFavorite: The fvalue by which the show's favorite status will be updated.
+		- Parameter successHandler: A closure returning a ShowDetailsElement object.
+		- Parameter isFavorite: The returned integer value indicating whether the show is favorited. (0 = false, 1 = true)
+	*/
+	func updateFavoriteStatus(forShow showID: Int?, isFavorite: Int?, withSuccess successHandler: @escaping (_ isFavorite: Int?) -> Void) {
+		guard let showID = showID else { return }
+		guard let isFavorite = isFavorite else { return }
+
+		let request: APIRequest<FavoriteShow, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/favorite-anime")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.method = .post
+		request.parameters = [
+			"anime_id": showID,
+			"is_favorite": isFavorite
+		]
+		request.perform(withSuccess: { favoriteShow in
+			if let success = favoriteShow.success {
+				if success {
+					successHandler(favoriteShow.isFavorite)
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Can't update favorite status 😔", subTitle: error.message)
+			print("Received update favorite status error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
 		Fetch the profile details of the given user id.
 
 		- Parameter userID: The id of the user whose profile details should be fetched.
