@@ -273,6 +273,7 @@
 		669EA9A222C1491600784181 /* purchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669EA9A122C1491600784181 /* purchase.storyboard */; };
 		66A08C6A23E3A2D5007B6418 /* privacy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A08C6923E3A2D5007B6418 /* privacy.storyboard */; };
 		66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */; };
+		66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */; };
 		66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A1C65B232B75360044EAD1 /* FollowCell.swift */; };
 		66A254C622AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */; };
 		66A254C722AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */; };
@@ -527,7 +528,7 @@
 		6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = authenticationSettings.storyboard; sourceTree = "<group>"; };
 		6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsCell.swift; sourceTree = "<group>"; };
 		6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsViewController.swift; sourceTree = "<group>"; };
-		6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RequireAuthentication.swift; path = Models/RequireAuthentication.swift; sourceTree = "<group>"; };
+		6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequireAuthentication.swift; sourceTree = "<group>"; };
 		664133E021DA64C800CE823A /* SettingsNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationCell.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -695,6 +696,7 @@
 		669EA9A122C1491600784181 /* purchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = purchase.storyboard; sourceTree = "<group>"; };
 		66A08C6923E3A2D5007B6418 /* privacy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = privacy.storyboard; sourceTree = "<group>"; };
 		66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
+		66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSettingsViewController.swift; sourceTree = "<group>"; };
 		66A1C65B232B75360044EAD1 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
 		66A254C222AA9EE9002A0E34 /* App-Icon-iPad-Product-RED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Product-RED@2x.png"; sourceTree = "<group>"; };
 		66A254C322AA9EE9002A0E34 /* App-Icon-iPhone-Product-RED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Product-RED@3x.png"; sourceTree = "<group>"; };
@@ -1183,10 +1185,10 @@
 			isa = PBXGroup;
 			children = (
 				6640E19622ADD30100D0F575 /* authenticationSettings.storyboard */,
-				6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */,
 				6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */,
-				6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */,
+				6640E19422ADD2D800D0F575 /* AuthenticationTableViewController.swift */,
 				6640E19222ADD24400D0F575 /* Cells */,
+				66A08C6E23E3AF26007B6418 /* Models */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -1631,6 +1633,14 @@
 			path = Legal;
 			sourceTree = "<group>";
 		};
+		66A08C6E23E3AF26007B6418 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		66A254D622AABC3B002A0E34 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1827,6 +1837,7 @@
 		66C27A7323E3A0C700BC09D3 /* Sub Settings */ = {
 			isa = PBXGroup;
 			children = (
+				66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */,
 				6614409221DA411C00E54915 /* Account */,
 				6614409121DA40F300E54915 /* Debug */,
 				6640E19122ADD20700D0F575 /* Authentication */,
@@ -2765,6 +2776,7 @@
 				66BDEC7421C3F0A100D5487B /* KCommentEditorViewController.swift in Sources */,
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
+				66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */,
 				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
 				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,

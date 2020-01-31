@@ -8,25 +8,7 @@
 
 import UIKit
 
-class BrowserSettingsTableViewController: KTableViewController {
-	// MARK: - Properties
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
-    }
+class BrowserSettingsTableViewController: SubSettingsViewController {
 }
 
 // MARK: - UITableViewDataSource
@@ -65,20 +47,6 @@ extension BrowserSettingsTableViewController {
 		if let browserSettingsTableViewCell = tableView.cellForRow(at: indexPath) as? BrowserSettingsTableViewCell {
 			UserSettings.set(browserSettingsTableViewCell.browser?.rawValue, forKey: .defaultBrowser)
 			tableView.reloadData()
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let browserSettingsTableViewCell = tableView.cellForRow(at: indexPath) as? BrowserSettingsTableViewCell {
-			browserSettingsTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			browserSettingsTableViewCell.primaryTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let browserSettingsTableViewCell = tableView.cellForRow(at: indexPath) as? BrowserSettingsTableViewCell {
-			browserSettingsTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			browserSettingsTableViewCell.primaryTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 }

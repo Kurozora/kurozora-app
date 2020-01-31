@@ -8,20 +8,10 @@
 
 import UIKit
 
-class NotificationsOptionsViewController: KTableViewController {
+class NotificationsOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
 	var notificationSegueIdentifier: NotificationSegueIdentifier = .bannerStyle
 	var segueIdentifier: String!
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -33,9 +23,6 @@ class NotificationsOptionsViewController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
@@ -108,19 +95,5 @@ extension NotificationsOptionsViewController {
 
 		NotificationCenter.default.post(name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		tableView.reloadData()
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			notificationsGroupingCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let notificationsGroupingCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			notificationsGroupingCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			notificationsGroupingCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
 	}
 }

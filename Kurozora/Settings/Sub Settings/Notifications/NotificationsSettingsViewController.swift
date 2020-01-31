@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsSettingsViewController: KTableViewController {
+class NotificationsSettingsViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var allowNotificationsSwitch: UISwitch! {
 		didSet {
@@ -34,22 +34,9 @@ class NotificationsSettingsViewController: KTableViewController {
 	// MARK: - Properties
 	var numberOfSections = 4
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 
 		allowNotificationsSwitch.isOn = UserSettings.notificationsAllowed
 		soundsSwitch.isOn = UserSettings.notificationsSound
@@ -107,39 +94,5 @@ extension NotificationsSettingsViewController {
 		}
 
 		return super.tableView(tableView, cellForRowAt: indexPath)
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension NotificationsSettingsViewController {
-	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-			headerView.textLabel?.font = .systemFont(ofSize: 15, weight: .medium)
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
-		if settingsCell?.selectedView != nil {
-			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
-
-			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell
-		if settingsCell?.selectedView != nil {
-			settingsCell?.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			settingsCell?.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-
-			settingsCell?.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-			settingsCell?.bannerStyleValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			settingsCell?.notificationGroupingValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-		}
 	}
 }

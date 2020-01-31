@@ -10,7 +10,7 @@ import UIKit
 import SCLAlertView
 import SwiftTheme
 
-class AccountTableViewController: KTableViewController {
+class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
@@ -30,17 +30,6 @@ class AccountTableViewController: KTableViewController {
 		}
 	}
 
-	// MARK: - Properties
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -49,13 +38,6 @@ class AccountTableViewController: KTableViewController {
 		userEmailLabel.text = "\(Kurozora.shared.KDefaults["username"] ?? "kurozora")@kurozora.app"
 		userEmailLabel.textAlignment = .center
 		userEmailLabel.font = UIFont(name: "System", size: 13)
-	}
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
 	}
 }
 
@@ -77,27 +59,6 @@ extension AccountTableViewController {
 
 			alertView.showError("Sign out", subTitle: "Are you sure you want to sign out?", closeButtonTitle: "No, keep me signed in 😆")
 		default: break
-		}
-	}
-}
-
-// MARK: - UITableViewDelegate
-extension AccountTableViewController {
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
-			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
-
-			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
-			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
-
-			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 }

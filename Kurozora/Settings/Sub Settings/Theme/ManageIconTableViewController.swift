@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class ManageIconTableViewController: KTableViewController {
+class ManageIconTableViewController: SubSettingsViewController {
 	// MARK: - Properties
 	var alternativeIcons: AlternativeIcons? {
 		didSet {
@@ -19,19 +19,11 @@ class ManageIconTableViewController: KTableViewController {
 	}
 	var alternativeIconsArray = JSON()
 
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		_prefersActivityIndicatorHidden = false
 
 		DispatchQueue.global(qos: .background).async {
 			if let path = Bundle.main.path(forResource: "app-icons", ofType: "json") {
@@ -129,27 +121,6 @@ extension ManageIconTableViewController {
 			UserSettings.set(iconTableViewCell.alternativeIconsElement?.image, forKey: .appIcon)
 			NotificationCenter.default.post(name: .KSAppIconDidChange, object: nil)
 			tableView.reloadData()
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-			headerView.textLabel?.font = .systemFont(ofSize: 15, weight: .medium)
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
-			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
-			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			iconTableViewCell.iconTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
 		}
 	}
 }

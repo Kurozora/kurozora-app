@@ -8,30 +8,12 @@
 
 import UIKit
 
-class AppearanceOptionsViewController: KTableViewController {
+class AppearanceOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
 	var datePickerIndexPath: IndexPath?
 	var inputDates: [Date] = [UserSettings.darkThemeOptionStart, UserSettings.darkThemeOptionEnd]
 	let customScheduleOptions: [String] = ["Light Appearance", "Dark Appearance"]
 	let automaticOptions: [String] = ["Sunset to Sunrise", "Custom Schedule"]
-
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
-	}
 
 	// MARK: - Functions
 	func indexPathToInsertDatePicker(indexPath: IndexPath) -> IndexPath {
@@ -131,26 +113,6 @@ extension AppearanceOptionsViewController {
 				tableView.deselectRow(at: indexPath, animated: true)
 			}
 			tableView.endUpdates()
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let selectableSettingsCell = tableView.cellForRow(at: indexPath) as? SelectableSettingsCell {
-			selectableSettingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			selectableSettingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-		if let footerView = view as? UITableViewHeaderFooterView {
-			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 

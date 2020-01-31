@@ -276,16 +276,6 @@ extension ManageActiveSessionsController {
 	}
 }
 
-// MARK: - UITableViewDelegate
-extension ManageActiveSessionsController {
-	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-		if let headerView = view as? UITableViewHeaderFooterView {
-			headerView.textLabel?.font = UIFont.systemFont(ofSize: 15)
-			headerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
-}
-
 // MARK: - OtherSessionsCellDelegate
 extension ManageActiveSessionsController: OtherSessionsCellDelegate {
 	func removeSession(for otherSessionsCell: OtherSessionsCell) {

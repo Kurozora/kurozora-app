@@ -8,25 +8,7 @@
 
 import UIKit
 
-class AuthenticationOptionsViewController: KTableViewController {
-	// MARK: - Properties
-	// Activity indicator
-	var _prefersActivityIndicatorHidden = false {
-		didSet {
-			self.setNeedsActivityIndicatorAppearanceUpdate()
-		}
-	}
-	override var prefersActivityIndicatorHidden: Bool {
-		return _prefersActivityIndicatorHidden
-	}
-
-	// MARK: - View
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
-	}
+class AuthenticationOptionsViewController: SubSettingsViewController {
 }
 
 // MARK: - UITableViewDataSource
@@ -50,19 +32,5 @@ extension AuthenticationOptionsViewController {
 
 		NotificationCenter.default.post(name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		tableView.reloadData()
-	}
-
-	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
-			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
-			authenticationOptionsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-		if let authenticationOptionsCell = tableView.cellForRow(at: indexPath) as? AuthenticationOptionsCell {
-			authenticationOptionsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			authenticationOptionsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
 	}
 }
