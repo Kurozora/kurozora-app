@@ -9,8 +9,8 @@
 import Foundation
 
 extension Notification.Name {
-	// MARK: - Explore
-	static var KEDidInvalidateContentSize: NSNotification.Name {
+	// MARK: - Shows
+	static var KFavoriteShowsListDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}
 

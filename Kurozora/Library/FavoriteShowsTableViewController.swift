@@ -17,6 +17,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		}
 	}
 	var userID: Int? = nil
+	var username: String?
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
 			if dismissButtonIsEnabled {
@@ -47,6 +48,11 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
 		collectionView.register(nibWithCellClass: SmallLockupCollectionViewCell.self)
 
+		// Observe NotificationCenter for an update
+		if userID == nil {
+			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
+		}
+
 		DispatchQueue.global(qos: .background).async {
 			self.fetchFavoritesList()
 		}
@@ -74,12 +80,33 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
+	override func setupEmptyDataSetView() {
+		collectionView.emptyDataSetView { view in
+			let detailLabel = self.userID == nil ? "Favorited shows will show up on this page!" : "\(self.username ?? "This user") hasn't favorited shows yet."
+			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+				.image(#imageLiteral(resourceName: "empty_favorites"))
+				.imageTintColor(KThemePicker.textColor.colorValue)
+				.verticalOffset(-50)
+				.verticalSpace(5)
+				.isScrollAllowed(true)
+		}
+	}
+
 	/// Fetches the user's favorite list.
-	fileprivate func fetchFavoritesList() {
+	@objc fileprivate func fetchFavoritesList() {
 		KService.shared.getFavourites(forUser: userID) { (showDetailsElements) in
 			DispatchQueue.main.async {
 				self.showDetailsElements = showDetailsElements
 			}
+		}
+	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let currentCell = sender as? SmallLockupCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+			showDetailCollectionViewController.baseLockupCollectionViewCell = currentCell
+			showDetailCollectionViewController.showDetailsElement = currentCell.showDetailsElement
 		}
 	}
 }
@@ -87,7 +114,12 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension FavoriteShowsCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 2
+		guard let showDetailsElements = showDetailsElements else { return 0 }
+		if showDetailsElements.isEmpty {
+			return 0
+		} else {
+			return 2
+		}
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -115,6 +147,13 @@ extension FavoriteShowsCollectionViewController {
 			libraryStatisticsCollectionViewCell.showDetailsElements = showDetailsElements
 		} else if let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell {
 			smallLockupCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.row]
+		}
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if indexPath.section == 1 {
+			let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
+			performSegue(withIdentifier: "ShowDetailsSegue", sender: smallLockupCollectionViewCell)
 		}
 	}
 }

@@ -416,6 +416,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="My Favorites" id="6D3-vz-S9g"/>
+                    <connections>
+                        <segue destination="sOR-Y4-DCs" kind="show" identifier="ShowDetailsSegue" id="QhS-SJ-X7e"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMD-gD-RNs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -484,5 +487,8 @@
         <image name="placeholder_poster_image" width="680" height="1000"/>
         <image name="shadow" width="6" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="QhS-SJ-X7e"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

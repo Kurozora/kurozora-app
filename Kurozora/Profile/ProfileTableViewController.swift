@@ -530,6 +530,7 @@ class ProfileTableViewController: KTableViewController {
 	fileprivate func showFavoriteShowsList() {
 		if let favoriteShowsCollectionViewController = FavoriteShowsCollectionViewController.instantiateFromStoryboard() as? FavoriteShowsCollectionViewController {
 			favoriteShowsCollectionViewController.userID = userID
+			favoriteShowsCollectionViewController.username = user?.profile?.username
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
 			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)

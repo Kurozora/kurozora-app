@@ -166,6 +166,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		let favoriteImage = showIsFavorite ? #imageLiteral(resourceName: "Symbols/heart_fill") : #imageLiteral(resourceName: "Symbols/heart")
 		favoriteButton.tag = showIsFavorite ? 1 : 0
 		favoriteButton.setImage(favoriteImage, for: .normal)
+		NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
 	}
 
 	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
