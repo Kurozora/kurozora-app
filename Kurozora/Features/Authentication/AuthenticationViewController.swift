@@ -11,7 +11,16 @@ import SwiftTheme
 
 class AuthenticationViewController: KViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var lockImageView: UIImageView!
+	@IBOutlet weak var blurEffectView: UIVisualEffectView! {
+		didSet {
+			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
+		}
+	}
+	@IBOutlet weak var lockImageView: UIImageView! {
+		didSet {
+			lockImageView.theme_tintColor = KThemePicker.textColor.rawValue
+		}
+	}
 	@IBOutlet weak var unlockDescriptionView: UIView!
 	@IBOutlet weak var unlockButton: UIButton! {
 		didSet {
@@ -19,9 +28,9 @@ class AuthenticationViewController: KViewController {
 			unlockButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var subTextLabel: UILabel! {
+	@IBOutlet weak var subTextLabel: UILabel!  {
 		didSet {
-			subTextLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+			subTextLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 
@@ -32,6 +41,8 @@ class AuthenticationViewController: KViewController {
 
 	// MARK: - View
 	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
 		Kurozora.shared.handleUserAuthentication()
 		unlockDescriptionView.isHidden = true
 		lockImageView.isHidden = false

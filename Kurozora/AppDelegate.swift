@@ -19,12 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var authenticationCount = 0
 	var isUnreachable = false
-	let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 
 	// MARK: - AppDelegate
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-		// Override point for customization after application launch.
+	fileprivate func setupAppTheme() {
 		// Initialize theme
+		let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
 		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
 
 		if UserSettings.automaticDarkTheme {
@@ -47,6 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// Fallback to default if no theme is chosen
 			KThemeStyle.switchTo(.default)
 		}
+	}
+
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+		// Override point for customization after application launch.
+		// Initialize theme
+		setupAppTheme()
 
 		// Initialize UIWindow
 		window = UIWindow()
@@ -89,9 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		} else {
 			let customTabBar = KTabBarController()
 			self.window?.rootViewController = customTabBar
-		}
 
-		if User.isSignedIn {
 			// Check if user should authenticate
 			Kurozora.shared.userHasToAuthenticate()
 		}

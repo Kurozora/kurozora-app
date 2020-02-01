@@ -35,7 +35,7 @@ class KurozoraReachabilityViewController: UIViewController {
 
 	// MARK: - Properties
 	var window: UIWindow?
-	let network = KNetworkManager.shared
+	let networkManager = KNetworkManager.shared
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +49,7 @@ class KurozoraReachabilityViewController: UIViewController {
 		super.viewDidLoad()
 
 		// If the network is reachable show the main controller
-		network.reachability.whenReachable = { _ in
+		networkManager.reachability.whenReachable = { _ in
 			Kurozora.shared.showMainPage(for: self.window, viewController: self)
 		}
 	}

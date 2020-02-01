@@ -139,7 +139,7 @@ extension SettingsTableViewController {
 		/// An array containing all general section settings rows.
 		static var allGeneral: [Row] {
 			#if targetEnvironment(macCatalyst)
-				return [.displayBlindness, .theme, .cache, .privacy]
+				return [.displayBlindness, .theme, .biometrics, .cache, .privacy]
 			#else
 				return [.displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy]
 			#endif

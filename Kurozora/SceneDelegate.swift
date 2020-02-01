@@ -45,6 +45,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let customTabBar = KTabBarController()
 		self.window?.rootViewController = customTabBar
 
+		// Check if user should authenticate
+		Kurozora.shared.userHasToAuthenticate()
+
 		// Resotre previoud activity
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			 if !configure(window: window, with: userActivity) {

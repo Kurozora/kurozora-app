@@ -66,7 +66,7 @@ class Kurozora {
 			DispatchQueue.main.async {
 				if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() {
 					let topViewController = UIApplication.topViewController
-					topViewController?.present(reachabilityViewController, animated: true, completion: nil)
+					topViewController?.present(reachabilityViewController)
 				}
 			}
 		}
@@ -235,9 +235,9 @@ extension Kurozora {
 	func prepareView() {
 		let blurEffect = UIBlurEffect(style: .dark)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-		blurEffectView.frame = UIApplication.shared.keyWindow?.frame ?? .zero
+		blurEffectView.frame = UIApplication.shared.windows.first { $0.isKeyWindow }?.frame ?? .zero
 		blurEffectView.tag = 5614325
-		UIApplication.shared.keyWindow?.addSubview(blurEffectView)
+		UIApplication.shared.windows.first { $0.isKeyWindow }?.addSubview(blurEffectView)
 
 		if let authenticationViewController = UIApplication.topViewController as? AuthenticationViewController {
 			authenticationViewController.dismiss(animated: false, completion: nil)
@@ -275,7 +275,11 @@ extension Kurozora {
 		// If user should authenticate but the top view controller isn't AuthenticationViewController
 		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
 			if let authenticationViewController = AuthenticationViewController.instantiateFromStoryboard() as? AuthenticationViewController {
-				UIApplication.topViewController?.present(authenticationViewController, animated: true, completion: nil)
+				topViewController?.present(authenticationViewController)
+			}
+		} else if topViewController == nil {
+			if let authenticationViewController = AuthenticationViewController.instantiateFromStoryboard() as? AuthenticationViewController {
+				topViewController?.present(authenticationViewController)
 			}
 		}
 	}

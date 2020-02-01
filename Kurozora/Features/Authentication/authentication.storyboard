@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5pL-t1-VJe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5pL-t1-VJe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Authentication View Controller-->
+        <!--Authentication-->
         <scene sceneID="Rro-IK-pHc">
             <objects>
-                <viewController id="5pL-t1-VJe" customClass="AuthenticationViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Authentication" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="overFullScreen" id="5pL-t1-VJe" customClass="AuthenticationViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fJg-Qu-t5Z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vYQ-Ee-SuJ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000596046448" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jbg-et-ZVg">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Eo-Qj-w87">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="wFB-lI-DfI">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="dark"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZQ-9T-UrF">
-                                <rect key="frame" x="20" y="401.5" width="374" height="103"/>
+                                <rect key="frame" x="20" y="396.5" width="374" height="103"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGH-9M-cuk">
                                         <rect key="frame" x="101" y="0.0" width="172" height="41"/>
@@ -40,7 +61,7 @@
                                         <rect key="frame" x="8" y="49" width="358" height="54"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -53,7 +74,7 @@
                                     <constraint firstItem="FGH-9M-cuk" firstAttribute="top" secondItem="wZQ-9T-UrF" secondAttribute="top" id="oTM-8a-eSF"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/lock_fill" translatesAutoresizingMaskIntoConstraints="NO" id="0pE-C4-Ed3">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/lock_fill" translatesAutoresizingMaskIntoConstraints="NO" id="0pE-C4-Ed3">
                                 <rect key="frame" x="157" y="144" width="100" height="100"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -62,20 +83,24 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="0pE-C4-Ed3" secondAttribute="trailing" id="0qr-JJ-ceb"/>
                             <constraint firstItem="0pE-C4-Ed3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fJg-Qu-t5Z" secondAttribute="leadingMargin" id="9PH-UD-RNO"/>
                             <constraint firstItem="0pE-C4-Ed3" firstAttribute="top" secondItem="fJg-Qu-t5Z" secondAttribute="topMargin" constant="100" id="JEZ-QS-K6d"/>
+                            <constraint firstAttribute="trailing" secondItem="vYQ-Ee-SuJ" secondAttribute="trailing" id="O0c-62-5Nh"/>
                             <constraint firstItem="wZQ-9T-UrF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fJg-Qu-t5Z" secondAttribute="leadingMargin" id="VCq-Bz-ePN"/>
-                            <constraint firstItem="0pE-C4-Ed3" firstAttribute="centerX" secondItem="sff-Hj-Ntx" secondAttribute="centerX" id="l60-t8-ZEO"/>
+                            <constraint firstItem="vYQ-Ee-SuJ" firstAttribute="leading" secondItem="fJg-Qu-t5Z" secondAttribute="leading" id="eyX-3c-4lt"/>
+                            <constraint firstItem="0pE-C4-Ed3" firstAttribute="centerX" secondItem="fJg-Qu-t5Z" secondAttribute="centerX" id="l60-t8-ZEO"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="wZQ-9T-UrF" secondAttribute="trailing" id="nch-l2-V0M"/>
-                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerY" secondItem="sff-Hj-Ntx" secondAttribute="centerY" id="wAQ-Wg-d35"/>
-                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerX" secondItem="sff-Hj-Ntx" secondAttribute="centerX" id="yXW-Ss-IZl"/>
+                            <constraint firstItem="vYQ-Ee-SuJ" firstAttribute="bottom" secondItem="fJg-Qu-t5Z" secondAttribute="bottom" id="tjW-rS-9fG"/>
+                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerY" secondItem="fJg-Qu-t5Z" secondAttribute="centerY" id="wAQ-Wg-d35"/>
+                            <constraint firstAttribute="top" secondItem="vYQ-Ee-SuJ" secondAttribute="top" id="wPP-xs-5zp"/>
+                            <constraint firstItem="wZQ-9T-UrF" firstAttribute="centerX" secondItem="fJg-Qu-t5Z" secondAttribute="centerX" id="yXW-Ss-IZl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="sff-Hj-Ntx"/>
                     </view>
                     <connections>
+                        <outlet property="blurEffectView" destination="vYQ-Ee-SuJ" id="kbw-Y3-hn4"/>
                         <outlet property="lockImageView" destination="0pE-C4-Ed3" id="gjL-s0-L05"/>
                         <outlet property="subTextLabel" destination="WfF-KK-GqB" id="KE2-ob-q3F"/>
                         <outlet property="unlockButton" destination="FGH-9M-cuk" id="ucm-wv-OAN"/>

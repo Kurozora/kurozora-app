@@ -21,5 +21,5 @@ enum KNavigationStyle: Int {
 	case normal = 0
 
 	/// A blurred navigation bar, intended for use on search view only.
-	case blurred
+	case blurred = 1
 }
