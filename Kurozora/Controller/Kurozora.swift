@@ -233,12 +233,6 @@ extension Kurozora {
 
 	/// Prepare the view to prepare the app for authentication.
 	func prepareView() {
-		let blurEffect = UIBlurEffect(style: .dark)
-		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-		blurEffectView.frame = UIApplication.shared.windows.first { $0.isKeyWindow }?.frame ?? .zero
-		blurEffectView.tag = 5614325
-		UIApplication.shared.windows.first { $0.isKeyWindow }?.addSubview(blurEffectView)
-
 		if let authenticationViewController = UIApplication.topViewController as? AuthenticationViewController {
 			authenticationViewController.dismiss(animated: false, completion: nil)
 		}
@@ -309,7 +303,12 @@ extension Kurozora {
 	fileprivate func localAuthentication(viewController: AuthenticationViewController, withSuccess successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		let localAuthenticationContext = LAContext()
 		var authError: NSError?
+
+		#if targetEnvironment(macCatalyst)
+		let reasonString = "authenticate to continue."
+		#else
 		let reasonString = "Welcome back! Please authenticate to continue."
+		#endif
 
 		if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError) {
 			localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString) { success, evaluateError in

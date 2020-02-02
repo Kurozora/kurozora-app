@@ -62,12 +62,16 @@ extension UIApplication {
 
 	/// The root view controller of the application.
 	static var topViewController: UIViewController? {
-		var base: UIViewController?
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			base = UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController
-		} else {
-			base = UIApplication.shared.keyWindow?.rootViewController
-		}
+		let base = UIApplication.sharedKeyWindow?.rootViewController
 		return UIApplication.topViewController(base)
+	}
+
+	/// The shared key window of the application.
+	static var sharedKeyWindow: UIWindow? {
+		if #available(iOS 13, macCatalyst 13, *) {
+			return UIApplication.shared.windows.first { $0.isKeyWindow }
+		} else {
+			return UIApplication.shared.keyWindow
+		}
 	}
 }

@@ -61,15 +61,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		Kurozora.shared.schemeHandler(scene: scene, open: url)
 	}
 
-	func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+//	func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+//		KNetworkManager.isReachable { _ in
+//			if User.isSignedIn {
+//				_ = Kurozora.validateSession(window: self.window)
+//			}
+//		}
+//
+//        return scene.userActivity
+//    }
+
+	func sceneDidEnterBackground(_ scene: UIScene) {
+		Kurozora.shared.userShouldAuthenticate()
+	}
+
+	func sceneWillEnterForeground(_ scene: UIScene) {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
 				_ = Kurozora.validateSession(window: self.window)
 			}
 		}
 
-        return scene.userActivity
-    }
+		if UserSettings.automaticDarkTheme {
+			KThemeStyle.checkAutomaticSchedule()
+		}
+	}
+
+	func sceneDidBecomeActive(_ scene: UIScene) {
+		if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
+			Kurozora.shared.prepareForAuthentication()
+		}
+	}
 
 	// MARK: - Functions
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {

@@ -9,8 +9,6 @@
 import UIKit
 import StoreKit
 import Kingfisher
-import SCLAlertView
-import SwiftTheme
 import UserNotifications
 
 @UIApplicationMain
@@ -21,37 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var isUnreachable = false
 
 	// MARK: - AppDelegate
-	fileprivate func setupAppTheme() {
-		// Initialize theme
-		let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
-
-		if UserSettings.automaticDarkTheme {
-			KThemeStyle.startAutomaticDarkThemeSchedule(true)
-		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {
-			// If themeID is an integer
-			if let themeID = Int(currentThemeID) {
-				// Use a non default theme if it exists
-				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
-					KThemeStyle.switchTo(theme: themeID)
-				} else {
-					// Fallback to default if theme doesn't exist
-					KThemeStyle.switchTo(.day)
-				}
-			} else {
-				// Use one of the chosen default themes
-				KThemeStyle.switchTo(theme: currentThemeID)
-			}
-		} else {
-			// Fallback to default if no theme is chosen
-			KThemeStyle.switchTo(.default)
-		}
-	}
-
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 		// Override point for customization after application launch.
 		// Initialize theme
-		setupAppTheme()
+		KThemeStyle.initAppTheme()
 
 		// Initialize UIWindow
 		window = UIWindow()
@@ -137,17 +108,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-		if #available(macCatalyst 13.0, *) {
-		} else {
-			if authenticationCount < 1 {
-				if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
-					Kurozora.shared.prepareForAuthentication()
-				}
-				UIApplication.shared.keyWindow?.viewWithTag(5614325)?.removeFromSuperview()
+		if authenticationCount < 1 {
+			if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
+				Kurozora.shared.prepareForAuthentication()
 			}
-
-			authenticationCount += 1
 		}
+
+		authenticationCount += 1
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
@@ -186,14 +153,20 @@ extension AppDelegate {
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
 		let token = tokenParts.joined()
+		#if DEBUG
 		print("Device Token: \(token)")
+		#endif
 	}
 
 	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+		#if DEBUG
 		print("Failed to register: \(error)")
+		#endif
 	}
 
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+		#if DEBUG
 		userInfo.forEach({ print("\($0.key): \($0.value)") })
+		#endif
 	}
 }

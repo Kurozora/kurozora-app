@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y7k-DG-Epc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y7k-DG-Epc">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,11 +12,7 @@
         <scene sceneID="1VR-py-RkL">
             <objects>
                 <viewController storyboardIdentifier="KurozoraReachabilityViewController" title="Reachability" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y7k-DG-Epc" customClass="KurozoraReachabilityViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YCK-dy-Mi4"/>
-                        <viewControllerLayoutGuide type="bottom" id="jjR-z2-haq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="33p-NI-IU3">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="33p-NI-IU3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -37,7 +34,6 @@
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
@@ -72,7 +68,7 @@
                         <constraints>
                             <constraint firstItem="shM-IJ-2nj" firstAttribute="top" secondItem="LjC-th-a9Z" secondAttribute="bottom" constant="10" id="0du-HY-fng"/>
                             <constraint firstItem="NVv-u1-3Ms" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="33p-NI-IU3" secondAttribute="leadingMargin" id="7Zs-AO-UmB"/>
-                            <constraint firstItem="ND4-6U-Mvi" firstAttribute="centerX" secondItem="33p-NI-IU3" secondAttribute="centerX" id="9dV-Uj-d5D"/>
+                            <constraint firstItem="ND4-6U-Mvi" firstAttribute="centerX" secondItem="LIS-6d-x0F" secondAttribute="centerX" id="9dV-Uj-d5D"/>
                             <constraint firstItem="LjC-th-a9Z" firstAttribute="centerX" secondItem="NVv-u1-3Ms" secondAttribute="centerX" id="CTx-9A-XQ0"/>
                             <constraint firstItem="NVv-u1-3Ms" firstAttribute="centerY" secondItem="33p-NI-IU3" secondAttribute="centerY" id="Fdh-zs-eB9"/>
                             <constraint firstItem="LjC-th-a9Z" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NVv-u1-3Ms" secondAttribute="trailing" id="R4V-es-NGR"/>
@@ -84,9 +80,10 @@
                             <constraint firstItem="shM-IJ-2nj" firstAttribute="centerX" secondItem="LjC-th-a9Z" secondAttribute="centerX" id="cJS-ds-hDF"/>
                             <constraint firstItem="LjC-th-a9Z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NVv-u1-3Ms" secondAttribute="leading" id="dSk-9a-OaP"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="NVv-u1-3Ms" secondAttribute="trailing" id="maq-YB-T9m"/>
-                            <constraint firstAttribute="trailing" secondItem="yKL-qq-VMf" secondAttribute="trailing" id="nxM-8h-5gR"/>
-                            <constraint firstItem="yKL-qq-VMf" firstAttribute="leading" secondItem="33p-NI-IU3" secondAttribute="leading" id="qWi-gh-e64"/>
+                            <constraint firstItem="LIS-6d-x0F" firstAttribute="trailing" secondItem="yKL-qq-VMf" secondAttribute="trailing" id="nxM-8h-5gR"/>
+                            <constraint firstItem="yKL-qq-VMf" firstAttribute="leading" secondItem="LIS-6d-x0F" secondAttribute="leading" id="qWi-gh-e64"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="LIS-6d-x0F"/>
                     </view>
                     <connections>
                         <outlet property="blurEffectView" destination="yKL-qq-VMf" id="AZd-jl-k1M"/>

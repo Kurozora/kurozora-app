@@ -1766,9 +1766,9 @@
 		66B4F1D5223D141A007C5048 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				66FC6DF52342B91600A454DD /* Extensions */,
 				66AEABD922987A4D00949FD8 /* KThemePicker.swift */,
 				66752632222815C2007C1617 /* KThemeStyle.swift */,
+				66FC6DF52342B91600A454DD /* Extensions */,
 			);
 			path = Theme;
 			sourceTree = "<group>";

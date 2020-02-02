@@ -28,7 +28,7 @@ class AuthenticationViewController: KViewController {
 			unlockButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var subTextLabel: UILabel!  {
+	@IBOutlet weak var subTextLabel: UILabel! {
 		didSet {
 			subTextLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
@@ -53,6 +53,13 @@ class AuthenticationViewController: KViewController {
 
 		unlockDescriptionView.isHidden = true
 		lockImageView.isHidden = false
+
+		let subText = "Use the button above to unlock Kurozora or if you're snooping around someone else's device then press "
+		#if targetEnvironment(macCatalyst)
+		subTextLabel.text = subText + "⌘ + Q to quit."
+		#else
+		subTextLabel.text = subText + "the home button to exit."
+		#endif
 	}
 
 	// MARK: - Functions

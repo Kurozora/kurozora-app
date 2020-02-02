@@ -10,8 +10,8 @@
         <!--Authentication-->
         <scene sceneID="Rro-IK-pHc">
             <objects>
-                <viewController title="Authentication" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="overFullScreen" id="5pL-t1-VJe" customClass="AuthenticationViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fJg-Qu-t5Z">
+                <viewController storyboardIdentifier="AuthenticationViewController" title="Authentication" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5pL-t1-VJe" customClass="AuthenticationViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="fJg-Qu-t5Z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -33,7 +33,6 @@
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>

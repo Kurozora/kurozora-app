@@ -68,6 +68,33 @@ enum KThemeStyle: Int {
 	}
 
 	// MARK: - Functions
+	/// Initializes the app's global theme.
+	static func initAppTheme() {
+		let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
+
+		if UserSettings.automaticDarkTheme {
+			KThemeStyle.startAutomaticDarkThemeSchedule(true)
+		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {
+			// If themeID is an integer
+			if let themeID = Int(currentThemeID) {
+				// Use a non default theme if it exists
+				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
+					KThemeStyle.switchTo(theme: themeID)
+				} else {
+					// Fallback to default if theme doesn't exist
+					KThemeStyle.switchTo(.day)
+				}
+			} else {
+				// Use one of the chosen default themes
+				KThemeStyle.switchTo(theme: currentThemeID)
+			}
+		} else {
+			// Fallback to default if no theme is chosen
+			KThemeStyle.switchTo(.default)
+		}
+	}
+
 	/**
 		Return a KThemeStyle value for a given string.
 
