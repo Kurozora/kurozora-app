@@ -38,7 +38,8 @@ class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 				kWebViewController.url = actionItem?["url"]
 				kWebViewController.title = actionItem?["title"]
 			}
-
+			
+			kNavigationController.modalPresentationStyle = .custom
 			self.parentViewController?.present(kNavigationController)
 		}
 	}

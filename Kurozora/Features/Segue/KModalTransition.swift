@@ -15,7 +15,8 @@ class KModalTransition: UIStoryboardSegue {
 
 	override func perform() {
 		if #available(iOS 13.0, macCatalyst 13, *) {
-			super.perform()
+			destination.modalPresentationStyle = .custom
+			source.present(destination, animated: true, completion: nil)
 		} else {
 			transitioningDelegate = transitioningDelegate ?? SPStorkTransitioningDelegate()
 			transitioningDelegate?.showIndicator = false
