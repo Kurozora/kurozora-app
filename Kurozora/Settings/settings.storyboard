@@ -36,7 +36,7 @@
                 <splitViewController storyboardIdentifier="SettingsSplitViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FEY-7R-0UY" customClass="SettingsSplitViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="j9b-id-9wy" kind="relationship" relationship="masterViewController" id="VeX-CZ-O8W"/>
-                        <segue destination="Zmg-c6-Igs" kind="relationship" relationship="detailViewController" id="0Im-wF-5jX"/>
+                        <segue destination="urf-Ka-1Pe" kind="relationship" relationship="detailViewController" id="CVK-QH-6Cy"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ldr-ha-pf3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -77,32 +77,6 @@
             </objects>
             <point key="canvasLocation" x="-1746" y="-1005"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="CPk-At-3ge">
-            <objects>
-                <navigationController storyboardIdentifier="AccountKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zmg-c6-Igs" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ZA3-fv-L1X">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="urf-Ka-1Pe" kind="relationship" relationship="rootViewController" id="5fp-aD-46u"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-zC-V9X" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4014" y="-269"/>
-        </scene>
         <!--notificationSettings-->
         <scene sceneID="cL2-5n-9vs">
             <objects>
@@ -127,7 +101,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y62-rG-dh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2533" y="-269"/>
+            <point key="canvasLocation" x="-3252" y="-509"/>
         </scene>
         <!--purchase-->
         <scene sceneID="yi4-pG-GFi">
@@ -379,7 +353,7 @@
         <image name="display_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JqT-i1-ECV"/>
+        <segue reference="CVK-QH-6Cy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
