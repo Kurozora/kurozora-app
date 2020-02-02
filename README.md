@@ -1,4 +1,4 @@
-<p align="center"><img src=".github/Assets/Kurozora_on_Device.”png></p>
+<p align="center"><img src=".github/Assets/Kurozora_on_Device.png"></p>
 
 <p align="center">
     <sup><em>Discover, share and track anime with friends.</em></sup>
