@@ -1030,13 +1030,13 @@
 			path = "In-App Purchases";
 			sourceTree = "<group>";
 		};
-		66112343208F6A8E00E6033A /* Controller */ = {
+		66112343208F6A8E00E6033A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				6609FAD621D8D237008DF5E4 /* Kurozora.swift */,
 				66112348208F6ACE00E6033A /* WorkflowController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		6611234C208F70B500E6033A /* Extensions */ = {
@@ -1127,7 +1127,7 @@
 			children = (
 				66160C3F215C2DEB00D0D722 /* reachability.storyboard */,
 				6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */,
-				6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */,
+				6645D5F323E702B10042B4E0 /* Utilities */,
 			);
 			path = Reachability;
 			sourceTree = "<group>";
@@ -1234,6 +1234,46 @@
 				66973DFB231202960097A9F8 /* Models */,
 			);
 			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		6645D5F023E7022B0042B4E0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				669C8D552107B7D80014EB7A /* BounceAnimation.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		6645D5F123E702440042B4E0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6645D5F223E702920042B4E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66AEABD922987A4D00949FD8 /* KThemePicker.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6645D5F323E702B10042B4E0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		6645D5F423E702D60042B4E0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				669E89C62345573600092778 /* KStoreObserver.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		6646A26F236A5D1C00DCC0A4 /* Browser */ = {
@@ -1420,19 +1460,9 @@
 				663C95B823084FAC003720A4 /* SceneDelegate.swift */,
 				66707821208B1C6800471FBC /* LaunchScreen.xib */,
 				66B4F1D1223BC8EB007C5048 /* Features */,
-				66112343208F6A8E00E6033A /* Controller */,
+				66112343208F6A8E00E6033A /* Controllers */,
 				66B4F1D9223D1F70007C5048 /* Classes */,
 				6611234C208F70B500E6033A /* Extensions */,
-				66ABF5FB23383B8B00795750 /* Welcome */,
-				661F9F872087383500CF4153 /* Onboard */,
-				66E748BA20987E1A0039A105 /* Home */,
-				66058DB2212E915D0084B79E /* Shows */,
-				66D6237520A1BB4000304914 /* Library */,
-				66A552D220A2D1F300E515DB /* Forums */,
-				6601F1AA2118486A0074C1DD /* Notification */,
-				66CBA53322BC44F100FBEC13 /* Feed */,
-				66CF6D6320A9875600F98375 /* Profile */,
-				66707836208B844800471FBC /* Settings */,
 				66A8AF1F209990CE0011A342 /* View */,
 				66A552D720A2E4FC00E515DB /* Anime */,
 				66D6236A20A09DB900304914 /* Season */,
@@ -1607,9 +1637,9 @@
 		669C8D542107B7AD0014EB7A /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				669C8D572107B8170014EB7A /* BasicTabBarItemContentView.swift */,
-				669C8D552107B7D80014EB7A /* BounceAnimation.swift */,
 				66C2C5252107ACA10020E21F /* KTabBarController.swift */,
+				6645D5F023E7022B0042B4E0 /* Utilities */,
+				6645D5F123E702440042B4E0 /* Views */,
 			);
 			path = "Tab Bar";
 			sourceTree = "<group>";
@@ -1618,11 +1648,11 @@
 			isa = PBXGroup;
 			children = (
 				669EA9A122C1491600784181 /* purchase.storyboard */,
-				669E89C62345573600092778 /* KStoreObserver.swift */,
 				669EA99F22C1490A00784181 /* PurchaseTableViewController.swift */,
 				66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */,
 				661DBC50234A4E00009292DF /* TipJarTableViewController.swift */,
 				66CDC088234A8278009E799C /* Cells */,
+				6645D5F423E702D60042B4E0 /* Utilities */,
 			);
 			path = "In-App Purchases";
 			sourceTree = "<group>";
@@ -1724,16 +1754,26 @@
 			children = (
 				6640E18722AD631F00D0F575 /* Authentication */,
 				66B216A921C166B5006E167D /* Editor */,
+				66CBA53322BC44F100FBEC13 /* Feed */,
+				66A552D220A2D1F300E515DB /* Forums */,
+				66E748BA20987E1A0039A105 /* Home */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
+				66D6237520A1BB4000304914 /* Library */,
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
 				66B4F1D3223BC906007C5048 /* Networking */,
+				6601F1AA2118486A0074C1DD /* Notification */,
+				661F9F872087383500CF4153 /* Onboard */,
+				66CF6D6320A9875600F98375 /* Profile */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 				66B4F1D2223BC901007C5048 /* Search */,
 				6603F5E822E9BB7A0064BE62 /* Segue */,
+				66707836208B844800471FBC /* Settings */,
+				66058DB2212E915D0084B79E /* Shows */,
 				669C8D542107B7AD0014EB7A /* Tab Bar */,
 				66B4F1D5223D141A007C5048 /* Theme */,
 				664133E621DB827100CE823A /* UserDefaults */,
 				66D8AA7522F0DDFE00456E75 /* WebBrowser */,
+				66ABF5FB23383B8B00795750 /* Welcome */,
 				66BEC131231711C40039D683 /* WhatsNew */,
 			);
 			path = Features;
@@ -1766,9 +1806,9 @@
 		66B4F1D5223D141A007C5048 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				66AEABD922987A4D00949FD8 /* KThemePicker.swift */,
 				66752632222815C2007C1617 /* KThemeStyle.swift */,
 				66FC6DF52342B91600A454DD /* Extensions */,
+				6645D5F223E702920042B4E0 /* Models */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
