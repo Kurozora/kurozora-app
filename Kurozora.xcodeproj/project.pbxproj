@@ -59,7 +59,6 @@
 		661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7F2087282500CF4153 /* RegisterViewController.swift */; };
 		661F9F842087282500CF4153 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F802087282500CF4153 /* WelcomeViewController.swift */; };
 		66232CDB2310055900C45B5A /* BaseFeedPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */; };
-		66244D8F230B76F800EC33E0 /* LibraryCompactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D8E230B76F700EC33E0 /* LibraryCompactCollectionViewCell.swift */; };
 		66244D91230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */; };
 		662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */; };
 		662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B9260233E513A001D49B7 /* SearchForumsResultsCell.swift */; };
@@ -125,6 +124,10 @@
 		6641D6FA222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */; };
 		6641D6FB222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */; };
 		6645D5EB23E496940042B4E0 /* FavoriteShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5EA23E496940042B4E0 /* FavoriteShow.swift */; };
+		6645D5F723E709EE0042B4E0 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5F623E709EE0042B4E0 /* R.generated.swift */; };
+		6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */; };
+		6645D5FB23E70A670042B4E0 /* LibraryCompactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */; };
+		6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */; };
 		6646A26E236A54A700DCC0A4 /* URL+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */; };
 		6646A272236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */; };
 		6646A275236A5F7600DCC0A4 /* browserSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */; };
@@ -335,7 +338,6 @@
 		66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
-		66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */; };
 		66C5797922A83726001B8F51 /* theme.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* theme.storyboard */; };
 		66C5797B22A86435001B8F51 /* debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* debug.storyboard */; };
 		66C5797D22A864CB001B8F51 /* legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* legal.storyboard */; };
@@ -493,7 +495,6 @@
 		661F9F7F2087282500CF4153 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		661F9F802087282500CF4153 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedPostsCell.swift; sourceTree = "<group>"; };
-		66244D8E230B76F700EC33E0 /* LibraryCompactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LibraryCompactCollectionViewCell.swift; path = Kurozora/Library/Cells/LibraryCompactCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDetailedCollectionViewCell.swift; sourceTree = "<group>"; };
 		662B925E233E50FA001D49B7 /* SearchShowResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShowResultsCell.swift; sourceTree = "<group>"; };
 		662B9260233E513A001D49B7 /* SearchForumsResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchForumsResultsCell.swift; sourceTree = "<group>"; };
@@ -559,6 +560,10 @@
 		6641D6E1222EA3DF0067BD3A /* App-Icon-iPad-Pro-Emerald@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Emerald@2x.png"; sourceTree = "<group>"; };
 		6641D6E2222EA3DF0067BD3A /* App-Icon-iPad-Dutch-Orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Dutch-Orange@2x.png"; sourceTree = "<group>"; };
 		6645D5EA23E496940042B4E0 /* FavoriteShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShow.swift; sourceTree = "<group>"; };
+		6645D5F623E709EE0042B4E0 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageIconTableViewController.swift; sourceTree = "<group>"; };
+		6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCompactCollectionViewCell.swift; sourceTree = "<group>"; };
+		6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCollectionViewCell.swift; sourceTree = "<group>"; };
 		6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Kurozora.swift"; sourceTree = "<group>"; };
 		6646A270236A5D8400DCC0A4 /* BrowserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSettingsTableViewController.swift; sourceTree = "<group>"; };
 		6646A274236A5F7600DCC0A4 /* browserSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = browserSettings.storyboard; sourceTree = "<group>"; };
@@ -760,7 +765,6 @@
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
-		66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManageIconTableViewController.swift; path = "Kurozora/Settings/Sub Settings/Theme/ManageIconTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		66C5797822A83726001B8F51 /* theme.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = theme.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = debug.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = legal.storyboard; sourceTree = "<group>"; };
@@ -1209,7 +1213,7 @@
 			isa = PBXGroup;
 			children = (
 				66C5797822A83726001B8F51 /* theme.storyboard */,
-				66C5797422A81F19001B8F51 /* ManageIconTableViewController.swift */,
+				6645D5F823E70A4C0042B4E0 /* ManageIconTableViewController.swift */,
 				660B42A621259E300051EF66 /* ManageThemesController.swift */,
 				660B5B622152545B002D05F3 /* Cells */,
 				66A254D622AABC3B002A0E34 /* Models */,
@@ -1499,6 +1503,7 @@
 				6614408E21DA387800E54915 /* Settings.bundle */,
 				66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */,
 				66647B612084995E00CF624F /* Info.plist */,
+				6645D5F623E709EE0042B4E0 /* R.generated.swift */,
 				66647B5C2084995E00CF624F /* Assets.xcassets */,
 				668F63842098681C003B1C1D /* Fonts */,
 			);
@@ -1850,7 +1855,7 @@
 			isa = PBXGroup;
 			children = (
 				66D6237C20A1CB9C00304914 /* LibraryCollectionViewCell.swift */,
-				66244D8E230B76F700EC33E0 /* LibraryCompactCollectionViewCell.swift */,
+				6645D5FA23E70A660042B4E0 /* LibraryCompactCollectionViewCell.swift */,
 				66244D90230B774200EC33E0 /* LibraryDetailedCollectionViewCell.swift */,
 				6699A1C223779E9B00517C2C /* LibraryListCollectionViewCell.swift */,
 				66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */,
@@ -2024,13 +2029,13 @@
 		66D16CA0212D52AB00B6B882 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
 				660C042223CFE40D0040C749 /* BadgeCollectionViewCell.swift */,
-				667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */,
 				66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */,
 				66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */,
-				66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */,
 				6617D535222C9CC0001FD649 /* RelatedShowCollectionViewCell.swift */,
+				66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */,
+				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
+				667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2198,6 +2203,7 @@
 		66FDDB7523B97F8B00364886 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */,
 				6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */,
 			);
 			path = Cells;
@@ -2229,6 +2235,7 @@
 			buildConfigurationList = 66647B7A2084995E00CF624F /* Build configuration list for PBXNativeTarget "Kurozora" */;
 			buildPhases = (
 				C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */,
+				6645D5F523E7062F0042B4E0 /* R.swift */,
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
 				66647B4E2084995500CF624F /* Resources */,
@@ -2456,6 +2463,26 @@
 			shellPath = /bin/sh;
 			shellScript = "# Copy pods acknowledgements file to Settings.bundle\n\nPODPATH=\"${PODS_ROOT}/Target Support Files/Pods-Kurozora/Pods-Kurozora-acknowledgements.plist\"\nPROJECTPATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/Acknowledgements.plist\"\n\ncp \"${PODPATH}\" \"${PROJECTPATH}\"\n\nPLISTBUDDY=\"/usr/libexec/PlistBuddy -c\"\n\ni=0\nwhile true ; do\n   # If an item is printable then it exists, otherwise exit loop\n   $PLISTBUDDY \"Print PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n   if [ $? -ne 0 ]; then\n      break\n   fi\n   i=$(($i + 1))\ndone\n\n# Get last item in array\ni=$(($i - 1))\n\n# Delete last item in array\n$PLISTBUDDY \"Delete PreferenceSpecifiers:$i\" \"${PROJECTPATH}\" >/dev/null 2>/dev/null\n";
 		};
+		6645D5F523E7062F0042B4E0 /* R.swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = R.swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Add pod 'R.swift' to your Podfile and run pod install\n# In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left\n# Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: \"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n# Add $TEMP_DIR/rswift-lastrun to the \"Input Files\" and $SRCROOT/R.generated.swift to the \"Output Files\" of the Build Phase\n# Build your project, in Finder you will now see a R.generated.swift in the $SRCROOT-folder, drag the R.generated.swift files into your project and uncheck Copy items if needed\n\n\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
 		6666F88320BF4A4C0003A72F /* Run Build Bump Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2528,6 +2555,7 @@
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
@@ -2557,6 +2585,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
@@ -2644,6 +2673,7 @@
 				66D6237220A18E4200304914 /* CalendarViewController.swift in Sources */,
 				66FC6DEE2340BDB600A454DD /* KService+Kurozora.swift in Sources */,
 				66D6237020A189D200304914 /* ChartViewController.swift in Sources */,
+				6645D5FB23E70A670042B4E0 /* LibraryCompactCollectionViewCell.swift in Sources */,
 				666938B321B1D4E200BA9620 /* ShowMoreCell.swift in Sources */,
 				66AEABED2298AC6A00949FD8 /* NotificationOptions.swift in Sources */,
 				66232CDB2310055900C45B5A /* BaseFeedPostsCell.swift in Sources */,
@@ -2712,7 +2742,6 @@
 				666938AF21B1D4D200BA9620 /* TimelinePostCell.swift in Sources */,
 				663E34272360D333003386D1 /* MediumLockupCollectionViewCell.swift in Sources */,
 				6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */,
-				66244D8F230B76F800EC33E0 /* LibraryCompactCollectionViewCell.swift in Sources */,
 				66A552DB20A2E54200E515DB /* AnimeInformationViewController.swift in Sources */,
 				66DEB4B221D419420093725F /* KSearchController.swift in Sources */,
 				663E34252360D2F2003386D1 /* BannerLockupCollectionViewCell.swift in Sources */,
@@ -2721,6 +2750,7 @@
 				66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */,
 				66058DBA212E97670084B79E /* ReviewCollectionViewCell.swift in Sources */,
 				66B2C73D232D0F350042AB12 /* PostType.swift in Sources */,
+				6645D5FD23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift in Sources */,
 				664B6D7C230F532500F9C726 /* BadgeElement.swift in Sources */,
 				669E89C72345573600092778 /* KStoreObserver.swift in Sources */,
 				66ACA19222C2627000FAEF08 /* AppearanceOptionsViewController.swift in Sources */,
@@ -2733,6 +2763,7 @@
 				66BA740A223DB20800AEB8ED /* Library.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
+				6645D5F723E709EE0042B4E0 /* R.generated.swift in Sources */,
 				6640E18B22AD634600D0F575 /* AuthenticationViewController.swift in Sources */,
 				663E34232360D2BE003386D1 /* VideoLockupCollectionViewCell.swift in Sources */,
 				66C863FD216CDBB70054EE16 /* UserNotification.swift in Sources */,
@@ -2749,6 +2780,7 @@
 				66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */,
 				667C2C47239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayoutInteroperability.swift in Sources */,
 				66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */,
+				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
 				66FC6DEC2340BD5200A454DD /* KService+User.swift in Sources */,
 				66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */,
 				66CAE68D2337D0FF00991E59 /* OnboardingCellType.swift in Sources */,
@@ -2821,7 +2853,6 @@
 				6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */,
 				665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */,
 				66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */,
-				66C5797522A81F19001B8F51 /* ManageIconTableViewController.swift in Sources */,
 				66B216AE21C16B15006E167D /* ThreadPost.swift in Sources */,
 				666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */,
 				669EA9A022C1490A00784181 /* PurchaseTableViewController.swift in Sources */,

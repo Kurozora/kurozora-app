@@ -743,7 +743,7 @@
                         <outlet property="separatorView" destination="OmS-Rs-je8" id="Bft-MF-SNP"/>
                         <outlet property="tagBadgeButton" destination="acZ-hU-RmT" id="p1c-Zj-CB1"/>
                         <outlet property="usernameLabel" destination="Ak5-fH-5eB" id="D24-4f-G7c"/>
-                        <segue destination="MLI-TH-L8z" kind="presentation" identifier="FavoriteShowsSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="q0e-Li-wfz"/>
+                        <segue destination="MLI-TH-L8z" kind="custom" identifier="FavoriteShowsSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="q0e-Li-wfz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFh-8K-gm5" userLabel="First Responder" sceneMemberID="firstResponder"/>

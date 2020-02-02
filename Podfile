@@ -17,6 +17,7 @@ def kurozora_pods
 	pod 'KeychainAccess'
 	pod 'Kingfisher'
 	pod 'NotificationBannerSwift'
+	pod 'R.swift'
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'

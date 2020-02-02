@@ -148,7 +148,7 @@
                                             <outlet property="primaryLabel" destination="0UW-QR-FTb" id="haP-dM-nFh"/>
                                             <outlet property="secondaryLabel" destination="ixE-zS-toS" id="Xqw-si-Cgy"/>
                                             <outlet property="selectedView" destination="Xnn-up-RZi" id="qej-mH-dBq"/>
-                                            <segue destination="6zO-7o-cem" kind="presentation" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="v5S-pA-OUH"/>
+                                            <segue destination="6zO-7o-cem" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="v5S-pA-OUH"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

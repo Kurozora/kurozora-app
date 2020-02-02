@@ -240,11 +240,11 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Explore" id="2aK-dy-bZm"/>
                     <connections>
-                        <segue destination="0a7-9G-Fd6" kind="presentation" identifier="SubscriptionSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="3ef-dN-WV5"/>
-                        <segue destination="SJ2-V2-Ihb" kind="presentation" identifier="RedeemSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="X7E-Wd-lXb"/>
-                        <segue destination="fiZ-zG-fwp" kind="presentation" identifier="GenresSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="UbA-PQ-r8z"/>
+                        <segue destination="0a7-9G-Fd6" kind="custom" identifier="SubscriptionSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="3ef-dN-WV5"/>
+                        <segue destination="SJ2-V2-Ihb" kind="custom" identifier="RedeemSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="X7E-Wd-lXb"/>
+                        <segue destination="fiZ-zG-fwp" kind="custom" identifier="GenresSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="UbA-PQ-r8z"/>
                         <segue destination="a2S-hb-5lO" kind="show" identifier="ShowsListSegue" id="EuV-Lh-iIw"/>
-                        <segue destination="iCt-dj-RF4" kind="presentation" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="ctZ-Iy-Ut3"/>
+                        <segue destination="iCt-dj-RF4" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="ctZ-Iy-Ut3"/>
                         <segue destination="8H2-pT-d2L" kind="show" identifier="ShowDetailsSegue" id="gKM-pt-PFb"/>
                     </connections>
                 </collectionViewController>
@@ -257,7 +257,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="GenresTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pey-ss-6J5" customClass="GenresTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="wLF-aK-jIa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -370,7 +370,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Q86-9G-OBs"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="aaE-fl-5Pb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

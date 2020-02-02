@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>nib Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/nib" class="dashAnchor"></a>
+    <a title="nib Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../index.html">Kurozora 1.0.0 Docs</a> (65% documented)</p>
+        <p class="header-right"><a href="https://github.com/kiritokatklian/kurozora-app"><img src="../../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fkiritokatklian%2Egithub%2Eio%2Fkurozora%2Dapp%2Fdocsets%2FKurozora%2Exml"><img src="../../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../index.html">Kurozora Reference</a>
+        <img id="carat" src="../../img/carat.png" />
+        nib Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Classes/AddAnimeIntent.html">AddAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/AddAnimeIntentResponse.html">AddAnimeIntentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/KCollectionViewController.html">KCollectionViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/KFillBarIndicator.html">KFillBarIndicator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/KTableViewController.html">KTableViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes.html#/c:@M@Kurozora@objc(cs)KViewController">KViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/OpenAnimeIntent.html">OpenAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/OpenAnimeIntentResponse.html">OpenAnimeIntentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SearchAnimeIntent.html">SearchAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SearchAnimeIntentResponse.html">SearchAnimeIntentResponse</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Enums/AddAnimeIntentResponseCode.html">AddAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/AppAppearanceOption.html">AppAppearanceOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/BiometricType.html">BiometricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/DarkThemeOption.html">DarkThemeOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/EpisodeSection.html">EpisodeSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/FeedType.html">FeedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ForumsSortingStyle.html">ForumsSortingStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/HorizontalCollectionCellStyle.html">HorizontalCollectionCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/ImageFormat.html">ImageFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/KNavigationStyle.html">KNavigationStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/KThemePicker.html">KThemePicker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/KThemeStyle.html">KThemeStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationAlertStyle.html">NotificationAlertStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationBannerStyle.html">NotificationBannerStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationGroupStyle.html">NotificationGroupStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationOptions.html">NotificationOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationSegueIdentifier.html">NotificationSegueIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NotificationType.html">NotificationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/OnboardingCellType.html">OnboardingCellType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/OnboardingType.html">OnboardingType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/OpenAnimeIntentResponseCode.html">OpenAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums.html#/s:8Kurozora8PostTypeO">PostType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/RequireAuthentication.html">RequireAuthentication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SearchAnimeIntentResponseCode.html">SearchAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/SearchScope.html">SearchScope</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums.html#/s:8Kurozora15UserSettingsKeyO">UserSettingsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/UserType.html">UserType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/VerticalCollectionCellStyle.html">VerticalCollectionCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums.html#/s:8Kurozora11WatchStatusO">WatchStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/BaseLockupCollectionViewCell.html">BaseLockupCollectionViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/NSLayoutManager.html">NSLayoutManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/SKProduct.html">SKProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/SKProduct/PeriodUnit.html">– PeriodUnit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/SKProductSubscriptionPeriod.html">SKProductSubscriptionPeriod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/TMBar.html">TMBar</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIAlertController.html">UIAlertController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIApplication.html">UIApplication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UICollectionViewCell.html">UICollectionViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UICollectionViewController.html">UICollectionViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIColor.html">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIDevice.html">UIDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIImage.html">UIImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIImageView.html">UIImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIStatusBarStyle.html">UIStatusBarStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UITableView.html">UITableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UITableViewCell.html">UITableViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIView.html">UIView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/UIViewController.html">UIViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/URL.html">URL</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Protocols/AddAnimeIntentHandling.html">AddAnimeIntentHandling</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols.html#/c:@M@Kurozora@objc(pl)KCollectionViewDelegateLayout">KCollectionViewDelegateLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/OpenAnimeIntentHandling.html">OpenAnimeIntentHandling</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/SearchAnimeIntentHandling.html">SearchAnimeIntentHandling</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Structs.html#/s:8Kurozora20GroupedNotificationsV">GroupedNotifications</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R.html">R</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/segue.html">– segue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/storyboard.html">– storyboard</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R.html#/s:8Kurozora1RV12entitlementsV">– entitlements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/file.html">– file</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/font.html">– font</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/image.html">– image</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R.html#/s:8Kurozora1RV4infoV">– info</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/nib.html">– nib</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/R/reuseIdentifier.html">– reuseIdentifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Typealiases.html#/UIColor">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Typealiases.html#/UIImage">UIImage</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>nib</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="n">nib</span></code></pre>
+
+                </div>
+              </div>
+            <p>This <code>R.nib</code> struct is generated, and contains static references to 17 nibs.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV9animeCellAA2_RVADV06_AnimeD0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/animeCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV9animeCellAA2_RVADV06_AnimeD0VvpZ">animeCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>AnimeCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">animeCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_AnimeCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3380">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV22castCollectionViewCellAA2_RVADV05_CastdeF0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/castCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV22castCollectionViewCellAA2_RVADV05_CastdeF0VvpZ">castCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>CastCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">castCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_CastCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3382">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV11commentCellAA2_RVADV08_CommentD0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/commentCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV11commentCellAA2_RVADV08_CommentD0VvpZ">commentCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>CommentCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">commentCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_CommentCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3384">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV16commentImageCellAA2_RVADV08_CommentdE0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/commentImageCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV16commentImageCellAA2_RVADV08_CommentdE0VvpZ">commentImageCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>CommentImageCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">commentImageCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_CommentImageCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3386">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29largeLockupCollectionViewCellAA2_RVADV06_LargedefG0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/largeLockupCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29largeLockupCollectionViewCellAA2_RVADV06_LargedefG0VvpZ">largeLockupCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>LargeLockupCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">largeLockupCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_LargeLockupCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3388">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12launchScreenAA2_RVADV07_LaunchD0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/launchScreen" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12launchScreenAA2_RVADV07_LaunchD0VvpZ">launchScreen</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>LaunchScreen</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">launchScreen</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_LaunchScreen</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3390">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV23legalCollectionViewCellAA2_RVADV06_LegaldeF0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/legalCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV23legalCollectionViewCellAA2_RVADV06_LegaldeF0VvpZ">legalCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>LegalCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">legalCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_LegalCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3392">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV24lockupCollectionViewCellAA2_RVADV07_LockupdeF0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/lockupCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV24lockupCollectionViewCellAA2_RVADV07_LockupdeF0VvpZ">lockupCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>LockupCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">lockupCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_LockupCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3394">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV30mediumLockupCollectionViewCellAA2_RVADV07_MediumdefG0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/mediumLockupCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV30mediumLockupCollectionViewCellAA2_RVADV07_MediumdefG0VvpZ">mediumLockupCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>MediumLockupCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">mediumLockupCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_MediumLockupCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3396">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV8postCellAA2_RVADV05_PostD0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/postCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV8postCellAA2_RVADV05_PostD0VvpZ">postCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>PostCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">postCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_PostCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3398">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV13postImageCellAA2_RVADV05_PostdE0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/postImageCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV13postImageCellAA2_RVADV05_PostdE0VvpZ">postImageCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>PostImageCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">postImageCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_PostImageCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3400">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12postLinkCellAA2_RVADV05_PostdE0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/postLinkCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12postLinkCellAA2_RVADV05_PostdE0VvpZ">postLinkCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>PostLinkCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">postLinkCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_PostLinkCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3402">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV25sectionHeaderReusableViewAA2_RVADV08_SectiondeF0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/sectionHeaderReusableView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV25sectionHeaderReusableViewAA2_RVADV08_SectiondeF0VvpZ">sectionHeaderReusableView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>SectionHeaderReusableView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">sectionHeaderReusableView</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_SectionHeaderReusableView</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3404">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12showMoreCellAA2_RVADV05_ShowdE0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/showMoreCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12showMoreCellAA2_RVADV05_ShowdE0VvpZ">showMoreCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>ShowMoreCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">showMoreCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_ShowMoreCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3406">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29smallLockupCollectionViewCellAA2_RVADV06_SmalldefG0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/smallLockupCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29smallLockupCollectionViewCellAA2_RVADV06_SmalldefG0VvpZ">smallLockupCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>SmallLockupCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">smallLockupCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_SmallLockupCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3408">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29videoLockupCollectionViewCellAA2_RVADV06_VideodefG0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/videoLockupCollectionViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29videoLockupCollectionViewCellAA2_RVADV06_VideodefG0VvpZ">videoLockupCollectionViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>VideoLockupCollectionViewCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">videoLockupCollectionViewCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_VideoLockupCollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3410">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV17writeACommentCellAA2_RVADV06_WritedE0VvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/writeACommentCell" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV17writeACommentCellAA2_RVADV06_WritedE0VvpZ">writeACommentCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nib <code>WriteACommentCell</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">writeACommentCell</span><span class="p">:</span> <span class="n">_R</span><span class="o">.</span><span class="n">nib</span><span class="o">.</span><span class="n">_WriteACommentCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3412">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV9animeCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/animeCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV9animeCellySo5UINibCyt_tFZ">animeCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;AnimeCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.animeCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">animeCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3417-L3419">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV22castCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/castCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV22castCollectionViewCellySo5UINibCyt_tFZ">castCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;CastCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.castCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">castCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3425-L3427">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV11commentCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/commentCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV11commentCellySo5UINibCyt_tFZ">commentCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;CommentCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.commentCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">commentCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3433-L3435">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV16commentImageCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/commentImageCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV16commentImageCellySo5UINibCyt_tFZ">commentImageCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;CommentImageCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.commentImageCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">commentImageCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3441-L3443">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29largeLockupCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/largeLockupCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29largeLockupCollectionViewCellySo5UINibCyt_tFZ">largeLockupCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;LargeLockupCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.largeLockupCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">largeLockupCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3449-L3451">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12launchScreenySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/launchScreen(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12launchScreenySo5UINibCyt_tFZ">launchScreen(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;LaunchScreen&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.launchScreen﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">launchScreen</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3457-L3459">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV23legalCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/legalCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV23legalCollectionViewCellySo5UINibCyt_tFZ">legalCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;LegalCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.legalCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">legalCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3465-L3467">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV24lockupCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/lockupCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV24lockupCollectionViewCellySo5UINibCyt_tFZ">lockupCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;LockupCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.lockupCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">lockupCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3473-L3475">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV30mediumLockupCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/mediumLockupCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV30mediumLockupCollectionViewCellySo5UINibCyt_tFZ">mediumLockupCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;MediumLockupCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.mediumLockupCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">mediumLockupCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3481-L3483">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV8postCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/postCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV8postCellySo5UINibCyt_tFZ">postCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;PostCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.postCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">postCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3489-L3491">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV13postImageCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/postImageCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV13postImageCellySo5UINibCyt_tFZ">postImageCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;PostImageCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.postImageCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">postImageCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3497-L3499">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12postLinkCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/postLinkCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12postLinkCellySo5UINibCyt_tFZ">postLinkCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;PostLinkCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.postLinkCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">postLinkCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3505-L3507">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV25sectionHeaderReusableViewySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/sectionHeaderReusableView(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV25sectionHeaderReusableViewySo5UINibCyt_tFZ">sectionHeaderReusableView(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;SectionHeaderReusableView&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.sectionHeaderReusableView﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">sectionHeaderReusableView</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3513-L3515">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV12showMoreCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/showMoreCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV12showMoreCellySo5UINibCyt_tFZ">showMoreCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;ShowMoreCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.showMoreCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">showMoreCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3521-L3523">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29smallLockupCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/smallLockupCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29smallLockupCollectionViewCellySo5UINibCyt_tFZ">smallLockupCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;SmallLockupCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.smallLockupCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">smallLockupCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3529-L3531">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV29videoLockupCollectionViewCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/videoLockupCollectionViewCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV29videoLockupCollectionViewCellySo5UINibCyt_tFZ">videoLockupCollectionViewCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;VideoLockupCollectionViewCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.videoLockupCollectionViewCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">videoLockupCollectionViewCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3537-L3539">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV3nibV17writeACommentCellySo5UINibCyt_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/writeACommentCell(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV3nibV17writeACommentCellySo5UINibCyt_tFZ">writeACommentCell(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>UINib(name: &quot;WriteACommentCell&quot;, in: bundle)</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use UINib(resource: R.nib.writeACommentCell﹚ instead"</span><span class="p">)</span>
+<span class="kd">static</span> <span class="kd">func</span> <span class="nf">writeACommentCell</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UINib</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L3545-L3547">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018-present Khoren Katklian. All rights reserved. See <a class="link" href="https://github.com/kiritokatklian/kurozora-app/blob/master/LICENSE" target="_blank" rel="external">license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

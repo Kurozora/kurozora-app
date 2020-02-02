@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>settingsTableViewController Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../../js/jquery.min.js" defer></script>
+    <script src="../../../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/settingsTableViewController" class="dashAnchor"></a>
+    <a title="settingsTableViewController Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../../index.html">Kurozora 1.0.0 Docs</a> (65% documented)</p>
+        <p class="header-right"><a href="https://github.com/kiritokatklian/kurozora-app"><img src="../../../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fkiritokatklian%2Egithub%2Eio%2Fkurozora%2Dapp%2Fdocsets%2FKurozora%2Exml"><img src="../../../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../../index.html">Kurozora Reference</a>
+        <img id="carat" src="../../../img/carat.png" />
+        settingsTableViewController Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Classes/AddAnimeIntent.html">AddAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/AddAnimeIntentResponse.html">AddAnimeIntentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/KCollectionViewController.html">KCollectionViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/KFillBarIndicator.html">KFillBarIndicator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/KTableViewController.html">KTableViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes.html#/c:@M@Kurozora@objc(cs)KViewController">KViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/OpenAnimeIntent.html">OpenAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/OpenAnimeIntentResponse.html">OpenAnimeIntentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/SearchAnimeIntent.html">SearchAnimeIntent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Classes/SearchAnimeIntentResponse.html">SearchAnimeIntentResponse</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Enums/AddAnimeIntentResponseCode.html">AddAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/AppAppearanceOption.html">AppAppearanceOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/BiometricType.html">BiometricType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/DarkThemeOption.html">DarkThemeOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/EpisodeSection.html">EpisodeSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/FeedType.html">FeedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/ForumsSortingStyle.html">ForumsSortingStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/HorizontalCollectionCellStyle.html">HorizontalCollectionCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/ImageFormat.html">ImageFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/KNavigationStyle.html">KNavigationStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/KThemePicker.html">KThemePicker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/KThemeStyle.html">KThemeStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationAlertStyle.html">NotificationAlertStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationBannerStyle.html">NotificationBannerStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationGroupStyle.html">NotificationGroupStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationOptions.html">NotificationOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationSegueIdentifier.html">NotificationSegueIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/NotificationType.html">NotificationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/OnboardingCellType.html">OnboardingCellType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/OnboardingType.html">OnboardingType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/OpenAnimeIntentResponseCode.html">OpenAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums.html#/s:8Kurozora8PostTypeO">PostType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/RequireAuthentication.html">RequireAuthentication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/SearchAnimeIntentResponseCode.html">SearchAnimeIntentResponseCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/SearchScope.html">SearchScope</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums.html#/s:8Kurozora15UserSettingsKeyO">UserSettingsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/UserType.html">UserType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums/VerticalCollectionCellStyle.html">VerticalCollectionCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Enums.html#/s:8Kurozora11WatchStatusO">WatchStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/BaseLockupCollectionViewCell.html">BaseLockupCollectionViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/NSLayoutManager.html">NSLayoutManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/SKProduct.html">SKProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/SKProduct/PeriodUnit.html">– PeriodUnit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/SKProductSubscriptionPeriod.html">SKProductSubscriptionPeriod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/TMBar.html">TMBar</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIAlertController.html">UIAlertController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIApplication.html">UIApplication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UICollectionViewCell.html">UICollectionViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UICollectionViewController.html">UICollectionViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIColor.html">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIDevice.html">UIDevice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIImage.html">UIImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIImageView.html">UIImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIStatusBarStyle.html">UIStatusBarStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UITableView.html">UITableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UITableViewCell.html">UITableViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIView.html">UIView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/UIViewController.html">UIViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Extensions/URL.html">URL</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Protocols/AddAnimeIntentHandling.html">AddAnimeIntentHandling</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Protocols.html#/c:@M@Kurozora@objc(pl)KCollectionViewDelegateLayout">KCollectionViewDelegateLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Protocols/OpenAnimeIntentHandling.html">OpenAnimeIntentHandling</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Protocols/SearchAnimeIntentHandling.html">SearchAnimeIntentHandling</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Structs.html#/s:8Kurozora20GroupedNotificationsV">GroupedNotifications</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R.html">R</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/segue.html">– segue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/storyboard.html">– storyboard</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R.html#/s:8Kurozora1RV12entitlementsV">– entitlements</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/file.html">– file</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/font.html">– font</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/image.html">– image</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R.html#/s:8Kurozora1RV4infoV">– info</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/nib.html">– nib</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Structs/R/reuseIdentifier.html">– reuseIdentifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../../Typealiases.html#/UIColor">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../../Typealiases.html#/UIImage">UIImage</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>settingsTableViewController</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="n">settingsTableViewController</span></code></pre>
+
+                </div>
+              </div>
+            <p>This struct is generated for <code>SettingsTableViewController</code>, and contains static references to 11 segues.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12accountSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/accountSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12accountSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">accountSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>AccountSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">accountSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L418">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV15biometricsSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/biometricsSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV15biometricsSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">biometricsSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>BiometricsSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">biometricsSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L420">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12broswerSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/broswerSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12broswerSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">broswerSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>BroswerSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">broswerSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L422">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12displaySegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/displaySegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12displaySegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">displaySegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>DisplaySegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">displaySegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L424">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV9iconSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/iconSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV9iconSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">iconSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>IconSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">iconSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L426">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV9keysSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/keysSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV9keysSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">keysSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>KeysSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">keysSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L428">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV17notificationSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/notificationSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV17notificationSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">notificationSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>NotificationSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">notificationSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L430">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12privacySegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/privacySegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12privacySegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">privacySegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>PrivacySegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">privacySegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L432">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV17subscriptionSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/subscriptionSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV17subscriptionSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">subscriptionSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>SubscriptionSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">subscriptionSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L434">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV10themeSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/themeSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV10themeSegue6Rswift010StoryboardH10IdentifierVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">themeSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>ThemeSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">themeSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L436">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV11tipJarSegue6Rswift010StoryboardI10IdentifierVySo012UIStoryboardI0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/tipJarSegue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV11tipJarSegue6Rswift010StoryboardI10IdentifierVySo012UIStoryboardI0CAA08SettingsdeF0CAA011KNavigationF0CGvpZ">tipJarSegue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Segue identifier <code>TipJarSegue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">tipJarSegue</span><span class="p">:</span> <span class="kt">StoryboardSegueIdentifier</span><span class="o">&lt;</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L438">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12accountSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/accountSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12accountSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">accountSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>AccountSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">accountSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L444-L446">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV15biometricsSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/biometricsSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV15biometricsSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">biometricsSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>BiometricsSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">biometricsSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L453-L455">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12broswerSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/broswerSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12broswerSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">broswerSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>BroswerSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">broswerSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L462-L464">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12displaySegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/displaySegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12displaySegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">displaySegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>DisplaySegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">displaySegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L471-L473">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV9iconSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/iconSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV9iconSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">iconSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>IconSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">iconSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L480-L482">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV9keysSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/keysSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV9keysSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">keysSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>KeysSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">keysSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L489-L491">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV17notificationSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/notificationSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV17notificationSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">notificationSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>NotificationSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">notificationSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L498-L500">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV12privacySegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/privacySegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV12privacySegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">privacySegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>PrivacySegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">privacySegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L507-L509">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV17subscriptionSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/subscriptionSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV17subscriptionSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">subscriptionSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>SubscriptionSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">subscriptionSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L516-L518">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV10themeSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/themeSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV10themeSegueAD6Rswift015TypedStoryboardH4InfoVySo012UIStoryboardH0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">themeSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>ThemeSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">themeSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L525-L527">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Kurozora1RV5segueV27settingsTableViewControllerV11tipJarSegueAD6Rswift015TypedStoryboardI4InfoVySo012UIStoryboardI0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/tipJarSegue(segue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Kurozora1RV5segueV27settingsTableViewControllerV11tipJarSegueAD6Rswift015TypedStoryboardI4InfoVySo012UIStoryboardI0CAA08SettingsdeF0CAA011KNavigationF0CGSgAM_tFZ">tipJarSegue(segue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optionally returns a typed version of segue <code>TipJarSegue</code>.
+Returns nil if either the segue identifier, the source, destination, or segue types don&rsquo;t match.
+For use inside <code>prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">tipJarSegue</span><span class="p">(</span><span class="nv">segue</span><span class="p">:</span> <span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Rswift</span><span class="o">.</span><span class="kt">TypedStoryboardSegueInfo</span><span class="o">&lt;</span><span class="kt">UIKit</span><span class="o">.</span><span class="kt">UIStoryboardSegue</span><span class="p">,</span> <span class="kt">SettingsTableViewController</span><span class="p">,</span> <span class="kt">KNavigationController</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/kiritokatklian/kurozora-app/tree/master/R.generated.swift#L534-L536">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018-present Khoren Katklian. All rights reserved. See <a class="link" href="https://github.com/kiritokatklian/kurozora-app/blob/master/LICENSE" target="_blank" rel="external">license</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
