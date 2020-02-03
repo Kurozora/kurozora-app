@@ -137,14 +137,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure poster view
 		if posterImageView.image == nil {
 			if let posterThumb = showDetailsElement.posterThumbnail {
-				posterImageView.setImage(with: posterThumb, placeholder: R.image.placeholder.show_poster_image()!)
+				posterImageView.setImage(with: posterThumb, placeholder: R.image.placeholders.show_poster_image()!)
 			}
 		}
 
 		// Configure banner view
 		if bannerImageView.image == nil {
 			if let bannerImage = showDetailsElement.banner {
-				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholder.banner_image()!)
+				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.banner_image()!)
 			}
 		}
 
@@ -173,7 +173,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholder.show_banner_image.name, from: bannerImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.show_banner_image.name, from: bannerImageView)
 		}
 	}
 
@@ -181,7 +181,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholder.show_poster_image.name, from: posterImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.show_poster_image.name, from: posterImageView)
 		}
 	}
 }

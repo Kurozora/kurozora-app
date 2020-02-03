@@ -35,7 +35,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		primaryLabel.text = showDetailsElement.title
 
 		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			searchImageView.setImage(with: posterThumbnail, placeholder: R.image.placeholder.show_poster_image()!)
+			searchImageView.setImage(with: posterThumbnail, placeholder: R.image.placeholders.show_poster_image()!)
 		}
 
 		statusLabel?.text = showDetailsElement.airStatus ?? "TBA"

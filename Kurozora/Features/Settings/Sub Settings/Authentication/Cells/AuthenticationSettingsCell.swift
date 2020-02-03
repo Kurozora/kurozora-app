@@ -28,11 +28,11 @@ class AuthenticationSettingsCell: SettingsCell {
 		didSet {
 			switch UIDevice.supportedBiomtetric {
 			case .faceID:
-				authenticationImageView.image = R.image.face_id_icon()
+				authenticationImageView.image = R.image.icons.face_id()
 			case .touchID:
-				authenticationImageView.image = R.image.touch_id_icon()
+				authenticationImageView.image = R.image.icons.touch_id()
 			case .none:
-				authenticationImageView.image = R.image.lock_icon()
+				authenticationImageView.image = R.image.icons.lock()
 			}
 		}
 	}

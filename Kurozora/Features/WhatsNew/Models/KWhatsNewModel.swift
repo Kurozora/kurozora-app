@@ -16,8 +16,8 @@ class KWhatsNewModel {
 
 	/// Features of version one of the app.
 	static var v1: [WhatsNewItem] = [
-		.image(title: "Like a Candy", subtitle: "Your app with the colors you like.", image: R.image.theme_icon()!),
-		.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: R.image.privacy_icon()!),
-		.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: R.image.notifications_icon()!)
+		.image(title: "Like a Candy", subtitle: "Your app with the colors you like.", image: R.image.icons.theme()!),
+		.image(title: "High Five", subtitle: "Your privacy is our #1 priority!", image: R.image.icons.privacy()!),
+		.image(title: "Attention Grabber", subtitle: "New follower? New message? Look here!", image: R.image.icons.notifications()!)
 	]
 }

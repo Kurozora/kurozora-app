@@ -64,7 +64,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 
 		if let actorImage = actorElement.image {
 			if let nameInitials = actorElement.name?.initials {
-				let placeholderImage = nameInitials.toImage(withFrameSize: actorImageView.frame, placeholder: R.image.placeholder.show_person_image()!)
+				let placeholderImage = nameInitials.toImage(withFrameSize: actorImageView.frame, placeholder: R.image.placeholders.show_person_image()!)
 				self.actorImageView.setImage(with: actorImage, placeholder: placeholderImage)
 			}
 		}
@@ -82,7 +82,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 
 		let nameInitials = actorElement.role?.initials
 		if let imageFrame = characterImageView?.frame {
-			self.characterImageView?.image = nameInitials?.toImage(withFrameSize: imageFrame, placeholder: R.image.placeholder.show_person_image()!)
+			self.characterImageView?.image = nameInitials?.toImage(withFrameSize: imageFrame, placeholder: R.image.placeholders.show_person_image()!)
 		}
 		self.characterShadowView?.applyShadow()
 

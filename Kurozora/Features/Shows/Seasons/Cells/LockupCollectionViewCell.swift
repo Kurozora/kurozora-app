@@ -83,7 +83,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 		guard let seasonsElement = seasonsElement else { return }
 
 		if let seasonPosterImage = seasonsElement.poster {
-			self.posterImageView.setImage(with: seasonPosterImage, placeholder: R.image.placeholder.show_poster_image()!)
+			self.posterImageView.setImage(with: seasonPosterImage, placeholder: R.image.placeholders.show_poster_image()!)
 		}
 
 		// Season number

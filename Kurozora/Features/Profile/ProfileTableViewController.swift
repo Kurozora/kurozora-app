@@ -238,14 +238,14 @@ class ProfileTableViewController: KTableViewController {
 		// Setup profile image
 		if let profileImage = user.profile?.profileImage {
 			if let usernameInitials = user.profile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholder.profile_image()!)
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
 				profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
 			}
 		}
 
 		// Setup banner image
 		if let bannerImage = user.profile?.banner {
-			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholder.banner_image()!)
+			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.banner_image()!)
 		}
 
 		// Setup user bio

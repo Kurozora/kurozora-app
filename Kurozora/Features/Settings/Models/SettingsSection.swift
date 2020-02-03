@@ -292,42 +292,42 @@ extension SettingsTableViewController {
 			case .account:
 				return User.currentUserProfileImage
 			case .keychain:
-				return R.image.kdefaults_icon()!
+				return R.image.icons.kdefaults()!
 			case .notifications:
-				return R.image.notifications_icon()!
+				return R.image.icons.notifications()!
 			case .displayBlindness:
-				return R.image.display_icon()!
+				return R.image.icons.display()!
 			case .theme:
-				return R.image.theme_icon()!
+				return R.image.icons.theme()!
 			case .icon:
 				return #imageLiteral(resourceName: UserSettings.appIcon)
 			case .browser:
-				return R.image.browser_icon()!
+				return R.image.icons.browser()!
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					return R.image.face_id_icon()!
+					return R.image.icons.face_id()!
 				case .touchID:
-					return R.image.touch_id_icon()!
+					return R.image.icons.touch_id()!
 				case .none:
-					return R.image.lock_icon()!
+					return R.image.icons.lock()!
 				}
 			case .cache:
-				return R.image.clear_cache_icon()!
+				return R.image.icons.clear_cache()!
 			case .privacy:
-				return R.image.privacy_icon()!
+				return R.image.icons.privacy()!
 			case .rate:
-				return R.image.rate_icon()!
+				return R.image.icons.rate()!
 			case .unlockFeatures:
-				return R.image.unlock_icon()!
+				return R.image.icons.unlock()!
 			case .restoreFeatures:
-				return R.image.restore_icon()!
+				return R.image.icons.restore()!
 			case .tipjar:
-				return R.image.tipjar_icon()!
+				return R.image.icons.tipjar()!
 			case .followTwitter:
-				return R.image.twitter_icon()!
+				return R.image.icons.twitter()!
 			case .followMedium:
-				return R.image.medium_icon()!
+				return R.image.icons.medium()!
 			}
 		}
 	}

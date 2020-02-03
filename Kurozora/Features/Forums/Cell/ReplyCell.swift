@@ -86,7 +86,7 @@ class ReplyCell: UITableViewCell {
 		// Configure profile image
 		if let profileImage = threadRepliesElement.userProfile?.profileImage {
 			if let usernameInitials = threadRepliesElement.userProfile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholder.profile_image()!)
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}
