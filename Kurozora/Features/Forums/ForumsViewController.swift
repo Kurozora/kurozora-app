@@ -162,7 +162,7 @@ class ForumsViewController: TabmanViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", #imageLiteral(resourceName: "Symbols/arrow_up_line_horizontal_3_decrease")), ("Recent", "recent", #imageLiteral(resourceName: "Symbols/clock"))], currentSelection: threadSorting, action: { (title, value)  in
+		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", R.image.symbols.arrow_up_line_horizontal_3_decrease()!), ("Recent", "recent", R.image.symbols.clock()!)], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
 			currentSection?.currentPage = 1

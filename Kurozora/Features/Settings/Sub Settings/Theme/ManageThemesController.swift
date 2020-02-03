@@ -56,7 +56,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		collectionView.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Themes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get themes list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_themes"))
+				.image(R.image.empty.themes())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
 				.verticalSpace(5)

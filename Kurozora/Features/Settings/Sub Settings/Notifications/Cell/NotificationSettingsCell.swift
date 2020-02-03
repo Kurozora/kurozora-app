@@ -13,27 +13,27 @@ class NotificationSettingsCell: SettingsCell {
 	@IBOutlet weak var basicNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				basicNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_basic_ipad")
+				basicNotificationDeviceImageView.image = R.image.settings.notifications.basic_ipad()
 			} else {
-				basicNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_basic_iphone")
+				basicNotificationDeviceImageView.image = R.image.settings.notifications.basic_iphone()
 			}
 		}
 	}
 	@IBOutlet weak var iconNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				iconNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_icon_ipad")
+				iconNotificationDeviceImageView.image = R.image.settings.notifications.icon_ipad()
 			} else {
-				iconNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_icon_iphone")
+				iconNotificationDeviceImageView.image = R.image.settings.notifications.icon_iphone()
 			}
 		}
 	}
 	@IBOutlet weak var statusBarNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				statusBarNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_statusbar_ipad")
+				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbar_ipad()
 			} else {
-				statusBarNotificationDeviceImageView.image = #imageLiteral(resourceName: "notification_statusbar_iphone")
+				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbar_iphone()
 			}
 		}
 	}
@@ -100,7 +100,7 @@ class NotificationSettingsCell: SettingsCell {
 			iconNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			basicNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
+			basicNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
 			iconNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 1:
@@ -108,7 +108,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			statusBarNotificationSelectedImageView.borderWidth = 2
 
-			iconNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
+			iconNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
 			basicNotificationSelectedImageView.image = nil
 			statusBarNotificationSelectedImageView.image = nil
 		case 2:
@@ -116,7 +116,7 @@ class NotificationSettingsCell: SettingsCell {
 			basicNotificationSelectedImageView.borderWidth = 2
 			iconNotificationSelectedImageView.borderWidth = 2
 
-			statusBarNotificationSelectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
+			statusBarNotificationSelectedImageView.image = R.image.symbols.checkmark_circle_fill()
 			basicNotificationSelectedImageView.image = nil
 			iconNotificationSelectedImageView.image = nil
 		default: break

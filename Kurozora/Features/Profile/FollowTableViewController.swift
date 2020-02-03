@@ -54,7 +54,7 @@ class FollowTableViewController: KTableViewController {
 
 					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-						.image(#imageLiteral(resourceName: "empty_follow"))
+						.image(R.image.empty.follow())
 						.imageTintColor(KThemePicker.textColor.colorValue)
 						.verticalOffset(-50)
 						.verticalSpace(5)
@@ -72,7 +72,7 @@ class FollowTableViewController: KTableViewController {
 
 					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-						.image(#imageLiteral(resourceName: "empty_follow"))
+						.image(R.image.empty.follow())
 						.imageTintColor(KThemePicker.textColor.colorValue)
 						.verticalOffset(-50)
 						.verticalSpace(5)

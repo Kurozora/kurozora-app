@@ -26,7 +26,7 @@ class MediumLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		backgroundColorView?.backgroundColor = UIColor(hexString: genreColor)
 
 		if let symbol = genreElement.symbol {
-			bannerImageView?.setImage(with: symbol, placeholder: #imageLiteral(resourceName: "kurozora_icon"))
+			bannerImageView?.setImage(with: symbol, placeholder: R.image.kurozora_icon()!)
 		}
 
 		shadowView?.applyShadow()

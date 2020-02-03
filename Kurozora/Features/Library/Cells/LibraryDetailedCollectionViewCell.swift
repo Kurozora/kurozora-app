@@ -29,7 +29,7 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.userProgressLabel?.text = showDetailsElement.informationStringShort
 
 		if let bannerImage = showDetailsElement.banner {
-			self.episodeImageView?.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+			self.episodeImageView?.setImage(with: bannerImage, placeholder: R.image.placeholder.banner_image()!)
 		}
 
 		posterShadowView?.applyShadow()

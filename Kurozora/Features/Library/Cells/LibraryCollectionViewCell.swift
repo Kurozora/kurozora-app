@@ -29,7 +29,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 		self.titleLabel.text = showDetailsElement.title
 
 		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			self.posterImageView.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+			self.posterImageView.setImage(with: posterThumbnail, placeholder: R.image.placeholder.show_poster_image()!)
 		}
 	}
 }

@@ -53,7 +53,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		collectionView?.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Episodes", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "This season doesn't have episodes yet. Please check back again later.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_episodes"))
+				.image(R.image.empty.episodes())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
 				.verticalSpace(5)
@@ -98,14 +98,14 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
 		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = #imageLiteral(resourceName: "Symbols/chevron_down_circle")
+		goToButton.image = R.image.symbols.chevron_down_circle()
 	}
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
 		guard let episodes = episodes else { return }
 		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
-		goToButton.image = #imageLiteral(resourceName: "Symbols/chevron_up_circle")
+		goToButton.image = R.image.symbols.chevron_up_circle()
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
@@ -240,7 +240,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			let rateAction = SwipeAction(style: .default, title: "Rate") { _, _ in
 			}
 			rateAction.backgroundColor = .clear
-			rateAction.image = #imageLiteral(resourceName: "rate_circle")
+			rateAction.image = R.image.rate_circle()
 			rateAction.textColor = .kYellow
 			rateAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			rateAction.transitionDelegate = ScaleTransition.default
@@ -249,7 +249,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 				self.populateActionSheet(for: episode, at: cell)
 			}
 			moreAction.backgroundColor = .clear
-			moreAction.image = #imageLiteral(resourceName: "more_circle")
+			moreAction.image = R.image.more_circle()
 			moreAction.textColor = #colorLiteral(red: 0.25, green: 0.25, blue: 0.25, alpha: 1)
 			moreAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			moreAction.transitionDelegate = ScaleTransition.default
@@ -262,7 +262,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			watchedAction.backgroundColor = .clear
 			if let tag = cell.episodeWatchedButton?.tag {
 				watchedAction.title = (tag == 0) ? "Mark as Watched" : "Mark as Unwatched"
-				watchedAction.image = (tag == 0) ? #imageLiteral(resourceName: "watched_circle") : #imageLiteral(resourceName: "unwatched_circle")
+				watchedAction.image = (tag == 0) ? R.image.watched_circle() : R.image.unwatched_circle()
 				watchedAction.textColor = (tag == 0) ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
 			}
 			watchedAction.font = .systemFont(ofSize: 16, weight: .semibold)

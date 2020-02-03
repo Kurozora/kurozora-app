@@ -129,11 +129,11 @@ class Library {
 		var imageValue: UIImage {
 			switch self {
 			case .detailed:
-				return #imageLiteral(resourceName: "Symbols/rectangle_fill_on_rectangle_fill")
+				return R.image.symbols.rectangle_fill_on_rectangle_fill()!
 			case .compact:
-				return #imageLiteral(resourceName: "Symbols/rectangle_grid_3x2_fill")
+				return R.image.symbols.rectangle_grid_3x2_fill()!
 			case .list:
-				return #imageLiteral(resourceName: "Symbols/rectangle_grid_1x2_fill")
+				return R.image.symbols.rectangle_grid_1x2_fill()!
 			}
 		}
 
@@ -275,23 +275,23 @@ class Library {
 		var imageValue: UIImage {
 			switch self {
 			case .alphabetically:
-				return #imageLiteral(resourceName: "Symbols/textformat_abc")
+				return R.image.symbols.textformat_abc()!
 			case .popularity:
-				return #imageLiteral(resourceName: "Symbols/flame_fill")
+				return R.image.symbols.flame_fill()!
 			case .nextAiringEpisode:
-				return #imageLiteral(resourceName: "Symbols/tv_arrowshape_turn_up_right_fill")
+				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
 			case .nextEpisodeToWatch:
-				return #imageLiteral(resourceName: "Symbols/tv_eye_fill")
+				return R.image.symbols.tv_eye_fill()!
 			case .newest:
-				return #imageLiteral(resourceName: "Symbols/calendar_badge_arrowshape_turn_up_right")
+				return R.image.symbols.calendar_badge_arrowshape_turn_up_right()!
 			case .oldest:
-				return #imageLiteral(resourceName: "Symbols/calendar_badge_arrowshape_turn_up_left")
+				return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
 			case .rating:
-				return #imageLiteral(resourceName: "Symbols/star_fill")
+				return R.image.symbols.star_fill()!
 			case .myRating:
-				return #imageLiteral(resourceName: "Symbols/person_crop_circle_fill_badge_star")
+				return R.image.symbols.person_crop_circle_fill_badge_star()!
 			case .none:
-				return #imageLiteral(resourceName: "Symbols/line_horizontal_3_decrease_circle_fill")
+				return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
 			}
 		}
 

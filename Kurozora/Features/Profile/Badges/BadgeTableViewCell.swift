@@ -42,6 +42,6 @@ class BadgeTableViewCell: UITableViewCell {
 		}
 
 		// Set badge image and border color
-		self.badgeImageView.image = #imageLiteral(resourceName: "following")
+		self.badgeImageView.image = R.image.symbols.person_crop_circle_fill()
 	}
 }

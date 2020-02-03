@@ -133,15 +133,15 @@ class ManageActiveSessionsController: KTableViewController {
 				annotation.title = "\(device)"
 
 				if device.contains("iPhone") {
-					annotation.image = #imageLiteral(resourceName: "iphone")
+					annotation.image = R.image.iphone()
 				} else if device.contains("iPad") {
-					annotation.image = #imageLiteral(resourceName: "ipad")
+					annotation.image = R.image.ipad()
 				} else if device.contains("Apple TV") {
-					annotation.image = #imageLiteral(resourceName: "apple_tv")
+					annotation.image = R.image.apple_tv()
 				} else if device.contains("MacBook") {
-					annotation.image = #imageLiteral(resourceName: "macbook")
+					annotation.image = R.image.macbook()
 				} else {
-					annotation.image = #imageLiteral(resourceName: "other_devices")
+					annotation.image = R.image.other_devices()
 				}
 			}
 

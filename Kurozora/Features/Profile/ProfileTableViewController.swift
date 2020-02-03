@@ -178,7 +178,7 @@ class ProfileTableViewController: KTableViewController {
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
+				.image(R.image.empty.comment())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
 				.verticalSpace(10)
@@ -238,14 +238,14 @@ class ProfileTableViewController: KTableViewController {
 		// Setup profile image
 		if let profileImage = user.profile?.profileImage {
 			if let usernameInitials = user.profile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholder.profile_image()!)
 				profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
 			}
 		}
 
 		// Setup banner image
 		if let bannerImage = user.profile?.banner {
-			bannerImageView.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "default_banner_image"))
+			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholder.banner_image()!)
 		}
 
 		// Setup user bio
@@ -546,7 +546,7 @@ class ProfileTableViewController: KTableViewController {
 		let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
 			self.showFavoriteShowsList()
 		})
-		showFavoriteShowsList.setValue(#imageLiteral(resourceName: "Symbols/heart_circle"), forKey: "image")
+		showFavoriteShowsList.setValue(R.image.symbols.heart_circle()!, forKey: "image")
 		showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(showFavoriteShowsList)
 

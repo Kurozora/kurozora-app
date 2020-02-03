@@ -102,7 +102,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_library"))
+				.image(R.image.empty.library())
 				.isScrollAllowed(true)
 
 			// Not signed in
@@ -168,7 +168,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				self.librarySortType = .none
 				self.fetchLibrary()
 			})
-			stopSortingAction.setValue(#imageLiteral(resourceName: "Symbols/xmark_circle_fill"), forKey: "image")
+			stopSortingAction.setValue(R.image.symbols.xmark_circle_fill()!, forKey: "image")
 			stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(stopSortingAction)
 		}
@@ -311,7 +311,7 @@ extension LibraryListCollectionViewController: UICollectionViewDragDelegate {
 		let selectedShow = self.selectedShow(at: indexPath)
 
 		guard let userActivity = selectedShow?.openDetailUserActivity else { return [UIDragItem]() }
-		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? #imageLiteral(resourceName: "placeholder_poster_image"))
+		let itemProvider = NSItemProvider(object: (libraryBaseCollectionViewCell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image ?? libraryBaseCollectionViewCell.posterImageView.image ?? R.image.placeholder.show_poster_image()!)
 		itemProvider.suggestedName = libraryBaseCollectionViewCell.titleLabel.text
 		itemProvider.registerObject(userActivity, visibility: .all)
 

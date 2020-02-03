@@ -68,7 +68,7 @@ class FeedTableViewController: KTableViewController {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Feed", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get feed list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
+				.image(R.image.empty.comment())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
 				.verticalSpace(5)

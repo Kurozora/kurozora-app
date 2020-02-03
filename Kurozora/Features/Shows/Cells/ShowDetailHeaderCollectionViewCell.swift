@@ -137,14 +137,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure poster view
 		if posterImageView.image == nil {
 			if let posterThumb = showDetailsElement.posterThumbnail {
-				posterImageView.setImage(with: posterThumb, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+				posterImageView.setImage(with: posterThumb, placeholder: R.image.placeholder.show_poster_image()!)
 			}
 		}
 
 		// Configure banner view
 		if bannerImageView.image == nil {
 			if let bannerImage = showDetailsElement.banner {
-				bannerImageView.setImage(with: bannerImage, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholder.banner_image()!)
 			}
 		}
 
@@ -163,7 +163,7 @@ extension ShowDetailHeaderCollectionViewCell {
 	func updateFavoriteStatus(with showDetailsElement: ShowDetailsElement? = nil, withInt isFavorite: Int? = 0) {
 		let showIsFavorite = showDetailsElement?.currentUser?.isFavorite ?? (isFavorite == 1)
 		self.showDetailsElement?.currentUser?.isFavorite = showIsFavorite
-		let favoriteImage = showIsFavorite ? #imageLiteral(resourceName: "Symbols/heart_fill") : #imageLiteral(resourceName: "Symbols/heart")
+		let favoriteImage = showIsFavorite ? R.image.symbols.heart_fill() : R.image.symbols.heart()
 		favoriteButton.tag = showIsFavorite ? 1 : 0
 		favoriteButton.setImage(favoriteImage, for: .normal)
 		NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
@@ -173,7 +173,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_banner_image", from: bannerImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholder.show_banner_image.name, from: bannerImageView)
 		}
 	}
 
@@ -181,7 +181,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_poster_image", from: posterImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholder.show_poster_image.name, from: posterImageView)
 		}
 	}
 }

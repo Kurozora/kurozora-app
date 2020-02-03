@@ -45,21 +45,21 @@ enum KBrowser: Int {
 	var image: UIImage {
 		switch self {
 		case .safari:
-			return #imageLiteral(resourceName: "safari_icon")
+			return R.image.browsers.safari_icon()!
 		case .brave:
-			return #imageLiteral(resourceName: "brave_icon")
+			return R.image.browsers.brave_icon()!
 		case .dolphin:
-			return #imageLiteral(resourceName: "dolphin_icon")
+			return R.image.browsers.dolphin_icon()!
 		case .duckduckgo:
-			return #imageLiteral(resourceName: "duckduckgo_icon")
+			return R.image.browsers.duckduckgo_icon()!
 		case .firefox:
-			return #imageLiteral(resourceName: "firefox_icon")
+			return R.image.browsers.firefox_icon()!
 		case .firefoxfocus:
-			return #imageLiteral(resourceName: "firefoxfocus_icon")
+			return R.image.browsers.firefoxfocus_icon()!
 		case .googlechrome:
-			return #imageLiteral(resourceName: "googlechrome_icon")
+			return R.image.browsers.googlechrome_icon()!
 		case .opera:
-			return #imageLiteral(resourceName: "opera_icon")
+			return R.image.browsers.opera_icon()!
 		}
 	}
 

@@ -41,7 +41,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		// Configure profile image
 		if let profileImage = userProfile.profileImage {
 			if let usernameInitials = userProfile.username?.initials {
-				let placeholderImage = usernameInitials.toImage(withFrameSize: searchImageView.frame, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				let placeholderImage = usernameInitials.toImage(withFrameSize: searchImageView.frame, placeholder: R.image.placeholder.profile_image()!)
 				searchImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}

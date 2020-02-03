@@ -86,7 +86,7 @@ class ReplyCell: UITableViewCell {
 		// Configure profile image
 		if let profileImage = threadRepliesElement.userProfile?.profileImage {
 			if let usernameInitials = threadRepliesElement.userProfile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholder.profile_image()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}
@@ -214,11 +214,11 @@ class ReplyCell: UITableViewCell {
 //				self.replyThread()
 //			})
 
-			upvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_up_circle_fill"), forKey: "image")
+			upvoteAction.setValue(R.image.symbols.arrow_up_circle_fill()!, forKey: "image")
 			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			downvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_down_circle_fill"), forKey: "image")
+			downvoteAction.setValue(R.image.symbols.arrow_down_circle_fill()!, forKey: "image")
 			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//			replyAction.setValue(#imageLiteral(resourceName: "Symbols/message_fill"), forKey: "image")
+//			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
 //			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
 			action.addAction(upvoteAction)
@@ -231,7 +231,7 @@ class ReplyCell: UITableViewCell {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
-			userAction.setValue(#imageLiteral(resourceName: "Symbols/person_crop_circle_fill"), forKey: "image")
+			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(userAction)
 		}
@@ -240,7 +240,7 @@ class ReplyCell: UITableViewCell {
 		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			self.shareReply()
 		})
-		shareAction.setValue(#imageLiteral(resourceName: "Symbols/square_and_arrow_up_fill"), forKey: "image")
+		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(shareAction)
 
@@ -248,7 +248,7 @@ class ReplyCell: UITableViewCell {
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
 			self.reportThread()
 		})
-		reportAction.setValue(#imageLiteral(resourceName: "Symbols/exclamationmark_circle_fill"), forKey: "image")
+		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(reportAction)
 

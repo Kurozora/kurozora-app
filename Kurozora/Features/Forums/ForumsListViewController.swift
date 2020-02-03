@@ -77,7 +77,7 @@ class ForumsListViewController: KTableViewController {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Threads", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to post in the \(self.sectionTitle.lowercased()) forums!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
+				.image(R.image.empty.comment())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
 				.verticalSpace(5)

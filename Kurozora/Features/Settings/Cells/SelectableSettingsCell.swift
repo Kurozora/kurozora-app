@@ -20,7 +20,7 @@ class SelectableSettingsCell: SettingsCell {
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				self.selectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark")
+				self.selectedImageView.image = R.image.symbols.checkmark()
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 			} else {
 				self.selectedImageView.image = nil

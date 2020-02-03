@@ -64,12 +64,12 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 
 		// Configure banner
 		if let bannerThumbnail = showDetailsElement.banner {
-			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_banner_image"))
+			self.bannerImageView?.setImage(with: bannerThumbnail, placeholder: R.image.placeholder.show_banner_image()!)
 		}
 
 		// Configure poster
 		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			self.posterImageView?.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+			self.posterImageView?.setImage(with: posterThumbnail, placeholder: R.image.placeholder.show_poster_image()!)
 		}
 
 		// Configure library status

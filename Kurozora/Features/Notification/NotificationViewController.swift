@@ -118,7 +118,7 @@ class NotificationsViewController: KTableViewController {
 			let detailLabelString = User.isSignedIn ? "When you have notifications, you will see them here!" : "Notifications is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Notifications", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_notifications"))
+				.image(R.image.empty.notifications())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-60)
 				.verticalSpace(5)
@@ -258,7 +258,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", with: 1)
 		})
-		markAllAsRead.setValue(#imageLiteral(resourceName: "Symbols/checkmark_circle_fill"), forKey: "image")
+		markAllAsRead.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(markAllAsRead)
 
@@ -266,7 +266,7 @@ class NotificationsViewController: KTableViewController {
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
 			self.updateNotification(for: "all", with: 0)
 		})
-		markAllAsUnread.setValue(#imageLiteral(resourceName: "Symbols/checkmark_circle"), forKey: "image")
+		markAllAsUnread.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(markAllAsUnread)
 
@@ -447,7 +447,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				}
 			}
 			deleteAction.backgroundColor = .clear
-			deleteAction.image = #imageLiteral(resourceName: "trash_circle")
+			deleteAction.image = R.image.trash_circle()!
 			deleteAction.textColor = .kLightRed
 			deleteAction.font = .systemFont(ofSize: 13)
 			deleteAction.transitionDelegate = ScaleTransition.default
@@ -483,7 +483,7 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			}
 			markedAction.backgroundColor = .clear
 			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
-			markedAction.image = isRead ? #imageLiteral(resourceName: "watched_circle") : #imageLiteral(resourceName: "unwatched_circle")
+			markedAction.image = isRead ? R.image.watched_circle()! : R.image.unwatched_circle()!
 			markedAction.textColor = isRead ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
 			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			markedAction.transitionDelegate = ScaleTransition.default

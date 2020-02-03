@@ -24,7 +24,7 @@ class AuthenticationOptionsCell: SettingsCell {
 	override var isSelected: Bool {
 		didSet {
 			if isSelected {
-				self.selectedImageView.image = #imageLiteral(resourceName: "Symbols/checkmark")
+				self.selectedImageView.image = R.image.symbols.checkmark()
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
 				try? Kurozora.shared.KDefaults.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
 			} else {

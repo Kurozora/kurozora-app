@@ -44,7 +44,7 @@ class DebugSettingsTableViewController: KTableViewController {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Keys", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "All Kurozora related keys in your keychain are removed.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_keychain"))
+				.image(R.image.empty.keychain())
 				.verticalOffset(-50)
 				.verticalSpace(5)
 				.isScrollAllowed(true)

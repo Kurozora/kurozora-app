@@ -292,42 +292,42 @@ extension SettingsTableViewController {
 			case .account:
 				return User.currentUserProfileImage
 			case .keychain:
-				return #imageLiteral(resourceName: "kdefaults_icon")
+				return R.image.kdefaults_icon()!
 			case .notifications:
-				return #imageLiteral(resourceName: "notifications_icon")
+				return R.image.notifications_icon()!
 			case .displayBlindness:
-				return #imageLiteral(resourceName: "display_icon")
+				return R.image.display_icon()!
 			case .theme:
-				return #imageLiteral(resourceName: "theme_icon")
+				return R.image.theme_icon()!
 			case .icon:
 				return #imageLiteral(resourceName: UserSettings.appIcon)
 			case .browser:
-				return #imageLiteral(resourceName: "browser_icon")
+				return R.image.browser_icon()!
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					return #imageLiteral(resourceName: "face_id_icon")
+					return R.image.face_id_icon()!
 				case .touchID:
-					return #imageLiteral(resourceName: "touch_id_icon")
+					return R.image.touch_id_icon()!
 				case .none:
-					return #imageLiteral(resourceName: "lock_icon")
+					return R.image.lock_icon()!
 				}
 			case .cache:
-				return #imageLiteral(resourceName: "clear_cache_icon")
+				return R.image.clear_cache_icon()!
 			case .privacy:
-				return #imageLiteral(resourceName: "privacy_icon")
+				return R.image.privacy_icon()!
 			case .rate:
-				return #imageLiteral(resourceName: "rate_icon")
+				return R.image.rate_icon()!
 			case .unlockFeatures:
-				return #imageLiteral(resourceName: "unlock_icon")
+				return R.image.unlock_icon()!
 			case .restoreFeatures:
-				return #imageLiteral(resourceName: "restore_icon")
+				return R.image.restore_icon()!
 			case .tipjar:
-				return #imageLiteral(resourceName: "tipjar_icon")
+				return R.image.tipjar_icon()!
 			case .followTwitter:
-				return #imageLiteral(resourceName: "twitter_icon")
+				return R.image.twitter_icon()!
 			case .followMedium:
-				return #imageLiteral(resourceName: "medium_icon")
+				return R.image.medium_icon()!
 			}
 		}
 	}

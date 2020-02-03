@@ -12,7 +12,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var lightOptionContainerView: UIView?
 	@IBOutlet weak var lightOptionImageView: UIImageView? {
 		didSet {
-			lightOptionImageView?.image = #imageLiteral(resourceName: "light_option")
+			lightOptionImageView?.image = R.image.settings.display.light_option()
 			toggleAppAppearanceOptions(!UserSettings.automaticDarkTheme)
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAppAppearance(_:)), name: .KSAppAppearanceDidChange, object: nil)
 		}
@@ -37,7 +37,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var darkOptionContainerView: UIView?
 	@IBOutlet weak var darkOptionImageView: UIImageView? {
 		didSet {
-			darkOptionImageView?.image = #imageLiteral(resourceName: "dark_option")
+			darkOptionImageView?.image = R.image.settings.display.dark_option()
 		}
 	}
 	@IBOutlet weak var darkOptionSelectedImageView: UIImageView? {
@@ -135,13 +135,13 @@ class DisplaySettingsCell: SettingsCell {
 			lightOptionSelectedImageView?.borderWidth = 0
 			darkOptionSelectedImageView?.borderWidth = 2
 
-			lightOptionSelectedImageView?.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
+			lightOptionSelectedImageView?.image = R.image.symbols.checkmark_circle_fill()
 			darkOptionSelectedImageView?.image = nil
 		case .dark:
 			darkOptionSelectedImageView?.borderWidth = 0
 			lightOptionSelectedImageView?.borderWidth = 2
 
-			darkOptionSelectedImageView?.image = #imageLiteral(resourceName: "Symbols/checkmark_circle_fill")
+			darkOptionSelectedImageView?.image = R.image.symbols.checkmark_circle_fill()
 			lightOptionSelectedImageView?.image = nil
 		}
 	}

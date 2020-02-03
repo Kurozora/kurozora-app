@@ -24,9 +24,9 @@ enum ForumsSortingStyle: String {
 	var imageValue: UIImage {
 		switch self {
 		case .top:
-			return #imageLiteral(resourceName: "Symbols/arrow_up_line_horizontal_3_decrease")
+			return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
 		case .recent:
-			return #imageLiteral(resourceName: "Symbols/clock")
+			return R.image.symbols.clock()!
 		}
 	}
 }

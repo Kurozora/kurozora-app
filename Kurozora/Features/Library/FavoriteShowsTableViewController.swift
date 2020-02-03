@@ -85,7 +85,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			let detailLabel = self.userID == nil ? "Favorited shows will show up on this page!" : "\(self.username ?? "This user") hasn't favorited shows yet."
 			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_favorites"))
+				.image(R.image.empty.favorites()!)
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(-50)
 				.verticalSpace(5)

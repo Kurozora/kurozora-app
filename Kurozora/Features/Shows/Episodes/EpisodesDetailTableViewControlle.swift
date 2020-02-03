@@ -76,7 +76,7 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 		guard let cell = episodeCell else { return }
 		// Episode Misc
 		title = cell.episodeNumberLabel.text
-		screenshotImageView?.image = cell.episodeImageView.image.unwrapped(or: #imageLiteral(resourceName: "placeholder_episode_image"))
+		screenshotImageView?.image = cell.episodeImageView.image.unwrapped(or: R.image.placeholder.show_episode_image()!)
 		episodeNumberLabel.text = cell.episodeNumberLabel.text
 		episodeTitleLabel.text = cell.episodeTitleLabel.text
 		episodeFirstAiredLabel.text = cell.episodeFirstAiredLabel.text

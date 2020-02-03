@@ -27,7 +27,7 @@ class SearchSuggestionResultCell: UICollectionViewCell {
 		titleLabel?.text = showDetailsElement.title
 
 		if let posterThumbnail = showDetailsElement.posterThumbnail {
-			posterImageView?.setImage(with: posterThumbnail, placeholder: #imageLiteral(resourceName: "placeholder_poster_image"))
+			posterImageView?.setImage(with: posterThumbnail, placeholder: R.image.placeholder.show_poster_image()!)
 		}
 	}
 }

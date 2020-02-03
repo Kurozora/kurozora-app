@@ -49,7 +49,7 @@ class FollowCell: UITableViewCell {
 		// Configure profile image
 		if let profileImage = userProfile.profileImage {
 			if let usernameInitials = userProfile.username?.initials {
-				let placeholderImage = usernameInitials.toImage(withFrameSize: profileImageView.frame, placeholder: #imageLiteral(resourceName: "default_profile_image"))
+				let placeholderImage = usernameInitials.toImage(withFrameSize: profileImageView.frame, placeholder: R.image.placeholder.profile_image()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}

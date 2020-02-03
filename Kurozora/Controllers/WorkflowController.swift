@@ -103,7 +103,7 @@ extension WorkflowController {
 			if alertType == 0 {
 				banner = FloatingNotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", style: .info)
 			} else if alertType == 1 {
-				banner = FloatingNotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: #imageLiteral(resourceName: "session_icon")), style: .info)
+				banner = FloatingNotificationBanner(title: "New sign in detected from " + device, subtitle: "(Tap to manage your sessions!)", leftView: UIImageView(image: R.image.session_icon()), style: .info)
 			} else if alertType == 2 {
 				banner = StatusBarNotificationBanner(title: "New sign in detected from " + device, style: .info)
 			}

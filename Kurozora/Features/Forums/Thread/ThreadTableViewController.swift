@@ -165,7 +165,7 @@ class ThreadTableViewController: KTableViewController {
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 			view.titleLabelString(NSAttributedString(string: "No Replies", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Be the first to reply on this thread!", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_comment"))
+				.image(R.image.empty.comment())
 				.imageTintColor(KThemePicker.textColor.colorValue)
 				.verticalOffset(verticalOffset < 0 ? 0 : verticalOffset)
 				.verticalSpace(10)
@@ -410,9 +410,9 @@ class ThreadTableViewController: KTableViewController {
 				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
 				if locked {
-					lockAction.setValue(#imageLiteral(resourceName: "Symbols/lock_fill"), forKey: "image")
+					lockAction.setValue(R.image.symbols.lock_fill()!, forKey: "image")
 				} else {
-					lockAction.setValue(#imageLiteral(resourceName: "Symbols/lock_open_fill"), forKey: "image")
+					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
 				}
 
 				action.addAction(lockAction)
@@ -431,11 +431,11 @@ class ThreadTableViewController: KTableViewController {
 				self.replyThread()
 			})
 
-			upvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_up_circle_fill"), forKey: "image")
+			upvoteAction.setValue(R.image.symbols.arrow_up_circle_fill()!, forKey: "image")
 			upvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			downvoteAction.setValue(#imageLiteral(resourceName: "Symbols/arrow_down_circle_fill"), forKey: "image")
+			downvoteAction.setValue(R.image.symbols.arrow_down_circle_fill()!, forKey: "image")
 			downvoteAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			replyAction.setValue(#imageLiteral(resourceName: "Symbols/message_fill"), forKey: "image")
+			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
 			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
 			action.addAction(upvoteAction)
@@ -448,7 +448,7 @@ class ThreadTableViewController: KTableViewController {
 			let userAction = UIAlertAction.init(title: posterUsername + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
-			userAction.setValue(#imageLiteral(resourceName: "Symbols/person_crop_circle_fill"), forKey: "image")
+			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.addAction(userAction)
 		}
@@ -457,7 +457,7 @@ class ThreadTableViewController: KTableViewController {
 		let shareAction = UIAlertAction.init(title: "Share", style: .default, handler: { (_) in
 			self.shareThread(barButtonItem: sender)
 		})
-		shareAction.setValue(#imageLiteral(resourceName: "Symbols/square_and_arrow_up_fill"), forKey: "image")
+		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(shareAction)
 
@@ -465,7 +465,7 @@ class ThreadTableViewController: KTableViewController {
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
 			self.reportThread()
 		})
-		reportAction.setValue(#imageLiteral(resourceName: "Symbols/exclamationmark_circle_fill"), forKey: "image")
+		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		action.addAction(reportAction)
 

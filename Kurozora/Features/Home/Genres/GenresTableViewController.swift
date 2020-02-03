@@ -41,7 +41,7 @@ class GenresTableViewController: KTableViewController {
 		tableView.emptyDataSetView { (view) in
 			view.titleLabelString(NSAttributedString(string: "No Genres", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: "Can't get genres list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
-				.image(#imageLiteral(resourceName: "empty_genres"))
+				.image(R.image.empty.genres())
 				.verticalOffset(-50)
 				.verticalSpace(5)
 				.isScrollAllowed(true)
