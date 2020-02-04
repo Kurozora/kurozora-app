@@ -10,7 +10,6 @@ import UIKit
 
 class WriteACommentCell: UITableViewCell {
     public class func registerNibFor(tableView: UITableView) {
-        let listNib = UINib(nibName: "WriteACommentCell", bundle: nil)
-        tableView.register(listNib, forCellReuseIdentifier: "WriteACommentCell")
+        tableView.register(R.nib.writeACommentCell)
     }
 }

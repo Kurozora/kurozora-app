@@ -117,11 +117,11 @@ class Library {
 		var identifierString: String {
 			switch self {
 			case .detailed:
-				return "LibraryDetailedCollectionViewCell"
+				return R.reuseIdentifier.libraryDetailedCollectionViewCell.identifier
 			case .compact:
-				return "LibraryCompactCollectionViewCell"
+				return R.reuseIdentifier.libraryCompactCollectionViewCell.identifier
 			case .list:
-				return "LibraryListCollectionViewCell"
+				return R.reuseIdentifier.libraryListCollectionViewCell.identifier
 			}
 		}
 

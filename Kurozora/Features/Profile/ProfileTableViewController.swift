@@ -612,16 +612,16 @@ class ProfileTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "BadgeSegue" {
+		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {
 			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
 				badgesTableViewController.user = user?.profile
 			}
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
 			followTableViewController.user = user?.profile
 
-			if segue.identifier == "FollowingSegue" {
+			if segue.identifier == R.segue.profileTableViewController.followingSegue.identifier {
 				followTableViewController.followList = "Following"
-			} else if segue.identifier == "FollowersSegue" {
+			} else if segue.identifier == R.segue.profileTableViewController.followersSegue.identifier {
 				followTableViewController.followList = "Followers"
 			}
 		}
@@ -636,7 +636,9 @@ extension ProfileTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let feedPostCell = tableView.dequeueReusableCell(withIdentifier: "FeedPostCell") as! FeedPostCell
+		guard let feedPostCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedPostCell, for: indexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.feedPostCell.identifier)")
+		}
 		feedPostCell.feedPostElement = feedPostElement?[indexPath.row]
 		return feedPostCell
 	}

@@ -70,13 +70,19 @@ extension RedeemTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchasePreviewTableViewCell", for: indexPath) as! PurchasePreviewTableViewCell
+			guard let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchasePreviewTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewTableViewCell.identifier)")
+			}
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
-			let purchaseHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseHeaderTableViewCell", for: indexPath) as! PurchaseHeaderTableViewCell
+			guard let purchaseHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseHeaderTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseHeaderTableViewCell.identifier)")
+			}
 			return purchaseHeaderTableViewCell
 		} else if indexPath.section == 2 {
-			let purchaseRedeemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseRedeemTableViewCell", for: indexPath) as! PurchaseRedeemTableViewCell
+			guard let purchaseRedeemTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseRedeemTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseRedeemTableViewCell.identifier)")
+			}
 			purchaseRedeemTableViewCell.redeemTextField.tag = indexPath.row
 			purchaseRedeemTableViewCell.redeemTextField.delegate = self
 			purchaseRedeemTableViewCell.redeemTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -84,7 +90,9 @@ extension RedeemTableViewController {
 			return purchaseRedeemTableViewCell
 		}
 
-		let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseInfoTableViewCell", for: indexPath) as! PurchaseInfoTableViewCell
+		guard let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseInfoTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseInfoTableViewCell.identifier)")
+		}
 		return purchaseInfoTableViewCell
 	}
 }

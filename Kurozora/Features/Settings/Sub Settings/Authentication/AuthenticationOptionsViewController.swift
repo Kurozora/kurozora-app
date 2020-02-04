@@ -18,7 +18,9 @@ extension AuthenticationOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: "AuthenticationOptionsCell", for: indexPath) as! AuthenticationOptionsCell
+		guard let authenticationOptionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.authenticationOptionsCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.authenticationOptionsCell.identifier)")
+		}
 		authenticationOptionsCell.requireAuthentication = RequireAuthentication(rawValue: indexPath.row)
 		return authenticationOptionsCell
 	}

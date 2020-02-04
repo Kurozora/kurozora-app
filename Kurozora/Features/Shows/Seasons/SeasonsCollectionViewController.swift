@@ -83,7 +83,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeSegue", let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
+		if segue.identifier == R.segue.seasonsCollectionViewController.episodeSegue.identifier, let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
 				episodesCollectionViewController.seasonID = seasonsElements?[indexPath.item].id
 			}
@@ -99,7 +99,9 @@ extension SeasonsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LockupCollectionViewCell", for: indexPath) as! LockupCollectionViewCell
+		guard let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
+		}
 		return lockupCollectionViewCell
 	}
 }
@@ -108,7 +110,7 @@ extension SeasonsCollectionViewController {
 extension SeasonsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
-		self.performSegue(withIdentifier: "EpisodeSegue", sender: collectionViewCell)
+		self.performSegue(withIdentifier: R.segue.seasonsCollectionViewController.episodeSegue, sender: collectionViewCell)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

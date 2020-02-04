@@ -27,7 +27,7 @@ class Kurozora {
 	/// The app's base keychain service.
 	let KDefaults = Keychain(service: "Kurozora", accessGroup: "\(appIdentifierPrefix)app.kurozora.shared" ).synchronizable(true).accessibility(.afterFirstUnlock)
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	private init() {}
 
 	// MARK: - Functions

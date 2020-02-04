@@ -117,7 +117,7 @@ class ForumsListViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "ThreadSegue" {
+		if segue.identifier == R.segue.forumsListViewController.threadSegue.identifier {
 			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
 			threadViewController?.forumsThreadElement = sender as? ForumsThreadElement
@@ -133,7 +133,9 @@ extension ForumsListViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let forumsCell = tableView.dequeueReusableCell(withIdentifier: "ForumsCell") as! ForumsCell
+		guard let forumsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.forumsCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
+		}
 		forumsCell.forumThreadsElement = forumThreadsElements?[indexPath.row]
 		forumsCell.forumsChildViewController = self
 		return forumsCell
@@ -143,7 +145,7 @@ extension ForumsListViewController {
 // MARK: - UITableViewDelegate
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: "ThreadSegue", sender: forumThreadsElements?[indexPath.row])
+		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: forumThreadsElements?[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

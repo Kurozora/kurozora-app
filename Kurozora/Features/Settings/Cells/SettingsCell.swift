@@ -47,14 +47,14 @@ class SettingsCell: UITableViewCell {
 	}
 	@IBOutlet weak var notificationGroupingValueLabel: UILabel? {
 		didSet {
-			self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
+			self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
 			self.notificationGroupingValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
 	}
 	@IBOutlet weak var bannerStyleValueLabel: UILabel? {
 		didSet {
-			self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
+			self.bannerStyleValueLabel?.text = KNotification.BannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
 			self.bannerStyleValueLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationValueLabels), name: .KSNotificationOptionsValueLabelsNotification, object: nil)
 		}
@@ -89,9 +89,9 @@ class SettingsCell: UITableViewCell {
 		switch sectionRow?.accessoryValue ?? .none {
 		case .none:
 			chevronImageView?.isHidden = true
-			secondaryLabel?.isHidden = reuseIdentifier == "SettingsCell"
+			secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
 		case .chevron:
-			secondaryLabel?.isHidden = reuseIdentifier == "SettingsCell"
+			secondaryLabel?.isHidden = reuseIdentifier == R.reuseIdentifier.settingsCell.identifier
 			chevronImageView?.isHidden = false
 		case .label:
 			chevronImageView?.isHidden = true
@@ -126,7 +126,7 @@ class SettingsCell: UITableViewCell {
 
 	/// Updates the notification value labels with the respective options selected by the user.
 	@objc func updateNotificationValueLabels() {
-		self.notificationGroupingValueLabel?.text = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
-		self.bannerStyleValueLabel?.text = NotificationBannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
+		self.notificationGroupingValueLabel?.text = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping)?.stringValue
+		self.bannerStyleValueLabel?.text = KNotification.BannerStyle(rawValue: UserSettings.notificationsPersistent)?.stringValue
 	}
 }

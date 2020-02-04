@@ -112,7 +112,9 @@ extension PurchaseTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchasePreviewTableViewCell", for: indexPath) as! PurchasePreviewTableViewCell
+			guard let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchasePreviewTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewTableViewCell.identifier)")
+			}
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
 			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
@@ -124,7 +126,9 @@ extension PurchaseTableViewController {
 			return subscriptionButtonTableViewCell
 		}
 
-		let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseInfoTableViewCell", for: indexPath) as! PurchaseInfoTableViewCell
+		guard let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseInfoTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseInfoTableViewCell.identifier)")
+		}
 		return purchaseInfoTableViewCell
 	}
 }

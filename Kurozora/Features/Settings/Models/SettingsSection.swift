@@ -158,33 +158,33 @@ extension SettingsTableViewController {
 		var segueIdentifier: String {
 			switch self {
 			case .account:
-				return "AccountSegue"
+				return R.segue.settingsTableViewController.accountSegue.identifier
 			case .keychain:
-				return "KeysSegue"
+				return R.segue.settingsTableViewController.keysSegue.identifier
 			case .notifications:
-				return "NotificationSegue"
+				return R.segue.settingsTableViewController.notificationSegue.identifier
 			case .displayBlindness:
-				return "DisplaySegue"
+				return R.segue.settingsTableViewController.displaySegue.identifier
 			case .theme:
-				return "ThemeSegue"
+				return R.segue.settingsTableViewController.themeSegue.identifier
 			case .icon:
-				return "IconSegue"
+				return R.segue.settingsTableViewController.iconSegue.identifier
 			case .browser:
-				return "BroswerSegue"
+				return R.segue.settingsTableViewController.broswerSegue.identifier
 			case .biometrics:
-				return "BiometricsSegue"
+				return R.segue.settingsTableViewController.biometricsSegue.identifier
 			case .cache:
-				return "CacheSegue"
+				return ""
 			case .privacy:
-				return "PrivacySegue"
+				return R.segue.settingsTableViewController.privacySegue.identifier
 			case .rate:
 				return ""
 			case .unlockFeatures:
-				return "SubscriptionSegue"
+				return R.segue.settingsTableViewController.subscriptionSegue.identifier
 			case .restoreFeatures:
 				return ""
 			case .tipjar:
-				return "TipJarSegue"
+				return R.segue.settingsTableViewController.tipJarSegue.identifier
 			case .followTwitter:
 				return ""
 			case .followMedium:

@@ -59,8 +59,10 @@ extension BadgesTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = (indexPath.row % 2 == 0) ? "LeftBadgeCell" : "RightBadgeCell"
-		let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) as! BadgeTableViewCell
+		let identifier = (indexPath.row % 2 == 0) ? R.reuseIdentifier.leftBadgeCell : R.reuseIdentifier.rightBadgeCell
+		guard let badgeTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath as IndexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
+		}
 		badgeTableViewCell.badge = self.badges?[indexPath.row]
 		return badgeTableViewCell
 	}

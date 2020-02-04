@@ -132,7 +132,9 @@ extension FavoriteShowsCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if indexPath.section == 0 {
-			let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LibraryStatisticsCollectionViewCell", for: indexPath)
+			guard let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.libraryStatisticsCollectionViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.libraryStatisticsCollectionViewCell.identifier)")
+			}
 			return libraryStatisticsCollectionViewCell
 		}
 		let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
@@ -153,7 +155,7 @@ extension FavoriteShowsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if indexPath.section == 1 {
 			let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
-			performSegue(withIdentifier: "ShowDetailsSegue", sender: smallLockupCollectionViewCell)
+			performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: smallLockupCollectionViewCell)
 		}
 	}
 }

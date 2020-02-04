@@ -37,8 +37,7 @@ class PostCell: UITableViewCell {
 	class func registerNibFor(tableView: UITableView) {
 		let listNib = UINib(nibName: "PostTextCell", bundle: nil)
 		tableView.register(listNib, forCellReuseIdentifier: "PostTextCell")
-		let listNib2 = UINib(nibName: "PostImageCell", bundle: nil)
-		tableView.register(listNib2, forCellReuseIdentifier: "PostImageCell")
+		tableView.register(R.nib.postImageCell)
 
 	}
 

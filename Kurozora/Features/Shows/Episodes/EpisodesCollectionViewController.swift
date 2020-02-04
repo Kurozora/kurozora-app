@@ -162,7 +162,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "EpisodeDetailSegue", let episodeCell = sender as? EpisodesCollectionViewCell {
+		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodesCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
 				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
 				episodeDetailViewController.episodeCell = episodeCell
@@ -180,7 +180,9 @@ extension EpisodesCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "EpisodesCollectionViewCell", for: indexPath) as! EpisodesCollectionViewCell
+		guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodesCollectionViewCell.identifier)")
+		}
 		episodesCollectionViewCell.episodesDelegate = self
 		episodesCollectionViewCell.delegate = self
 		episodesCollectionViewCell.episodesElement = episodes?[indexPath.row]

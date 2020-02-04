@@ -18,7 +18,7 @@ class KSearchController: UISearchController {
 		}
 	}
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	init() {
 		let searchResultsCollectionViewController = SearchResultsCollectionViewController.instantiateFromStoryboard() as? SearchResultsCollectionViewController
 		super.init(searchResultsController: searchResultsCollectionViewController)

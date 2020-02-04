@@ -60,7 +60,7 @@ extension AppearanceOptionsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 1, let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: "SelectableSettingsCell", for: indexPath) as? SelectableSettingsCell {
+		if indexPath.section == 1, let selectableSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.selectableSettingsCell, for: indexPath) {
 			selectableSettingsCell.primaryLabel?.text = automaticOptions[indexPath.row]
 			let darkThemeOption = DarkThemeOption(rawValue: indexPath.item)!
 			let selected = UserSettings.darkThemeOption
@@ -70,13 +70,15 @@ extension AppearanceOptionsViewController {
 			}
 
 			return selectableSettingsCell
-		} else if datePickerIndexPath == indexPath, let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: "DatePickerSettingsCell", for: indexPath) as? DatePickerSettingsCell {
+		} else if datePickerIndexPath == indexPath, let datePickerSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.datePickerSettingsCell, for: indexPath) {
 			datePickerSettingsCell.updateCell(with: inputDates[indexPath.row - 1], for: indexPath)
 			datePickerSettingsCell.delegate = self
 			return datePickerSettingsCell
 		}
 
-		let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: "DateSettingsCell", for: indexPath) as! DateSettingsCell
+		guard let dateSettingsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.dateSettingsCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.dateSettingsCell.identifier)")
+		}
 		dateSettingsCell.primaryLabel?.text = customScheduleOptions[indexPath.row]
 		dateSettingsCell.updateText(with: inputDates[indexPath.row])
 		return dateSettingsCell

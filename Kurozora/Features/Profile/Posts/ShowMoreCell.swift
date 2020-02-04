@@ -10,7 +10,6 @@ import UIKit
 
 class ShowMoreCell: UITableViewCell {
     public class func registerNibFor(tableView: UITableView) {
-        let listNib = UINib(nibName: "ShowMoreCell", bundle: nil)
-        tableView.register(listNib, forCellReuseIdentifier: "ShowMoreCell")
+		tableView.register(R.nib.showMoreCell)
     }
 }

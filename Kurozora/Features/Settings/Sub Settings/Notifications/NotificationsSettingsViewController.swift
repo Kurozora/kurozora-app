@@ -51,7 +51,7 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 
 	// MARK: - IBActions
 	@IBAction func switchTapped(_ sender: UISwitch) {
-		let switchType = NotificationOptions(rawValue: sender.tag)!
+		let switchType = KNotification.Options(rawValue: sender.tag)!
 		let isOn = sender.isOn
 
 		switch switchType {
@@ -75,8 +75,8 @@ class NotificationsSettingsViewController: SubSettingsViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let vc = segue.destination as? NotificationsOptionsViewController {
-			vc.segueIdentifier = segue.identifier
+		if let notificationsOptionsViewController = segue.destination as? NotificationsOptionsViewController {
+			notificationsOptionsViewController.segueIdentifier = segue.identifier
 		}
 	}
 }

@@ -85,7 +85,9 @@ extension TipJarTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let purchaseHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseHeaderTableViewCell", for: indexPath) as! PurchaseHeaderTableViewCell
+			guard let purchaseHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseHeaderTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseHeaderTableViewCell.identifier)")
+			}
 			return purchaseHeaderTableViewCell
 		} else if indexPath.section == 1 {
 			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
@@ -97,7 +99,9 @@ extension TipJarTableViewController {
 			return purchaseButtonTableViewCell
 		}
 
-		let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseInfoTableViewCell", for: indexPath) as! PurchaseInfoTableViewCell
+		guard let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseInfoTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseInfoTableViewCell.identifier)")
+		}
 		return purchaseInfoTableViewCell
 	}
 }

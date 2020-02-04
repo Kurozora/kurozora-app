@@ -140,21 +140,21 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "SynopsisSegue" {
+		if segue.identifier == R.segue.showDetailCollectionViewController.synopsisSegue.identifier {
 			if let kNavigationController = segue.destination as? KNavigationController {
 				if let synopsisViewController = kNavigationController.viewControllers.first as? SynopsisViewController {
 					synopsisViewController.synopsis = showDetailsElement?.synopsis
 				}
 			}
-		} else if segue.identifier == "SeasonSegue" {
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.seasonSegue.identifier {
 			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
 				seasonsCollectionViewController.seasonsElements = seasons
 			}
-		} else if segue.identifier == "CastSegue" {
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.castSegue.identifier {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
 				castCollectionViewController.actorsElements = actors
 			}
-		} else if segue.identifier == "EpisodeSegue" {
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
 				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
 					episodesCollectionViewController.seasonID = lockupCollectionViewCell.seasonsElement?.id
@@ -250,7 +250,7 @@ extension ShowDetailCollectionViewController {
 
 		switch showDetailSection {
 		case .seasons:
-			segueIdentifier = "EpisodeSegue"
+			segueIdentifier = R.segue.showDetailCollectionViewController.episodeSegue.identifier
 		default: return
 		}
 

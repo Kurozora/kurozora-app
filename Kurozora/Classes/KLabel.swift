@@ -14,7 +14,7 @@ class KLabel: UILabel {
 		return true
 	}
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		sharedInit()

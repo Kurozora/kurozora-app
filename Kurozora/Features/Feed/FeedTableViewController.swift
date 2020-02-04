@@ -105,11 +105,6 @@ class FeedTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "FeedSegue" {
-			let threadViewController = segue.destination as? ThreadTableViewController
-			threadViewController?.hidesBottomBarWhenPushed = true
-			threadViewController?.forumsThreadElement = sender as? ForumsThreadElement
-		}
 	}
 }
 
@@ -121,7 +116,9 @@ extension FeedTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let feedPostCell = tableView.dequeueReusableCell(withIdentifier: "FeedPostCell") as! FeedPostCell
+		guard let feedPostCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.feedPostCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.feedPostCell.identifier)")
+		}
 		return feedPostCell
 	}
 }
@@ -129,7 +126,7 @@ extension FeedTableViewController {
 // MARK: - UITableViewDelegate
 extension FeedTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: "ThreadSegue", sender: feedPostElements?[indexPath.row])
+
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -22,7 +22,9 @@ extension BrowserSettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let BrowserSettingsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BrowserSettingsTableViewCell", for: indexPath) as! BrowserSettingsTableViewCell
+		guard let BrowserSettingsTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.browserSettingsTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.browserSettingsTableViewCell.identifier)")
+		}
 		return BrowserSettingsTableViewCell
 	}
 

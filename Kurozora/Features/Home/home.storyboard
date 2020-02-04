@@ -242,10 +242,10 @@
                     <connections>
                         <segue destination="0a7-9G-Fd6" kind="custom" identifier="SubscriptionSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="3ef-dN-WV5"/>
                         <segue destination="SJ2-V2-Ihb" kind="custom" identifier="RedeemSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="X7E-Wd-lXb"/>
-                        <segue destination="fiZ-zG-fwp" kind="show" identifier="GenresSegue" id="UbA-PQ-r8z"/>
                         <segue destination="a2S-hb-5lO" kind="show" identifier="ShowsListSegue" id="EuV-Lh-iIw"/>
                         <segue destination="iCt-dj-RF4" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="ctZ-Iy-Ut3"/>
                         <segue destination="8H2-pT-d2L" kind="show" identifier="ShowDetailsSegue" id="gKM-pt-PFb"/>
+                        <segue destination="Pey-ss-6J5" kind="show" identifier="GenresSegue" id="YYd-Uu-4EQ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -336,7 +336,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBH-3e-ZKw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2906" y="-172"/>
+            <point key="canvasLocation" x="2229" y="-133"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KfH-cc-N2P">
@@ -362,32 +362,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8iy-pl-SuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="737" y="179"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="WCy-mS-yuK">
-            <objects>
-                <navigationController storyboardIdentifier="GenresKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fiZ-zG-fwp" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Q86-9G-OBs"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="aaE-fl-5Pb">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Pey-ss-6J5" kind="relationship" relationship="rootViewController" id="6mX-w4-mv0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2RC-qk-FlI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2229" y="-172"/>
         </scene>
         <!--RedeemKNavigationController-->
         <scene sceneID="zeC-Uz-NjZ">

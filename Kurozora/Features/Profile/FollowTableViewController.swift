@@ -114,7 +114,7 @@ class FollowTableViewController: KTableViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? FollowCell {
-			if segue.identifier == "ProfileSegue" {
+			if segue.identifier == R.segue.followTableViewController.profileSegue.identifier {
 				if let profileTableViewController = segue.destination as? ProfileTableViewController {
 					profileTableViewController.userID = currentCell.userProfile?.id
 				}
@@ -131,7 +131,9 @@ extension FollowTableViewController {
     }
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let followCell = tableView.dequeueReusableCell(withIdentifier: "FollowCell") as! FollowCell
+		guard let followCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.followCell, for: indexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.followCell.identifier)")
+		}
 		followCell.userProfile = userFollow?[indexPath.row]
         return followCell
     }

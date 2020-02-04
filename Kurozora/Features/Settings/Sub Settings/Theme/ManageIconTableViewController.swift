@@ -67,8 +67,9 @@ extension ManageIconTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: "IconTableViewCell", for: indexPath) as! IconTableViewCell
-
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.iconTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.iconTableViewCell.identifier)")
+		}
 		return iconTableViewCell
 	}
 

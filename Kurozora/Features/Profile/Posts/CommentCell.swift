@@ -15,6 +15,7 @@ class CommentCell: PostCell {
         case video
     }
 
+	// NOTE: - LOOK AT THIS
 	override class func registerNibFor(tableView: UITableView) {
         super.registerNibFor(tableView: tableView)
 
@@ -24,8 +25,7 @@ class CommentCell: PostCell {
         }
 
         do {
-            let listNib = UINib(nibName: "CommentImageCell", bundle: nil)
-            tableView.register(listNib, forCellReuseIdentifier: "CommentImageCell")
+			tableView.register(R.nib.commentImageCell)
         }
     }
 }

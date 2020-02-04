@@ -42,7 +42,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "ShowDetailsSegue" {
+		if segue.identifier == R.segue.showsListCollectionViewController.showDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
 				if let selectedCell = sender as? BaseLockupCollectionViewCell {
@@ -82,7 +82,7 @@ extension ShowsListCollectionViewController {
 extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath)
-		performSegue(withIdentifier: "ShowDetailsSegue", sender: baseLockupCollectionViewCell)
+		performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
 	}
 }
 

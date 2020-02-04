@@ -31,7 +31,7 @@ class BaseNotificationCell: SwipeTableViewCell {
 	// Body
 	@IBOutlet weak var notificationTextLabel: UILabel!
 
-	var notificationType: NotificationType?
+	var notificationType: KNotification.CustomType?
 	var userNotificationsElement: UserNotificationsElement? {
 		didSet {
 			configureCell()

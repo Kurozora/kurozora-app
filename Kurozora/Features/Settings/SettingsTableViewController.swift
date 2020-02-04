@@ -54,7 +54,7 @@ class SettingsTableViewController: KTableViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "SubscriptionSegue" {
+		if segue.identifier == R.segue.settingsTableViewController.subscriptionSegue.identifier {
 			let kNavigationController = segue.destination as? KNavigationController
 			(kNavigationController?.viewControllers.first as? PurchaseTableViewController)?.leftNavigationBarButtonIsHidden = true
 		}
@@ -78,14 +78,16 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var identifier = "SettingsCell"
+		var identifier = R.reuseIdentifier.settingsCell
 		switch indexPath {
 		case [0, 0]:
-			identifier = "AccountCell"
+			identifier = R.reuseIdentifier.accountCell
 		default: break
 		}
 
-		let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! SettingsCell
+		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
+		}
 		let sectionRows = sectionRow[settingsSection[indexPath.section]]
 		settingsCell.sectionRow = sectionRows?[indexPath.row]
 		return settingsCell

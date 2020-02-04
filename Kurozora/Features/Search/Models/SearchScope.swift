@@ -62,13 +62,13 @@ enum SearchScope: Int {
 	var identifierString: String {
 		switch self {
 		case .show:
-			return "SearchShowResultsCell"
+			return R.reuseIdentifier.searchShowResultsCell.identifier
 		case .myLibrary:
 			return "SearchLibraryResultCell"
 		case .thread:
-			return "SearchForumsResultsCell"
+			return R.reuseIdentifier.searchForumsResultsCell.identifier
 		case .user:
-			return "SearchUserResultsCell"
+			return R.reuseIdentifier.searchUserResultsCell.identifier
 		}
 	}
 

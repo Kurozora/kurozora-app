@@ -63,21 +63,21 @@ class ShowDetail {
 		var identifierString: String {
 			switch self {
 			case .header:
-				return "ShowDetailHeaderCollectionViewCell"
+				return R.reuseIdentifier.showDetailHeaderCollectionViewCell.identifier
 			case .badge:
-				return "BadgeCollectionViewCell"
+				return R.reuseIdentifier.badgeCollectionViewCell.identifier
 			case .synopsis:
-				return "SynopsisCollectionViewCell"
+				return R.reuseIdentifier.synopsisCollectionViewCell.identifier
 			case .rating:
-				return "RatingCollectionViewCell"
+				return R.reuseIdentifier.ratingCollectionViewCell.identifier
 			case .information:
-				return "InformationCollectionViewCell"
+				return R.reuseIdentifier.informationCollectionViewCell.identifier
 			case .seasons:
-				return "LockupCollectionViewCell"
+				return R.reuseIdentifier.lockupCollectionViewCell.identifier
 			case .cast:
-				return "CastCollectionViewCell"
+				return R.reuseIdentifier.castCollectionViewCell.identifier
 			case .related:
-				return "RelatedShowCollectionViewCell"
+				return "RelatedShowCollectionViewCell" // R.reuseIdentifier.relatedShowCollectionViewCell.identifier
 			}
 		}
 
@@ -95,11 +95,11 @@ class ShowDetail {
 			case .information:
 				return ""
 			case .seasons:
-				return "SeasonSegue"
+				return R.segue.showDetailCollectionViewController.seasonSegue.identifier
 			case .cast:
-				return "CastSegue"
+				return R.segue.showDetailCollectionViewController.castSegue.identifier
 			case .related:
-				return "RelatedSegue"
+				return "RelatedSegue" //R.segue.showDetailCollectionViewController.relatedSegue.identifier
 			}
 		}
 	}

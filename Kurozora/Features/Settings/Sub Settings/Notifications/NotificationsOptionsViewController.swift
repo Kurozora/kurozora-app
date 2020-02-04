@@ -10,15 +10,15 @@ import UIKit
 
 class NotificationsOptionsViewController: SubSettingsViewController {
 	// MARK: - Properties
-	var notificationSegueIdentifier: NotificationSegueIdentifier = .bannerStyle
-	var segueIdentifier: String!
+	var notificationSegueIdentifier: KNotification.Settings = .bannerStyle
+	var segueIdentifier: String?
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if let notificationSegueIdentifier = NotificationSegueIdentifier(rawValue: segueIdentifier) {
-			self.notificationSegueIdentifier = notificationSegueIdentifier
-		}
+
+		let notificationSegueIdentifier = KNotification.Settings(stringValue: segueIdentifier)
+		self.notificationSegueIdentifier = notificationSegueIdentifier
 	}
 
 	override func viewDidLoad() {
@@ -48,7 +48,7 @@ extension NotificationsOptionsViewController {
 		let notificationsGroupingCell = tableView.dequeueReusableCell(withIdentifier: "SelectableSettingsCell", for: indexPath) as! SelectableSettingsCell
 		switch notificationSegueIdentifier {
 		case .notificationsGrouping:
-			let grouping = NotificationGroupStyle(rawValue: indexPath.item)!
+			let grouping = KNotification.GroupStyle(rawValue: indexPath.item)!
 			let selected = UserSettings.notificationsGrouping
 
 			switch grouping {
@@ -64,7 +64,7 @@ extension NotificationsOptionsViewController {
 				notificationsGroupingCell.isSelected = true
 			}
 		case .bannerStyle:
-			let bannerStyle = NotificationBannerStyle(rawValue: indexPath.item)!
+			let bannerStyle = KNotification.BannerStyle(rawValue: indexPath.item)!
 			let selected = UserSettings.notificationsPersistent
 
 			switch bannerStyle {

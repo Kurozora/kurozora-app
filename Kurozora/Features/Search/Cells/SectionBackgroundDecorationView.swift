@@ -13,7 +13,7 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
 	// MARK: - Properties
 	static let elementKindSectionBackground = "SectionBackgroundElementKind"
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		configureView()

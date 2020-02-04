@@ -8,18 +8,42 @@
 
 import Foundation
 
-/**
-	List of notification segue identifiers.
+extension KNotification {
+	/**
+		List of notification settings.
 
-	```
-	case notificationsGrouping = "notificationsGroupingSegue"
-	case bannerStyle = "bannerStyleSegue"
-	```
-*/
-enum NotificationSegueIdentifier: String {
-	/// Indicates the view should segue to the notifications grouping options view.
-	case notificationsGrouping = "notificationsGroupingSegue"
+		```
+		case notificationsGrouping = 0
+		case bannerStyle = 1
+		```
+	*/
+	enum Settings: Int {
+		/// Indicates the view should segue to the notifications grouping options view.
+		case notificationsGrouping = 0
 
-	/// Indicates the view should segue to the banner style options view.
-	case bannerStyle = "bannerStyleSegue"
+		/// Indicates the view should segue to the banner style options view.
+		case bannerStyle = 1
+
+		// MARK: - Initializers
+		init(stringValue: String?) {
+			switch stringValue {
+			case R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier:
+				self = .notificationsGrouping
+			case R.segue.notificationsSettingsViewController.bannerStyleSegue.identifier:
+				self = .bannerStyle
+			default:
+				self = .bannerStyle
+			}
+		}
+
+		// MARK: - Properties
+		var segueIdentifier: String {
+			switch self {
+			case .notificationsGrouping:
+				return R.segue.notificationsSettingsViewController.notificationsGroupingSegue.identifier
+			case .bannerStyle:
+				return R.segue.notificationsSettingsViewController.bannerStyleSegue.identifier
+			}
+		}
+	}
 }

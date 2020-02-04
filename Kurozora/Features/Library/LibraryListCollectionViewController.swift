@@ -236,7 +236,7 @@ extension LibraryListCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell
-		performSegue(withIdentifier: "ShowDetailsSegue", sender: libraryBaseCollectionViewCell)
+		performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: libraryBaseCollectionViewCell)
 	}
 }
 

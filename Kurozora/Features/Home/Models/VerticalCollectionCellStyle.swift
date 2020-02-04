@@ -34,11 +34,11 @@ extension VerticalCollectionCellStyle {
 	var identifierString: String {
 		switch self {
 		case .actionList:
-			return "ActionListExploreCollectionViewCell"
+			return R.reuseIdentifier.actionListExploreCollectionViewCell.identifier
 		case .actionButton:
-			return "ActionButtonExploreCollectionViewCell"
+			return R.reuseIdentifier.actionButtonExploreCollectionViewCell.identifier
 		case .legal:
-			return "LegalCollectionViewCell"
+			return R.reuseIdentifier.legalCollectionViewCell.identifier
 		}
 	}
 }

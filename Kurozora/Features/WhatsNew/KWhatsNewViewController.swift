@@ -16,7 +16,7 @@ class KWhatsNewViewController: WhatsNewViewController {
 		return KThemePicker.statusBarStyle.statusBarValue
 	}
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	required init(titleText: String, buttonText: String, items: [WhatsNewItem]) {
 		super.init(items: items)
 		self.titleText = titleText

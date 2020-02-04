@@ -64,7 +64,7 @@ extension BaseOnboardingTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = onboardingType.cellType[indexPath.row] == .footer ? "OnboardingFooterTableViewCell" : "OnboardingTextFieldCell"
+		let identifier = onboardingType.cellType[indexPath.row] == .footer ? R.reuseIdentifier.onboardingFooterTableViewCell.identifier : R.reuseIdentifier.onboardingTextFieldCell.identifier
 		let onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OnboardingBaseTableViewCell
 		onboardingBaseTableViewCell.onboardingType = onboardingType
 

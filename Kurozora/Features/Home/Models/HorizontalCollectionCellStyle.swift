@@ -148,15 +148,15 @@ extension HorizontalCollectionCellStyle {
 	var identifierString: String {
 		switch self {
 		case .banner:
-			return "BannerLockupCollectionViewCell"
+			return R.reuseIdentifier.bannerLockupCollectionViewCell.identifier
 		case .large:
-			return "LargeLockupCollectionViewCell"
+			return R.reuseIdentifier.largeLockupCollectionViewCell.identifier
 		case .medium:
-			return "MediumLockupCollectionViewCell"
+			return R.reuseIdentifier.mediumLockupCollectionViewCell.identifier
 		case .small:
-			return "SmallLockupCollectionViewCell"
+			return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 		case .video:
-			return "VideoLockupCollectionViewCell"
+			return R.reuseIdentifier.videoLockupCollectionViewCell.identifier
 		}
 	}
 

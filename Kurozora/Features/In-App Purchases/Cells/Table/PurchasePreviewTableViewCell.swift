@@ -29,7 +29,9 @@ extension PurchasePreviewTableViewCell: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let purchasePreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PurchasePreviewCollectionViewCell", for: indexPath) as! PurchasePreviewCollectionViewCell
+		guard let purchasePreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchasePreviewCollectionViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewCollectionViewCell.identifier)")
+		}
 		purchasePreviewCollectionViewCell.previewItem = previewItems[indexPath.item]
 		return purchasePreviewCollectionViewCell
 	}

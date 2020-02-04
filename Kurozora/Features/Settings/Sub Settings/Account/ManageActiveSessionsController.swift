@@ -253,7 +253,9 @@ extension ManageActiveSessionsController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: "CurrentSessionCell", for: indexPath) as! CurrentSessionCell
+			guard let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.currentSessionCell, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.currentSessionCell.identifier)")
+			}
 			currentSessionCell.session = sessions?.currentSessions
 			return currentSessionCell
 		} else {
@@ -261,12 +263,16 @@ extension ManageActiveSessionsController {
 
 			// No other sessions
 			if otherSessionsCount == nil || otherSessionsCount == 0 {
-				let noSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: "NoSessionsCell", for: indexPath) as! NoSessionsCell
+				guard let noSessionsCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.noSessionsCell, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.noSessionsCell.identifier)")
+				}
 				return noSessionsCell
 			}
 
 			// Other sessions found
-			let otherSessionsCell = tableView.dequeueReusableCell(withIdentifier: "OtherSessionsCell", for: indexPath) as! OtherSessionsCell
+			guard let otherSessionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.otherSessionsCell, for: indexPath) else {
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.otherSessionsCell.identifier)")
+			}
 
 			otherSessionsCell.delegate = self
 			otherSessionsCell.sessions = sessions?.otherSessions?[indexPath.row]

@@ -18,7 +18,7 @@ class WorkflowController: NSObject {
 	static let shared = WorkflowController()
 	let notificationCenter = UNUserNotificationCenter.current()
 
-	// MARK: - Initializer
+	// MARK: - Initializers
 	private override init() {}
 
 	// MARK: - Functions

@@ -10,7 +10,7 @@ import UIKit
 //import ANParseKit
 
 class AnimeCell: UICollectionViewCell {
-	static let id = "AnimeCell"
+	static let id = R.reuseIdentifier.animeCell.identifier
 
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var etaLabel: UILabel!

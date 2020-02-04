@@ -170,7 +170,9 @@ extension SearchResultsCollectionViewController {
 			return searchBaseResultsCell
 		}
 
-		let searchResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchSuggestionResultCell", for: indexPath) as! SearchSuggestionResultCell
+		guard let searchResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.searchSuggestionResultCell, for: indexPath) else {
+			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.searchSuggestionResultCell.identifier)")
+		}
 		return searchResultsCell
 	}
 

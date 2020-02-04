@@ -71,7 +71,9 @@ extension GenresTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let genreTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GenreTableViewCell", for: indexPath) as! GenreTableViewCell
+		guard let genreTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.genreTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.genreTableViewCell.identifier)")
+		}
 
 		genreTableViewCell.genreElement = genresElements?[indexPath.row]
 

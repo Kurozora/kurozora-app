@@ -16,7 +16,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	var kSearchController: KSearchController = KSearchController()
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
-		[["title": "Redeem", "segueId": "RedeemSegue"], ["title": "Become a Pro User", "segueId": "SubscriptionSegue"]]
+		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
 	]
 
 	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
@@ -157,7 +157,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "ShowDetailsSegue" {
+		if segue.identifier == R.segue.homeCollectionViewController.showDetailsSegue.identifier {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
 				if let selectedCell = sender as? BaseLockupCollectionViewCell {
@@ -167,7 +167,7 @@ class HomeCollectionViewController: KCollectionViewController {
 					showDetailCollectionViewController.showID = showID
 				}
 			}
-		} else if segue.identifier == "ShowsListSegue" {
+		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
 			if let showsListCollectionViewController = segue.destination as? ShowsListCollectionViewController {
 				if let indexPath = sender as? IndexPath {
 					showsListCollectionViewController.exploreCategory = exploreCategories?[indexPath.section]
@@ -212,10 +212,10 @@ extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
 			if exploreCategories?[indexPath.section].genres?.count == 0 {
-				performSegue(withIdentifier: "ShowDetailsSegue", sender: baseLockupCollectionViewCell)
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.genresSegue, sender: baseLockupCollectionViewCell)
 			}
 		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
-			performSegue(withIdentifier: "LegalSegue", sender: legalCollectionViewCell)
+			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
 		}
 	}
 }
@@ -226,13 +226,13 @@ extension HomeCollectionViewController {
 		switch verticalCollectionCellStyle {
 		case .legal:
 			guard let legalExploreCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? LegalCollectionViewCell else {
-				fatalError("Cannot create new \(verticalCollectionCellStyle.identifierString)")
+				fatalError("Cannot dequeue reusable cell with identifier \(verticalCollectionCellStyle.identifierString)")
 			}
 			return legalExploreCollectionViewCell
 		default:
 			guard let actionBaseExploreCollectionViewCell = collectionView.dequeueReusableCell(
 				withReuseIdentifier: verticalCollectionCellStyle.identifierString, for: indexPath) as? ActionBaseExploreCollectionViewCell else {
-					fatalError("Cannot create new \(verticalCollectionCellStyle.identifierString)")
+					fatalError("Cannot dequeue reusable cell with identifier \(verticalCollectionCellStyle.identifierString)")
 			}
 			return actionBaseExploreCollectionViewCell
 		}
@@ -249,7 +249,7 @@ extension HomeCollectionViewController {
 				}
 				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(
 					withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
-					else { fatalError("Cannot create new \(horizontalCollectionCellStyle.identifierString)") }
+					else { fatalError("Cannot dequeue reusable cell with identifier \(horizontalCollectionCellStyle.identifierString)") }
 
 				// Populate the cell with our item description.
 				let exploreCategoriesSection = self.exploreCategories?[indexPath.section]
@@ -289,9 +289,9 @@ extension HomeCollectionViewController {
 			if indexPath.section < exploreCategoriesCount {
 				let sectionTitle = self.exploreCategories?[indexPath.section].title ?? ""
 				if sectionTitle.contains("categories", caseSensitive: false) || sectionTitle.contains("genres", caseSensitive: false) {
-					exploreSectionTitleCell.segueID = "GenresSegue"
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.genresSegue.identifier
 				} else {
-					exploreSectionTitleCell.segueID = "ShowsListSegue"
+					exploreSectionTitleCell.segueID = R.segue.homeCollectionViewController.showsListSegue.identifier
 				}
 				exploreSectionTitleCell.title = self.exploreCategories?[indexPath.section].title
 			} else {

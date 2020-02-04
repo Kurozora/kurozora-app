@@ -23,7 +23,7 @@ class NotificationsViewController: KTableViewController {
 
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
-	var grouping: NotificationGroupStyle = NotificationGroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
+	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
 	var userNotificationsElement: [UserNotificationsElement]? {
 		didSet {
@@ -54,7 +54,7 @@ class NotificationsViewController: KTableViewController {
 		super.viewWillAppear(animated)
 		if oldGrouping == nil || oldGrouping != UserSettings.notificationsGrouping, User.isSignedIn {
 			let notificationsGrouping = UserSettings.notificationsGrouping
-			grouping = NotificationGroupStyle(rawValue: notificationsGrouping)!
+			grouping = KNotification.GroupStyle(rawValue: notificationsGrouping)!
 
 			DispatchQueue.global(qos: .background).async {
 				self.fetchNotifications()
@@ -196,7 +196,7 @@ class NotificationsViewController: KTableViewController {
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
 			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
 				guard let type = userNotificationsElement.type else { return }
-				guard let notificationType = NotificationType(rawValue: type) else { return }
+				guard let notificationType = KNotification.CustomType(rawValue: type) else { return }
 				let timeKey = notificationType.stringValue
 
 				result[timeKey, default: []].append(userNotificationsElement)
@@ -339,6 +339,15 @@ extension NotificationsViewController {
 		}
 	}
 
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch self.grouping {
+		case .automatic, .byType:
+			return groupedNotifications[section].sectionNotifications.count
+		case .off:
+			return userNotificationsElement?.count ?? 0
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch self.grouping {
 		case .automatic, .byType:
@@ -350,39 +359,30 @@ extension NotificationsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let notificationTitleCell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationTitleCell") as! NotificationTitleCell
-		notificationTitleCell.notificationMarkButton.tag = section
-		notificationTitleCell.notificationMarkButton.addTarget(self, action: #selector(notificationMarkButtonPressed(_:)), for: .touchUpInside)
+		let notificationTitleCell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.notificationTitleCell.identifier) as? NotificationTitleCell
+		notificationTitleCell?.notificationMarkButton.tag = section
+		notificationTitleCell?.notificationMarkButton.addTarget(self, action: #selector(notificationMarkButtonPressed(_:)), for: .touchUpInside)
 
 		switch self.grouping {
 		case .automatic, .byType:
-			notificationTitleCell.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
+			notificationTitleCell?.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
 			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.read ?? false })
-			notificationTitleCell.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Marks as read", for: .normal)
-			return notificationTitleCell.contentView
+			notificationTitleCell?.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Marks as read", for: .normal)
+			return notificationTitleCell?.contentView
 		case .off: break
 		}
 
 		return nil
 	}
 
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch self.grouping {
-		case .automatic, .byType:
-			return groupedNotifications[section].sectionNotifications.count
-		case .off:
-			return userNotificationsElement?.count ?? 0
-		}
-	}
-
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		// Prepare necessary information for setting up the correct cell
-		var notificationType: NotificationType = .other
+		var notificationType: KNotification.CustomType = .other
 		var notificationCellIdentifier: String = notificationType.identifierString
 
 		let notifications = (self.grouping == .off) ? userNotificationsElement?[indexPath.row] : groupedNotifications[indexPath.section].sectionNotifications[indexPath.row]
 		if let notificationsType = notifications?.type, !notificationsType.isEmpty {
-			notificationType = NotificationType(rawValue: notificationsType) ?? notificationType
+			notificationType = KNotification.CustomType(rawValue: notificationsType) ?? notificationType
 			notificationCellIdentifier = notificationType.identifierString
 		}
 
