@@ -13,7 +13,13 @@ import SCLAlertView
 class TipJarTableViewController: KTableViewController {
 	// MARK: - Properties
 	var purchaseDetails = ["Wolf tip 🐺", "Tiger tip 🐯", "Demon tip 👺", "Dragon tip 🐲", "God tip 🙏"]
+
+	#if targetEnvironment(macCatalyst)
+	var productIDs: [String] = ["20000331KTIPWOLF_macCatalyst", "20000331KTIPTIGER_macCatalyst", "20000331KTIPDEMON_macCatalyst", "20000331KTIPDRAGON_macCatalyst", "20000331KTIPGOD_macCatalyst"]
+	#else
 	var productIDs: [String] = ["20000331KTIPWOLF", "20000331KTIPTIGER", "20000331KTIPDEMON", "20000331KTIPDRAGON", "20000331KTIPGOD"]
+	#endif
+
 	fileprivate var _productsArray: [SKProduct] {
 		get { return productsArray }
 		set {
