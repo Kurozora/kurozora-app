@@ -18,7 +18,7 @@ enum KBrowser: Int {
 	case opera = 6
 	case dolphin = 7
 
-	static var all: [KBrowser] = [.safari, .brave, .dolphin, .duckduckgo, .firefox, .firefoxfocus, .googlechrome, .opera]
+	static let all: [KBrowser] = [.safari, .brave, .dolphin, .duckduckgo, .firefox, .firefoxfocus, .googlechrome, .opera]
 
 	// MARK: - Properties
 	var stringValue: String {

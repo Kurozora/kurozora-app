@@ -363,7 +363,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10932</string>
+	<string>10935</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -441,7 +441,7 @@
 	<array>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>
-			<string>home</string>
+			<string>Symbols/house_fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Home</string>
 			<key>UIApplicationShortcutItemType</key>
@@ -449,7 +449,7 @@
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>
-			<string>notification</string>
+			<string>Symbols/app_badge_fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Notifications</string>
 			<key>UIApplicationShortcutItemType</key>
@@ -457,7 +457,7 @@
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>
-			<string>profile</string>
+			<string>Symbols/person_crop_circle_fill</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Profile</string>
 			<key>UIApplicationShortcutItemType</key>

@@ -144,7 +144,7 @@ extension AppDelegate {
 	}
 
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		Kurozora.shared.shortcutHandler(application, shortcutItem)
+		Kurozora.shared.shortcutHandler(application, performActionFor: shortcutItem)
 	}
 }
 

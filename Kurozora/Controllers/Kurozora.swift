@@ -94,118 +94,92 @@ class Kurozora {
 	}
 
 	/**
-		Handle the selected app shortcut.
+		Routes the scheme with the specified url to an in app resource.
 
-		- Parameter app: The app's centralized point of control and coordination.
-		- Parameter shortcutItem: The application's shortcut item.
-	*/
-	func shortcutHandler(_ app: UIApplication, _ shortcutItem: UIApplicationShortcutItem) {
-		if shortcutItem.type == "HomeShortcut" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 0
-			}
-		} else if shortcutItem.type == "NotificationShortcut" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
-			}
-		} else if shortcutItem.type == "ProfileShortcut" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 4
-			}
-		}
-	}
-
-	/**
-		Handle the scheme passed to the app.
-
-		- Parameter app: The app's centralized point of control and coordination.
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
-		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
 	*/
-	func schemeHandler(_ app: UIApplication = UIApplication.shared, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
-		let urlScheme = url.host?.removingPercentEncoding
+	fileprivate func routeScheme(with url: URL) {
+		guard let urlScheme = url.host?.removingPercentEncoding else { return }
+		guard let scheme: Scheme = Scheme(rawValue: urlScheme) else { return }
 
-		if urlScheme == "anime" || urlScheme == "show" {
+		switch scheme {
+		case .anime, .show:
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
 				if let showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
 					showDetailCollectionViewController.showID = Int(showID)
 
 					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
-					return
 				}
 			}
-		}
-
-		if urlScheme == "profile" || urlScheme == "user" {
+		case .profile, .user:
 			let userID = url.lastPathComponent
-			if !userID.isEmpty {
-				if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
-					profileViewController.userID = Int(userID)
-					profileViewController.dismissButtonIsEnabled = true
-
-					let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-					UIApplication.topViewController?.present(kurozoraNavigationController)
-					return
-				}
-			}
-		}
-
-		if urlScheme == "explore" || urlScheme == "home" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 0
-				return
-			}
-		}
-
-		if urlScheme == "library" || urlScheme == "mylibrary" || urlScheme == "my library" || urlScheme == "list" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 1
-				return
-			}
-		}
-
-		if urlScheme == "forum" || urlScheme == "forums" || urlScheme == "forumThread" || urlScheme == "forumsThread" || urlScheme == "thread" {
-			let forumThreadID = url.lastPathComponent
-			if !forumThreadID.isEmpty {
-				if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-					threadViewController.forumThreadID = Int(forumThreadID)
-
-					UIApplication.topViewController?.present(threadViewController, animated: true)
-					return
-				}
-			} else {
-				if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-					tabBarController.selectedIndex = 2
-					return
-				}
-			}
-		}
-
-		if urlScheme == "notification" || urlScheme == "notifications" {
-			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
-				tabBarController.selectedIndex = 3
-				return
-			}
-		}
-
-		if urlScheme == "feed" || urlScheme == "timeline" {
+			let isCurrentUser = userID.isEmpty || userID.int == User.currentID
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
-				return
+
+				if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+					if isCurrentUser {
+						WorkflowController.shared.isSignedIn {
+							tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
+						}
+					} else {
+						profileTableViewController.userID = userID.int
+						tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
+					}
+				}
+			}
+		case .explore, .home:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 0
+			}
+		case .library, .myLibrary, .list:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 1
+			}
+		case .forum, .forums, .forumThread, .forumsThread, .thread:
+			let forumThreadID = url.lastPathComponent
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 2
+
+				if !forumThreadID.isEmpty {
+					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
+						threadViewController.forumThreadID = forumThreadID.int
+						tabBarController.selectedViewController?.show(threadViewController, sender: nil)
+					}
+				}
+			}
+		case .notification, .notifications:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 3
+			}
+		case .feed, .timeline:
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 4
 			}
 		}
 	}
 
 	/**
-		Handle the scheme passed to the app on iOS 13+.
+		Opens a resource specified by a URL.
+
+		- Parameter app: The app's centralized point of control and coordination.
+		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
+		- Parameter option: A dictionary of URL handling options. For information about the possible keys in this dictionary and how to handle them, see UIApplicationOpenURLOptionsKey. By default, the value of this parameter is an empty dictionary.
+	*/
+	func schemeHandler(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
+		routeScheme(with: url)
+	}
+
+	/**
+		Opens a resource specified by a URL on iOS 13.0+ and macCatalyst 13.0+.
 
 		- Parameter scene: The object that represents one instance of the app's user interface.
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	*/
 	@available(iOS 13.0, macCatalyst 13.0, *)
-	func schemeHandler(scene: UIScene? = nil, open url: URL) {
-		schemeHandler(open: url, options: [:])
+	func schemeHandler(_ scene: UIScene, open url: URL) {
+		routeScheme(with: url)
 	}
 }
 
@@ -394,5 +368,55 @@ extension Kurozora {
 		}
 
 		return message
+	}
+}
+
+// MARK: - Quick Actions
+extension Kurozora {
+	/**
+		Performs an action for the specified shortcut item.
+
+		- Parameter shortcutItem: The action selected by the user. Your app defines the actions that it supports, and the user chooses from among those actions. For information about how to create and configure shortcut items for your app, see [UIApplicationShortcutItem](apple-reference-documentation://hsTvcCjEDQ).
+	*/
+	fileprivate func performAction(for shortcutItem: UIApplicationShortcutItem) {
+		if shortcutItem.type == R.info.uiApplicationShortcutItems.homeShortcut._key {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 0
+			}
+		} else if shortcutItem.type == R.info.uiApplicationShortcutItems.notificationShortcut._key {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 3
+			}
+		} else if shortcutItem.type == R.info.uiApplicationShortcutItems.profileShortcut._key {
+			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
+				tabBarController.selectedIndex = 4
+				WorkflowController.shared.isSignedIn {
+					if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
+						tabBarController.navigationController?.show(profileTableViewController, sender: nil)
+					}
+				}
+			}
+		}
+	}
+
+	/**
+		Handle the selected quick action.
+
+		- Parameter app: The app's centralized point of control and coordination.
+		- Parameter shortcutItem: The quick action for which you are providing an implementation in this method.
+	*/
+	func shortcutHandler(_ app: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem) {
+		performAction(for: shortcutItem)
+	}
+
+	/**
+		Handle the selected quick action on iOS 13.0+ and macCatalyst 13.0+.
+
+		- Parameter windowScene: The window scene object receiving the shortcut item.
+		- Parameter shortcutItem: The application's shortcut item.
+	*/
+	@available(iOS 13.0, *)
+	func shortcutHandler(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) {
+		performAction(for: shortcutItem)
 	}
 }
