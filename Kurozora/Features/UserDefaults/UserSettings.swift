@@ -151,8 +151,9 @@ extension UserSettings {
 
 	/// Returns a string indicating the currently used app icon.
 	static var appIcon: String {
-		guard let appIcon = shared.string(forKey: #function) else { return "AppIcon60x60" }
-		return appIcon
+		let primaryIcon = "AppIcon60x60"
+		guard let appIcon = shared.string(forKey: #function) else { return primaryIcon }
+		return (UIImage(named: appIcon) != nil) ? appIcon : primaryIcon
 	}
 
 	/// Returns an integer indicating the default browser.

@@ -15,10 +15,6 @@
 	],
 	"Premium": [
 		{
-			"name": "Blue",
-			"image": "App-Icon-iPhone-Blue"
-		},
-		{
 			"name": "Coral",
 			"image": "App-Icon-iPhone-Coral"
 		},
@@ -27,20 +23,16 @@
 			"image": "App-Icon-iPhone-Dutch-Orange"
 		},
 		{
-			"name": "Emerald",
-			"image": "App-Icon-iPhone-Emerald"
-		},
-		{
 			"name": "Green",
 			"image": "App-Icon-iPhone-Green"
 		},
 		{
-			"name": "Lime",
-			"image": "App-Icon-iPhone-Lime"
+			"name": "Ocean Blue",
+			"image": "App-Icon-iPhone-Ocean-Blue"
 		},
 		{
-			"name": "Orange",
-			"image": "App-Icon-iPhone-Orange"
+			"name": "Peach Orange",
+			"image": "App-Icon-iPhone-Peach-Orange"
 		},
 		{
 			"name": "Red",
@@ -50,10 +42,9 @@
 			"name": "Rose Gold",
 			"image": "App-Icon-iPhone-Rose-Gold"
 		},
-
 		{
-			"name": "Saphire",
-			"image": "App-Icon-iPhone-Saphire"
+			"name": "Sky Blue",
+			"image": "App-Icon-iPhone-Sky-Blue"
 		},
 		{
 			"name": "Yellow",
@@ -61,6 +52,10 @@
 		}
 	],
 	"Limited": [
+		{
+			"name": "Kurogram",
+			"image": "App-Icon-iPhone-Kurogram"
+		},
 		{
 			"name": "Product(RED)",
 			"image": "App-Icon-iPhone-Product-RED"

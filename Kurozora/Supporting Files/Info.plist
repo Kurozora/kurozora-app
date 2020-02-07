@@ -14,15 +14,6 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>Blue</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>App-Icon-iPhone-Blue</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>Coral</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -50,15 +41,6 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Emerald</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>App-Icon-iPhone-Emerald</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>Green</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -68,11 +50,11 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Lime</key>
+			<key>Kurogram</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Lime</string>
+					<string>App-Icon-iPhone-Kurogram</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -86,11 +68,20 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Orange</key>
+			<key>Ocean Blue</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Orange</string>
+					<string>App-Icon-iPhone-Ocean-Blue</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Peach Orange</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPhone-Peach-Orange</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -122,11 +113,11 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Saphire</key>
+			<key>Sky Blue</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Saphire</string>
+					<string>App-Icon-iPhone-Sky-Blue</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -171,16 +162,6 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>Blue</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>App-Icon-iPad-Blue</string>
-					<string>App-Icon-iPad-Pro-Blue</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>Coral</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -205,16 +186,8 @@
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Dutch-Orange</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>Emerald</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>App-Icon-iPhone-Emerald</string>
+					<string>App-Icon-iPad-Dutch-Orange</string>
+					<string>App-Icon-iPad-Pro-Dutch-Orange</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -229,11 +202,12 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Lime</key>
+			<key>Kurogram</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Lime</string>
+					<string>App-Icon-iPad-Kurogram</string>
+					<string>App-Icon-iPad-Pro-Kurogram</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -248,11 +222,22 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Orange</key>
+			<key>Ocean Blue</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Orange</string>
+					<string>App-Icon-iPad-Ocean-Blue</string>
+					<string>App-Icon-iPad-Pro-Ocean-Blue</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Peach Orange</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPad-Peach-Orange</string>
+					<string>App-Icon-iPad-Pro-Peach-Orange</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -287,11 +272,12 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Saphire</key>
+			<key>Sky Blue</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPhone-Saphire</string>
+					<string>App-Icon-iPad-Sky-Blue</string>
+					<string>App-Icon-iPad-Pro-Sky-Blue</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -363,7 +349,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10935</string>
+	<string>10936</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
