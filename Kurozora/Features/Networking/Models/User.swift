@@ -98,66 +98,6 @@ class UserProfile: JSONDecodable {
 	}
 }
 
-//    var myAnimeListPassword: String? {
-//        get {
-//            return UserDefaults.standard.object(forKey: User.MyAnimeListPasswordKey) as! String?
-//        }
-//        set(object) {
-//            UserDefaults.standard.set(object, forKey: User.MyAnimeListPasswordKey)
-//            UserDefaults.standard.synchronize()
-//        }
-//    }
-//    
-//    class func signOutMyAnimeList() {
-//        UserDefaults.standard.removeObject(forKey: User.MyAnimeListPasswordKey)
-//        UserDefaults.standard.synchronize()
-//    }
-
-//    class func syncingWithMyAnimeList() -> Bool {
-//        guard let user = User.currentUser() else {
-//            return false
-//        }
-//        return user.myAnimeListPassword != nil
-//    }
-//
-//    func incrementPostCount(byAmount: Int) {
-//        details.incrementKey("posts", byAmount: byAmount)
-//        details.saveInBackground()
-//    }
-
-// Trial
-//    func hasTrial() -> Bool {
-//        return trialExpiration?.compare(Date()) == .orderedDescending
-//    }
-
-// Muting
-//    class func muted(viewController: UIViewController) -> Bool {
-//        guard let currentUser = User.currentUser() else {
-//            return false
-//        }
-
-//        var mutedUntil: Date?
-
-//        do {
-//            let details = try currentUser.details.fetchIfNeeded()
-//            mutedUntil = details.mutedUntil
-
-//        } catch _ { }
-
-//        guard let muteDate = mutedUntil else {
-//            return false
-//        }
-
-//        if muteDate.compare(Date()) == ComparisonResult.orderedAscending  {
-//            currentUser.details.mutedUntil = nil
-//            currentUser.saveInBackground()
-//            return false
-//        }
-
-//        viewController.presentBasicAlertWithTitle(title: "Account muted", message: "Until \(muteDate.mediumDateTime()).\nContact admins for more information.")
-//        return true
-//    }
-
 // MARK: - Properties
 extension User {
 	/// The object used to start and stop the delivery of location-related events to the app.
@@ -261,38 +201,6 @@ extension User {
 	/// Returns a boolean indicating if the current user has purchased PRO
 	static var isPro: Bool {
 		return true
-	}
-
-	/// Returns a boolean indicating if the current user is an admin
-	static var isAdmin: Bool {
-		if let userTypeString = Kurozora.shared.KDefaults["user_role"], !userTypeString.isEmpty {
-			guard let userTypeInt = Int(userTypeString) else { return false }
-			guard let userType: UserType = UserType(rawValue: userTypeInt) else { return false }
-
-			switch userType {
-			case .admin:
-				return true
-			default:
-				return false
-			}
-		}
-		return false
-	}
-
-	/// Returns a boolean if the current user is a mod
-	static var isMod: Bool {
-		if let userType = Kurozora.shared.KDefaults["user_role"], !userType.isEmpty {
-			guard let userType = Int(userType) else { return false }
-			guard let type: UserType = UserType(rawValue: userType) else { return false }
-
-			switch type {
-			case .mod:
-				return true
-			default:
-				return false
-			}
-		}
-		return false
 	}
 }
 

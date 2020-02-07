@@ -199,8 +199,6 @@ class ReplyCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if User.isAdmin || User.isMod {
-		}
 
 		// Upvote, downvote and reply actions
 		if let replyID = threadRepliesElement.id, let locked = forumsThreadElement?.locked, replyID != 0 && !locked {

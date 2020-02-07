@@ -184,7 +184,6 @@
 		664B6D7A230F469900F9C726 /* AppAppearanceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D79230F469900F9C726 /* AppAppearanceOption.swift */; };
 		664B6D7C230F532500F9C726 /* BadgeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7B230F532500F9C726 /* BadgeElement.swift */; };
 		664B6D7E230F5AA300F9C726 /* UITableView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */; };
-		665099D322FC22670053C2FD /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D222FC22670053C2FD /* UserType.swift */; };
 		665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */; };
 		665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */; };
 		665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */; };
@@ -622,7 +621,6 @@
 		664B6D79230F469900F9C726 /* AppAppearanceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceOption.swift; sourceTree = "<group>"; };
 		664B6D7B230F532500F9C726 /* BadgeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeElement.swift; sourceTree = "<group>"; };
 		664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Kurozora.swift"; sourceTree = "<group>"; };
-		665099D222FC22670053C2FD /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		665099D422FC2B6A0053C2FD /* SearchSuggestionResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionResultCell.swift; sourceTree = "<group>"; };
 		665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTableViewController.swift; sourceTree = "<group>"; };
 		665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1426,7 +1424,6 @@
 		665099D122FC223A0053C2FD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				665099D222FC22670053C2FD /* UserType.swift */,
 				66B2C73C232D0F350042AB12 /* PostType.swift */,
 			);
 			path = Models;
@@ -2692,7 +2689,6 @@
 				662B925F233E50FA001D49B7 /* SearchShowResultsCell.swift in Sources */,
 				665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */,
 				6640E18F22ADD19000D0F575 /* AuthenticationSettingsCell.swift in Sources */,
-				665099D322FC22670053C2FD /* UserType.swift in Sources */,
 				66FC6DE22340BC6A00A454DD /* KService+Forums.swift in Sources */,
 				66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */,
 				6601C3A023BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift in Sources */,

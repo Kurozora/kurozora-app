@@ -187,9 +187,9 @@ extension ShowDetailCollectionViewController {
 			numberOfRows = 1
 		case .information:
 			numberOfRows = ShowDetail.Information.all.count
-			if !User.isAdmin {
-				numberOfRows -= 1
-			}
+//			if !User.isAdmin {
+//				numberOfRows -= 1
+//			}
 		case .seasons:
 			if let seasonsCount = seasons?.count {
 				numberOfRows = seasonsCount >= 10 ? 10 : seasonsCount

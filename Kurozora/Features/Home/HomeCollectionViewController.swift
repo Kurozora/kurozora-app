@@ -212,7 +212,7 @@ extension HomeCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
 			if exploreCategories?[indexPath.section].genres?.count == 0 {
-				performSegue(withIdentifier: R.segue.homeCollectionViewController.genresSegue, sender: baseLockupCollectionViewCell)
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
 			}
 		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
 			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)

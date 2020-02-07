@@ -614,7 +614,7 @@ class ProfileTableViewController: KTableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {
 			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
-				badgesTableViewController.user = user?.profile
+				badgesTableViewController.userProfile = user?.profile
 			}
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
 			followTableViewController.user = user?.profile

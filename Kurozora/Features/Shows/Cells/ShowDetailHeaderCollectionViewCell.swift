@@ -144,7 +144,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		// Configure banner view
 		if bannerImageView.image == nil {
 			if let bannerImage = showDetailsElement.banner {
-				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.banner_image()!)
+				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.show_banner_image()!)
 			}
 		}
 

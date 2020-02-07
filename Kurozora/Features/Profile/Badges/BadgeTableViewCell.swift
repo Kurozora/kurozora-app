@@ -13,7 +13,7 @@ class BadgeTableViewCell: UITableViewCell {
 	@IBOutlet weak var badgeDescriptionLabel: UILabel!
 	@IBOutlet weak var badgeImageView: UIImageView!
 
-	var badge: BadgeElement? {
+	var badgeElement: BadgeElement? {
 		didSet {
 			configureCell()
 		}
@@ -22,12 +22,12 @@ class BadgeTableViewCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let badge = badge else { return }
+		guard let badgeElement = badgeElement else { return }
 
-		if let badgeText = badge.text, !badgeText.isEmpty,
-			let badgeTextColor = badge.textColor, !badgeTextColor.isEmpty,
-			let badgeDescription = badge.description, !badgeDescription.isEmpty,
-			let badgeBackgroundColor = badge.backgroundColor, !badgeBackgroundColor.isEmpty {
+		if let badgeText = badgeElement.text, !badgeText.isEmpty,
+			let badgeTextColor = badgeElement.textColor, !badgeTextColor.isEmpty,
+			let badgeDescription = badgeElement.description, !badgeDescription.isEmpty,
+			let badgeBackgroundColor = badgeElement.backgroundColor, !badgeBackgroundColor.isEmpty {
 
 			// Set title and text color.
 			self.badgeTitleLabel.text = badgeText

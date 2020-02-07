@@ -40,9 +40,9 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
 		guard let showDetail = showDetailsElement else { return }
-		if !User.isAdmin {
-			indexPathRow += 1
-		}
+//		if !User.isAdmin {
+//			indexPathRow += 1
+//		}
 		guard let showDetailInformation = ShowDetail.Information(rawValue: indexPathRow) else { return }
 
 		titleLabel.text = showDetailInformation.stringValue

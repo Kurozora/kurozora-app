@@ -326,13 +326,7 @@
                             <outlet property="delegate" destination="Pey-ss-6J5" id="1HQ-2X-MKg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Genres" largeTitleDisplayMode="never" id="6Oo-9z-mNy">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="X0G-hQ-4Nr">
-                            <connections>
-                                <action selector="dismissButtonPressed:" destination="Pey-ss-6J5" id="dC0-Hs-md5"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Genres" largeTitleDisplayMode="never" id="6Oo-9z-mNy"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBH-3e-ZKw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

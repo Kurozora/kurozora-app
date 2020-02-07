@@ -193,32 +193,32 @@ public class ForumsCell: UITableViewCell {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
-		if User.isAdmin || User.isMod {
-			if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
-				var lock = 0
-				var lockTitle = "Locked"
-
-				if !locked {
-					lock = 1
-					lockTitle = "Unlocked"
-				}
-
-				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
-						self.isLocked(locked)
-					})
-				})
-				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-				if locked {
-					lockAction.setValue(R.image.symbols.lock_fill()!, forKey: "image")
-				} else {
-					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
-				}
-
-				action.addAction(lockAction)
-			}
-		}
+//		if User.isAdmin || User.isMod {
+//			if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
+//				var lock = 0
+//				var lockTitle = "Locked"
+//
+//				if !locked {
+//					lock = 1
+//					lockTitle = "Unlocked"
+//				}
+//
+//				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
+//					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+//						self.isLocked(locked)
+//					})
+//				})
+//				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//
+//				if locked {
+//					lockAction.setValue(R.image.symbols.lock_fill()!, forKey: "image")
+//				} else {
+//					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
+//				}
+//
+//				action.addAction(lockAction)
+//			}
+//		}
 
 		// Upvote, downvote and reply actions
 		if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 && !locked {
