@@ -216,7 +216,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-rK-xnC">
                                                     <rect key="frame" x="8" y="10" width="30" height="30"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display_icon" translatesAutoresizingMaskIntoConstraints="NO" id="T0T-T6-ssy">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/display" translatesAutoresizingMaskIntoConstraints="NO" id="T0T-T6-ssy">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         </imageView>
                                                     </subviews>
@@ -349,11 +349,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Icons/display" width="128" height="128"/>
         <image name="Symbols/chevron_right" width="24" height="24"/>
-        <image name="display_icon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CVK-QH-6Cy"/>
+        <segue reference="JqT-i1-ECV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

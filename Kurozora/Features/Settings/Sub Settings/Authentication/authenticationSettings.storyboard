@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTF-rJ-AtF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTF-rJ-AtF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +38,7 @@
                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="PGA-te-zoj">
                                                             <rect key="frame" x="8" y="10" width="30" height="30"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face_id_icon" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/face_id" translatesAutoresizingMaskIntoConstraints="NO" id="S7B-cc-bhW">
                                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                                 </imageView>
                                                             </subviews>
@@ -51,14 +51,14 @@
                                                                 <constraint firstAttribute="trailing" secondItem="S7B-cc-bhW" secondAttribute="trailing" id="k8f-XZ-Wga"/>
                                                             </constraints>
                                                         </view>
-                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with Face ID &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrA-AR-cki">
-                                                            <rect key="frame" x="46" y="14.5" width="259" height="21"/>
+                                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lock with Face ID &amp; Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrA-AR-cki">
+                                                            <rect key="frame" x="46" y="14.5" width="229" height="21"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH">
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFc-qj-smH">
                                                             <rect key="frame" x="315" y="9.5" width="51" height="31"/>
                                                             <connections>
                                                                 <action selector="enabledSwitchSwitched:" destination="6oh-ZP-WM2" eventType="valueChanged" id="reQ-a1-hfT"/>
@@ -69,7 +69,7 @@
                                                     <constraints>
                                                         <constraint firstItem="PGA-te-zoj" firstAttribute="centerY" secondItem="X67-2T-iMW" secondAttribute="centerY" id="6JD-ux-xxj"/>
                                                         <constraint firstAttribute="bottom" secondItem="PGA-te-zoj" secondAttribute="bottom" constant="10" id="InX-xR-yy4"/>
-                                                        <constraint firstItem="OFc-qj-smH" firstAttribute="leading" relation="lessThanOrEqual" secondItem="vrA-AR-cki" secondAttribute="trailing" constant="10" id="Pih-M4-zsd"/>
+                                                        <constraint firstItem="OFc-qj-smH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vrA-AR-cki" secondAttribute="trailing" constant="10" id="Pih-M4-zsd"/>
                                                         <constraint firstItem="vrA-AR-cki" firstAttribute="centerY" secondItem="PGA-te-zoj" secondAttribute="centerY" id="ePW-qo-kaG"/>
                                                         <constraint firstItem="PGA-te-zoj" firstAttribute="leading" secondItem="X67-2T-iMW" secondAttribute="leadingMargin" id="g9e-7w-aDS"/>
                                                         <constraint firstItem="PGA-te-zoj" firstAttribute="top" secondItem="X67-2T-iMW" secondAttribute="top" constant="10" id="h9I-pM-dVH"/>
@@ -115,14 +115,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnh-ey-GH6">
                                                     <rect key="frame" x="20" y="5" width="374" height="50"/>
                                                     <subviews>
-                                                        <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Require Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nad-PE-BM9">
+                                                        <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Require Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Nad-PE-BM9">
                                                             <rect key="frame" x="8" y="10" width="174" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Immediately" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idh-YM-Jj3">
+                                                        <label multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Immediately" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="idh-YM-Jj3">
                                                             <rect key="frame" x="244" y="14.5" width="93" height="21"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -144,6 +144,7 @@
                                                         <constraint firstAttribute="trailingMargin" secondItem="Bwb-FO-ynS" secondAttribute="trailing" id="GKz-LG-pea"/>
                                                         <constraint firstItem="Nad-PE-BM9" firstAttribute="top" secondItem="qnh-ey-GH6" secondAttribute="top" constant="10" id="HgK-YC-hTp"/>
                                                         <constraint firstItem="Nad-PE-BM9" firstAttribute="centerY" secondItem="qnh-ey-GH6" secondAttribute="centerY" id="IUt-aD-fbw"/>
+                                                        <constraint firstItem="idh-YM-Jj3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nad-PE-BM9" secondAttribute="trailing" constant="10" id="OOt-J7-U7Z"/>
                                                         <constraint firstItem="idh-YM-Jj3" firstAttribute="centerY" secondItem="Bwb-FO-ynS" secondAttribute="centerY" id="dML-AQ-8xp"/>
                                                         <constraint firstItem="Bwb-FO-ynS" firstAttribute="leading" secondItem="idh-YM-Jj3" secondAttribute="trailing" constant="5" id="fvl-6R-zUi"/>
                                                         <constraint firstAttribute="bottom" secondItem="Nad-PE-BM9" secondAttribute="bottom" constant="10" id="q0R-R0-Xyh"/>
@@ -206,7 +207,7 @@
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qge-UM-9hX">
                                             <rect key="frame" x="20" y="0.0" width="374" height="50"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Immediately" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgQ-O9-7hB">
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Immediately" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="cgQ-O9-7hB">
                                                     <rect key="frame" x="8" y="10" width="93" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -287,9 +288,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Icons/face_id" width="128" height="128"/>
         <image name="Symbols/checkmark" width="24" height="24"/>
         <image name="Symbols/chevron_right" width="24" height="24"/>
-        <image name="face_id_icon" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
