@@ -59,6 +59,15 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>Love Bug</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPhone-Love-Bug</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>Night</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -212,6 +221,16 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>Love Bug</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPad-Love-Bug</string>
+					<string>App-Icon-iPad-Pro-Love-Bug</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>Night</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -349,7 +368,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10940</string>
+	<string>10941</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
