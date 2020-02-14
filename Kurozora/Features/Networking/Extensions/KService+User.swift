@@ -207,9 +207,11 @@ extension KService {
 		]
 		request.method = .get
 		request.parameters = [
-			"status": status,
-			"sort": "\(sortType.parameterValue)\(sortOption.parameterValue)"
+			"status": status
 		]
+		if sortType != .none {
+			request.parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"
+		}
 		request.perform(withSuccess: { showDetails in
 			if let success = showDetails.success {
 				if success {
