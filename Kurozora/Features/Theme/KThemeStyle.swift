@@ -70,9 +70,6 @@ enum KThemeStyle: Int {
 	// MARK: - Functions
 	/// Initializes the app's global theme.
 	static func initAppTheme() {
-		let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-		let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
-
 		if UserSettings.automaticDarkTheme {
 			KThemeStyle.startAutomaticDarkThemeSchedule(true)
 		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {

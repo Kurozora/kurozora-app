@@ -260,6 +260,7 @@
 		668B166D23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */; };
 		668B166E23EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */; };
 		668B166F23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */; };
+		668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668B167423EEED0C00C1306A /* SearchHistory.swift */; };
 		668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638520986843003B1C1D /* Aller_Lt.ttf */; };
 		668F638D20986851003B1C1D /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F638620986849003B1C1D /* Aller_Rg.ttf */; };
 		668F638E20986851003B1C1D /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 668F63872098684B003B1C1D /* Aller_Bd.ttf */; };
@@ -285,7 +286,7 @@
 		66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A1C65B232B75360044EAD1 /* FollowCell.swift */; };
 		66A254D522AABC29002A0E34 /* AlternativeIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A254D422AABC29002A0E34 /* AlternativeIcons.swift */; };
 		66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */; };
-		66A254DA22AAE55B002A0E34 /* app-icons.json in Resources */ = {isa = PBXBuildFile; fileRef = 66A254D922AAE55B002A0E34 /* app-icons.json */; };
+		66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */ = {isa = PBXBuildFile; fileRef = 66A254D922AAE55B002A0E34 /* App Icons.json */; };
 		66A254DE22AAEF5D002A0E34 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A254DD22AAEF5D002A0E34 /* MapKit.framework */; };
 		66A48FDE21A3098100F34085 /* TopicCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A48FDD21A3098100F34085 /* TopicCells.swift */; };
 		66A48FE021A411A900F34085 /* notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A48FDF21A411A900F34085 /* notification.storyboard */; };
@@ -681,6 +682,7 @@
 		668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurogram@3x.png"; sourceTree = "<group>"; };
 		668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurogram@2x.png"; sourceTree = "<group>"; };
 		668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Kurogram@2x.png"; sourceTree = "<group>"; };
+		668B167423EEED0C00C1306A /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
 		668F638520986843003B1C1D /* Aller_Lt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Lt.ttf; sourceTree = "<group>"; };
 		668F638620986849003B1C1D /* Aller_Rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Rg.ttf; sourceTree = "<group>"; };
 		668F63872098684B003B1C1D /* Aller_Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aller_Bd.ttf; sourceTree = "<group>"; };
@@ -706,7 +708,7 @@
 		66A1C65B232B75360044EAD1 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
 		66A254D422AABC29002A0E34 /* AlternativeIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeIcons.swift; sourceTree = "<group>"; };
 		66A254D722AABCE7002A0E34 /* IconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTableViewCell.swift; sourceTree = "<group>"; };
-		66A254D922AAE55B002A0E34 /* app-icons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "app-icons.json"; sourceTree = "<group>"; };
+		66A254D922AAE55B002A0E34 /* App Icons.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "App Icons.json"; sourceTree = "<group>"; };
 		66A254DD22AAEF5D002A0E34 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		66A48FDD21A3098100F34085 /* TopicCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCells.swift; sourceTree = "<group>"; };
 		66A48FDF21A411A900F34085 /* notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = notification.storyboard; sourceTree = "<group>"; };
@@ -1366,7 +1368,7 @@
 				668B162923EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png */,
 				668B160223EDF0C800C1306A /* App-Icon-iPhone-Yellow@2x.png */,
 				668B160123EDF0C800C1306A /* App-Icon-iPhone-Yellow@3x.png */,
-				66A254D922AAE55B002A0E34 /* app-icons.json */,
+				66A254D922AAE55B002A0E34 /* App Icons.json */,
 			);
 			path = "App Icons";
 			sourceTree = "<group>";
@@ -1784,6 +1786,7 @@
 				66DEB4A321D247810093725F /* BrowseViewController.swift */,
 				66DEB4A621D247820093725F /* FilterViewControllerBakup.swift */,
 				66DEB4B121D419420093725F /* KSearchController.swift */,
+				668B167423EEED0C00C1306A /* SearchHistory.swift */,
 				66DEB4A421D247810093725F /* SearchResultsViewController.swift */,
 				66DEB4AE21D28B6A0093725F /* Cells */,
 				66B4F1DE223D336C007C5048 /* Models */,
@@ -2374,7 +2377,7 @@
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
 				66A08C6A23E3A2D5007B6418 /* privacy.storyboard in Resources */,
 				66C5797922A83726001B8F51 /* theme.storyboard in Resources */,
-				66A254DA22AAE55B002A0E34 /* app-icons.json in Resources */,
+				66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */,
 				66A8AF23209991310011A342 /* AnimeCell.xib in Resources */,
 				666938B721B1D4FE00BA9620 /* CommentCell.xib in Resources */,
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
@@ -2652,6 +2655,7 @@
 				662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */,
 				660E9FC721455F3100F6813C /* Cast.swift in Sources */,
 				66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */,
+				668B167523EEED0C00C1306A /* SearchHistory.swift in Sources */,
 				664133E121DA64C800CE823A /* SettingsNotificationCell.swift in Sources */,
 				66CF6D6F20A9921000F98375 /* NotificationViewController.swift in Sources */,
 				66825BFA21B3E2A700A2F602 /* WorkflowController.swift in Sources */,

@@ -235,87 +235,58 @@ class Library {
 		// MARK: - Cases
 		case none = 0
 		case alphabetically = 1
-		case popularity = 2
-		case nextAiringEpisode = 3
-		case nextEpisodeToWatch = 4
-		case newest = 5
-		case oldest = 6
-		case rating = 7
-		case myRating = 8
+//		case popularity = 2
+//		case nextAiringEpisode = 3
+//		case nextEpisodeToWatch = 4
+		case date = 5
+		case rating = 6
+		case myRating = 7
 
 		// MARK: - Properties
 		/// An array containing all sort types.
-		static let all: [Library.SortType] = [.alphabetically, .popularity, .nextAiringEpisode, .nextEpisodeToWatch, .newest, .oldest, .rating, .myRating]
+		static let all: [Library.SortType] = [.alphabetically, /*.popularity, .nextAiringEpisode, .nextEpisodeToWatch,*/ .date, .rating, .myRating]
 
 		/// The string value of a sort type.
 		var stringValue: String {
 			switch self {
+			case .none:
+				return "None"
 			case .alphabetically:
 				return "Alphabetically"
-			case .popularity:
-				return "Popularity"
-			case .nextAiringEpisode:
-				return "Next Episode to Air"
-			case .nextEpisodeToWatch:
-				return "Next Episode to Watch"
-			case .newest:
-				return "Newest"
-			case .oldest:
-				return "Oldest"
+//			case .popularity:
+//				return "Popularity"
+//			case .nextAiringEpisode:
+//				return "Next Episode to Air"
+//			case .nextEpisodeToWatch:
+//				return "Next Episode to Watch"
+			case .date:
+				return "Date"
 			case .rating:
 				return "Rating"
 			case .myRating:
 				return "My Rating"
-			case .none:
-				return "None"
 			}
 		}
 
 		/// The image value of a sort type.
 		var imageValue: UIImage {
 			switch self {
+			case .none:
+				return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
 			case .alphabetically:
 				return R.image.symbols.textformat_abc()!
-			case .popularity:
-				return R.image.symbols.flame_fill()!
-			case .nextAiringEpisode:
-				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
-			case .nextEpisodeToWatch:
-				return R.image.symbols.tv_eye_fill()!
-			case .newest:
-				return R.image.symbols.calendar_badge_arrowshape_turn_up_right()!
-			case .oldest:
-				return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
+//			case .popularity:
+//				return R.image.symbols.flame_fill()!
+//			case .nextAiringEpisode:
+//				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
+//			case .nextEpisodeToWatch:
+//				return R.image.symbols.tv_eye_fill()!
+			case .date:
+				return R.image.symbols.calendar()!
 			case .rating:
 				return R.image.symbols.star_fill()!
 			case .myRating:
 				return R.image.symbols.person_crop_circle_fill_badge_star()!
-			case .none:
-				return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
-			}
-		}
-
-		// MARK: - Functions
-		func performAction() -> [ShowDetailsElement]? {
-			switch self {
-			case .alphabetically:
-				return [ShowDetailsElement]()
-			case .popularity:
-				return [ShowDetailsElement]()
-			case .nextAiringEpisode:
-				return [ShowDetailsElement]()
-			case .nextEpisodeToWatch:
-				return [ShowDetailsElement]()
-			case .newest:
-				return [ShowDetailsElement]()
-			case .oldest:
-				return [ShowDetailsElement]()
-			case .rating:
-				return [ShowDetailsElement]()
-			case .myRating:
-				return [ShowDetailsElement]()
-			case .none:
-				return nil
 			}
 		}
 
@@ -326,6 +297,120 @@ class Library {
 				items.append((sortType.stringValue, sortType, sortType.imageValue))
 			}
 			return items
+		}
+
+		/// An array containing all library sort type string value and its equivalent raw value.
+		var subAlertControllerItems: [(String, Library.SortType.Options, UIImage)] {
+			var items = [(String, Library.SortType.Options, UIImage)]()
+			for option in self.optionValue {
+				items.append((option.stringValue, option, option.imageValue))
+			}
+			return items
+		}
+
+		/// The parameter value of a sort type.
+		var parameterValue: String {
+			switch self {
+			case .none:
+				return ""
+			case .alphabetically:
+				return "title"
+			case .date:
+				return "age"
+			case .rating:
+				return "rating"
+			case .myRating:
+				return "my-rating"
+			}
+		}
+
+		/// An array containing all library sort type sub-options string value and its equivalent raw value.
+		var optionValue: [Library.SortType.Options] {
+			switch self {
+			case .none:
+				return []
+			case .alphabetically:
+				return [.ascending, .descending]
+			case .date:
+				return [.newest, .oldest]
+			case .rating:
+				return [.best, .worst]
+			case .myRating:
+				return [.best, .worst]
+			}
+		}
+	}
+}
+
+extension Library.SortType {
+	enum Options: Int {
+		case none = 0
+		case ascending, descending
+		case newest, oldest
+		case worst, best
+
+		// MARK: - Properties
+		/// An array containing all sort type options.
+		static let all: [Library.SortType.Options] = [.ascending, .descending, .newest, .oldest, .worst, .best]
+
+		/// The string value of a sort type option.
+		var stringValue: String {
+			switch self {
+			case .none:
+				return "None"
+			case .ascending:
+				return "A-Z"
+			case .descending:
+				return "Z-A"
+			case .newest:
+				return "Newest"
+			case .oldest:
+				return "Oldest"
+			case .worst:
+				return "Worst"
+			case .best:
+				return "Best"
+			}
+		}
+
+		/// The image value of a sort type option.
+		var imageValue: UIImage {
+			switch self {
+			case .none:
+				return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
+			case .ascending:
+				return R.image.symbols.arrow_up_line_horizontal_3_decrease()!
+			case .descending:
+				return R.image.symbols.arrow_down_line_horizontal_3_increase()!
+			case .newest:
+				return R.image.symbols.calendar_badge_arrowshape_turn_up_right()!
+			case .oldest:
+				return R.image.symbols.calendar_badge_arrowshape_turn_up_left()!
+			case .best:
+				return R.image.symbols.hand_thumbsup_fill()!
+			case .worst:
+				return R.image.symbols.hand_thumbsdown_fill()!
+			}
+		}
+
+		/// The parameter value of a sort type option.
+		var parameterValue: String {
+			switch self {
+			case .none:
+				return "()"
+			case .ascending:
+				return "(asc)"
+			case .descending:
+				return "(desc)"
+			case .newest:
+				return "(newest)"
+			case .oldest:
+				return "(oldest)"
+			case .best:
+				return "(best)"
+			case .worst:
+				return "(worst)"
+			}
 		}
 	}
 }

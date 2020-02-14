@@ -29,10 +29,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 	var sectionTitle: String = ""
 	var sectionIndex: Int?
-	var librarySortType: Library.SortType = .none {
+	var librarySortType: Library.SortType = .none
+	var librarySortTypeOption: Library.SortType.Options = .none {
 		didSet {
 			self.delegate?.updateSortTypeButton(with: librarySortType)
-			self.savePreferredSortType()
+//			self.savePreferredSortType()
 		}
 	}
 	var libraryCellStyle: Library.CellStyle = .detailed
@@ -132,7 +133,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			KService.shared.getLibrary(forStatus: sectionTitle, withSortType: librarySortType.rawValue, withSuccess: { (showDetailsElements) in
+			KService.shared.getLibrary(forStatus: sectionTitle, withSortType: librarySortType, withSortOption: librarySortTypeOption, withSuccess: { (showDetailsElements) in
 				DispatchQueue.main.async {
 					self.showDetailsElements = showDetailsElements
 				}
@@ -148,42 +149,13 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		return showDetailsElements?[indexPath.row]
     }
 
-	fileprivate func savePreferredSortType() {
-		let librarySortTypes = UserSettings.librarySortTypes
-		var newLibrarySortTypes = librarySortTypes
-		newLibrarySortTypes[sectionTitle] = librarySortType.rawValue
-		UserSettings.set(newLibrarySortTypes, forKey: .librarySortTypes)
-	}
-
-	/// Builds and presents the sort types in an action sheet.
-	func populateSortActions(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: Library.SortType.alertControllerItems) { (_, value) in
-			self.librarySortType = value
-			self.fetchLibrary()
-		}
-
-		if librarySortType != .none {
-			// Report thread action
-			let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
-				self.librarySortType = .none
-				self.fetchLibrary()
-			})
-			stopSortingAction.setValue(R.image.symbols.xmark_circle_fill()!, forKey: "image")
-			stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(stopSortingAction)
-		}
-
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.barButtonItem = sender
-		}
-
-		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(action, animated: true, completion: nil)
-		}
-	}
+//	fileprivate func savePreferredSortType() {
+//		let librarySortTypes = UserSettings.librarySortTypes
+//		var newLibrarySortTypes = librarySortTypes
+//		newLibrarySortTypes[sectionTitle]?[0] = librarySortType.rawValue
+//		newLibrarySortTypes[sectionTitle]?[1] = librarySortTypeOption.rawValue
+//		UserSettings.set(newLibrarySortTypes, forKey: .librarySortTypes)
+//	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -339,8 +311,14 @@ extension LibraryListCollectionViewController: ShowDetailCollectionViewControlle
 
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
-	func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		populateSortActions(sender)
+	func sortLibrary(by sortType: Library.SortType, option: Library.SortType.Options) {
+		librarySortType = sortType
+		librarySortTypeOption = option
+		self.fetchLibrary()
+	}
+
+	func sortValue() -> Library.SortType {
+		return librarySortType
 	}
 }
 

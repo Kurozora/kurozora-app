@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bv1-mJ-dWI" userLabel="Shadow View">
                         <rect key="frame" x="0.0" y="10" width="119.5" height="179"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="FrK-Qi-yZ0">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/show_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="FrK-Qi-yZ0">
                                 <rect key="frame" x="0.0" y="0.0" width="119.5" height="179"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
@@ -209,6 +209,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="placeholder_poster_image" width="680" height="1000"/>
+        <image name="Placeholders/show_poster_image" width="680" height="1000"/>
     </resources>
 </document>

@@ -13,7 +13,19 @@ import SCLAlertView
 import SwiftTheme
 
 protocol LibraryViewControllerDelegate: class {
-	func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem)
+	/**
+		Tells your LibraryViewControllerDelegate to sort the library with the specified sort type.
+
+		- Parameter sortType: The sort type by which the library should be sorted.
+	*/
+	func sortLibrary(by sortType: Library.SortType, option: Library.SortType.Options)
+
+	/**
+		Tells your LibraryViewControllerDelegate the current sort value used to sort the items in the library.
+
+		- Returns: The current sort value used to sort the items in the library.
+	*/
+	func sortValue() -> Library.SortType
 }
 
 class LibraryViewController: TabmanViewController {
@@ -176,11 +188,12 @@ class LibraryViewController: TabmanViewController {
 			let sectionTitle = Library.Section.all[index].sectionValue
 
 			// Get the user's preferred sort type
-			let librarySortTypes = UserSettings.librarySortTypes
-			let preferredSortType = librarySortTypes[sectionTitle] ?? 0
-			if let librarySortType = Library.SortType(rawValue: preferredSortType) {
-				libraryListCollectionViewController.librarySortType = librarySortType
-			}
+//			let librarySortTypes = UserSettings.librarySortTypes
+//			let preferredSortType = librarySortTypes[sectionTitle]
+//			let sortType = preferredSortType?[0] ?? 0
+//			let sortTypeOption = preferredSortType?[1] ?? 0
+//			libraryListCollectionViewController.librarySortType = Library.SortType(rawValue: sortType) ?? .none
+//			libraryListCollectionViewController.librarySortTypeOption = Library.SortType.Options(rawValue: sortTypeOption) ?? .none
 
 			// Get the user's preferred library layout
 			let libraryLayouts = UserSettings.libraryCellStyles
@@ -260,9 +273,55 @@ class LibraryViewController: TabmanViewController {
 		})
 	}
 
-	/// Builds and presents the sort types in an action sheet.
+	fileprivate func populateSubActions(_ sender: UIBarButtonItem, with value: String) {
+
+	}
+
+	/**
+		Builds and presents the sort types in an action sheet.
+
+		- Parameter sender: The object containing a reference to the button that initiated this action.
+	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		libraryViewControllerDelegate?.sortTypeBarButtonItemPressed(sender)
+		let action = UIAlertController.actionSheetWithItems(items: Library.SortType.alertControllerItems) { (_, value) in
+			let action = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, action: { (_, subValue) in
+				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
+			})
+
+			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+			//Present the controller
+			if let popoverController = action.popoverPresentationController {
+				popoverController.barButtonItem = sender
+			}
+
+			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+				self.present(action, animated: true, completion: nil)
+			}
+		}
+
+		if let sortValue = self.libraryViewControllerDelegate?.sortValue() {
+			if sortValue != .none {
+				// Report thread action
+				let stopSortingAction = UIAlertAction.init(title: "Stop sorting", style: .destructive, handler: { (_) in
+					self.libraryViewControllerDelegate?.sortLibrary(by: .none, option: .none)
+				})
+				stopSortingAction.setValue(R.image.symbols.xmark_circle_fill()!, forKey: "image")
+				stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+				action.addAction(stopSortingAction)
+			}
+		}
+
+		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+		//Present the controller
+		if let popoverController = action.popoverPresentationController {
+			popoverController.barButtonItem = sender
+		}
+
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(action, animated: true, completion: nil)
+		}
 	}
 
 	// MARK: - IBActions

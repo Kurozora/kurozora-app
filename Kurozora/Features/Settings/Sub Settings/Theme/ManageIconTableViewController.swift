@@ -26,7 +26,7 @@ class ManageIconTableViewController: SubSettingsViewController {
 		_prefersActivityIndicatorHidden = false
 
 		DispatchQueue.global(qos: .background).async {
-			if let path = Bundle.main.path(forResource: "app-icons", ofType: "json") {
+			if let path = Bundle.main.path(forResource: "App Icons", ofType: "json") {
 				do {
 					let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
 					self.alternativeIconsArray = try JSON(data: data)

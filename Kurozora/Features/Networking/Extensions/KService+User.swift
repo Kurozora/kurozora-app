@@ -192,10 +192,12 @@ extension KService {
 		Fetch the list of shows with the given show status in the current user's library.
 
 		- Parameter status: The status to retrieve the library items for.
+		- Parameter sortType: The sort value by which the retrived items should be sorted.
+		- Parameter sortOption: The sort option value by which the retrived items should be sorted.
 		- Parameter successHandler: A closure returning a LibraryElement array.
 		- Parameter library: The returned LibraryElement array.
 	*/
-	func getLibrary(forStatus status: String?, withSortType sortType: Int, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
+	func getLibrary(forStatus status: String?, withSortType sortType: Library.SortType, withSortOption sortOption: Library.SortType.Options, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
 		guard let status = status else { return }
 
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(User.currentID)/library")
@@ -206,7 +208,7 @@ extension KService {
 		request.method = .get
 		request.parameters = [
 			"status": status,
-			"sort_type": sortType
+			"sort": "\(sortType.parameterValue)\(sortOption.parameterValue)"
 		]
 		request.perform(withSuccess: { showDetails in
 			if let success = showDetails.success {
