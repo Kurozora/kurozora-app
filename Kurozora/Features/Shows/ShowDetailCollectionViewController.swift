@@ -115,7 +115,8 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
-		if showDetailsElement == nil {
+		// If the air status is empty then the details are incomplete and should be fetched anew.
+		if showDetailsElement?.airStatus == "" {
 			KService.shared.getDetails(forShow: showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement

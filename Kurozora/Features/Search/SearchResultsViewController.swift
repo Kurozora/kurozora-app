@@ -36,22 +36,12 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 
 	var timer: Timer?
 	var currentScope: Int = 0
-	var suggestions: [ShowDetailsElement] {
-		var suggestionResults = [ShowDetailsElement]()
-		let suggestionResultsArray: [JSON] = [
-			["id": 1774, "title": "One Piece", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/81797-1.jpg"],
-			["id": 2345, "title": "Steins;Gate 0", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/339268-1.jpg"],
-			["id": 147, "title": "Death Parade", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/289177-1.jpg"],
-			["id": 235, "title": "One-Punch Man", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/293088-2.jpg"],
-			["id": 236, "title": "Re: Zero kara Hajimeru Isekai Seikatsu", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/305089-3.jpg"],
-			["id": 56, "title": "Gintama'", "average_rating": 0, "poster_thumbnail": "https://www.thetvdb.com/banners/posters/79895-24.jpg"]
-		]
-		for suggestionResultItem in suggestionResultsArray {
-			if let showDetailsElement = try? ShowDetailsElement(json: suggestionResultItem) {
-				suggestionResults.append(showDetailsElement)
+	var suggestionElements: [ShowDetailsElement]? {
+		didSet {
+			if suggestionElements != nil {
+				self.collectionView.reloadData()
 			}
 		}
-		return suggestionResults
 	}
 
 	override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -59,9 +49,19 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 	}
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Fetch user's search history.
+		SearchHistory.getContent({ (showDetailsElements) in
+			self.suggestionElements = showDetailsElements
+		})
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		// Create colelction view layout
 		collectionView.collectionViewLayout = createLayout()
 
 		// Blurred table view background
@@ -143,23 +143,23 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		var resultsCount = suggestions.count
+		var resultsCount = suggestionElements?.count
 
 		if showResults != nil || threadResults != nil || userResults != nil {
 			if let searchScope = SearchScope(rawValue: currentScope) {
 				switch searchScope {
 				case .show:
-					resultsCount = showResults?.count ?? 0
+					resultsCount = showResults?.count
 				case .myLibrary: break
 				case .thread:
-					resultsCount = threadResults?.count ?? 0
+					resultsCount = threadResults?.count
 				case .user:
-					resultsCount = userResults?.count ?? 0
+					resultsCount = userResults?.count
 				}
 			}
 		}
 
-		return resultsCount
+		return resultsCount ?? 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -184,7 +184,7 @@ extension SearchResultsCollectionViewController {
 		} else if userResults != nil {
 			(cell as? SearchUserResultsCell)?.userProfile = userResults?[indexPath.row]
 		} else {
-			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestions[indexPath.row]
+			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestionElements?[indexPath.row]
 		}
 	}
 }
@@ -195,7 +195,9 @@ extension SearchResultsCollectionViewController {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if showResults != nil {
 			if let showDetailsViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
-				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
+				let showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
+				showDetailsViewController.showDetailsElement = showDetailsElement
+				SearchHistory.saveContentsOf(showDetailsElement)
 				presentingViewController?.show(showDetailsViewController, sender: nil)
 			}
 		} else if threadResults != nil {
