@@ -56,11 +56,9 @@ class SearchHistory {
 		if let showDetailsElement = showDetailsElement, fileExists() {
 			getContent { (showDetailsElements) in
 				var fileShowDetailsElements = showDetailsElements
-
-				if !fileShowDetailsElements.contains(where: { $0.id == showDetailsElement.id }) {
-					fileShowDetailsElements.prepend(showDetailsElement)
-					save(getJSON(from: fileShowDetailsElements)) { _ in
-					}
+				fileShowDetailsElements.removeFirst(where: { $0.id == showDetailsElement.id })
+				fileShowDetailsElements.prepend(showDetailsElement)
+				save(getJSON(from: fileShowDetailsElements)) { _ in
 				}
 			}
 		}
