@@ -144,6 +144,9 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		var resultsCount = suggestionElements?.count
+		if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat, resultsCount ?? 0 > 6 {
+			resultsCount = 6
+		}
 
 		if showResults != nil || threadResults != nil || userResults != nil {
 			if let searchScope = SearchScope(rawValue: currentScope) {
