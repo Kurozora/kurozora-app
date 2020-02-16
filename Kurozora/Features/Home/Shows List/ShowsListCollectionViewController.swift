@@ -46,7 +46,6 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
 				if let selectedCell = sender as? BaseLockupCollectionViewCell {
-					showDetailCollectionViewController.baseLockupCollectionViewCell = selectedCell
 					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
 				} else if let showID = sender as? Int {
 					showDetailCollectionViewController.showID = showID

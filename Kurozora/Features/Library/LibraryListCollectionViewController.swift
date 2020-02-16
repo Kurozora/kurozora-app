@@ -160,7 +160,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let currentCell = sender as? LibraryBaseCollectionViewCell, let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
-			showDetailCollectionViewController.libraryBaseCollectionViewCell = currentCell
 			showDetailCollectionViewController.showDetailsElement = currentCell.showDetailsElement
 		}
 	}

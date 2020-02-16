@@ -66,34 +66,6 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 
 // MARK: - Functions
 extension ShowDetailHeaderCollectionViewCell {
-	/**
-		Configures the view from the given Explore cell if the details view was requested from the Explore page.
-
-		- Parameter cell: The explore cell from which the view should be configured.
-	*/
-	fileprivate func configureShowDetails(from cell: BaseLockupCollectionViewCell?) {
-		guard let cell = cell else { return }
-		if cell.bannerImageView != nil {
-			showTitleLabel.text = cell.primaryLabel?.text
-			bannerImageView.image = cell.bannerImageView?.image
-		} else {
-			posterImageView.image = cell.posterImageView?.image
-//			ratingScoreLabel.text = "\((cell as? SmallLockupCollectionViewCell)?.scoreButton.titleForNormal ?? "0")"
-		}
-	}
-
-	/**
-		Configures the view from the given Library cell if the details view was requested from the Library page.
-
-		- Parameter cell: The library cell from which the view should be configured.
-	*/
-	fileprivate func configureShowDetails(from cell: LibraryBaseCollectionViewCell?) {
-		guard let cell = cell else { return }
-		showTitleLabel.text = cell.titleLabel?.text
-		bannerImageView.image = (cell as? LibraryDetailedCollectionViewCell)?.episodeImageView?.image
-		posterImageView.image = cell.posterImageView?.image
-	}
-
 	/// Updates the view with the details fetched from the server.
 	fileprivate func updateDetails() {
 		guard let showDetailsElement = showDetailsElement else { return }
@@ -135,17 +107,13 @@ extension ShowDetailHeaderCollectionViewCell {
 		}
 
 		// Configure poster view
-		if posterImageView.image == nil {
-			if let posterThumb = showDetailsElement.posterThumbnail {
-				posterImageView.setImage(with: posterThumb, placeholder: R.image.placeholders.show_poster_image()!)
-			}
+		if let posterImage = showDetailsElement.poster {
+			posterImageView.setImage(with: posterImage, placeholder: R.image.placeholders.show_poster_image()!)
 		}
 
 		// Configure banner view
-		if bannerImageView.image == nil {
-			if let bannerImage = showDetailsElement.banner {
-				bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.show_banner_image()!)
-			}
+		if let bannerImage = showDetailsElement.banner {
+			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.show_banner_image()!)
 		}
 
 		// Configre favorite status

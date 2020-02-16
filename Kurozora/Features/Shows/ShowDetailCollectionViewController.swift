@@ -23,21 +23,10 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			_prefersActivityIndicatorHidden = true
 			self.title = showDetailsElement?.title
 			self.showID = showDetailsElement?.id
-			self.collectionView.reloadData()
 		}
 	}
-	var seasons: [SeasonsElement]? {
-		didSet {
-			self.collectionView.reloadData()
-		}
-	}
-	var actors: [ActorsElement]? {
-		didSet {
-			self.collectionView.reloadData()
-		}
-	}
-	var baseLockupCollectionViewCell: BaseLockupCollectionViewCell? = nil
-	var libraryBaseCollectionViewCell: LibraryBaseCollectionViewCell? = nil
+	var seasons: [SeasonsElement]?
+	var actors: [ActorsElement]?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -62,7 +51,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 
 		// Donate suggestion to Siri
 		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetailsElement?.title, let showID = showID {
+		if let title = showDetailsElement?.title, let showID = showDetailsElement?.id {
 			let title = "Open \(title)"
 			userActivity?.title = title
 			userActivity?.userInfo = ["showID": showID]
@@ -107,26 +96,31 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.
 		if showDetailsElement?.airStatus == "" {
-			KService.shared.getDetails(forShow: showID) { (showDetailsElement) in
+			KService.shared.getDetails(forShow: showDetailsElement?.id) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
+					self.collectionView.reloadData()
 				}
 			}
 		}
 
 		if seasons == nil {
-			KService.shared.getSeasonsFor(showID) { (seasons) in
+			KService.shared.getSeasonsFor(showDetailsElement?.id) { (seasons) in
 				DispatchQueue.main.async {
 					self.seasons = seasons
+					self.collectionView.reloadData()
 				}
 			}
 		}
 
-		KService.shared.getCastFor(showID, withSuccess: { (actors) in
-			DispatchQueue.main.async {
-				self.actors = actors
-			}
-		})
+		if actors == nil {
+			KService.shared.getCastFor(showDetailsElement?.id, withSuccess: { (actors) in
+				DispatchQueue.main.async {
+					self.actors = actors
+					self.collectionView.reloadData()
+				}
+			})
+		}
 	}
 
 	// MARK: - Segue
