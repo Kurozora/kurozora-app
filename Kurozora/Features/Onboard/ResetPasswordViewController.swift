@@ -16,17 +16,6 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 		onboardingType = .reset
 	}
 
-	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "onboarding", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "ResetPasswordTableViewController")
-	}
-
 	// MARK: - IBActions
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)

@@ -93,16 +93,6 @@ class NotificationsViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "notification", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "NotificationViewController")
-	}
-
 	/// Sets up the search bar.
 	fileprivate func setupSearchBar() {
 		// Configure search bar
@@ -127,7 +117,7 @@ class NotificationsViewController: KTableViewController {
 				view.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
 					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 					.didTapDataButton {
-						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 							self.present(kNavigationController)
 						}

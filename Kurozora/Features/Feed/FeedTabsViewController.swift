@@ -67,20 +67,20 @@ class FeedTabsViewController: TabmanViewController {
 
 	// MARK: - Functions
 	private func initializeViewControllers(with count: Int) {
-		let storyboard = UIStoryboard(name: "feed", bundle: nil)
 		var viewControllers = [UITableViewController]()
 
 		for index in 0 ..< count {
-			let viewController = storyboard.instantiateViewController(withIdentifier: "FeedTableViewController") as! FeedTableViewController
-//			guard let sectionTitle = sections?[index].name else { return }
-//			viewController.sectionTitle = sectionTitle
-			viewController.sectionTitle = "Section \(index)"
+			if let feedTableViewController = R.storyboard.feed.feedTableViewController() {
+	//			guard let sectionTitle = sections?[index].name else { return }
+	//			viewController.sectionTitle = sectionTitle
+				feedTableViewController.sectionTitle = "Section \(index)"
 
-			if let sectionID = sections?[index].id, sectionID != 0 {
-				viewController.sectionID = sectionID
+				if let sectionID = sections?[index].id, sectionID != 0 {
+					feedTableViewController.sectionID = sectionID
+				}
+				feedTableViewController.sectionIndex = index
+				viewControllers.append(feedTableViewController)
 			}
-			viewController.sectionIndex = index
-			viewControllers.append(viewController)
 		}
 
 		self.viewControllers = viewControllers
@@ -151,7 +151,7 @@ class FeedTabsViewController: TabmanViewController {
 
 	@IBAction func profileButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
+			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				self.show(profileTableViewController, sender: nil)
 			}
 		}

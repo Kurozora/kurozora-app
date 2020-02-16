@@ -150,7 +150,7 @@ public class ForumsCell: UITableViewCell {
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
 		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
-			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+			if let profileViewController = R.storyboard.profile.profileTableViewController() {
 				profileViewController.userID = posterId
 				profileViewController.dismissButtonIsEnabled = true
 

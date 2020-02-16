@@ -92,17 +92,6 @@ class KCommentEditorViewController: KViewController {
 		commentTextView.selectedTextRange = commentTextView.textRange(from: commentTextView.beginningOfDocument, to: commentTextView.beginningOfDocument)
 	}
 
-	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "editor", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "KCommentEditorViewController")
-	}
-
 	// MARK: - IBActions
 	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)

@@ -60,17 +60,6 @@ class LegalViewController: KViewController {
 		super.viewDidLoad()
 	}
 
-	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "about", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "LegalViewController")
-	}
-
 	// MARK: - IBActions
 	@IBAction func doneButtonPressed(_ sender: UIButton) {
 		self.dismiss(animated: true, completion: nil)

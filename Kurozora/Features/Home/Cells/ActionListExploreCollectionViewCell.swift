@@ -33,7 +33,7 @@ class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 
 	// MARK: - IBActions
 	override func actionButtonPressed(_ sender: UIButton) {
-		if let kNavigationController = KWebViewController.instantiateFromStoryboard() as? KNavigationController {
+		if let kNavigationController = R.storyboard.webbrowser.kWebViewKNavigationController() {
 			if let kWebViewController = kNavigationController.viewControllers.first as? KWebViewController {
 				kWebViewController.url = actionItem?["url"]
 				kWebViewController.title = actionItem?["title"]

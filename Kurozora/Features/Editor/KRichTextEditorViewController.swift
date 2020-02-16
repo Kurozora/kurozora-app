@@ -60,17 +60,6 @@ class KRichTextEditorViewController: KViewController {
 		richTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 	}
 
-	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let editorStoryboard = UIStoryboard(name: "editor", bundle: nil)
-		return editorStoryboard.instantiateViewController(withIdentifier: "KRichTextEditorViewController")
-	}
-
 	// MARK: - IBActions
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		dismiss(animated: true, completion: nil)

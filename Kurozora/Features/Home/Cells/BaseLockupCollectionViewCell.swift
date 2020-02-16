@@ -134,7 +134,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 #if !targetEnvironment(macCatalyst)
 extension BaseLockupCollectionViewCell: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-		showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController
+		showDetailCollectionViewController = R.storyboard.details.showDetailCollectionViewController()
 		showDetailCollectionViewController?.baseLockupCollectionViewCell = self
 		showDetailCollectionViewController?.showDetailsElement = showDetailsElement
 

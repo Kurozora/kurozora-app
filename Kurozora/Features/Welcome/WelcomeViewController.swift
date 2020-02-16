@@ -63,16 +63,6 @@ class WelcomeViewController: UIViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "welcome", bundle: nil)
-		return storyboard.instantiateInitialViewController()
-	}
-
 	@objc @available(iOS 13.0, macCatalyst 13.0, *)
 	func signInWithAppleButtonPressed() {
 		let authorizationRequest = ASAuthorizationAppleIDProvider().createRequest()

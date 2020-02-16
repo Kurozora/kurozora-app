@@ -31,7 +31,7 @@ class WorkflowController: NSObject {
 		if User.isSignedIn {
 			completion?()
 		} else {
-			if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+			if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 				UIApplication.topViewController?.present(kNavigationController)
 			}
@@ -81,7 +81,7 @@ extension WorkflowController {
 	/// Open the sessions view if the current view is not the sessions view.
 	func showSessions() {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
-			if let manageActiveSessionsController = ManageActiveSessionsController.instantiateFromStoryboard() as? ManageActiveSessionsController {
+			if let manageActiveSessionsController = R.storyboard.account.manageActiveSessionsController() {
 				manageActiveSessionsController.dismissEnabled = true
 				let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController)
 				UIApplication.topViewController?.present(kurozoraNavigationController)

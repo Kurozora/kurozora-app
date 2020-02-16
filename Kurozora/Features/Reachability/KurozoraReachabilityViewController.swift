@@ -65,17 +65,6 @@ class KurozoraReachabilityViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(false, animated: animated)
 	}
 
-	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "reachability", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "KurozoraReachabilityViewController")
-	}
-
 	// MARK: - IBActions
 	@IBAction func reconnectButtonPressed(_ sender: UIButton) {
 		KNetworkManager.isReachable { _ in

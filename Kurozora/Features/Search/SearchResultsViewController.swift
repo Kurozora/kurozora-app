@@ -77,16 +77,6 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 
 	// MARK: - Functions
 	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "search", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "SearchResultsCollectionViewController")
-	}
-
-	/**
 		Perform search with the given search text and the search scope.
 
 		- Parameter text: The string which to search for.
@@ -197,24 +187,24 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if showResults != nil {
-			if let showDetailsViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+			if let showDetailsViewController = R.storyboard.details.showDetailCollectionViewController() {
 				let showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
 				showDetailsViewController.showDetailsElement = showDetailsElement
 				SearchHistory.saveContentsOf(showDetailsElement)
 				presentingViewController?.show(showDetailsViewController, sender: nil)
 			}
 		} else if threadResults != nil {
-			if let threadTableViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
+			if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
 				threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
 				presentingViewController?.show(threadTableViewController, sender: nil)
 			}
 		} else if userResults != nil {
-			if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 				profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
 				presentingViewController?.show(profileTableViewController, sender: nil)
 			}
 		} else {
-			if let showDetailsViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+			if let showDetailsViewController = R.storyboard.details.showDetailCollectionViewController() {
 				showDetailsViewController.showDetailsElement = (searchBaseResultsCell as? SearchSuggestionResultCell)?.showDetailsElement
 				presentingViewController?.show(showDetailsViewController, sender: nil)
 			}

@@ -159,7 +159,7 @@ class ReplyCell: UITableViewCell {
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
 		if let userID = threadRepliesElement?.userProfile?.id, userID != 0 {
-			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+			if let profileViewController = R.storyboard.profile.profileTableViewController() {
 				profileViewController.userID = userID
 				profileViewController.dismissButtonIsEnabled = true
 

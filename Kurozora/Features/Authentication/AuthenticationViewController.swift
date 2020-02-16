@@ -63,16 +63,6 @@ class AuthenticationViewController: KViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "authentication", bundle: nil)
-		return storyboard.instantiateInitialViewController()
-	}
-
 	/// Hides and unhides the description text shown when authenticating
 	func toggleHide() {
 		unlockDescriptionView.isHidden = !unlockDescriptionView.isHidden

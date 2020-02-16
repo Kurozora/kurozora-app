@@ -50,16 +50,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
     }
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "SeasonsCollectionViewController")
-	}
-
 	override func setupEmptyDataSetView() {
 		collectionView?.emptyDataSetView { view in
 			view.titleLabelString(NSAttributedString(string: "No Seasons", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))

@@ -58,13 +58,13 @@ class Kurozora {
 	*/
 	func showOfflinePage(for window: UIWindow?) {
 		if window != nil {
-			if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() as? KurozoraReachabilityViewController {
+			if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
 				reachabilityViewController.window = window
 				window?.rootViewController = reachabilityViewController
 			}
 		} else {
 			DispatchQueue.main.async {
-				if let reachabilityViewController = KurozoraReachabilityViewController.instantiateFromStoryboard() {
+				if let reachabilityViewController = R.storyboard.reachability.kurozoraReachabilityViewController() {
 					let topViewController = UIApplication.topViewController
 					topViewController?.present(reachabilityViewController)
 				}
@@ -106,7 +106,7 @@ class Kurozora {
 		case .anime, .show:
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
-				if let showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+				if let showDetailCollectionViewController = R.storyboard.details.showDetailCollectionViewController() {
 					showDetailCollectionViewController.showID = Int(showID)
 
 					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
@@ -118,7 +118,7 @@ class Kurozora {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 
-				if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 					if isCurrentUser {
 						WorkflowController.shared.isSignedIn {
 							tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
@@ -143,9 +143,9 @@ class Kurozora {
 				tabBarController.selectedIndex = 2
 
 				if !forumThreadID.isEmpty {
-					if let threadViewController = ThreadTableViewController.instantiateFromStoryboard() as? ThreadTableViewController {
-						threadViewController.forumThreadID = forumThreadID.int
-						tabBarController.selectedViewController?.show(threadViewController, sender: nil)
+					if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
+						threadTableViewController.forumThreadID = forumThreadID.int
+						tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
 					}
 				}
 			}
@@ -242,11 +242,11 @@ extension Kurozora {
 
 		// If user should authenticate but the top view controller isn't AuthenticationViewController
 		if let isAuthenticationViewController = topViewController?.isKind(of: AuthenticationViewController.self), !isAuthenticationViewController {
-			if let authenticationViewController = AuthenticationViewController.instantiateFromStoryboard() as? AuthenticationViewController {
+			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
 				topViewController?.present(authenticationViewController)
 			}
 		} else if topViewController == nil {
-			if let authenticationViewController = AuthenticationViewController.instantiateFromStoryboard() as? AuthenticationViewController {
+			if let authenticationViewController = R.storyboard.authentication.authenticationViewController() {
 				topViewController?.present(authenticationViewController)
 			}
 		}
@@ -391,7 +391,7 @@ extension Kurozora {
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 				WorkflowController.shared.isSignedIn {
-					if let profileTableViewController = ProfileTableViewController.instantiateFromStoryboard() {
+					if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
 						tabBarController.navigationController?.show(profileTableViewController, sender: nil)
 					}
 				}

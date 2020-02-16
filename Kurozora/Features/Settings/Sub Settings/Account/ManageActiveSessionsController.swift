@@ -94,16 +94,6 @@ class ManageActiveSessionsController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyBoard = UIStoryboard(name: "account", bundle: nil)
-		return storyBoard.instantiateViewController(withIdentifier: "ManageActiveSessionsController")
-	}
-
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
 		KService.shared.getSessions( withSuccess: { (sessions) in

@@ -64,16 +64,6 @@ class PurchaseTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "purchase", bundle: nil)
-		return storyboard.instantiateInitialViewController()
-	}
-
 	/// Retrieves product information from the App Store.
 	fileprivate func fetchProductInformation() {
 		if KStoreObserver.shared.isAuthorizedForPayments {

@@ -103,16 +103,6 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "details", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "ShowDetailCollectionViewController")
-	}
-
 	/// Fetches details for the currently viewed show.
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.

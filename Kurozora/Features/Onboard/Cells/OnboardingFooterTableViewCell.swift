@@ -107,7 +107,7 @@ class OnboardingFooterTableViewCell: OnboardingBaseTableViewCell {
 	@objc fileprivate func legalButtonPressed(_ sender: UIButton) {
 		sender.alpha = 1.0
 
-		if let legalViewController = LegalViewController.instantiateFromStoryboard() as? LegalViewController {
+		if let legalViewController = R.storyboard.legal.legalViewController() {
 			let kNavigationController = KNavigationController(rootViewController: legalViewController)
 			self.parentViewController?.present(kNavigationController)
 		}

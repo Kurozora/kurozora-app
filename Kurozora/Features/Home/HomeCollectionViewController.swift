@@ -68,7 +68,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		if User.isSignedIn {
 			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
-					if let welcomeViewController = WelcomeViewController.instantiateFromStoryboard() {
+					if let welcomeViewController = R.storyboard.welcome.welcomeViewController() {
 						self.present(welcomeViewController, animated: true, completion: nil)
 					}
 				}
@@ -84,16 +84,6 @@ class HomeCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "home", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "HomeCollectionViewController")
-	}
-
 	/// Shows what's new in the app if necessary.
 	fileprivate func showWhatsNew() {
 		if WhatsNew.shouldPresent() {

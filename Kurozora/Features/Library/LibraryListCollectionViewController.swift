@@ -112,7 +112,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 					.buttonTitle(NSAttributedString(string: "Sign In", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 					.isScrollAllowed(false)
 					.didTapDataButton {
-						if let signInTableViewController = SignInTableViewController.instantiateFromStoryboard() as? SignInTableViewController {
+						if let signInTableViewController = R.storyboard.onboarding.signInTableViewController() {
 							let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 							self.present(kNavigationController)
 						}

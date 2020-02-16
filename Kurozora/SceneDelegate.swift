@@ -102,7 +102,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
 				let showID = parameters["showID"]
-				if let showDetailCollectionViewController = ShowDetailCollectionViewController.instantiateFromStoryboard() as? ShowDetailCollectionViewController {
+				if let showDetailCollectionViewController = R.storyboard.details.showDetailCollectionViewController() {
 					showDetailCollectionViewController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {
 						tabBarController.present(showDetailCollectionViewController)

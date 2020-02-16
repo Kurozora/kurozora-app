@@ -37,16 +37,6 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "onboarding", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "RegisterTableViewController")
-	}
-
 	/// Open the camera if the device has one, otherwise show a warning.
 	func openCamera() {
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {

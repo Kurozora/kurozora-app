@@ -59,16 +59,6 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "library", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "FavoriteShowsCollectionViewController")
-	}
-
 	/// Enable and show the dismiss button.
 	func enableDismissButton() {
 		let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissButtonPressed))

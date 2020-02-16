@@ -141,7 +141,7 @@
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_icon" translatesAutoresizingMaskIntoConstraints="NO" id="YKm-sf-d9B" userLabel="Notification Image">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/message" translatesAutoresizingMaskIntoConstraints="NO" id="YKm-sf-d9B" userLabel="Notification Image">
                                                     <rect key="frame" x="21" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="ICX-4i-Gbe"/>
@@ -239,7 +239,7 @@
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="session_icon" translatesAutoresizingMaskIntoConstraints="NO" id="v7I-mK-kbO" userLabel="Notification Image">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/session" translatesAutoresizingMaskIntoConstraints="NO" id="v7I-mK-kbO" userLabel="Notification Image">
                                                     <rect key="frame" x="16" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="V7X-a6-Cn7"/>
@@ -408,7 +408,7 @@
         <!--Navigation Controller-->
         <scene sceneID="HB9-eK-xFL">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="jkm-sX-7PU" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NotificationKNvaigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jkm-sX-7PU" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="9Dm-9O-5Ob">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -432,8 +432,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="message_icon" width="128" height="128"/>
-        <image name="session_icon" width="128" height="128"/>
+        <image name="Icons/message" width="128" height="128"/>
+        <image name="Icons/session" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

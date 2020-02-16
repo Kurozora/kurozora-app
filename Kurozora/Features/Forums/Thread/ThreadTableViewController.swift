@@ -150,16 +150,6 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "forums", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "ThreadTableViewController")
-	}
-
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
@@ -305,7 +295,7 @@ class ThreadTableViewController: KTableViewController {
 	/// Presents the reply view for the current thread.
 	func replyThread() {
 		WorkflowController.shared.isSignedIn {
-			let kCommentEditorViewController = KCommentEditorViewController.instantiateFromStoryboard() as? KCommentEditorViewController
+			let kCommentEditorViewController = R.storyboard.editor.kCommentEditorViewController()
 			kCommentEditorViewController?.delegate = self
 			kCommentEditorViewController?.forumsThreadElement = self.forumsThreadElement
 
@@ -372,7 +362,7 @@ class ThreadTableViewController: KTableViewController {
 	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
 		if let posterUserID = forumsThreadElement?.posterUserID, posterUserID != 0 {
-			if let profileViewController = ProfileTableViewController.instantiateFromStoryboard() as? ProfileTableViewController {
+			if let profileViewController = R.storyboard.profile.profileTableViewController() {
 				profileViewController.userID = posterUserID
 				profileViewController.dismissButtonIsEnabled = true
 

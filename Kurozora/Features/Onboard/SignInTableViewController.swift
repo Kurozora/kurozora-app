@@ -25,16 +25,6 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "onboarding", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "SignInTableViewController")
-	}
-
 	/// Prompts the user if an existing KDefaults credential or Apple ID credential is found.
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func performExistingAccountSetupFlows() {
@@ -106,7 +96,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 
 		KService.shared.register(withAppleUserID: appleIDCredential.user, email: appleIDCredential.email) { (success) in
 			if success {
-				if let registerTableViewController = RegisterTableViewController.instantiateFromStoryboard() as? RegisterTableViewController {
+				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
 					registerTableViewController.isSIWA = true
 					self.show(registerTableViewController, sender: nil)
 				}

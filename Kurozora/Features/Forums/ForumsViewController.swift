@@ -142,19 +142,19 @@ class ForumsViewController: TabmanViewController {
 		- Parameter count: The number of view controller to initialize.
 	*/
 	private func initializeViewControllers(with count: Int) {
-		let storyboard = UIStoryboard(name: "forums", bundle: nil)
 		var viewControllers = [UIViewController]()
 
 		for index in 0 ..< count {
-			let viewController = storyboard.instantiateViewController(withIdentifier: "ForumsListViewController") as! ForumsListViewController
-			guard let sectionTitle = sections?[index].name else { return }
-			viewController.sectionTitle = sectionTitle
+			if let forumsListViewController = R.storyboard.forums.forumsListViewController() {
+				guard let sectionTitle = sections?[index].name else { return }
+				forumsListViewController.sectionTitle = sectionTitle
 
-			if let sectionID = sections?[index].id, sectionID != 0 {
-				viewController.sectionID = sectionID
+				if let sectionID = sections?[index].id, sectionID != 0 {
+					forumsListViewController.sectionID = sectionID
+				}
+				forumsListViewController.sectionIndex = index
+				viewControllers.append(forumsListViewController)
 			}
-			viewController.sectionIndex = index
-			viewControllers.append(viewController)
 		}
 
 		self.viewControllers = viewControllers
@@ -183,7 +183,7 @@ class ForumsViewController: TabmanViewController {
 
 	@IBAction func createThreadBarButtonItemPressed(_ sender: Any) {
 		WorkflowController.shared.isSignedIn {
-			if let kRichTextEditorViewController = KRichTextEditorViewController.instantiateFromStoryboard() as? KRichTextEditorViewController {
+			if let kRichTextEditorViewController = R.storyboard.editor.kRichTextEditorViewController() {
 				if let currentIndex = self.currentIndex {
 					kRichTextEditorViewController.delegate = self.viewControllers[currentIndex] as? ForumsListViewController
 					kRichTextEditorViewController.sectionID = currentIndex + 1

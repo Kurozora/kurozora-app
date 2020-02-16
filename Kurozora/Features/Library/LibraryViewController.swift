@@ -180,32 +180,32 @@ class LibraryViewController: TabmanViewController {
 		- Parameter count: The number of view controller to initialize.
 	*/
     private func initializeViewControllers(with count: Int) {
-        let storyboard = UIStoryboard(name: "library", bundle: nil)
         var viewControllers = [UIViewController]()
 
         for index in 0 ..< count {
-            let libraryListCollectionViewController = storyboard.instantiateViewController(withIdentifier: "LibraryListCollectionViewController") as! LibraryListCollectionViewController
-			let sectionTitle = Library.Section.all[index].sectionValue
+			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
+				let sectionTitle = Library.Section.all[index].sectionValue
 
-			// Get the user's preferred sort type
-//			let librarySortTypes = UserSettings.librarySortTypes
-//			let preferredSortType = librarySortTypes[sectionTitle]
-//			let sortType = preferredSortType?[0] ?? 0
-//			let sortTypeOption = preferredSortType?[1] ?? 0
-//			libraryListCollectionViewController.librarySortType = Library.SortType(rawValue: sortType) ?? .none
-//			libraryListCollectionViewController.librarySortTypeOption = Library.SortType.Options(rawValue: sortTypeOption) ?? .none
+				// Get the user's preferred sort type
+//				let librarySortTypes = UserSettings.librarySortTypes
+//				let preferredSortType = librarySortTypes[sectionTitle]
+//				let sortType = preferredSortType?[0] ?? 0
+//				let sortTypeOption = preferredSortType?[1] ?? 0
+//				libraryListCollectionViewController.librarySortType = Library.SortType(rawValue: sortType) ?? .none
+//				libraryListCollectionViewController.librarySortTypeOption = Library.SortType.Options(rawValue: sortTypeOption) ?? .none
 
-			// Get the user's preferred library layout
-			let libraryLayouts = UserSettings.libraryCellStyles
-			let preferredLayout = libraryLayouts[sectionTitle] ?? 0
-			if let libraryCellStyle = Library.CellStyle(rawValue: preferredLayout) {
-				libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
+				// Get the user's preferred library layout
+				let libraryLayouts = UserSettings.libraryCellStyles
+				let preferredLayout = libraryLayouts[sectionTitle] ?? 0
+				if let libraryCellStyle = Library.CellStyle(rawValue: preferredLayout) {
+					libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
+				}
+
+				libraryListCollectionViewController.sectionTitle = sectionTitle
+				libraryListCollectionViewController.sectionIndex = index
+				libraryListCollectionViewController.delegate = self
+				viewControllers.append(libraryListCollectionViewController)
 			}
-
-			libraryListCollectionViewController.sectionTitle = sectionTitle
-			libraryListCollectionViewController.sectionIndex = index
-			libraryListCollectionViewController.delegate = self
-            viewControllers.append(libraryListCollectionViewController)
         }
 
         self.viewControllers = viewControllers

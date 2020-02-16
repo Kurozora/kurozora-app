@@ -161,16 +161,6 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - Functions
-	/**
-		Instantiates and returns a view controller from the relevant storyboard.
-
-		- Returns: a view controller from the relevant storyboard.
-	*/
-	static func instantiateFromStoryboard() -> UIViewController? {
-		let storyboard = UIStoryboard(name: "profile", bundle: nil)
-		return storyboard.instantiateViewController(withIdentifier: "ProfileTableViewController")
-	}
-
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			let detailLabel = self.userID == User.currentID || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
@@ -528,7 +518,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
-		if let favoriteShowsCollectionViewController = FavoriteShowsCollectionViewController.instantiateFromStoryboard() as? FavoriteShowsCollectionViewController {
+		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
 			favoriteShowsCollectionViewController.userID = userID
 			favoriteShowsCollectionViewController.username = user?.profile?.username
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
