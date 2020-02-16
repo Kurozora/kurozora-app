@@ -285,6 +285,16 @@
 		669E89C72345573600092778 /* KStoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669E89C62345573600092778 /* KStoreObserver.swift */; };
 		669EA9A022C1490A00784181 /* PurchaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669EA99F22C1490A00784181 /* PurchaseTableViewController.swift */; };
 		669EA9A222C1491600784181 /* purchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669EA9A122C1491600784181 /* purchase.storyboard */; };
+		669FD7F423F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */; };
+		669FD7F523F9E9DB001440EC /* App-Icon-iPad-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */; };
+		669FD7F623F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */; };
+		669FD7F723F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */; };
+		669FD7F823F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */; };
+		669FD7F923F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */; };
+		669FD7FA23F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */; };
+		669FD7FB23F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */; };
+		669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */; };
+		669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */; };
 		66A08C6A23E3A2D5007B6418 /* privacy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A08C6923E3A2D5007B6418 /* privacy.storyboard */; };
 		66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */; };
 		66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */; };
@@ -712,6 +722,16 @@
 		669E89C62345573600092778 /* KStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KStoreObserver.swift; sourceTree = "<group>"; };
 		669EA99F22C1490A00784181 /* PurchaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseTableViewController.swift; sourceTree = "<group>"; };
 		669EA9A122C1491600784181 /* purchase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = purchase.storyboard; sourceTree = "<group>"; };
+		669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Cookiezora@2x.png"; sourceTree = "<group>"; };
+		669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurolicious@2x.png"; sourceTree = "<group>"; };
+		669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Cookiezora@3x.png"; sourceTree = "<group>"; };
+		669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Kurolicious.png"; sourceTree = "<group>"; };
+		669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Kurolicious@2x.png"; sourceTree = "<group>"; };
+		669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurolicious@2x.png"; sourceTree = "<group>"; };
+		669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Cookiezora.png"; sourceTree = "<group>"; };
+		669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Cookiezora@2x.png"; sourceTree = "<group>"; };
+		669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Cookiezora@2x.png"; sourceTree = "<group>"; };
+		669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurolicious@3x.png"; sourceTree = "<group>"; };
 		66A08C6923E3A2D5007B6418 /* privacy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = privacy.storyboard; sourceTree = "<group>"; };
 		66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
 		66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSettingsViewController.swift; sourceTree = "<group>"; };
@@ -1314,6 +1334,8 @@
 			isa = PBXGroup;
 			children = (
 				66A254D922AAE55B002A0E34 /* App Icons.json */,
+				669FD7F023F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png */,
+				669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */,
 				668B161D23EDF0CD00C1306A /* App-Icon-iPad-Coral.png */,
 				668B160F23EDF0CB00C1306A /* App-Icon-iPad-Coral@2x.png */,
 				668B15FD23EDF0C800C1306A /* App-Icon-iPad-Day.png */,
@@ -1324,6 +1346,8 @@
 				668B15F523EDF0C600C1306A /* App-Icon-iPad-Green@2x.png */,
 				668B166623EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png */,
 				668B166923EDF7FC00C1306A /* App-Icon-iPad-Kurogram@2x.png */,
+				669FD7ED23F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png */,
+				669FD7EB23F9E9DA001440EC /* App-Icon-iPad-Kurolicious@2x.png */,
 				66407C9323F625DB008944AB /* App-Icon-iPad-Love-Bug.png */,
 				66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */,
 				668B161923EDF0CD00C1306A /* App-Icon-iPad-Night.png */,
@@ -1332,11 +1356,13 @@
 				668B15EF23EDF0C500C1306A /* App-Icon-iPad-Ocean-Blue@2x.png */,
 				668B160A23EDF0CA00C1306A /* App-Icon-iPad-Peach-Orange.png */,
 				668B161623EDF0CD00C1306A /* App-Icon-iPad-Peach-Orange@2x.png */,
+				669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */,
 				668B162623EDF0CE00C1306A /* App-Icon-iPad-Pro-Coral@2x.png */,
 				668B161723EDF0CD00C1306A /* App-Icon-iPad-Pro-Day@2x.png */,
 				668B15EE23EDF0C500C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png */,
 				668B162523EDF0CE00C1306A /* App-Icon-iPad-Pro-Green@2x.png */,
 				668B166A23EDF7FC00C1306A /* App-Icon-iPad-Pro-Kurogram@2x.png */,
+				669FD7EE23F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png */,
 				66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */,
 				668B161C23EDF0CD00C1306A /* App-Icon-iPad-Pro-Night@2x.png */,
 				668B160923EDF0CA00C1306A /* App-Icon-iPad-Pro-Ocean-Blue@2x.png */,
@@ -1356,6 +1382,8 @@
 				668B161223EDF0CC00C1306A /* App-Icon-iPad-Sky-Blue@2x.png */,
 				668B15F623EDF0C600C1306A /* App-Icon-iPad-Yellow.png */,
 				668B160E23EDF0CB00C1306A /* App-Icon-iPad-Yellow@2x.png */,
+				669FD7EA23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@2x.png */,
+				669FD7EC23F9E9DA001440EC /* App-Icon-iPhone-Cookiezora@3x.png */,
 				668B15FF23EDF0C800C1306A /* App-Icon-iPhone-Coral@2x.png */,
 				668B15FC23EDF0C700C1306A /* App-Icon-iPhone-Coral@3x.png */,
 				668B161E23EDF0CE00C1306A /* App-Icon-iPhone-Day@2x.png */,
@@ -1366,6 +1394,8 @@
 				668B162423EDF0CE00C1306A /* App-Icon-iPhone-Green@3x.png */,
 				668B166723EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png */,
 				668B166823EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@3x.png */,
+				669FD7EF23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png */,
+				669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */,
 				66407C9123F625DB008944AB /* App-Icon-iPhone-Love-Bug@2x.png */,
 				66407C9223F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png */,
 				668B161323EDF0CC00C1306A /* App-Icon-iPhone-Night@2x.png */,
@@ -2321,13 +2351,16 @@
 			files = (
 				668B165923EDF0CF00C1306A /* App-Icon-iPad-Coral.png in Resources */,
 				668B163423EDF0CF00C1306A /* App-Icon-iPad-Night@2x.png in Resources */,
+				669FD7F523F9E9DB001440EC /* App-Icon-iPad-Kurolicious@2x.png in Resources */,
 				668F638F20986851003B1C1D /* AllerDisplay.ttf in Resources */,
 				66ED9D8722ABD60400C7A45C /* notificationSettings.storyboard in Resources */,
+				669FD7F423F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@2x.png in Resources */,
 				66B216AC21C1681F006E167D /* editor.storyboard in Resources */,
 				668B165623EDF0CF00C1306A /* App-Icon-iPad-Rose-Gold@2x.png in Resources */,
 				6640E19722ADD30100D0F575 /* authenticationSettings.storyboard in Resources */,
 				66FC6DD32340028D00A454DD /* account.storyboard in Resources */,
 				6611233D208E285600E6033A /* inapppurchase.storyboard in Resources */,
+				669FD7F623F9E9DB001440EC /* App-Icon-iPhone-Cookiezora@3x.png in Resources */,
 				668B162D23EDF0CF00C1306A /* App-Icon-iPad-Day@2x.png in Resources */,
 				668B163623EDF0CF00C1306A /* App-Icon-iPad-Red.png in Resources */,
 				66D6237F20A1CC1D00304914 /* library.storyboard in Resources */,
@@ -2393,6 +2426,7 @@
 				668B162A23EDF0CF00C1306A /* App-Icon-iPad-Pro-Dutch-Orange@2x.png in Resources */,
 				668B165723EDF0CF00C1306A /* App-Icon-iPad-Pro-Red@2x.png in Resources */,
 				666FBD9022C4E170007DB5D8 /* Black.plist in Resources */,
+				669FD7FB23F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png in Resources */,
 				66A08C6A23E3A2D5007B6418 /* privacy.storyboard in Resources */,
 				66C5797922A83726001B8F51 /* theme.storyboard in Resources */,
 				66A254DA22AAE55B002A0E34 /* App Icons.json in Resources */,
@@ -2401,6 +2435,7 @@
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
 				6640E18922AD633500D0F575 /* authentication.storyboard in Resources */,
 				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
+				669FD7F723F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png in Resources */,
 				66D6236E20A09F6B00304914 /* season.storyboard in Resources */,
 				668B162C23EDF0CF00C1306A /* App-Icon-iPad-Product-RED@2x.png in Resources */,
 				668B166123EDF0CF00C1306A /* App-Icon-iPad-Pro-Green@2x.png in Resources */,
@@ -2418,6 +2453,7 @@
 				66ABF5FD23383BAA00795750 /* welcome.storyboard in Resources */,
 				668B164C23EDF0CF00C1306A /* App-Icon-iPhone-Dutch-Orange@3x.png in Resources */,
 				660C043023D14F760040C749 /* SmallLockupCollectionViewCell.xib in Resources */,
+				669FD7F823F9E9DB001440EC /* App-Icon-iPad-Pro-Kurolicious@2x.png in Resources */,
 				66407C9723F625DB008944AB /* App-Icon-iPhone-Love-Bug@3x.png in Resources */,
 				668B163F23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue.png in Resources */,
 				668B164723EDF0CF00C1306A /* App-Icon-iPad-Pro-Rose-Gold@2x.png in Resources */,
@@ -2426,8 +2462,10 @@
 				660C043423D150310040C749 /* LargeLockupCollectionViewCell.xib in Resources */,
 				6674A0D820A58E2700AAB527 /* thread.storyboard in Resources */,
 				668B164A23EDF0CF00C1306A /* App-Icon-iPad-Yellow@2x.png in Resources */,
+				669FD7FA23F9E9DB001440EC /* App-Icon-iPad-Cookiezora.png in Resources */,
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				660C042C23D149F20040C749 /* CastCollectionViewCell.xib in Resources */,
+				669FD7F923F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png in Resources */,
 				660C043623D150640040C749 /* LegalCollectionViewCell.xib in Resources */,
 				66707835208B842E00471FBC /* settings.storyboard in Resources */,
 				668B163723EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@3x.png in Resources */,
@@ -2438,6 +2476,7 @@
 				668B165523EDF0CF00C1306A /* App-Icon-iPad-Night.png in Resources */,
 				664B52D122C03C0900B988B3 /* display.storyboard in Resources */,
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
+				669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				66058DB6212E95AB0084B79E /* details.storyboard in Resources */,
 				668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
@@ -2448,6 +2487,7 @@
 				668B164023EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange@2x.png in Resources */,
 				668B166323EDF0CF00C1306A /* App-Icon-iPhone-Ocean-Blue@2x.png in Resources */,
 				668B164B23EDF0CF00C1306A /* App-Icon-iPad-Coral@2x.png in Resources */,
+				669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */,
 				668B166B23EDF7FC00C1306A /* App-Icon-iPad-Kurogram.png in Resources */,
 				668F638C20986851003B1C1D /* Aller_Lt.ttf in Resources */,
 			);

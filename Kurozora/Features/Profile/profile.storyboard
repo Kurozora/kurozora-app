@@ -13,7 +13,7 @@
                 <viewControllerPlaceholder storyboardName="library" referencedIdentifier="FavoriteShowsCollectionViewController" id="MLI-TH-L8z" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Buf-ae-aTm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1596" y="-1492"/>
+            <point key="canvasLocation" x="1194" y="-703"/>
         </scene>
         <!--Follow Table View Controller-->
         <scene sceneID="JNH-Id-RWd">
@@ -922,7 +922,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uMU-AB-vWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="929" y="-413"/>
+            <point key="canvasLocation" x="583" y="-413"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o26-8I-W3L">

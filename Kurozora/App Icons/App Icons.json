@@ -53,16 +53,24 @@
 	],
 	"Limited": [
 		{
+			"name": "Cookiezora",
+			"image": "App-Icon-iPhone-Cookiezora"
+		},
+		{
 			"name": "Kurogram",
 			"image": "App-Icon-iPhone-Kurogram"
 		},
 		{
-			"name": "Product(RED)",
-			"image": "App-Icon-iPhone-Product-RED"
+			"name": "Kurolicious",
+			"image": "App-Icon-iPhone-Kurolicious"
 		},
 		{
 			"name": "Love Bug",
 			"image": "App-Icon-iPhone-Love-Bug"
+		},
+		{
+			"name": "Product(RED)",
+			"image": "App-Icon-iPhone-Product-RED"
 		}
 	]
 }

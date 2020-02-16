@@ -14,6 +14,15 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
+			<key>Cookiezora</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPhone-Cookiezora</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>Coral</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -55,6 +64,15 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>App-Icon-iPhone-Kurogram</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Kurolicious</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPhone-Kurolicious</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -171,6 +189,16 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
+			<key>Cookizora</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPad-Cookizora</string>
+					<string>App-Icon-iPad-Pro-Cookizora</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>Coral</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -217,6 +245,16 @@
 				<array>
 					<string>App-Icon-iPad-Kurogram</string>
 					<string>App-Icon-iPad-Pro-Kurogram</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Kurolicious</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>App-Icon-iPad-Kurolicious</string>
+					<string>App-Icon-iPad-Pro-Kurolicious</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
