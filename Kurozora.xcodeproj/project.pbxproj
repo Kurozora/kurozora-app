@@ -52,7 +52,7 @@
 		661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */; };
 		661DBC51234A4E00009292DF /* TipJarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC50234A4E00009292DF /* TipJarTableViewController.swift */; };
 		661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */; };
-		661DBC5B234A6CC9009292DF /* PurchaseHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC5A234A6CC9009292DF /* PurchaseHeaderTableViewCell.swift */; };
+		661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC5A234A6CC9009292DF /* ProductHeaderTableViewCell.swift */; };
 		661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */; };
 		661F9F812087282500CF4153 /* onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661F9F7D2087282400CF4153 /* onboarding.storyboard */; };
 		661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7E2087282400CF4153 /* SignInTableViewController.swift */; };
@@ -84,7 +84,7 @@
 		663E342B2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */; };
 		663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */; };
 		663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */; };
-		663F8C4B22F1882F00F1EACB /* PurchasePreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4822F1882F00F1EACB /* PurchasePreviewTableViewCell.swift */; };
+		663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */; };
 		663F8C4F22F199A400F1EACB /* PurchasePreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */; };
 		66407C9423F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */; };
 		66407C9523F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */; };
@@ -295,6 +295,8 @@
 		669FD7FB23F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */; };
 		669FD7FC23F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */; };
 		669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */; };
+		669FD7FF23FA15BD001440EC /* MALImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669FD7FE23FA15BD001440EC /* MALImport.swift */; };
+		669FD80123FA2270001440EC /* MALImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669FD80023FA2270001440EC /* MALImportTableViewController.swift */; };
 		66A08C6A23E3A2D5007B6418 /* privacy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A08C6923E3A2D5007B6418 /* privacy.storyboard */; };
 		66A08C6D23E3A2F0007B6418 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */; };
 		66A08C7023E3B342007B6418 /* SubSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */; };
@@ -367,9 +369,9 @@
 		66CBA53B22BCED5300FBEC13 /* FeedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53A22BCED5300FBEC13 /* FeedSections.swift */; };
 		66CBA53D22BCFE1E00FBEC13 /* FeedPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */; };
 		66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */; };
-		66CDC089234A829E009E799C /* PurchaseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* PurchaseInfoTableViewCell.swift */; };
+		66CDC089234A829E009E799C /* ProductInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
-		66CDC090234A9704009E799C /* PurchaseRedeemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* PurchaseRedeemTableViewCell.swift */; };
+		66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */; };
 		66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumsSortingStyle.swift */; };
 		66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */; };
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
@@ -498,8 +500,8 @@
 		661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Kurozora.swift"; sourceTree = "<group>"; };
 		661DBC50234A4E00009292DF /* TipJarTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarTableViewController.swift; sourceTree = "<group>"; };
 		661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseButtonTableViewCell.swift; sourceTree = "<group>"; };
-		661DBC56234A6A74009292DF /* PurchaseInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseInfoTableViewCell.swift; sourceTree = "<group>"; };
-		661DBC5A234A6CC9009292DF /* PurchaseHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoTableViewCell.swift; sourceTree = "<group>"; };
+		661DBC5A234A6CC9009292DF /* ProductHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		661F9F7D2087282400CF4153 /* onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = onboarding.storyboard; sourceTree = "<group>"; };
 		661F9F7E2087282400CF4153 /* SignInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInTableViewController.swift; sourceTree = "<group>"; };
@@ -531,7 +533,7 @@
 		663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCollectionCellStyle.swift; sourceTree = "<group>"; };
 		663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionButtonTableViewCell.swift; sourceTree = "<group>"; };
-		663F8C4822F1882F00F1EACB /* PurchasePreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasePreviewTableViewCell.swift; sourceTree = "<group>"; };
+		663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasePreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Love-Bug@2x.png"; sourceTree = "<group>"; };
 		66407C9023F625DB008944AB /* App-Icon-iPad-Pro-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Love-Bug@2x.png"; sourceTree = "<group>"; };
@@ -732,6 +734,8 @@
 		669FD7F123F9E9DB001440EC /* App-Icon-iPad-Pro-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Pro-Cookiezora@2x.png"; sourceTree = "<group>"; };
 		669FD7F223F9E9DB001440EC /* App-Icon-iPad-Cookiezora@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Cookiezora@2x.png"; sourceTree = "<group>"; };
 		669FD7F323F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPhone-Kurolicious@3x.png"; sourceTree = "<group>"; };
+		669FD7FE23FA15BD001440EC /* MALImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MALImport.swift; sourceTree = "<group>"; };
+		669FD80023FA2270001440EC /* MALImportTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MALImportTableViewController.swift; sourceTree = "<group>"; };
 		66A08C6923E3A2D5007B6418 /* privacy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = privacy.storyboard; sourceTree = "<group>"; };
 		66A08C6C23E3A2F0007B6418 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
 		66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSettingsViewController.swift; sourceTree = "<group>"; };
@@ -805,7 +809,7 @@
 		66CBA53A22BCED5300FBEC13 /* FeedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSections.swift; sourceTree = "<group>"; };
 		66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPosts.swift; sourceTree = "<group>"; };
 		66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
-		66CDC08A234A91A2009E799C /* PurchaseRedeemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseRedeemTableViewCell.swift; sourceTree = "<group>"; };
+		66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductActionTableViewCell.swift; sourceTree = "<group>"; };
 		66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTableViewController.swift; sourceTree = "<group>"; };
 		66CE1AF9209B304A0007A4DE /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		66CE1AFA209B304A0007A4DE /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
@@ -976,6 +980,7 @@
 				6669386F21AF39A000BA9620 /* ForumsThread.swift */,
 				664A065B21EA1187008CF4A6 /* Genres.swift */,
 				660A642521CE90080032FDCF /* JSONError.swift */,
+				669FD7FE23FA15BD001440EC /* MALImport.swift */,
 				66B69BD721454618007154BD /* PrivacyPolicy.swift */,
 				66DEB4A921D26FBC0093725F /* Search.swift */,
 				6619EE77216FDD3E00655B99 /* Seasons.swift */,
@@ -1125,6 +1130,7 @@
 				66FC6DD22340028D00A454DD /* account.storyboard */,
 				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
 				66ED9D8A22AC15E600C7A45C /* ImageAnnotation.swift */,
+				669FD80023FA2270001440EC /* MALImportTableViewController.swift */,
 				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
 				6614409521DA417300E54915 /* Cell */,
 			);
@@ -1999,10 +2005,10 @@
 			isa = PBXGroup;
 			children = (
 				661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */,
-				661DBC5A234A6CC9009292DF /* PurchaseHeaderTableViewCell.swift */,
-				661DBC56234A6A74009292DF /* PurchaseInfoTableViewCell.swift */,
-				663F8C4822F1882F00F1EACB /* PurchasePreviewTableViewCell.swift */,
-				66CDC08A234A91A2009E799C /* PurchaseRedeemTableViewCell.swift */,
+				661DBC5A234A6CC9009292DF /* ProductHeaderTableViewCell.swift */,
+				661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */,
+				663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */,
+				66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */,
 				663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */,
 			);
 			path = Table;
@@ -2706,6 +2712,7 @@
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
 				66FC6DEA2340BD2700A454DD /* KService+Theme.swift in Sources */,
 				6674A0BF20A45E4700AAB527 /* AnimeSynopsisCell.swift in Sources */,
+				669FD7FF23FA15BD001440EC /* MALImport.swift in Sources */,
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
@@ -2745,7 +2752,7 @@
 				6609FAD721D8D237008DF5E4 /* Kurozora.swift in Sources */,
 				66D1358D228087920079438C /* KButton.swift in Sources */,
 				665099D522FC2B6A0053C2FD /* SearchSuggestionResultCell.swift in Sources */,
-				66CDC089234A829E009E799C /* PurchaseInfoTableViewCell.swift in Sources */,
+				66CDC089234A829E009E799C /* ProductInfoTableViewCell.swift in Sources */,
 				664A065E21EA1BA7008CF4A6 /* GenresTableViewController.swift in Sources */,
 				66112341208E28C200E6033A /* InAppTransactionController.swift in Sources */,
 				66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */,
@@ -2811,7 +2818,7 @@
 				66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */,
 				66FDDB7323B95AF600364886 /* UICollectionViewController+Kurozora.swift in Sources */,
 				6674A0BD20A45E2300AAB527 /* InformationCell.swift in Sources */,
-				663F8C4B22F1882F00F1EACB /* PurchasePreviewTableViewCell.swift in Sources */,
+				663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */,
 				66BA740A223DB20800AEB8ED /* Library.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
 				662C307F22A06A5E00AAD69B /* CurrentSessionCell.swift in Sources */,
@@ -2840,7 +2847,7 @@
 				6674A0C120A45E5700AAB527 /* ReviewCell.swift in Sources */,
 				66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */,
 				6611233F208E287400E6033A /* InAppPurchaseViewController.swift in Sources */,
-				661DBC5B234A6CC9009292DF /* PurchaseHeaderTableViewCell.swift in Sources */,
+				661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */,
 				66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */,
 				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldCell.swift in Sources */,
@@ -2893,6 +2900,7 @@
 				664A065C21EA1187008CF4A6 /* Genres.swift in Sources */,
 				665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */,
 				66A1C65C232B75360044EAD1 /* FollowCell.swift in Sources */,
+				669FD80123FA2270001440EC /* MALImportTableViewController.swift in Sources */,
 				66D6237720A1BB6600304914 /* LibraryViewController.swift in Sources */,
 				6674A0C720A45EA000AAB527 /* CharacterCell.swift in Sources */,
 				66CBA53D22BCFE1E00FBEC13 /* FeedPosts.swift in Sources */,
@@ -2921,7 +2929,7 @@
 				66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */,
 				6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */,
 				66C86404216DFB850054EE16 /* LockupCollectionViewCell.swift in Sources */,
-				66CDC090234A9704009E799C /* PurchaseRedeemTableViewCell.swift in Sources */,
+				66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */,
 				66BEC133231711DD0039D683 /* KWhatsNewViewController.swift in Sources */,
 				6674A0CE20A571EA00AAB527 /* AnimeBaseViewController.swift in Sources */,
 				66AEABEB2298ABA100949FD8 /* NotificationSegueIdentifier.swift in Sources */,

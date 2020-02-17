@@ -9,7 +9,6 @@
 import SwiftyJSON
 import TRON
 
-// Throw json error
 class JSONError: ErrorSerializable {
 	var success: Bool?
 	var message: String?

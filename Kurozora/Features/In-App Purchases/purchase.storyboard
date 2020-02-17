@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +21,7 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="9Os-Nf-PcB"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Y3k-cc-I3v"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchasePreviewTableViewCell" rowHeight="340" id="f8R-hk-9d8" customClass="PurchasePreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductPreviewTableViewCell" rowHeight="340" id="f8R-hk-9d8" customClass="ProductPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="340"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f8R-hk-9d8" id="h3P-EM-Bwr">
@@ -63,6 +64,10 @@
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
+                                            <connections>
+                                                <outlet property="dataSource" destination="f8R-hk-9d8" id="9Qp-fm-X7C"/>
+                                                <outlet property="delegate" destination="f8R-hk-9d8" id="VIe-sk-Tbe"/>
+                                            </connections>
                                         </collectionView>
                                     </subviews>
                                     <constraints>
@@ -137,7 +142,7 @@
                                     <outlet property="purchaseButton" destination="NEW-jY-Gjc" id="aQw-iY-0dV"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseInfoTableViewCell" rowHeight="182" id="Yui-6E-7BW" customClass="PurchaseInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductInfoTableViewCell" rowHeight="182" id="Yui-6E-7BW" customClass="ProductInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="465.5" width="414" height="182"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yui-6E-7BW" id="mEg-GL-t9k">
@@ -276,7 +281,7 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="e94-hb-0ri"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="NmY-0b-CXH"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" rowHeight="213" id="qKP-xb-LrH" customClass="PurchaseHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" rowHeight="213" id="qKP-xb-LrH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="213"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qKP-xb-LrH" id="SwT-sQ-aFG">
@@ -387,7 +392,7 @@
                                     <outlet property="purchaseButton" destination="EEm-xc-IlI" id="FPm-Xq-A8i"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseInfoTableViewCell" rowHeight="115.5" id="tZw-ei-G0b" customClass="PurchaseInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductInfoTableViewCell" rowHeight="115.5" id="tZw-ei-G0b" customClass="ProductInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="327.5" width="414" height="115.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tZw-ei-G0b" id="6O3-ta-IFb">
@@ -497,66 +502,74 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="pJp-Rc-tca"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="xgr-tq-6Mn"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchasePreviewTableViewCell" rowHeight="340" id="1i2-GM-Phk" customClass="PurchasePreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="340"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductPreviewTableViewCell" rowHeight="220" id="1i2-GM-Phk" customClass="ProductPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="220"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1i2-GM-Phk" id="9Hw-rk-nUE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qzn-d9-kZP">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                                        </imageView>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0Nw-AF-Itf">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <viewLayoutGuide key="safeArea" id="rxk-L0-QaQ"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eAo-fF-vM0">
-                                                <size key="itemSize" width="413" height="325"/>
+                                                <size key="itemSize" width="413" height="220"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PurchasePreviewCollectionViewCell" id="cIN-Uw-RaY" customClass="PurchasePreviewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="7.5" width="413" height="325"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                        <rect key="frame" x="0.0" y="0.0" width="413" height="325"/>
+                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Q48-49-5DV">
+                                                        <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Tt-Ob-0yQ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="413" height="325"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
                                                             </imageView>
                                                         </subviews>
-                                                    </view>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="1Tt-Ob-0yQ" secondAttribute="trailing" id="Bpd-Ff-gi6"/>
+                                                            <constraint firstItem="1Tt-Ob-0yQ" firstAttribute="leading" secondItem="Q48-49-5DV" secondAttribute="leading" id="C4G-DR-wjV"/>
+                                                            <constraint firstAttribute="bottom" secondItem="1Tt-Ob-0yQ" secondAttribute="bottom" id="i2U-nK-2lM"/>
+                                                            <constraint firstItem="1Tt-Ob-0yQ" firstAttribute="top" secondItem="Q48-49-5DV" secondAttribute="top" id="v44-7G-JNb"/>
+                                                        </constraints>
+                                                    </collectionViewCellContentView>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="1Tt-Ob-0yQ" secondAttribute="trailing" id="Bpd-Ff-gi6"/>
-                                                        <constraint firstItem="1Tt-Ob-0yQ" firstAttribute="leading" secondItem="cIN-Uw-RaY" secondAttribute="leading" id="C4G-DR-wjV"/>
-                                                        <constraint firstAttribute="bottom" secondItem="1Tt-Ob-0yQ" secondAttribute="bottom" id="i2U-nK-2lM"/>
-                                                        <constraint firstItem="1Tt-Ob-0yQ" firstAttribute="top" secondItem="cIN-Uw-RaY" secondAttribute="top" id="v44-7G-JNb"/>
-                                                    </constraints>
-                                                    <size key="customSize" width="413" height="325"/>
-                                                    <connections>
-                                                        <outlet property="previewImageView" destination="1Tt-Ob-0yQ" id="9rt-jS-D0z"/>
-                                                    </connections>
                                                 </collectionViewCell>
                                             </cells>
+                                            <connections>
+                                                <outlet property="dataSource" destination="1i2-GM-Phk" id="MuC-64-OiL"/>
+                                                <outlet property="delegate" destination="1i2-GM-Phk" id="Z7k-dz-0DL"/>
+                                            </connections>
                                         </collectionView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="0Nw-AF-Itf" firstAttribute="leading" secondItem="9Hw-rk-nUE" secondAttribute="leading" id="2U8-vH-1uZ"/>
                                         <constraint firstAttribute="trailing" secondItem="0Nw-AF-Itf" secondAttribute="trailing" id="5o2-tC-eLs"/>
+                                        <constraint firstItem="Qzn-d9-kZP" firstAttribute="top" secondItem="9Hw-rk-nUE" secondAttribute="top" id="H3H-8l-JR0"/>
                                         <constraint firstAttribute="bottom" secondItem="0Nw-AF-Itf" secondAttribute="bottom" id="Lde-Aa-ajD"/>
+                                        <constraint firstItem="Qzn-d9-kZP" firstAttribute="leading" secondItem="9Hw-rk-nUE" secondAttribute="leading" id="MP4-fL-vjn"/>
                                         <constraint firstItem="0Nw-AF-Itf" firstAttribute="top" secondItem="9Hw-rk-nUE" secondAttribute="top" id="SzR-nd-LPA"/>
+                                        <constraint firstAttribute="bottom" secondItem="Qzn-d9-kZP" secondAttribute="bottom" id="tRs-t6-nW0"/>
+                                        <constraint firstAttribute="trailing" secondItem="Qzn-d9-kZP" secondAttribute="trailing" id="tbt-1K-asc"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="L8I-P0-ktP"/>
                                 <connections>
                                     <outlet property="collectionView" destination="0Nw-AF-Itf" id="nvn-o2-STF"/>
+                                    <outlet property="previewImageView" destination="Qzn-d9-kZP" id="zmp-sf-rD6"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHeaderTableViewCell" id="xkh-3Y-LHq" customClass="PurchaseHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="395.5" width="414" height="107"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductHeaderTableViewCell" id="xkh-3Y-LHq" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="275.5" width="414" height="107"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xkh-3Y-LHq" id="CXS-xI-FRj">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="107"/>
@@ -594,8 +607,8 @@
                                     <outlet property="secondaryLabel" destination="CQ3-jw-noy" id="Kr5-BU-nuK"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseRedeemTableViewCell" id="LMJ-08-91z" customClass="PurchaseRedeemTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="502.5" width="414" height="74"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductActionTableViewCell" id="LMJ-08-91z" customClass="ProductActionTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="382.5" width="414" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LMJ-08-91z" id="gSP-do-eDx">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
@@ -606,7 +619,7 @@
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="Use Camera"/>
                                             <connections>
-                                                <action selector="redeemButtonPressed:" destination="LMJ-08-91z" eventType="touchUpInside" id="fU3-Lf-gif"/>
+                                                <action selector="actionButtonPressed:" destination="LMJ-08-91z" eventType="touchUpInside" id="YA5-jd-abE"/>
                                             </connections>
                                         </button>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Or enter your code manually" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XL8-5a-HAR">
@@ -629,18 +642,18 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="BuP-Fd-Ir5"/>
                                 <connections>
-                                    <outlet property="redeemButton" destination="Apl-Ns-8uI" id="ovP-n2-9WS"/>
-                                    <outlet property="redeemTextField" destination="XL8-5a-HAR" id="wFg-4n-Uyo"/>
+                                    <outlet property="actionButton" destination="Apl-Ns-8uI" id="W2N-Gh-PLe"/>
+                                    <outlet property="actionTextField" destination="XL8-5a-HAR" id="8Ob-P5-uie"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseInfoTableViewCell" id="giZ-Ro-aex" customClass="PurchaseInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="576.5" width="414" height="69"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductInfoTableViewCell" id="giZ-Ro-aex" customClass="ProductInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="456.5" width="414" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="giZ-Ro-aex" id="CMI-Ag-6kD">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora codes are redeemable only once per account." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-nU-Oyq">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kurozora codes are redeemable only once per account." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-nU-Oyq">
                                             <rect key="frame" x="40" y="20" width="334.5" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="0lv-bD-gBv"/>
@@ -649,7 +662,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qSi-9X-vAY">
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qSi-9X-vAY">
                                             <rect key="frame" x="50.5" y="41" width="313" height="28"/>
                                             <state key="normal">
                                                 <attributedString key="attributedTitle">
@@ -745,7 +758,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kHh-sP-pcn"/>
+        <segue reference="Hyu-la-4qQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

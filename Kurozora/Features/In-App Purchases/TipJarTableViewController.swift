@@ -99,10 +99,10 @@ extension TipJarTableViewController {
 			return purchaseButtonTableViewCell
 		}
 
-		guard let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseInfoTableViewCell.identifier)")
+		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
 		}
-		return purchaseInfoTableViewCell
+		return productInfoTableViewCell
 	}
 }
 

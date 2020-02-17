@@ -1,5 +1,5 @@
 //
-//  PurchasePreviewTableViewCell.swift
+//  ProductPreviewTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 31/07/2019.
@@ -8,41 +8,57 @@
 
 import UIKit
 
-class PurchasePreviewTableViewCell: UITableViewCell {
-	@IBOutlet weak var collectionView: UICollectionView! {
+class ProductPreviewTableViewCell: UITableViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var collectionView: UICollectionView?
+	@IBOutlet weak var previewImageView: UIImageView?
+
+	// MARK: - Properties
+	var previewImages: [UIImage?] = [] {
 		didSet {
-			collectionView.dataSource = self
-			collectionView.delegate = self
+			let isSinglePreviewImage = previewImages.count <= 1
+			collectionView?.isHidden = isSinglePreviewImage
+			previewImageView?.isHidden = !isSinglePreviewImage
+
+			if isSinglePreviewImage {
+				if let previewImage = previewImages.first {
+					previewImageView?.image = previewImage
+				}
+			}
 		}
 	}
-	var previewItems = ["promo_icons", "promo_gif"]
 }
 
 // MARK: - UICollectionViewDataSource
-extension PurchasePreviewTableViewCell: UICollectionViewDataSource {
+extension ProductPreviewTableViewCell: UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return previewItems.count
+		return previewImages.count <= 1 ? 0 : previewImages.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let purchasePreviewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.purchasePreviewCollectionViewCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewCollectionViewCell.identifier)")
 		}
-		purchasePreviewCollectionViewCell.previewItem = previewItems[indexPath.item]
 		return purchasePreviewCollectionViewCell
 	}
 }
 
 // MARK: - UICollectionViewDelegate
-extension PurchasePreviewTableViewCell: UICollectionViewDelegate {
+extension ProductPreviewTableViewCell: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		if indexPath.section == 0 {
+			let purchasePreviewCollectionViewCell = cell as? PurchasePreviewCollectionViewCell
+			purchasePreviewCollectionViewCell?.previewImage = previewImages[indexPath.item]
+		}
+	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension PurchasePreviewTableViewCell: UICollectionViewDelegateFlowLayout {
+extension ProductPreviewTableViewCell: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		if UIDevice.isPad {
 			if UIDevice.isLandscape {

@@ -16,12 +16,13 @@ class PurchaseTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var subscriptionDetails = [["unit": "1 Month", "trial": "Includes 1 week free trial!"], ["unit": "6 Months", "trial": "Includes 2 weeks free trial!"], ["unit": "12 Months", "trial": "Includes 2 weeks free trial!"]]
-
 	#if targetEnvironment(macCatalyst)
 	var productIDs: [String] = ["20000331KPLUS1M_macCatalyst", "20000331KPLUS6M_macCatalyst", "20000331KPLUS12M_macCatalyst"]
 	#else
 	var productIDs: [String] = ["20000331KPLUS1M", "20000331KPLUS6M", "20000331KPLUS12M"]
 	#endif
+
+	let previewImages = [R.image.promo_icons(), R.image.promo_gif()]
 
 	fileprivate var _productsArray: [SKProduct] {
 		get { return productsArray }
@@ -102,29 +103,39 @@ extension PurchaseTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			guard let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchasePreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchasePreviewTableViewCell.identifier)")
+			guard let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
 			}
 			return subscriptionPreviewTableViewCell
 		} else if indexPath.section == 1 {
 			let subscriptionButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! SubscriptionButtonTableViewCell
-			subscriptionButtonTableViewCell.productsArray = productsArray
-			subscriptionButtonTableViewCell.productNumber = indexPath.row
-			subscriptionButtonTableViewCell.subscriptionDetail = subscriptionDetails[indexPath.row]
-			subscriptionButtonTableViewCell.purchaseButton.tag = indexPath.row
-			subscriptionButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
 			return subscriptionButtonTableViewCell
 		}
 
-		guard let purchaseInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseInfoTableViewCell.identifier)")
+		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
+			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
 		}
-		return purchaseInfoTableViewCell
+		return productInfoTableViewCell
 	}
 }
 
 // MARK: -  UITableViewDelegate
 extension PurchaseTableViewController {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if indexPath.section == 0 {
+			let subscriptionPreviewTableViewCell = cell as? ProductPreviewTableViewCell
+			subscriptionPreviewTableViewCell?.previewImages = previewImages
+		} else if indexPath.section == 1 {
+			if let subscriptionButtonTableViewCell = cell as? SubscriptionButtonTableViewCell {
+				subscriptionButtonTableViewCell.productsArray = productsArray
+				subscriptionButtonTableViewCell.productNumber = indexPath.row
+				subscriptionButtonTableViewCell.subscriptionDetail = subscriptionDetails[indexPath.row]
+				subscriptionButtonTableViewCell.purchaseButton.tag = indexPath.row
+				subscriptionButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
+			}
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		if indexPath.section == 0 {
 			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
@@ -149,8 +160,8 @@ extension PurchaseTableViewController: PurchaseButtonTableViewCellDelegate {
 		if self.productsArray.count != 0 {
 			KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { (alert, product, transaction) in
 				if let tran = transaction, let prod = product {
-					print("Transaction: \(tran)")
-					print("Product: \(prod)")
+//					print("Transaction: \(tran)")
+//					print("Product: \(prod)")
 				}
 				SCLAlertView().showWarning(alert.message)
 			}

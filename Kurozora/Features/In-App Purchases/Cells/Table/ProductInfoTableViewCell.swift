@@ -1,5 +1,5 @@
 //
-//  PurchaseInfoTableViewCell.swift
+//  ProductInfoTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PurchaseInfoTableViewCell: UITableViewCell {
+class ProductInfoTableViewCell: UITableViewCell {
 	@IBOutlet weak var restorePurchaseButton: UIButton? {
 		didSet {
 			restorePurchaseButton?.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)

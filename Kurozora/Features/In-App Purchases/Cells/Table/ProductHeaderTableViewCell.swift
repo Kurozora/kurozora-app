@@ -1,5 +1,5 @@
 //
-//  PurchaseHeaderTableViewCell.swift
+//  ProductHeaderTableViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PurchaseHeaderTableViewCell: UITableViewCell {
+class ProductHeaderTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: UILabel! {
 		didSet {

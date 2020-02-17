@@ -13,7 +13,7 @@ class PurchasePreviewCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var previewImageView: UIImageView!
 
 	// MARK: - Properties
-	var previewItem: String? {
+	var previewImage: UIImage? {
 		didSet {
 			configureCell()
 		}
@@ -22,8 +22,8 @@ class PurchasePreviewCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let previewItem = previewItem else { return }
+		guard let previewImage = previewImage else { return }
 
-		previewImageView.image = UIImage(named: previewItem)
+		previewImageView.image = previewImage
 	}
 }

@@ -30,7 +30,9 @@ extension KService {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
 		}
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "multipart/form-data"
+		]
 		request.method = .post
 		request.parameters = [
 			"username": username,
@@ -66,7 +68,9 @@ extension KService {
 		print("Register Email: \(email)")
 
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("users/register-siwa")
-		request.headers = headers
+		request.headers = [
+			"Content-Type": "multipart/form-data"
+		]
 		request.method = .post
 		request.parameters = [
 			"siwa_id": userID,
@@ -286,6 +290,42 @@ extension KService {
 		}, failure: { error in
 			SCLAlertView().showError("Can't remove from your library 😔", subTitle: error.message)
 			print("Received remove library error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
+		Import a MAL export file into the user's library.
+
+		- Parameter filePath: The path to the file to be imported.
+		- Parameter behavior: The preferred behavior of importing the file.
+		- Parameter successHandler: A closure returning a boolean indicating whether removing show from library is successful.
+		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
+	*/
+	func importMALLibrary(from filePath: URL?, behavior: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let filePath = filePath else { return }
+		guard let behavior = behavior else { return }
+
+		let request: UploadAPIRequest<MALImport, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(User.currentID)/library/mal-import") { formData in
+			formData.append(filePath, withName: "file", fileName: "MALAnimeImport.xml", mimeType: "text/xml")
+		}
+		request.headers = [
+			"accept": "application/json",
+			"Content-Type": "multipart/form-data",
+			"kuro-auth": User.authToken
+		]
+		request.method = .post
+		request.parameters = [
+			"behavior": behavior
+		]
+		request.perform(withSuccess: { response in
+			if let success = response.success {
+				if success {
+					SCLAlertView().showInfo("Processing request", subTitle: response.message)
+				}
+			}
+		}, failure: { error in
+			SCLAlertView().showError("Can't import MAL library 😔", subTitle: error.message)
+			print("Received import MAL library error: \(error.message ?? "No message available")")
 		})
 	}
 
