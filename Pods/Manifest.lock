@@ -19,9 +19,9 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.1.0)
-  - Kingfisher (5.13.0):
-    - Kingfisher/Core (= 5.13.0)
-  - Kingfisher/Core (5.13.0)
+  - Kingfisher (5.13.1):
+    - Kingfisher/Core (= 5.13.1)
+  - Kingfisher/Core (5.13.1)
   - MarqueeLabel (4.0.2)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
@@ -145,7 +145,7 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
+  Kingfisher: f33a848445e33c543620812158dc5d47f6bf90df
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
