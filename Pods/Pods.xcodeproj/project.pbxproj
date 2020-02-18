@@ -16,6 +16,7 @@
 				4C96BD147A28C219742913509A3A6065 /* PBXTargetDependency */,
 			);
 			name = R.swift;
+			productName = R.swift;
 		};
 /* End PBXAggregateTarget section */
 
@@ -1000,7 +1001,7 @@
 		04D57228FC7A2A586CBB04D0E205B8BB /* DiffableDataSources-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DiffableDataSources-prefix.pch"; sourceTree = "<group>"; };
 		0594B3FA8C3FBA955275FEE6CBA6FAB4 /* WhatsNew-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-umbrella.h"; sourceTree = "<group>"; };
 		05A877B2AFE9B1B08E67E75513388F20 /* IBPCollectionViewOrthogonalScrollerSectionController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPCollectionViewOrthogonalScrollerSectionController.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPCollectionViewOrthogonalScrollerSectionController.m; sourceTree = "<group>"; };
-		05C4280976BF93DA8B36818DE2E2A5E0 /* Cosmos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Cosmos.framework; path = Cosmos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05C4280976BF93DA8B36818DE2E2A5E0 /* Cosmos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cosmos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07734A3648CFAB8826662D23B7A09928 /* PageboyAutoScroller.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageboyAutoScroller.swift; path = Sources/Pageboy/AutoScrolling/PageboyAutoScroller.swift; sourceTree = "<group>"; };
 		07ACA45109F83A8E201282020CC17AFF /* MainThreadSerialDispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MainThreadSerialDispatcher.swift; path = Sources/Internal/MainThreadSerialDispatcher.swift; sourceTree = "<group>"; };
 		082797D4B2BFF7362DB8EF1D7C9A54B8 /* Pods-Kurozora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Kurozora.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1011,7 +1012,7 @@
 		08DCFC72217583871FB5BB32AFE5776B /* IBPNSCollectionLayoutSupplementaryItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPNSCollectionLayoutSupplementaryItem.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutSupplementaryItem.m; sourceTree = "<group>"; };
 		0998921EAAA22B543FCD8AD4554C89D2 /* TRON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TRON-dummy.m"; sourceTree = "<group>"; };
 		09FD90868FF40D0AFBC3208AA6B24A89 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		0AB91F46DDDA5588520D012E6F4FB918 /* NotificationBannerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NotificationBannerSwift.framework; path = NotificationBannerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AB91F46DDDA5588520D012E6F4FB918 /* NotificationBannerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationBannerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AFF5D7B61E247CCE4F37BB7FE026851 /* WhatsNew.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WhatsNew.modulemap; sourceTree = "<group>"; };
 		0B23E3162AD163CC8ADD4289DCCAD041 /* UITabBarExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UITabBarExtensions.swift; path = Sources/SwifterSwift/UIKit/UITabBarExtensions.swift; sourceTree = "<group>"; };
 		0BE4D420BC587A500D1431E11D79EF88 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Source/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
@@ -1079,7 +1080,7 @@
 		20E08CBEEC785B216ACC80ECBBEA5D5C /* AXTransitionInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AXTransitionInfo.swift; path = Source/Classes/Models/AXTransitionInfo.swift; sourceTree = "<group>"; };
 		213BF98C671C18E3AF81528953991622 /* BinaryFloatingPointExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BinaryFloatingPointExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/BinaryFloatingPointExtensions.swift; sourceTree = "<group>"; };
 		21632F24CE327032FEB7129DB1EBAC62 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Sources/Image/Image.swift; sourceTree = "<group>"; };
-		21B03CA622E690725A6626C088E1D09F /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Reachability.framework; path = ReachabilitySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		21B03CA622E690725A6626C088E1D09F /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21EA96A5C5925EC6FB32011BBD97CF84 /* IBPCollectionCompositionalLayoutSolverResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPCollectionCompositionalLayoutSolverResult.h; path = Sources/IBPCollectionViewCompositionalLayout/IBPCollectionCompositionalLayoutSolverResult.h; sourceTree = "<group>"; };
 		22017163B8B5EB7FE0BBE11AF2732DFA /* DifferenceKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DifferenceKit.modulemap; sourceTree = "<group>"; };
 		222A3A0130E5BC71CE81F761B002B938 /* BaseRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseRequest.swift; path = Source/TRON/BaseRequest.swift; sourceTree = "<group>"; };
@@ -1087,7 +1088,7 @@
 		230032A2549967E1F5ACB60E4941A1E8 /* KeychainAccess-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeychainAccess-dummy.m"; sourceTree = "<group>"; };
 		2353676405C01F19500E34CF2DEB4F87 /* FLAnimatedImageView+AXExtensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FLAnimatedImageView+AXExtensions.h"; path = "Source/Extensions/FLAnimatedImageView+AXExtensions.h"; sourceTree = "<group>"; };
 		239B08BDC90E4EB1201E449FF5BBA690 /* CGVectorExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGVectorExtensions.swift; path = Sources/SwifterSwift/CoreGraphics/CGVectorExtensions.swift; sourceTree = "<group>"; };
-		23D5CD291D18F2187712FE6F84B6F1C6 /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pageboy.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23D5CD291D18F2187712FE6F84B6F1C6 /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24214829A742587C345DF3906A25749A /* AXPagingConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AXPagingConfig.swift; path = Source/Classes/Models/AXPagingConfig.swift; sourceTree = "<group>"; };
 		244BA707F43DA30BA499872704646000 /* EmptyDataSet-Swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "EmptyDataSet-Swift.modulemap"; sourceTree = "<group>"; };
 		2451EC4B8D61820EDC5E927E3F8743D5 /* SnapKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-umbrella.h"; sourceTree = "<group>"; };
@@ -1202,10 +1203,10 @@
 		479D5C8172A5EB0A844883070923E493 /* SPStorkController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SPStorkController.modulemap; sourceTree = "<group>"; };
 		47A48C2F366361EE9AA200F469514358 /* SPStorkDismissingAnimationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPStorkDismissingAnimationController.swift; path = Source/SPStorkController/TransitioningDelegate/SPStorkDismissingAnimationController.swift; sourceTree = "<group>"; };
 		47FF9B29A46F9617C23591E110FBE023 /* NotificationBannerUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationBannerUtilities.swift; path = NotificationBanner/Classes/NotificationBannerUtilities.swift; sourceTree = "<group>"; };
-		482801E4801314B39BE88FEA9024B833 /* SwiftTheme.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftTheme.framework; path = SwiftTheme.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		482801E4801314B39BE88FEA9024B833 /* SwiftTheme.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftTheme.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48BF8B286F245C1FC610134BD4D7ABF6 /* TRON-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TRON-prefix.pch"; sourceTree = "<group>"; };
 		48DF1E5812579FFB06459F63A6D2F8D9 /* Bundle+FileResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+FileResource.swift"; path = "Library/Foundation/Bundle+FileResource.swift"; sourceTree = "<group>"; };
-		48F33B8E9F258A1278C9CC14A691D668 /* AXPhotoViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AXPhotoViewer.framework; path = AXPhotoViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48F33B8E9F258A1278C9CC14A691D668 /* AXPhotoViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AXPhotoViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F878B9F255C3AEEF9331F2C1A783EC /* TMChevronBarIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMChevronBarIndicator.swift; path = Sources/Tabman/Bar/BarIndicator/Types/TMChevronBarIndicator.swift; sourceTree = "<group>"; };
 		496D90D795C032D1DBC0637826428826 /* IBPNSCollectionLayoutSpacing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPNSCollectionLayoutSpacing.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutSpacing.m; sourceTree = "<group>"; };
 		49EF664D6E6EC846ACF9781F9B139463 /* UINavigationControllerExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UINavigationControllerExtensions.swift; path = Sources/SwifterSwift/UIKit/UINavigationControllerExtensions.swift; sourceTree = "<group>"; };
@@ -1222,7 +1223,7 @@
 		4CF9E1B95834644C9838674563BDF503 /* IBPNSCollectionLayoutEnvironment_Protocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSCollectionLayoutEnvironment_Protocol.h; path = Sources/IBPCollectionViewCompositionalLayout/include/IBPNSCollectionLayoutEnvironment_Protocol.h; sourceTree = "<group>"; };
 		4D21BCF2BFA39174AD31CD98A97A1573 /* APIRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/TRON/APIRequest.swift; sourceTree = "<group>"; };
 		4D3AFEAAFD0861CC7CB12BCB93DDA891 /* PageboyViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageboyViewController.swift; path = Sources/Pageboy/PageboyViewController.swift; sourceTree = "<group>"; };
-		4D4799138F8AC5FFF2497DCB60AF4CBB /* Tabman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Tabman.framework; path = Tabman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D4799138F8AC5FFF2497DCB60AF4CBB /* Tabman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tabman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D612975DB38CEE27241E43426CC9AD1 /* ESTabBarController-swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ESTabBarController-swift-Info.plist"; sourceTree = "<group>"; };
 		4EE2DBB5E3AC237F70A921EF31CE276A /* FLAnimatedImage-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FLAnimatedImage-Info.plist"; sourceTree = "<group>"; };
 		4EF4FE940750484D957B7FA725D0296D /* SPStorkController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SPStorkController-prefix.pch"; sourceTree = "<group>"; };
@@ -1263,7 +1264,7 @@
 		5CC5FED8110A40A4E0CAFBFA16DA248C /* ESTabBarController-swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ESTabBarController-swift-prefix.pch"; sourceTree = "<group>"; };
 		5CD0DF3C58C372679EBA1A810083A7C9 /* UIBezierPathExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIBezierPathExtensions.swift; path = Sources/SwifterSwift/UIKit/UIBezierPathExtensions.swift; sourceTree = "<group>"; };
 		5D088200370DA7DC5174438A66925AA0 /* SizeExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SizeExtensions.swift; path = Sources/Utility/SizeExtensions.swift; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DCD6E34F8FE0F96A35DC2DE7B3D8F8C /* UITextViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UITextViewExtensions.swift; path = Sources/SwifterSwift/UIKit/UITextViewExtensions.swift; sourceTree = "<group>"; };
 		5DF38FE6D2B209C3A136D8E094B4BAE3 /* Pageboy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Pageboy.h; path = Sources/Pageboy/Pageboy.h; sourceTree = "<group>"; };
 		5E3EB348D306DD802E1E6D84E4AF1CFC /* InsetCalculations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InsetCalculations.swift; path = Sources/Tabman/AutoInsetter/InsetCalculator/InsetCalculations.swift; sourceTree = "<group>"; };
@@ -1349,7 +1350,7 @@
 		7958EDC9A8D346DCE5D0DB18E9972C1D /* AXPhotosDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AXPhotosDataSource.swift; path = Source/Classes/Models/AXPhotosDataSource.swift; sourceTree = "<group>"; };
 		795CCC7F6BC2AB85513153578EBFF5D9 /* SPStorkController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SPStorkController-umbrella.h"; sourceTree = "<group>"; };
 		796BEEA024DA4D319E1D2D23B321FDB7 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DictionaryExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/DictionaryExtensions.swift; sourceTree = "<group>"; };
-		797B1BBC3E03CD39B8CB79D79BCFF843 /* DifferenceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DifferenceKit.framework; path = DifferenceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		797B1BBC3E03CD39B8CB79D79BCFF843 /* DifferenceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DifferenceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A2B23E840BB42639D7C3B96F88B8D5D /* MarqueeLabel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MarqueeLabel-dummy.m"; sourceTree = "<group>"; };
 		7A45714DA7B9DE8EB6333EA0044D9EF6 /* Box.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Box.swift; path = Sources/Utility/Box.swift; sourceTree = "<group>"; };
 		7AD602AD04BA518DA228735C19E277C8 /* Pods-Kurozora-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Kurozora-frameworks.sh"; sourceTree = "<group>"; };
@@ -1412,11 +1413,11 @@
 		8A79851639634A11E1D5E50C3FCB26B9 /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Source/Extensions.swift; sourceTree = "<group>"; };
 		8ADFD143BACBE28F4D39D6AFFFFC5F78 /* KeychainAccess-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-umbrella.h"; sourceTree = "<group>"; };
 		8B44EBBA092A751FC1B4B7EAFBD5CA35 /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
-		8B486AD56DBE8BB093D92AA6C3482AA8 /* AXStateButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AXStateButton.framework; path = AXStateButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B486AD56DBE8BB093D92AA6C3482AA8 /* AXStateButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AXStateButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BCA18277B88319033EB60AE8097DDC9 /* ScrollViewInsetCalculator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollViewInsetCalculator.swift; path = Sources/Tabman/AutoInsetter/InsetCalculator/ScrollViewInsetCalculator.swift; sourceTree = "<group>"; };
 		8BEE4EEAEA3BD9965F855AD6838ED503 /* BarMath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarMath.swift; path = Sources/Tabman/Bar/Utility/BarMath.swift; sourceTree = "<group>"; };
-		8C81A3F6D6E88BB13C101D6462262715 /* SwifterSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwifterSwift.framework; path = SwifterSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C8D3E7DAC4A6F7D93BEE7C98A601DC9 /* SPStorkController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SPStorkController.framework; path = SPStorkController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C81A3F6D6E88BB13C101D6462262715 /* SwifterSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwifterSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C8D3E7DAC4A6F7D93BEE7C98A601DC9 /* SPStorkController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPStorkController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CC161B06E2579C49F51133C65D058CD /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
 		8D388100F6A1540A589D7A1853640BB7 /* UIWindowExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIWindowExtensions.swift; path = Sources/SwifterSwift/UIKit/UIWindowExtensions.swift; sourceTree = "<group>"; };
 		8D40D4E1502AF2E14471B210D189DE60 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
@@ -1436,7 +1437,7 @@
 		92D4D5516F2F1A7A6B51FC11E5C074E9 /* CGSizeExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGSizeExtensions.swift; path = Sources/SwifterSwift/CoreGraphics/CGSizeExtensions.swift; sourceTree = "<group>"; };
 		930C18E2558164F22A2F3D80B8CED817 /* EmptyDataSetSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EmptyDataSetSource.swift; path = "EmptyDataSet-Swift/Sources/EmptyDataSetSource.swift"; sourceTree = "<group>"; };
 		9320D2445DB7A153BB624C5FFAA5DF8B /* ThemeManager+Plist.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ThemeManager+Plist.swift"; path = "Sources/ThemeManager+Plist.swift"; sourceTree = "<group>"; };
-		934C9384F84C81874A5A4907BCCCA2C8 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TRON.framework; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		934C9384F84C81874A5A4907BCCCA2C8 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93BB668D2AD254D1ADD662CC02AC6C38 /* SwipeController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeController.swift; path = Source/SwipeController.swift; sourceTree = "<group>"; };
 		93BF734AC4EB6C8DD287E7D0C893FC76 /* EmptyDataSet-Swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EmptyDataSet-Swift-Info.plist"; sourceTree = "<group>"; };
 		93FB2972FD1E2596A9A14F695D29F09D /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/Cache/Storage.swift; sourceTree = "<group>"; };
@@ -1447,14 +1448,14 @@
 		9460F210D8B507BD94C16456F7265F23 /* SCNPlaneExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SCNPlaneExtensions.swift; path = Sources/SwifterSwift/SceneKit/SCNPlaneExtensions.swift; sourceTree = "<group>"; };
 		953A0AF6D8AFEABB05575F87953ABF84 /* DiffableDataSources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "DiffableDataSources-Info.plist"; sourceTree = "<group>"; };
 		9574C5AC5C51C12CF95C2222EC9809D0 /* SPStorkController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPStorkController.swift; path = Source/SPStorkController/SPStorkController.swift; sourceTree = "<group>"; };
-		962A4B1F73A781D3BB906D0525BD2A8A /* SCLAlertView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SCLAlertView.framework; path = SCLAlertView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		962A4B1F73A781D3BB906D0525BD2A8A /* SCLAlertView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCLAlertView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9648DA7579A85461B9EF1FD91D94219C /* IBPUICollectionViewCompositionalLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPUICollectionViewCompositionalLayout.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPUICollectionViewCompositionalLayout.m; sourceTree = "<group>"; };
 		9678527FB344CD3D57F66CD8A4E66A91 /* SwiftTheme-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftTheme-prefix.pch"; sourceTree = "<group>"; };
 		9685BC10AB38B6202722D6EF6FF0A9D1 /* UIViewController+ScrollViewDetection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+ScrollViewDetection.swift"; path = "Sources/Tabman/AutoInsetter/Utilities/UIViewController+ScrollViewDetection.swift"; sourceTree = "<group>"; };
 		96890CB5F378CE8B1944F6E3504652E8 /* ExtensionHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtensionHelpers.swift; path = Sources/Utility/ExtensionHelpers.swift; sourceTree = "<group>"; };
 		96D6CF4089AFC8261DF6A9824F4A28A4 /* TMBarIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBarIndicator.swift; path = Sources/Tabman/Bar/BarIndicator/TMBarIndicator.swift; sourceTree = "<group>"; };
 		96D8EEC48D98C7E255E3020ADA0CB910 /* SwipeOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeOptions.swift; path = Source/SwipeOptions.swift; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D38E6B03EBFFE5A3AA1EAD73847BA3 /* AXBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AXBundle.swift; path = Source/AXBundle.swift; sourceTree = "<group>"; };
 		98A61D0225DA8D9E0E2E2124CA9E310C /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Source/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
 		98BC257368425AE110C5C4D187171F94 /* TMBarButtonStateController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBarButtonStateController.swift; path = Sources/Tabman/Bar/BarButton/TMBarButtonStateController.swift; sourceTree = "<group>"; };
@@ -1471,9 +1472,9 @@
 		9C7B3700430972ADE38D3373307317B6 /* UIActivityExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIActivityExtensions.swift; path = Sources/SwifterSwift/UIKit/UIActivityExtensions.swift; sourceTree = "<group>"; };
 		9CB63E93FAA45ADA10827BD9C38542BC /* CallbackQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CallbackQueue.swift; path = Sources/Utility/CallbackQueue.swift; sourceTree = "<group>"; };
 		9CC0B82D6543094C096FE3C281473FD5 /* AXPhotoViewer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AXPhotoViewer.xcconfig; sourceTree = "<group>"; };
-		9D443E759FE97A6C0CA5A3B5E4142EBA /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwipeCellKit.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D443E759FE97A6C0CA5A3B5E4142EBA /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D5206ACDD172FE55A44C66E4E16C577 /* IBPCollectionViewCompositionalLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IBPCollectionViewCompositionalLayout.xcconfig; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E5DCF7E0AE6217C7F71D38C49D18993 /* AnyDifferentiable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyDifferentiable.swift; path = Sources/AnyDifferentiable.swift; sourceTree = "<group>"; };
 		9ED21AAD75A9EC98B236B5FCF4B82DBA /* CosmosSize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CosmosSize.swift; path = Cosmos/CosmosSize.swift; sourceTree = "<group>"; };
 		9EFB90FFC112ECB8B9FFA101370B8206 /* TMAnimation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMAnimation.swift; path = Sources/Tabman/Bar/TMAnimation.swift; sourceTree = "<group>"; };
@@ -1490,8 +1491,8 @@
 		A1029DC9798164C415551BE9443371C8 /* TMBlockBarIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBlockBarIndicator.swift; path = Sources/Tabman/Bar/BarIndicator/Types/TMBlockBarIndicator.swift; sourceTree = "<group>"; };
 		A19B4C023F2248225CC7D2CADD511396 /* SwipeAccessibilityCustomAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeAccessibilityCustomAction.swift; path = Source/SwipeAccessibilityCustomAction.swift; sourceTree = "<group>"; };
 		A1E860B6C9794F8F3FD48940B7B9BBD4 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UITableViewExtensions.swift; path = Sources/SwifterSwift/UIKit/UITableViewExtensions.swift; sourceTree = "<group>"; };
-		A2E91EBAF3A95F47C4047CEC7E518E96 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
-		A32C04AA80E5FC203D367AA35162B5AD /* DiffableDataSources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DiffableDataSources.framework; path = DiffableDataSources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2E91EBAF3A95F47C4047CEC7E518E96 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Sources/en.lproj; sourceTree = "<group>"; };
+		A32C04AA80E5FC203D367AA35162B5AD /* DiffableDataSources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DiffableDataSources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C9FC1573DF1228FAC1C3A93BF2741 /* UIPageViewController+ScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIPageViewController+ScrollView.swift"; path = "Sources/Pageboy/Utilities/Extensions/UIPageViewController+ScrollView.swift"; sourceTree = "<group>"; };
 		A3FDFFF0BA1D256A889C27065561849B /* CosmosLayerHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CosmosLayerHelper.swift; path = Cosmos/CosmosLayerHelper.swift; sourceTree = "<group>"; };
 		A40284FDE2AE40FA083872AB025B27AA /* URLRequest+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLRequest+Alamofire.swift"; path = "Source/URLRequest+Alamofire.swift"; sourceTree = "<group>"; };
@@ -1556,7 +1557,7 @@
 		B4D8052C850A1EE5C5EE35BB65812D46 /* ESTabBarItemContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESTabBarItemContentView.swift; path = Sources/ESTabBarItemContentView.swift; sourceTree = "<group>"; };
 		B50F7AF1F3564A55217EC712277BEA88 /* Pods-Kurozora-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Kurozora-acknowledgements.plist"; sourceTree = "<group>"; };
 		B521AD9955D1309C78D27F47E8C36E30 /* TMBarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBarItem.swift; path = Sources/Tabman/Bar/BarItem/TMBarItem.swift; sourceTree = "<group>"; };
-		B58AFC6D846F420BFB5B781F5BEEF7D4 /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WhatsNew.framework; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B58AFC6D846F420BFB5B781F5BEEF7D4 /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59EEF9F2C1543432A93E03273E38C21 /* IBPNSCollectionLayoutSize_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSCollectionLayoutSize_Private.h; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutSize_Private.h; sourceTree = "<group>"; };
 		B5B68669FF49EF95AF6A8DC4040A2FFE /* TRON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON/TRON.swift; sourceTree = "<group>"; };
 		B5D6E985ABDBC83F65589E0C3BF3DCEF /* IBPNSCollectionLayoutDecorationItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPNSCollectionLayoutDecorationItem.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutDecorationItem.m; sourceTree = "<group>"; };
@@ -1598,7 +1599,7 @@
 		C3668A10038B35C95614A487ADB9BCC7 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Image/Filter.swift; sourceTree = "<group>"; };
 		C36B196CAF20E237A66FF1B547E6B302 /* WhatsNew-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "WhatsNew-Info.plist"; sourceTree = "<group>"; };
 		C39F9004F8C623B0EA86829C462023D2 /* ThemeCGFloatPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThemeCGFloatPicker.swift; path = Sources/ThemeCGFloatPicker.swift; sourceTree = "<group>"; };
-		C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Kingfisher.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4213C2C2750AB7F0426B68A3B4B95CE /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Source/LayoutConstraint.swift; sourceTree = "<group>"; };
 		C4F2FD8F95C1386A6CF3AA8DC50F1C46 /* IBPNSCollectionLayoutAnchor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSCollectionLayoutAnchor.h; path = Sources/IBPCollectionViewCompositionalLayout/include/IBPNSCollectionLayoutAnchor.h; sourceTree = "<group>"; };
 		C57E092D57D12B52B9C2671C3499EF5B /* String+MD5.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+MD5.swift"; path = "Sources/Utility/String+MD5.swift"; sourceTree = "<group>"; };
@@ -1618,11 +1619,11 @@
 		C90B937D79B8E92165133B5510F6E6D7 /* UIColorExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = Sources/UIColorExtension.swift; sourceTree = "<group>"; };
 		C9574CE4DF4010F80FB868BD8A6AE29C /* FLAnimatedImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FLAnimatedImage.xcconfig; sourceTree = "<group>"; };
 		C9CA168F75612A0C7BEEF88D8713ADEF /* SwipeTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeTableViewCell.swift; path = Source/SwipeTableViewCell.swift; sourceTree = "<group>"; };
-		CA4E3B66CE4D02048C77392B64FD0ABB /* Rswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Rswift.framework; path = R.swift.Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA4E3B66CE4D02048C77392B64FD0ABB /* Rswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAE826261A064C2460806EC8568A463C /* KeychainAccess.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.xcconfig; sourceTree = "<group>"; };
 		CB00BE856913A1CED221C7F7A37F4602 /* AutoInsetSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AutoInsetSpec.swift; path = Sources/Tabman/AutoInsetter/AutoInsetSpec.swift; sourceTree = "<group>"; };
 		CB7694F9BBF170F58CFEC0F560FD1B8B /* UIRefreshControlExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIRefreshControlExtensions.swift; path = Sources/SwifterSwift/UIKit/UIRefreshControlExtensions.swift; sourceTree = "<group>"; };
-		CC3406619DBCF0E7859D95A5389DE8A0 /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Kurozora.framework; path = "Pods-Kurozora.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC3406619DBCF0E7859D95A5389DE8A0 /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC6154F0105B68E9BD00C9C6139C5F07 /* IBPNSCollectionLayoutGroupCustomItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPNSCollectionLayoutGroupCustomItem.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutGroupCustomItem.m; sourceTree = "<group>"; };
 		CC9AE32968A3950DBF3F3225CBB4051F /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Utility/Result.swift; sourceTree = "<group>"; };
 		CCCCD7A184A0A79D6E979664985E76E7 /* EmptyDataSetView+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "EmptyDataSetView+Extension.swift"; path = "EmptyDataSet-Swift/Sources/EmptyDataSetView+Extension.swift"; sourceTree = "<group>"; };
@@ -1637,9 +1638,9 @@
 		CEC72D25E8D432BC818C9FA4E5E291C6 /* IBPNSCollectionLayoutSpacing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSCollectionLayoutSpacing.h; path = Sources/IBPCollectionViewCompositionalLayout/include/IBPNSCollectionLayoutSpacing.h; sourceTree = "<group>"; };
 		CECEEDDE13DEAF8AAC32FE40D4AD1612 /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemImageView.xib; path = WhatsNew/Resources/WhatsNewItemImageView.xib; sourceTree = "<group>"; };
 		CED2F8A4A8DD4894FEFEC5412020939A /* CLLocationExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CLLocationExtensions.swift; path = Sources/SwifterSwift/CoreLocation/CLLocationExtensions.swift; sourceTree = "<group>"; };
-		CF0AA9FBFBDB70858C030769541505ED /* MarqueeLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MarqueeLabel.framework; path = MarqueeLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF0AA9FBFBDB70858C030769541505ED /* MarqueeLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MarqueeLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3E4E53583BAF17C341ECA18B260F3C /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
-		CF8D19DFCF0FADE0AFA804F44FA81E75 /* EmptyDataSet_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EmptyDataSet_Swift.framework; path = "EmptyDataSet-Swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF8D19DFCF0FADE0AFA804F44FA81E75 /* EmptyDataSet_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EmptyDataSet_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9950547627C6682B4F67D39835358E /* Pods-Kurozora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Kurozora.release.xcconfig"; sourceTree = "<group>"; };
 		CFA6C6B9DBDB9FF094BCA38C6E92D6CB /* IBPNSDirectionalRectEdge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSDirectionalRectEdge.h; path = Sources/IBPCollectionViewCompositionalLayout/include/IBPNSDirectionalRectEdge.h; sourceTree = "<group>"; };
 		CFAA86E2C9AE279C0028340CF0CD4AA7 /* ESTabBarItemContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ESTabBarItemContainer.swift; path = Sources/ESTabBarItemContainer.swift; sourceTree = "<group>"; };
@@ -1696,7 +1697,7 @@
 		E16855DA073E2AC2E14EF7B94F8238B0 /* UIDatePickerExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIDatePickerExtensions.swift; path = Sources/SwifterSwift/UIKit/UIDatePickerExtensions.swift; sourceTree = "<group>"; };
 		E19294923701F7FCA38A7F35583264D8 /* TRON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TRON-umbrella.h"; sourceTree = "<group>"; };
 		E1EF5C5FC126787E96B2FDABCCA9652A /* CosmosTouchTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CosmosTouchTarget.swift; path = Cosmos/Helpers/CosmosTouchTarget.swift; sourceTree = "<group>"; };
-		E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24CCE7EFF6F6FD41CBA24A14B60D48C /* UINavigationItemExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UINavigationItemExtensions.swift; path = Sources/SwifterSwift/UIKit/UINavigationItemExtensions.swift; sourceTree = "<group>"; };
 		E28B0CE1F612BFF23553E338C933BD36 /* PageboyViewController+ScrollCalculations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PageboyViewController+ScrollCalculations.swift"; path = "Sources/Pageboy/PageboyViewController+ScrollCalculations.swift"; sourceTree = "<group>"; };
 		E2BB1EC91D4244C19F4DCEA092014E1D /* SequenceExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SequenceExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/SequenceExtensions.swift; sourceTree = "<group>"; };
@@ -1707,7 +1708,7 @@
 		E3EA37EA96A59E2C2AD88B0F8801B176 /* ArraySection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ArraySection.swift; path = Sources/ArraySection.swift; sourceTree = "<group>"; };
 		E3F70A64DEDF176C1E5AFCCD14111E98 /* Kingfisher-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Kingfisher-umbrella.h"; sourceTree = "<group>"; };
 		E3FE891DF5EFF84D11E3CE9DA2A74EEA /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E48F0D65F89CC343D4071F3F1B72CE6B /* IBPCollectionViewCompositionalLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = IBPCollectionViewCompositionalLayout.framework; path = IBPCollectionViewCompositionalLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E48F0D65F89CC343D4071F3F1B72CE6B /* IBPCollectionViewCompositionalLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IBPCollectionViewCompositionalLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B3CE1A7063C986B86DE2EFCA810EAC /* SignedIntegerExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignedIntegerExtensions.swift; path = Sources/SwifterSwift/SwiftStdlib/SignedIntegerExtensions.swift; sourceTree = "<group>"; };
 		E58850614013E035D49CD2699DF25B56 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Source/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
 		E65C3A81FADD7AAF4E73F9A66C157CC2 /* Runtime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Runtime.swift; path = Sources/Utility/Runtime.swift; sourceTree = "<group>"; };
@@ -1720,7 +1721,7 @@
 		E8B5E711BDECEEAE4B9091D20B50443A /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UIImageViewExtensions.swift; path = Sources/SwifterSwift/UIKit/UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		E8C253244FB7AC983E2557AD07BF0279 /* Cosmos.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Cosmos.xcconfig; sourceTree = "<group>"; };
 		E8DFA36C438A5EC600FA651DB2FB0871 /* TMBarButtonController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMBarButtonController.swift; path = Sources/Tabman/Bar/BarButton/TMBarButtonController.swift; sourceTree = "<group>"; };
-		E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeychainAccess.framework; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E960ECE0B8A6B2DAB7F65B911208D5F3 /* IBPCollectionCompositionalLayoutSolverResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPCollectionCompositionalLayoutSolverResult.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPCollectionCompositionalLayoutSolverResult.m; sourceTree = "<group>"; };
 		E9B4CE3290E578FFB6F0470B1CD1C316 /* IBPNSDirectionalEdgeInsets.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IBPNSDirectionalEdgeInsets.h; path = Sources/IBPCollectionViewCompositionalLayout/include/IBPNSDirectionalEdgeInsets.h; sourceTree = "<group>"; };
 		EA51A5B020FA78A39F1D93706466F778 /* SwipeTransitionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeTransitionLayout.swift; path = Source/SwipeTransitionLayout.swift; sourceTree = "<group>"; };
@@ -1759,7 +1760,7 @@
 		F5A44B8DBB24AD1ACB76708F757CF8F2 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		F5E5A41933D9A5EF8AB5560EDC50758E /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
 		F61252F9C03B9566B934CC4A29FE8F16 /* CosmosLayers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CosmosLayers.swift; path = Cosmos/CosmosLayers.swift; sourceTree = "<group>"; };
-		F6D00CA03F52F8332AAD8FEEC4AFD406 /* ESTabBarController_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ESTabBarController_swift.framework; path = "ESTabBarController-swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6D00CA03F52F8332AAD8FEEC4AFD406 /* ESTabBarController_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ESTabBarController_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F06B007D32F9D8FB82E7C29F3E8CBC /* Tabman.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Tabman.h; path = Sources/Tabman/Tabman.h; sourceTree = "<group>"; };
 		F7EDBB2F64E19C1CD97D6012FC967436 /* Pageboy-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pageboy-Info.plist"; sourceTree = "<group>"; };
 		F83F027D43E6EB4A0C55B893883E5D29 /* RequestTaskMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestTaskMap.swift; path = Source/RequestTaskMap.swift; sourceTree = "<group>"; };
@@ -1773,7 +1774,7 @@
 		FA00E57D2D2E05AD6C4B4DFBE308CC33 /* IBPNSCollectionLayoutGroup.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IBPNSCollectionLayoutGroup.m; path = Sources/IBPCollectionViewCompositionalLayout/IBPNSCollectionLayoutGroup.m; sourceTree = "<group>"; };
 		FA2BCF45D4807E3DD5FCB1577A191BFF /* NotificationBannerSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NotificationBannerSwift-Info.plist"; sourceTree = "<group>"; };
 		FA7CEF6B17A5A14F5DD291BADC5A34E2 /* BannerPositionFrame.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BannerPositionFrame.swift; path = NotificationBanner/Classes/BannerPositionFrame.swift; sourceTree = "<group>"; };
-		FAA5F2D71B90788C908800A94534AA92 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FLAnimatedImage.framework; path = FLAnimatedImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAA5F2D71B90788C908800A94534AA92 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAnimatedImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB750A532B6AADC70FD925E63B08B587 /* UISwitchExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UISwitchExtensions.swift; path = Sources/SwifterSwift/UIKit/UISwitchExtensions.swift; sourceTree = "<group>"; };
 		FB95A8315A788608BF4069A48EFDD5FA /* ConstraintMakerExtendable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerExtendable.swift; path = Source/ConstraintMakerExtendable.swift; sourceTree = "<group>"; };
 		FC02480D8586A0A7D0C5AD20D644152C /* IndexedObjectMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IndexedObjectMap.swift; path = Sources/Pageboy/Utilities/IndexedObjectMap.swift; sourceTree = "<group>"; };
@@ -2087,7 +2088,6 @@
 				5C5AF24C1BE8AB52318DE286AB0C6CCD /* UIWindow+orientation.swift */,
 				5D081142922A041BC9D3EB60BAD7EAEF /* Support Files */,
 			);
-			name = NotificationBannerSwift;
 			path = NotificationBannerSwift;
 			sourceTree = "<group>";
 		};
@@ -2126,7 +2126,6 @@
 				0B0F0EC1A07A02B3478F3166F8BEC6CF /* Support Files */,
 				C2F11E03B4D3258FAF68303D6C88B2CD /* SwiftyJSON */,
 			);
-			name = TRON;
 			path = TRON;
 			sourceTree = "<group>";
 		};
@@ -2167,7 +2166,6 @@
 				B7F6A674516B8365DDBF6BEC80284DA7 /* Validation.swift */,
 				22E7363A3111F93646647FE570B0B50A /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -2198,7 +2196,6 @@
 				32B98B65C6AE0067534659A2605CA3B2 /* Core */,
 				AB1AB5149C12E9D991DF96F09A3E6509 /* Support Files */,
 			);
-			name = AXPhotoViewer;
 			path = AXPhotoViewer;
 			sourceTree = "<group>";
 		};
@@ -2267,7 +2264,6 @@
 			children = (
 				D62B8368A8F305A6B7FF7E4D3CF4FC94 /* Support Files */,
 			);
-			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -2346,7 +2342,6 @@
 				2CC1854029917BE34BD7BE2920EBECF8 /* UITextField+PlaceholderAttributes.swift */,
 				492135BAED8B25D81F6533EA10DE2E30 /* Support Files */,
 			);
-			name = SwiftTheme;
 			path = SwiftTheme;
 			sourceTree = "<group>";
 		};
@@ -2370,7 +2365,6 @@
 				15F678A90D6F6A4576449F8E9087AE19 /* StarLayer.swift */,
 				52112024C962D7885B445E353BF3F652 /* Support Files */,
 			);
-			name = Cosmos;
 			path = Cosmos;
 			sourceTree = "<group>";
 		};
@@ -2407,7 +2401,6 @@
 				E74B1B754B8A2A66DD88B6047C79F16D /* Resources */,
 				9657F105567A833E8FCA638025577E59 /* Support Files */,
 			);
-			name = WhatsNew;
 			path = WhatsNew;
 			sourceTree = "<group>";
 		};
@@ -2467,7 +2460,6 @@
 				713BEAB0D51810B2032761590A10672B /* AXStateButton.m */,
 				0860E4F7396D1B8F494457D7F827EDB1 /* Support Files */,
 			);
-			name = AXStateButton;
 			path = AXStateButton;
 			sourceTree = "<group>";
 		};
@@ -2633,7 +2625,6 @@
 				F88014936BF3FBBF45B38C1BA212D7F9 /* SPStorkViewControllerExtenshion.swift */,
 				6EA32546272E5C7085D554383D58DFE9 /* Support Files */,
 			);
-			name = SPStorkController;
 			path = SPStorkController;
 			sourceTree = "<group>";
 		};
@@ -2643,7 +2634,6 @@
 				0367CADD9AD1F1477C4AA6B4DFCDDEA1 /* SwiftyJSON.swift */,
 				8243C99B39A793C2D0FDF61C9FD4C1B4 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -2654,7 +2644,6 @@
 				A0AC21464C533F75CEB344E3E866773F /* Support Files */,
 				06523CFC1BB1241FFD3E7555C7182864 /* UIKitExtension */,
 			);
-			name = DifferenceKit;
 			path = DifferenceKit;
 			sourceTree = "<group>";
 		};
@@ -2689,7 +2678,6 @@
 				D1F3BD2F9FF33F10B576AF0CD80C7831 /* WeakContainer.swift */,
 				520A274EAECDF576E4886EE85801465E /* Support Files */,
 			);
-			name = Pageboy;
 			path = Pageboy;
 			sourceTree = "<group>";
 		};
@@ -2744,7 +2732,6 @@
 				A82B09B307FBE8991381D8A16F3F268B /* MarqueeLabel.swift */,
 				6243372DAFD4D46E0701686EE4B9CE01 /* Support Files */,
 			);
-			name = MarqueeLabel;
 			path = MarqueeLabel;
 			sourceTree = "<group>";
 		};
@@ -2755,7 +2742,6 @@
 				4B46E1DAE91083D31A1DBF68E9C91B8F /* SCLExtensions.swift */,
 				6EE72435E227D21E73778D9680E2E4B0 /* Support Files */,
 			);
-			name = SCLAlertView;
 			path = SCLAlertView;
 			sourceTree = "<group>";
 		};
@@ -2800,7 +2786,6 @@
 				EA51A5B020FA78A39F1D93706466F778 /* SwipeTransitionLayout.swift */,
 				3D533CAFEC6DD8BFF9663E8BD6B1C590 /* Support Files */,
 			);
-			name = SwipeCellKit;
 			path = SwipeCellKit;
 			sourceTree = "<group>";
 		};
@@ -2877,7 +2862,6 @@
 				39526CCE82A40A76505931D9EF8A3F17 /* FLAnimatedImageView.m */,
 				8357ED73C4D6272AC41F61C52D9305C4 /* Support Files */,
 			);
-			name = FLAnimatedImage;
 			path = FLAnimatedImage;
 			sourceTree = "<group>";
 		};
@@ -2934,7 +2918,6 @@
 				DB20259EEBAF89109EE28E8E90BBA93B /* Validatable.swift */,
 				C13BFA7CAAFE56E8A148C544DA4209D9 /* Support Files */,
 			);
-			name = R.swift.Library;
 			path = R.swift.Library;
 			sourceTree = "<group>";
 		};
@@ -2972,7 +2955,6 @@
 				CCCCD7A184A0A79D6E979664985E76E7 /* EmptyDataSetView+Extension.swift */,
 				2C730987B992EA421C5693EEF4290E27 /* Support Files */,
 			);
-			name = "EmptyDataSet-Swift";
 			path = "EmptyDataSet-Swift";
 			sourceTree = "<group>";
 		};
@@ -2989,7 +2971,6 @@
 				7EEFF0593A474719D848E6395C6148B0 /* UniversalError.swift */,
 				F3798CF93EEAD43B7978A0343CFF4E9B /* Support Files */,
 			);
-			name = DiffableDataSources;
 			path = DiffableDataSources;
 			sourceTree = "<group>";
 		};
@@ -3090,7 +3071,6 @@
 				6404CAF49143AF3DC16B9E14D4F0AE2A /* Core */,
 				0A2FDA18AA1C1DB7A78F5C9D9B977AC0 /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -3220,7 +3200,6 @@
 				CD6B94BC6BA9A1A6B874F5A7ACD6A885 /* SwiftStdlib */,
 				22EE5DC8959D273EEE446889412CC7DB /* UIKit */,
 			);
-			name = SwifterSwift;
 			path = SwifterSwift;
 			sourceTree = "<group>";
 		};
@@ -3299,7 +3278,6 @@
 				B27B7ECD8A134304EA356E3C3FAA034A /* IBPUICollectionViewCompositionalLayoutConfiguration_Private.h */,
 				662AB04FE119D8F02C9FBB00D38DCF22 /* Support Files */,
 			);
-			name = IBPCollectionViewCompositionalLayout;
 			path = IBPCollectionViewCompositionalLayout;
 			sourceTree = "<group>";
 		};
@@ -3363,7 +3341,6 @@
 				1C8F92758F57774D559D8D1E93FCCAA6 /* Reachability.swift */,
 				A07B380B20892769B3B5EF536A2D67C4 /* Support Files */,
 			);
-			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -3418,7 +3395,6 @@
 				2A43A4A495D172E8E6BC0AB091B8FC4A /* UILayoutSupport+Extensions.swift */,
 				3BFFFC57A4D244E623EEA69976D205F2 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -3428,7 +3404,6 @@
 				2539D51CB5EF3163A99E7852707A67D1 /* Keychain.swift */,
 				D44F6241EF6DAD47EF1E5A80A2C47498 /* Support Files */,
 			);
-			name = KeychainAccess;
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
@@ -3505,7 +3480,6 @@
 				2CAD83060935CE398DDC1B6081107BB2 /* WeakContainer.swift */,
 				8CC4210B7CD45B4F2907508D963953E1 /* Support Files */,
 			);
-			name = Tabman;
 			path = Tabman;
 			sourceTree = "<group>";
 		};
@@ -3522,7 +3496,6 @@
 				DE1F213A6772D4B03E13E4225EDE714C /* Resources */,
 				9FE3266B721FB6333D906B1C74C27BE1 /* Support Files */,
 			);
-			name = "ESTabBarController-swift";
 			path = "ESTabBarController-swift";
 			sourceTree = "<group>";
 		};
@@ -4384,7 +4357,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1130;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -5627,7 +5600,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B759E64C7D31E312FACCC631484B00B5 /* SwiftyJSON.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5661,7 +5633,6 @@
 			baseConfigurationReference = CF9950547627C6682B4F67D39835358E /* Pods-Kurozora.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -5697,7 +5668,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 664BE00C3A29622022618747BE63E0CF /* DifferenceKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5730,7 +5700,6 @@
 			baseConfigurationReference = 082797D4B2BFF7362DB8EF1D7C9A54B8 /* Pods-Kurozora.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -5829,7 +5798,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DDEBB13B9DD2B27E1769DD399C715A4 /* SCLAlertView.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5861,7 +5829,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71387F084F16F85A7F3A9B9B20E76DDD /* TRON.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -5895,7 +5862,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E8C253244FB7AC983E2557AD07BF0279 /* Cosmos.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5928,7 +5894,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FF6CB7635E294832351BA9C12DB0E4F /* SwipeCellKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5960,7 +5925,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A5F894BAB70C624A053EA398F18DC2C7 /* ReachabilitySwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -5992,7 +5956,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F90C04EDC911467250BC735DBFD963EB /* ESTabBarController-swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6024,7 +5987,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DAEE05B7A8002C7E135C9FA799E7314 /* SnapKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6057,7 +6019,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 468BCB7936A5551D5E769DFFF3A58469 /* MarqueeLabel.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6090,7 +6051,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D5206ACDD172FE55A44C66E4E16C577 /* IBPCollectionViewCompositionalLayout.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6124,7 +6084,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B759E64C7D31E312FACCC631484B00B5 /* SwiftyJSON.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6156,7 +6115,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 318A6E67BA680CA9E3296CD58DF0A40A /* Tabman.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6189,7 +6147,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B3F190A2771DD07A0F00E97FFCCB9B1 /* R.swift.Library.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6221,7 +6178,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E629619BC6FAA65E192C450454A6AF4 /* WhatsNew.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6253,7 +6209,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B9DFB2C539F176EFA28A35C5D9C0355 /* SwiftTheme.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6286,7 +6241,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 318A6E67BA680CA9E3296CD58DF0A40A /* Tabman.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6318,7 +6272,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1042A657AC009A1EBBA629F1D51A8F22 /* SwifterSwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6351,7 +6304,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3C1E41DD2AC6C400A46DEDDB84B5BA1 /* NotificationBannerSwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6384,7 +6336,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E8C253244FB7AC983E2557AD07BF0279 /* Cosmos.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6416,7 +6367,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F5DD7DB2D870A5900D1B9065EA4ACA6 /* EmptyDataSet-Swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6448,7 +6398,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BF202D8F8FC9B8074F06CE438AE803AF /* Kingfisher.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6481,7 +6430,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3C1E41DD2AC6C400A46DEDDB84B5BA1 /* NotificationBannerSwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6515,7 +6463,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C9574CE4DF4010F80FB868BD8A6AE29C /* FLAnimatedImage.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6547,7 +6494,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 56C3CB4A3984BB52A7D73747E590D4F6 /* Alamofire.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6580,7 +6526,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CAE826261A064C2460806EC8568A463C /* KeychainAccess.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6612,7 +6557,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B3F190A2771DD07A0F00E97FFCCB9B1 /* R.swift.Library.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6645,7 +6589,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 468BCB7936A5551D5E769DFFF3A58469 /* MarqueeLabel.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6677,7 +6620,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D5206ACDD172FE55A44C66E4E16C577 /* IBPCollectionViewCompositionalLayout.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6710,7 +6652,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 664BE00C3A29622022618747BE63E0CF /* DifferenceKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6743,7 +6684,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F232948A60C0A2C68A04DC8B43926FC /* AXStateButton.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6776,7 +6716,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CAE826261A064C2460806EC8568A463C /* KeychainAccess.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6809,7 +6748,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F90C04EDC911467250BC735DBFD963EB /* ESTabBarController-swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6842,7 +6780,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B9DFB2C539F176EFA28A35C5D9C0355 /* SwiftTheme.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6874,7 +6811,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04AA9D5752034B4F2D2E684337E49712 /* SPStorkController.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -6907,7 +6843,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C9574CE4DF4010F80FB868BD8A6AE29C /* FLAnimatedImage.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6940,7 +6875,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CC0B82D6543094C096FE3C281473FD5 /* AXPhotoViewer.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -6973,7 +6907,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEA0400088E6DE25FDD3ABC3A88DCC03 /* Pageboy.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7005,7 +6938,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FF6CB7635E294832351BA9C12DB0E4F /* SwipeCellKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7038,7 +6970,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1042A657AC009A1EBBA629F1D51A8F22 /* SwifterSwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7070,7 +7001,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BF202D8F8FC9B8074F06CE438AE803AF /* Kingfisher.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7104,7 +7034,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DAEE05B7A8002C7E135C9FA799E7314 /* SnapKit.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7138,7 +7067,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04AA9D5752034B4F2D2E684337E49712 /* SPStorkController.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7172,7 +7100,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F5DD7DB2D870A5900D1B9065EA4ACA6 /* EmptyDataSet-Swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7205,7 +7132,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DDEBB13B9DD2B27E1769DD399C715A4 /* SCLAlertView.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7238,7 +7164,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CC0B82D6543094C096FE3C281473FD5 /* AXPhotoViewer.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7270,7 +7195,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E629619BC6FAA65E192C450454A6AF4 /* WhatsNew.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7303,7 +7227,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5ECF9B59A4C03DC0EA3359D4B7215A37 /* R.swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -7318,7 +7241,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5ECF9B59A4C03DC0EA3359D4B7215A37 /* R.swift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -7334,7 +7256,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 56C3CB4A3984BB52A7D73747E590D4F6 /* Alamofire.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7368,7 +7289,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A37A16F9F364C2BA901FC13D2308667 /* DiffableDataSources.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7401,7 +7321,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A37A16F9F364C2BA901FC13D2308667 /* DiffableDataSources.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7482,8 +7401,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -7493,7 +7411,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F232948A60C0A2C68A04DC8B43926FC /* AXStateButton.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7525,7 +7442,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71387F084F16F85A7F3A9B9B20E76DDD /* TRON.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7558,7 +7474,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEA0400088E6DE25FDD3ABC3A88DCC03 /* Pageboy.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -7591,7 +7506,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A5F894BAB70C624A053EA398F18DC2C7 /* ReachabilitySwift.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

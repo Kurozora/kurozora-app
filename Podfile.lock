@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-rc.3)
+  - Alamofire (5.0.0)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
   - AXPhotoViewer/Core (1.7.1):
@@ -60,13 +60,13 @@ PODS:
   - SwipeCellKit (2.7.1)
   - Tabman (2.8.0):
     - Pageboy (~> 3.5.0)
-  - TRON (5.0.0-rc.1):
-    - Alamofire (~> 5.0.0-rc.1)
-    - TRON/Core (= 5.0.0-rc.1)
-  - TRON/Core (5.0.0-rc.1):
-    - Alamofire (~> 5.0.0-rc.1)
-  - TRON/SwiftyJSON (5.0.0-rc.1):
-    - Alamofire (~> 5.0.0-rc.1)
+  - TRON (5.0.0):
+    - Alamofire (~> 5.0.0)
+    - TRON/Core (= 5.0.0)
+  - TRON/Core (5.0.0):
+    - Alamofire (~> 5.0.0)
+  - TRON/SwiftyJSON (5.0.0):
+    - Alamofire (~> 5.0.0)
     - SwiftyJSON (~> 5.0)
     - TRON/Core
   - WhatsNew (0.4.6)
@@ -134,7 +134,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
-  Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
+  Alamofire: 58ff2bfb8daaacaa233d5c36e37b10a5248f59b1
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
@@ -160,7 +160,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Tabman: f62ad94ee54a7d96e3fbab34f677d9ea4d38ece6
-  TRON: da1c258cd02f13ede7764ffc1fc0f3a89791edcb
+  TRON: eedc71827468743fc3e054d00451102db0bfe845
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
 PODFILE CHECKSUM: 6dd7a973253eb7656c3470a5bf23f3515a5199fd
