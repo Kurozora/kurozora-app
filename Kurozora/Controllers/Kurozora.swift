@@ -99,6 +99,16 @@ class Kurozora {
 		- Parameter url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	*/
 	fileprivate func routeScheme(with url: URL) {
+		if url.pathExtension == "xml" {
+			WorkflowController.shared.isSignedIn({
+				if let malImportTableViewController = R.storyboard.account.malImportTableViewController() {
+					malImportTableViewController.selectedFileURL = url
+
+					UIApplication.topViewController?.show(malImportTableViewController, sender: nil)
+				}
+			})
+		}
+
 		guard let urlScheme = url.host?.removingPercentEncoding else { return }
 		guard let scheme: Scheme = Scheme(rawValue: urlScheme) else { return }
 

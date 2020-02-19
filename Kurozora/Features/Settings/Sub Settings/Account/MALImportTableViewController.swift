@@ -117,6 +117,12 @@ extension MALImportTableViewController {
 				malImportActionTableViewCell.actionTextField.tag = indexPath.row
 				malImportActionTableViewCell.actionTextField.delegate = self
 				malImportActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+				if selectedFileURL != nil {
+					if let lastPathComponent = selectedFileURL?.lastPathComponent {
+						malImportActionTableViewCell.actionTextField.text = ".../" + lastPathComponent
+						self.rightNavigationBarButton.isEnabled = true
+					}
+				}
 				textFieldArray.append(malImportActionTableViewCell.actionTextField)
 			}
 		}
