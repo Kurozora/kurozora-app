@@ -215,9 +215,6 @@ class ProfileTableViewController: KTableViewController {
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
 
-		// Setup more button
-		moreButton.isHidden = !User.isSignedIn // If user is signed in then don't hide button
-
 		// Setup username
 		if let username = user.profile?.username, !username.isEmpty {
 			usernameLabel.text = username
@@ -533,12 +530,14 @@ class ProfileTableViewController: KTableViewController {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Go to last watched episode
-		let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
-			self.showFavoriteShowsList()
-		})
-		showFavoriteShowsList.setValue(R.image.symbols.heart_circle()!, forKey: "image")
-		showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(showFavoriteShowsList)
+		if User.isSignedIn {
+			let showFavoriteShowsList = UIAlertAction.init(title: "Favorite shows", style: .default, handler: { (_) in
+				self.showFavoriteShowsList()
+			})
+			showFavoriteShowsList.setValue(R.image.symbols.heart_circle()!, forKey: "image")
+			showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+			action.addAction(showFavoriteShowsList)
+		}
 
 		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 		action.view.theme_tintColor = KThemePicker.tintColor.rawValue

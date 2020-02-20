@@ -20,7 +20,7 @@ class RedeemTableViewController: KTableViewController {
 	var textFieldArray: [UITextField?] = []
 	var textRecognitionRequest: VNImageBasedRequest = {
 		var textRecognitionRequest: VNImageBasedRequest
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			textRecognitionRequest = VNRecognizeTextRequest()
 		} else {
 			textRecognitionRequest = VNDetectTextRectanglesRequest()
@@ -53,7 +53,7 @@ class RedeemTableViewController: KTableViewController {
 		rightNavigationBarButton.isEnabled = false
 
 		// Prepare Vision
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { (request, _) in
 				if let results = request.results, !results.isEmpty {
 					if let requestResults = request.results as? [VNRecognizedTextObservation] {
@@ -63,11 +63,9 @@ class RedeemTableViewController: KTableViewController {
 					}
 				}
 			})
+			(textRecognitionRequest as? VNRecognizeTextRequest)?.revision = VNRecognizeTextRequestRevision1
 			(textRecognitionRequest as? VNRecognizeTextRequest)?.recognitionLevel = .fast
 			(textRecognitionRequest as? VNRecognizeTextRequest)?.usesLanguageCorrection = false
-		} else {
-			textRecognitionRequest = VNDetectTextRectanglesRequest()
-			(textRecognitionRequest as? VNDetectTextRectanglesRequest)?.reportCharacterBoxes = true
 		}
 	}
 
@@ -118,18 +116,19 @@ class RedeemTableViewController: KTableViewController {
 	}
 
 	/**
-		Processes the specified arra of recognized text observation.
+		Processes the specified array of recognized text observation by creating a full transcript to run analysis on.
 
 		- Parameter recognizedtext: An array of recognized text observation.
 	*/
-	@available(iOS 13.0, *)
-	fileprivate func processRecognizedText(_ recognizedText: [VNRecognizedTextObservation]) {
-		// Create a full transcript to run analysis on.
-		let maximumCandidates = 1
-		for observation in recognizedText {
-			guard let candidate = observation.topCandidates(maximumCandidates).first else { continue }
-			if candidate.string.starts(with: "XXX") && candidate.string.count == 13 {
-				showSuccess(for: candidate.string)
+	@available(iOS 13.0, macCatalyst 13.0, *)
+	fileprivate func processRecognizedText(_ recognizedText: [Any]) {
+		if let recognizedText = recognizedText as? [VNRecognizedTextObservation] {
+			let maximumCandidates = 1
+			for observation in recognizedText {
+				guard let candidate = observation.topCandidates(maximumCandidates).first else { continue }
+				if candidate.string.starts(with: "XXX") && candidate.string.count == 13 {
+					showSuccess(for: candidate.string)
+				}
 			}
 		}
 	}
@@ -203,6 +202,14 @@ extension RedeemTableViewController {
 				productActionTableViewCell.actionTextField.delegate = self
 				productActionTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 				textFieldArray.append(productActionTableViewCell.actionTextField)
+
+				if #available(iOS 13.0, macCatalyst 13.0, *) {
+					productActionTableViewCell.actionButton.isHidden = false
+					productActionTableViewCell.actionTextField.placeholder = "Or enter your code manually"
+				} else {
+					productActionTableViewCell.actionButton.isHidden = true
+					productActionTableViewCell.actionTextField.placeholder = "Please enter your code"
+				}
 			}
 		}
 	}

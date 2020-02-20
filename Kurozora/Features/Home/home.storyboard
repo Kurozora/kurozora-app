@@ -37,7 +37,7 @@
         <!--Explore-->
         <scene sceneID="cmd-mB-OEl">
             <objects>
-                <collectionViewController storyboardIdentifier="HomeCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lLs-XV-jFy" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="HomeCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lLs-XV-jFy" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="4qz-vz-vYz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
