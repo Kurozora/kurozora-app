@@ -150,7 +150,6 @@
 		302EE70D3C627CCCFD3CC4B5CE65AF87 /* AXStateButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F0CBFBF043D78C62B7E1A490CDA2D9C /* AXStateButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		303A906125CF20098502E1BDBFD640A0 /* IBPNSCollectionLayoutGroup_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A62DD23D4A756A6293B65A3F280EFEC5 /* IBPNSCollectionLayoutGroup_Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		31F197BE95B262581D49F7F165F13B5A /* SPStorkController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 795CCC7F6BC2AB85513153578EBFF5D9 /* SPStorkController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		322E7CE359EE6E934232877D12B2F96A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ECA28D6DCD1B896B72C24998C698A94 /* MobileCoreServices.framework */; };
 		3239E7964A620F94C4C9068231993C82 /* UIEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAB2F02969964A7AA9FEC85B69078E /* UIEdgeInsetsExtensions.swift */; };
 		325BA69A1881ED0F610714A630739449 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6FA298457864F3A84C2D8F46529F92 /* Foundation.framework */; };
 		3299D6E39FFF8B081DDB2B416ACEB8CD /* MKPolylineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9734EFE844D7C6B0193AB50D869CCD6 /* MKPolylineExtensions.swift */; };
@@ -295,6 +294,7 @@
 		655163642437CC12215B8BB0826DEC87 /* InsetExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506092DF13015D19B1D4E25314FB9849 /* InsetExecutor.swift */; };
 		658D5D39B1275BFD243F1A51793BF9EA /* TMBarIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D6CF4089AFC8261DF6A9824F4A28A4 /* TMBarIndicator.swift */; };
 		65AB308984A6EAF2A1925707DDD3622B /* IBPNSCollectionLayoutSupplementaryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DCFC72217583871FB5BB32AFE5776B /* IBPNSCollectionLayoutSupplementaryItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		665643BF23FD858E00807687 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665643BE23FD858E00807687 /* CoreServices.framework */; };
 		669C3F6EEFDE57E600B8796396CE0EB7 /* LayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4213C2C2750AB7F0426B68A3B4B95CE /* LayoutConstraint.swift */; };
 		66C55F598883BB9E871ECFEFF5B3D11E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6FA298457864F3A84C2D8F46529F92 /* Foundation.framework */; };
 		6711E12103DDCCC716E3C41D591F1A4F /* Tabman-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D666A0D58A921E3BC360FD5934D862E0 /* Tabman-dummy.m */; };
@@ -1299,6 +1299,7 @@
 		65C8217136F0CB4BA796D13C1A942CA7 /* SPStorkIndicatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPStorkIndicatorView.swift; path = Source/SPStorkController/Views/SPStorkIndicatorView.swift; sourceTree = "<group>"; };
 		6607E4F9FCDAC1DC013ADC8D55B1602B /* UIScrollView+ScrollActivity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIScrollView+ScrollActivity.swift"; path = "Sources/Pageboy/Utilities/Extensions/UIScrollView+ScrollActivity.swift"; sourceTree = "<group>"; };
 		664BE00C3A29622022618747BE63E0CF /* DifferenceKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DifferenceKit.xcconfig; sourceTree = "<group>"; };
+		665643BE23FD858E00807687 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		66A908C66CFBCA6BB491D432AD44AFD1 /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		67086AE6A7BCEAE0F1ECA8188118F6A5 /* SwipeCellKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwipeCellKit-Info.plist"; sourceTree = "<group>"; };
 		6780D8B2B5D5067879B5EB5CDF058723 /* DifferenceKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DifferenceKit-dummy.m"; sourceTree = "<group>"; };
@@ -1849,9 +1850,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				69D3533DC75C9B2EDB911CDC74C545BF /* CoreGraphics.framework in Frameworks */,
+				665643BF23FD858E00807687 /* CoreServices.framework in Frameworks */,
 				7BACB3DE54A85A947507FEAFFF301FD9 /* Foundation.framework in Frameworks */,
 				3D4DF62CCD17B3079F3209890E42DA15 /* ImageIO.framework in Frameworks */,
-				322E7CE359EE6E934232877D12B2F96A /* MobileCoreServices.framework in Frameworks */,
 				EF4367310F0D11937EFBB87426BC383A /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3322,6 +3323,7 @@
 		E1B5C714E54F954387F1DE619661B998 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				665643BE23FD858E00807687 /* CoreServices.framework */,
 				90B6AADB356537EA90CCBDB7F6E6810D /* Alamofire.framework */,
 				CE9E7C9511588C3625C664AC6F8C54C5 /* AXStateButton.framework */,
 				7B05DAD8CD3AB9FA78E35F5B8AC4549C /* DifferenceKit.framework */,

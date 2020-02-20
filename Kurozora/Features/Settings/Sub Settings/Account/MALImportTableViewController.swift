@@ -8,7 +8,7 @@
 
 import UIKit
 import SCLAlertView
-import CoreServices
+import MobileCoreServices
 
 class MALImportActionTableViewCell: ProductActionTableViewCell {
 	// MARK: - Functions

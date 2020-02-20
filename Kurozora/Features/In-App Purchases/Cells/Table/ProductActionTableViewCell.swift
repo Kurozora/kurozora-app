@@ -10,7 +10,14 @@ import UIKit
 import SCLAlertView
 import SwiftTheme
 
+protocol ProductActionTableViewCellDelegate: class {
+	func actionButtonPressed(_ sender: UIButton)
+}
+
 class ProductActionTableViewCell: UITableViewCell {
+	// MARK: - Properties
+	weak var delegate: ProductActionTableViewCellDelegate?
+
 	// MARK: - IBOutlets
 	@IBOutlet weak var actionButton: UIButton! {
 		didSet {
@@ -33,6 +40,6 @@ class ProductActionTableViewCell: UITableViewCell {
 
 	// MARK: - IBActions
 	@IBAction func actionButtonPressed(_ sender: UIButton) {
-		SCLAlertView().showInfo("No touchy!", subTitle: "This feature is a work in progress. It will be available in the upcoming feature.")
+		delegate?.actionButtonPressed(sender)
 	}
 }
