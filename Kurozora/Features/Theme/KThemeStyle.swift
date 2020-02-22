@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
+import Alamofire
+import Solar
 import SwiftTheme
 import TRON
-import Alamofire
-import CoreLocation
 
 /**
 	List of app-wide theme styles.

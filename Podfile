@@ -21,6 +21,7 @@ def kurozora_pods
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
+	pod 'Solar'
 	pod 'SPStorkController'
 #	pod 'SnowGlobe'
 	pod 'SwiftTheme'
@@ -29,6 +30,7 @@ def kurozora_pods
 	pod 'Tabman'
 	pod 'TRON', '~> 5.0.0-beta.5'
 	pod 'TRON/SwiftyJSON'
+	pod 'UIImageColors'
 	pod 'WhatsNew'
 #	pod 'Zip'
 end
