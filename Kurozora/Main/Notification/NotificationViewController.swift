@@ -179,7 +179,7 @@ class NotificationsViewController: KTableViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate ?? Date() > $1.sectionNotifications[0].creationDate?.toDate ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.creationDate?.toDate ?? Date() > $1.sectionNotifications.first?.creationDate?.toDate ?? Date() })
 		case .byType:
 			self.groupedNotifications = []
 
@@ -199,7 +199,7 @@ class NotificationsViewController: KTableViewController {
 			}
 
 			// Reorder grouped notifiactions so the recent one is at the top (Recent, Earlier Today, Yesterday, etc.)
-			self.groupedNotifications.sort(by: { $0.sectionNotifications[0].creationDate?.toDate ?? Date() > $1.sectionNotifications[0].creationDate?.toDate ?? Date() })
+			self.groupedNotifications.sort(by: { $0.sectionNotifications.first?.creationDate?.toDate ?? Date() > $1.sectionNotifications.first?.creationDate?.toDate ?? Date() })
 		case .off:
 			self.groupedNotifications = []
 		}

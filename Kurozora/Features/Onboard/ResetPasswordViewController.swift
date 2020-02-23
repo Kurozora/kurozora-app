@@ -20,7 +20,7 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		guard let userEmail = textFieldArray[0]?.trimmedText, userEmail.isValidEmail else {
+		guard let userEmail = textFieldArray.first??.trimmedText, userEmail.isValidEmail else {
 			SCLAlertView().showError("Errr...", subTitle: "Please type a valid Kurozora ID 😣")
 			return
 		}

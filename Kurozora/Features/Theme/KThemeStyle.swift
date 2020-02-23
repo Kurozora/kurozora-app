@@ -40,8 +40,8 @@ enum KThemeStyle: Int {
 	// FileManager variables
 	fileprivate static let cachesURL = FileManager.SearchPathDirectory.cachesDirectory
 	fileprivate static let libraryURL = FileManager.SearchPathDomainMask.userDomainMask
-	fileprivate static let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-	fileprivate static let themesDirectoryUrl: URL = libraryDirectoryUrl.appendingPathComponent("Themes/")
+	fileprivate static let libraryDirectoryUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first
+	fileprivate static let themesDirectoryUrl = libraryDirectoryUrl?.appendingPathComponent("Themes/")
 
 	// Theme variables
 	fileprivate static var current: KThemeStyle = .default
@@ -77,7 +77,7 @@ enum KThemeStyle: Int {
 			// If themeID is an integer
 			if let themeID = Int(currentThemeID) {
 				// Use a non default theme if it exists
-				if FileManager.default.fileExists(atPath: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist").path) {
+				if let themeDirectoryURLPath = themesDirectoryUrl?.appendingPathComponent("theme-\(themeID).plist").path, FileManager.default.fileExists(atPath: themeDirectoryURLPath) {
 					KThemeStyle.switchTo(theme: themeID)
 				} else {
 					// Fallback to default if theme doesn't exist
@@ -204,6 +204,7 @@ extension KThemeStyle {
 		current = .other
 
 		UserSettings.set("\(themeID)", forKey: .currentTheme)
+		guard let themesDirectoryUrl = themesDirectoryUrl else { return }
 		ThemeManager.setTheme(plistName: "theme-\(themeID)", path: .sandbox(themesDirectoryUrl))
 	}
 
@@ -239,6 +240,12 @@ extension KThemeStyle {
 			}
 			return
 		}
+		guard let themesDirectoryUrl = themesDirectoryUrl else {
+			DispatchQueue.main.async {
+				successHandler(false)
+			}
+			return
+		}
 
 		do {
 			try FileManager.default.removeItem(at: themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist"))
@@ -246,11 +253,10 @@ extension KThemeStyle {
 			DispatchQueue.main.async {
 				successHandler(!themeExist(for: themeID))
 			}
-		} catch let writeError {
+		} catch {
 			DispatchQueue.main.async {
 				successHandler(themeExist(for: themeID))
 			}
-			print("Error removing file \(themesDirectoryUrl) : \(writeError)")
 		}
 	}
 
@@ -268,8 +274,19 @@ extension KThemeStyle {
 			}
 			return
 		}
-
 		guard let themeID = theme?.id else {
+			DispatchQueue.main.async {
+				successHandler(false)
+			}
+			return
+		}
+		guard let libraryDirectoryUrl = libraryDirectoryUrl else {
+			DispatchQueue.main.async {
+				successHandler(false)
+			}
+			return
+		}
+		guard let themesDirectoryUrl = themesDirectoryUrl else {
 			DispatchQueue.main.async {
 				successHandler(false)
 			}
@@ -278,7 +295,12 @@ extension KThemeStyle {
 
 		let sessionConfig = URLSessionConfiguration.default
 		let session = URLSession(configuration: sessionConfig)
-		guard let request = try? URLRequest(url: urlString, method: .get) else { return }
+		guard let request = try? URLRequest(url: urlString, method: .get) else {
+			DispatchQueue.main.async {
+				successHandler(false)
+			}
+			return
+		}
 
 		let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
 			if let tempLocalUrl = tempLocalUrl, error == nil {
@@ -291,11 +313,10 @@ extension KThemeStyle {
 				if !directoryExist(atPath: themesDirectoryUrl.path) {
 					do {
 						try FileManager.default.createDirectory(atPath: libraryDirectoryUrl.appendingPathComponent("Themes/").path, withIntermediateDirectories: true, attributes: nil)
-					} catch let createError {
+					} catch {
 						DispatchQueue.main.async {
 							successHandler(themeExist(for: themeID))
 						}
-						print("Error creating directory \(libraryDirectoryUrl) : \(createError)")
 					}
 				}
 
@@ -305,14 +326,12 @@ extension KThemeStyle {
 					DispatchQueue.main.async {
 						successHandler(themeExist(for: themeID))
 					}
-				} catch let writeError {
+				} catch {
 					DispatchQueue.main.async {
 						successHandler(themeExist(for: themeID))
 					}
-					print("Error writing file \(themesDirectoryUrl) : \(writeError)")
 				}
 			} else {
-				print("Failure: \(String(describing: error?.localizedDescription))")
 				DispatchQueue.main.async {
 					successHandler(themeExist(for: themeID))
 				}
@@ -343,6 +362,7 @@ extension KThemeStyle {
 	*/
 	static func themeExist(for themeID: Int?) -> Bool {
 		guard let themeID = themeID else { return false }
+		guard let themesDirectoryUrl = themesDirectoryUrl else { return false }
 		let themeFileDirectoryUrl: URL = themesDirectoryUrl.appendingPathComponent("theme-\(themeID).plist")
 		return FileManager.default.fileExists(atPath: themeFileDirectoryUrl.path)
 	}

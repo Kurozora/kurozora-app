@@ -14,8 +14,8 @@ class SearchHistory {
 	private init() { }
 
 	// MARK: - Poperties
-	fileprivate static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-	fileprivate static let filePathURL = documentsDirectory.appendingPathComponent("Search History.json")
+	fileprivate static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+	fileprivate static let filePathURL = documentsDirectory?.appendingPathComponent("Search History.json")
 
 	// MARK: - Functions
 	/**
@@ -27,6 +27,8 @@ class SearchHistory {
 		- Parameter showDetailsElement: The returned  ShowDetailsElement array.
 	*/
 	static func getContent(_ successHandler: @escaping (_ showDetailsElement: [ShowDetailsElement]) -> Void) {
+		guard let filePathURL = filePathURL else { return }
+
 		if fileExists() {
 			DispatchQueue.global(qos: .background).async {
 				do {
@@ -40,8 +42,7 @@ class SearchHistory {
 							successHandler(showDetailsElements)
 						}
 					}
-				} catch /*let errorMessage*/ {
-//					print("----- Error getting content: \(errorMessage.localizedDescription)")
+				} catch {
 				}
 			}
 		}
@@ -70,6 +71,8 @@ class SearchHistory {
 		- Returns: Boolean indicating whether search history file exists.
 	*/
 	fileprivate static func fileExists() -> Bool {
+		guard let filePathURL = filePathURL else { return false }
+
 		do {
 			return try filePathURL.checkResourceIsReachable()
 		} catch {
@@ -110,6 +113,8 @@ class SearchHistory {
 		- Parameter isSuccess: A boolean value indicating whether the writing is successful.
 	*/
 	fileprivate static func save(_ object: [String: Any], _ successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
+		guard let filePathURL = filePathURL else { return }
+
 		DispatchQueue.global(qos: .background).async {
 			do {
 				let jsonFromObject = JSON(object)
@@ -117,8 +122,7 @@ class SearchHistory {
 				try dataFromJSON.write(to: filePathURL)
 
 				successHandler?(true)
-			} catch /*let errorMessage*/ {
-//				print("Error saving show JSON: \(errorMessage.localizedDescription)")
+			} catch {
 				successHandler?(false)
 			}
 		}

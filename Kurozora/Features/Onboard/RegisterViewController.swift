@@ -62,9 +62,9 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
 		if onboardingType == .register {
-			let username = textFieldArray[0]?.trimmedText
+			let username = textFieldArray.first??.trimmedText
 			let email = textFieldArray[1]?.trimmedText
-			let password = textFieldArray[2]?.text
+			let password = textFieldArray.last??.text
 			let profileImage = profileImageView.image
 
 			KService.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
@@ -78,7 +78,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 				}
 			}
 		} else if onboardingType == .siwa {
-			let username = textFieldArray[0]?.trimmedText
+			let username = textFieldArray.first??.trimmedText
 			let profileImage = profileImageView.image
 
 			KService.shared.updateInformation(for: nil, username: username, profileImage: profileImage, bannerImage: nil) { (success) in

@@ -33,7 +33,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var librarySortTypeOption: Library.SortType.Options = .none {
 		didSet {
 			self.delegate?.updateSortTypeButton(with: librarySortType)
-//			self.savePreferredSortType()
 		}
 	}
 	var libraryCellStyle: Library.CellStyle = .detailed
@@ -148,14 +147,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	func selectedShow(at indexPath: IndexPath) -> ShowDetailsElement? {
 		return showDetailsElements?[indexPath.row]
     }
-
-//	fileprivate func savePreferredSortType() {
-//		let librarySortTypes = UserSettings.librarySortTypes
-//		var newLibrarySortTypes = librarySortTypes
-//		newLibrarySortTypes[sectionTitle]?[0] = librarySortType.rawValue
-//		newLibrarySortTypes[sectionTitle]?[1] = librarySortTypeOption.rawValue
-//		UserSettings.set(newLibrarySortTypes, forKey: .librarySortTypes)
-//	}
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -320,60 +311,3 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 		return librarySortType
 	}
 }
-
-//    func updateSortType(sortType: SortType) {
-//
-//        currentSortType = sortType
-//
-//        switch self.currentSortType {
-//        case .Rating:
-//            animeList.sortInPlace({ $0.rank < $1.rank && $0.rank != 0 })
-//        case .Popularity:
-//            animeList.sortInPlace({ $0.popularityRank < $1.popularityRank })
-//        case .Title:
-//            animeList.sortInPlace({ $0.title < $1.title })
-//        case .NextAiringEpisode:
-//            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
-//
-//                let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
-//                let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
-//                return startDate1.compare(startDate2) == .OrderedAscending
-//            })
-//        case .Newest:
-//            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
-//
-//                let startDate1 = anime1.startDate ?? NSDate()
-//                let startDate2 = anime2.startDate ?? NSDate()
-//                return startDate1.compare(startDate2) == .OrderedDescending
-//            })
-//        case .Oldest:
-//            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
-//
-//                let startDate1 = anime1.startDate ?? NSDate()
-//                let startDate2 = anime2.startDate ?? NSDate()
-//                return startDate1.compare(startDate2) == .OrderedAscending
-//
-//            })
-//        case .MyRating:
-//            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
-//
-//                let score1 = anime1.progress!.score ?? 0
-//                let score2 = anime2.progress!.score ?? 0
-//                return score1 > score2
-//            })
-//        case .NextEpisodeToWatch:
-//            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
-//                let nextDate1 = anime1.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
-//                let nextDate2 = anime2.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
-//                return nextDate1.compare(nextDate2) == .OrderedAscending
-//            })
-//            break
-//        default:
-//            break
-//        }
-//
-//        if isViewLoaded {
-//            collectionView.reloadData()
-//        }
-//    }
-//}

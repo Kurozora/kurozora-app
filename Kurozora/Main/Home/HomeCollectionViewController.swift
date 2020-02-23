@@ -68,8 +68,8 @@ class HomeCollectionViewController: KCollectionViewController {
 		if User.isSignedIn {
 			KService.shared.validateSession(withSuccess: { (success) in
 				if !success {
-					if let welcomeViewController = R.storyboard.welcome.welcomeViewController() {
-						self.present(welcomeViewController, animated: true, completion: nil)
+					if let signInKNavigationController = R.storyboard.onboarding.signInKNavigationController() {
+						self.present(signInKNavigationController, animated: true, completion: nil)
 					}
 				}
 			})
@@ -253,7 +253,7 @@ extension HomeCollectionViewController {
 			}
 
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
-			var actionsArray = self.actionsArray[0]
+			var actionsArray = self.actionsArray.first
 
 			switch indexPath.section {
 			case let section where section == collectionView.numberOfSections - 1: // If last section
@@ -265,7 +265,7 @@ extension HomeCollectionViewController {
 			}
 
 			let actionBaseExploreCollectionViewCell = self.createExploreCell(with: verticalCollectionCellStyle, for: indexPath) as? ActionBaseExploreCollectionViewCell
-			actionBaseExploreCollectionViewCell?.actionItem = actionsArray[indexPath.item]
+			actionBaseExploreCollectionViewCell?.actionItem = actionsArray?[indexPath.item]
 			return actionBaseExploreCollectionViewCell
 		}
 		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -310,7 +310,7 @@ extension HomeCollectionViewController {
 					itemsPerSection = exploreCategoriesSection?.genres?.count ?? 0
 				}
 			} else if section == numberOfSections - 2 {
-				itemsPerSection = actionsArray[0].count
+				itemsPerSection = actionsArray.first?.count ?? itemsPerSection
 			} else if section == numberOfSections - 1 {
 				itemsPerSection = actionsArray[1].count
 			} else {

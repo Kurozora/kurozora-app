@@ -95,7 +95,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal" title="Forgot your password? Time to use your email 📧"/>
                                                     <connections>
-                                                        <segue destination="94x-Fc-KWc" kind="custom" identifier="ResetPasswordSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="7Lt-v8-jGy"/>
+                                                        <segue destination="7C8-i2-q1I" kind="show" identifier="ResetPasswordSegue" id="MuH-mJ-aou"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
@@ -230,26 +230,6 @@
             </objects>
             <point key="canvasLocation" x="523" y="137"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ceb-IL-WsW">
-            <objects>
-                <navigationController storyboardIdentifier="ResetPasswordKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="94x-Fc-KWc" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="OcO-Oq-fIq"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" barStyle="black" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AP1-bO-oEZ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="7C8-i2-q1I" kind="relationship" relationship="rootViewController" id="7Mm-W2-MwW"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hF4-Bg-P3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2161" y="-177"/>
-        </scene>
         <!--Reset Password Table View Controller-->
         <scene sceneID="PVE-rB-cpl">
             <objects>
@@ -359,14 +339,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="eqW-Ei-0kB">
-                        <leftBarButtonItems>
-                            <barButtonItem id="fgC-Rj-U2T"/>
-                            <barButtonItem systemItem="cancel" id="aAb-gR-WC6">
-                                <connections>
-                                    <action selector="cancelButtonPressedWithSender:" destination="7C8-i2-q1I" id="fs6-F4-0s1"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="Send ✨" id="6Dt-vl-A8F">
                             <connections>
                                 <action selector="rightNavigationBarButtonPressedWithSender:" destination="7C8-i2-q1I" id="lby-xs-yyf"/>
@@ -381,7 +353,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qph-B1-EaH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2879.7101449275365" y="-177.45535714285714"/>
+            <point key="canvasLocation" x="2161" y="-151"/>
         </scene>
         <!--Register Table View Controller-->
         <scene sceneID="5MS-1r-T5m">

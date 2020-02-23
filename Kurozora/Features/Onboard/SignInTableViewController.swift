@@ -43,8 +43,8 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		let username = textFieldArray[0]?.trimmedText
-		let password = textFieldArray[1]?.text
+		let username = textFieldArray.first??.trimmedText
+		let password = textFieldArray.last??.text
 		let device = UIDevice.modelName + " on iOS " + UIDevice.current.systemVersion
 
 		KService.shared.signIn(username, password, device, withSuccess: { (success) in

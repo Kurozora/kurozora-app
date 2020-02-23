@@ -186,14 +186,6 @@ class LibraryViewController: TabmanViewController {
 			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
 				let sectionTitle = Library.Section.all[index].sectionValue
 
-				// Get the user's preferred sort type
-//				let librarySortTypes = UserSettings.librarySortTypes
-//				let preferredSortType = librarySortTypes[sectionTitle]
-//				let sortType = preferredSortType?[0] ?? 0
-//				let sortTypeOption = preferredSortType?[1] ?? 0
-//				libraryListCollectionViewController.librarySortType = Library.SortType(rawValue: sortType) ?? .none
-//				libraryListCollectionViewController.librarySortTypeOption = Library.SortType.Options(rawValue: sortTypeOption) ?? .none
-
 				// Get the user's preferred library layout
 				let libraryLayouts = UserSettings.libraryCellStyles
 				let preferredLayout = libraryLayouts[sectionTitle] ?? 0
