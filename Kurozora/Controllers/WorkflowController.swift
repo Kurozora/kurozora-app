@@ -81,7 +81,7 @@ extension WorkflowController {
 	/// Open the sessions view if the current view is not the sessions view.
 	func showSessions() {
 		if UIApplication.topViewController as? ManageActiveSessionsController == nil {
-			if let manageActiveSessionsController = R.storyboard.account.manageActiveSessionsController() {
+			if let manageActiveSessionsController = R.storyboard.accountSettings.manageActiveSessionsController() {
 				manageActiveSessionsController.dismissEnabled = true
 				let kurozoraNavigationController = KNavigationController(rootViewController: manageActiveSessionsController)
 				UIApplication.topViewController?.present(kurozoraNavigationController)

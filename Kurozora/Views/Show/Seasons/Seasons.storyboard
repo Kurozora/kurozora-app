@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uW7-To-tBj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Seasons-->
+        <scene sceneID="xM2-o0-K1A">
+            <objects>
+                <collectionViewController storyboardIdentifier="SeasonsCollectionViewController" title="Seasons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q3a-Bd-6BM" customClass="SeasonsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="0Kf-Al-nNW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="Rfp-1z-h82">
+                            <size key="itemSize" width="374" height="170"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="q3a-Bd-6BM" id="Ohn-eK-htG"/>
+                            <outlet property="delegate" destination="q3a-Bd-6BM" id="okg-rT-Jzo"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Seasons" id="c5f-Cr-SHY"/>
+                    <connections>
+                        <segue destination="JI4-ia-Xsp" kind="show" identifier="EpisodeSegue" id="6WJ-1E-Sa4"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="THv-S9-lrl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1558" y="-601"/>
+        </scene>
+        <!--EpisodesCollectionViewController-->
+        <scene sceneID="Dou-93-a7w">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Episodes" referencedIdentifier="EpisodesCollectionViewController" id="JI4-ia-Xsp" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="t8Q-cU-vka"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A5M-Yf-1ul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2209" y="-601"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wj4-WE-m5x">
+            <objects>
+                <navigationController storyboardIdentifier="SeasonsKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uW7-To-tBj" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="iQ0-Bz-bE6"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="fXf-Rn-JGf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="q3a-Bd-6BM" kind="relationship" relationship="rootViewController" id="WFQ-q3-Gd1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Utf-6u-7gX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="797" y="-601"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</document>

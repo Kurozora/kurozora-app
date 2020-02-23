@@ -34,7 +34,7 @@ class KTabBarController: ESTabBarController {
 		let homeCollectionViewController = R.storyboard.home.homeKNavigationController()!
 		let libraryViewController = R.storyboard.library.libraryKNavigationController()!
 		let forumsViewController = R.storyboard.forums.forumsKNavigationController()!
-		let notificationsViewController = R.storyboard.notification.notificationKNvaigationController()!
+		let notificationsViewController = R.storyboard.notifications.notificationKNvaigationController()!
 		let feedViewController = R.storyboard.feed.feedKNavigationController()!
 
         // Setup animation, title and image

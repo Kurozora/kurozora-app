@@ -101,7 +101,7 @@ class Kurozora {
 	fileprivate func routeScheme(with url: URL) {
 		if url.pathExtension == "xml" {
 			WorkflowController.shared.isSignedIn({
-				if let malImportTableViewController = R.storyboard.account.malImportTableViewController() {
+				if let malImportTableViewController = R.storyboard.accountSettings.malImportTableViewController() {
 					malImportTableViewController.selectedFileURL = url
 
 					UIApplication.topViewController?.show(malImportTableViewController, sender: nil)
@@ -116,7 +116,7 @@ class Kurozora {
 		case .anime, .show:
 			let showID = url.lastPathComponent
 			if !showID.isEmpty {
-				if let showDetailCollectionViewController = R.storyboard.details.showDetailCollectionViewController() {
+				if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
 					showDetailCollectionViewController.showID = Int(showID)
 
 					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
