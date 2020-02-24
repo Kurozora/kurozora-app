@@ -1,5 +1,5 @@
 //
-//  KCollectionViewDataSource.swift
+//  UICollectionViewController+KCollectionViewDataSource.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/02/2020.

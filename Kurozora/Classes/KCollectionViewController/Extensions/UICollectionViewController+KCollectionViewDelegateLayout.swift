@@ -1,5 +1,5 @@
 //
-//  UICollectionViewController+Kurozora.swift
+//  UICollectionViewController+UICollectionViewController+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/12/2019.
