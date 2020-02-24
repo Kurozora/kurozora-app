@@ -16,6 +16,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 			collectionView.reloadData()
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -31,13 +32,6 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = exploreCategory?.title
-
-		let cellStyle = exploreCategory?.size ?? "small"
-		let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
-
-		// Create colelction view layout
-		collectionView.collectionViewLayout = createLayout()
-		collectionView.register(nibWithCellClass: horizontalCollectionCellStyle.classValue)
 	}
 
 	// MARK: - Segue
@@ -55,33 +49,40 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension ShowsListCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let exploreCategoryShowsCount = exploreCategory?.shows?.count else { return 0 }
-		return exploreCategoryShowsCount
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cellStyle = exploreCategory?.size ?? "small"
-		let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
-
-		let collectionViewCell = collectionView.dequeueReusableCell(withClass: horizontalCollectionCellStyle.classValue, for: indexPath)
-		return collectionViewCell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let baseLockupCollectionViewCell = cell as? BaseLockupCollectionViewCell {
-			baseLockupCollectionViewCell.showDetailsElement = exploreCategory?.shows?[indexPath.row]
-		}
-	}
-}
-
 // MARK: - UICollectionViewDelegate
 extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath)
 		performSegue(withIdentifier: R.segue.showsListCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension ShowsListCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		let cellStyle = exploreCategory?.size ?? "small"
+		let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
+		return [horizontalCollectionCellStyle.classValue.self]
+	}
+
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			let cellStyle = self.exploreCategory?.size ?? "small"
+			let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
+			let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: horizontalCollectionCellStyle.classValue, for: indexPath)
+			baseLockupCollectionViewCell.showDetailsElement = self.exploreCategory?.shows?[indexPath.row]
+			return baseLockupCollectionViewCell
+		}
+
+		let itemsPerSection = exploreCategory?.shows?.count ?? 0
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -175,5 +176,19 @@ extension ShowsListCollectionViewController {
 			return layoutSection
 		}
 		return layout
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension ShowsListCollectionViewController {
+	/**
+	List of shows list section layout kind.
+
+		```
+		case main = 0
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
 	}
 }

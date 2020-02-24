@@ -17,6 +17,7 @@ class CastCollectionViewController: KCollectionViewController {
 			self.collectionView?.reloadData()
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -36,10 +37,6 @@ class CastCollectionViewController: KCollectionViewController {
 		if actorsElements != nil {
 			_prefersActivityIndicatorHidden = true
 		}
-
-		// Setup collection view.
-		collectionView.collectionViewLayout = createLayout()
-		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
 
 		// Fetch actors
 		if actorsElements == nil {
@@ -71,33 +68,37 @@ class CastCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - KCollectionViewDataSource
 extension CastCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let actorsCount = actorsElements?.count else { return 0 }
-		return actorsCount
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [CastCollectionViewCell.self]
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
-		}
-		return castCollectionViewCell
-	}
-}
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
+				castCollectionViewCell.actorElement = self.actorsElements?[indexPath.row]
 
-// MARK: - UICollectionViewDelegate
-extension CastCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let castCollectionViewCell = cell as? CastCollectionViewCell {
-			castCollectionViewCell.actorElement = actorsElements?[indexPath.row]
-
-			if collectionView.indexPathForLastItem == indexPath {
-				castCollectionViewCell.separatorView.isHidden = true
+				if collectionView.indexPathForLastItem == indexPath {
+					castCollectionViewCell.separatorView.isHidden = true
+				} else {
+					castCollectionViewCell.separatorView.isHidden = false
+				}
+				return castCollectionViewCell
 			} else {
-				castCollectionViewCell.separatorView.isHidden = false
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
 			}
 		}
+
+		let itemsPerSection = actorsElements?.count ?? 0
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -142,5 +143,19 @@ extension CastCollectionViewController {
 			return layoutSection
 		}
 		return layout
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension CastCollectionViewController {
+	/**
+		List of cast section layout kind.
+
+		```
+		case main = 0
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
 	}
 }

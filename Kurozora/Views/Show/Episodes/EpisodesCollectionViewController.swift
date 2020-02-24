@@ -18,13 +18,14 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Properties
-    var seasonID: Int?
-	var episodes: [EpisodesElement]? {
+	var seasonID: Int?
+	var episodesElements: [EpisodesElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.collectionView?.reloadData()
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -37,16 +38,14 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		collectionView.collectionViewLayout = createLayout()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		// Fetch episodes
 		DispatchQueue.global(qos: .background).async {
 			self.fetchEpisodes()
 		}
-    }
+	}
 
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
@@ -65,7 +64,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	func fetchEpisodes() {
 		KService.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
 			DispatchQueue.main.async {
-				self.episodes = episodes?.episodes
+				self.episodesElements = episodes?.episodes
 			}
 		})
 	}
@@ -103,14 +102,14 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Goes to the last item in the presented collection view.
 	fileprivate func goToLastEpisode() {
-		guard let episodes = episodes else { return }
+		guard let episodes = episodesElements else { return }
 		collectionView.scrollToItem(at: IndexPath(row: episodes.count - 1, section: 0), at: .centeredVertically, animated: true)
 		goToButton.image = R.image.symbols.chevron_up_circle()
 	}
 
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
-		guard let lastWatchedEpisode = episodes?.closestMatch(index: 0, predicate: {
+		guard let lastWatchedEpisode = episodesElements?.closestMatch(index: 0, predicate: {
 			if let watched = $0.userDetails?.watched {
 				return !watched
 			}
@@ -164,7 +163,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodesCollectionViewCell {
 			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
-				episodeDetailViewController.episodeElement = episodes?[indexPath.row]
+				episodeDetailViewController.episodeElement = episodesElements?[indexPath.row]
 				episodeDetailViewController.episodeCell = episodeCell
 				episodeDetailViewController.delegate = episodeCell
 			}
@@ -172,21 +171,33 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - KCollectionViewDataSource
 extension EpisodesCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let episodesCount = episodes?.count else { return 0 }
-		return episodesCount
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [EpisodesCollectionViewCell.self]
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodesCollectionViewCell.identifier)")
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) {
+				episodesCollectionViewCell.episodesDelegate = self
+				episodesCollectionViewCell.delegate = self
+				episodesCollectionViewCell.episodesElement = self.episodesElements?[indexPath.row]
+				return episodesCollectionViewCell
+			} else {
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodesCollectionViewCell.identifier)")
+			}
 		}
-		episodesCollectionViewCell.episodesDelegate = self
-		episodesCollectionViewCell.delegate = self
-		episodesCollectionViewCell.episodesElement = episodes?[indexPath.row]
-		return episodesCollectionViewCell
+
+		let itemsPerSection = episodesElements?.count ?? 0
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -212,15 +223,14 @@ extension EpisodesCollectionViewController {
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 												  heightDimension: .fractionalHeight(1.0))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
+			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
-			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -234,7 +244,7 @@ extension EpisodesCollectionViewController {
 // MARK: - SwipeCollectionViewCellDelegate
 extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 	func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-		guard let episode = episodes?[indexPath.item] else { return nil }
+		guard let episode = episodesElements?[indexPath.item] else { return nil }
 		guard let cell = collectionView.cellForItem(at: indexPath) as? EpisodesCollectionViewCell else { return nil}
 
 		switch orientation {
@@ -293,14 +303,14 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 	func episodesCellMoreButtonPressed(for cell: EpisodesCollectionViewCell) {
 		if let indexPath = collectionView.indexPath(for: cell) {
-			guard let episode = episodes?[indexPath.row] else { return }
+			guard let episode = episodesElements?[indexPath.row] else { return }
 			populateActionSheet(for: episode, at: cell)
 		}
 	}
 
-    func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell) {
-        if let indexPath = collectionView.indexPath(for: cell) {
-			guard let episodeID = episodes?[indexPath.row].id else { return }
+	func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell) {
+		if let indexPath = collectionView.indexPath(for: cell) {
+			guard let episodeID = episodesElements?[indexPath.row].id else { return }
 			var watched = 0
 
 			if cell.episodeWatchedButton.tag == 0 {
@@ -312,40 +322,20 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 					cell.configureCell(with: watchStatus, shouldUpdate: true, withValue: watchStatus)
 				}
 			}
-        }
-    }
+		}
+	}
 }
 
-//extension EpisodesViewController: DropDownListDelegate {
-//    func selectedAction(sender trigger: UIView, action: String, indexPath: IndexPath) {
-//        if dataSource.isEmpty {
-//            return
-//        }
-//
-//        switch indexPath.row {
-//        case 0:
-//            // Go to top
-//            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
-//        case 1:
-//            // Go to next episode
-//            if let nextEpisode = anime.nextEpisode, nextEpisode > 0 {
-//                self.collectionView.scrollToItem(at: IndexPath(row: nextEpisode - 1, section: 0), at: UICollectionViewScrollPosition.centeredVertically, animated: true)
-//            }
-//        case 2:
-//            // Go to bottom
-//            self.collectionView.scrollToItem(at: IndexPath(row: dataSource.count - 1, section: 0), at: UICollectionViewScrollPosition.bottom, animated: true)
-//        default:
-//            break
-//        }
-//    }
-//
-//    func dropDownDidDismissed(selectedAction: Bool) {
-//
-//    }
-//}
-//
-//extension EpisodesViewController: RateViewControllerProtocol {
-//    func rateControllerDidFinishedWith(anime: Anime, rating: Float) {
-//        RateViewController.updateAnime(anime, withRating: rating*2.0)
-//    }
-//}
+// MARK: - SectionLayoutKind
+extension EpisodesCollectionViewController {
+	/**
+		List of episode section layout kind.
+
+		```
+		case main = 0
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
+	}
+}

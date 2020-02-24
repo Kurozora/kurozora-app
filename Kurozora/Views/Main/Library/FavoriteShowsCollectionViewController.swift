@@ -25,6 +25,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			}
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -43,12 +44,9 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
 
-		// Create colelction view layout
-		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
-		collectionView.register(nibWithCellClass: SmallLockupCollectionViewCell.self)
 
-		// Observe NotificationCenter for an update
+		// Observe NotificationCenter for an update.
 		if userID == nil {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
 		}
@@ -100,52 +98,48 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension FavoriteShowsCollectionViewController {
-	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		guard let showDetailsElements = showDetailsElements else { return 0 }
-		if showDetailsElements.isEmpty {
-			return 0
-		} else {
-			return 2
-		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		if section == 0 {
-			return 1
-		}
-		guard let showDetailsElementsCount = showDetailsElements?.count else { return 0 }
-		return showDetailsElementsCount
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if indexPath.section == 0 {
-			guard let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.libraryStatisticsCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.libraryStatisticsCollectionViewCell.identifier)")
-			}
-			return libraryStatisticsCollectionViewCell
-		}
-		let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
-		return smallLockupCollectionViewCell
-	}
-}
-
 // MARK: - UICollectionViewDelegate
 extension FavoriteShowsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let libraryStatisticsCollectionViewCell = cell as? LibraryStatisticsCollectionViewCell {
-			libraryStatisticsCollectionViewCell.showDetailsElements = showDetailsElements
-		} else if let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell {
-			smallLockupCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.row]
-		}
-	}
-
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if indexPath.section == 1 {
 			let smallLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? SmallLockupCollectionViewCell
 			performSegue(withIdentifier: R.segue.favoriteShowsCollectionViewController.showDetailsSegue, sender: smallLockupCollectionViewCell)
 		}
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension FavoriteShowsCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [SmallLockupCollectionViewCell.self]
+	}
+
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if indexPath.section == 0 {
+				if let libraryStatisticsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.libraryStatisticsCollectionViewCell, for: indexPath) {
+					libraryStatisticsCollectionViewCell.showDetailsElements = self.showDetailsElements
+					return libraryStatisticsCollectionViewCell
+				} else {
+					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.libraryStatisticsCollectionViewCell.identifier)")
+				}
+			}
+
+			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: SmallLockupCollectionViewCell.self, for: indexPath)
+			smallLockupCollectionViewCell.showDetailsElement = self.showDetailsElements?[indexPath.row]
+			return smallLockupCollectionViewCell
+		}
+
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			let itemsPerSection = $0 == .statistics ? 1: showDetailsElements?.count ?? 0
+
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -202,5 +196,21 @@ extension FavoriteShowsCollectionViewController {
 			return layoutSection
 		}
 		return layout
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension FavoriteShowsCollectionViewController {
+	/**
+		List of cast section layout kind.
+
+		```
+		case statistics = 0
+		case main = 1
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case statistics = 0
+		case main = 1
 	}
 }

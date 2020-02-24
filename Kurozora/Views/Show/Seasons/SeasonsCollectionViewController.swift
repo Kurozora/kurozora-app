@@ -17,6 +17,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 			self.collectionView?.reloadData()
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -36,10 +37,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		if seasonsElements != nil {
 			_prefersActivityIndicatorHidden = true
 		}
-
-		// Setup collection view.
-		collectionView.collectionViewLayout = createLayout()
-		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
 
 		// Fetch seasons
 		if seasonsElements == nil {
@@ -81,38 +78,44 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension SeasonsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let seasonsCount = seasonsElements?.count else { return 0 }
-		return seasonsCount
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
-		}
-		return lockupCollectionViewCell
-	}
-}
-
 // MARK: - UICollectionViewDelegate
 extension SeasonsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		self.performSegue(withIdentifier: R.segue.seasonsCollectionViewController.episodeSegue, sender: collectionViewCell)
 	}
+}
 
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let lockupCollectionViewCell = cell as? LockupCollectionViewCell {
-			lockupCollectionViewCell.seasonsElement = seasonsElements?[indexPath.row]
+// MARK: - KCollectionViewDataSource
+extension SeasonsCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [LockupCollectionViewCell.self]
+	}
 
-			if collectionView.indexPathForLastItem == indexPath {
-				lockupCollectionViewCell.separatorView.isHidden = true
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.lockupCollectionViewCell, for: indexPath) {
+				lockupCollectionViewCell.seasonsElement = self.seasonsElements?[indexPath.row]
+				if collectionView.indexPathForLastItem == indexPath {
+					lockupCollectionViewCell.separatorView.isHidden = true
+				} else {
+					lockupCollectionViewCell.separatorView.isHidden = false
+				}
+				return lockupCollectionViewCell
 			} else {
-				lockupCollectionViewCell.separatorView.isHidden = false
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.lockupCollectionViewCell.identifier)")
 			}
 		}
+
+		let itemsPerSection = seasonsElements?.count ?? 0
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
 
@@ -154,5 +157,19 @@ extension SeasonsCollectionViewController {
 			return layoutSection
 		}
 		return layout
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension SeasonsCollectionViewController {
+	/**
+		List of season section layout kind.
+
+		```
+		case main = 0
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
 	}
 }

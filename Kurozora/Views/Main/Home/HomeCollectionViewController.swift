@@ -265,8 +265,7 @@ extension HomeCollectionViewController {
 				if indexPath.section == 0 {
 					horizontalCollectionCellStyle = .banner
 				}
-				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(
-					withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
+				guard let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: horizontalCollectionCellStyle.identifierString, for: indexPath) as? BaseLockupCollectionViewCell
 					else { fatalError("Cannot dequeue reusable cell with identifier \(horizontalCollectionCellStyle.identifierString)") }
 
 				// Populate the cell with our item description.
