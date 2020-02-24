@@ -151,9 +151,9 @@ extension AppDelegate {
 // MARK: - Push Notifications
 extension AppDelegate {
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+		#if DEBUG
 		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
 		let token = tokenParts.joined()
-		#if DEBUG
 		print("Device Token: \(token)")
 		#endif
 	}

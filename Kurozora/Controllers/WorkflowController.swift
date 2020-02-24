@@ -174,7 +174,6 @@ extension WorkflowController {
 	/// Asks the user for permission to register the device for push notifications.
 	func registerForPushNotifications() {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-
 			print("Permission granted: \(granted)")
 
 			guard granted else { return }

@@ -47,14 +47,7 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Create colelction view layout
-		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
-		collectionView.register(nibWithCellClass: SmallLockupCollectionViewCell.self)
-		collectionView.register(nibWithCellClass: MediumLockupCollectionViewCell.self)
-		collectionView.register(nibWithCellClass: LargeLockupCollectionViewCell.self)
-		collectionView.register(nibWithCellClass: VideoLockupCollectionViewCell.self)
-		collectionView.register(nibWithCellClass: LegalCollectionViewCell.self)
 
 		// Fetch explore details.
 		DispatchQueue.global(qos: .background).async {
@@ -92,6 +85,14 @@ class HomeCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/**
+		Returns a grid described by compositional layout.
+
+		- Parameter section: The section for which the layout is being described.
+		- Parameter layoutEnvironment: The layout environment in which the layout is being described.
+
+		- Returns: a grid described by compositional layout.
+	*/
 	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -110,6 +111,14 @@ class HomeCollectionViewController: KCollectionViewController {
 		return layoutSection
 	}
 
+	/**
+		Returns a list described by compositional layout.
+
+		- Parameter section: The section for which the layout is being described.
+		- Parameter layoutEnvironment: The layout environment in which the layout is being described.
+
+		- Returns: a list described by compositional layout.
+	*/
 	func listSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -211,6 +220,14 @@ extension HomeCollectionViewController {
 
 // MARK: - Helper functions
 extension HomeCollectionViewController {
+	/**
+		Dequeues and returns collection view cells for the vertical collection view cell style.
+
+		- Parameter verticalCollectionCellStyle: The style of the collection view cell to be dequeued.
+		- Parameter indexPath: The indexPath for which the collection view cell should be dequeued.
+
+		- Returns: The dequeued collection view cell.
+	*/
 	func createExploreCell(with verticalCollectionCellStyle: VerticalCollectionCellStyle, for indexPath: IndexPath) -> UICollectionViewCell {
 		switch verticalCollectionCellStyle {
 		case .legal:
@@ -226,8 +243,20 @@ extension HomeCollectionViewController {
 			return actionBaseExploreCollectionViewCell
 		}
 	}
+}
 
-	func configureDataSource() {
+// MARK: - KCollectionViewDataSource
+extension HomeCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [SmallLockupCollectionViewCell.self,
+				MediumLockupCollectionViewCell.self,
+				LargeLockupCollectionViewCell.self,
+				VideoLockupCollectionViewCell.self,
+				LegalCollectionViewCell.self
+		]
+	}
+
+	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			if indexPath.section < self.exploreCategories?.count ?? 0 {
 				// Get a cell of the desired kind.

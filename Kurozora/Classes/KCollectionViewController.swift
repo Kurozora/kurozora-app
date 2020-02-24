@@ -64,11 +64,37 @@ class KCollectionViewController: UICollectionViewController {
 		// Observe theme update notification.
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Configure collection view.
+		configureCollectionView()
+
 		// Start activity indicator view.
 		setupActivityIndicator()
 
 		// Setup empty data view.
 		setupEmptyDataSetView()
+	}
+
+	// MARK: - Functions
+	/**
+		Configures the collection view with default values.
+
+		Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCVC-registerCellsForCollectionView).
+	*/
+	fileprivate func configureCollectionView() {
+		collectionView.collectionViewLayout = createLayout()
+		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+		// Register cells with the collection view.
+		registerCells()
+	}
+
+	/**
+		Registers cells returned by [registerCells(for collectionView: UICollectionView)](x-source-tag://KCVC-registerCellsForCollectionView).
+	*/
+	fileprivate func registerCells() {
+		for cell in registerCells(for: collectionView) {
+			collectionView.register(nibWithCellClass: cell)
+		}
 	}
 }
 

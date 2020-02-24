@@ -309,6 +309,7 @@
 		66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABEE22993E9B00949FD8 /* NotificationsOptionsViewController.swift */; };
 		66AEABF122994F4600949FD8 /* EpisodeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AEABF022994F4600949FD8 /* EpisodeSection.swift */; };
 		66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AF50DC21D9B67900FC622E /* NotificationsSettingsViewController.swift */; };
+		66B13A572403CA4F00CD732B /* KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A562403CA4F00CD732B /* KCollectionViewDataSource.swift */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
 		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
 		66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* TextEditor.storyboard */; };
@@ -402,7 +403,7 @@
 		66FC6DEC2340BD5200A454DD /* KService+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DEB2340BD5200A454DD /* KService+User.swift */; };
 		66FC6DEE2340BDB600A454DD /* KService+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */; };
 		66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */; };
-		66FDDB7323B95AF600364886 /* UICollectionViewController+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FDDB7223B95AF600364886 /* UICollectionViewController+Kurozora.swift */; };
+		66FDDB7323B95AF600364886 /* KCollectionViewDelegateLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FDDB7223B95AF600364886 /* KCollectionViewDelegateLayout.swift */; };
 		66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */; };
 		66FE5D01215B739D00E2844A /* KDefaultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FE5D00215B739D00E2844A /* KDefaultsCell.swift */; };
 		73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */; };
@@ -739,6 +740,7 @@
 		66AEABEE22993E9B00949FD8 /* NotificationsOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsOptionsViewController.swift; sourceTree = "<group>"; };
 		66AEABF022994F4600949FD8 /* EpisodeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeSection.swift; sourceTree = "<group>"; };
 		66AF50DC21D9B67900FC622E /* NotificationsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsViewController.swift; sourceTree = "<group>"; };
+		66B13A562403CA4F00CD732B /* KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		66B216A721C033B9006E167D /* UIView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Kurozora.swift"; sourceTree = "<group>"; };
 		66B216AD21C16B15006E167D /* ThreadPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPost.swift; sourceTree = "<group>"; };
 		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
@@ -843,7 +845,7 @@
 		66FC6DEB2340BD5200A454DD /* KService+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+User.swift"; sourceTree = "<group>"; };
 		66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Kurozora.swift"; sourceTree = "<group>"; };
 		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
-		66FDDB7223B95AF600364886 /* UICollectionViewController+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Kurozora.swift"; sourceTree = "<group>"; };
+		66FDDB7223B95AF600364886 /* KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewDelegateLayout.swift; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettingsTableViewController.swift; sourceTree = "<group>"; };
 		66FE5D00215B739D00E2844A /* KDefaultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefaultsCell.swift; sourceTree = "<group>"; };
 		E06CAB22F87FA1B89AE618FB /* Pods_Kurozora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kurozora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1035,7 +1037,7 @@
 				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
 				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
 				6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */,
-				66FDDB7223B95AF600364886 /* UICollectionViewController+Kurozora.swift */,
+				66FDDB7223B95AF600364886 /* KCollectionViewDelegateLayout.swift */,
 				66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */,
 				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
 				66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */,
@@ -1048,6 +1050,7 @@
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
 				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
 				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
+				66B13A562403CA4F00CD732B /* KCollectionViewDataSource.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2632,6 +2635,7 @@
 				66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */,
 				667943632273933400E2D0D0 /* SynopsisCollectionViewCell.swift in Sources */,
 				66938FD8211CD3E600ADA5D6 /* ShowDetailCollectionViewController.swift in Sources */,
+				66B13A572403CA4F00CD732B /* KCollectionViewDataSource.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */,
 				66CBA53922BCEBD000FBEC13 /* FeedTabsViewController.swift in Sources */,
@@ -2685,7 +2689,7 @@
 				662B9263233E515E001D49B7 /* SearchUserResultsCell.swift in Sources */,
 				66AEABF122994F4600949FD8 /* EpisodeSection.swift in Sources */,
 				66F9449F22F0BF57009F1FE2 /* ActionListExploreCollectionViewCell.swift in Sources */,
-				66FDDB7323B95AF600364886 /* UICollectionViewController+Kurozora.swift in Sources */,
+				66FDDB7323B95AF600364886 /* KCollectionViewDelegateLayout.swift in Sources */,
 				663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */,
 				66BA740A223DB20800AEB8ED /* Library.swift in Sources */,
 				66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */,
