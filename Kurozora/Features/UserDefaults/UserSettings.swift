@@ -22,16 +22,6 @@ class UserSettings: UserDefaults {
 	}
 }
 
-// MARK: - Settings
-extension UserSettings {
-	/// Return the array of collapsed sections in settings.
-	static var collapsedSections: [Int] {
-		guard let collapsedSections = shared.array(forKey: "collapsedSections") as? [Int] else { return [3] }
-
-		return collapsedSections
-	}
-}
-
 // MARK: - Appearence settings
 extension UserSettings {
 	/// Returns a boolean indicating if automatic dark theme is on.

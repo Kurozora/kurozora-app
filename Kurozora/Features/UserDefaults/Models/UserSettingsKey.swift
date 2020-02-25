@@ -10,9 +10,6 @@ import Foundation
 
 /// Notificartions key used to get notifications settings
 enum UserSettingsKey: String {
-	// Settings keys
-	case collapsedSections
-
 	// Library keys
 	case libraryPage
 	case libraryCellStyles
