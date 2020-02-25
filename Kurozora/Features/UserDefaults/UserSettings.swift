@@ -155,3 +155,12 @@ extension UserSettings {
 		return shared.integer(forKey: #function)
 	}
 }
+
+// MARK: - Notification Registration
+extension UserSettings {
+	/// Returns a string indicating the currently used theme.
+	static var lastNotificationRegistrationRequest: Date? {
+		guard let lastNotificationRegistrationRequest = shared.date(forKey: #function) else { return nil }
+		return lastNotificationRegistrationRequest
+	}
+}

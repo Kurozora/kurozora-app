@@ -83,6 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
 				_ = Kurozora.validateSession(window: self.window)
+				WorkflowController.shared.registerForPushNotifications()
 			}
 		}
 

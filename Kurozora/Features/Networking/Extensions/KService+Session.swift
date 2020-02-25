@@ -64,6 +64,37 @@ extension KService {
 	}
 
 	/**
+		Update the user's current session with the specified data.
+
+		- Parameter apnDeviceToken: The updated APN Device Token.
+		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
+		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
+	*/
+	func updateSession(withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let sessionID = User.currentSessionID else { return }
+
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/update")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.method = .post
+		request.parameters = [
+			"apn_device_token": apnDeviceToken
+		]
+		request.perform(withSuccess: { session in
+			if let success = session.success {
+				if success {
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+//			SCLAlertView().showError("Can't update session 😔", subTitle: error.message)
+			print("Received update session error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
 		Check if the current session is valid.
 
 		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.

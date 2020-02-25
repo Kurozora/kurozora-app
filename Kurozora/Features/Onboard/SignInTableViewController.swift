@@ -51,7 +51,10 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 			if success {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-					self.dismiss(animated: true, completion: nil)
+					self.dismiss(animated: true) {
+						UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+						WorkflowController.shared.registerForPushNotifications()
+					}
 				}
 			}
 			self.rightNavigationBarButton.isEnabled = false

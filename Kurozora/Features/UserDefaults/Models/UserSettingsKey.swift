@@ -42,4 +42,7 @@ enum UserSettingsKey: String {
 	case currentTheme
 	case appIcon
 	case defaultBrowser
+
+	// Register for notification
+	case lastNotificationRegistrationRequest
 }

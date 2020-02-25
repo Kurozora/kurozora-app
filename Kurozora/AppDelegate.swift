@@ -49,9 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			WorkflowController.shared.getUserDetails()
 		}
 
-		// Register the app for receiving push notifications
-		WorkflowController.shared.registerForPushNotifications()
-
 		// Init payment queue
 		SKPaymentQueue.default().add(KStoreObserver.shared)
 
@@ -98,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
 				_ = Kurozora.validateSession(window: self.window)
+				WorkflowController.shared.registerForPushNotifications()
 			}
 		}
 
@@ -151,17 +149,16 @@ extension AppDelegate {
 // MARK: - Push Notifications
 extension AppDelegate {
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-		#if DEBUG
 		let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
-		let token = tokenParts.joined()
-		print("Device Token: \(token)")
-		#endif
+		let apnDeviceToken = tokenParts.joined()
+
+		if User.isSignedIn {
+			KService.shared.updateSession(withToken: apnDeviceToken) { _ in
+			}
+		}
 	}
 
 	func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-		#if DEBUG
-		print("Failed to register: \(error)")
-		#endif
 	}
 
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
