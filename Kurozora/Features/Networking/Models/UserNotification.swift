@@ -37,11 +37,9 @@ class UserNotificationsElement: JSONDecodable {
 	let data: UserNotificationData?
 	let message: String?
 	let creationDate: String?
-	let userID: Int?
 
 	required init(json: JSON) throws {
 		self.id = json["id"].stringValue
-		self.userID = json["user_id"].intValue
 		self.type = json["type"].stringValue
 		self.read = json["read"].boolValue
 		self.data = try? UserNotificationData(json: json["data"])
@@ -51,15 +49,21 @@ class UserNotificationsElement: JSONDecodable {
 }
 
 class UserNotificationData: JSONDecodable {
+	// Session
 	let ip: String?
 	let sessionID: Int?
-	let name: String?
+
+	// Follower
+	let userID: Int?
+	let username: String?
 	let profileImage: String?
 
 	required init(json: JSON) throws {
 		self.ip = json["ip"].stringValue
-		self.sessionID = json["session_id"].intValue
-		self.name = json["follower_name"].stringValue
-		self.profileImage = json["follower_avatar"].stringValue
+		self.sessionID = json["user_id"].intValue
+
+		self.userID = json["user_id"].intValue
+		self.username = json["username"].stringValue
+		self.profileImage = json["avatar_url"].stringValue
 	}
 }

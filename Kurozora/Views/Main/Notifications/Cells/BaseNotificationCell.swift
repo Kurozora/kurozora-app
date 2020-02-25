@@ -10,6 +10,7 @@ import UIKit
 import SwipeCellKit
 
 class BaseNotificationCell: SwipeTableViewCell {
+	// MARK: - IBOutlets
 	// Head
 	@IBOutlet weak var notificationTypeLabel: UILabel! {
 		didSet {
@@ -21,7 +22,6 @@ class BaseNotificationCell: SwipeTableViewCell {
 			dateLabel.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var notificationIconImageView: UIImageView!
 	@IBOutlet weak var notificationMark: UIPageControl! {
 		didSet {
 			notificationMark.theme_currentPageIndicatorTintColor = KThemePicker.tintColor.rawValue
@@ -30,7 +30,9 @@ class BaseNotificationCell: SwipeTableViewCell {
 
 	// Body
 	@IBOutlet weak var notificationTextLabel: UILabel!
+	@IBOutlet weak var bubbleView: UIView!
 
+	// MARK: - Properties
 	var notificationType: KNotification.CustomType?
 	var userNotificationsElement: UserNotificationsElement? {
 		didSet {
@@ -43,14 +45,23 @@ class BaseNotificationCell: SwipeTableViewCell {
 	func configureCell() {
 		guard let userNotificationsElement = userNotificationsElement else { return }
 
+		// Configure date label.
 		if let creationDate = userNotificationsElement.creationDate {
-			dateLabel.text = creationDate.timeAgo
+			self.dateLabel.text = creationDate.timeAgo
 		}
 
+		// Configure text label.
 		if let notificationContent = userNotificationsElement.message {
-			notificationTextLabel.text = notificationContent
+			self.notificationTextLabel.text = notificationContent
 		}
 
+		// Configure notification type label.
+		self.notificationTypeLabel.text = notificationType?.stringValue
+
+		// Configure bubble view.
+		self.bubbleView.backgroundColor = notificationType?.colorValue
+
+		// Setup read status.
 		updateReadStatus()
 	}
 

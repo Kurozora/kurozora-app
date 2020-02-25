@@ -55,20 +55,20 @@
                                     <outlet property="notificationTitleLabel" destination="KnC-Lj-iBV" id="4by-JN-hn3"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageNotificationCell" rowHeight="108" id="wbn-0V-6lL" customClass="MessageNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="95.5" width="414" height="108"/>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IconNotificationCell" id="wbn-0V-6lL" customClass="IconNotificationCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95.5" width="414" height="123.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="wbn-0V-6lL" id="Xq7-ba-E9W">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="123.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-cz-QfD" userLabel="Notification Bubble">
-                                            <rect key="frame" x="20" y="36" width="374" height="64"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-cz-QfD">
+                                            <rect key="frame" x="20" y="36" width="374" height="79.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-tc-hKo">
-                                                    <rect key="frame" x="16" y="10" width="44" height="44"/>
+                                                    <rect key="frame" x="11" y="10" width="44" height="44"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-iu-Zxu" userLabel="Profile Image">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sh-iu-Zxu">
                                                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <userDefinedRuntimeAttributes>
@@ -93,31 +93,32 @@
                                                         <constraint firstAttribute="width" constant="44" id="pR3-Sm-1gC"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBA-Cy-hoI" userLabel="Username Label">
-                                                    <rect key="frame" x="68" y="10" width="47" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usopp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBA-Cy-hoI">
+                                                    <rect key="frame" x="63" y="10" width="52.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uj8-UI-F9c">
-                                                    <rect key="frame" x="68" y="28" width="298" height="31.5"/>
+                                                    <rect key="frame" x="63" y="30.5" width="298" height="41"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.39224386220000002" green="0.76949959990000005" blue="0.39992958309999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" red="0.88627450980392153" green="0.76470588235294112" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
-                                                <constraint firstItem="GDo-tc-hKo" firstAttribute="centerY" secondItem="rnB-cz-QfD" secondAttribute="centerY" id="5Re-fM-p3k"/>
                                                 <constraint firstItem="GDo-tc-hKo" firstAttribute="top" secondItem="HBA-Cy-hoI" secondAttribute="top" id="8rJ-He-ji1"/>
                                                 <constraint firstItem="uj8-UI-F9c" firstAttribute="top" secondItem="HBA-Cy-hoI" secondAttribute="bottom" id="EKi-XK-GDb"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="uj8-UI-F9c" secondAttribute="trailing" id="F7q-fr-ltX"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="uj8-UI-F9c" secondAttribute="trailing" id="F7q-fr-ltX"/>
                                                 <constraint firstItem="HBA-Cy-hoI" firstAttribute="leading" secondItem="GDo-tc-hKo" secondAttribute="trailing" constant="8" id="JKL-uF-K4v"/>
-                                                <constraint firstAttribute="bottom" secondItem="GDo-tc-hKo" secondAttribute="bottom" constant="10" id="MTe-bT-3Nf"/>
-                                                <constraint firstItem="GDo-tc-hKo" firstAttribute="leading" secondItem="rnB-cz-QfD" secondAttribute="leadingMargin" constant="8" id="T23-ch-eeH"/>
-                                                <constraint firstAttribute="height" constant="64" id="adU-0t-jMX"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GDo-tc-hKo" secondAttribute="bottom" constant="10" id="MTe-bT-3Nf"/>
+                                                <constraint firstItem="GDo-tc-hKo" firstAttribute="leading" relation="lessThanOrEqual" secondItem="rnB-cz-QfD" secondAttribute="leadingMargin" constant="8" id="T23-ch-eeH"/>
                                                 <constraint firstItem="GDo-tc-hKo" firstAttribute="top" secondItem="rnB-cz-QfD" secondAttribute="top" constant="10" id="b5U-gz-63N"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="uj8-UI-F9c" secondAttribute="bottom" id="cvw-EU-CBv"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="f8m-ZJ-YbM"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="HBA-Cy-hoI" secondAttribute="trailing" id="hb7-xd-fEe"/>
                                                 <constraint firstItem="uj8-UI-F9c" firstAttribute="leading" secondItem="HBA-Cy-hoI" secondAttribute="leading" id="n0i-XH-Zzs"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
@@ -129,27 +130,30 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMw-Am-bvt" userLabel="Notification Header">
                                             <rect key="frame" x="20" y="8" width="374" height="34"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MN-pn-YOV" userLabel="Notification Time">
-                                                    <rect key="frame" x="263" y="9" width="103" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MN-pn-YOV">
+                                                    <rect key="frame" x="263" y="8.5" width="103" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MESSAGE" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvR-b1-6iW" userLabel="Notification Title">
-                                                    <rect key="frame" x="63" y="9" width="60" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWER" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvR-b1-6iW">
+                                                    <rect key="frame" x="58" y="8.5" width="75" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/message" translatesAutoresizingMaskIntoConstraints="NO" id="YKm-sf-d9B" userLabel="Notification Image">
-                                                    <rect key="frame" x="21" y="0.0" width="34" height="34"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/follower" translatesAutoresizingMaskIntoConstraints="NO" id="YKm-sf-d9B">
+                                                    <rect key="frame" x="16" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="ICX-4i-Gbe"/>
                                                         <constraint firstAttribute="width" constant="34" id="vt3-bN-G4V"/>
                                                     </constraints>
                                                 </imageView>
                                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="5yi-U6-q3P">
-                                                    <rect key="frame" x="0.0" y="0.0" width="21" height="34"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="kEg-Qx-esz"/>
+                                                    </constraints>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -183,36 +187,37 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="bubbleView" destination="rnB-cz-QfD" id="cz1-UG-5iK"/>
                                     <outlet property="dateLabel" destination="6MN-pn-YOV" id="WjO-B6-1Ry"/>
                                     <outlet property="notificationIconImageView" destination="YKm-sf-d9B" id="9pe-GV-sk6"/>
                                     <outlet property="notificationMark" destination="5yi-U6-q3P" id="QcV-JO-yYZ"/>
                                     <outlet property="notificationTextLabel" destination="uj8-UI-F9c" id="mBg-kQ-pGl"/>
                                     <outlet property="notificationTitleLabel" destination="HBA-Cy-hoI" id="Jvt-cc-6eh"/>
                                     <outlet property="notificationTypeLabel" destination="EvR-b1-6iW" id="gie-z1-tYr"/>
-                                    <outlet property="profileImageView" destination="4sh-iu-Zxu" id="qxN-Jv-0VH"/>
+                                    <outlet property="profileImageView" destination="4sh-iu-Zxu" id="4Yi-Qk-VcL"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SessionNotificationCell" rowHeight="102" id="kul-Nw-ISN" customClass="SessionNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="203.5" width="414" height="102"/>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BasicNotificationCell" id="kul-Nw-ISN" customClass="BasicNotificationCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="219" width="414" height="108"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="kul-Nw-ISN" id="deI-YU-FxE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLQ-Lf-kPM" userLabel="Notification Bubble">
-                                            <rect key="frame" x="20" y="36" width="374" height="58"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLQ-Lf-kPM">
+                                            <rect key="frame" x="20" y="36" width="374" height="64"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqu-xF-Uzd">
-                                                    <rect key="frame" x="16" y="8" width="350" height="42"/>
+                                                    <rect key="frame" x="16" y="8" width="350" height="48"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.2056275904" green="0.47037732599999998" blue="0.96475392579999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="58" id="DmG-zS-KgB"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="DmG-zS-KgB"/>
                                                 <constraint firstItem="vqu-xF-Uzd" firstAttribute="leading" secondItem="PLQ-Lf-kPM" secondAttribute="leadingMargin" constant="8" id="WW1-k3-ex6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="vqu-xF-Uzd" secondAttribute="trailing" id="dqf-kQ-HWv"/>
                                                 <constraint firstItem="vqu-xF-Uzd" firstAttribute="top" secondItem="PLQ-Lf-kPM" secondAttribute="topMargin" id="luH-wz-gwB"/>
@@ -227,19 +232,19 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-YH-pYX" userLabel="Notification Header">
                                             <rect key="frame" x="20" y="8" width="374" height="34"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdZ-Zr-Pub" userLabel="Notification Time">
-                                                    <rect key="frame" x="263" y="9" width="103" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdZ-Zr-Pub">
+                                                    <rect key="frame" x="263" y="8.5" width="103" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW SESSION" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGV-Ej-uJB" userLabel="Notification Title">
-                                                    <rect key="frame" x="58" y="9" width="87" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW SESSION" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGV-Ej-uJB">
+                                                    <rect key="frame" x="58" y="8.5" width="95" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/session" translatesAutoresizingMaskIntoConstraints="NO" id="v7I-mK-kbO" userLabel="Notification Image">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons/session" translatesAutoresizingMaskIntoConstraints="NO" id="v7I-mK-kbO">
                                                     <rect key="frame" x="16" y="0.0" width="34" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="V7X-a6-Cn7"/>
@@ -248,6 +253,9 @@
                                                 </imageView>
                                                 <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="VjR-jp-bBK">
                                                     <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="1zd-lc-uAl"/>
+                                                    </constraints>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -270,9 +278,9 @@
                                     <constraints>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="trailing" secondItem="PLQ-Lf-kPM" secondAttribute="trailing" id="2LY-WB-TOx"/>
                                         <constraint firstItem="PLQ-Lf-kPM" firstAttribute="firstBaseline" secondItem="MeL-YH-pYX" secondAttribute="baseline" constant="-6" id="7TT-Hi-YRy"/>
+                                        <constraint firstItem="vqu-xF-Uzd" firstAttribute="leading" secondItem="VjR-jp-bBK" secondAttribute="trailing" id="89W-fx-GSm"/>
                                         <constraint firstItem="PLQ-Lf-kPM" firstAttribute="leading" secondItem="deI-YU-FxE" secondAttribute="leadingMargin" id="DU4-ca-Nh4"/>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="leading" secondItem="PLQ-Lf-kPM" secondAttribute="leading" id="J1h-Dw-2r3"/>
-                                        <constraint firstItem="v7I-mK-kbO" firstAttribute="leading" secondItem="vqu-xF-Uzd" secondAttribute="leading" id="KdB-Tm-eTR"/>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="top" secondItem="deI-YU-FxE" secondAttribute="top" constant="8" id="KjE-f1-679"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="PLQ-Lf-kPM" secondAttribute="trailing" id="ORU-93-LEW"/>
                                         <constraint firstItem="MeL-YH-pYX" firstAttribute="centerX" secondItem="deI-YU-FxE" secondAttribute="centerX" id="UaQ-WU-c3x"/>
@@ -281,6 +289,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="bubbleView" destination="PLQ-Lf-kPM" id="Txb-DP-YiB"/>
                                     <outlet property="dateLabel" destination="QdZ-Zr-Pub" id="zHh-La-YLq"/>
                                     <outlet property="notificationIconImageView" destination="v7I-mK-kbO" id="tWU-XE-iLM"/>
                                     <outlet property="notificationMark" destination="VjR-jp-bBK" id="3Fi-28-LkT"/>
@@ -288,28 +297,28 @@
                                     <outlet property="notificationTypeLabel" destination="WGV-Ej-uJB" id="ZBW-ld-MKO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BaseNotificationCell" rowHeight="102" id="PGf-48-VWM" customClass="BaseNotificationCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="305.5" width="414" height="102"/>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="BaseNotificationCell" id="PGf-48-VWM" customClass="BaseNotificationCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="327" width="414" height="108"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="PGf-48-VWM" id="2yO-Pi-AaD">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvE-fW-jXs" userLabel="Notification Bubble">
-                                            <rect key="frame" x="20" y="36" width="374" height="58"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvE-fW-jXs">
+                                            <rect key="frame" x="20" y="36" width="374" height="64"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMy-m9-XDc">
-                                                    <rect key="frame" x="16" y="8" width="350" height="42"/>
+                                                    <rect key="frame" x="16" y="8" width="350" height="48"/>
                                                     <string key="text">This is a pretty long text which shouldn't completly fit inside this text field but if it does then fk it I'm studpid and don't know how long a long text should be. Fudge!</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.415267575" green="0.44207243419999998" blue="0.99703437090000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="pMy-m9-XDc" secondAttribute="trailing" id="3pB-6f-jtW"/>
-                                                <constraint firstAttribute="height" constant="58" id="PZI-B5-VkB"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="PZI-B5-VkB"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="pMy-m9-XDc" secondAttribute="bottom" id="bip-9K-5Vz"/>
                                                 <constraint firstItem="pMy-m9-XDc" firstAttribute="top" secondItem="RvE-fW-jXs" secondAttribute="topMargin" id="yUq-k9-vv1"/>
                                                 <constraint firstItem="pMy-m9-XDc" firstAttribute="leading" secondItem="RvE-fW-jXs" secondAttribute="leadingMargin" constant="8" id="zvz-3x-SSl"/>
@@ -323,41 +332,34 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swy-NZ-F7Z" userLabel="Notification Header">
                                             <rect key="frame" x="20" y="8" width="374" height="34"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Adx-Nu-dn8" userLabel="Notification Time">
-                                                    <rect key="frame" x="263" y="9" width="103" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="May 5 at 5:05pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Adx-Nu-dn8">
+                                                    <rect key="frame" x="263" y="8.5" width="103" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sov-Vv-LWd" userLabel="Notification Title">
-                                                    <rect key="frame" x="16" y="9" width="34.5" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OTHER" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sov-Vv-LWd">
+                                                    <rect key="frame" x="16" y="8.5" width="46.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="0.64000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K9q-Xw-No8" userLabel="Notification Image">
-                                                    <rect key="frame" x="16" y="0.0" width="0.0" height="34"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" id="27h-Vp-7uO"/>
-                                                        <constraint firstAttribute="height" constant="34" id="ZSV-ym-mZD"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="kdh-1v-blb">
                                                     <rect key="frame" x="0.0" y="0.0" width="16" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="NLN-qI-K3L"/>
+                                                    </constraints>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="K9q-Xw-No8" firstAttribute="leading" secondItem="kdh-1v-blb" secondAttribute="trailing" id="0Vd-Qj-dm9"/>
-                                                <constraint firstAttribute="bottom" secondItem="K9q-Xw-No8" secondAttribute="bottom" id="83n-cA-Lij"/>
+                                                <constraint firstAttribute="bottom" secondItem="kdh-1v-blb" secondAttribute="bottom" id="87T-GL-h6O"/>
+                                                <constraint firstItem="sov-Vv-LWd" firstAttribute="leading" secondItem="kdh-1v-blb" secondAttribute="trailing" id="EQw-UD-DSm"/>
                                                 <constraint firstItem="Adx-Nu-dn8" firstAttribute="top" secondItem="sov-Vv-LWd" secondAttribute="top" id="Ezr-bQ-oCj"/>
+                                                <constraint firstItem="sov-Vv-LWd" firstAttribute="centerY" secondItem="kdh-1v-blb" secondAttribute="centerY" id="Jgs-lJ-jDZ"/>
+                                                <constraint firstItem="kdh-1v-blb" firstAttribute="top" secondItem="swy-NZ-F7Z" secondAttribute="top" id="JiN-p0-AWw"/>
                                                 <constraint firstItem="Adx-Nu-dn8" firstAttribute="bottom" secondItem="sov-Vv-LWd" secondAttribute="bottom" id="UzC-nP-1tc"/>
-                                                <constraint firstItem="sov-Vv-LWd" firstAttribute="centerY" secondItem="K9q-Xw-No8" secondAttribute="centerY" id="Yiw-U6-0wE"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Adx-Nu-dn8" secondAttribute="trailing" id="e3N-2r-PQM"/>
-                                                <constraint firstItem="kdh-1v-blb" firstAttribute="top" secondItem="K9q-Xw-No8" secondAttribute="top" id="g44-sV-qAQ"/>
-                                                <constraint firstItem="K9q-Xw-No8" firstAttribute="top" secondItem="swy-NZ-F7Z" secondAttribute="top" id="iL4-rD-Sib"/>
                                                 <constraint firstItem="Adx-Nu-dn8" firstAttribute="centerY" secondItem="sov-Vv-LWd" secondAttribute="centerY" id="pNE-sX-UzT"/>
-                                                <constraint firstItem="sov-Vv-LWd" firstAttribute="leading" secondItem="K9q-Xw-No8" secondAttribute="trailing" id="qGz-IS-ClJ"/>
-                                                <constraint firstItem="kdh-1v-blb" firstAttribute="bottom" secondItem="K9q-Xw-No8" secondAttribute="bottom" id="r0P-UP-1dO"/>
                                                 <constraint firstItem="kdh-1v-blb" firstAttribute="leading" secondItem="swy-NZ-F7Z" secondAttribute="leading" id="sMK-4W-SCI"/>
                                                 <constraint firstAttribute="height" constant="34" id="zwR-ne-eo6"/>
                                             </constraints>
@@ -367,7 +369,6 @@
                                         <constraint firstItem="swy-NZ-F7Z" firstAttribute="top" secondItem="2yO-Pi-AaD" secondAttribute="top" constant="8" id="6kd-dJ-vFa"/>
                                         <constraint firstItem="swy-NZ-F7Z" firstAttribute="centerX" secondItem="2yO-Pi-AaD" secondAttribute="centerX" id="DLT-5j-8Me"/>
                                         <constraint firstItem="swy-NZ-F7Z" firstAttribute="leading" secondItem="RvE-fW-jXs" secondAttribute="leading" id="Mpb-yQ-82d"/>
-                                        <constraint firstItem="K9q-Xw-No8" firstAttribute="leading" secondItem="pMy-m9-XDc" secondAttribute="leading" id="Q5D-Zq-yva"/>
                                         <constraint firstItem="swy-NZ-F7Z" firstAttribute="trailing" secondItem="RvE-fW-jXs" secondAttribute="trailing" id="WLb-JS-Q1C"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="RvE-fW-jXs" secondAttribute="trailing" id="hga-Fj-Spa"/>
                                         <constraint firstItem="RvE-fW-jXs" firstAttribute="firstBaseline" secondItem="swy-NZ-F7Z" secondAttribute="baseline" constant="-6" id="pnL-UR-QCV"/>
@@ -377,8 +378,8 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="bubbleView" destination="RvE-fW-jXs" id="brM-N1-1fY"/>
                                     <outlet property="dateLabel" destination="Adx-Nu-dn8" id="zGW-Ub-HGJ"/>
-                                    <outlet property="notificationIconImageView" destination="K9q-Xw-No8" id="Jfz-qD-JIp"/>
                                     <outlet property="notificationMark" destination="kdh-1v-blb" id="VCO-67-dT9"/>
                                     <outlet property="notificationTextLabel" destination="pMy-m9-XDc" id="G1a-s8-41I"/>
                                     <outlet property="notificationTypeLabel" destination="sov-Vv-LWd" id="QTc-CX-qhj"/>
@@ -432,7 +433,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Icons/message" width="128" height="128"/>
+        <image name="Icons/follower" width="128" height="128"/>
         <image name="Icons/session" width="128" height="128"/>
     </resources>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

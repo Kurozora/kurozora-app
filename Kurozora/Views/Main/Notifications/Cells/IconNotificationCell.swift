@@ -1,5 +1,5 @@
 //
-//  MessageNotificationCell.swift
+//  IconNotificationCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/08/2018.
@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SwipeCellKit
 
-class MessageNotificationCell: BaseNotificationCell {
+class IconNotificationCell: BasicNotificationCell {
+	// MARK: - IBOutlets
 	// Body
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
@@ -22,12 +22,12 @@ class MessageNotificationCell: BaseNotificationCell {
 	override func configureCell() {
 		super.configureCell()
 
-		if let title = userNotificationsElement?.data?.name {
+		if let title = userNotificationsElement?.data?.username {
 			notificationTitleLabel.text = title
 		}
 
 		if let profileImage = userNotificationsElement?.data?.profileImage {
-			if let usernameInitials = userNotificationsElement?.data?.name?.initials {
+			if let usernameInitials = userNotificationsElement?.data?.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}

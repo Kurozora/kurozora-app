@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 
 public class ForumsCell: UITableViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var usernameButton: UIButton! {
 		didSet {
 			usernameButton.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
@@ -72,6 +73,7 @@ public class ForumsCell: UITableViewCell {
 		}
 	}
 
+	// MARK: - Properties
 	var forumsChildViewController: ForumsListViewController?
 	var forumThreadsElement: ForumsThreadElement? {
 		didSet {
@@ -155,11 +157,7 @@ public class ForumsCell: UITableViewCell {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				if #available(iOS 13.0, macCatalyst 13.0, *) {
-					forumsChildViewController?.present(kurozoraNavigationController, animated: true, completion: nil)
-				} else {
-					forumsChildViewController?.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-				}
+				forumsChildViewController?.present(kurozoraNavigationController)
 			}
 		}
 	}
