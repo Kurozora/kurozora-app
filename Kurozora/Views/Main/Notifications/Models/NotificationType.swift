@@ -13,9 +13,10 @@ enum KNotification {
 		List of custom notification types.
 
 		```
+		case other
 		case session = "NewSession"
 		case follower = "NewFollower"
-		case other
+		case message = "NewMessage"
 		```
 	*/
 	enum CustomType: String {

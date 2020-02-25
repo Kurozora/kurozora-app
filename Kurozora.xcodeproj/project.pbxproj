@@ -51,7 +51,6 @@
 		661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC55234A6A73009292DF /* PurchaseButtonTableViewCell.swift */; };
 		661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC5A234A6CC9009292DF /* ProductHeaderTableViewCell.swift */; };
 		661F9F7C208727D200CF4153 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */; };
-		661F9F812087282500CF4153 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661F9F7D2087282400CF4153 /* Onboarding.storyboard */; };
 		661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7E2087282400CF4153 /* SignInTableViewController.swift */; };
 		661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F9F7F2087282500CF4153 /* RegisterViewController.swift */; };
 		66232CDB2310055900C45B5A /* BaseFeedPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */; };
@@ -314,6 +313,7 @@
 		66B13A5F2405AA8000CD732B /* WorkflowController+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */; };
 		66B13A612405AAC000CD732B /* WorkflowController+In-AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */; };
 		66B13A632405AAED00CD732B /* WorkflowController+Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B13A622405AAED00CD732B /* WorkflowController+Onboarding.swift */; };
+		66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B13A662405DBE000CD732B /* Onboarding.storyboard */; };
 		66B216A821C033B9006E167D /* UIView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B216A721C033B9006E167D /* UIView+Kurozora.swift */; };
 		66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66825BE921B29F3800A2F602 /* KRichTextEditorViewController.swift */; };
 		66B216AC21C1681F006E167D /* TextEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666938AC21B19E3800BA9620 /* TextEditor.storyboard */; };
@@ -497,7 +497,6 @@
 		661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoTableViewCell.swift; sourceTree = "<group>"; };
 		661DBC5A234A6CC9009292DF /* ProductHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
-		661F9F7D2087282400CF4153 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		661F9F7E2087282400CF4153 /* SignInTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInTableViewController.swift; sourceTree = "<group>"; };
 		661F9F7F2087282500CF4153 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		66232CDA2310055900C45B5A /* BaseFeedPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFeedPostsCell.swift; sourceTree = "<group>"; };
@@ -749,6 +748,7 @@
 		66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+User.swift"; sourceTree = "<group>"; };
 		66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+In-AppNotifications.swift"; sourceTree = "<group>"; };
 		66B13A622405AAED00CD732B /* WorkflowController+Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkflowController+Onboarding.swift"; sourceTree = "<group>"; };
+		66B13A662405DBE000CD732B /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		66B216A721C033B9006E167D /* UIView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Kurozora.swift"; sourceTree = "<group>"; };
 		66B216AD21C16B15006E167D /* ThreadPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadPost.swift; sourceTree = "<group>"; };
 		66B2C73C232D0F350042AB12 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
@@ -1127,7 +1127,7 @@
 		661F9F872087383500CF4153 /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
-				661F9F7D2087282400CF4153 /* Onboarding.storyboard */,
+				66B13A662405DBE000CD732B /* Onboarding.storyboard */,
 				667074D423382756008C1A75 /* BaseOnboardingTableViewController.swift */,
 				661F9F7F2087282500CF4153 /* RegisterViewController.swift */,
 				661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */,
@@ -2347,8 +2347,8 @@
 				668B164423EDF0CF00C1306A /* App-Icon-iPhone-Product-RED@3x.png in Resources */,
 				66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */,
 				668B166C23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png in Resources */,
+				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				6614408F21DA387800E54915 /* Settings.bundle in Resources */,
-				661F9F812087282500CF4153 /* Onboarding.storyboard in Resources */,
 				668B164F23EDF0CF00C1306A /* App-Icon-iPhone-Night@2x.png in Resources */,
 				668B165323EDF0CF00C1306A /* App-Icon-iPad-Pro-Day@2x.png in Resources */,
 				668B165C23EDF0CF00C1306A /* App-Icon-iPhone-Day@3x.png in Resources */,
