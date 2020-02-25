@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.1)
+  - Alamofire (5.0.2)
   - AXPhotoViewer (1.7.1):
     - AXPhotoViewer/Core (= 1.7.1)
   - AXPhotoViewer/Core (1.7.1):
@@ -140,7 +140,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/vikmeup/SCLAlertView-Swift.git
 
 SPEC CHECKSUMS:
-  Alamofire: 41c162d645ba6a78e7fd030fcdaf6aa394ca39a0
+  Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
   AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
   AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
