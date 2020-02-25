@@ -1129,9 +1129,9 @@
 			children = (
 				661F9F7D2087282400CF4153 /* Onboarding.storyboard */,
 				667074D423382756008C1A75 /* BaseOnboardingTableViewController.swift */,
-				661F9F7E2087282400CF4153 /* SignInTableViewController.swift */,
 				661F9F7F2087282500CF4153 /* RegisterViewController.swift */,
 				661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */,
+				661F9F7E2087282400CF4153 /* SignInTableViewController.swift */,
 				66CAE6832337CF9B00991E59 /* Cells */,
 				66CAE68A2337D0D800991E59 /* Models */,
 			);
