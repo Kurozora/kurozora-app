@@ -13,7 +13,7 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	var exploreCategory: ExploreCategory? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			collectionView.reloadData()
+			self.configureDataSource()
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
@@ -66,7 +66,7 @@ extension ShowsListCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			let cellStyle = self.exploreCategory?.size ?? "small"
 			let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = HorizontalCollectionCellStyle(rawValue: cellStyle) ?? .small
 			let baseLockupCollectionViewCell = collectionView.dequeueReusableCell(withClass: horizontalCollectionCellStyle.classValue, for: indexPath)

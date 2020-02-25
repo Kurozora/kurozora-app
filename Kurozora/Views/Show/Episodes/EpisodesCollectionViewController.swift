@@ -22,7 +22,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	var episodesElements: [EpisodesElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.collectionView?.reloadData()
+			self.configureDataSource()
+			self.collectionView.reloadEmptyDataSet()
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil

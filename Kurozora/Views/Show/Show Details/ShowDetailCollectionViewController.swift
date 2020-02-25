@@ -71,10 +71,6 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			_prefersActivityIndicatorHidden = true
 		}
 
-		// Setup collection view.
-		collectionView.collectionViewLayout = createLayout()
-		collectionView.register(nibWithCellClass: LockupCollectionViewCell.self)
-		collectionView.register(nibWithCellClass: CastCollectionViewCell.self)
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
 
 		// Fetch show details.
@@ -149,7 +145,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UICollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return showDetailsElement != nil ? ShowDetail.Section.all.count : 0
@@ -226,7 +222,7 @@ extension ShowDetailCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionDelegate
+// MARK: - UICollectionViewDelegate
 extension ShowDetailCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
@@ -279,6 +275,15 @@ extension ShowDetailCollectionViewController {
 		sectionHeaderReusableView.segueID = showSection.segueIdentifier
 		sectionHeaderReusableView.title = showSection.stringValue
 		sectionHeaderReusableView.indexPath = indexPath
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension ShowDetailCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [LockupCollectionViewCell.self,
+				CastCollectionViewCell.self
+		]
 	}
 }
 

@@ -14,7 +14,8 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	var seasonsElements: [SeasonsElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.collectionView?.reloadData()
+			self.configureDataSource()
+			self.collectionView.reloadEmptyDataSet()
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil

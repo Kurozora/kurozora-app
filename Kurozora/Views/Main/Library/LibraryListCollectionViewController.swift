@@ -22,7 +22,8 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
-			collectionView.reloadData()
+			self.configureDataSource()
+			self.collectionView.reloadEmptyDataSet()
 			self.refreshControl.endRefreshing()
 			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		}
@@ -37,6 +38,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 	var libraryCellStyle: Library.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	override var prefersActivityIndicatorHidden: Bool {
 		return true
@@ -156,20 +158,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension LibraryListCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let showDetailsElementsCount = showDetailsElements?.count else { return 0 }
-		return showDetailsElementsCount
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: libraryCellStyle.identifierString, for: indexPath) as! LibraryBaseCollectionViewCell
-		libraryBaseCollectionViewCell.showDetailsElement = showDetailsElements?[indexPath.item]
-		return libraryBaseCollectionViewCell
-	}
-}
-
 // MARK: - UICollectionViewDelegate
 extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
@@ -199,6 +187,34 @@ extension LibraryListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let libraryBaseCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LibraryBaseCollectionViewCell
 		performSegue(withIdentifier: R.segue.libraryListCollectionViewController.showDetailsSegue, sender: libraryBaseCollectionViewCell)
+	}
+}
+
+// MARK: - KCollectionViewDataSource
+extension LibraryListCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return []
+	}
+
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if let libraryBaseCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.libraryCellStyle.identifierString, for: indexPath) as? LibraryBaseCollectionViewCell {
+				libraryBaseCollectionViewCell.showDetailsElement = self.showDetailsElements?[indexPath.item]
+				return libraryBaseCollectionViewCell
+			} else {
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.castCollectionViewCell.identifier)")
+			}
+		}
+
+		let itemsPerSection = showDetailsElements?.count ?? 0
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot)
 	}
 }
 
@@ -309,5 +325,19 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 
 	func sortValue() -> Library.SortType {
 		return librarySortType
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension LibraryListCollectionViewController {
+	/**
+		List of cast section layout kind.
+
+		```
+		case main = 0
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case main = 0
 	}
 }
