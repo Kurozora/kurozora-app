@@ -113,6 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		authenticationCount += 1
+
+		// Clear notifications
+		application.applicationIconBadgeNumber = 0
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {

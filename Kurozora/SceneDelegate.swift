@@ -96,6 +96,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		if Date.uptime() > Kurozora.shared.authenticationInterval, Kurozora.shared.authenticationEnabled {
 			Kurozora.shared.prepareForAuthentication()
 		}
+
+		// Clear notifications
+		UIApplication.shared.applicationIconBadgeNumber = 0
 	}
 
 	// MARK: - Functions
