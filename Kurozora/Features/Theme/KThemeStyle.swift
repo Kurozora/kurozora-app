@@ -73,7 +73,9 @@ enum KThemeStyle: Int {
 	static func initAppTheme() {
 		if UserSettings.automaticDarkTheme {
 			KThemeStyle.startAutomaticDarkThemeSchedule(true)
-		} else if let currentThemeID = UserSettings.currentTheme, !currentThemeID.isEmpty {
+		} else if !UserSettings.currentTheme.isEmpty {
+			let currentThemeID = UserSettings.currentTheme
+
 			// If themeID is an integer
 			if let themeID = Int(currentThemeID) {
 				// Use a non default theme if it exists

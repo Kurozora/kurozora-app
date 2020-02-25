@@ -128,7 +128,7 @@ extension UserSettings {
 // MARK: - App customization
 extension UserSettings {
 	/// Returns a string indicating the currently used theme.
-	static var currentTheme: String? {
+	static var currentTheme: String {
 		guard let currentTheme = shared.string(forKey: #function) else { return "" }
 		return currentTheme
 	}

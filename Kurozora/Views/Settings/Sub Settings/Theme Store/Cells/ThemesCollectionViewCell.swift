@@ -95,7 +95,9 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 
 	/// Sets the correct title for `getThemeButton`.
 	@objc func updateGetThemeButton() {
-		if let currentThemeID = UserSettings.currentTheme {
+		if !UserSettings.currentTheme.isEmpty {
+			let currentThemeID = UserSettings.currentTheme
+
 			switch indexPath?.item {
 			case 0:
 				if currentThemeID == "Default" {
@@ -214,7 +216,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		})
 		let removeAction = UIAlertAction(title: "Remove theme", style: .destructive, handler: { (_) in
 			self.handleRemoveTheme()
-			if UserSettings.currentTheme?.int == self.themesElement?.id {
+			if UserSettings.currentTheme.int == self.themesElement?.id {
 				KThemeStyle.switchTo(.default)
 			}
 		})
