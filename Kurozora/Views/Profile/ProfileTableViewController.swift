@@ -226,7 +226,12 @@ class ProfileTableViewController: KTableViewController {
 		if let profileImage = user.profile?.profileImage {
 			if let usernameInitials = user.profile?.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-				profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
+
+				if self.userID == User.currentID {
+					profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
+				} else {
+					profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
+				}
 			}
 		}
 
