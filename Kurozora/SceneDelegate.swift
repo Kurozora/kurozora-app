@@ -82,7 +82,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneWillEnterForeground(_ scene: UIScene) {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
-				_ = Kurozora.validateSession(window: self.window)
+				KService.shared.validateSession(withSuccess: { (success) in
+					#if DEBUG
+					print("Session valid:", success)
+					#endif
+				})
 				WorkflowController.shared.registerForPushNotifications()
 			}
 		}

@@ -14,7 +14,6 @@ import SCLAlertView
 
 class Kurozora {
 	// MARK: - Properties
-	fileprivate static var success = false
 	var authenticationEnabled = false
 	var authenticationInterval = 0
 
@@ -70,27 +69,6 @@ class Kurozora {
 				}
 			}
 		}
-	}
-
-	/**
-		Return a boolean value indicating if the current session is valid.
-
-		- Parameter window: The window on which the sign in view will be presented in case the session isn't valid.
-
-		- Returns: a boolean value indicating if the current session is valid.
-	*/
-	static func validateSession(window: UIWindow?) -> Bool {
-		if User.isSignedIn {
-			KService.shared.validateSession(withSuccess: { (success) in
-				if !success {
-					WorkflowController.shared.signOut(with: "Session expired. Please sign in again to continue.", whereUser: false)
-				}
-
-				self.success = success
-			})
-		}
-
-		return success
 	}
 
 	/**

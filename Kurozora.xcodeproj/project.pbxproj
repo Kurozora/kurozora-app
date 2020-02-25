@@ -1024,9 +1024,9 @@
 		66112343208F6A8E00E6033A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				66B13A5A2405A9E300CD732B /* Workflow */,
 				6609FAD621D8D237008DF5E4 /* Kurozora.swift */,
 				6694202523EAF1BB00D69B5E /* Models */,
+				66B13A5A2405A9E300CD732B /* Workflow */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1730,8 +1730,8 @@
 		66B13A5A2405A9E300CD732B /* Workflow */ = {
 			isa = PBXGroup;
 			children = (
-				66B13A5B2405A9FC00CD732B /* Extensions */,
 				66112348208F6ACE00E6033A /* WorkflowController.swift */,
+				66B13A5B2405A9FC00CD732B /* Extensions */,
 			);
 			path = Workflow;
 			sourceTree = "<group>";
@@ -1739,10 +1739,10 @@
 		66B13A5B2405A9FC00CD732B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */,
-				66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */,
 				66B13A602405AAC000CD732B /* WorkflowController+In-AppNotifications.swift */,
 				66B13A622405AAED00CD732B /* WorkflowController+Onboarding.swift */,
+				66B13A5C2405AA1000CD732B /* WorkflowController+PushNotifications.swift */,
+				66B13A5E2405AA8000CD732B /* WorkflowController+User.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

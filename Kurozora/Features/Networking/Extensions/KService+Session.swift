@@ -101,7 +101,7 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		if #available(iOS 13, *), !User.currentIDToken.isEmpty {
+		if #available(iOS 13.0, macCatalyst 13.0, *), !User.currentIDToken.isEmpty {
 			let appleIDProvider = ASAuthorizationAppleIDProvider()
 			appleIDProvider.getCredentialState(forUserID: "\(User.currentSIWAID)") { (state, _) in
 				switch state {
