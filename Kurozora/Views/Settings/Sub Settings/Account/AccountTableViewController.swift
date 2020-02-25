@@ -35,9 +35,11 @@ class AccountTableViewController: SubSettingsViewController {
 		super.viewWillAppear(animated)
 
 		// Setup user email
-		userEmailLabel.text = "\(Kurozora.shared.KDefaults["username"] ?? "kurozora")@kurozora.app"
-		userEmailLabel.textAlignment = .center
-		userEmailLabel.font = UIFont(name: "System", size: 13)
+		if let kurozoraID = Kurozora.shared.KDefaults["kurozora_id"] {
+			userEmailLabel.text = kurozoraID
+			userEmailLabel.textAlignment = .center
+			userEmailLabel.font = UIFont(name: "System", size: 13)
+		}
 	}
 }
 

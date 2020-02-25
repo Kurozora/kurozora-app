@@ -109,6 +109,12 @@ extension User {
 		return username
 	}
 
+	/// Returns the Kurozora ID saved in KDefaults
+	static var kurozoraID: String {
+		guard let kurozoraID = Kurozora.shared.KDefaults["kurozora_id"], !kurozoraID.isEmpty else { return "" }
+		return kurozoraID
+	}
+
 	/// Returns the current User ID saved in KDefaults.
 	static var currentID: Int {
 		guard let userID = Kurozora.shared.KDefaults["user_id"]?.int else { return 0 }
@@ -195,7 +201,7 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is signed in
 	static var isSignedIn: Bool {
-		return User.username != ""
+		return !User.kurozoraID.isEmpty
 	}
 
 	/// Returns a boolean indicating if the current user has purchased PRO

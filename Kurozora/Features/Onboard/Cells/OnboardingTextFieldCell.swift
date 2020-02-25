@@ -48,7 +48,7 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 			}
 		case .signIn:
 			switch textField.textType {
-			case .username:
+			case .emailAddress:
 				textField.placeholder = "The cool Kurozora ID you claimed 🙌"
 			case .password:
 				textField.placeholder = "Your super secret password 👀"

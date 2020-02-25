@@ -43,11 +43,17 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		let username = textFieldArray.first??.trimmedText
+		let kurozoraID = textFieldArray.first??.trimmedText
 		let password = textFieldArray.last??.text
-		let device = UIDevice.modelName + " on iOS " + UIDevice.current.systemVersion
+		#if targetEnvironment(macCatalyst)
+		let platform = " on macOS "
+		#else
+		let platform = " on iOS "
+		#endif
 
-		KService.shared.signIn(username, password, device, withSuccess: { (success) in
+		let device = UIDevice.modelName + platform + UIDevice.current.systemVersion
+
+		KService.shared.signIn(kurozoraID, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)

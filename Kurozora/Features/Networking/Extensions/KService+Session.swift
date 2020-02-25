@@ -14,14 +14,14 @@ extension KService {
 	/**
 		Create a new session a.k.a sign in.
 
-		- Parameter username: The username of the user to be signed in.
+		- Parameter kurozoraID: The Kurozora id of the user to be signed in.
 		- Parameter password: The password of the user to be signed in.
 		- Parameter device: The name of the device the sign in is occuring from.
 		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
-	func signIn(_ username: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let username = username else { return }
+	func signIn(_ kurozoraID: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let kurozoraID = kurozoraID else { return }
 		guard let password = password else { return }
 		guard let device = device else { return }
 
@@ -29,18 +29,22 @@ extension KService {
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
-			"username": username,
+			"email": kurozoraID,
 			"password": password,
 			"device": device
 		]
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					if let userId = user.profile?.id {
-						try? Kurozora.shared.KDefaults.set(String(userId), key: "user_id")
+					try? Kurozora.shared.KDefaults.set(kurozoraID, key: "kurozora_id")
+
+					if let userID = user.profile?.id {
+						try? Kurozora.shared.KDefaults.set(String(userID), key: "user_id")
 					}
 
-					try? Kurozora.shared.KDefaults.set(username, key: "username")
+					if let username = user.profile?.username {
+						try? Kurozora.shared.KDefaults.set(username, key: "username")
+					}
 
 					if let authToken = user.profile?.authToken {
 						try? Kurozora.shared.KDefaults.set(authToken, key: "auth_token")
@@ -58,8 +62,8 @@ extension KService {
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
-			successHandler(false)
 			print("Received sign in error: \(error.message ?? "No message available")")
+			successHandler(false)
 		})
 	}
 
