@@ -70,7 +70,16 @@ class SettingsCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		iconImageView?.image = sectionRow?.imageValue
+		if sectionRow?.imageValue == UIImage() {
+			if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
+				if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
+					let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+					iconImageView?.setImage(with: profileImage, placeholder: placeholderImage)
+				}
+			}
+		} else {
+			iconImageView?.image = sectionRow?.imageValue
+		}
 		primaryLabel?.text = sectionRow?.primaryStringValue
 		secondaryLabel?.text = sectionRow?.secondaryStringValue
 

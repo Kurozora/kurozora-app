@@ -44,11 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Global app tint color
 		self.window?.theme_tintColor = KThemePicker.tintColor.rawValue
 
-		// Fetch user details
-		if User.isSignedIn {
-			WorkflowController.shared.getUserDetails()
-		}
-
 		// Init payment queue
 		SKPaymentQueue.default().add(KStoreObserver.shared)
 

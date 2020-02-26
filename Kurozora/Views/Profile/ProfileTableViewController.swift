@@ -226,12 +226,7 @@ class ProfileTableViewController: KTableViewController {
 		if let profileImage = user.profile?.profileImage {
 			if let usernameInitials = user.profile?.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-
-				if self.userID == User.currentID {
-					profileImageView.setImage(with: profileImage, cacheKey: "currentUserProfileImage", placeholder: placeholderImage)
-				} else {
-					profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
-				}
+				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}
 
@@ -489,11 +484,11 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.shared.updateInformation(for: bioText, username: nil, profileImage: profileImage, bannerImage: bannerImage) { (update) in
-				if update {
-					self.editMode(!update)
-					if shouldUpdateProfileImage {
-						User.refreshProfileImage(with: profileImage)
+			KService.shared.updateInformation(for: bioText, username: nil, profileImage: profileImage, bannerImage: bannerImage) { (user) in
+				if let success = user?.success {
+					self.editMode(!success)
+					if let profileImage = user?.profile?.profileImage, shouldUpdateProfileImage {
+						try? Kurozora.shared.KDefaults.set(profileImage, key: "profile_image")
 					}
 				}
 			}

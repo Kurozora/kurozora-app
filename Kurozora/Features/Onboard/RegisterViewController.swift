@@ -81,8 +81,8 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 			let username = textFieldArray.first??.trimmedText
 			let profileImage = profileImageView.image
 
-			KService.shared.updateInformation(for: nil, username: username, profileImage: profileImage, bannerImage: nil) { (success) in
-				if success {
+			KService.shared.updateInformation(for: nil, username: username, profileImage: profileImage, bannerImage: nil) { (update) in
+				if let success = update?.success, success {
 					self.navigationController?.popViewController(animated: true)
 					self.dismiss(animated: true, completion: nil)
 				}

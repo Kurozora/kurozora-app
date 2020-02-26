@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 import Tabman
 import Pageboy
 import SwiftTheme
@@ -14,12 +15,7 @@ import SwiftTheme
 class FeedTabsViewController: TabmanViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var createThreadButton: UIButton!
-	@IBOutlet weak var navigationProfileButton: UIButton! {
-		didSet {
-			let profileImage = User.currentUserProfileImage.withRenderingMode(.alwaysOriginal)
-			self.navigationProfileButton.setImage(profileImage, for: .normal)
-		}
-	}
+	@IBOutlet weak var navigationProfileButton: UIButton!
 
 	// MARK: - Properties
 	var sections: [FeedSectionsElement]? {
@@ -33,13 +29,6 @@ class FeedTabsViewController: TabmanViewController {
 	let bar = TMBar.ButtonBar()
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		let profileImage = User.currentUserProfileImage.withRenderingMode(.alwaysOriginal)
-		navigationProfileButton.setImage(profileImage, for: .normal)
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
@@ -49,6 +38,13 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
+
+		if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
+			if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				navigationProfileButton.imageView?.setImage(with: profileImage, placeholder: placeholderImage)
+			}
+		}
 
 		// Fetch feed sections
 //		KService.shared.getFeedSections(withSuccess: { (sections) in

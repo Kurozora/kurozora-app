@@ -67,21 +67,18 @@ extension KService {
 		print("Register User ID: \(userID)")
 		print("Register Email: \(email)")
 
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("users/register-siwa")
-		request.headers = [
-			"Content-Type": "multipart/form-data"
-		]
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/register-siwa")
+		request.headers = headers
 		request.method = .post
 		request.parameters = [
-			"siwa_id": userID,
-			"email": email
+			"email": email,
+			"siwa_id": userID
 		]
-		request.perform(withSuccess: { reset in
-			if let success = reset.success {
+		request.perform(withSuccess: { userSession in
+			if let success = userSession.success {
 				if success {
 					try? Kurozora.shared.KDefaults.set("\(userID)", key: "SIWA_user")
-					try? Kurozora.shared.KDefaults.set("\(0)", key: "user_role")
-
+					WorkflowController.shared.processUserData(fromSession: userSession)
 					successHandler(success)
 				}
 			}
@@ -127,10 +124,10 @@ extension KService {
 		- Parameter bio: The new biography to set.
 		- Parameter profileImage: The new user's profile image.
 		- Parameter bannerImage: The new user's profile image.
-		- Parameter successHandler: A closure returning a boolean indicating whether information update is successful.
-		- Parameter isSuccess: A boolean value indicating whether information update is successful.
+		- Parameter successHandler: A closure returning a User object with the updated information.
+		- Parameter isSuccess: A User object containing the updated information.
 	*/
-	func updateInformation(for bio: String?, username: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	func updateInformation(for bio: String?, username: String?, profileImage: UIImage?, bannerImage: UIImage?, withSuccess successHandler: @escaping (_ isSuccess: User?) -> Void) {
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(User.currentID)/profile") { (formData) in
 			if let profileImage = profileImage?.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
@@ -154,7 +151,7 @@ extension KService {
 		request.perform(withSuccess: { (update) in
 			if let success = update.success {
 				if success {
-					successHandler(success)
+					successHandler(update)
 					if let message = update.message {
 						SCLAlertView().showSuccess("Settings updated ☺️", subTitle: message)
 					}

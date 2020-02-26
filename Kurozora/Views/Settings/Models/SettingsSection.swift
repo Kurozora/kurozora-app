@@ -290,7 +290,7 @@ extension SettingsTableViewController {
 		var imageValue: UIImage {
 			switch self {
 			case .account:
-				return User.currentUserProfileImage
+				return UIImage()
 			case .keychain:
 				return R.image.icons.kdefaults()!
 			case .notifications:

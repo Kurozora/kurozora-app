@@ -118,11 +118,11 @@ extension String {
 		Returns a UIImage from the string. If no image can be created then the specified placeholder is returned.
 
 		- Parameter frame: The size used to create the image. Default value is 50x50.
-		- Parameter placeholder: The UIImage to return if no image can be create from the string.
+		- Parameter placeholderImage: The UIImage to return if no image can be create from the string.
 
 		- Returns: A UIImage from the string.
 	*/
-	func toImage(withFrameSize frame: CGRect = CGRect(x: 0, y: 0, width: 50, height: 50), placeholder image: UIImage) -> UIImage {
+	func toImage(withFrameSize frame: CGRect = CGRect(x: 0, y: 0, width: 50, height: 50), placeholder placeholderImage: UIImage) -> UIImage {
 		// Calculate optimal font size
 		let shortestLength = frame.size.minDimension
 		let fontFraction = shortestLength / 50
@@ -140,10 +140,10 @@ extension String {
 		UIGraphicsBeginImageContext(frame.size)
 		if let currentContext = UIGraphicsGetCurrentContext() {
 			nameLabel.layer.render(in: currentContext)
-			let nameImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal) ?? image
+			let nameImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal) ?? placeholderImage
 			return nameImage
 		}
-		return image
+		return placeholderImage
 	}
 
 	// MARK: - Functions

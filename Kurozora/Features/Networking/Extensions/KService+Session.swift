@@ -25,7 +25,7 @@ extension KService {
 		guard let password = password else { return }
 		guard let device = device else { return }
 
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions")
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions")
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -33,30 +33,11 @@ extension KService {
 			"password": password,
 			"device": device
 		]
-		request.perform(withSuccess: { user in
-			if let success = user.success {
+		request.perform(withSuccess: { userSession in
+			if let success = userSession.success {
 				if success {
 					try? Kurozora.shared.KDefaults.set(kurozoraID, key: "kurozora_id")
-
-					if let userID = user.profile?.id {
-						try? Kurozora.shared.KDefaults.set(String(userID), key: "user_id")
-					}
-
-					if let username = user.profile?.username {
-						try? Kurozora.shared.KDefaults.set(username, key: "username")
-					}
-
-					if let authToken = user.profile?.authToken {
-						try? Kurozora.shared.KDefaults.set(authToken, key: "auth_token")
-					}
-
-					if let sessionID = user.profile?.sessionID {
-						try? Kurozora.shared.KDefaults.set(String(sessionID), key: "session_id")
-					}
-
-					if let role = user.profile?.role {
-						try? Kurozora.shared.KDefaults.set(String(role), key: "user_role")
-					}
+					WorkflowController.shared.processUserData(fromSession: userSession)
 					successHandler(success)
 				}
 			}

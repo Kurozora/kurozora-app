@@ -12,15 +12,9 @@ import SwiftTheme
 
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: UIImageView! {
-		didSet {
-			self.profileImageView?.image = User.currentUserProfileImage
-			self.profileImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
-		}
-	}
+	@IBOutlet weak var profileImageView: UIImageView!
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
-			usernameLabel.text = Kurozora.shared.KDefaults["username"]
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
@@ -31,14 +25,23 @@ class AccountTableViewController: SubSettingsViewController {
 	}
 
 	// MARK: - View
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		// Setup user email
-		if let kurozoraID = Kurozora.shared.KDefaults["kurozora_id"] {
-			userEmailLabel.text = kurozoraID
-			userEmailLabel.textAlignment = .center
-			userEmailLabel.font = UIFont(name: "System", size: 13)
+		// Setup username.
+		usernameLabel.text = Kurozora.shared.KDefaults["username"]
+
+		// Setup email address.
+		userEmailLabel.text = Kurozora.shared.KDefaults["kurozora_id"]
+		userEmailLabel.textAlignment = .center
+		userEmailLabel.font = UIFont(name: "System", size: 13)
+
+		// Setup profile image.
+		if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
+			if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
+			}
 		}
 	}
 }

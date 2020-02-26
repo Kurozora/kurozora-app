@@ -15,7 +15,8 @@ struct KService {
 	//	let tron = TRON(baseURL: "http://kurozora-web.test/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
 	let headers: HTTPHeaders = [
-		"Content-Type": "application/x-www-form-urlencoded"
+		"Content-Type": "application/x-www-form-urlencoded",
+		"accept": "application/json"
 	]
 
 	static let shared = KService()

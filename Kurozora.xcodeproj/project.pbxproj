@@ -358,6 +358,7 @@
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
 		66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */; };
 		66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumsSortingStyle.swift */; };
+		66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */; };
 		66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */; };
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
 		66CF5D8221E7E90D00969BBB /* UserFollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D8121E7E90D00969BBB /* UserFollow.swift */; };
@@ -803,6 +804,7 @@
 		66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreCell.xib; sourceTree = "<group>"; };
 		66CE1B09209BB1400007A4DE /* PostImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		66CE342E2325519300A41558 /* ForumsSortingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsSortingStyle.swift; sourceTree = "<group>"; };
+		66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Kurozora.swift"; sourceTree = "<group>"; };
 		66CEFCFE20AD8C1D00792B1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Kurozora.swift"; sourceTree = "<group>"; };
@@ -1057,6 +1059,7 @@
 				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
 				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
 				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
+				66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2851,6 +2854,7 @@
 				66FC6DF62342BA5C00A454DD /* UIStatusBarStyle+Theme.swift in Sources */,
 				660B42AB2125AF830051EF66 /* ThemesCollectionViewCell.swift in Sources */,
 				66496EE723733CD000911F2C /* UITextView+Kurozora.swift in Sources */,
+				66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */,
 				66754BC42101020800268355 /* KService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

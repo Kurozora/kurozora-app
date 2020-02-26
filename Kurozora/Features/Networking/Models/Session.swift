@@ -11,12 +11,20 @@ import SwiftyJSON
 
 class UserSessions: JSONDecodable {
     let success: Bool?
+	let authToken: String?
+	let user: UserProfile?
 	let currentSessions: UserSessionsElement?
     var otherSessions: [UserSessionsElement]?
 
     required init(json: JSON) throws {
-        success = json["success"].boolValue
-		self.currentSessions = try? UserSessionsElement(json: json["current_session"])
+		self.success = json["success"].boolValue
+		self.authToken = json["kuro_auth_token"].stringValue
+		self.user = try? UserProfile(json: json["user"])
+		if !json["current_session"].isEmpty {
+			self.currentSessions = try? UserSessionsElement(json: json["current_session"])
+		} else {
+			self.currentSessions = try? UserSessionsElement(json: json["session"])
+		}
 		var otherSessions = [UserSessionsElement]()
 
         let otherSessionsArray = json["other_sessions"].arrayValue

@@ -81,7 +81,12 @@ class KCommentEditorViewController: KViewController {
 			posterUsernameLabel.text = posterUsername
 		}
 
-		profileImageView.image = User.currentUserProfileImage
+		if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
+			if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
+			}
+		}
 		currentUsernameLabel.text = User.username
 
 		characterCountLabel.text = "\(characterLimit)"
@@ -114,11 +119,11 @@ class KCommentEditorViewController: KViewController {
 						"poster": [
 							"id": User.currentID,
 							"username": User.username,
-							"avatar_url": User.currentUserProfileImage
+							"avatar_url": User.profileImage
 						],
 						"score": 0,
 						"content": comment
-						]
+					]
 					if let threadRepliesElement = try? ThreadRepliesElement(json: replyJSON) {
 						self.delegate?.updateReplies(with: threadRepliesElement)
 					}

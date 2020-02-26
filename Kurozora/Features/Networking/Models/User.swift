@@ -25,8 +25,6 @@ class User: JSONDecodable {
 
 class UserProfile: JSONDecodable {
 	let id: Int?
-	let authToken: String?
-	let sessionID: Int?
 	let role: Int?
 
 	let username: String?
@@ -57,8 +55,6 @@ class UserProfile: JSONDecodable {
 
 	required init(json: JSON) throws {
 		self.id = json["id"].intValue
-		self.authToken = json["kuro_auth_token"].stringValue
-		self.sessionID = json["session_id"].intValue
 		self.role = json["role"].intValue
 
 		self.username = json["username"].stringValue
@@ -103,13 +99,19 @@ extension User {
 	/// The object used to start and stop the delivery of location-related events to the app.
 	fileprivate static let locationManager = CLLocationManager()
 
-	/// Returns the username saved in KDefaults
+	/// Returns the username saved in KDefaults.
 	static var username: String {
 		guard let username = Kurozora.shared.KDefaults["username"], !username.isEmpty else { return "" }
 		return username
 	}
 
-	/// Returns the Kurozora ID saved in KDefaults
+	/// Returns the profile image saved in KDefaults.
+	static var profileImage: String {
+		guard let profileImage = Kurozora.shared.KDefaults["profile_image"], !profileImage.isEmpty else { return "" }
+		return profileImage
+	}
+
+	/// Returns the Kurozora ID saved in KDefaults.
 	static var kurozoraID: String {
 		guard let kurozoraID = Kurozora.shared.KDefaults["kurozora_id"], !kurozoraID.isEmpty else { return "" }
 		return kurozoraID
@@ -155,37 +157,18 @@ extension User {
 		return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 	}
 
-	/// Returns the user's latitude saved in KDefaults
+	/// Returns the user's latitude saved in KDefaults.
 	static var latitude: Double {
 		guard let latitudeString = Kurozora.shared.KDefaults["latitude"], !latitudeString.isEmpty,
 			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
 		return latitude
 	}
 
-	/// Returns the user's longitude saved in KDefaults
+	/// Returns the user's longitude saved in KDefaults.
 	static var longitude: Double {
 		guard let longitudeString = Kurozora.shared.KDefaults["longitude"], !longitudeString.isEmpty,
 			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
 		return longitude
-	}
-
-	/// Returns the current user profile image from cache if available, otherwise returns default profile image
-	static var currentUserProfileImage: UIImage {
-		var profileImage = username.initials.toImage(placeholder: R.image.placeholders.profile_image()!)
-
-		ImageCache.default.retrieveImage(forKey: "currentUserProfileImage", options: [], callbackQueue: .mainCurrentOrAsync) { (result) in
-			switch result {
-			case .success(let cacheResult):
-				// If the `cacheType is `.none`, `image` will be `nil`.
-				if cacheResult.cacheType != .none {
-					profileImage = cacheResult.image ?? profileImage
-				}
-			case .failure(let error):
-				print("Received image cache error: \(error.localizedDescription)")
-			}
-		}
-
-		return profileImage
 	}
 
 	/// Returns the current Session ID saved in KDefaults
@@ -199,36 +182,13 @@ extension User {
 		return UIDevice.modelName
 	}
 
-	/// Returns a boolean indicating if the current user is signed in
+	/// Returns a boolean indicating if the current user is signed in.
 	static var isSignedIn: Bool {
 		return !User.kurozoraID.isEmpty
 	}
 
-	/// Returns a boolean indicating if the current user has purchased PRO
+	/// Returns a boolean indicating if the current user has purchased PRO.
 	static var isPro: Bool {
 		return true
-	}
-}
-
-// MARK: - Functions
-extension User {
-	/**
-		Removes and adds the current user's profile image to the cache.
-
-		- Parameter image: The image to add to the cache.
-	*/
-	static func refreshProfileImage(with image: UIImage?) {
-		// Clear cache for user profile image.
-		removeProfileImage()
-
-		// Add new image to cache.
-		if let profileImage = image {
-			KingfisherManager.shared.cache.store(profileImage, forKey: "currentUserProfileImage")
-		}
-	}
-
-	/// Removes the current user's profile image from the cache.
-	static func removeProfileImage() {
-		KingfisherManager.shared.cache.removeImage(forKey: "currentUserProfileImage")
 	}
 }
