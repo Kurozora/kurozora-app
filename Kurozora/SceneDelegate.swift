@@ -48,7 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Check if user should authenticate
 		Kurozora.shared.userHasToAuthenticate()
 
-		// Resotre previoud activity
+		// Configure window or resotre previous activity.
 		if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
 			 if !configure(window: window, with: userActivity) {
 				print("Failed to restore from \(userActivity)")
@@ -82,10 +82,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneWillEnterForeground(_ scene: UIScene) {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
-				KService.shared.validateSession(withSuccess: { (success) in
-					#if DEBUG
-					print("Session valid:", success)
-					#endif
+				KService.shared.validateSession(withSuccess: { _ in
 				})
 				WorkflowController.shared.registerForPushNotifications()
 			}
