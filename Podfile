@@ -7,6 +7,13 @@ inhibit_all_warnings!
 use_frameworks!
 
 # MARK: - Defs
+def common_pods
+	pod 'Kingfisher'
+	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
+	pod 'TRON', '~> 5.0.0-beta.5'
+	pod 'TRON/SwiftyJSON'
+end
+
 def kurozora_pods
 	pod 'AXPhotoViewer'
 	pod 'Cosmos'
@@ -15,12 +22,10 @@ def kurozora_pods
 	pod 'EmptyDataSet-Swift'
 	pod 'IBPCollectionViewCompositionalLayout'
 	pod 'KeychainAccess'
-	pod 'Kingfisher'
 	pod 'NotificationBannerSwift'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
-	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 	pod 'Solar'
 	pod 'SPStorkController'
 #	pod 'SnowGlobe'
@@ -28,8 +33,6 @@ def kurozora_pods
 	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
-	pod 'TRON', '~> 5.0.0-beta.5'
-	pod 'TRON/SwiftyJSON'
 	pod 'UIImageColors'
 	pod 'WhatsNew'
 #	pod 'Zip'
@@ -37,7 +40,11 @@ end
 
 # MARK: - Targets
 target 'Kurozora' do
-    kurozora_pods
+	kurozora_pods
+end
+
+target 'KurozoraKit' do
+	common_pods
 end
 
 # MARK: - Post install scripts

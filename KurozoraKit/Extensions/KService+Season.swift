@@ -17,13 +17,13 @@ extension KService {
 		- Parameter successHandler: A closure returning an Episodes object.
 		- Parameter episodes: The returned Episodes object.
 	*/
-	func getEpisodes(forSeason seasonID: Int?, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
+	func getEpisodes(forSeasonID seasonID: Int?, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
 		guard let seasonID = seasonID else { return }
 
 		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.perform(withSuccess: { episodes in

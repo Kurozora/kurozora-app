@@ -25,7 +25,7 @@ extension KService {
 		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [

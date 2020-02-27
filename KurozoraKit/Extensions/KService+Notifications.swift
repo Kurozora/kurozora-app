@@ -23,7 +23,7 @@ extension KService {
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("notifications/\(notificationID)/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.perform(withSuccess: { notification in
@@ -54,7 +54,7 @@ extension KService {
 
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [

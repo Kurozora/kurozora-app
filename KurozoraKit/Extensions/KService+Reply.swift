@@ -18,14 +18,11 @@ extension KService {
 		- Parameter successHandler: A closure returning an integer indicating whether the reply is upvoted or downvoted.
 		- Parameter action: The integer indicating whether the reply is upvoted or downvoted.
 	*/
-	func vote(forReply replyID: Int?, vote: Int?, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
-		guard let replyID = replyID else { return }
-		guard let vote = vote else { return }
-
+	func vote(forReply replyID: Int, vote: Int, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [

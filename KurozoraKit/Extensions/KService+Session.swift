@@ -6,7 +6,6 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import AuthenticationServices
 import TRON
 import SCLAlertView
 
@@ -20,10 +19,10 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
-	func signIn(_ kurozoraID: String?, _ password: String?, _ device: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let kurozoraID = kurozoraID else { return }
-		guard let password = password else { return }
-		guard let device = device else { return }
+	func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+//		guard let kurozoraID = kurozoraID else { return }
+//		guard let password = password else { return }
+//		guard let device = device else { return }
 
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions")
 		request.headers = headers
@@ -36,8 +35,8 @@ extension KService {
 		request.perform(withSuccess: { userSession in
 			if let success = userSession.success {
 				if success {
-					try? Kurozora.shared.KDefaults.set(kurozoraID, key: "kurozora_id")
-					WorkflowController.shared.processUserData(fromSession: userSession)
+//					try? Kurozora.shared.KDefaults.set(kurozoraID, key: "kurozora_id")
+//					WorkflowController.shared.processUserData(fromSession: userSession)
 					successHandler(success)
 				}
 			}
@@ -51,17 +50,18 @@ extension KService {
 	/**
 		Update the user's current session with the specified data.
 
+		- Parameter sessionID: The session ID to be updated.
 		- Parameter apnDeviceToken: The updated APN Device Token.
 		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
-	func updateSession(withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let sessionID = User.currentSessionID else { return }
+	func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+//		guard let sessionID = User.currentSessionID else { return }
 
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/update")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [
@@ -85,29 +85,29 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
-	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		if #available(iOS 13.0, macCatalyst 13.0, *), !User.currentIDToken.isEmpty {
-			let appleIDProvider = ASAuthorizationAppleIDProvider()
-			appleIDProvider.getCredentialState(forUserID: "\(User.currentSIWAID)") { (state, _) in
-				switch state {
-				case .authorized: // valid user id
-					successHandler(true)
-				case .revoked: // user revoked authorization
-					successHandler(false)
-				case .notFound: //not found
-					successHandler(false)
-				default: // other cases
-					break
-				}
-			}
-
-			successHandler(true)
-		} else {
-			guard let sessionID = User.currentSessionID else { return }
+	func validateSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+//		if #available(iOS 13.0, macCatalyst 13.0, *), !User.currentIDToken.isEmpty {
+//			let appleIDProvider = ASAuthorizationAppleIDProvider()
+//			appleIDProvider.getCredentialState(forUserID: "\(User.currentSIWAID)") { (state, _) in
+//				switch state {
+//				case .authorized: // valid user id
+//					successHandler(true)
+//				case .revoked: // user revoked authorization
+//					successHandler(false)
+//				case .notFound: //not found
+//					successHandler(false)
+//				default: // other cases
+//					break
+//				}
+//			}
+//
+//			successHandler(true)
+//		} else {
+//			guard let sessionID = User.currentSessionID else { return }
 			let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
 			request.headers = [
 				"Content-Type": "application/x-www-form-urlencoded",
-				"kuro-auth": User.authToken
+//				"kuro-auth": User.authToken
 			]
 			request.method = .post
 			request.perform(withSuccess: { user in
@@ -115,27 +115,27 @@ extension KService {
 					successHandler(success)
 				}
 			}, failure: { error in
-				WorkflowController.shared.signOut()
+//				WorkflowController.shared.signOut()
 				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
 				print("Received validate session error: \(error.message ?? "No message available")")
 			})
-		}
+//		}
 	}
 
 	/**
-		Delete a session with the given session id.
+		Delete the specified session ID from the user's active sessions.
 
-		- Parameter sessionID: The id of the session to be deleted.
+		- Parameter sessionID: The session ID to be deleted.
 		- Parameter successHandler: A closure returning a boolean indicating whether session delete is successful.
 		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
 	*/
-	func deleteSession(with sessionID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let sessionID = sessionID else { return }
+	func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+//		guard let sessionID = sessionID else { return }
 
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.perform(withSuccess: { session in
@@ -153,22 +153,23 @@ extension KService {
 	/**
 		Sign out the current user by deleting the current session.
 
+		- Parameter sessionID: The current session ID of the user to be signed out.
 		- Parameter successHandler: A closure returning a boolean indicating whether sign out is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
 	*/
-	func signOut(withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
-		guard let sessionID = User.currentSessionID else { return }
+	func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
+//		guard let sessionID = User.currentSessionID else { return }
 
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-					WorkflowController.shared.signOut()
+//					WorkflowController.shared.signOut()
 					successHandler?(success)
 				}
 			}

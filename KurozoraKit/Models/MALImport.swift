@@ -18,3 +18,26 @@ class MALImport: JSONDecodable {
 		self.message = json["message"].stringValue
 	}
 }
+
+// MARK: - Behavior
+extension MALImport {
+	/**
+		List of MAL import behaviors.
+
+		```
+		case overwrite = 0
+		```
+	*/
+	enum Behavior: Int {
+		case overwrite = 0
+
+		// MARK: - Properties
+		// The string value of a MALImport behavior.
+		var stringValue: String {
+			switch self {
+			case .overwrite:
+				return "overwrite"
+			}
+		}
+	}
+}

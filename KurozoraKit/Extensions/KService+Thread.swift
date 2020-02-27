@@ -23,7 +23,7 @@ extension KService {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.perform(withSuccess: { thread in
@@ -53,7 +53,7 @@ extension KService {
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/vote")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [
@@ -88,7 +88,7 @@ extension KService {
 		let request: APIRequest<ThreadReplies, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.parameters = [
@@ -122,7 +122,7 @@ extension KService {
 		let request: APIRequest<ThreadReply, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/replies")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [
@@ -153,7 +153,7 @@ extension KService {
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("forum-threads/search")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.parameters = [
@@ -186,7 +186,7 @@ extension KService {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-threads/\(threadID)/lock")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [

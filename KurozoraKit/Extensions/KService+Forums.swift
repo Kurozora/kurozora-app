@@ -48,7 +48,7 @@ extension KService {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.parameters = [
@@ -84,7 +84,7 @@ extension KService {
 		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [

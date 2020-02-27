@@ -20,7 +20,7 @@ extension KService {
 		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request("explore")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.perform(withSuccess: { explore in
@@ -48,7 +48,7 @@ extension KService {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("anime/\(showID)")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
@@ -128,7 +128,7 @@ extension KService {
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("anime/\(showID)/rate")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .post
 		request.parameters = [
@@ -159,7 +159,7 @@ extension KService {
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("anime/search")
 		request.headers = [
 			"Content-Type": "application/x-www-form-urlencoded",
-			"kuro-auth": User.authToken
+//			"kuro-auth": User.authToken
 		]
 		request.method = .get
 		request.parameters = [

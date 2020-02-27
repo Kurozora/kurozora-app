@@ -197,17 +197,17 @@ class ShowDetailsElement: JSONDecodable {
 		return informationString
 	}
 
-	var fullAirDate: String? {
-		guard let airDate = self.airDate?.toDate else { return nil }
-		guard let airTime = self.airTime?.toDate else { return nil }
-
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeStyle = .none
-		let airDateString = dateFormatter.string(from: airDate)
-
-		print("------ \(airDateString)")
-		return "\(airDateString) \(airTime)"
-	}
+//	var fullAirDate: String? {
+//		guard let airDate = self.airDate?.toDate else { return nil }
+//		guard let airTime = self.airTime?.toDate else { return nil }
+//
+//		let dateFormatter = DateFormatter()
+//		dateFormatter.timeStyle = .none
+//		let airDateString = dateFormatter.string(from: airDate)
+//
+//		print("------ \(airDateString)")
+//		return "\(airDateString) \(airTime)"
+//	}
 
 	/// Create an NSUserActivity from the selected show.
 	var openDetailUserActivity: NSUserActivity? {
