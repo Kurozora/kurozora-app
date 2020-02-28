@@ -44,20 +44,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	fileprivate func configureCell() {
 		guard let themesElement = themesElement else { return }
 
-		switch indexPath?.item {
-		case 0:
-			titleLabel.text = "Default"
-			themeScreenshot.backgroundColor = .kGrayishNavy
-		case 1:
-			titleLabel.text = "Day"
-			themeScreenshot.backgroundColor = #colorLiteral(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-		case 2:
-			titleLabel.text = "Night"
-			themeScreenshot.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-		default:
-			titleLabel.text = themesElement.name
-			themeScreenshot.backgroundColor = UIColor.random
-		}
+		titleLabel.text = themesElement.name
+		themeScreenshot.backgroundColor = UIColor(hexString: themesElement.backgroundColor ?? "#333333")
 
 		// Configure buy state
 //		if let themeBought = themesElement.currentUser?.themeBought {
