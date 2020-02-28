@@ -64,9 +64,6 @@ extension KService {
 		guard let userID = userID else { return }
 		guard let email = email else { return }
 
-		print("Register User ID: \(userID)")
-		print("Register Email: \(email)")
-
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/register-siwa")
 		request.headers = headers
 		request.method = .post
@@ -77,7 +74,7 @@ extension KService {
 		request.perform(withSuccess: { userSession in
 			if let success = userSession.success {
 				if success {
-					try? Kurozora.shared.KDefaults.set("\(userID)", key: "SIWA_user")
+					try? Kurozora.shared.KDefaults.set("\(userID)", key: "siwa_id")
 					WorkflowController.shared.processUserData(fromSession: userSession)
 					successHandler(success)
 				}
@@ -86,6 +83,40 @@ extension KService {
 			UIView().endEditing(true)
 			SCLAlertView().showError("Can't register account 😔", subTitle: error.message)
 			print("Received register account with SIWA error: \(error.message ?? "No message available")")
+		})
+	}
+
+	/**
+		Sign in the user using the details from Sign In With Apple.
+
+		- Parameter idToken: A JSON Web Token (JWT) that securely communicates information about the user to the server.
+		- Parameter authorizationCode: A short-lived token used by the app for proof of authorization when interacting with the server.
+		- Parameter successHandler: A closure returning a boolean indicating whether registration is successful.
+		- Parameter isSuccess: A boolean value indicating whether registration is successful.
+	*/
+	func signInWithApple(usingIDToken idToken: String?, authorizationCode: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		guard let idToken = idToken else { return }
+//		guard let authorizationCode = authorizationCode else { return }
+
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/login-siwa")
+		request.headers = headers
+		request.method = .post
+		request.parameters = [
+			"identity_token": idToken
+//			"auth_code": authorizationCode
+		]
+		request.perform(withSuccess: { userSession in
+			if let success = userSession.success {
+				if success {
+					try? Kurozora.shared.KDefaults.set(idToken, key: "siwa_id_token")
+					WorkflowController.shared.processUserData(fromSession: userSession)
+					successHandler(success)
+				}
+			}
+		}, failure: { error in
+			UIView().endEditing(true)
+			SCLAlertView().showError("Can't sign in with Apple 😔", subTitle: error.message)
+			print("Received sign in with Apple error: \(error.message ?? "No message available")")
 		})
 	}
 

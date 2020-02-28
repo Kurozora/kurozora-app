@@ -86,40 +86,22 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		if #available(iOS 13.0, macCatalyst 13.0, *), !User.currentIDToken.isEmpty {
-			let appleIDProvider = ASAuthorizationAppleIDProvider()
-			appleIDProvider.getCredentialState(forUserID: "\(User.currentSIWAID)") { (state, _) in
-				switch state {
-				case .authorized: // valid user id
-					successHandler(true)
-				case .revoked: // user revoked authorization
-					successHandler(false)
-				case .notFound: //not found
-					successHandler(false)
-				default: // other cases
-					break
-				}
+		guard let sessionID = User.currentSessionID else { return }
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
+		request.headers = [
+			"Content-Type": "application/x-www-form-urlencoded",
+			"kuro-auth": User.authToken
+		]
+		request.method = .post
+		request.perform(withSuccess: { user in
+			if let success = user.success {
+				successHandler(success)
 			}
-
-			successHandler(true)
-		} else {
-			guard let sessionID = User.currentSessionID else { return }
-			let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
-			request.headers = [
-				"Content-Type": "application/x-www-form-urlencoded",
-				"kuro-auth": User.authToken
-			]
-			request.method = .post
-			request.perform(withSuccess: { user in
-				if let success = user.success {
-					successHandler(success)
-				}
-			}, failure: { error in
-				WorkflowController.shared.signOut()
-				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
-				print("Received validate session error: \(error.message ?? "No message available")")
-			})
-		}
+		}, failure: { error in
+			WorkflowController.shared.signOut()
+			SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
+			print("Received validate session error: \(error.message ?? "No message available")")
+		})
 	}
 
 	/**

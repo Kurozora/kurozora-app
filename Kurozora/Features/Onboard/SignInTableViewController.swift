@@ -93,21 +93,47 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("User Email - \(appleIDCredential.email ?? "N/A")")
 //		print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
 //
-//		if let authorizationCode = appleIDCredential.authorizationCode,
-//			let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) {
+		let authorizationCode = appleIDCredential.authorizationCode ?? Data()
+		let authorizationCodeString = String(data: authorizationCode, encoding: .utf8)
 //			print("Refresh Token \(authorizationCodeString)")
-//		}
-//
-//		if let identityTokenData = appleIDCredential.identityToken,
-//			let identityTokenString = String(data: identityTokenData, encoding: .utf8) {
-//			print("Identity Token \(identityTokenString)")
-//		}
 
-		KService.shared.register(withAppleUserID: appleIDCredential.user, email: appleIDCredential.email) { (success) in
-			if success {
-				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
-					registerTableViewController.isSIWA = true
-					self.show(registerTableViewController, sender: nil)
+		let identityTokenData = appleIDCredential.identityToken ?? Data()
+		let identityTokenString = String(data: identityTokenData, encoding: .utf8)
+//			print("Identity Token \(identityTokenString)")
+
+		if appleIDCredential.email?.isEmpty ?? true {
+			KService.shared.signInWithApple(usingIDToken: identityTokenString, authorizationCode: authorizationCodeString) { success in
+				if success {
+					DispatchQueue.main.async {
+						NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+						self.dismiss(animated: true) {
+							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+							WorkflowController.shared.registerForPushNotifications()
+						}
+					}
+				}
+				self.rightNavigationBarButton.isEnabled = false
+			}
+		} else {
+			KService.shared.register(withAppleUserID: appleIDCredential.user, email: appleIDCredential.email) { (success) in
+				if success {
+//					if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
+//						registerTableViewController.isSIWA = true
+//						self.show(registerTableViewController, sender: nil)
+//					}
+
+					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+					alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
+					alertController.addButton("Done", action: {
+						DispatchQueue.main.async {
+							self.navigationController?.popViewController(animated: true)
+							NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+							self.dismiss(animated: true) {
+								UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+								WorkflowController.shared.registerForPushNotifications()
+							}
+						}
+					})
 				}
 			}
 		}

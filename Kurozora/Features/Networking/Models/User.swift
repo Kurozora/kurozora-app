@@ -123,15 +123,15 @@ extension User {
 		return userID
 	}
 
-	/// Returns the current User 'Sign In With Apple' ID saved in KDefaults.
-	static var currentSIWAID: Int {
-		guard let currentSIWAID = Kurozora.shared.KDefaults["SIWA_user"]?.int else { return 0 }
-		return currentSIWAID
+	/// Returns the current user's Sign In With Apple ID saved in KDefaults.
+	static var siwaID: String {
+		guard let siwaID = Kurozora.shared.KDefaults["SIWA_user"], !siwaID.isEmpty else { return "" }
+		return siwaID
 	}
 
-	/// Returns the current User ID Token saved in KDefaults.
+	/// Returns the current user's Sign In With Apple ID Token saved in KDefaults.
 	static var currentIDToken: String {
-		guard let currentIDToken = Kurozora.shared.KDefaults["id_token"], !currentIDToken.isEmpty else { return ""}
+		guard let currentIDToken = Kurozora.shared.KDefaults["siwa_id_token"], !currentIDToken.isEmpty else { return "" }
 		return currentIDToken
 	}
 
@@ -184,7 +184,7 @@ extension User {
 
 	/// Returns a boolean indicating if the current user is signed in.
 	static var isSignedIn: Bool {
-		return !User.kurozoraID.isEmpty
+		return !User.kurozoraID.isEmpty || !User.siwaID.isEmpty || !User.currentIDToken.isEmpty
 	}
 
 	/// Returns a boolean indicating if the current user has purchased PRO.
