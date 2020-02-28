@@ -15,7 +15,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
-			self.collectionView.reloadEmptyDataSet()
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
@@ -116,7 +115,8 @@ extension SeasonsCollectionViewController {
 			let itemUpperbound = itemOffset + itemsPerSection
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
-		dataSource.apply(snapshot, animatingDifferences: true)
+		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 

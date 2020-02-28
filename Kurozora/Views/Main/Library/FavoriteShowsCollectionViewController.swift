@@ -13,7 +13,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.collectionView.reloadData()
+			self.configureDataSource()
 		}
 	}
 	var userID: Int? = nil
@@ -139,7 +139,8 @@ extension FavoriteShowsCollectionViewController {
 			let itemUpperbound = itemOffset + itemsPerSection
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
-		dataSource.apply(snapshot, animatingDifferences: true)
+		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 

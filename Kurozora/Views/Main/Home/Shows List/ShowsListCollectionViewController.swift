@@ -82,7 +82,8 @@ extension ShowsListCollectionViewController {
 			let itemUpperbound = itemOffset + itemsPerSection
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
-		dataSource.apply(snapshot, animatingDifferences: true)
+		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 
