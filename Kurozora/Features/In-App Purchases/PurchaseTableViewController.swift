@@ -16,11 +16,7 @@ class PurchaseTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var subscriptionDetails = [["unit": "1 Month", "trial": "Includes 1 week free trial!"], ["unit": "6 Months", "trial": "Includes 2 weeks free trial!"], ["unit": "12 Months", "trial": "Includes 2 weeks free trial!"]]
-	#if targetEnvironment(macCatalyst)
-	var productIDs: [String] = ["20000331KPLUS1M_macCatalyst", "20000331KPLUS6M_macCatalyst", "20000331KPLUS12M_macCatalyst"]
-	#else
 	var productIDs: [String] = ["20000331KPLUS1M", "20000331KPLUS6M", "20000331KPLUS12M"]
-	#endif
 
 	let previewImages = [R.image.promo_icons(), R.image.promo_gif()]
 
