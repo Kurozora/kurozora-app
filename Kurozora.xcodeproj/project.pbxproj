@@ -1826,7 +1826,6 @@
 				66B216A921C166B5006E167D /* Text Editor */,
 				669EA99E22C148D300784181 /* In-App Purchases */,
 				666E0D1E22888AFC00AA8BA4 /* Navigation */,
-				66B4F1D3223BC906007C5048 /* Networking */,
 				661F9F872087383500CF4153 /* Onboard */,
 				6614ABE2215EB23500A3A0C9 /* Reachability */,
 				6603F5E822E9BB7A0064BE62 /* Segue */,
@@ -1850,13 +1849,6 @@
 				66B4F1DE223D336C007C5048 /* Models */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		66B4F1D3223BC906007C5048 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Networking;
 			sourceTree = "<group>";
 		};
 		66B4F1D5223D141A007C5048 /* Theme */ = {
