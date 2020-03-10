@@ -1,5 +1,5 @@
 //
-//  KService+Reply.swift
+//  KurozoraKit+Reply.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Upvote or downvote a reply with the given reply id.
 
@@ -19,11 +19,12 @@ extension KService {
 		- Parameter action: The integer indicating whether the reply is upvoted or downvoted.
 	*/
 	func vote(forReply replyID: Int, vote: Int, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
-		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request("forum-replies/\(replyID)/vote")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let forumsRepliesVote = self.kurozoraEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
+		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsRepliesVote)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"vote": vote

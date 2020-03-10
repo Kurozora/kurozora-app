@@ -1,5 +1,5 @@
 //
-//  KService+Forums.swift
+//  KurozoraKit+Forums.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the list of forum sections.
 
@@ -17,7 +17,8 @@ extension KService {
 		- Parameter forumSections: The returned ForumsSectionsElement array.
 	*/
 	func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumsSectionsElement]?) -> Void) {
-		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request("forum-sections")
+		let forumsSections = self.kurozoraEndpoints.forumsSections
+		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request(forumsSections)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
@@ -41,15 +42,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a ForumsThread array.
 		- Parameter forumThreads: The returned ForumsThread array.
 	*/
-	func getForumsThreads(for sectionID: Int?, order: String?, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumsThread?) -> Void) {
-		guard let sectionID = sectionID else { return }
-		guard let order = order else { return }
+	func getForumsThreads(for sectionID: Int, order: String, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumsThread?) -> Void) {
+		let forumsSectionsThreads = self.kurozoraEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
-		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.parameters = [
 			"order": order,
@@ -76,16 +75,13 @@ extension KService {
 		- Parameter successHandler: A closure returning the newly created thread id.
 		- Parameter threadID: The id of the newly created thread.
 	*/
-	func postThread(inSection sectionID: Int?, withTitle title: String?, content: String?, withSuccess successHandler: @escaping (_ threadID: Int) -> Void) {
-		guard let title = title else { return }
-		guard let content = content else { return }
-		guard let sectionID = sectionID else { return }
+	func postThread(inSection sectionID: Int, withTitle title: String, content: String, withSuccess successHandler: @escaping (_ threadID: Int) -> Void) {
+		let forumsSectionsThreads = self.kurozoraEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
-		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request("forum-sections/\(sectionID)/threads")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"title": title,

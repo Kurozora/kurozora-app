@@ -1,5 +1,5 @@
 //
-//  KService+Session.swift
+//  KurozoraKit+Session.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Create a new session a.k.a sign in.
 
@@ -20,11 +20,8 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
 	func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-//		guard let kurozoraID = kurozoraID else { return }
-//		guard let password = password else { return }
-//		guard let device = device else { return }
-
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions")
+		let sessions = self.kurozoraEndpoints.sessions
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -56,13 +53,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-//		guard let sessionID = User.currentSessionID else { return }
+		let sessionsUpdate = self.kurozoraEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsUpdate)
 
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/update")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"apn_device_token": apnDeviceToken
@@ -86,40 +82,22 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-//		if #available(iOS 13.0, macCatalyst 13.0, *), !User.currentIDToken.isEmpty {
-//			let appleIDProvider = ASAuthorizationAppleIDProvider()
-//			appleIDProvider.getCredentialState(forUserID: "\(User.currentSIWAID)") { (state, _) in
-//				switch state {
-//				case .authorized: // valid user id
-//					successHandler(true)
-//				case .revoked: // user revoked authorization
-//					successHandler(false)
-//				case .notFound: //not found
-//					successHandler(false)
-//				default: // other cases
-//					break
-//				}
-//			}
-//
-//			successHandler(true)
-//		} else {
-//			guard let sessionID = User.currentSessionID else { return }
-			let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/validate")
-			request.headers = [
-				"Content-Type": "application/x-www-form-urlencoded",
-//				"kuro-auth": User.authToken
-			]
-			request.method = .post
-			request.perform(withSuccess: { user in
-				if let success = user.success {
-					successHandler(success)
-				}
-			}, failure: { error in
-//				WorkflowController.shared.signOut()
-				SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
-				print("Received validate session error: \(error.message ?? "No message available")")
-			})
-//		}
+		let sessionsValidate = self.kurozoraEndpoints.sessionsValidate.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsValidate)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
+		request.method = .post
+		request.perform(withSuccess: { user in
+			if let success = user.success {
+				successHandler(success)
+			}
+		}, failure: { error in
+//			WorkflowController.shared.signOut()
+			SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
+			print("Received validate session error: \(error.message ?? "No message available")")
+		})
 	}
 
 	/**
@@ -130,13 +108,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
 	*/
 	func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-//		guard let sessionID = sessionID else { return }
+		let sessionsDelete = self.kurozoraEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.perform(withSuccess: { session in
 			if let success = session.success {
@@ -158,13 +135,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
 	*/
 	func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
-//		guard let sessionID = User.currentSessionID else { return }
+		let sessionsDelete = self.kurozoraEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("sessions/\(sessionID)/delete")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.perform(withSuccess: { user in
 			if let success = user.success {

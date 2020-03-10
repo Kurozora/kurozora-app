@@ -1,5 +1,5 @@
 //
-//  KService+Notifications.swift
+//  KurozoraKit+Notifications.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Delete the notification for the given notification id.
 
@@ -17,14 +17,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func deleteNotification(with notificationID: String?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let notificationID = notificationID else { return }
+	func deleteNotification(with notificationID: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		let notificationsDelete = self.kurozoraEndpoints.notificationsDelete.replacingOccurrences(of: "?", with: "\(notificationID)")
+		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(notificationsDelete)
 
-		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("notifications/\(notificationID)/delete")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.perform(withSuccess: { notification in
 			if let success = notification.success {
@@ -46,16 +45,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func updateNotification(_ notificationID: String?, withStatus read: Int?, withSuccess successHandler: @escaping (Bool) -> Void) {
-		guard let notificationID = notificationID else { return }
-		guard let read = read else { return }
+	func updateNotification(_ notificationID: String, withStatus read: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
+		let notificationsUpdate = self.kurozoraEndpoints.notificationsUpdate
+		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request(notificationsUpdate)
 
-		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request("notifications/update")
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
 
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
 		request.method = .post
 		request.parameters = [
 			"notification": notificationID,

@@ -1,5 +1,5 @@
 //
-//  KService+Season.swift
+//  KurozoraKit+Season.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the episodes for the given season id.
 
@@ -17,14 +17,13 @@ extension KService {
 		- Parameter successHandler: A closure returning an Episodes object.
 		- Parameter episodes: The returned Episodes object.
 	*/
-	func getEpisodes(forSeasonID seasonID: Int?, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
-		guard let seasonID = seasonID else { return }
+	func getEpisodes(forSeasonID seasonID: Int, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
+		let animeSeasonsEpisodes = self.kurozoraEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
+		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
-		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request("anime-seasons/\(seasonID)/episodes")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { episodes in
 			if let success = episodes.success {

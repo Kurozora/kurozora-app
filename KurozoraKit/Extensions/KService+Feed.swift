@@ -1,5 +1,5 @@
 //
-//  KService+Feed.swift
+//  KurozoraKit+Feed.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the list of feed sections.
 
@@ -17,7 +17,8 @@ extension KService {
 		- Parameter feedSections: The returned FeedSectionsElement array.
 	*/
 	func getFeedSections(withSuccess successHandler: @escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
-		let request: APIRequest<FeedSections, JSONError> = tron.swiftyJSON.request("feed-sections")
+		let feedSection = self.kurozoraEndpoints.feedSection
+		let request: APIRequest<FeedSections, JSONError> = tron.swiftyJSON.request(feedSection)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
@@ -40,11 +41,9 @@ extension KService {
 		- Parameter successHandler: A closure returning a FeedPosts array.
 		- Parameter feedPosts: The returned FeedPosts array.
 	*/
-	func getFeedPosts(for sectionID: Int?, page: Int?, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
-		guard let sectionID = sectionID else { return }
-		guard let page = page else { return }
-
-		let request: APIRequest<FeedPosts, JSONError> = tron.swiftyJSON.request("feed-sections/\(sectionID)/posts")
+	func getFeedPosts(for sectionID: Int, page: Int, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
+		let feedSectionPost = self.kurozoraEndpoints.feedSectionPost.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let request: APIRequest<FeedPosts, JSONError> = tron.swiftyJSON.request(feedSectionPost)
 		request.headers = headers
 		request.method = .get
 		request.parameters = [

@@ -47,7 +47,7 @@ class FeedTabsViewController: TabmanViewController {
 		}
 
 		// Fetch feed sections
-//		KService.shared.getFeedSections(withSuccess: { (sections) in
+//		KurozoraKit.shared.getFeedSections(withSuccess: { (sections) in
 //			DispatchQueue.main.async {
 //				self.sectionsCount = sections?.count
 //				self.sections = sections

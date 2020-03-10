@@ -1,5 +1,5 @@
 //
-//  KService+User.swift
+//  KurozoraKit+User.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Register a new account with the given details.
 
@@ -21,7 +21,8 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
 	func register(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users") { (formData) in
+		let users = self.kurozoraEndpoints.users
+		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart(users) { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
@@ -56,7 +57,8 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
 	func signInWithApple(usingIDToken idToken: String, authorizationCode: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/register-siwa")
+		let usersRegisterSIWA = self.kurozoraEndpoints.usersRegisterSIWA
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(usersRegisterSIWA)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -85,7 +87,8 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether reset password request is successful.
 	*/
 	func resetPassword(forEmailAddress emailAddress: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("users/reset-password")
+		let usersResetPassword = self.kurozoraEndpoints.usersResetPassword
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(usersResetPassword)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -115,7 +118,8 @@ extension KService {
 		- Parameter isSuccess: A User object containing the updated information.
 	*/
 	func updateInformation(forUserID userID: Int, bio: String, profileImage: UIImage, bannerImage: UIImage, withSuccess successHandler: @escaping (_ isSuccess: User?) -> Void) {
-		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/profile") { (formData) in
+		let usersProfile = self.kurozoraEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart(usersProfile) { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
 			}
@@ -123,15 +127,16 @@ extension KService {
 				formData.append(bannerImage, withName: "bannerImage", fileName: "BannerImage.png", mimeType: "image/png")
 			}
 		}
+
 		request.headers = [
 			"Content-Type": "multipart/form-data",
-//			"kuro-auth": User.authToken
 		]
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"biography": bio
 		]
-
 		request.perform(withSuccess: { (update) in
 			if let success = update.success {
 				if success {
@@ -156,11 +161,12 @@ extension KService {
 		- Parameter userSessions: The returned UserSessions object.
 	*/
 	func getSessions(forUserID userID: Int, withSuccess successHandler: @escaping (_ userSessions: UserSessions?) -> Void) {
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request("users/\(userID)/sessions")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersSessions = self.kurozoraEndpoints.usersSessions.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(usersSessions)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { session in
 			if let success = session.success {
@@ -185,11 +191,12 @@ extension KService {
 		- Parameter library: The returned LibraryElement array.
 	*/
 	func getLibrary(forUserID userID: Int, withStatus status: Library.Status, withSortType sortType: Library.SortType, withSortOption sortOption: Library.SortType.Options, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersLibrary = self.kurozoraEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.parameters = [
 			"status": status.stringValue
@@ -219,11 +226,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether adding show to library is successful.
 	*/
 	func addToLibrary(forUserID userID: Int, withStatus status: Library.Status, showID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersLibrary = self.kurozoraEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"status": status.stringValue,
@@ -250,11 +258,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	*/
 	func removeFromLibrary(forUserID userID: Int, showID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/library/delete")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersLibraryDelete = self.kurozoraEndpoints.usersLibraryDelete.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibraryDelete)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"anime_id": showID
@@ -281,14 +290,17 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	*/
 	func importMALLibrary(forUserID userID: Int, filePath: URL, behavior: MALImport.Behavior, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let request: UploadAPIRequest<MALImport, JSONError> = tron.swiftyJSON.uploadMultipart("users/\(userID)/library/mal-import") { formData in
+		let usersLibraryMALImport = self.kurozoraEndpoints.usersLibraryMALImport.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: UploadAPIRequest<MALImport, JSONError> = tron.swiftyJSON.uploadMultipart(usersLibraryMALImport) { formData in
 			formData.append(filePath, withName: "file", fileName: "MALAnimeImport.xml", mimeType: "text/xml")
 		}
+
 		request.headers = [
 			"accept": "application/json",
-			"Content-Type": "multipart/form-data",
-//			"kuro-auth": User.authToken
+			"Content-Type": "multipart/form-data"
 		]
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"behavior": behavior.stringValue
@@ -313,11 +325,12 @@ extension KService {
 		- Parameter favorites: The returned ShowDetailsElement array.
 	*/
 	func getFavourites(forUserID userID: Int, withSuccess successHandler: @escaping (_ favorites: [ShowDetailsElement]?) -> Void) {
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("users/\(userID)/favorite-anime")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersFavoriteAnime = self.kurozoraEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
 			if let success = showDetails.success {
@@ -341,11 +354,12 @@ extension KService {
 		- Parameter isFavorite: The returned integer value indicating whether the show is favorited. (0 = false, 1 = true)
 	*/
 	func updateFavoriteStatus(forUserID userID: Int, forShow showID: Int, isFavorite: Int, withSuccess successHandler: @escaping (_ isFavorite: Int?) -> Void) {
-		let request: APIRequest<FavoriteShow, JSONError> = tron.swiftyJSON.request("users/\(userID)/favorite-anime")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersFavoriteAnime = self.kurozoraEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<FavoriteShow, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"anime_id": showID,
@@ -371,11 +385,12 @@ extension KService {
 		- Parameter user: The returned User object.
 	*/
 	func getProfile(forUserID userID: Int, withSuccess successHandler: @escaping (_ user: User?) -> Void) {
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("users/\(userID)/profile")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersProfile = self.kurozoraEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(usersProfile)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { userProfile in
 			if let success = userProfile.success {
@@ -397,11 +412,12 @@ extension KService {
 		- Parameter userNotifications: The returned UserNotificationsElement array.
 	*/
 	func getNotifications(forUserID userID: Int, withSuccess successHandler: @escaping (_ userNotifications: [UserNotificationsElement]?) -> Void) {
-		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request("users/\(userID)/notifications")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersNotifications = self.kurozoraEndpoints.usersNotifications.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(usersNotifications)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { userNotifications in
 			if let success = userNotifications.success {
@@ -423,11 +439,12 @@ extension KService {
 		- Parameter search: The returned SearchElement array.
 	*/
 	func search(forUsername username: String, withSuccess successHandler: @escaping (_ search: [UserProfile]?) -> Void) {
-		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("users/search")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersSearch = self.kurozoraEndpoints.usersSearch
+		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(usersSearch)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.parameters = [
 			"query": username
@@ -453,11 +470,12 @@ extension KService {
 		- Parameter isSuccess: A boolean value indicating whether follow/unfollow is successful.
 	*/
 	func follow(userID: Int, _ follow: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
-		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/follow")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let usersFollow = self.kurozoraEndpoints.usersFolllow.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollow)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"follow": follow
@@ -484,11 +502,14 @@ extension KService {
 		- Parameter userFollow: The returned UserFollow object.
 	*/
 	func getFollow(forUserID userID: Int, list: String, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
-		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request("users/\(userID)/\(list.lowercased())")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		var usersFollowerOrFollowing = list.lowercased() == "following" ? self.kurozoraEndpoints.usersFollowing : self.kurozoraEndpoints.usersFollower
+		usersFollowerOrFollowing = usersFollowerOrFollowing.replacingOccurrences(of: "?", with: "\(userID)")
+
+		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollowerOrFollowing)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.parameters = [
 			"page": page

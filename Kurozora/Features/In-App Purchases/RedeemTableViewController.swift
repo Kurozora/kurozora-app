@@ -143,7 +143,7 @@ class RedeemTableViewController: KTableViewController {
 
 		let redeemCode = textFieldArray.first??.trimmedText
 		showSuccess(for: redeemCode)
-//		KService.shared.redeem(code, withSuccess: { (success) in
+//		KurozoraKit.shared.redeem(code, withSuccess: { (success) in
 //			if success {
 //				DispatchQueue.main.async {
 //

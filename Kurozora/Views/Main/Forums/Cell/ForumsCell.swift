@@ -202,7 +202,7 @@ public class ForumsCell: UITableViewCell {
 //				}
 //
 //				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-//					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+//					KurozoraKit.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 //						self.isLocked(locked)
 //					})
 //				})

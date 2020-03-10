@@ -1,5 +1,5 @@
 //
-//  KService+Theme.swift
+//  KurozoraKit+Theme.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the list of themes.
 
@@ -17,7 +17,8 @@ extension KService {
 		- Parameter themes: The returned ThemesElement array.
 	*/
 	func getThemes(withSuccess successHandler: @escaping (_ themes: [ThemesElement]?) -> Void) {
-		let request: APIRequest<Themes, JSONError> = tron.swiftyJSON.request("themes")
+		let themes = self.kurozoraEndpoints.themes
+		let request: APIRequest<Themes, JSONError> = tron.swiftyJSON.request(themes)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { themes in

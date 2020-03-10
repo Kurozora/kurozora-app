@@ -1,5 +1,5 @@
 //
-//  KService+Genre.swift
+//  KurozoraKit+Genre.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the list of genres.
 
@@ -17,7 +17,8 @@ extension KService {
 		- Parameter genres: The returned GenreElement array.
 	*/
 	func getGenres(withSuccess successHandler: @escaping (_ genres: [GenreElement]?) -> Void) {
-		let request: APIRequest<Genres, JSONError> = tron.swiftyJSON.request("genres")
+		let genres = self.kurozoraEndpoints.genres
+		let request: APIRequest<Genres, JSONError> = tron.swiftyJSON.request(genres)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { genres in

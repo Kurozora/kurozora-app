@@ -1,5 +1,5 @@
 //
-//  KService+Kurozora.swift
+//  KurozoraKit+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the latest privacy policy.
 
@@ -17,7 +17,8 @@ extension KService {
 		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
 	*/
 	func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
-		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request("privacy-policy")
+		let privacyPolicy = self.kurozoraEndpoints.privacyPolicy
+		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request(privacyPolicy)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { privacyPolicy in

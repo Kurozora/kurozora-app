@@ -1,5 +1,5 @@
 //
-//  KService+Episode.swift
+//  KurozoraKit+Episode.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Watch or unwatch an episode with the given episode id.
 
@@ -18,15 +18,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether watch/unwatch is successful.
 		- Parameter isSuccess: A boolean value indicating whether watch/unwatch is successful.
 	*/
-	func mark(asWatched watched: Int?, forEpisode episodeID: Int?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let episodeID = episodeID else { return }
-		guard let watched = watched else { return }
+	func mark(asWatched watched: Int, forEpisode episodeID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		let animeEpisodesWatched = self.kurozoraEndpoints.animeEpisodesWatched.replacingOccurrences(of: "?", with: "\(episodeID)")
+		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request(animeEpisodesWatched)
 
-		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request("anime-episodes/\(episodeID)/watched")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
 			"watched": watched

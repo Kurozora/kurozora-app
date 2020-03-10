@@ -1,5 +1,5 @@
 //
-//  KService+Show.swift
+//  KurozoraKit+Show.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/09/2019.
@@ -9,7 +9,7 @@
 import TRON
 import SCLAlertView
 
-extension KService {
+extension KurozoraKit {
 	/**
 		Fetch the explore page content.
 
@@ -17,11 +17,12 @@ extension KService {
 		- Parameter explore: The returned Explore object.
 	*/
 	func getExplore(withSuccess successHandler: @escaping (_ explore: Explore?) -> Void) {
-		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request("explore")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		let explore = self.kurozoraEndpoints.explore
+		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request(explore)
+
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { explore in
 			if let success = explore.success {
@@ -42,14 +43,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a ShowDetailsElement object.
 		- Parameter showDetailsElement: The returned ShowDetailsElement object.
 	*/
-	func getDetails(forShow showID: Int?, withSuccess successHandler: @escaping (_ showDetailsElement: ShowDetailsElement) -> Void) {
-		guard let showID = showID else { return }
+	func getDetails(forShow showID: Int, withSuccess successHandler: @escaping (_ showDetailsElement: ShowDetailsElement) -> Void) {
+		let anime = self.kurozoraEndpoints.anime.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(anime)
 
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request("anime/\(showID)")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
 			DispatchQueue.main.async {
@@ -70,10 +70,9 @@ extension KService {
 		- Parameter successHandler: A closure returning an ActorsElement array.
 		- Parameter actors: The returned ActorsElement array.
 	*/
-	func getCastFor(_ showID: Int?, withSuccess successHandler: @escaping (_ actors: [ActorsElement]?) -> Void) {
-		guard let showID = showID else { return }
-
-		let request: APIRequest<Actors, JSONError> = tron.swiftyJSON.request("anime/\(showID)/actors")
+	func getCastFor(_ showID: Int, withSuccess successHandler: @escaping (_ actors: [ActorsElement]?) -> Void) {
+		let animeActors = self.kurozoraEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<Actors, JSONError> = tron.swiftyJSON.request(animeActors)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { actors in
@@ -95,10 +94,9 @@ extension KService {
 		- Parameter successHandler: A closure returning a SeasonsElement array.
 		- Parameter seasons: The returned SeasonsElement array.
 	*/
-	func getSeasonsFor(_ showID: Int?, withSuccess successHandler: @escaping (_ seasons: [SeasonsElement]?) -> Void) {
-		guard let showID = showID else { return }
-
-		let request: APIRequest<Seasons, JSONError> = tron.swiftyJSON.request("anime/\(showID)/seasons")
+	func getSeasonsFor(_ showID: Int, withSuccess successHandler: @escaping (_ seasons: [SeasonsElement]?) -> Void) {
+		let animeSeasons = self.kurozoraEndpoints.animeSeasons.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<Seasons, JSONError> = tron.swiftyJSON.request(animeSeasons)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { seasons in
@@ -121,18 +119,16 @@ extension KService {
 		- Parameter successHandler: A closure returning a boolean indicating whether rating is successful.
 		- Parameter isSuccess: A boolean value indicating whether rating is successful.
 	*/
-	func rateShow(_ showID: Int?, with score: Double?, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		guard let rating = score else { return }
-		guard let showID = showID else { return }
+	func rateShow(_ showID: Int, with score: Double, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+		let animeRate = self.kurozoraEndpoints.animeRate.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(animeRate)
 
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request("anime/\(showID)/rate")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .post
 		request.parameters = [
-			"rating": rating
+			"rating": score
 		]
 		request.perform(withSuccess: { user in
 			if let success = user.success {
@@ -153,14 +149,13 @@ extension KService {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forShow show: String?, withSuccess successHandler: @escaping (_ search: [ShowDetailsElement]?) -> Void) {
-		guard let show = show else { return }
+	func search(forShow show: String, withSuccess successHandler: @escaping (_ search: [ShowDetailsElement]?) -> Void) {
+		let animeSearch = self.kurozoraEndpoints.animeSearch
+		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(animeSearch)
 
-		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request("anime/search")
-		request.headers = [
-			"Content-Type": "application/x-www-form-urlencoded",
-//			"kuro-auth": User.authToken
-		]
+		request.headers = headers
+		request.headers["kuro-auth"] = self.userAuthToken
+
 		request.method = .get
 		request.parameters = [
 			"query": show
