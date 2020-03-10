@@ -18,7 +18,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
 	func deleteNotification(with notificationID: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let notificationsDelete = self.kurozoraEndpoints.notificationsDelete.replacingOccurrences(of: "?", with: "\(notificationID)")
+		let notificationsDelete = self.kurozoraKitEndpoints.notificationsDelete.replacingOccurrences(of: "?", with: "\(notificationID)")
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(notificationsDelete)
 
 		request.headers = headers
@@ -46,7 +46,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
 	func updateNotification(_ notificationID: String, withStatus read: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
-		let notificationsUpdate = self.kurozoraEndpoints.notificationsUpdate
+		let notificationsUpdate = self.kurozoraKitEndpoints.notificationsUpdate
 		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request(notificationsUpdate)
 
 		request.headers = headers

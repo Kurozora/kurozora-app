@@ -18,7 +18,7 @@ extension KurozoraKit {
 		- Parameter thread: The returned ForumsThreadElement object.
 	*/
 	func getDetails(forThread threadID: Int, withSuccess successHandler: @escaping (_ thread: ForumsThreadElement?) -> Void) {
-		let forumsThreads = self.kurozoraEndpoints.forumsThreads.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreads = self.kurozoraKitEndpoints.forumsThreads.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreads)
 
 		request.headers = headers
@@ -46,7 +46,7 @@ extension KurozoraKit {
 		- Parameter action: The integer indicating whether the thead is upvoted or downvoted.
 	*/
 	func vote(forThread threadID: Int, vote: Int, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
-		let forumsThreadsVote = self.kurozoraEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsVote = self.kurozoraKitEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsThreadsVote)
 
 		request.headers = headers
@@ -78,7 +78,7 @@ extension KurozoraKit {
 		- Parameter threadReplies: The returned ThreadReplies object.
 	*/
 	func getReplies(forThread threadID: Int, order: String, page: Int, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies?) -> Void) {
-		let forumsThreadsReplies = self.kurozoraEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ThreadReplies, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
@@ -110,7 +110,7 @@ extension KurozoraKit {
 		- Parameter replyID: The id of the newly created reply.
 	*/
 	func postReply(inThread threadID: Int, withComment comment: String, withSuccess successHandler: @escaping (_ replyID: Int) -> Void) {
-		let forumsThreadsReplies = self.kurozoraEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ThreadReply, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
@@ -140,7 +140,7 @@ extension KurozoraKit {
 		- Parameter search: The returned SearchElement array.
 	*/
 	func search(forThread thread: String, withSuccess successHandler: @escaping (_ search: [ForumsThreadElement]?) -> Void) {
-		let forumsThreadsSearch = self.kurozoraEndpoints.forumsThreadsSearch
+		let forumsThreadsSearch = self.kurozoraKitEndpoints.forumsThreadsSearch
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(forumsThreadsSearch)
 
 		request.headers = headers
@@ -171,7 +171,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether thread lock/unlock is successful.
 	*/
 	func lockThread(withID threadID: Int, lock: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let forumsThreadsLock = self.kurozoraEndpoints.forumsThreadsLock.replacingOccurrences(of: "?", with: "\(threadID)")
+		let forumsThreadsLock = self.kurozoraKitEndpoints.forumsThreadsLock.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreadsLock)
 
 		request.headers = headers

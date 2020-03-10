@@ -317,6 +317,7 @@
 		66BEC13723191E6D0039D683 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BEC13623191E6D0039D683 /* RatingCollectionViewCell.swift */; };
 		66C27A7123E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */; };
 		66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C2C5252107ACA10020E21F /* KTabBarController.swift */; };
+		66C3A5502417C32100E7C972 /* KurozoraKitEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C3A54F2417C32100E7C972 /* KurozoraKitEndpoints.swift */; };
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
 		66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* Legal.storyboard */; };
@@ -341,19 +342,19 @@
 		66CE8E3824086A1100052AE9 /* KurozoraKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66CE8E2324086A1000052AE9 /* KurozoraKit.framework */; };
 		66CE8E3924086A1100052AE9 /* KurozoraKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 66CE8E2324086A1000052AE9 /* KurozoraKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		66CE8E4024086A3E00052AE9 /* KurozoraKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6613F02320F6423000071CAE /* KurozoraKit.swift */; };
-		66CE8E4124086F2500052AE9 /* KService+Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDB2340BC0900A454DD /* KService+Episode.swift */; };
-		66CE8E4224086F2500052AE9 /* KService+Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDF2340BC4600A454DD /* KService+Feed.swift */; };
-		66CE8E4324086F2500052AE9 /* KService+Forums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE12340BC6A00A454DD /* KService+Forums.swift */; };
-		66CE8E4424086F2500052AE9 /* KService+Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDD2340BC2400A454DD /* KService+Genre.swift */; };
-		66CE8E4524086F2500052AE9 /* KService+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */; };
-		66CE8E4624086F2500052AE9 /* KService+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD42340BADA00A454DD /* KService+Notifications.swift */; };
-		66CE8E4724086F2500052AE9 /* KService+Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE52340BCCF00A454DD /* KService+Reply.swift */; };
-		66CE8E4824086F2500052AE9 /* KService+Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD92340BBB500A454DD /* KService+Season.swift */; };
-		66CE8E4924086F2500052AE9 /* KService+Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE72340BCF200A454DD /* KService+Session.swift */; };
-		66CE8E4A24086F2500052AE9 /* KService+Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD72340BB6A00A454DD /* KService+Show.swift */; };
-		66CE8E4B24086F2500052AE9 /* KService+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE92340BD2700A454DD /* KService+Theme.swift */; };
-		66CE8E4C24086F2500052AE9 /* KService+Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE32340BC9800A454DD /* KService+Thread.swift */; };
-		66CE8E4D24086F2500052AE9 /* KService+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DEB2340BD5200A454DD /* KService+User.swift */; };
+		66CE8E4124086F2500052AE9 /* KurozoraKit+Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDB2340BC0900A454DD /* KurozoraKit+Episode.swift */; };
+		66CE8E4224086F2500052AE9 /* KurozoraKit+Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDF2340BC4600A454DD /* KurozoraKit+Feed.swift */; };
+		66CE8E4324086F2500052AE9 /* KurozoraKit+Forums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE12340BC6A00A454DD /* KurozoraKit+Forums.swift */; };
+		66CE8E4424086F2500052AE9 /* KurozoraKit+Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DDD2340BC2400A454DD /* KurozoraKit+Genre.swift */; };
+		66CE8E4524086F2500052AE9 /* KurozoraKit+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DED2340BDB600A454DD /* KurozoraKit+Kurozora.swift */; };
+		66CE8E4624086F2500052AE9 /* KurozoraKit+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD42340BADA00A454DD /* KurozoraKit+Notifications.swift */; };
+		66CE8E4724086F2500052AE9 /* KurozoraKit+Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE52340BCCF00A454DD /* KurozoraKit+Reply.swift */; };
+		66CE8E4824086F2500052AE9 /* KurozoraKit+Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD92340BBB500A454DD /* KurozoraKit+Season.swift */; };
+		66CE8E4924086F2500052AE9 /* KurozoraKit+Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE72340BCF200A454DD /* KurozoraKit+Session.swift */; };
+		66CE8E4A24086F2500052AE9 /* KurozoraKit+Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DD72340BB6A00A454DD /* KurozoraKit+Show.swift */; };
+		66CE8E4B24086F2500052AE9 /* KurozoraKit+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE92340BD2700A454DD /* KurozoraKit+Theme.swift */; };
+		66CE8E4C24086F2500052AE9 /* KurozoraKit+Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DE32340BC9800A454DD /* KurozoraKit+Thread.swift */; };
+		66CE8E4D24086F2500052AE9 /* KurozoraKit+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC6DEB2340BD5200A454DD /* KurozoraKit+User.swift */; };
 		66CE8E4E24086F3500052AE9 /* BadgeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7B230F532500F9C726 /* BadgeElement.swift */; };
 		66CE8E4F24086F3500052AE9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E9FC621455F3100F6813C /* Cast.swift */; };
 		66CE8E5024086F3500052AE9 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE79216FF31D00655B99 /* Episodes.swift */; };
@@ -804,6 +805,7 @@
 		66BF02B6209CAACD00BDAF41 /* PostLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostLinkCell.xib; sourceTree = "<group>"; };
 		66C27A7023E243FB00BC09D3 /* LibraryStatisticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStatisticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		66C2C5252107ACA10020E21F /* KTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabBarController.swift; sourceTree = "<group>"; };
+		66C3A54F2417C32100E7C972 /* KurozoraKitEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraKitEndpoints.swift; sourceTree = "<group>"; };
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* Legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Legal.storyboard; sourceTree = "<group>"; };
@@ -877,19 +879,19 @@
 		66F944B222F0D11B009F1FE2 /* KWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWebViewController.swift; sourceTree = "<group>"; };
 		66FC6DCF233FE9C900A454DD /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		66FC6DD22340028D00A454DD /* AccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountSettings.storyboard; sourceTree = "<group>"; };
-		66FC6DD42340BADA00A454DD /* KService+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Notifications.swift"; sourceTree = "<group>"; };
-		66FC6DD72340BB6A00A454DD /* KService+Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Show.swift"; sourceTree = "<group>"; };
-		66FC6DD92340BBB500A454DD /* KService+Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Season.swift"; sourceTree = "<group>"; };
-		66FC6DDB2340BC0900A454DD /* KService+Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Episode.swift"; sourceTree = "<group>"; };
-		66FC6DDD2340BC2400A454DD /* KService+Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Genre.swift"; sourceTree = "<group>"; };
-		66FC6DDF2340BC4600A454DD /* KService+Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Feed.swift"; sourceTree = "<group>"; };
-		66FC6DE12340BC6A00A454DD /* KService+Forums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Forums.swift"; sourceTree = "<group>"; };
-		66FC6DE32340BC9800A454DD /* KService+Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Thread.swift"; sourceTree = "<group>"; };
-		66FC6DE52340BCCF00A454DD /* KService+Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Reply.swift"; sourceTree = "<group>"; };
-		66FC6DE72340BCF200A454DD /* KService+Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Session.swift"; sourceTree = "<group>"; };
-		66FC6DE92340BD2700A454DD /* KService+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Theme.swift"; sourceTree = "<group>"; };
-		66FC6DEB2340BD5200A454DD /* KService+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+User.swift"; sourceTree = "<group>"; };
-		66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KService+Kurozora.swift"; sourceTree = "<group>"; };
+		66FC6DD42340BADA00A454DD /* KurozoraKit+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Notifications.swift"; sourceTree = "<group>"; };
+		66FC6DD72340BB6A00A454DD /* KurozoraKit+Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Show.swift"; sourceTree = "<group>"; };
+		66FC6DD92340BBB500A454DD /* KurozoraKit+Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Season.swift"; sourceTree = "<group>"; };
+		66FC6DDB2340BC0900A454DD /* KurozoraKit+Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Episode.swift"; sourceTree = "<group>"; };
+		66FC6DDD2340BC2400A454DD /* KurozoraKit+Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Genre.swift"; sourceTree = "<group>"; };
+		66FC6DDF2340BC4600A454DD /* KurozoraKit+Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Feed.swift"; sourceTree = "<group>"; };
+		66FC6DE12340BC6A00A454DD /* KurozoraKit+Forums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Forums.swift"; sourceTree = "<group>"; };
+		66FC6DE32340BC9800A454DD /* KurozoraKit+Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Thread.swift"; sourceTree = "<group>"; };
+		66FC6DE52340BCCF00A454DD /* KurozoraKit+Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Reply.swift"; sourceTree = "<group>"; };
+		66FC6DE72340BCF200A454DD /* KurozoraKit+Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Session.swift"; sourceTree = "<group>"; };
+		66FC6DE92340BD2700A454DD /* KurozoraKit+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Theme.swift"; sourceTree = "<group>"; };
+		66FC6DEB2340BD5200A454DD /* KurozoraKit+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+User.swift"; sourceTree = "<group>"; };
+		66FC6DED2340BDB600A454DD /* KurozoraKit+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KurozoraKit+Kurozora.swift"; sourceTree = "<group>"; };
 		66FC6DF32342B79000A454DD /* UIStatusBarStyle+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStatusBarStyle+Theme.swift"; sourceTree = "<group>"; };
 		66FDDB7223B95AF600364886 /* UICollectionViewController+KCollectionViewDelegateLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+KCollectionViewDelegateLayout.swift"; sourceTree = "<group>"; };
 		66FE5CFE215B665200E2844A /* DebugSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -1199,6 +1201,7 @@
 		6622742D240FB7AC002CC263 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				66C3A54F2417C32100E7C972 /* KurozoraKitEndpoints.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -2224,19 +2227,19 @@
 		66FC6DD62340BB5100A454DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66FC6DDB2340BC0900A454DD /* KService+Episode.swift */,
-				66FC6DDF2340BC4600A454DD /* KService+Feed.swift */,
-				66FC6DE12340BC6A00A454DD /* KService+Forums.swift */,
-				66FC6DDD2340BC2400A454DD /* KService+Genre.swift */,
-				66FC6DED2340BDB600A454DD /* KService+Kurozora.swift */,
-				66FC6DD42340BADA00A454DD /* KService+Notifications.swift */,
-				66FC6DE52340BCCF00A454DD /* KService+Reply.swift */,
-				66FC6DD92340BBB500A454DD /* KService+Season.swift */,
-				66FC6DE72340BCF200A454DD /* KService+Session.swift */,
-				66FC6DD72340BB6A00A454DD /* KService+Show.swift */,
-				66FC6DE92340BD2700A454DD /* KService+Theme.swift */,
-				66FC6DE32340BC9800A454DD /* KService+Thread.swift */,
-				66FC6DEB2340BD5200A454DD /* KService+User.swift */,
+				66FC6DDB2340BC0900A454DD /* KurozoraKit+Episode.swift */,
+				66FC6DDF2340BC4600A454DD /* KurozoraKit+Feed.swift */,
+				66FC6DE12340BC6A00A454DD /* KurozoraKit+Forums.swift */,
+				66FC6DDD2340BC2400A454DD /* KurozoraKit+Genre.swift */,
+				66FC6DED2340BDB600A454DD /* KurozoraKit+Kurozora.swift */,
+				66FC6DD42340BADA00A454DD /* KurozoraKit+Notifications.swift */,
+				66FC6DE52340BCCF00A454DD /* KurozoraKit+Reply.swift */,
+				66FC6DD92340BBB500A454DD /* KurozoraKit+Season.swift */,
+				66FC6DE72340BCF200A454DD /* KurozoraKit+Session.swift */,
+				66FC6DD72340BB6A00A454DD /* KurozoraKit+Show.swift */,
+				66FC6DE92340BD2700A454DD /* KurozoraKit+Theme.swift */,
+				66FC6DE32340BC9800A454DD /* KurozoraKit+Thread.swift */,
+				66FC6DEB2340BD5200A454DD /* KurozoraKit+User.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2372,7 +2375,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = Kurozora;
 				TargetAttributes = {
 					66647B4F2084995500CF624F = {
@@ -3014,37 +3017,38 @@
 				66CE8E4024086A3E00052AE9 /* KurozoraKit.swift in Sources */,
 				66CE8E5124086F3500052AE9 /* EpisodesWatched.swift in Sources */,
 				66CE8E5624086F3500052AE9 /* ForumsSections.swift in Sources */,
-				66CE8E4C24086F2500052AE9 /* KService+Thread.swift in Sources */,
+				66CE8E4C24086F2500052AE9 /* KurozoraKit+Thread.swift in Sources */,
 				66CE8E5524086F3500052AE9 /* FeedSections.swift in Sources */,
 				66CE8E5024086F3500052AE9 /* Episodes.swift in Sources */,
 				66CE8E6724086F3500052AE9 /* VoteThread.swift in Sources */,
 				66CE8E5924086F3500052AE9 /* JSONError.swift in Sources */,
-				66CE8E4624086F2500052AE9 /* KService+Notifications.swift in Sources */,
+				66CE8E4624086F2500052AE9 /* KurozoraKit+Notifications.swift in Sources */,
 				66CE8E5724086F3500052AE9 /* ForumsThread.swift in Sources */,
 				66CE8E5C24086F3500052AE9 /* Search.swift in Sources */,
 				66CE8E5324086F3500052AE9 /* FavoriteShow.swift in Sources */,
 				66CE8E5824086F3500052AE9 /* Genres.swift in Sources */,
-				66CE8E4824086F2500052AE9 /* KService+Season.swift in Sources */,
+				66CE8E4824086F2500052AE9 /* KurozoraKit+Season.swift in Sources */,
 				66CE8E6324086F3500052AE9 /* ThreadReply.swift in Sources */,
 				66CE8E6624086F3500052AE9 /* UserNotification.swift in Sources */,
 				66CE8E6024086F3500052AE9 /* Themes.swift in Sources */,
 				66CE8E6B2408820600052AE9 /* Library.swift in Sources */,
-				66CE8E4724086F2500052AE9 /* KService+Reply.swift in Sources */,
+				66CE8E4724086F2500052AE9 /* KurozoraKit+Reply.swift in Sources */,
 				66CE8E5B24086F3500052AE9 /* PrivacyPolicy.swift in Sources */,
 				66CE8E5D24086F3500052AE9 /* Seasons.swift in Sources */,
 				66CE8E5F24086F3500052AE9 /* ShowDetails.swift in Sources */,
 				66CE8E5E24086F3500052AE9 /* Session.swift in Sources */,
 				66CE8E6424086F3500052AE9 /* User.swift in Sources */,
-				66CE8E4924086F2500052AE9 /* KService+Session.swift in Sources */,
-				66CE8E4D24086F2500052AE9 /* KService+User.swift in Sources */,
-				66CE8E4224086F2500052AE9 /* KService+Feed.swift in Sources */,
+				66CE8E4924086F2500052AE9 /* KurozoraKit+Session.swift in Sources */,
+				66CE8E4D24086F2500052AE9 /* KurozoraKit+User.swift in Sources */,
+				66CE8E4224086F2500052AE9 /* KurozoraKit+Feed.swift in Sources */,
 				66CE8E4E24086F3500052AE9 /* BadgeElement.swift in Sources */,
-				66CE8E4A24086F2500052AE9 /* KService+Show.swift in Sources */,
-				66CE8E4524086F2500052AE9 /* KService+Kurozora.swift in Sources */,
-				66CE8E4424086F2500052AE9 /* KService+Genre.swift in Sources */,
-				66CE8E4B24086F2500052AE9 /* KService+Theme.swift in Sources */,
-				66CE8E4124086F2500052AE9 /* KService+Episode.swift in Sources */,
-				66CE8E4324086F2500052AE9 /* KService+Forums.swift in Sources */,
+				66CE8E4A24086F2500052AE9 /* KurozoraKit+Show.swift in Sources */,
+				66CE8E4524086F2500052AE9 /* KurozoraKit+Kurozora.swift in Sources */,
+				66C3A5502417C32100E7C972 /* KurozoraKitEndpoints.swift in Sources */,
+				66CE8E4424086F2500052AE9 /* KurozoraKit+Genre.swift in Sources */,
+				66CE8E4B24086F2500052AE9 /* KurozoraKit+Theme.swift in Sources */,
+				66CE8E4124086F2500052AE9 /* KurozoraKit+Episode.swift in Sources */,
+				66CE8E4324086F2500052AE9 /* KurozoraKit+Forums.swift in Sources */,
 				66CE8E5224086F3500052AE9 /* Explore.swift in Sources */,
 				66CE8E6524086F3500052AE9 /* UserFollow.swift in Sources */,
 				66CE8E6224086F3500052AE9 /* ThreadReplies.swift in Sources */,
@@ -3249,6 +3253,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_BITCODE = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
@@ -3287,6 +3292,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_BITCODE = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
@@ -3315,7 +3321,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01C3B6E180B1386C434F51B8 /* Pods-KurozoraKit.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -3345,7 +3351,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 737689E9E0DAAABD1B6489DE /* Pods-KurozoraKit.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

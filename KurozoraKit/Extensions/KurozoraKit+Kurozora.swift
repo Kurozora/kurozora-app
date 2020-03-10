@@ -17,7 +17,7 @@ extension KurozoraKit {
 		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
 	*/
 	func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
-		let privacyPolicy = self.kurozoraEndpoints.privacyPolicy
+		let privacyPolicy = self.kurozoraKitEndpoints.privacyPolicy
 		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request(privacyPolicy)
 		request.headers = headers
 		request.method = .get

@@ -20,7 +20,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
 	func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let sessions = self.kurozoraEndpoints.sessions
+		let sessions = self.kurozoraKitEndpoints.sessions
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
 		request.method = .post
@@ -53,7 +53,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let sessionsUpdate = self.kurozoraEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let sessionsUpdate = self.kurozoraKitEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsUpdate)
 
 		request.headers = headers
@@ -82,7 +82,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
 	func validateSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let sessionsValidate = self.kurozoraEndpoints.sessionsValidate.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let sessionsValidate = self.kurozoraKitEndpoints.sessionsValidate.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsValidate)
 
 		request.headers = headers
@@ -108,7 +108,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
 	*/
 	func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let sessionsDelete = self.kurozoraEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
@@ -135,7 +135,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
 	*/
 	func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
-		let sessionsDelete = self.kurozoraEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
+		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers

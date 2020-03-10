@@ -17,7 +17,7 @@ extension KurozoraKit {
 		- Parameter forumSections: The returned ForumsSectionsElement array.
 	*/
 	func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumsSectionsElement]?) -> Void) {
-		let forumsSections = self.kurozoraEndpoints.forumsSections
+		let forumsSections = self.kurozoraKitEndpoints.forumsSections
 		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request(forumsSections)
 		request.headers = headers
 		request.method = .get
@@ -43,7 +43,7 @@ extension KurozoraKit {
 		- Parameter forumThreads: The returned ForumsThread array.
 	*/
 	func getForumsThreads(for sectionID: Int, order: String, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumsThread?) -> Void) {
-		let forumsSectionsThreads = self.kurozoraEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
@@ -76,7 +76,7 @@ extension KurozoraKit {
 		- Parameter threadID: The id of the newly created thread.
 	*/
 	func postThread(inSection sectionID: Int, withTitle title: String, content: String, withSuccess successHandler: @escaping (_ threadID: Int) -> Void) {
-		let forumsSectionsThreads = self.kurozoraEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers

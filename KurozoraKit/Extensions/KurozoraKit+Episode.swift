@@ -19,7 +19,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether watch/unwatch is successful.
 	*/
 	func mark(asWatched watched: Int, forEpisode episodeID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let animeEpisodesWatched = self.kurozoraEndpoints.animeEpisodesWatched.replacingOccurrences(of: "?", with: "\(episodeID)")
+		let animeEpisodesWatched = self.kurozoraKitEndpoints.animeEpisodesWatched.replacingOccurrences(of: "?", with: "\(episodeID)")
 		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request(animeEpisodesWatched)
 
 		request.headers = headers

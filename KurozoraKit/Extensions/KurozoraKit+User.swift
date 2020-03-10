@@ -21,7 +21,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
 	func register(withUsername username: String, emailAddress: String, password: String, profileImage: UIImage, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let users = self.kurozoraEndpoints.users
+		let users = self.kurozoraKitEndpoints.users
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart(users) { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
@@ -57,7 +57,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether registration is successful.
 	*/
 	func signInWithApple(usingIDToken idToken: String, authorizationCode: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let usersRegisterSIWA = self.kurozoraEndpoints.usersRegisterSIWA
+		let usersRegisterSIWA = self.kurozoraKitEndpoints.usersRegisterSIWA
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(usersRegisterSIWA)
 		request.headers = headers
 		request.method = .post
@@ -87,7 +87,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether reset password request is successful.
 	*/
 	func resetPassword(forEmailAddress emailAddress: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let usersResetPassword = self.kurozoraEndpoints.usersResetPassword
+		let usersResetPassword = self.kurozoraKitEndpoints.usersResetPassword
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(usersResetPassword)
 		request.headers = headers
 		request.method = .post
@@ -118,7 +118,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A User object containing the updated information.
 	*/
 	func updateInformation(forUserID userID: Int, bio: String, profileImage: UIImage, bannerImage: UIImage, withSuccess successHandler: @escaping (_ isSuccess: User?) -> Void) {
-		let usersProfile = self.kurozoraEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersProfile = self.kurozoraKitEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: UploadAPIRequest<User, JSONError> = tron.swiftyJSON.uploadMultipart(usersProfile) { (formData) in
 			if let profileImage = profileImage.jpegData(compressionQuality: 0.1) {
 				formData.append(profileImage, withName: "profileImage", fileName: "ProfileImage.png", mimeType: "image/png")
@@ -161,7 +161,7 @@ extension KurozoraKit {
 		- Parameter userSessions: The returned UserSessions object.
 	*/
 	func getSessions(forUserID userID: Int, withSuccess successHandler: @escaping (_ userSessions: UserSessions?) -> Void) {
-		let usersSessions = self.kurozoraEndpoints.usersSessions.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersSessions = self.kurozoraKitEndpoints.usersSessions.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(usersSessions)
 
 		request.headers = headers
@@ -191,7 +191,7 @@ extension KurozoraKit {
 		- Parameter library: The returned LibraryElement array.
 	*/
 	func getLibrary(forUserID userID: Int, withStatus status: Library.Status, withSortType sortType: Library.SortType, withSortOption sortOption: Library.SortType.Options, withSuccess successHandler: @escaping (_ library: [ShowDetailsElement]?) -> Void) {
-		let usersLibrary = self.kurozoraEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersLibrary = self.kurozoraKitEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
 
 		request.headers = headers
@@ -226,7 +226,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether adding show to library is successful.
 	*/
 	func addToLibrary(forUserID userID: Int, withStatus status: Library.Status, showID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let usersLibrary = self.kurozoraEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersLibrary = self.kurozoraKitEndpoints.usersLibrary.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
 
 		request.headers = headers
@@ -258,7 +258,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	*/
 	func removeFromLibrary(forUserID userID: Int, showID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let usersLibraryDelete = self.kurozoraEndpoints.usersLibraryDelete.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersLibraryDelete = self.kurozoraKitEndpoints.usersLibraryDelete.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibraryDelete)
 
 		request.headers = headers
@@ -290,7 +290,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether removing show from library is successful.
 	*/
 	func importMALLibrary(forUserID userID: Int, filePath: URL, behavior: MALImport.Behavior, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let usersLibraryMALImport = self.kurozoraEndpoints.usersLibraryMALImport.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersLibraryMALImport = self.kurozoraKitEndpoints.usersLibraryMALImport.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: UploadAPIRequest<MALImport, JSONError> = tron.swiftyJSON.uploadMultipart(usersLibraryMALImport) { formData in
 			formData.append(filePath, withName: "file", fileName: "MALAnimeImport.xml", mimeType: "text/xml")
 		}
@@ -325,7 +325,7 @@ extension KurozoraKit {
 		- Parameter favorites: The returned ShowDetailsElement array.
 	*/
 	func getFavourites(forUserID userID: Int, withSuccess successHandler: @escaping (_ favorites: [ShowDetailsElement]?) -> Void) {
-		let usersFavoriteAnime = self.kurozoraEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersFavoriteAnime = self.kurozoraKitEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
 
 		request.headers = headers
@@ -354,7 +354,7 @@ extension KurozoraKit {
 		- Parameter isFavorite: The returned integer value indicating whether the show is favorited. (0 = false, 1 = true)
 	*/
 	func updateFavoriteStatus(forUserID userID: Int, forShow showID: Int, isFavorite: Int, withSuccess successHandler: @escaping (_ isFavorite: Int?) -> Void) {
-		let usersFavoriteAnime = self.kurozoraEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersFavoriteAnime = self.kurozoraKitEndpoints.usersFavoriteAnime.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<FavoriteShow, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
 
 		request.headers = headers
@@ -385,7 +385,7 @@ extension KurozoraKit {
 		- Parameter user: The returned User object.
 	*/
 	func getProfile(forUserID userID: Int, withSuccess successHandler: @escaping (_ user: User?) -> Void) {
-		let usersProfile = self.kurozoraEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersProfile = self.kurozoraKitEndpoints.usersProfile.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(usersProfile)
 
 		request.headers = headers
@@ -412,7 +412,7 @@ extension KurozoraKit {
 		- Parameter userNotifications: The returned UserNotificationsElement array.
 	*/
 	func getNotifications(forUserID userID: Int, withSuccess successHandler: @escaping (_ userNotifications: [UserNotificationsElement]?) -> Void) {
-		let usersNotifications = self.kurozoraEndpoints.usersNotifications.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersNotifications = self.kurozoraKitEndpoints.usersNotifications.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(usersNotifications)
 
 		request.headers = headers
@@ -439,7 +439,7 @@ extension KurozoraKit {
 		- Parameter search: The returned SearchElement array.
 	*/
 	func search(forUsername username: String, withSuccess successHandler: @escaping (_ search: [UserProfile]?) -> Void) {
-		let usersSearch = self.kurozoraEndpoints.usersSearch
+		let usersSearch = self.kurozoraKitEndpoints.usersSearch
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(usersSearch)
 
 		request.headers = headers
@@ -470,7 +470,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether follow/unfollow is successful.
 	*/
 	func follow(userID: Int, _ follow: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
-		let usersFollow = self.kurozoraEndpoints.usersFolllow.replacingOccurrences(of: "?", with: "\(userID)")
+		let usersFollow = self.kurozoraKitEndpoints.usersFolllow.replacingOccurrences(of: "?", with: "\(userID)")
 		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollow)
 
 		request.headers = headers
@@ -502,7 +502,7 @@ extension KurozoraKit {
 		- Parameter userFollow: The returned UserFollow object.
 	*/
 	func getFollow(forUserID userID: Int, list: String, page: Int, withSuccess successHandler: @escaping (_ userFollow: UserFollow?) -> Void) {
-		var usersFollowerOrFollowing = list.lowercased() == "following" ? self.kurozoraEndpoints.usersFollowing : self.kurozoraEndpoints.usersFollower
+		var usersFollowerOrFollowing = list.lowercased() == "following" ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollower
 		usersFollowerOrFollowing = usersFollowerOrFollowing.replacingOccurrences(of: "?", with: "\(userID)")
 
 		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollowerOrFollowing)

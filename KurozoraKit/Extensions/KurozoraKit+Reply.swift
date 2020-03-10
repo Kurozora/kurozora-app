@@ -19,7 +19,7 @@ extension KurozoraKit {
 		- Parameter action: The integer indicating whether the reply is upvoted or downvoted.
 	*/
 	func vote(forReply replyID: Int, vote: Int, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
-		let forumsRepliesVote = self.kurozoraEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
+		let forumsRepliesVote = self.kurozoraKitEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsRepliesVote)
 
 		request.headers = headers

@@ -17,7 +17,7 @@ extension KurozoraKit {
 		- Parameter explore: The returned Explore object.
 	*/
 	func getExplore(withSuccess successHandler: @escaping (_ explore: Explore?) -> Void) {
-		let explore = self.kurozoraEndpoints.explore
+		let explore = self.kurozoraKitEndpoints.explore
 		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request(explore)
 
 		request.headers = headers
@@ -44,7 +44,7 @@ extension KurozoraKit {
 		- Parameter showDetailsElement: The returned ShowDetailsElement object.
 	*/
 	func getDetails(forShow showID: Int, withSuccess successHandler: @escaping (_ showDetailsElement: ShowDetailsElement) -> Void) {
-		let anime = self.kurozoraEndpoints.anime.replacingOccurrences(of: "?", with: "\(showID)")
+		let anime = self.kurozoraKitEndpoints.anime.replacingOccurrences(of: "?", with: "\(showID)")
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(anime)
 
 		request.headers = headers
@@ -71,7 +71,7 @@ extension KurozoraKit {
 		- Parameter actors: The returned ActorsElement array.
 	*/
 	func getCastFor(_ showID: Int, withSuccess successHandler: @escaping (_ actors: [ActorsElement]?) -> Void) {
-		let animeActors = self.kurozoraEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
+		let animeActors = self.kurozoraKitEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
 		let request: APIRequest<Actors, JSONError> = tron.swiftyJSON.request(animeActors)
 		request.headers = headers
 		request.method = .get
@@ -95,7 +95,7 @@ extension KurozoraKit {
 		- Parameter seasons: The returned SeasonsElement array.
 	*/
 	func getSeasonsFor(_ showID: Int, withSuccess successHandler: @escaping (_ seasons: [SeasonsElement]?) -> Void) {
-		let animeSeasons = self.kurozoraEndpoints.animeSeasons.replacingOccurrences(of: "?", with: "\(showID)")
+		let animeSeasons = self.kurozoraKitEndpoints.animeSeasons.replacingOccurrences(of: "?", with: "\(showID)")
 		let request: APIRequest<Seasons, JSONError> = tron.swiftyJSON.request(animeSeasons)
 		request.headers = headers
 		request.method = .get
@@ -120,7 +120,7 @@ extension KurozoraKit {
 		- Parameter isSuccess: A boolean value indicating whether rating is successful.
 	*/
 	func rateShow(_ showID: Int, with score: Double, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let animeRate = self.kurozoraEndpoints.animeRate.replacingOccurrences(of: "?", with: "\(showID)")
+		let animeRate = self.kurozoraKitEndpoints.animeRate.replacingOccurrences(of: "?", with: "\(showID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(animeRate)
 
 		request.headers = headers
@@ -150,7 +150,7 @@ extension KurozoraKit {
 		- Parameter search: The returned SearchElement array.
 	*/
 	func search(forShow show: String, withSuccess successHandler: @escaping (_ search: [ShowDetailsElement]?) -> Void) {
-		let animeSearch = self.kurozoraEndpoints.animeSearch
+		let animeSearch = self.kurozoraKitEndpoints.animeSearch
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(animeSearch)
 
 		request.headers = headers

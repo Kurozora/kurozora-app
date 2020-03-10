@@ -18,7 +18,7 @@ extension KurozoraKit {
 		- Parameter episodes: The returned Episodes object.
 	*/
 	func getEpisodes(forSeasonID seasonID: Int, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
-		let animeSeasonsEpisodes = self.kurozoraEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
+		let animeSeasonsEpisodes = self.kurozoraKitEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
 		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
 		request.headers = headers
