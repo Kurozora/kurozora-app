@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftTheme
 
 class FeedTableViewController: KTableViewController {
@@ -80,7 +81,7 @@ class FeedTableViewController: KTableViewController {
 	func fetchFeedPosts() {
 		guard let sectionID = sectionID else { return }
 
-		KService.shared.getFeedPosts(for: sectionID, page: pageNumber, withSuccess: { (feed) in
+		KService.getFeedPosts(forSection: sectionID, page: pageNumber, withSuccess: { (feed) in
 			DispatchQueue.main.async {
 				if let feedPages = feed?.feedPages {
 					self.totalPages = feedPages

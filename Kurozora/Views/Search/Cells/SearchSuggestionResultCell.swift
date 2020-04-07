@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class SearchSuggestionResultCell: UICollectionViewCell {
 	// MARK: - IBOutlets

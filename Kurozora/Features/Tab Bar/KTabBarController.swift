@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import ESTabBarController_swift
 
 class KTabBarController: ESTabBarController {

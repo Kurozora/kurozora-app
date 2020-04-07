@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int?
+	var showID: Int = 0
 	var actorsElements: [ActorsElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
@@ -60,7 +61,7 @@ class CastCollectionViewController: KCollectionViewController {
 
 	/// Fetch actors for the current show.
 	fileprivate func fetchActors() {
-		KService.shared.getCastFor(showID, withSuccess: { (actors) in
+		KService.getCast(forShowID: showID, withSuccess: { (actors) in
 			DispatchQueue.main.async {
 				self.actorsElements = actors
 			}

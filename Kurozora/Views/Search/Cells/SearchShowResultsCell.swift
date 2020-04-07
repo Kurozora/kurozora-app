@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Cosmos
 
 class SearchShowResultsCell: SearchBaseResultsCell {
@@ -88,17 +89,19 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		super.actionButtonPressed(sender)
 
 		WorkflowController.shared.isSignedIn {
-			guard let libraryStatus = self.showDetailsElement?.currentUser?.libraryStatus else { return }
-			let action = UIAlertController.actionSheetWithItems(items: Library.Section.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
-				guard let showID = self.showDetailsElement?.id else { return }
+			guard let libraryStatusString = self.showDetailsElement?.currentUser?.libraryStatus else { return }
+			guard let showID = self.showDetailsElement?.id else { return }
+			guard let userID = User().current?.id else { return }
 
+			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
+			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
-					KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+					KService.addToLibrary(forUserID: userID, withLibraryStatus: libraryStatus, showID: showID, withSuccess: { (success) in
 						if success {
 							// Update entry in library
-							self.showDetailsElement?.currentUser?.libraryStatus = value
+							self.showDetailsElement?.currentUser?.libraryStatus = value.stringValue
 
-							let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
+							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 							self.actionButton?.setTitle("\(title) ▾", for: .normal)
@@ -107,9 +110,9 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 				}
 			})
 
-			if let libraryStatus = self.showDetailsElement?.currentUser?.libraryStatus, !libraryStatus.isEmpty {
+			if !libraryStatusString.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
+					KService.removeFromLibrary(forUserID: userID, showID: showID, withSuccess: { (success) in
 						if success {
 							self.showDetailsElement?.currentUser?.libraryStatus = ""
 							self.actionButton?.setTitle("ADD", for: .normal)

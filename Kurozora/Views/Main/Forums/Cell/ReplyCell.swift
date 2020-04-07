@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class ReplyCell: UITableViewCell {
 	@IBOutlet weak var profileImageView: UIImageView! {
@@ -125,20 +126,22 @@ class ReplyCell: UITableViewCell {
 		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
 	*/
 	fileprivate func voteForReply(with vote: Int) {
-		WorkflowController.shared.isSignedIn {
-			guard let threadRepliesElement = self.threadRepliesElement else { return }
-			guard var replyScore = threadRepliesElement.score else { return }
+		guard let voteStatus: VoteStatus = VoteStatus(rawValue: vote) else { return }
+		guard let replyID = self.threadRepliesElement?.id else { return }
 
-			KService.shared.vote(forReply: threadRepliesElement.id, vote: vote) { action in
+		WorkflowController.shared.isSignedIn {
+			guard var replyScore = self.threadRepliesElement?.score else { return }
+
+			KService.voteOnReply(replyID, withVoteStatus: voteStatus) { voteStatus in
 				DispatchQueue.main.async {
-					if action == 1 { // upvote
+					if voteStatus == .upVote {
 						replyScore += 1
 						self.upvoteButton.tintColor = .kGreen
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if action == 0 { // no vote
+					} else if voteStatus == .noVote {
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if action == -1 { // downvote
+					} else if voteStatus == .downVote {
 						replyScore -= 1
 						self.downvoteButton.tintColor = .kLightRed
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue

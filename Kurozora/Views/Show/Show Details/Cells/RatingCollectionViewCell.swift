@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import KurozoraKit
 import Cosmos
 import SCLAlertView
 
 class RatingCollectionViewCell: UICollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var cosmosView: CosmosView!
 	@IBOutlet weak var cosmosDetailLabel: UILabel! {
 		didSet {
@@ -28,6 +30,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
+	// MARK: - Properties
 	var showDetailsElement: ShowDetailsElement? {
 		didSet {
 			configureCell()
@@ -73,7 +76,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	func rateShow(with rating: Double) {
 		guard let showID = showDetailsElement?.id else { return }
 
-		KService.shared.rateShow(showID, with: rating, withSuccess: { (success) in
+		KService.rateShow(showID, with: rating, withSuccess: { (success) in
 			if success {
 				// Update current rating for the user.
 				self.showDetailsElement?.currentUser?.currentRating = rating

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import FLAnimatedImage
 import Kingfisher
 import SCLAlertView
@@ -100,7 +101,7 @@ class ProfileTableViewController: KTableViewController {
 			self.tableView.reloadData()
 		}
 	}
-	var userID: Int?
+	var userID: Int? = nil
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
 			if dismissButtonIsEnabled {
@@ -139,7 +140,7 @@ class ProfileTableViewController: KTableViewController {
 		self.view.layoutIfNeeded()
 
 		// Fetch user details
-		fetchUserDetails(for: userID ?? User.currentID)
+		fetchUserDetails(for: userID ?? User().current?.id)
 
 		// Setup refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -163,7 +164,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
-			let detailLabel = self.userID == User.currentID || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+			let detailLabel = self.userID == User().current?.id || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -202,7 +203,8 @@ class ProfileTableViewController: KTableViewController {
 	*/
 	private func fetchUserDetails(for userID: Int?) {
 		guard let userID = userID else { return }
-		KService.shared.getUserProfile(userID, withSuccess: { user in
+
+		KService.getProfile(forUserID: userID, withSuccess: { user in
 			DispatchQueue.main.async {
 				self.user = user
 			}
@@ -291,7 +293,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Setup follow button
-		if self.userID == User.currentID || self.userID == nil {
+		if self.userID == User().current?.id || self.userID == nil {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
@@ -455,9 +457,9 @@ class ProfileTableViewController: KTableViewController {
 		- Parameter sender: The object requesting the changes to be applied.
 	*/
 	@objc func applyProfileEdit(_ sender: UIBarButtonItem) {
-		let bioText = bioTextView.text
-		var profileImage = profileImageView.image
-		var bannerImage = bannerImageView.image
+		let bioText = bioTextView.text.trimmed
+		var profileImage = profileImageView.image ?? UIImage()
+		var bannerImage = bannerImageView.image ?? UIImage()
 		var shouldUpdate = true
 		var shouldUpdateProfileImage = true
 
@@ -467,7 +469,7 @@ class ProfileTableViewController: KTableViewController {
 			self.editMode(shouldUpdate)
 		}
 
-		// If the profile image the same, then ignore.
+		// If the profile image is the same, then ignore.
 		if self.profileImageCache == profileImage {
 			profileImage = UIImage()
 			shouldUpdateProfileImage = false
@@ -484,7 +486,7 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.shared.updateInformation(for: bioText, username: nil, profileImage: profileImage, bannerImage: bannerImage) { (user) in
+			KService.updateInformation(forUserID: 0, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (user) in
 				if let success = user?.success {
 					self.editMode(!success)
 					if let profileImage = user?.profile?.profileImage, shouldUpdateProfileImage {
@@ -515,6 +517,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
+		guard let userID = self.userID else { return }
 		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
 			favoriteShowsCollectionViewController.userID = userID
 			favoriteShowsCollectionViewController.username = user?.profile?.username
@@ -563,11 +566,12 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let follow = self.user?.profile?.following ?? false ? 0 : 1
+			guard let userID = self.userID else { return }
+			let followStatus: FollowStatus = self.user?.profile?.following ?? false ? .unfollow : .follow
 
-			KService.shared.follow(follow, user: self.userID) { (success) in
+			KService.updateFollowStatus(userID, withFollowStatus: followStatus) { (success) in
 				if success {
-					if follow == 0 {
+					if followStatus == .unfollow {
 						sender.setTitle("＋ Follow", for: .normal)
 						self.user?.profile?.following = false
 					} else {
@@ -609,9 +613,9 @@ class ProfileTableViewController: KTableViewController {
 			followTableViewController.user = user?.profile
 
 			if segue.identifier == R.segue.profileTableViewController.followingSegue.identifier {
-				followTableViewController.followList = "Following"
+				followTableViewController.followList = .following
 			} else if segue.identifier == R.segue.profileTableViewController.followersSegue.identifier {
-				followTableViewController.followList = "Followers"
+				followTableViewController.followList = .followers
 			}
 		}
 	}

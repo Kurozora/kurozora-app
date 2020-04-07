@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Tabman
 import Pageboy
 import SCLAlertView
@@ -18,14 +19,14 @@ protocol LibraryViewControllerDelegate: class {
 
 		- Parameter sortType: The sort type by which the library should be sorted.
 	*/
-	func sortLibrary(by sortType: Library.SortType, option: Library.SortType.Options)
+	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options)
 
 	/**
 		Tells your LibraryViewControllerDelegate the current sort value used to sort the items in the library.
 
 		- Returns: The current sort value used to sort the items in the library.
 	*/
-	func sortValue() -> Library.SortType
+	func sortValue() -> KKLibrary.SortType
 }
 
 class LibraryViewController: TabmanViewController {
@@ -184,16 +185,16 @@ class LibraryViewController: TabmanViewController {
 
         for index in 0 ..< count {
 			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
-				let sectionTitle = Library.Section.all[index].sectionValue
+				let libraryStatus = KKLibrary.Status.all[index]
 
 				// Get the user's preferred library layout
 				let libraryLayouts = UserSettings.libraryCellStyles
-				let preferredLayout = libraryLayouts[sectionTitle] ?? 0
-				if let libraryCellStyle = Library.CellStyle(rawValue: preferredLayout) {
+				let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
+				if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
 					libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
 				}
 
-				libraryListCollectionViewController.sectionTitle = sectionTitle
+				libraryListCollectionViewController.libraryStatus = libraryStatus
 				libraryListCollectionViewController.sectionIndex = index
 				libraryListCollectionViewController.delegate = self
 				viewControllers.append(libraryListCollectionViewController)
@@ -204,14 +205,14 @@ class LibraryViewController: TabmanViewController {
     }
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
-	fileprivate func updateChangeLayoutBarButtonItem(_ cellStyle: Library.CellStyle) {
+	fileprivate func updateChangeLayoutBarButtonItem(_ cellStyle: KKLibrary.CellStyle) {
 		changeLayoutBarButtonItem.tag = cellStyle.rawValue
 		changeLayoutBarButtonItem.title = cellStyle.stringValue
 		changeLayoutBarButtonItem.image = cellStyle.imageValue
 	}
 
 	/// Updates the sort type button icon to reflect the current sort type when switching between views.
-	fileprivate func updateSortTypeBarButtonItem(_ sortType: Library.SortType) {
+	fileprivate func updateSortTypeBarButtonItem(_ sortType: KKLibrary.SortType) {
 		sortTypeBarButtonItem.tag = sortType.rawValue
 		sortTypeBarButtonItem.title = sortType.stringValue
 		sortTypeBarButtonItem.image = sortType.imageValue
@@ -220,7 +221,7 @@ class LibraryViewController: TabmanViewController {
 	fileprivate func savePreferredCellStyle(for currentSection: LibraryListCollectionViewController) {
 		let libraryLayouts = UserSettings.libraryCellStyles
 		var newLibraryLayouts = libraryLayouts
-		newLibraryLayouts[currentSection.sectionTitle] = changeLayoutBarButtonItem.tag
+		newLibraryLayouts[currentSection.libraryStatus.sectionValue] = changeLayoutBarButtonItem.tag
 		UserSettings.set(newLibraryLayouts, forKey: .libraryCellStyles)
 	}
 
@@ -242,7 +243,7 @@ class LibraryViewController: TabmanViewController {
 	/// Changes the layout between the available library cell styles.
 	fileprivate func changeLayout() {
 		guard let currentSection = self.currentViewController as? LibraryListCollectionViewController else { return }
-		var libraryCellStyle: Library.CellStyle = Library.CellStyle(rawValue: changeLayoutBarButtonItem.tag) ?? .detailed
+		var libraryCellStyle: KKLibrary.CellStyle = KKLibrary.CellStyle(rawValue: changeLayoutBarButtonItem.tag) ?? .detailed
 
 		// Change button information
 		libraryCellStyle = libraryCellStyle.next
@@ -275,7 +276,7 @@ class LibraryViewController: TabmanViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: Library.SortType.alertControllerItems) { (_, value) in
+		let action = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems) { (_, value) in
 			let action = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, action: { (_, subValue) in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			})
@@ -328,11 +329,11 @@ class LibraryViewController: TabmanViewController {
 
 // MARK: - LibraryListViewControllerDelegate
 extension LibraryViewController: LibraryListViewControllerDelegate {
-	func updateChangeLayoutButton(with cellStyle: Library.CellStyle) {
+	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle) {
 		updateChangeLayoutBarButtonItem(cellStyle)
 	}
 
-	func updateSortTypeButton(with sortType: Library.SortType) {
+	func updateSortTypeButton(with sortType: KKLibrary.SortType) {
 		updateSortTypeBarButtonItem(sortType)
 		changeSortType()
 	}
@@ -341,7 +342,7 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 // MARK: - PageboyViewControllerDataSource
 extension LibraryViewController: PageboyViewControllerDataSource {
 	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = User.isSignedIn ? Library.Section.all.count : 1
+		let sectionsCount = User.isSignedIn ? KKLibrary.Status.all.count : 1
 		initializeViewControllers(with: sectionsCount)
 		return sectionsCount
 	}
@@ -358,7 +359,7 @@ extension LibraryViewController: PageboyViewControllerDataSource {
 // MARK: - TMBarDataSource
 extension LibraryViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		let sectionTitle = Library.Section.all[index].stringValue
+		let sectionTitle = KKLibrary.Status.all[index].stringValue
 		return TMBarItem(title: sectionTitle)
 	}
 }

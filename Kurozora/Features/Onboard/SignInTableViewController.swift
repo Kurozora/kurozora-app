@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import AuthenticationServices
 import SCLAlertView
 
@@ -43,17 +44,16 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		let kurozoraID = textFieldArray.first??.trimmedText
-		let password = textFieldArray.last??.text
+		guard let kurozoraID = textFieldArray.first??.trimmedText else { return }
+		guard let password = textFieldArray.last??.text else { return }
 		#if targetEnvironment(macCatalyst)
 		let platform = " on macOS "
 		#else
 		let platform = " on iOS "
 		#endif
-
 		let device = UIDevice.modelName + platform + UIDevice.current.systemVersion
 
-		KService.shared.signIn(kurozoraID, password, device, withSuccess: { (success) in
+		KService.signIn(kurozoraID, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
@@ -93,48 +93,33 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("User Email - \(appleIDCredential.email ?? "N/A")")
 //		print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
 //
-		let authorizationCode = appleIDCredential.authorizationCode ?? Data()
-		let authorizationCodeString = String(data: authorizationCode, encoding: .utf8)
-//			print("Refresh Token \(authorizationCodeString)")
+//		let authorizationCode = appleIDCredential.authorizationCode ?? Data()
+//		let authorizationCodeString = String(data: authorizationCode, encoding: .utf8)
+//		print("Refresh Token \(authorizationCodeString)")
 
-		let identityTokenData = appleIDCredential.identityToken ?? Data()
-		let identityTokenString = String(data: identityTokenData, encoding: .utf8)
-//			print("Identity Token \(identityTokenString)")
+//		let identityTokenData = appleIDCredential.identityToken ?? Data()
+//		let identityTokenString = String(data: identityTokenData, encoding: .utf8)
+//		print("Identity Token \(identityTokenString)")
 
-		if appleIDCredential.email?.isEmpty ?? true {
-			KService.shared.signInWithApple(usingIDToken: identityTokenString, authorizationCode: authorizationCodeString) { success in
-				if success {
+		guard let emailAddress = appleIDCredential.email else { return }
+		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { (success) in
+			if success {
+//				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
+//					registerTableViewController.isSIWA = true
+//					self.show(registerTableViewController, sender: nil)
+//				}
+
+				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+				alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
+				alertController.addButton("Done", action: {
 					DispatchQueue.main.async {
-						NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+						self.navigationController?.popViewController(animated: true)
 						self.dismiss(animated: true) {
 							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 							WorkflowController.shared.registerForPushNotifications()
 						}
 					}
-				}
-				self.rightNavigationBarButton.isEnabled = false
-			}
-		} else {
-			KService.shared.register(withAppleUserID: appleIDCredential.user, email: appleIDCredential.email) { (success) in
-				if success {
-//					if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
-//						registerTableViewController.isSIWA = true
-//						self.show(registerTableViewController, sender: nil)
-//					}
-
-					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-					alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
-					alertController.addButton("Done", action: {
-						DispatchQueue.main.async {
-							self.navigationController?.popViewController(animated: true)
-							NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-							self.dismiss(animated: true) {
-								UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-								WorkflowController.shared.registerForPushNotifications()
-							}
-						}
-					})
-				}
+				})
 			}
 		}
 	}

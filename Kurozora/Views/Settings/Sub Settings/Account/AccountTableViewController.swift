@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftTheme
 
@@ -57,7 +58,8 @@ extension AccountTableViewController {
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isSignedIn {
-					KService.shared.signOut(withSuccess: nil)
+					guard let sessionID = User().current?.sessionID else { return }
+					KService.signOut(ofSessionID: sessionID)
 				}
 				self.dismiss(animated: true, completion: nil)
 			})

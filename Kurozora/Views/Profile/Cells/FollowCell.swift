@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class FollowCell: UITableViewCell {
 	@IBOutlet weak var usernameLabel: UILabel! {
@@ -56,16 +57,17 @@ class FollowCell: UITableViewCell {
 
 		// Configure follow button
 		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)
-		followButton.isHidden = userProfile.id == User.currentID
+		followButton.isHidden = userProfile.id == User().current?.id
 	}
 
 	// MARK: - IBActions
 	@IBAction func followButtonPressed(_ sender: UIButton) {
-		let follow = userProfile?.following ?? false ? 0 : 1
+		guard let userID = userProfile?.id else { return }
+		let followStatus: FollowStatus = userProfile?.following ?? false ? .unfollow : .follow
 
-		KService.shared.follow(follow, user: userProfile?.id) { (success) in
+		KService.updateFollowStatus(userID, withFollowStatus: followStatus) { (success) in
 			if success {
-				if follow == 0 {
+				if followStatus == .unfollow {
 					sender.setTitle("＋ Follow", for: .normal)
 					self.userProfile?.following = false
 				} else {

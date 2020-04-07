@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Tabman
 import Pageboy
 import SCLAlertView
@@ -61,7 +62,7 @@ class ForumsViewController: TabmanViewController {
 
 	/// Fetches the forum sections from the server.
 	func fetchForumsSections() {
-		KService.shared.getForumSections(withSuccess: { (sections) in
+		KService.getForumSections(withSuccess: { (sections) in
 			DispatchQueue.main.async {
 				self.sectionsCount = sections?.count
 				self.sections = sections

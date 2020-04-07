@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 
-public class ForumsCell: UITableViewCell {
+class ForumsCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var usernameButton: UIButton! {
 		didSet {
@@ -109,8 +110,11 @@ public class ForumsCell: UITableViewCell {
 			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
 		}
 
-		// Thread vote state
-		updateVoting(with: forumThreadsElement.currentUser?.likeAction)
+		// Thread vote status
+		if let voteStatusInt = forumThreadsElement.currentUser?.likeAction {
+			let voteStatus = VoteStatus(rawValue: voteStatusInt) ?? .noVote
+			updateVoting(withVoteStatus: voteStatus)
+		}
 
 		// Check if thread is locked
 		lockImageView.tintColor = .kLightRed
@@ -127,19 +131,20 @@ public class ForumsCell: UITableViewCell {
 	/**
 		Upvote or downvote a thread according to the given integer.
 
-		- Parameter vote: The integer indicating whether to downvote or upvote a reply.  (0 = downvote, 1 = upvote)
+		- Parameter vote: The integer indicating whether to downvote or upvote a thread.  (0 = downvote, 1 = upvote)
 	*/
 	fileprivate func voteForThread(with vote: Int) {
-		WorkflowController.shared.isSignedIn {
-			guard let forumThreadsElement = self.forumThreadsElement else { return }
-			guard var threadScore = forumThreadsElement.voteCount else { return }
+		guard let voteStatus = VoteStatus(rawValue: vote) else { return }
+		guard let threadID = self.forumThreadsElement?.id else { return }
 
-			KService.shared.vote(forThread: forumThreadsElement.id, vote: vote, withSuccess: { (action) in
+		WorkflowController.shared.isSignedIn {
+			guard var threadScore = self.forumThreadsElement?.voteCount else { return }
+			KService.voteOnThread(threadID, withVoteStatus: voteStatus, withSuccess: { (voteStatus) in
 				DispatchQueue.main.async {
-					self.updateVoting(with: action)
-					if action == 1 {
+					self.updateVoting(withVoteStatus: voteStatus)
+					if voteStatus == .upVote {
 						threadScore += 1
-					} else if action == -1 {
+					} else if voteStatus == .downVote {
 						threadScore -= 1
 					}
 
@@ -202,7 +207,7 @@ public class ForumsCell: UITableViewCell {
 //				}
 //
 //				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-//					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+//					KurozoraKit.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 //						self.isLocked(locked)
 //					})
 //				})
@@ -310,18 +315,18 @@ public class ForumsCell: UITableViewCell {
 	}
 
 	/**
-		Update the voting state of the reply.
+		Update the voting status of the thread.
 
-		- Parameter action: The integer indicating whether to upvote, downvote or remove vote.
+		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
 	*/
-	fileprivate func updateVoting(with action: Int?) {
-		if action == 1 { // upvote
+	fileprivate func updateVoting(withVoteStatus voteStatus: VoteStatus) {
+		if voteStatus == .upVote {
 			self.upvoteButton.tintColor = .kGreen
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		} else if action == 0 { // no vote
+		} else if voteStatus == .noVote {
 			self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-		} else if action == -1 { // downvote
+		} else if voteStatus == .downVote {
 			self.downvoteButton.tintColor = .kLightRed
 			self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}

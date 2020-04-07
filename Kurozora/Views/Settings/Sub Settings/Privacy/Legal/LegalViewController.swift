@@ -42,7 +42,7 @@ class LegalViewController: KViewController {
 		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.navigationController?.navigationBar.backgroundColor = .clear
 
-		KService.shared.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
+		KService.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
 			if let privacyPolicyText = privacyPolicy?.text {
 				self.privacyPolicyTextView.text = privacyPolicyText
 			}

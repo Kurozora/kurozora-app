@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import ESTabBarController_swift
 import KeychainAccess
 import LocalAuthentication
@@ -92,17 +93,18 @@ class Kurozora {
 
 		switch scheme {
 		case .anime, .show:
-			let showID = url.lastPathComponent
-			if !showID.isEmpty {
+			let showIDString = url.lastPathComponent
+			if !showIDString.isEmpty {
+				guard let showID = Int(showIDString) else { return }
 				if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-					showDetailCollectionViewController.showID = Int(showID)
+					showDetailCollectionViewController.showID = showID
 
 					UIApplication.topViewController?.show(showDetailCollectionViewController, sender: nil)
 				}
 			}
 		case .profile, .user:
 			let userID = url.lastPathComponent
-			let isCurrentUser = userID.isEmpty || userID.int == User.currentID
+			let isCurrentUser = userID.isEmpty || userID.int == User().current?.sessionID
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 
@@ -126,13 +128,14 @@ class Kurozora {
 				tabBarController.selectedIndex = 1
 			}
 		case .forum, .forums, .forumThread, .forumsThread, .thread:
-			let forumThreadID = url.lastPathComponent
+			let forumThreadIDString = url.lastPathComponent
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 2
 
-				if !forumThreadID.isEmpty {
+				if !forumThreadIDString.isEmpty {
+					guard let forumThreadID = forumThreadIDString.int else { return }
 					if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
-						threadTableViewController.forumThreadID = forumThreadID.int
+						threadTableViewController.forumThreadID = forumThreadID
 						tabBarController.selectedViewController?.show(threadTableViewController, sender: nil)
 					}
 				}

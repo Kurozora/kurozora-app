@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 
 class ThemesCollectionViewCell: UICollectionViewCell {

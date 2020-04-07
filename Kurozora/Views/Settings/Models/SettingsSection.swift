@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 extension SettingsTableViewController {
 	enum Accessory {

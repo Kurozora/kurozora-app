@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 
 // MARK: - Onboarding
@@ -24,20 +25,6 @@ extension WorkflowController {
 				let kNavigationController = KNavigationController(rootViewController: signInTableViewController)
 				UIApplication.topViewController?.present(kNavigationController)
 			}
-		}
-	}
-
-	/**
-		Sign out the current user by emptying KDefaults. Also show a message with the reason of the sign out if the user's session was terminated from a different device.
-
-		- Parameter signOutReason: The reason as to why the user has been signed out.
-		- Parameter isKiller: A boolean indicating whether the current user is the one who initiated the sign out.
-	*/
-	func signOut(with signOutReason: String? = nil, whereUser isKiller: Bool = false) {
-		try? Kurozora.shared.KDefaults.removeAll()
-		NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-		if signOutReason != nil {
-			SCLAlertView().showWarning("Signed out", subTitle: signOutReason)
 		}
 	}
 }

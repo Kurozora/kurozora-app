@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Intents
 import IntentsUI
 import SwiftTheme
@@ -17,12 +18,12 @@ protocol ShowDetailCollectionViewControllerDelegate: class {
 
 class ShowDetailCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int?
+	var showID: Int = 0
 	var showDetailsElement: ShowDetailsElement? = nil {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.title = showDetailsElement?.title
-			self.showID = showDetailsElement?.id
+			self.showID = showDetailsElement?.id ?? self.showID
 		}
 	}
 	var seasons: [SeasonsElement]?
@@ -51,10 +52,10 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 
 		// Donate suggestion to Siri
 		userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
-		if let title = showDetailsElement?.title, let showID = showDetailsElement?.id {
+		if let title = showDetailsElement?.title {
 			let title = "Open \(title)"
 			userActivity?.title = title
-			userActivity?.userInfo = ["showID": showID]
+			userActivity?.userInfo = ["showID": self.showID]
 			if #available(iOS 12.0, *) {
 				userActivity?.suggestedInvocationPhrase = title
 				userActivity?.isEligibleForPrediction = true
@@ -92,7 +93,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.
 		if showDetailsElement?.airStatus == "" {
-			KService.shared.getDetails(forShow: showDetailsElement?.id) { (showDetailsElement) in
+			KService.getDetails(forShowID: self.showID) { (showDetailsElement) in
 				DispatchQueue.main.async {
 					self.showDetailsElement = showDetailsElement
 					self.collectionView.reloadData()
@@ -101,7 +102,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		}
 
 		if seasons == nil {
-			KService.shared.getSeasonsFor(showDetailsElement?.id) { (seasons) in
+			KService.getSeasons(forShowID: self.showID) { (seasons) in
 				DispatchQueue.main.async {
 					self.seasons = seasons
 					self.collectionView.reloadData()
@@ -110,12 +111,12 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		}
 
 		if actors == nil {
-			KService.shared.getCastFor(showDetailsElement?.id, withSuccess: { (actors) in
+			KService.getCast(forShowID: self.showID) { (actors) in
 				DispatchQueue.main.async {
 					self.actors = actors
 					self.collectionView.reloadData()
 				}
-			})
+			}
 		}
 	}
 
@@ -137,8 +138,8 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
-				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
-					episodesCollectionViewController.seasonID = lockupCollectionViewCell.seasonsElement?.id
+				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell, let seasonID = lockupCollectionViewCell.seasonsElement?.id {
+					episodesCollectionViewController.seasonID = seasonID
 				}
 			}
 		}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 import SCLAlertView
 
@@ -88,11 +89,11 @@ class ThreadTableViewController: KTableViewController {
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	// MARK: - Properties
-	var forumThreadID: Int?
+	var forumThreadID: Int = 0
 	var forumsThreadElement: ForumsThreadElement? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.forumThreadID = forumsThreadElement?.id
+			self.forumThreadID = forumsThreadElement?.id ?? self.forumThreadID
 		}
 	}
 	var replyID: Int?
@@ -101,7 +102,7 @@ class ThreadTableViewController: KTableViewController {
 
 	// Reply variables
 	var replies: [ThreadRepliesElement]?
-	var repliesOrder = "top"
+	var repliesOrder: ForumOrder = .top
 
 	// Pagination
 	var currentPage = 1
@@ -214,7 +215,7 @@ class ThreadTableViewController: KTableViewController {
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
 		if forumsThreadElement == nil {
-			KService.shared.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
+			KService.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
 				DispatchQueue.main.async {
 					self.forumsThreadElement = thread
 					self.updateThreadDetails()
@@ -227,7 +228,7 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
-		KService.shared.getReplies(forThread: forumThreadID, order: repliesOrder, page: lastPage) { (replies) in
+		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, page: lastPage) { (replies) in
 			DispatchQueue.main.async {
 				self.currentPage = replies?.currentPage ?? 1
 				self.lastPage = replies?.lastPage ?? 1
@@ -248,21 +249,22 @@ class ThreadTableViewController: KTableViewController {
 	/**
 		Vote the current thread with the given vote.
 
-		- Parameter vote: The integer indicating whether to upvote or downvote the thread.
+		- Parameter voteStatus: The `VoteStatus` value indicating whether to upvote, downvote or novote a thread.
 	*/
-	func voteForThread(with vote: Int?) {
+	func voteOnThread(withVoteStatus voteStatus: VoteStatus) {
 		WorkflowController.shared.isSignedIn {
 			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
-			KService.shared.vote(forThread: self.forumThreadID, vote: vote, withSuccess: { (action) in
+
+			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus, withSuccess: { (voteStatus) in
 				DispatchQueue.main.async {
-					if action == 1 { // upvote
+					if voteStatus == .upVote {
 						threadScore += 1
 						self.upvoteButton.tintColor = .kGreen
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if action == 0 { // no vote
+					} else if voteStatus == .noVote {
 						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if action == -1 { // downvote
+					} else if voteStatus == .downVote {
 						threadScore -= 1
 						self.downvoteButton.tintColor = .kLightRed
 						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
@@ -308,8 +310,7 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Presents a share sheet to share the current thread.
 	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		guard let threadID = forumThreadID else { return }
-		let threadUrl = "https://kurozora.app/thread/\(threadID)"
+		let threadUrl = "https://kurozora.app/thread/\(forumThreadID)"
 		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
 
 		if let title = forumsThreadElement?.title, !title.isEmpty {
@@ -393,7 +394,7 @@ class ThreadTableViewController: KTableViewController {
 //				}
 //
 //				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-//					KService.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
+//					KurozoraKit.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
 //						self.isLocked(locked)
 //					})
 //				})
@@ -412,10 +413,10 @@ class ThreadTableViewController: KTableViewController {
 		// Upvote, downvote and reply actions
 		if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 && !locked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
-				self.voteForThread(with: 1)
+				self.voteOnThread(withVoteStatus: .upVote)
 			})
 			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
-				self.voteForThread(with: 0)
+				self.voteOnThread(withVoteStatus: .downVote)
 			})
 			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
 				self.replyThread()
@@ -477,12 +478,12 @@ class ThreadTableViewController: KTableViewController {
 	}
 
 	@IBAction func upVoteButtonPressed(_ sender: UIButton) {
-		voteForThread(with: 1)
+		voteOnThread(withVoteStatus: .upVote)
 		sender.animateBounce()
 	}
 
 	@IBAction func downVoteButtonPressed(_ sender: UIButton) {
-		voteForThread(with: 0)
+		voteOnThread(withVoteStatus: .downVote)
 		sender.animateBounce()
 	}
 

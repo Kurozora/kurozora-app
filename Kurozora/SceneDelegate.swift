@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 @available(iOS 13.0, macCatalyst 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -82,8 +83,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneWillEnterForeground(_ scene: UIScene) {
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
-				KService.shared.validateSession(withSuccess: { _ in
-				})
 				WorkflowController.shared.registerForPushNotifications()
 			}
 		}
@@ -106,7 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func configure(window: UIWindow?, with activity: NSUserActivity) -> Bool {
         if activity.title == "OpenShowDetail" {
 			if let parameters = activity.userInfo as? [String: Int] {
-				let showID = parameters["showID"]
+				guard let showID = parameters["showID"] else { return false }
 				if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
 					showDetailCollectionViewController.showID = showID
 					if let tabBarController = window?.rootViewController as? KTabBarController {

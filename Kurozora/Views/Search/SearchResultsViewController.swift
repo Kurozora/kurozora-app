@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 import SwiftTheme
 
@@ -91,20 +92,20 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
-				KService.shared.search(forShow: text) { (showResults) in
+				KService.search(forShow: text) { (showResults) in
 					DispatchQueue.main.async {
 						self.showResults = showResults
 					}
 				}
 			case .myLibrary: break
 			case .thread:
-				KService.shared.search(forThread: text) { (threadResults) in
+				KService.search(forThread: text) { (threadResults) in
 					DispatchQueue.main.async {
 						self.threadResults = threadResults
 					}
 				}
 			case .user:
-				KService.shared.search(forUser: text) { (userResults) in
+				KService.search(forUsername: text) { (userResults) in
 					DispatchQueue.main.async {
 						self.userResults = userResults
 					}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import CoreLocation
 import Alamofire
 import Solar
@@ -446,7 +447,8 @@ extension KThemeStyle {
 
 	/// Wheather it's currently night time.
 	static var isSolarNighttime: Bool {
-		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: User.latitude, longitude: User.longitude)) else { return false }
+		guard let currentUser = User().current else { return false }
+		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: currentUser.latitude, longitude: currentUser.longitude)) else { return false }
 		let isNighttime = solar.isNighttime
 
 		return isNighttime

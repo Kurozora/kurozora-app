@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets

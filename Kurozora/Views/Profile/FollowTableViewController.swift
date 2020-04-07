@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class FollowTableViewController: KTableViewController {
 	// MARK: - Properties
@@ -16,7 +17,7 @@ class FollowTableViewController: KTableViewController {
 			tableView.reloadData()
 		}
 	}
-	var followList: String = "Followers"
+	var followList: FollowList = .followers
 	var user: UserProfile?
 
 	// Pagination
@@ -37,7 +38,7 @@ class FollowTableViewController: KTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		self.title = followList
+		self.title = followList.stringValue
 
 		// Fetch follow list.
 		DispatchQueue.global(qos: .background).async {
@@ -48,11 +49,11 @@ class FollowTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
-			if let username = self.user?.username {
-				if self.followList == "Followers" {
-					let detailLabelString = self.user?.id != User.currentID ? "Be the first to follow \(username)!" : "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
+			if let username = self.user?.username, let userID = User().current?.id {
+				if self.followList == .followers {
+					let detailLabelString = self.user?.id != userID ? "Be the first to follow \(username)!" : "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
 
-					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					view.titleLabelString(NSAttributedString(string: "No \(self.followList.stringValue)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 						.image(R.image.empty.follow())
 						.imageTintColor(KThemePicker.textColor.colorValue)
@@ -60,7 +61,7 @@ class FollowTableViewController: KTableViewController {
 						.verticalSpace(5)
 						.isScrollAllowed(true)
 
-					if self.user?.id != User.currentID, !(self.user?.following ?? true) {
+					if self.user?.id != userID, !(self.user?.following ?? true) {
 						view.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue]), for: .normal)
 							.buttonTitle(NSAttributedString(string: "＋ Follow \(username)", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.tintColor.colorValue.darken()]), for: .highlighted)
 							.didTapDataButton {
@@ -68,9 +69,9 @@ class FollowTableViewController: KTableViewController {
 						}
 					}
 				} else {
-					let detailLabelString = self.user?.id != User.currentID ? "\(username) is not following anyone yet." : "Follow a user and they will show up here!"
+					let detailLabelString = self.user?.id != userID ? "\(username) is not following anyone yet." : "Follow a user and they will show up here!"
 
-					view.titleLabelString(NSAttributedString(string: "No \(self.followList)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+					view.titleLabelString(NSAttributedString(string: "No \(self.followList.stringValue)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 						.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 						.image(R.image.empty.follow())
 						.imageTintColor(KThemePicker.textColor.colorValue)
@@ -85,7 +86,8 @@ class FollowTableViewController: KTableViewController {
 	/// Sends a request to follow the user whose followers list is being viewed.
 	func followUser() {
 		guard let userID = user?.id else { return }
-		KService.shared.follow(1, user: userID) { (success) in
+
+		KService.updateFollowStatus(userID, withFollowStatus: .follow) { (success) in
 			if success {
 				self.fetchFollowList()
 			}
@@ -95,7 +97,8 @@ class FollowTableViewController: KTableViewController {
 	/// Fetch the follow list for the currently viewed profile.
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
-		KService.shared.getFollow(list: followList, for: userID, page: currentPage) { (userFollow) in
+
+		KService.getFollowList(userID, self.followList, page: currentPage) { (userFollow) in
 			DispatchQueue.main.async {
 				self.currentPage = userFollow?.currentPage ?? 1
 				self.lastPage = userFollow?.lastPage ?? 1

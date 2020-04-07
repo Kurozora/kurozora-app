@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var showID: Int?
+	var showID: Int = 0
 	var seasonsElements: [SeasonsElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
@@ -61,7 +62,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	/// Fetch seasons for the current show.
     fileprivate func fetchSeasons() {
-        KService.shared.getSeasonsFor(showID, withSuccess: { (seasons) in
+		KService.getSeasons(forShowID: showID, withSuccess: { (seasons) in
 			DispatchQueue.main.async {
 				self.seasonsElements = seasons
 			}
@@ -72,7 +73,9 @@ class SeasonsCollectionViewController: KCollectionViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.seasonsCollectionViewController.episodeSegue.identifier, let lockupCollectionViewCell = sender as? LockupCollectionViewCell {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController, let indexPath = collectionView.indexPath(for: lockupCollectionViewCell) {
-				episodesCollectionViewController.seasonID = seasonsElements?[indexPath.item].id
+				if let seasonID = seasonsElements?[indexPath.item].id {
+					episodesCollectionViewController.seasonID = seasonID
+				}
 			}
 		}
 	}

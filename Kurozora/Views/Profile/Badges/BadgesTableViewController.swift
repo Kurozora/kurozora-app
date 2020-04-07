@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 
 class BadgesTableViewController: KTableViewController {
@@ -41,7 +42,7 @@ class BadgesTableViewController: KTableViewController {
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
 			if let username = self.userProfile?.username {
-				let detailLabelString = self.userProfile?.id != User.currentID ? "\(username) has no badges to show." : "Badges you earn show up here."
+				let detailLabelString = self.userProfile?.id != User().current?.id ? "\(username) has no badges to show." : "Badges you earn show up here."
 				view.titleLabelString(NSAttributedString(string: "No Badges", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 					.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 					.image(R.image.empty.badge())
