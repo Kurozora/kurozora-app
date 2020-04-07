@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftyJSON
 
@@ -87,7 +88,7 @@ class KCommentEditorViewController: KViewController {
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}
-		currentUsernameLabel.text = User.username
+		currentUsernameLabel.text = User().current?.username
 
 		characterCountLabel.text = "\(characterLimit)"
 
@@ -110,16 +111,20 @@ class KCommentEditorViewController: KViewController {
 				return
 			}
 
-			KService.shared.postReply(inThread: threadID, withComment: comment) { (replyID) in
+			KService.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {
+					guard let userID = User().current?.id else { return }
+					guard let username = User().current?.username else { return }
+					guard let profileImage = User().current?.profileImage else { return }
+
 					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 					let replyJSON: JSON = [
 						"id": replyID,
 						"posted_at": postedAt,
 						"poster": [
-							"id": User.currentID,
-							"username": User.username,
-							"avatar_url": User.profileImage
+							"id": userID,
+							"username": username,
+							"avatar_url": profileImage
 						],
 						"score": 0,
 						"content": comment

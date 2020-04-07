@@ -9,12 +9,12 @@
 import TRON
 import SwiftyJSON
 
-class Episodes: JSONDecodable {
-	let success: Bool?
-	let season: EpisodesSeason?
-	let episodes: [EpisodesElement]?
+public class Episodes: JSONDecodable {
+	public let success: Bool?
+	public let season: EpisodesSeason?
+	public let episodes: [EpisodesElement]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.season = try? EpisodesSeason(json: json["season"])
 		var episodes = [EpisodesElement]()
@@ -30,17 +30,17 @@ class Episodes: JSONDecodable {
 	}
 }
 
-class EpisodesElement: JSONDecodable {
-	let id: Int?
-	let number: Int?
-	let name: String?
-	let screenshot: String?
-	let firstAired: String?
-	let overview: String?
-	let verified: Bool?
-	let userDetails: EpisodesUserDetails?
+public class EpisodesElement: JSONDecodable {
+	public let id: Int?
+	public let number: Int?
+	public let name: String?
+	public let screenshot: String?
+	public let firstAired: String?
+	public let overview: String?
+	public let verified: Bool?
+	public let userDetails: EpisodesUserDetails?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.number = json["number"].intValue
 		self.name = json["name"].stringValue
@@ -52,23 +52,23 @@ class EpisodesElement: JSONDecodable {
 	}
 }
 
-class EpisodesUserDetails: JSONDecodable {
-	let success: Bool?
-	var watched: Bool?
+public class EpisodesUserDetails: JSONDecodable {
+	public let success: Bool?
+	public var watched: Bool?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.watched = json["watched"].boolValue
 	}
 }
 
-class EpisodesSeason: JSONDecodable {
-	let id: Int?
-	let showID: Int?
-	let title: String?
-	let episodeCount: Int?
+public class EpisodesSeason: JSONDecodable {
+	public let id: Int?
+	public let showID: Int?
+	public let title: String?
+	public let episodeCount: Int?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.showID = json["anime_id"].intValue
 		self.title = json["title"].stringValue

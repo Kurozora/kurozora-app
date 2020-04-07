@@ -7,7 +7,10 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
+
+let KService = KurozoraKit()
 
 class RegisterTableViewController: BaseOnboardingTableViewController {
 	// MARK: - IBOutlets
@@ -62,12 +65,12 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
 		if onboardingType == .register {
-			let username = textFieldArray.first??.trimmedText
-			let email = textFieldArray[1]?.trimmedText
-			let password = textFieldArray.last??.text
+			guard let username = textFieldArray.first??.trimmedText else { return }
+			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
+			guard let password = textFieldArray.last??.text else { return }
 			let profileImage = profileImageView.image
 
-			KService.shared.register(withUsername: username, email: email, password: password, profileImage: profileImage) { (success) in
+			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { (success) in
 				if success {
 					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
 					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
@@ -78,15 +81,15 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 				}
 			}
 		} else if onboardingType == .siwa {
-			let username = textFieldArray.first??.trimmedText
-			let profileImage = profileImageView.image
-
-			KService.shared.updateInformation(for: nil, username: username, profileImage: profileImage, bannerImage: nil) { (update) in
-				if let success = update?.success, success {
-					self.navigationController?.popViewController(animated: true)
-					self.dismiss(animated: true, completion: nil)
-				}
-			}
+//			let username = textFieldArray.first??.trimmedText
+//			let profileImage = profileImageView.image
+//			
+//			KService.updateInformation(forUserID: 0, username: username, profileImage: profileImage, bannerImage: nil) { (update) in
+//				if let success = update?.success, success {
+//					self.navigationController?.popViewController(animated: true)
+//					self.dismiss(animated: true, completion: nil)
+//				}
+//			}
 		}
 	}
 

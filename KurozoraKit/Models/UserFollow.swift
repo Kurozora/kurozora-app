@@ -9,14 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class UserFollow: JSONDecodable {
-	let success: Bool?
-	let currentPage: Int?
-	let lastPage: Int?
-	let followers: [UserProfile]?
-	let following: [UserProfile]?
+public class UserFollow: JSONDecodable {
+	public let success: Bool?
+	public let currentPage: Int?
+	public let lastPage: Int?
+	public let followers: [UserProfile]?
+	public let following: [UserProfile]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue

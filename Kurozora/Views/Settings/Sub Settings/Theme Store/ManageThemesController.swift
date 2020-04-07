@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftTheme
 
@@ -44,7 +45,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// Fetches themes from the server.
 	func fetchThemes() {
-		KService.shared.getThemes( withSuccess: { (themes) in
+		KService.getThemes(withSuccess: { (themes) in
 			DispatchQueue.main.async {
 				self.themes = themes
 			}

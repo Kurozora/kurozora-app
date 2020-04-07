@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import Foundation
 
 /**

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import StoreKit
 import Kingfisher
 import UserNotifications
@@ -81,8 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 		KNetworkManager.isReachable { _ in
 			if User.isSignedIn {
-				KService.shared.validateSession(withSuccess: { _ in
-				})
 				WorkflowController.shared.registerForPushNotifications()
 			}
 		}
@@ -136,7 +135,7 @@ extension AppDelegate {
 
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 		if userActivity.activityType == "OpenAnimeIntent", let parameters = userActivity.userInfo as? [String: Int] {
-			let showID = parameters["showID"]
+			guard let showID = parameters["showID"] else { return false }
 
 			if let showDetailCollectionViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
 				showDetailCollectionViewController.showID = showID
@@ -159,7 +158,8 @@ extension AppDelegate {
 		let apnDeviceToken = tokenParts.joined()
 
 		if User.isSignedIn {
-			KService.shared.updateSession(withToken: apnDeviceToken) { _ in
+			guard let sessionID = User().current?.sessionID else { return }
+			KService.updateSession(sessionID, withToken: apnDeviceToken) { _ in
 			}
 		}
 	}

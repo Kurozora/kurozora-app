@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class BadgeTableViewCell: UITableViewCell {
 	@IBOutlet weak var badgeTitleLabel: UILabel!

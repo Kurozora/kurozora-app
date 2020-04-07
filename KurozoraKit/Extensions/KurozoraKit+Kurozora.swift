@@ -16,7 +16,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a PrivacyPolicyElement object.
 		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
 	*/
-	func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
+	public func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
 		let privacyPolicy = self.kurozoraKitEndpoints.privacyPolicy
 		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request(privacyPolicy)
 		request.headers = headers

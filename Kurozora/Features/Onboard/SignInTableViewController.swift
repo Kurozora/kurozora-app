@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import AuthenticationServices
 import SCLAlertView
 
@@ -43,17 +44,16 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		let kurozoraID = textFieldArray.first??.trimmedText
-		let password = textFieldArray.last??.text
+		guard let kurozoraID = textFieldArray.first??.trimmedText else { return }
+		guard let password = textFieldArray.last??.text else { return }
 		#if targetEnvironment(macCatalyst)
 		let platform = " on macOS "
 		#else
 		let platform = " on iOS "
 		#endif
-
 		let device = UIDevice.modelName + platform + UIDevice.current.systemVersion
 
-		KService.shared.signIn(kurozoraID, password, device, withSuccess: { (success) in
+		KService.signIn(kurozoraID, password, device, withSuccess: { (success) in
 			if success {
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
@@ -103,12 +103,25 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //			print("Identity Token \(identityTokenString)")
 //		}
 
-		KService.shared.register(withAppleUserID: appleIDCredential.user, email: appleIDCredential.email) { (success) in
+		guard let emailAddress = appleIDCredential.email else { return }
+		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { (success) in
 			if success {
-				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
-					registerTableViewController.isSIWA = true
-					self.show(registerTableViewController, sender: nil)
-				}
+//				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
+//					registerTableViewController.isSIWA = true
+//					self.show(registerTableViewController, sender: nil)
+//				}
+
+				let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+				alertController.showSuccess("Hooray!", subTitle: "Account created successfully!")
+				alertController.addButton("Done", action: {
+					DispatchQueue.main.async {
+						self.navigationController?.popViewController(animated: true)
+						self.dismiss(animated: true) {
+							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+							WorkflowController.shared.registerForPushNotifications()
+						}
+					}
+				})
 			}
 		}
 	}

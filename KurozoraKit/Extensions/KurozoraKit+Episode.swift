@@ -11,27 +11,27 @@ import SCLAlertView
 
 extension KurozoraKit {
 	/**
-		Watch or unwatch an episode with the given episode id.
+		Update an episode's watch status.
 
-		- Parameter watched: The integer indicating whether to mark the episode as watched or not watched. (0 = not watched, 1 = watched)
 		- Parameter episodeID: The id of the episode that should be marked as watched/unwatched.
-		- Parameter successHandler: A closure returning a boolean indicating whether watch/unwatch is successful.
-		- Parameter isSuccess: A boolean value indicating whether watch/unwatch is successful.
+		- Parameter watchStatus: The new watch status by which the episode's current watch status is updated.
+		- Parameter successHandler: A closure returning a `WatchStatus` value indicating the episode's watch status.
+		- Parameter isSuccess: A `WatchStatus` value indicating the episode's watch status.
 	*/
-	func mark(asWatched watched: Int, forEpisode episodeID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func updateEpisodeWatchStatus(_ episodeID: Int, withWatchStatus watchStatus: WatchStatus, withSuccess successHandler: @escaping (_ watchStatus: WatchStatus) -> Void) {
 		let animeEpisodesWatched = self.kurozoraKitEndpoints.animeEpisodesWatched.replacingOccurrences(of: "?", with: "\(episodeID)")
 		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request(animeEpisodesWatched)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [
-			"watched": watched
+			"watched": watchStatus.rawValue
 		]
 		request.perform(withSuccess: { episode in
 			if let watchedStatus = episode.watched {
-				successHandler(watchedStatus)
+				successHandler(watchedStatus ? .watched : .notWatched)
 			}
 		}, failure: { error in
 			SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)

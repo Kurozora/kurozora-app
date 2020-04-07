@@ -20,12 +20,12 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		guard let userEmail = textFieldArray.first??.trimmedText, userEmail.isValidEmail else {
+		guard let emailAddress = textFieldArray.first??.trimmedText, emailAddress.isValidEmail else {
 			SCLAlertView().showError("Errr...", subTitle: "Please type a valid Kurozora ID 😣")
 			return
 		}
 
-		KService.shared.resetPassword(userEmail, withSuccess: { _ in
+		KService.resetPassword(withEmailAddress: emailAddress, withSuccess: { _ in
 			let appearance = SCLAlertView.SCLAppearance(
 				showCloseButton: false
 			)

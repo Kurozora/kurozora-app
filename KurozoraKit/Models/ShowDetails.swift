@@ -9,12 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class ShowDetails: JSONDecodable {
-	let success: Bool?
-	var showDetailsElement: ShowDetailsElement?
-	let showDetailsElements: [ShowDetailsElement]?
+public class ShowDetails: JSONDecodable {
+	// MARK: - Properties
+	public let success: Bool?
+	public var showDetailsElement: ShowDetailsElement?
+	public let showDetailsElements: [ShowDetailsElement]?
 
-	required init(json: JSON) throws {
+	// MARK: - Initializers
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.showDetailsElement = try? ShowDetailsElement(json: json["anime"])
 
@@ -29,58 +31,60 @@ class ShowDetails: JSONDecodable {
 	}
 }
 
-class ShowDetailsElement: JSONDecodable {
+public class ShowDetailsElement: JSONDecodable {
+	// MARK: - Properties
 	// General
-	let id: Int?
-	let imdbID: String?
-	let banner: String?
-	let bannerThumbnail: String?
-	let genres: [GenreElement]?
-	let poster: String?
-	let posterThumbnail: String?
-	let title: String?
+	public let id: Int?
+	public let imdbID: String?
+	public let banner: String?
+	public let bannerThumbnail: String?
+	public let genres: [GenreElement]?
+	public let poster: String?
+	public let posterThumbnail: String?
+	public let title: String?
 
 	// Details
-	let airDate: String?
-	let episodes: Int?
-	let runtime: Int?
-	let screenshots: [String]?
-	let seasons: Int?
-	let airStatus: String?
-	let synopsis: String?
-	let tagline: String?
-	let type: String?
-	let watchRating: String?
-	let year: Int?
+	public let airDate: String?
+	public let episodes: Int?
+	public let runtime: Int?
+	public let screenshots: [String]?
+	public let seasons: Int?
+	public let airStatus: String?
+	public let synopsis: String?
+	public let tagline: String?
+	public let type: String?
+	public let watchRating: String?
+	public let year: Int?
 
 	// Ratings & ranks
-	let averageRating: Double?
-	let endDate: String?
-	let network: String?
-	let nsfw: Bool?
-	let popularityRank: Int?
-	let producers: String?
-	let rank: Int?
-	let age: String?
-	let ratingCount: Int?
+	public let averageRating: Double?
+	public let endDate: String?
+	public let network: String?
+	public let nsfw: Bool?
+	public let popularityRank: Int?
+	public let producers: String?
+	public let rank: Int?
+	public let age: String?
+	public let ratingCount: Int?
 
 	// Schedule
-	let startDate: String?
-	let airTime: String?
-	var airDay = DateComponents().weekday
+	public let startDate: String?
+	public let airTime: String?
+	public var airDay = DateComponents().weekday
 
 	// Extra's
-	let englishTitles: String?
-	let externalLinks: String?
-	let japaneseTitles: String?
-	let languages: String?
-	let synonyms: String?
-	let videoUrl: String?
+	public let englishTitles: String?
+	public let externalLinks: String?
+	public let japaneseTitles: String?
+	public let languages: String?
+	public let synonyms: String?
+	public let videoUrl: String?
 
 	// User details
-	var currentUser: UserProfile?
+	public var currentUser: UserProfile?
 
-	required init(json: JSON) throws {
+	// MARK: - Initializers
+	required public init(json: JSON) throws {
 		// Anime
 		self.id = json["id"].intValue
 		self.imdbID = json["imdb_id"].stringValue
@@ -138,7 +142,10 @@ class ShowDetailsElement: JSONDecodable {
 		// User details
 		self.currentUser = try? UserProfile(json: json["current_user"])
 	}
+}
 
+// MARK: - Helpers
+extension ShowDetailsElement {
 	/**
 		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
 
@@ -146,7 +153,7 @@ class ShowDetailsElement: JSONDecodable {
 		"TV · TV-MA · 25eps · 25min · 2016"
 		```
 	*/
-	var informationString: String {
+	public var informationString: String {
 		var informationString = ""
 
 		if let type = self.type, !type.isEmpty {
@@ -179,7 +186,7 @@ class ShowDetailsElement: JSONDecodable {
 		"TV · ✓ 10/25 · ☆ 5"
 		```
 	*/
-	var informationStringShort: String {
+	public var informationStringShort: String {
 		var informationString = ""
 
 		if let type = self.type, !type.isEmpty {
@@ -197,20 +204,27 @@ class ShowDetailsElement: JSONDecodable {
 		return informationString
 	}
 
-//	var fullAirDate: String? {
-//		guard let airDate = self.airDate?.toDate else { return nil }
-//		guard let airTime = self.airTime?.toDate else { return nil }
-//
-//		let dateFormatter = DateFormatter()
-//		dateFormatter.timeStyle = .none
-//		let airDateString = dateFormatter.string(from: airDate)
-//
-//		print("------ \(airDateString)")
-//		return "\(airDateString) \(airTime)"
-//	}
+	/**
+		Returns the full air date of the show.
+
+		```
+		"2016-04-16 18:30:00"
+		```
+	*/
+	public var fullAirDate: String? {
+		guard let airDate = self.airDate?.toDate else { return nil }
+		guard let airTime = self.airTime?.toDate else { return nil }
+
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeStyle = .none
+		let airDateString = dateFormatter.string(from: airDate)
+
+		print("------ \(airDateString)")
+		return "\(airDateString) \(airTime)"
+	}
 
 	/// Create an NSUserActivity from the selected show.
-	var openDetailUserActivity: NSUserActivity? {
+	public var openDetailUserActivity: NSUserActivity? {
 		guard let id = id else { return nil }
 		let userActivity = NSUserActivity(activityType: "OpenAnimeIntent")
 		userActivity.title = "OpenShowDetail"

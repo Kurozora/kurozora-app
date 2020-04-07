@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 import SCLAlertView
 import SwiftTheme
 
 protocol LibraryListViewControllerDelegate: class {
-	func updateChangeLayoutButton(with cellStyle: Library.CellStyle)
-	func updateSortTypeButton(with sortType: Library.SortType)
+	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle)
+	func updateSortTypeButton(with sortType: KKLibrary.SortType)
 }
 
 class LibraryListCollectionViewController: KCollectionViewController {
@@ -25,18 +26,18 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			self.configureDataSource()
 			self.collectionView.reloadEmptyDataSet()
 			self.refreshControl.endRefreshing()
-			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		}
 	}
-	var sectionTitle: String = ""
+	var libraryStatus: KKLibrary.Status = .planning
 	var sectionIndex: Int?
-	var librarySortType: Library.SortType = .none
-	var librarySortTypeOption: Library.SortType.Options = .none {
+	var librarySortType: KKLibrary.SortType = .none
+	var librarySortTypeOption: KKLibrary.SortType.Options = .none {
 		didSet {
 			self.delegate?.updateSortTypeButton(with: librarySortType)
 		}
 	}
-	var libraryCellStyle: Library.CellStyle = .detailed
+	var libraryCellStyle: KKLibrary.CellStyle = .detailed
 	weak var delegate: LibraryListViewControllerDelegate?
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
@@ -76,11 +77,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl
 		refreshControl.theme_tintColor = KThemePicker.tintColor.rawValue
-		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(sectionTitle.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+		refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		refreshControl.addTarget(self, action: #selector(viewWillReload), for: .valueChanged)
 
 		// Observe NotificationCenter for an update
-		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(sectionTitle)Section"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(fetchLibrary), name: Notification.Name("Update\(libraryStatus.sectionValue)Section"), object: nil)
 
 		// Fetch library if user is signed in
 		if User.isSignedIn {
@@ -101,7 +102,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { (view) in
-			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.sectionTitle.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
+			let detailLabelString = User.isSignedIn ? "Add a show to your \(self.libraryStatus.stringValue.lowercased()) list and it will show up here." : "Library is only available to registered Kurozora users."
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.library())
@@ -131,10 +132,11 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	@objc private func fetchLibrary() {
 		if User.isSignedIn {
 			DispatchQueue.main.async {
-				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.sectionTitle.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
+				self.refreshControl.attributedTitle = NSAttributedString(string: "Refreshing your \(self.libraryStatus.stringValue.lowercased()) list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			KService.shared.getLibrary(forStatus: sectionTitle, withSortType: librarySortType, withSortOption: librarySortTypeOption, withSuccess: { (showDetailsElements) in
+			guard let userID = User().current?.id else { return }
+			KService.getLibrary(forUserID: userID, withLibraryStatus: .completed, withSortType: librarySortType, withSortOption: librarySortTypeOption, withSuccess: { (showDetailsElements) in
 				DispatchQueue.main.async {
 					self.showDetailsElements = showDetailsElements
 				}
@@ -317,13 +319,13 @@ extension LibraryListCollectionViewController: ShowDetailCollectionViewControlle
 
 // MARK: - LibraryViewControllerDelegate
 extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
-	func sortLibrary(by sortType: Library.SortType, option: Library.SortType.Options) {
+	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options) {
 		librarySortType = sortType
 		librarySortTypeOption = option
 		self.fetchLibrary()
 	}
 
-	func sortValue() -> Library.SortType {
+	func sortValue() -> KKLibrary.SortType {
 		return librarySortType
 	}
 }

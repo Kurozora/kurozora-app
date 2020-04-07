@@ -16,7 +16,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a FeedSectionsElement array.
 		- Parameter feedSections: The returned FeedSectionsElement array.
 	*/
-	func getFeedSections(withSuccess successHandler: @escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
+	public func getFeedSections(withSuccess successHandler: @escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
 		let feedSection = self.kurozoraKitEndpoints.feedSection
 		let request: APIRequest<FeedSections, JSONError> = tron.swiftyJSON.request(feedSection)
 		request.headers = headers
@@ -41,7 +41,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a FeedPosts array.
 		- Parameter feedPosts: The returned FeedPosts array.
 	*/
-	func getFeedPosts(for sectionID: Int, page: Int, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
+	public func getFeedPosts(forSection sectionID: Int, page: Int, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
 		let feedSectionPost = self.kurozoraKitEndpoints.feedSectionPost.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<FeedPosts, JSONError> = tron.swiftyJSON.request(feedSectionPost)
 		request.headers = headers

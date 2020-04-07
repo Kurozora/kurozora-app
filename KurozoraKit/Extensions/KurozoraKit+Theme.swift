@@ -16,7 +16,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a ThemesElement array.
 		- Parameter themes: The returned ThemesElement array.
 	*/
-	func getThemes(withSuccess successHandler: @escaping (_ themes: [ThemesElement]?) -> Void) {
+	public func getThemes(withSuccess successHandler: @escaping (_ themes: [ThemesElement]?) -> Void) {
 		let themes = self.kurozoraKitEndpoints.themes
 		let request: APIRequest<Themes, JSONError> = tron.swiftyJSON.request(themes)
 		request.headers = headers

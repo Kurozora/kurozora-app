@@ -19,7 +19,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
-	func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let sessions = self.kurozoraKitEndpoints.sessions
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
@@ -45,19 +45,19 @@ extension KurozoraKit {
 	}
 
 	/**
-		Update the user's current session with the specified data.
+		Update a session with the specified data.
 
-		- Parameter sessionID: The session ID to be updated.
+		- Parameter sessionID: The ID of the session whose data should be updated.
 		- Parameter apnDeviceToken: The updated APN Device Token.
 		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
 		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
 	*/
-	func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let sessionsUpdate = self.kurozoraKitEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [
@@ -76,43 +76,18 @@ extension KurozoraKit {
 	}
 
 	/**
-		Check if the current session is valid.
-
-		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
-		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
-	*/
-	func validateSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
-		let sessionsValidate = self.kurozoraKitEndpoints.sessionsValidate.replacingOccurrences(of: "?", with: "\(sessionID)")
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsValidate)
-
-		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
-
-		request.method = .post
-		request.perform(withSuccess: { user in
-			if let success = user.success {
-				successHandler(success)
-			}
-		}, failure: { error in
-//			WorkflowController.shared.signOut()
-			SCLAlertView().showError("Can't validate session 😔", subTitle: error.message)
-			print("Received validate session error: \(error.message ?? "No message available")")
-		})
-	}
-
-	/**
 		Delete the specified session ID from the user's active sessions.
 
 		- Parameter sessionID: The session ID to be deleted.
 		- Parameter successHandler: A closure returning a boolean indicating whether session delete is successful.
 		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
 	*/
-	func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.perform(withSuccess: { session in
@@ -128,24 +103,28 @@ extension KurozoraKit {
 	}
 
 	/**
-		Sign out the current user by deleting the current session.
+		Sign out the given user session.
 
-		- Parameter sessionID: The current session ID of the user to be signed out.
+		After the user has been signed out successfully, a notification with the `KUserIsSignedInDidChange` name is posted.
+		This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
+
+		- Parameter sessionID: The session ID to be signed out of.
 		- Parameter successHandler: A closure returning a boolean indicating whether sign out is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
 	*/
-	func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)?) {
+	public func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.perform(withSuccess: { user in
 			if let success = user.success {
 				if success {
-//					WorkflowController.shared.signOut()
+					try? KKServices.shared.KeychainDefaults.removeAll()
+					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 					successHandler?(success)
 				}
 			}

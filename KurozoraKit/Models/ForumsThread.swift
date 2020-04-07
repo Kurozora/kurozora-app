@@ -9,14 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class ForumsThread: JSONDecodable {
-	let success: Bool?
-	let currentPage: Int?
-	let lastPage: Int?
-	let thread: ForumsThreadElement?
-	let threads: [ForumsThreadElement]?
+public class ForumsThread: JSONDecodable {
+	public let success: Bool?
+	public let currentPage: Int?
+	public let lastPage: Int?
+	public let thread: ForumsThreadElement?
+	public let threads: [ForumsThreadElement]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
@@ -33,19 +33,19 @@ class ForumsThread: JSONDecodable {
 	}
 }
 
-class ForumsThreadElement: JSONDecodable {
-	let id: Int?
-	let title: String?
-	let content: String?
-	var locked: Bool?
-	let posterUserID: Int?
-	let posterUsername: String?
-	let creationDate: String?
-	let commentCount: Int?
-	let voteCount: Int?
-	let currentUser: UserProfile?
+public class ForumsThreadElement: JSONDecodable {
+	public let id: Int?
+	public let title: String?
+	public let content: String?
+	public var locked: Bool?
+	public let posterUserID: Int?
+	public let posterUsername: String?
+	public let creationDate: String?
+	public let commentCount: Int?
+	public let voteCount: Int?
+	public let currentUser: UserProfile?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.title = json["title"].stringValue
 		self.content = json["content"].stringValue

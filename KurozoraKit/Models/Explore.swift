@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class Explore: JSONDecodable {
-    let success: Bool?
-	let categories: [ExploreCategory]?
+public class Explore: JSONDecodable {
+    public let success: Bool?
+	public let categories: [ExploreCategory]?
 
-    required init(json: JSON) throws {
+    required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 
 		var categories = [ExploreCategory]()
@@ -27,13 +27,13 @@ class Explore: JSONDecodable {
     }
 }
 
-class ExploreCategory: JSONDecodable {
-	let title: String?
-	let size: String?
-	let shows: [ShowDetailsElement]?
-	let genres: [GenreElement]?
+public class ExploreCategory: JSONDecodable {
+	public let title: String?
+	public let size: String?
+	public let shows: [ShowDetailsElement]?
+	public let genres: [GenreElement]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.title = json["title"].stringValue
 		self.size = json["size"].stringValue
 

@@ -9,14 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class UserSessions: JSONDecodable {
-    let success: Bool?
-	let authToken: String?
-	let user: UserProfile?
-	let currentSessions: UserSessionsElement?
-    var otherSessions: [UserSessionsElement]?
+public class UserSessions: JSONDecodable {
+    public let success: Bool?
+	public let authToken: String?
+	public let user: UserProfile?
+	public let currentSessions: UserSessionsElement?
+    public var otherSessions: [UserSessionsElement]?
 
-    required init(json: JSON) throws {
+    required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.authToken = json["kuro_auth_token"].stringValue
 		self.user = try? UserProfile(json: json["user"])
@@ -38,14 +38,14 @@ class UserSessions: JSONDecodable {
     }
 }
 
-class UserSessionsElement: JSONDecodable {
-	let id: Int?
-	let device: String?
-	let ip: String?
-	let lastValidated: String?
-	let location: UserSessionsLocation?
+public class UserSessionsElement: JSONDecodable {
+	public let id: Int?
+	public let device: String?
+	public let ip: String?
+	public let lastValidated: String?
+	public let location: UserSessionsLocation?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.device = json["device"].stringValue
 		self.ip = json["ip"].stringValue
@@ -54,14 +54,14 @@ class UserSessionsElement: JSONDecodable {
 	}
 }
 
-class UserSessionsLocation: JSONDecodable {
-	let city: String?
-	let region: String?
-	let country: String?
-	let latitude: Double?
-	let longitude: Double?
+public class UserSessionsLocation: JSONDecodable {
+	public let city: String?
+	public let region: String?
+	public let country: String?
+	public let latitude: Double?
+	public let longitude: Double?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.city = json["city"].stringValue
 		self.region = json["region"].stringValue
 		self.country = json["country"].stringValue

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class GenresTableViewController: KTableViewController {
 	// MARK: - Properties
@@ -50,7 +51,7 @@ class GenresTableViewController: KTableViewController {
 
 	/// Fetches genres from the server.
 	func fetchGenres() {
-		KService.shared.getGenres { (genres) in
+		KService.getGenres { (genres) in
 			DispatchQueue.main.async {
 				self.genresElements = genres
 			}

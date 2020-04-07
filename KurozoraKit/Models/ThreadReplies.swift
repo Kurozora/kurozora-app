@@ -9,14 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class ThreadReplies: JSONDecodable {
-	let success: Bool?
-	let currentPage: Int?
-	let lastPage: Int?
-	let replyPages: Int?
-	let replies: [ThreadRepliesElement]?
+public class ThreadReplies: JSONDecodable {
+	public let success: Bool?
+	public let currentPage: Int?
+	public let lastPage: Int?
+	public let replyPages: Int?
+	public let replies: [ThreadRepliesElement]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
@@ -33,14 +33,14 @@ class ThreadReplies: JSONDecodable {
 	}
 }
 
-class ThreadRepliesElement: JSONDecodable {
-	let id: Int?
-	let postedAt: String?
-	let userProfile: UserProfile?
-	let score: Int?
-	let content: String?
+public class ThreadRepliesElement: JSONDecodable {
+	public let id: Int?
+	public let postedAt: String?
+	public let userProfile: UserProfile?
+	public let score: Int?
+	public let content: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.postedAt = json["posted_at"].stringValue
 		self.userProfile = try? UserProfile(json: json["poster"])

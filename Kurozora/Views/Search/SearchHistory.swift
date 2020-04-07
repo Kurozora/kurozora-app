@@ -6,6 +6,7 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import Foundation
 import SwiftyJSON
 

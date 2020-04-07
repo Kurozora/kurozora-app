@@ -9,14 +9,14 @@
 import TRON
 import SwiftyJSON
 
-class BadgeElement: JSONDecodable {
-	let id: Int?
-	let text: String?
-	let description: String?
-	let textColor: String?
-	let backgroundColor: String?
+public class BadgeElement: JSONDecodable {
+	public let id: Int?
+	public let text: String?
+	public let description: String?
+	public let textColor: String?
+	public let backgroundColor: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.text = json["text"].stringValue
 		self.description = json["description"].stringValue

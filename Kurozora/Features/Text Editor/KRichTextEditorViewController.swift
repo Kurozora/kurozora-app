@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftyJSON
 import SwiftTheme
@@ -77,16 +78,19 @@ class KRichTextEditorViewController: KViewController {
 		}
 		print("Input: \(content)")
 
-		KService.shared.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
+		KService.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
 			DispatchQueue.main.async {
+				guard let userID = User().current?.id else { return }
+				guard let username = User().current?.username else { return }
+
 				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 				let forumThreadJSON: JSON = [
 					"id": threadID,
 					"title": title,
 					"content": content,
 					"locked": false,
-					"poster_user_id": User.currentID,
-					"poster_username": User.username,
+					"poster_user_id": userID,
+					"poster_username": username,
 					"creation_date": creationDate,
 					"reply_count": 0,
 					"score": 0

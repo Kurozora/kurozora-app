@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class CurrentSessionCell: UITableViewCell {
 	@IBOutlet weak var ipAddressTitleLabel: UILabel! {

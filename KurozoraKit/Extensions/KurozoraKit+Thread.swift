@@ -17,12 +17,12 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a ForumsThreadElement object.
 		- Parameter thread: The returned ForumsThreadElement object.
 	*/
-	func getDetails(forThread threadID: Int, withSuccess successHandler: @escaping (_ thread: ForumsThreadElement?) -> Void) {
+	public func getDetails(forThread threadID: Int, withSuccess successHandler: @escaping (_ thread: ForumsThreadElement?) -> Void) {
 		let forumsThreads = self.kurozoraKitEndpoints.forumsThreads.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreads)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .get
 		request.perform(withSuccess: { thread in
@@ -41,25 +41,25 @@ extension KurozoraKit {
 		Upvote or downvote a thread with the given thread id.
 
 		- Parameter threadID: The id of the thread that should be up upvoted/downvoted.
-		- Parameter vote: An intgere indicating whether the thread is upvoted or downvoted. (0 = downvote, 1 = upvote)
-		- Parameter successHandler: A closure returning an intiger indicating whether the thread is upvoted or downvoted.
-		- Parameter action: The integer indicating whether the thead is upvoted or downvoted.
+		- Parameter vote: An vote status value indicating whether the thread is upvoted or downvoted.
+		- Parameter successHandler: A closure returning an vote status indicating whether the thread is upvoted or downvoted.
+		- Parameter action: The vote status indicating whether the thead is upvoted or downvoted.
 	*/
-	func vote(forThread threadID: Int, vote: Int, withSuccess successHandler: @escaping (_ action: Int) -> Void) {
+	public func voteOnThread(_ threadID: Int, withVoteStatus vote: VoteStatus, withSuccess successHandler: @escaping (_ action: VoteStatus) -> Void) {
 		let forumsThreadsVote = self.kurozoraKitEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsThreadsVote)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [
-			"vote": vote
+			"vote": vote.rawValue
 		]
 		request.perform(withSuccess: { vote in
 			if let success = vote.success {
 				if success, let action = vote.action {
-					successHandler(action)
+					successHandler(VoteStatus(rawValue: action) ?? .noVote)
 				}
 			}
 		}, failure: { error in
@@ -72,21 +72,21 @@ extension KurozoraKit {
 		Fetch the replies for the given thread id.
 
 		- Parameter threadID: The id of the thread for which the replies should be fetched.
-		- Parameter order: The method by which the replies should be ordered. Current options are "top" and "recent".
+		- Parameter order: The forum order vlue by which the replies should be ordered.
 		- Parameter page: The page to retrieve replies from. (starts at 0)
 		- Parameter successHandler: A closure returning a ThreadReplies object.
 		- Parameter threadReplies: The returned ThreadReplies object.
 	*/
-	func getReplies(forThread threadID: Int, order: String, page: Int, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies?) -> Void) {
+	public func getReplies(forThread threadID: Int, orderedBy order: ForumOrder, page: Int, withSuccess successHandler: @escaping (_ threadReplies: ThreadReplies?) -> Void) {
 		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ThreadReplies, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .get
 		request.parameters = [
-			"order": order,
+			"order": order.rawValue,
 			"page": page
 		]
 		request.perform(withSuccess: { replies in
@@ -104,17 +104,17 @@ extension KurozoraKit {
 	/**
 		Post a new reply to the given thread id.
 
-		- Parameter comment: The content of the reply.
 		- Parameter threadID: The id of the forum thread where the reply is posted.
+		- Parameter comment: The content of the reply.
 		- Parameter successHandler: A closure returning the newly created reply id.
 		- Parameter replyID: The id of the newly created reply.
 	*/
-	func postReply(inThread threadID: Int, withComment comment: String, withSuccess successHandler: @escaping (_ replyID: Int) -> Void) {
+	public func postReply(inThread threadID: Int, withComment comment: String, withSuccess successHandler: @escaping (_ replyID: Int) -> Void) {
 		let forumsThreadsReplies = self.kurozoraKitEndpoints.forumsThreadsReplies.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ThreadReply, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [
@@ -139,12 +139,12 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a SearchElement array.
 		- Parameter search: The returned SearchElement array.
 	*/
-	func search(forThread thread: String, withSuccess successHandler: @escaping (_ search: [ForumsThreadElement]?) -> Void) {
+	public func search(forThread thread: String, withSuccess successHandler: @escaping (_ search: [ForumsThreadElement]?) -> Void) {
 		let forumsThreadsSearch = self.kurozoraKitEndpoints.forumsThreadsSearch
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(forumsThreadsSearch)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .get
 		request.parameters = [
@@ -166,25 +166,25 @@ extension KurozoraKit {
 		Lock or unlock a thread with the given thread id.
 
 		- Parameter threadID: The id of the forum thread to be locked/unlocked.
-		- Parameter lock: The integer indicating whether to lock or unlock a thread. (0 = unlock, 1 = lock)
-		- Parameter successHandler: A closure returning a boolean indicating whether thread lock/unlock is successful.
-		- Parameter isSuccess: A boolean value indicating whether thread lock/unlock is successful.
+		- Parameter lockStatus: The lock status value indicating whether to lock or unlock a thread.
+		- Parameter successHandler: A closure returning a lock status value indicating whether a thread is locked or unlocked.
+		- Parameter lockStatus: A lock status value indicating whether a thread is locked or unlocked.
 	*/
-	func lockThread(withID threadID: Int, lock: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func lockThread(_ threadID: Int, withLockStatus lockStatus: LockStatus, withSuccess successHandler: @escaping (_ lockStatus: LockStatus) -> Void) {
 		let forumsThreadsLock = self.kurozoraKitEndpoints.forumsThreadsLock.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreadsLock)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [
-			"lock": lock
+			"lock": lockStatus.rawValue
 		]
 		request.perform(withSuccess: { forums in
 			if let success = forums.success {
 				if success, let locked = forums.thread?.locked {
-					successHandler(locked)
+					successHandler(locked ? .locked : .unlocked)
 				}
 			}
 		}, failure: { error in

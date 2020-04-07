@@ -9,6 +9,7 @@ use_frameworks!
 # MARK: - Defs
 def common_pods
 	pod 'Kingfisher'
+	pod 'KeychainAccess'
 	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
 	pod 'TRON', '~> 5.0.0-beta.5'
 	pod 'TRON/SwiftyJSON'
@@ -21,7 +22,6 @@ def kurozora_pods
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
 	pod 'IBPCollectionViewCompositionalLayout'
-	pod 'KeychainAccess'
 	pod 'NotificationBannerSwift'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'

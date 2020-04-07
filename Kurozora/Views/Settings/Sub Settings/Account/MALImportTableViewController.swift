@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import MobileCoreServices
 
@@ -63,7 +64,10 @@ class MALImportTableViewController: KTableViewController {
 	// MARK: - IBActions
 	@IBAction func rightNavigationBarButtonPressed(sender: AnyObject) {
 		DispatchQueue.global(qos: .background).async {
-			KService.shared.importMALLibrary(from: self.selectedFileURL, behavior: "overwrite") { _ in
+			guard let userID = User().current?.id else { return }
+			guard let filePath = self.selectedFileURL else { return }
+
+			KService.importMALLibrary(forUserID: userID, filePath: filePath, importBehavior: .overwrite) { _ in
 			}
 		}
 

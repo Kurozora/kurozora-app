@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 class FeedPostCell: BaseFeedPostCell {
 	var feedPostElement: FeedPostElement? {

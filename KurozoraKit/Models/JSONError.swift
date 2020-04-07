@@ -25,6 +25,11 @@ class JSONError: ErrorSerializable {
 		self.success = false
 		if let responseCode = error?.asAFError?.responseCode {
 			switch responseCode {
+			case 401:
+				self.message = "Session expired"
+//				WorkflowController.shared.signOut()
+			case 404:
+				self.message = "API not found!"
 			case 429:
 				self.message = "You have sent too many requests. Please try again in a minute."
 			default:

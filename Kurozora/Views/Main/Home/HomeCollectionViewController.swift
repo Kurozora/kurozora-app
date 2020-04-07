@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftyJSON
 import WhatsNew
@@ -14,6 +15,7 @@ import WhatsNew
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
+	var genreID: Int? = nil
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
@@ -56,17 +58,6 @@ class HomeCollectionViewController: KCollectionViewController {
 
 		// Setup search bar.
 		setupSearchBar()
-
-		// Validate session.
-		if User.isSignedIn {
-			KService.shared.validateSession(withSuccess: { (success) in
-				if !success {
-					if let signInKNavigationController = R.storyboard.onboarding.signInKNavigationController() {
-						self.present(signInKNavigationController, animated: true, completion: nil)
-					}
-				}
-			})
-		}
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -147,7 +138,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
-		KService.shared.getExplore(withSuccess: { (explore) in
+		KService.getExplore(genreID, withSuccess: { (explore) in
 			DispatchQueue.main.async {
 				self.exploreCategories = explore?.categories
 			}

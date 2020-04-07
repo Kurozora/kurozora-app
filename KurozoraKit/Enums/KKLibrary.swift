@@ -1,5 +1,5 @@
 //
-//  Library.swift
+//  KKLibrary.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 16/03/2019.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-enum Library {
+public enum KKLibrary {
 	/**
-		List of library statuses.
+		List of library status.
 
 		```
 		case watching = 0
@@ -20,7 +20,7 @@ enum Library {
 		case dropped = 4
 		```
 	*/
-	enum Status: Int {
+	public enum Status: Int {
 		// MARK: - Cases
 		/// The watching status of a show.
 		case watching = 0
@@ -38,11 +38,11 @@ enum Library {
 		case dropped = 4
 
 		// MARK: - Properties
-		/// An array containing all library statuses.
-		static let all: [Status] = [.watching, .planning, .completed, .onHold, .dropped]
+		/// An array containing all library status.
+		public static let all: [Status] = [.watching, .planning, .completed, .onHold, .dropped]
 
 		/// The string value of a library status.
-		var stringValue: String {
+		public var stringValue: String {
 			switch self {
 			case .watching:
 				return "Watching"
@@ -51,9 +51,37 @@ enum Library {
 			case .completed:
 				return "Completed"
 			case .onHold:
-				return "OnHold"
+				return "On-Hold"
 			case .dropped:
 				return "Dropped"
+			}
+		}
+
+		// MARK: - Functions
+		/**
+			Returns the `KKLibrary.Status` value for the given string.
+
+			To decide the returned value, the given string is lowercased and compared with the `stringValue` of the `KKLibrary.Status` cases.
+			If no match is found then `.watching` is returned.
+
+			- Parameter string: The string value by which the `KKLibrary.Status` value is determined.
+
+			- Returns: the `KKLibrary.Status` value for the given string or `.watching` if no match is found.
+		*/
+		public static func fromString(_ string: String) -> KKLibrary.Status {
+			switch string.lowercased() {
+			case watching.stringValue.lowercased():
+				return .watching
+			case planning.stringValue.lowercased():
+				return .planning
+			case completed.stringValue.lowercased():
+				return .completed
+			case onHold.stringValue.lowercased():
+				return .onHold
+			case dropped.stringValue.lowercased():
+				return .dropped
+			default:
+				return .watching
 			}
 		}
 	}
@@ -67,7 +95,7 @@ enum Library {
 		...
 		```
 	*/
-	enum SortType: Int {
+	public enum SortType: Int {
 		// MARK: - Cases
 		case none = 0
 		case alphabetically = 1
@@ -80,10 +108,10 @@ enum Library {
 
 		// MARK: - Properties
 		/// An array containing all sort types.
-		static let all: [Library.SortType] = [.alphabetically, /*.popularity, .nextAiringEpisode, .nextEpisodeToWatch,*/ .date, .rating, .myRating]
+		public static let all: [KKLibrary.SortType] = [.alphabetically, /*.popularity, .nextAiringEpisode, .nextEpisodeToWatch,*/ .date, .rating, .myRating]
 
 		/// The string value of a sort type.
-		var stringValue: String {
+		public var stringValue: String {
 			switch self {
 			case .none:
 				return "None"
@@ -105,7 +133,7 @@ enum Library {
 		}
 
 		/// The parameter value of a sort type.
-		var parameterValue: String {
+		public var parameterValue: String {
 			switch self {
 			case .none:
 				return ""
@@ -119,10 +147,26 @@ enum Library {
 				return "my-rating"
 			}
 		}
+
+		/// An array containing all library sort type sub-options string value and its equivalent raw value.
+		public var optionValue: [KKLibrary.SortType.Options] {
+			switch self {
+			case .none:
+				return []
+			case .alphabetically:
+				return [.ascending, .descending]
+			case .date:
+				return [.newest, .oldest]
+			case .rating:
+				return [.best, .worst]
+			case .myRating:
+				return [.best, .worst]
+			}
+		}
 	}
 }
 
-extension Library.SortType {
+extension KKLibrary.SortType {
 	/**
 		List of library sorting type options.
 
@@ -133,7 +177,7 @@ extension Library.SortType {
 		case worst, best
 		```
 	*/
-	enum Options: Int {
+	public enum Options: Int {
 		case none = 0
 		case ascending, descending
 		case newest, oldest
@@ -141,10 +185,10 @@ extension Library.SortType {
 
 		// MARK: - Properties
 		/// An array containing all sort type options.
-		static let all: [Library.SortType.Options] = [.ascending, .descending, .newest, .oldest, .worst, .best]
+		public static let all: [KKLibrary.SortType.Options] = [.ascending, .descending, .newest, .oldest, .worst, .best]
 
 		/// The string value of a sort type option.
-		var stringValue: String {
+		public var stringValue: String {
 			switch self {
 			case .none:
 				return "None"
@@ -164,7 +208,7 @@ extension Library.SortType {
 		}
 
 		/// The parameter value of a sort type option.
-		var parameterValue: String {
+		public var parameterValue: String {
 			switch self {
 			case .none:
 				return "()"

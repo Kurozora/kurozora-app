@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Cosmos
 
 class BadgeCollectionViewCell: UICollectionViewCell {

@@ -105,7 +105,7 @@ class ShowDetail {
 	}
 
 	/**
-		List of airing statuses.
+		List of airing status.
 
 		```
 		case toBeAnnounced = "Tba"
@@ -124,7 +124,7 @@ class ShowDetail {
 		case finishedAiring = "Ended"
 
 		// MARK: - Properties
-		/// An array containing all airing statuses.
+		/// An array containing all airing status.
 		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
 
 		/// The string value of an airing status.
@@ -263,7 +263,7 @@ class ShowDetail {
 	//		/// The show finished airing all of its episodes.
 	//		case finishedAiring = 2
 	//
-	//		/// An array containing all airing statuses.
+	//		/// An array containing all airing status.
 	//		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
 	//
 	//		/// The string value of an airing status.

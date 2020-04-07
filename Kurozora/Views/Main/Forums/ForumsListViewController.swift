@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SCLAlertView
 import SwiftTheme
 import SwiftyJSON
@@ -87,13 +88,11 @@ class ForumsListViewController: KTableViewController {
 
 	/// Fetch threads list for the current section.
 	func fetchThreads() {
+		let threadOrder = self.threadOrder ?? "top"
 		guard let sectionID = sectionID else { return }
+		guard let forumOrder = ForumOrder(rawValue: threadOrder) else { return }
 
-		if threadOrder == nil {
-			threadOrder = "top"
-		}
-
-		KService.shared.getForumsThreads(for: sectionID, order: threadOrder, page: currentPage, withSuccess: { (threads) in
+		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, page: currentPage, withSuccess: { (threads) in
 			DispatchQueue.main.async {
 				self.currentPage = threads?.currentPage ?? 1
 				self.lastPage = threads?.lastPage ?? 1

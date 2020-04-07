@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class UserNotification: JSONDecodable {
-	let success: Bool?
-	let notifications: [UserNotificationsElement]
+public class UserNotification: JSONDecodable {
+	public let success: Bool?
+	public let notifications: [UserNotificationsElement]
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		var notifications = [UserNotificationsElement]()
 
@@ -31,15 +31,15 @@ class UserNotification: JSONDecodable {
 	}
 }
 
-class UserNotificationsElement: JSONDecodable {
-	let id: String?
-	let type: String?
-	var read: Bool?
-	let data: UserNotificationData?
-	let message: String?
-	let creationDate: String?
+public class UserNotificationsElement: JSONDecodable {
+	public let id: String?
+	public let type: String?
+	public var read: Bool?
+	public let data: UserNotificationData?
+	public let message: String?
+	public let creationDate: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].stringValue
 		self.type = json["type"].stringValue
 		self.read = json["read"].boolValue
@@ -49,17 +49,17 @@ class UserNotificationsElement: JSONDecodable {
 	}
 }
 
-class UserNotificationData: JSONDecodable {
+public class UserNotificationData: JSONDecodable {
 	// Session
-	let ip: String?
-	let sessionID: Int?
+	public let ip: String?
+	public let sessionID: Int?
 
 	// Follower
-	let userID: Int?
-	let username: String?
-	let profileImage: String?
+	public let userID: Int?
+	public let username: String?
+	public let profileImage: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.ip = json["ip"].stringValue
 		self.sessionID = json["user_id"].intValue
 

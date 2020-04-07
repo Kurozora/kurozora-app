@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwipeCellKit
 
 class BaseNotificationCell: SwipeTableViewCell {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwipeCellKit
 
 class EpisodesCollectionViewController: KCollectionViewController {
@@ -18,7 +19,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	}
 
 	// MARK: - Properties
-	var seasonID: Int?
+	var seasonID: Int = 0
 	var episodesElements: [EpisodesElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
@@ -63,7 +64,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		KService.shared.getEpisodes(forSeason: seasonID, withSuccess: { (episodes) in
+		KService.getEpisodes(forSeasonID: seasonID, withSuccess: { (episodes) in
 			DispatchQueue.main.async {
 				self.episodesElements = episodes?.episodes
 			}
@@ -312,15 +313,11 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 	func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell) {
 		if let indexPath = collectionView.indexPath(for: cell) {
 			guard let episodeID = episodesElements?[indexPath.row].id else { return }
-			var watched = 0
+			let watchStatus: WatchStatus = cell.episodeWatchedButton.tag == 0 ? .watched : .notWatched
 
-			if cell.episodeWatchedButton.tag == 0 {
-				watched = 1
-			}
-
-			KService.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
+			KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { (watchStatus) in
 				DispatchQueue.main.async {
-					cell.configureCell(with: watchStatus, shouldUpdate: true, withValue: watchStatus)
+					cell.configureCell(withWatchStatus: watchStatus, shouldUpdate: true)
 				}
 			}
 		}

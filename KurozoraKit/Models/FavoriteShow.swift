@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class FavoriteShow: JSONDecodable {
-	let success: Bool?
-	let isFavorite: Int?
+public class FavoriteShow: JSONDecodable {
+	public let success: Bool?
+	public let isFavorite: Int?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.isFavorite = json["is_favorite"].intValue
 	}

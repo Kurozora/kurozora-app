@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import CoreLocation
 import MapKit
 import SCLAlertView
@@ -96,7 +97,8 @@ class ManageActiveSessionsController: KTableViewController {
 	// MARK: - Functions
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
-		KService.shared.getSessions( withSuccess: { (sessions) in
+		guard let userID = User().current?.id else { return }
+		KService.getSessions(forUserID: userID, withSuccess: { (sessions) in
 			DispatchQueue.main.async {
 				self.sessions = sessions
 			}
@@ -155,9 +157,9 @@ class ManageActiveSessionsController: KTableViewController {
 	private func removeSession(_ otherSessionsCell: OtherSessionsCell) {
 		let alertView = SCLAlertView()
 		alertView.addButton("Yes!", action: {
-			let sessionSecret = otherSessionsCell.sessions?.id
+			guard let sessionID = otherSessionsCell.sessions?.id else { return }
 
-			KService.shared.deleteSession(with: sessionSecret, withSuccess: { (success) in
+			KService.deleteSession(sessionID, withSuccess: { (success) in
 				if success {
 					// Get index path for cell
 					if let indexPath = self.tableView.indexPath(for: otherSessionsCell) {

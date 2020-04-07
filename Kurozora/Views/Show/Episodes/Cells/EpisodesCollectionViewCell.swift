@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Cosmos
 import SwipeCellKit
 
@@ -53,8 +54,8 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
         }
     }
 
-	func configureCell(with watchStatus: Bool, shouldUpdate: Bool = false, withValue: Bool = false) {
-		if watchStatus {
+	func configureCell(withWatchStatus watchStatus: WatchStatus, shouldUpdate: Bool = false) {
+		if watchStatus == .watched {
 			self.episodeWatchedButton.tag = 1
 			self.episodeWatchedButton.backgroundColor = .kurozora
 			self.episodeWatchedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -65,7 +66,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 		}
 
 		if shouldUpdate {
-			self.episodesElement?.userDetails?.watched = withValue
+			self.episodesElement?.userDetails?.watched = Bool(exactly: NSNumber(value: watchStatus.rawValue))
 		}
 	}
 
@@ -87,7 +88,8 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 
 		self.shadowView.applyShadow()
 		if let episodeWatched = episodesElement.userDetails?.watched {
-			configureCell(with: episodeWatched)
+			let watchStatus: WatchStatus = episodeWatched ? .watched : .notWatched
+			configureCell(withWatchStatus: watchStatus)
 		}
 	}
 
@@ -103,7 +105,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 
 // MARK: - EpisodesDetailTableViewControlleDelegate
 extension EpisodesCollectionViewCell: EpisodesDetailTableViewControlleDelegate {
-	func updateWatchedStatus(with watchStatus: Bool) {
+	func updateWatchStatus(with watchStatus: WatchStatus) {
 		episodesDelegate?.episodesCellWatchedButtonPressed(for: self)
 	}
 }

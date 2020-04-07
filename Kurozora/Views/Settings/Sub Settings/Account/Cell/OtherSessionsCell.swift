@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 protocol OtherSessionsCellDelegate: class {
 	func removeSession(for otherSessionsCell: OtherSessionsCell)

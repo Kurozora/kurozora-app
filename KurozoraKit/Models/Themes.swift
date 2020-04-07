@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class Themes: JSONDecodable {
-	let success: Bool?
-	let themes: [ThemesElement]?
+public class Themes: JSONDecodable {
+	public let success: Bool?
+	public let themes: [ThemesElement]?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		var themes = [ThemesElement]()
 
@@ -28,14 +28,14 @@ class Themes: JSONDecodable {
 	}
 }
 
-class ThemesElement: JSONDecodable {
-	let id: Int?
-	let name: String?
-	let downloadCount: Int?
-	let downloadLink: String?
-	let currentUser: UserProfile?
+public class ThemesElement: JSONDecodable {
+	public let id: Int?
+	public let name: String?
+	public let downloadCount: Int?
+	public let downloadLink: String?
+	public let currentUser: UserProfile?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue
 		self.downloadCount = json["download_count"].intValue

@@ -46,7 +46,6 @@ internal struct KurozoraKitEndpoints {
 	let sessions = "sessions"
 	let sessionsDelete = "sessions/?/delete"
 	let sessionsUpdate = "sessions/?/update"
-	let sessionsValidate = "sessions/?/validate"
 
 	// MARK: - Themes
 	let themes = "themes"

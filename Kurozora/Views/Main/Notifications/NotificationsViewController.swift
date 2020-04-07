@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftyJSON
 import SCLAlertView
 import SwipeCellKit
@@ -140,7 +141,8 @@ class NotificationsViewController: KTableViewController {
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			KService.shared.getNotifications(withSuccess: { (notifications) in
+			guard let userID = User().current?.id else { return }
+			KService.getNotifications(forUserID: userID, withSuccess: { (notifications) in
 				self.userNotificationsElement = []
 				DispatchQueue.main.async {
 					self.userNotificationsElement = notifications
@@ -212,8 +214,8 @@ class NotificationsViewController: KTableViewController {
 		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
-	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String?, with status: Int) {
-		KService.shared.updateNotification(notificationID, withStatus: status) { (read) in
+	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, with status: Int) {
+		KService.updateNotification(notificationID, withStatus: status) { (read) in
 			if indexPaths == nil {
 				for userNotificationElement in self.userNotificationsElement ?? [] {
 					userNotificationElement.read = read
@@ -390,7 +392,7 @@ extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 		// Change notification status to read
-		let notificationID = baseNotificationCell?.userNotificationsElement?.id
+		guard let notificationID = baseNotificationCell?.userNotificationsElement?.id else { return }
 		self.updateNotification(at: [indexPath], for: notificationID, with: 1)
 
 		if baseNotificationCell?.notificationType == .session {
@@ -418,8 +420,8 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
 				switch self.grouping {
 				case .automatic, .byType:
-					let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id
-					KService.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
+					guard let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id else { return }
+					KService.deleteNotification(notificationID, withSuccess: { (success) in
 						DispatchQueue.main.async {
 							if success {
 								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
@@ -434,8 +436,8 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 						}
 					})
 				case .off:
-					let notificationID = self.userNotificationsElement?[indexPath.row].id
-					KService.shared.deleteNotification(with: notificationID, withSuccess: { (success) in
+					guard let notificationID = self.userNotificationsElement?[indexPath.row].id else { return }
+					KService.deleteNotification(notificationID, withSuccess: { (success) in
 						if success {
 							self.userNotificationsElement?.remove(at: indexPath.row)
 							tableView.beginUpdates()

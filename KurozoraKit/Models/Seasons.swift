@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class Seasons: JSONDecodable {
-    let success: Bool?
-    let seasons: [SeasonsElement]?
+public class Seasons: JSONDecodable {
+    public let success: Bool?
+    public let seasons: [SeasonsElement]?
 
-    required init(json: JSON) throws {
+    required public init(json: JSON) throws {
         self.success = json["success"].boolValue
 		var seasons = [SeasonsElement]()
 
@@ -27,14 +27,14 @@ class Seasons: JSONDecodable {
     }
 }
 
-class SeasonsElement: JSONDecodable {
-	let id: Int?
-	let title: String?
-	let number: Int?
-	let poster: String?
-	let episodesCount: Int?
+public class SeasonsElement: JSONDecodable {
+	public let id: Int?
+	public let title: String?
+	public let number: Int?
+	public let poster: String?
+	public let episodesCount: Int?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.title = json["title"].stringValue
 		self.number = json["number"].intValue

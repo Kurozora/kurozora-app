@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import KurozoraKit
 import Cosmos
 
 protocol EpisodesDetailTableViewControlleDelegate: class {
-	func updateWatchedStatus(with watchStatus: Bool)
+	func updateWatchStatus(with watchStatus: WatchStatus)
 }
 
 class EpisodesDetailTableViewControlle: KTableViewController {
@@ -56,8 +57,8 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 	}
 
 	// MARK: - Functions
-	fileprivate func updateWatchedStatus(with status: Bool) {
-		if status {
+	fileprivate func updateWatchStatus(with watchStatus: WatchStatus) {
+		if watchStatus == .watched {
 			episodeWatchedButton.isEnabled = true
 			episodeWatchedButton.isHidden = false
 			episodeWatchedButton.tag = 1
@@ -93,16 +94,12 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 	// MARK: - IBActions
 	@IBAction func episodeWatchedButtonPressed(_ sender: UIButton) {
 		guard let episodeID = episodeElement?.id else { return }
-		var watched = 0
+		let watchStatus: WatchStatus = episodeWatchedButton.tag == 0 ? .watched : .notWatched
 
-		if episodeWatchedButton.tag == 0 {
-			watched = 1
-		}
-
-		KService.shared.mark(asWatched: watched, forEpisode: episodeID) { (watchStatus) in
+		KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { (watchStatus) in
 			DispatchQueue.main.async {
-				self.delegate?.updateWatchedStatus(with: watchStatus)
-				self.updateWatchedStatus(with: watchStatus)
+				self.delegate?.updateWatchStatus(with: watchStatus)
+				self.updateWatchStatus(with: watchStatus)
 			}
 		}
 	}

@@ -9,11 +9,11 @@
 import TRON
 import SwiftyJSON
 
-class ThreadPost: JSONDecodable {
-	let success: Bool?
-	let threadID: Int?
+public class ThreadPost: JSONDecodable {
+	public let success: Bool?
+	public let threadID: Int?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.threadID = json["thread_id"].intValue
 	}

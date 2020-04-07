@@ -14,11 +14,6 @@ extension Notification.Name {
 		return Notification.Name(#function)
 	}
 
-	// MARK: - User state
-	static var KUserIsSignedInDidChange: NSNotification.Name {
-		return Notification.Name(#function)
-	}
-
 	// MARK: - Notification settings
 	static var KSNotificationsBadgeIsOn: NSNotification.Name {
 		return Notification.Name(#function)

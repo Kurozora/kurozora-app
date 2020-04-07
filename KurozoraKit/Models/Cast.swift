@@ -9,12 +9,12 @@
 import TRON
 import SwiftyJSON
 
-class Actors: JSONDecodable {
-    let success: Bool?
-    let totalActors: Int?
-    let actors: [ActorsElement]?
+public class Actors: JSONDecodable {
+    public let success: Bool?
+    public let totalActors: Int?
+    public let actors: [ActorsElement]?
 
-    required init(json: JSON) throws {
+    required public init(json: JSON) throws {
         self.success = json["success"].boolValue
         self.totalActors = json["total_actors"].intValue
         var actors = [ActorsElement]()
@@ -30,12 +30,12 @@ class Actors: JSONDecodable {
     }
 }
 
-class ActorsElement: JSONDecodable {
-	let name: String?
-	let role: String?
-	let image: String?
+public class ActorsElement: JSONDecodable {
+	public let name: String?
+	public let role: String?
+	public let image: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.name = json["name"].stringValue
 		self.role = json["role"].stringValue
 		self.image = json["image"].stringValue

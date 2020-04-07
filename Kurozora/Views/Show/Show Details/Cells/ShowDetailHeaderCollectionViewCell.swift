@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import SwiftTheme
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
@@ -128,8 +129,8 @@ extension ShowDetailHeaderCollectionViewCell {
 		quickDetailsView.isHidden = false
 	}
 
-	func updateFavoriteStatus(with showDetailsElement: ShowDetailsElement? = nil, withInt isFavorite: Int? = 0) {
-		let showIsFavorite = showDetailsElement?.currentUser?.isFavorite ?? (isFavorite == 1)
+	func updateFavoriteStatus(with showDetailsElement: ShowDetailsElement? = nil, withFavoriteStatus favoriteStatus: FavoriteStatus = .unfavorite) {
+		let showIsFavorite = showDetailsElement?.currentUser?.isFavorite ?? (favoriteStatus == .favorite)
 		self.showDetailsElement?.currentUser?.isFavorite = showIsFavorite
 		let favoriteImage = showIsFavorite ? R.image.symbols.heart_fill() : R.image.symbols.heart()
 		favoriteButton.tag = showIsFavorite ? 1 : 0
@@ -186,17 +187,20 @@ extension ShowDetailHeaderCollectionViewCell {
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			let action = UIAlertController.actionSheetWithItems(items: Library.Section.alertControllerItems, currentSelection: self.libraryStatus, action: { (title, value)  in
-				guard let showID = self.showDetailsElement?.id else { return }
+			guard let libraryStatusString = self.libraryStatus else { return }
+			guard let showID = self.showDetailsElement?.id else { return }
+			guard let userID = User().current?.id else { return }
 
-				if self.libraryStatus != value {
-					KService.shared.addToLibrary(withStatus: value, showID: showID, withSuccess: { (success) in
+			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
+			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
+				if libraryStatus != value {
+					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID, withSuccess: { (success) in
 						if success {
 							// Update entry in library
-							self.libraryStatus = value
+							self.libraryStatus = value.stringValue
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
 
-							let libraryUpdateNotificationName = Notification.Name("Update\(value)Section")
+							let libraryUpdateNotificationName = Notification.Name("Update\(value.sectionValue)Section")
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 							self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
@@ -205,14 +209,12 @@ extension ShowDetailHeaderCollectionViewCell {
 				}
 			})
 
-			if let libraryStatus = self.libraryStatus, !libraryStatus.isEmpty {
+			if !libraryStatusString.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.shared.removeFromLibrary(withID: self.showDetailsElement?.id, withSuccess: { (success) in
+					KService.removeFromLibrary(forUserID: userID, showID: showID, withSuccess: { (success) in
 						if success {
 							self.libraryStatus = ""
-
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
-
 							self.libraryStatusButton.setTitle("ADD", for: .normal)
 						}
 					})
@@ -237,11 +239,12 @@ extension ShowDetailHeaderCollectionViewCell {
 			guard let showID = self.showDetailsElement?.id else { return }
 			var isFavoriteBoolValue = self.showDetailsElement?.currentUser?.isFavorite ?? false
 			isFavoriteBoolValue = !isFavoriteBoolValue
-			let isFavorite = isFavoriteBoolValue.int
 
-			KService.shared.updateFavoriteStatus(forShow: showID, isFavorite: isFavorite) { (isFavorite) in
-				DispatchQueue.main.async {
-					self.updateFavoriteStatus(withInt: isFavorite)
+			if let favoriteStatus = FavoriteStatus(rawValue: isFavoriteBoolValue.int), let userID = User().current?.id {
+				KService.updateFavoriteStatus(forUserID: userID, forShow: showID, withFavoriteStatus: favoriteStatus) { (favoriteStatus) in
+					DispatchQueue.main.async {
+						self.updateFavoriteStatus(withFavoriteStatus: favoriteStatus)
+					}
 				}
 			}
 		}

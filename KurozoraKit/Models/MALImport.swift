@@ -9,11 +9,11 @@
 import SwiftyJSON
 import TRON
 
-class MALImport: JSONDecodable {
-	var success: Bool?
-	var message: String?
+public class MALImport: JSONDecodable {
+	public var success: Bool?
+	public var message: String?
 
-	required init(json: JSON) throws {
+	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
 	}
@@ -28,7 +28,7 @@ extension MALImport {
 		case overwrite = 0
 		```
 	*/
-	enum Behavior: Int {
+	public enum Behavior: Int {
 		case overwrite = 0
 
 		// MARK: - Properties

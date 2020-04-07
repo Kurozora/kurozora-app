@@ -17,12 +17,12 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func deleteNotification(with notificationID: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func deleteNotification(_ notificationID: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let notificationsDelete = self.kurozoraKitEndpoints.notificationsDelete.replacingOccurrences(of: "?", with: "\(notificationID)")
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(notificationsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.perform(withSuccess: { notification in
@@ -45,12 +45,12 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a boolean indicating whether notification deletion is successful.
 		- Parameter isSuccess: A boolean value indicating whether notification deletion is successful.
 	*/
-	func updateNotification(_ notificationID: String, withStatus read: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
+	public func updateNotification(_ notificationID: String, withStatus read: Int, withSuccess successHandler: @escaping (Bool) -> Void) {
 		let notificationsUpdate = self.kurozoraKitEndpoints.notificationsUpdate
 		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request(notificationsUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .post
 		request.parameters = [

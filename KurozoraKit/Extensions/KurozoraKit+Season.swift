@@ -17,12 +17,12 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning an Episodes object.
 		- Parameter episodes: The returned Episodes object.
 	*/
-	func getEpisodes(forSeasonID seasonID: Int, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
+	public func getEpisodes(forSeasonID seasonID: Int, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
 		let animeSeasonsEpisodes = self.kurozoraKitEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
 		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self.userAuthToken
+		request.headers["kuro-auth"] = self._userAuthToken
 
 		request.method = .get
 		request.perform(withSuccess: { episodes in

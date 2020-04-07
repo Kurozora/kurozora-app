@@ -16,7 +16,7 @@ extension KurozoraKit {
 		- Parameter successHandler: A closure returning a GenreElement array.
 		- Parameter genres: The returned GenreElement array.
 	*/
-	func getGenres(withSuccess successHandler: @escaping (_ genres: [GenreElement]?) -> Void) {
+	public func getGenres(withSuccess successHandler: @escaping (_ genres: [GenreElement]?) -> Void) {
 		let genres = self.kurozoraKitEndpoints.genres
 		let request: APIRequest<Genres, JSONError> = tron.swiftyJSON.request(genres)
 		request.headers = headers
