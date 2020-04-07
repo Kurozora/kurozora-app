@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eeh-Yo-M66">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="HomeCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lLs-XV-jFy" customClass="HomeCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="4qz-vz-vYz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gxn-7Q-2Hq">
@@ -246,6 +246,7 @@
                         <segue destination="iCt-dj-RF4" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="ctZ-Iy-Ut3"/>
                         <segue destination="8H2-pT-d2L" kind="show" identifier="ShowDetailsSegue" id="gKM-pt-PFb"/>
                         <segue destination="Pey-ss-6J5" kind="show" identifier="GenresSegue" id="YYd-Uu-4EQ"/>
+                        <segue destination="xdS-8x-Scn" kind="show" identifier="ExploreSegue" id="nLz-2r-FHa"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSz-C9-PSE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -318,6 +319,7 @@
                                     <outlet property="nameLabel" destination="LKU-4s-eHA" id="QqA-ST-cHw"/>
                                     <outlet property="nsfwButton" destination="3Bc-MI-E9j" id="Wob-Fi-rl7"/>
                                     <outlet property="separatorView" destination="fEU-EY-GlV" id="ptT-Ez-UET"/>
+                                    <segue destination="lLs-XV-jFy" kind="show" identifier="ExploreSegue" id="JnJ-bm-wRc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -370,7 +372,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="ShowsListCollectionViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a2S-hb-5lO" customClass="ShowsListCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="Cws-vs-Crh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pFr-a1-GkC">
@@ -395,13 +397,24 @@
             </objects>
             <point key="canvasLocation" x="2229" y="523"/>
         </scene>
+        <!--HomeCollectionViewController-->
+        <scene sceneID="JZQ-XP-0tx">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeCollectionViewController" id="xdS-8x-Scn" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="CaY-xw-KwS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="adX-LK-gOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="880" y="595"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="JnJ-bm-wRc"/>
+        <segue reference="gKM-pt-PFb"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/show_banner_image" width="1920" height="1080"/>
         <image name="shadow" width="6" height="30"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="gKM-pt-PFb"/>
-    </inferredMetricsTieBreakers>
-    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

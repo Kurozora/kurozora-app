@@ -62,6 +62,17 @@ class GenresTableViewController: KTableViewController {
 	@IBAction func dismissButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
 	}
+
+	// MARK: - Segue
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == R.segue.genresTableViewController.exploreSegue.identifier {
+			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
+				if let selectedCell = sender as? GenreTableViewCell {
+					homeCollectionViewController.genreElement = selectedCell.genreElement
+				}
+			}
+		}
+	}
 }
 
 // MARK: - UITableViewDataSource

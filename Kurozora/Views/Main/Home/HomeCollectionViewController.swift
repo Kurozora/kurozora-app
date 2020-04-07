@@ -15,7 +15,7 @@ import WhatsNew
 class HomeCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var kSearchController: KSearchController = KSearchController()
-	var genreID: Int? = nil
+	var genreElement: GenreElement? = nil
 	let actionsArray: [[[String: String]]] = [
 		[["title": "About In-App Purchases", "url": "https://kurozora.app/"], ["title": "About Personalization", "url": "https://kurozora.app/"], ["title": "Welcome to Kurozora", "url": "https://kurozora.app/"]],
 		[["title": "Redeem", "segueId": R.segue.homeCollectionViewController.redeemSegue.identifier], ["title": "Become a Pro User", "segueId": R.segue.homeCollectionViewController.subscriptionSegue.identifier]]
@@ -44,6 +44,11 @@ class HomeCollectionViewController: KCollectionViewController {
 		super.viewWillReload()
 
 		fetchExplore()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.title = genreElement?.name ?? "Explore"
 	}
 
 	override func viewDidLoad() {
@@ -138,7 +143,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
-		KService.getExplore(genreID, withSuccess: { (explore) in
+		KService.getExplore(genreElement?.id, withSuccess: { (explore) in
 			DispatchQueue.main.async {
 				self.exploreCategories = explore?.categories
 			}
@@ -154,6 +159,13 @@ class HomeCollectionViewController: KCollectionViewController {
 					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
 				} else if let showID = sender as? Int {
 					showDetailCollectionViewController.showID = showID
+				}
+			}
+		} else if segue.identifier == R.segue.homeCollectionViewController.exploreSegue.identifier {
+			// Show explore view with specified genre
+			if let homeCollectionViewController = segue.destination as? HomeCollectionViewController {
+				if let selectedCell = sender as? BaseLockupCollectionViewCell {
+					homeCollectionViewController.genreElement = selectedCell.genreElement
 				}
 			}
 		} else if segue.identifier == R.segue.homeCollectionViewController.showsListSegue.identifier {
@@ -202,6 +214,8 @@ extension HomeCollectionViewController {
 		if let baseLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? BaseLockupCollectionViewCell {
 			if exploreCategories?[indexPath.section].genres?.count == 0 {
 				performSegue(withIdentifier: R.segue.homeCollectionViewController.showDetailsSegue, sender: baseLockupCollectionViewCell)
+			} else {
+				performSegue(withIdentifier: R.segue.homeCollectionViewController.exploreSegue, sender: baseLockupCollectionViewCell)
 			}
 		} else if let legalCollectionViewCell = collectionView.cellForItem(at: indexPath) as? LegalCollectionViewCell {
 			performSegue(withIdentifier: R.segue.homeCollectionViewController.legalSegue, sender: legalCollectionViewCell)
