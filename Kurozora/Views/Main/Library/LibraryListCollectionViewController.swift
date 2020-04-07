@@ -24,7 +24,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 	var showDetailsElements: [ShowDetailsElement]? {
 		didSet {
 			self.configureDataSource()
-			self.collectionView.reloadEmptyDataSet()
 			self.refreshControl.endRefreshing()
 			self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.libraryStatus.stringValue.lowercased()) list.", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 		}
@@ -217,6 +216,7 @@ extension LibraryListCollectionViewController {
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
 		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 

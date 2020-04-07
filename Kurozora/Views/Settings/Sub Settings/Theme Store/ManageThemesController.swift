@@ -13,12 +13,13 @@ import SwiftTheme
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var themes: [ThemesElement]? {
+	var themes: [[ThemesElement]] = [[], []] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
-			self.collectionView.reloadData()
+			self.configureDataSource()
 		}
 	}
+	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -30,11 +31,21 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		return _prefersActivityIndicatorHidden
 	}
 
+	// Default theme
+	var defaultThemes = [
+		try? ThemesElement(json: ["name": "Default", "color": "#353A50"]),
+		try? ThemesElement(json: ["name": "Day", "color": "#E6E5E5"]),
+		try? ThemesElement(json: ["name": "Night", "color": "#333333"])
+	]
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		collectionView.collectionViewLayout = createLayout()
+		// Setup default themes
+		if let defaultThemes = self.defaultThemes as? [ThemesElement] {
+			self.themes[0].append(contentsOf: defaultThemes)
+		}
 
 		// Fetch themes
 		DispatchQueue.global(qos: .background).async {
@@ -47,7 +58,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	func fetchThemes() {
 		KService.getThemes(withSuccess: { (themes) in
 			DispatchQueue.main.async {
-				self.themes = themes
+				self.themes[1].append(contentsOf: themes ?? [])
 			}
 		})
 	}
@@ -66,28 +77,32 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	}
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - KCollectionViewDataSource
 extension ManageThemesCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let themesCount = themes?.count else { return 0 }
-		return themesCount + 3
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return []
 	}
 
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")
-		}
-		return themesCollectionViewCell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if let themesCollectionViewCell = cell as? ThemesCollectionViewCell {
-			if indexPath.row > 3 {
-				themesCollectionViewCell.themesElement = themes?[indexPath.item - 3]
+	override func configureDataSource() {
+		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
+			if let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) {
+				themesCollectionViewCell.themesElement = self.themes[indexPath.section][indexPath.item]
+				return themesCollectionViewCell
 			} else {
-				themesCollectionViewCell.themesElement = themes?.first
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")
 			}
 		}
+
+		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+		SectionLayoutKind.allCases.forEach {
+			let itemsPerSection = ($0 == .def ? themes.first?.count : themes.last?.count) ?? 0
+			snapshot.appendSections([$0])
+			let itemOffset = $0.rawValue * itemsPerSection
+			let itemUpperbound = itemOffset + itemsPerSection
+			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
+		}
+		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 
@@ -129,5 +144,21 @@ extension ManageThemesCollectionViewController {
 			return layoutSection
 		}
 		return layout
+	}
+}
+
+// MARK: - SectionLayoutKind
+extension ManageThemesCollectionViewController {
+	/**
+		List of theme section layout kind.
+
+		```
+		case def = 0
+		case main = 1
+		```
+	*/
+	enum SectionLayoutKind: Int, CaseIterable {
+		case def = 0
+		case main = 1
 	}
 }

@@ -93,15 +93,13 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("User Email - \(appleIDCredential.email ?? "N/A")")
 //		print("Real User Status - \(appleIDCredential.realUserStatus.rawValue)")
 //
-//		if let authorizationCode = appleIDCredential.authorizationCode,
-//			let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) {
-//			print("Refresh Token \(authorizationCodeString)")
-//		}
-//
-//		if let identityTokenData = appleIDCredential.identityToken,
-//			let identityTokenString = String(data: identityTokenData, encoding: .utf8) {
-//			print("Identity Token \(identityTokenString)")
-//		}
+//		let authorizationCode = appleIDCredential.authorizationCode ?? Data()
+//		let authorizationCodeString = String(data: authorizationCode, encoding: .utf8)
+//		print("Refresh Token \(authorizationCodeString)")
+
+//		let identityTokenData = appleIDCredential.identityToken ?? Data()
+//		let identityTokenString = String(data: identityTokenData, encoding: .utf8)
+//		print("Identity Token \(identityTokenString)")
 
 		guard let emailAddress = appleIDCredential.email else { return }
 		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { (success) in

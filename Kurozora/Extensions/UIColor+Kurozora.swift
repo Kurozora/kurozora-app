@@ -28,7 +28,7 @@ extension UIColor {
 	/// Kurozora yellow color value `#FDD35E`.
 	static var kYellow: UIColor = #colorLiteral(red: 0.9921568627, green: 0.8274509804, blue: 0.368627451, alpha: 1)
 
-	/// Kurozora charcoal color value `#353A50`/
+	/// Kurozora charcoal color value `#353A50`.
 	static var kGrayishNavy: UIColor = #colorLiteral(red: 0.2078431373, green: 0.2274509804, blue: 0.3137254902, alpha: 1)
 }
 

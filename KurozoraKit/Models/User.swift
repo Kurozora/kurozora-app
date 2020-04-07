@@ -161,7 +161,7 @@ extension User {
 		return Int(currentSIWAID) ?? 0
 	}
 
-	/// Returns the current User ID Token saved in KDefaults.
+	/// Returns the current user's Sign In With Apple ID Token saved in KDefaults.
 	static var currentIDToken: String {
 		guard let currentIDToken = KKServices.shared.KeychainDefaults["id_token"], !currentIDToken.isEmpty else { return ""}
 		return currentIDToken

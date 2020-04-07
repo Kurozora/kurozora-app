@@ -16,7 +16,6 @@ class CastCollectionViewController: KCollectionViewController {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
-			self.collectionView.reloadEmptyDataSet()
 		}
 	}
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>! = nil
@@ -100,7 +99,8 @@ extension CastCollectionViewController {
 			let itemUpperbound = itemOffset + itemsPerSection
 			snapshot.appendItems(Array(itemOffset..<itemUpperbound))
 		}
-		dataSource.apply(snapshot, animatingDifferences: true)
+		dataSource.apply(snapshot)
+		collectionView.reloadEmptyDataSet()
 	}
 }
 
