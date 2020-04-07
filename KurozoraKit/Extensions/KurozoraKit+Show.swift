@@ -24,11 +24,15 @@ extension KurozoraKit {
 		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request(explore)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		if genreID != nil || genreID != 0 {
 			if let genreID = genreID {
-				request.headers["genre_id"] = String(genreID)
+				request.parameters = [
+					"genre_id": String(genreID)
+				]
 			}
 		}
 
