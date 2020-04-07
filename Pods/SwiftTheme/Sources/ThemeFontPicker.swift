@@ -31,7 +31,7 @@ import UIKit
 @objc public extension ThemeFontPicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIFont?) -> ThemeFontPicker {
-        return ThemeFontPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeFontPicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithFonts(_ fonts: [UIFont]) -> ThemeFontPicker {

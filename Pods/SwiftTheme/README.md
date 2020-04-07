@@ -12,11 +12,10 @@
 
 <p align="center">
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-swift5-f48041.svg?style=flat"></a>
-<a href="https://developer.apple.com/ios"><img src="https://img.shields.io/badge/platform-iOS%208%2B-blue.svg?style=flat"></a>
-<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
-<a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat"></a>
+<a href="http://cocoadocs.org/docsets/SwiftTheme"><img src="https://img.shields.io/cocoapods/v/SwiftTheme.svg?style=flat"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/carthage-compatible-4BC51D.svg?style=flat"></a>
+<a href="https://developer.apple.com/ios"><img src="https://img.shields.io/badge/platform-iOS%208%2B | tvOS%208%2B-blue.svg?style=flat"></a>
 <a href="https://github.com/wxxsw/SwiftTheme/blob/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat"></a>
-<a href="https://github.com/wxxsw/SwiftTheme/tree/0.5.0"><img src="https://img.shields.io/badge/release-0.5.0-blue.svg"></a>
 </p>
 
 ## Screenshot
@@ -332,7 +331,9 @@ NotificationCenter.default.addObserver(
 // "#013E"			RGBA in short
 ①
 ThemeColorPicker(colors: "#FFFFFF", "#000")
+ThemeColorPicker(colors: UIColor.red, UIColor.blue)
 ThemeColorPicker.pickerWithColors(["#FFFFFF", "#000"])
+ThemeColorPicker.pickerWithUIColors([UIColor.red, UIColor.blue])
 ②
 ThemeColorPicker(keyPath: "someStringKeyPath")
 ThemeColorPicker.pickerWithKeyPath("someStringKeyPath")
@@ -364,7 +365,10 @@ ThemeCGFloatPicker.pickerWithKeyPath("someNumberKeyPath")
 ```swift
 ①
 ThemeCGColorPicker(colors: "#FFFFFF", "#000")
+ThemeCGColorPicker(colors: UIColor.red, UIColor.blue)
+ThemeCGColorPicker(colors: UIColor.red.cgColor, UIColor.blue.cgColor)
 ThemeCGColorPicker.pickerWithColors(["#FFFFFF", "#000"])
+ThemeCGColorPicker.pickerWithUIColors([UIColor.blue, UIColor.red])
 ②
 ThemeCGColorPicker(keyPath: "someStringKeyPath")
 ThemeCGColorPicker.pickerWithKeyPath("someStringKeyPath")
@@ -466,7 +470,7 @@ Download this project and find more. There are four demo targets:
 - `Demo` shows how to use index mode and how to save the last selection of themes and other general usages.
 - `PlistDemo` shows how to use plist mode and how to download themes that packaged in zip files.
 - `JsonDemo` is like `PlistDemo`, but use `json`.
-- `OCDemo` is `Demo`'s Objective-c version.
+- `OCDemo` is `Demo`'s Objective-C version.
 - `TVOSDemo` is used to test tvos compatibility.
 
 ## FAQ

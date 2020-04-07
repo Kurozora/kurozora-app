@@ -28,7 +28,7 @@ import UIKit
 @objc public extension ThemeNavigationBarAppearancePicker {
 
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UINavigationBarAppearance?) -> ThemeNavigationBarAppearancePicker {
-        return ThemeNavigationBarAppearancePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeNavigationBarAppearancePicker(keyPath: keyPath, map: map)
     }
 
     class func pickerWithAppearances(_ appearances: [UINavigationBarAppearance]) -> ThemeNavigationBarAppearancePicker {

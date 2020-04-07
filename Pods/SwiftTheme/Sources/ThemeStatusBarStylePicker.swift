@@ -60,7 +60,7 @@ final class ThemeStatusBarStylePicker: ThemePicker {}
 public extension ThemeStatusBarStylePicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIStatusBarStyle?) -> ThemeStatusBarStylePicker {
-        return ThemeStatusBarStylePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeStatusBarStylePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithStyles(_ styles: [UIStatusBarStyle]) -> ThemeStatusBarStylePicker {

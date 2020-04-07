@@ -43,7 +43,7 @@ import UIKit
 public extension ThemeCGFloatPicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> CGFloat?) -> ThemeCGFloatPicker {
-        return ThemeCGFloatPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeCGFloatPicker(keyPath: keyPath, map: map)
     }
     
 }

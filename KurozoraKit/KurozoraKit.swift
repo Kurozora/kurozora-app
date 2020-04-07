@@ -57,12 +57,9 @@ public struct KurozoraKit {
 		- Parameter accessGroup: The keychain group to which the app belongs.
 	*/
 	public init(authenticationKey: String? = nil, accessGroup: String? = nil) {
-		print("----- App Identifier Prefix: ", appIdentifierPrefix)
 		let accessGroup = accessGroup ?? "\(appIdentifierPrefix)app.kurozora.shared"
 
 		self.userAuthToken = authenticationKey
 		KKServices.shared.KeychainDefaults = Keychain(service: "Kurozora", accessGroup: accessGroup).synchronizable(true).accessibility(.afterFirstUnlock)
 	}
 }
-
-let kurozoraKit = KurozoraKit(authenticationKey: "edc954868bb006959e45", accessGroup: "")

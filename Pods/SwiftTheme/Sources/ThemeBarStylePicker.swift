@@ -57,7 +57,7 @@ final class ThemeBarStylePicker: ThemePicker {}
 public extension ThemeBarStylePicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIBarStyle?) -> ThemeBarStylePicker {
-        return ThemeBarStylePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeBarStylePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithStyles(_ styles: [UIBarStyle]) -> ThemeBarStylePicker {

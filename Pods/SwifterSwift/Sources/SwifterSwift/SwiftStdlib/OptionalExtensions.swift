@@ -63,8 +63,8 @@ public extension Optional {
     /// SwifterSwift: Assign an optional value to a variable only if the value is not nil.
     ///
     ///     let someParameter: String? = nil
-    ///     let parameters = [String:Any]() //Some parameters to be attached to a GET request
-    ///     parameters[someKey] ??= someParameter //It won't be added to the parameters dict
+    ///     let parameters = [String: Any]() // Some parameters to be attached to a GET request
+    ///     parameters[someKey] ??= someParameter // It won't be added to the parameters dict
     ///
     /// - Parameters:
     ///   - lhs: Any?
@@ -79,8 +79,8 @@ public extension Optional {
     ///     var someText: String? = nil
     ///     let newText = "Foo"
     ///     let defaultText = "Bar"
-    ///     someText ?= newText //someText is now "Foo" because it was nil before
-    ///     someText ?= defaultText //someText doesn't change its value because it's not nil
+    ///     someText ?= newText // someText is now "Foo" because it was nil before
+    ///     someText ?= defaultText // someText doesn't change its value because it's not nil
     ///
     /// - Parameters:
     ///   - lhs: Any?
@@ -108,6 +108,63 @@ public extension Optional where Wrapped: Collection {
         guard !collection.isEmpty else { return nil }
         return collection
     }
+
+}
+
+// MARK: - Methods (RawRepresentable, RawValue: Equatable)
+public extension Optional where Wrapped: RawRepresentable, Wrapped.RawValue: Equatable {
+
+    // swiftlint:disable missing_swifterswift_prefix
+
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    @inlinable static func == (lhs: Optional, rhs: Wrapped.RawValue?) -> Bool {
+        return lhs?.rawValue == rhs
+    }
+
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    @inlinable static func == (lhs: Wrapped.RawValue?, rhs: Optional) -> Bool {
+        return lhs == rhs?.rawValue
+    }
+
+    /// Returns a Boolean value indicating whether two values are not equal.
+    ///
+    /// Inequality is the inverse of equality. For any values `a` and `b`,
+    /// `a != b` implies that `a == b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    @inlinable static func != (lhs: Optional, rhs: Wrapped.RawValue?) -> Bool {
+        return lhs?.rawValue != rhs
+    }
+
+    /// Returns a Boolean value indicating whether two values are not equal.
+    ///
+    /// Inequality is the inverse of equality. For any values `a` and `b`,
+    /// `a != b` implies that `a == b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    @inlinable static func != (lhs: Wrapped.RawValue?, rhs: Optional) -> Bool {
+        return lhs != rhs?.rawValue
+    }
+
+    // swiftlint:enable missing_swifterswift_prefix
 
 }
 

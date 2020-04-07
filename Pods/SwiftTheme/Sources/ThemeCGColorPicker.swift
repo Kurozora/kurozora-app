@@ -6,8 +6,7 @@
 //  Copyright © 2017年 Gesen. All rights reserved.
 //
 
-import Foundation
-import CoreGraphics.CGColor
+import UIKit
 
 @objc public final class ThemeCGColorPicker: ThemePicker {
     
@@ -21,6 +20,14 @@ import CoreGraphics.CGColor
     
     public convenience init(colors: String...) {
         self.init(v: { ThemeManager.colorElement(for: colors)?.cgColor })
+    }
+    
+    public convenience init(colors: UIColor...) {
+        self.init(v: { ThemeManager.element(for: colors)?.cgColor })
+    }
+    
+    public convenience init(colors: CGColor...) {
+        self.init(v: { ThemeManager.element(for: colors) })
     }
     
     public required convenience init(arrayLiteral elements: String...) {
@@ -48,11 +55,15 @@ import CoreGraphics.CGColor
     }
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> CGColor?) -> ThemeCGColorPicker {
-        return ThemeCGColorPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeCGColorPicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithColors(_ colors: [String]) -> ThemeCGColorPicker {
         return ThemeCGColorPicker(v: { ThemeManager.colorElement(for: colors)?.cgColor })
+    }
+    
+    class func pickerWithUIColors(_ colors: [UIColor]) -> ThemeCGColorPicker {
+        return ThemeCGColorPicker(v: { ThemeManager.element(for: colors)?.cgColor })
     }
     
 }

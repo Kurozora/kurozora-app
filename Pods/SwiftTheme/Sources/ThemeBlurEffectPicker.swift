@@ -26,7 +26,7 @@ import UIKit
 @objc public extension ThemeBlurEffectPicker {
 
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIBlurEffect?) -> ThemeBlurEffectPicker {
-        return ThemeBlurEffectPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeBlurEffectPicker(keyPath: keyPath, map: map)
     }
 
     class func pickerWithAppearances(_ appearances: [UIBlurEffect]) -> ThemeBlurEffectPicker {

@@ -52,7 +52,7 @@ import UIKit
 public extension ThemeScrollViewIndicatorStylePicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIScrollView.IndicatorStyle?) -> ThemeScrollViewIndicatorStylePicker {
-        return ThemeScrollViewIndicatorStylePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeScrollViewIndicatorStylePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithStyles(_ styles: [UIScrollView.IndicatorStyle]) -> ThemeScrollViewIndicatorStylePicker {

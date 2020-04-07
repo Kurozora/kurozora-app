@@ -60,7 +60,7 @@ import UIKit
 public extension ThemeActivityIndicatorViewStylePicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIActivityIndicatorView.Style?) -> ThemeActivityIndicatorViewStylePicker {
-        return ThemeActivityIndicatorViewStylePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeActivityIndicatorViewStylePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithStyles(_ styles: [UIActivityIndicatorView.Style]) -> ThemeActivityIndicatorViewStylePicker {

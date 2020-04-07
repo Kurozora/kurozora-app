@@ -27,7 +27,7 @@ import UIKit
 @objc public extension ThemeStringAttributesPicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> [NSAttributedString.Key: Any]?) -> ThemeStringAttributesPicker {
-        return ThemeStringAttributesPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeStringAttributesPicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithAttributes(_ attributes: [[NSAttributedString.Key: Any]]) -> ThemeStringAttributesPicker {

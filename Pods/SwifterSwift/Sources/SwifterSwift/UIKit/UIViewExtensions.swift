@@ -17,10 +17,10 @@ public extension UIView {
     /// - horizontal: Shake left and right.
     /// - vertical: Shake up and down.
     enum ShakeDirection {
-        /// Shake left and right.
+        /// SwifterSwift: Shake left and right.
         case horizontal
 
-        /// Shake up and down.
+        /// SwifterSwift: Shake up and down.
         case vertical
     }
 
@@ -29,10 +29,10 @@ public extension UIView {
     /// - degrees: degrees.
     /// - radians: radians.
     enum AngleUnit {
-        /// degrees.
+        /// SwifterSwift: degrees.
         case degrees
 
-        /// radians.
+        /// SwifterSwift: radians.
         case radians
     }
 
@@ -43,16 +43,16 @@ public extension UIView {
     /// - easeOut: easeOut animation.
     /// - easeInOut: easeInOut animation.
     enum ShakeAnimationType {
-        /// linear animation.
+        /// SwifterSwift: linear animation.
         case linear
 
-        /// easeIn animation.
+        /// SwifterSwift: easeIn animation.
         case easeIn
 
-        /// easeOut animation.
+        /// SwifterSwift: easeOut animation.
         case easeOut
 
-        /// easeInOut animation.
+        /// SwifterSwift: easeInOut animation.
         case easeInOut
     }
 
@@ -111,7 +111,7 @@ public extension UIView {
 
     /// SwifterSwift: Check if view is in RTL format.
     var isRightToLeft: Bool {
-        if #available(iOS 10.0, *, tvOS 10.0, *) {
+        if #available(tvOS 10.0, *) {
             return effectiveUserInterfaceLayoutDirection == .rightToLeft
         } else {
             return false
@@ -203,7 +203,6 @@ public extension UIView {
         }
     }
 
-    // swiftlint:disable identifier_name
     /// SwifterSwift: x origin of view.
     var x: CGFloat {
         get {
@@ -213,9 +212,7 @@ public extension UIView {
             frame.origin.x = newValue
         }
     }
-    // swiftlint:enable identifier_name
 
-    // swiftlint:disable identifier_name
     /// SwifterSwift: y origin of view.
     var y: CGFloat {
         get {
@@ -225,7 +222,6 @@ public extension UIView {
             frame.origin.y = newValue
         }
     }
-    // swiftlint:enable identifier_name
 
 }
 
@@ -333,11 +329,7 @@ public extension UIView {
         gestureRecognizers?.forEach(removeGestureRecognizer)
     }
 
-    /// SwifterSwift: Attaches gesture recognizers to the view.
-    ///
-    /// Attaching gesture recognizers to a view defines the scope of the represented
-    /// gesture, causing it to receive touches hit-tested to that view and all of its
-    /// subviews. The view establishes a strong reference to the gesture recognizers.
+    /// SwifterSwift: Attaches gesture recognizers to the view. Attaching gesture recognizers to a view defines the scope of the represented gesture, causing it to receive touches hit-tested to that view and all of its subviews. The view establishes a strong reference to the gesture recognizers.
     ///
     /// - Parameter gestureRecognizers: The array of gesture recognizers to be added to the view.
     func addGestureRecognizers(_ gestureRecognizers: [UIGestureRecognizer]) {
@@ -346,9 +338,7 @@ public extension UIView {
         }
     }
 
-    /// SwifterSwift: Detaches gesture recognizers from the receiving view.
-    ///
-    /// This method releases gestureRecognizers in addition to detaching them from the view.
+    /// SwifterSwift: Detaches gesture recognizers from the receiving view. This method releases gestureRecognizers in addition to detaching them from the view.
     ///
     /// - Parameter gestureRecognizers: The array of gesture recognizers to be removed from the view.
     func removeGestureRecognizers(_ gestureRecognizers: [UIGestureRecognizer]) {
@@ -440,7 +430,6 @@ public extension UIView {
         CATransaction.commit()
     }
 
-	#if !targetEnvironment(macCatalyst)
     /// SwifterSwift: Add Visual Format constraints.
     ///
     /// - Parameters:
@@ -456,7 +445,6 @@ public extension UIView {
         }
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: withFormat, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
-	#endif
 
     /// SwifterSwift: Anchor all sides of the view into it's superview.
     @available(iOS 9, *)
@@ -472,7 +460,6 @@ public extension UIView {
         }
     }
 
-	#if !targetEnvironment(macCatalyst)
     /// SwifterSwift: Add anchors from any side of the current view into the specified anchors and returns the newly added constraints.
     ///
     /// - Parameters:
@@ -533,7 +520,6 @@ public extension UIView {
 
         return anchors
     }
-	#endif
 
     /// SwifterSwift: Anchor center X into current view's superview with a constant margin value.
     ///

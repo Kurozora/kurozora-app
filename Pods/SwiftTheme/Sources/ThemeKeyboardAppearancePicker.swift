@@ -52,7 +52,7 @@ import UIKit
 public extension ThemeKeyboardAppearancePicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIKeyboardAppearance?) -> ThemeKeyboardAppearancePicker {
-        return ThemeKeyboardAppearancePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeKeyboardAppearancePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithStyles(_ styles: [UIKeyboardAppearance]) -> ThemeKeyboardAppearancePicker {

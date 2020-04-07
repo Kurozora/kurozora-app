@@ -8,6 +8,7 @@
 
 import UIKit
 
+#if os(iOS)
 extension UIRefreshControl {
     @objc func updateTitleAttributes(_ newAttributes: [NSAttributedString.Key: Any]) {
         guard let title = self.attributedTitle else { return }
@@ -16,3 +17,4 @@ extension UIRefreshControl {
         self.attributedTitle = newString
     }
 }
+#endif

@@ -51,7 +51,7 @@ import UIKit
     }
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIImage?) -> ThemeImagePicker {
-        return ThemeImagePicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeImagePicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithNames(_ names: [String]) -> ThemeImagePicker {

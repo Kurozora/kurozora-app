@@ -8,6 +8,7 @@
 
 import UIKit
 
+#if os(iOS)
 @objc public final class ThemeVisualEffectPicker: ThemePicker {
     
     public convenience init(keyPath: String) {
@@ -73,7 +74,7 @@ import UIKit
 public extension ThemeVisualEffectPicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> UIVisualEffect?) -> ThemeVisualEffectPicker {
-        return ThemeVisualEffectPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeVisualEffectPicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithEffects(_ styles: [UIVisualEffect]) -> ThemeVisualEffectPicker {
@@ -96,3 +97,4 @@ public extension ThemeVisualEffectPicker {
 
 extension ThemeVisualEffectPicker: ExpressibleByArrayLiteral {}
 extension ThemeVisualEffectPicker: ExpressibleByStringLiteral {}
+#endif

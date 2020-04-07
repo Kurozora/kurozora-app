@@ -27,7 +27,7 @@ import Foundation
 @objc public extension ThemeDictionaryPicker {
     
     class func pickerWithKeyPath(_ keyPath: String, map: @escaping (Any?) -> [String: AnyObject]?) -> ThemeDictionaryPicker {
-        return ThemeDictionaryPicker(v: { map(ThemeManager.value(for: keyPath)) })
+        return ThemeDictionaryPicker(keyPath: keyPath, map: map)
     }
     
     class func pickerWithDicts(_ dicts: [[String: AnyObject]]) -> ThemeDictionaryPicker {
