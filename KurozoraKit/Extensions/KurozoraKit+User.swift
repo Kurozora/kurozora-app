@@ -171,7 +171,9 @@ extension KurozoraKit {
 		request.headers = [
 			"Content-Type": "multipart/form-data"
 		]
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -205,7 +207,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(usersSessions)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { session in
@@ -235,7 +239,9 @@ extension KurozoraKit {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [
@@ -270,7 +276,9 @@ extension KurozoraKit {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibrary)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -302,7 +310,9 @@ extension KurozoraKit {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersLibraryDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -339,7 +349,9 @@ extension KurozoraKit {
 			"accept": "application/json",
 			"Content-Type": "multipart/form-data"
 		]
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -369,7 +381,9 @@ extension KurozoraKit {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
@@ -398,7 +412,9 @@ extension KurozoraKit {
 		let request: APIRequest<FavoriteShow, JSONError> = tron.swiftyJSON.request(usersFavoriteAnime)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -430,7 +446,9 @@ extension KurozoraKit {
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(usersProfile)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { userProfile in
@@ -457,7 +475,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(usersNotifications)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { userNotifications in
@@ -484,7 +504,9 @@ extension KurozoraKit {
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(usersSearch)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [
@@ -515,7 +537,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollow)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -549,7 +573,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserFollow, JSONError> = tron.swiftyJSON.request(usersFollowerOrFollowing)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [

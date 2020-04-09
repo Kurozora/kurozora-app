@@ -22,7 +22,9 @@ extension KurozoraKit {
 		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { episodes in

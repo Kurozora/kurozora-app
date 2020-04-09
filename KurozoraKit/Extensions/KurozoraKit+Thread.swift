@@ -22,7 +22,9 @@ extension KurozoraKit {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreads)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { thread in
@@ -50,7 +52,9 @@ extension KurozoraKit {
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsThreadsVote)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -82,7 +86,9 @@ extension KurozoraKit {
 		let request: APIRequest<ThreadReplies, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [
@@ -114,7 +120,9 @@ extension KurozoraKit {
 		let request: APIRequest<ThreadReply, JSONError> = tron.swiftyJSON.request(forumsThreadsReplies)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -144,7 +152,9 @@ extension KurozoraKit {
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(forumsThreadsSearch)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [
@@ -175,7 +185,9 @@ extension KurozoraKit {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsThreadsLock)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [

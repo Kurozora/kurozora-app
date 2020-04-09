@@ -47,7 +47,9 @@ extension KurozoraKit {
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [
@@ -80,7 +82,9 @@ extension KurozoraKit {
 		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [

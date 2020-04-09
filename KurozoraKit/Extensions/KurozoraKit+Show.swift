@@ -61,7 +61,9 @@ extension KurozoraKit {
 		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(anime)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.perform(withSuccess: { showDetails in
@@ -137,7 +139,9 @@ extension KurozoraKit {
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(animeRate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -167,7 +171,9 @@ extension KurozoraKit {
 		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(animeSearch)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .get
 		request.parameters = [

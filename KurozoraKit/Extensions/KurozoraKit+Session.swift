@@ -15,11 +15,10 @@ extension KurozoraKit {
 
 		- Parameter kurozoraID: The Kurozora id of the user to be signed in.
 		- Parameter password: The password of the user to be signed in.
-		- Parameter device: The name of the device the sign in is occuring from.
 		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
 		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
 	*/
-	public func signIn(_ kurozoraID: String, _ password: String, _ device: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func signIn(_ kurozoraID: String, _ password: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
 		let sessions = self.kurozoraKitEndpoints.sessions
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
@@ -27,8 +26,12 @@ extension KurozoraKit {
 		request.parameters = [
 			"email": kurozoraID,
 			"password": password,
-			"device": device
+			"platform": UIDevice.commonSystemName,
+			"platform_version": UIDevice.current.systemVersion,
+			"device_vendor": "Apple",
+			"device_model": UIDevice.modelName
 		]
+
 		request.perform(withSuccess: { userSession in
 			if let success = userSession.success {
 				if success {
@@ -57,7 +60,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [
@@ -87,7 +92,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.perform(withSuccess: { session in
@@ -117,7 +124,9 @@ extension KurozoraKit {
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.perform(withSuccess: { user in
