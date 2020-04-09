@@ -9,11 +9,13 @@
 import SwiftyJSON
 import TRON
 
-class JSONError: ErrorSerializable {
-	var success: Bool?
-	var message: String?
+public class JSONError: ErrorSerializable {
+	// MARK: - Properties
+	internal var success: Bool?
+	public var message: String?
 
-	required init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+	// MARK: - Initializers
+	required public init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
 		if let data = data {
 			if let jsonFromData = try? JSON(data: data) {
 				self.success = jsonFromData["success"].boolValue

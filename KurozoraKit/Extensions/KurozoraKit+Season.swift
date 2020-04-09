@@ -14,28 +14,27 @@ extension KurozoraKit {
 		Fetch the episodes for the given season id.
 
 		- Parameter seasonID: The id of the season for which the episodes should be fetched.
-		- Parameter successHandler: A closure returning an Episodes object.
-		- Parameter episodes: The returned Episodes object.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getEpisodes(forSeasonID seasonID: Int, withSuccess successHandler: @escaping (_ episodes: Episodes?) -> Void) {
+	public func getEpisodes(forSeasonID seasonID: Int, completion completionHandler: @escaping (_ result: Result<Episodes, JSONError>) -> Void) {
 		let animeSeasonsEpisodes = self.kurozoraKitEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
 		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
 		request.method = .get
 		request.perform(withSuccess: { episodes in
-			if let success = episodes.success {
-				if success {
-					successHandler(episodes)
-				}
-			}
+			completionHandler(.success(episodes))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get episodes list 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get episodes list 😔", subTitle: error.message)
+			}
 			print("Received get show episodes error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

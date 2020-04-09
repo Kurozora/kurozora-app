@@ -10,9 +10,11 @@ import TRON
 import SwiftyJSON
 
 public class Genres: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let genres: [GenreElement]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 
@@ -28,12 +30,14 @@ public class Genres: JSONDecodable {
 }
 
 public class GenreElement: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let name: String?
 	public let color: String?
 	public let symbol: String?
 	public let nsfw: Bool?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue

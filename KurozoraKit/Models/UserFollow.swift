@@ -10,12 +10,14 @@ import TRON
 import SwiftyJSON
 
 public class UserFollow: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let currentPage: Int?
 	public let lastPage: Int?
 	public let followers: [UserProfile]?
 	public let following: [UserProfile]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue

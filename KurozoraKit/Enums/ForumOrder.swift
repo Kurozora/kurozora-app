@@ -17,6 +17,7 @@ import Foundation
 	```
 */
 public enum ForumOrder: String {
+	// MARK: - Cases
 	case top
 	case recent
 }

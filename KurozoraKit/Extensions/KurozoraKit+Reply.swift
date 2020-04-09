@@ -15,15 +15,15 @@ extension KurozoraKit {
 
 		- Parameter replyID: The id of the reply whose vote status should be updated.
 		- Parameter voteStatus: A `VoteStatus` value by which the reply's current vote status should be updated.
-		- Parameter successHandler: A closure returning a vote status value indicating the reply's new vote status.
-		- Parameter voteStatus: The vote status value indicating the reply's new vote status.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func voteOnReply(_ replyID: Int, withVoteStatus voteStatus: VoteStatus, withSuccess successHandler: @escaping (_ voteStatus: VoteStatus) -> Void) {
+	public func voteOnReply(_ replyID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, JSONError>) -> Void) {
 		let forumsRepliesVote = self.kurozoraKitEndpoints.forumsRepliesVote.replacingOccurrences(of: "?", with: "\(replyID)")
 		let request: APIRequest<VoteThread, JSONError> = tron.swiftyJSON.request(forumsRepliesVote)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
@@ -32,14 +32,13 @@ extension KurozoraKit {
 			"vote": voteStatus.rawValue
 		]
 		request.perform(withSuccess: { voteThread in
-			if let success = voteThread.success {
-				if success, let action = voteThread.action {
-					successHandler(action == 0 ? .noVote : action == 1 ? .upVote : .downVote)
-				}
-			}
+			completionHandler(.success(voteThread.voteStatus ?? .noVote))
 		}, failure: { error in
-			SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't vote on this reply 😔", subTitle: error.message)
+			}
 			print("Received vote reply error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

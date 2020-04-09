@@ -10,12 +10,14 @@ import TRON
 import SwiftyJSON
 
 public class BadgeElement: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let text: String?
 	public let description: String?
 	public let textColor: String?
 	public let backgroundColor: String?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.text = json["text"].stringValue

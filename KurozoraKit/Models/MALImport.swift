@@ -10,9 +10,11 @@ import SwiftyJSON
 import TRON
 
 public class MALImport: JSONDecodable {
-	public var success: Bool?
+	// MARK: - Properties
+	internal var success: Bool?
 	public var message: String?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue

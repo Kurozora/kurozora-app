@@ -10,11 +10,13 @@ import TRON
 import SwiftyJSON
 
 public class FeedPosts: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let page: Int?
 	public let feedPages: Int?
 	public let posts: [FeedPostElement]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.page = json["page"].intValue
@@ -33,6 +35,7 @@ public class FeedPosts: JSONDecodable {
 }
 
 public class FeedPostElement: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let posterUserID: Int?
 	public let posterUsername: String?
@@ -43,6 +46,7 @@ public class FeedPostElement: JSONDecodable {
 	public let shareCount: Int?
 	public let heartsCount: Int?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.posterUserID = json["poster_user_id"].intValue

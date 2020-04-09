@@ -13,23 +13,22 @@ extension KurozoraKit {
 	/**
 		Fetch the list of forum sections.
 
-		- Parameter successHandler: A closure returning a ForumsSectionsElement array.
-		- Parameter forumSections: The returned ForumsSectionsElement array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumSections(withSuccess successHandler: @escaping (_ forumSections: [ForumsSectionsElement]?) -> Void) {
+	public func getForumSections(completion completionHandler: @escaping (_ result: Result<[ForumsSectionsElement], JSONError>) -> Void) {
 		let forumsSections = self.kurozoraKitEndpoints.forumsSections
 		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request(forumsSections)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
-			if let success = sections.success {
-				if success {
-					successHandler(sections.sections)
-				}
-			}
+			completionHandler(.success(sections.sections ?? []))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get forum sections 😔", subTitle: error.message)
+			}
 			print("Received get forum sections error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 
@@ -39,15 +38,15 @@ extension KurozoraKit {
 		- Parameter sectionID: The id of the forum section for which the forum threads should be fetched.
 		- Parameter orderedBy: The forum order value by which the threads should be ordered.
 		- Parameter page: The page to retrieve threads from. (starts at 0)
-		- Parameter successHandler: A closure returning a ForumsThread array.
-		- Parameter forumThreads: The returned ForumsThread array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, page: Int, withSuccess successHandler: @escaping (_ forumThreads: ForumsThread?) -> Void) {
+	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, page: Int, completion completionHandler: @escaping (_ result: Result<ForumsThread, JSONError>) -> Void) {
 		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
@@ -57,32 +56,31 @@ extension KurozoraKit {
 			"page": page
 		]
 		request.perform(withSuccess: { threads in
-			if let success = threads.success {
-				if success {
-					successHandler(threads)
-				}
-			}
+			completionHandler(.success(threads))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get forum thread 😔", subTitle: error.message)
+			}
 			print("Received get forum threads error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 
 	/**
 		Post a new thread to the given forum section id.
 
+		- Parameter sectionID: The id of the forum section where the thread is posted.
 		- Parameter title: The title of the thread.
 		- Parameter content: The content of the thread.
-		- Parameter sectionID: The id of the forum section where the thread is posted.
-		- Parameter successHandler: A closure returning the newly created thread id.
-		- Parameter threadID: The id of the newly created thread.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, withSuccess successHandler: @escaping (_ threadID: Int) -> Void) {
+	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, completion completionHandler: @escaping (_ result: Result<Int, JSONError>) -> Void) {
 		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
@@ -92,14 +90,13 @@ extension KurozoraKit {
 			"content": content
 		]
 		request.perform(withSuccess: { thread in
-			if let success = thread.success {
-				if success, let threadID = thread.threadID {
-					successHandler(threadID)
-				}
-			}
+			completionHandler(.success(thread.threadID ?? 0))
 		}, failure: { error in
-			SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't submit your thread 😔", subTitle: error.message)
+			}
 			print("Received post thread error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

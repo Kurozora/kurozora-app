@@ -178,6 +178,7 @@ extension KKLibrary.SortType {
 		```
 	*/
 	public enum Options: Int {
+		// MARK: - Cases
 		case none = 0
 		case ascending, descending
 		case newest, oldest

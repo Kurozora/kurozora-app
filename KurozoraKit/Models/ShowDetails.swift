@@ -11,7 +11,7 @@ import SwiftyJSON
 
 public class ShowDetails: JSONDecodable {
 	// MARK: - Properties
-	public let success: Bool?
+	internal let success: Bool?
 	public var showDetailsElement: ShowDetailsElement?
 	public let showDetailsElements: [ShowDetailsElement]?
 
@@ -70,7 +70,7 @@ public class ShowDetailsElement: JSONDecodable {
 	// Schedule
 	public let startDate: String?
 	public let airTime: String?
-	public var airDay = DateComponents().weekday
+	public let airDay: Int?
 
 	// Extra's
 	public let englishTitles: String?
@@ -84,6 +84,50 @@ public class ShowDetailsElement: JSONDecodable {
 	public var currentUser: UserProfile?
 
 	// MARK: - Initializers
+	internal init() {
+		self.id = nil
+		self.imdbID = nil
+		self.banner = nil
+		self.bannerThumbnail = nil
+		self.genres = nil
+		self.poster = nil
+		self.posterThumbnail = nil
+		self.title = nil
+
+		self.airDate = nil
+		self.episodes = nil
+		self.runtime = nil
+		self.screenshots = nil
+		self.seasons = nil
+		self.airStatus = nil
+		self.synopsis = nil
+		self.tagline = nil
+		self.type = nil
+		self.watchRating = nil
+		self.year = nil
+
+		self.averageRating = nil
+		self.endDate = nil
+		self.network = nil
+		self.nsfw = nil
+		self.popularityRank = nil
+		self.producers = nil
+		self.rank = nil
+		self.age = nil
+		self.ratingCount = nil
+
+		self.startDate = nil
+		self.airTime = nil
+		self.airDay = nil
+
+		self.englishTitles = nil
+		self.externalLinks = nil
+		self.japaneseTitles = nil
+		self.languages = nil
+		self.synonyms = nil
+		self.videoUrl = nil
+	}
+
 	required public init(json: JSON) throws {
 		// Anime
 		self.id = json["id"].intValue
