@@ -13,23 +13,22 @@ extension KurozoraKit {
 	/**
 		Fetch the list of genres.
 
-		- Parameter successHandler: A closure returning a GenreElement array.
-		- Parameter genres: The returned GenreElement array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getGenres(withSuccess successHandler: @escaping (_ genres: [GenreElement]?) -> Void) {
+	public func getGenres(completion completionHandler: @escaping (_ result: Result<[GenreElement], JSONError>) -> Void) {
 		let genres = self.kurozoraKitEndpoints.genres
 		let request: APIRequest<Genres, JSONError> = tron.swiftyJSON.request(genres)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { genres in
-			if let success = genres.success {
-				if success {
-					successHandler(genres.genres)
-				}
-			}
+			completionHandler(.success(genres.genres ?? []))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get genres list 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get genres list 😔", subTitle: error.message)
+			}
 			print("Received get genres error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

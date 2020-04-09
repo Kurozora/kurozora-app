@@ -17,6 +17,7 @@ import Foundation
 	```
 */
 public enum LockStatus: Int {
+	// MARK: - Cases
 	case unlocked = 0
 	case locked = 1
 }

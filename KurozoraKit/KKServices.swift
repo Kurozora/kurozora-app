@@ -9,46 +9,64 @@
 import KeychainAccess
 
 /**
-	`KKServices` is a root object, that serves as a provider for KurozoraKit services.
+	`KKServices` is the object that serves as a provider for [KurozoraKit](x-source-tag://KurozoraKit) services.
 
-	`KKServices` provides the following services:
-	- Process and save user data in Keychain.
+	`KKServices` is used together with [KurozoraKit](x-source-tag://KurozoraKit) to provide extra functionality such as storing sensetive information in `Keychain` and showing success/error alerts.
+	For further control over the information saved in `Keychain`, you can provide your own `Keychain` object with your specified properties.
+
+	- Tag: KKServices
 */
-internal class KKServices {
-	/// KurozoraKit's base keychain service.
-	internal var KeychainDefaults: Keychain = Keychain()
+public class KKServices {
+	/// Provides access to the `Keychain` service used by [KurozoraKit](x-source-tag://KurozoraKit).
+	internal var _keychainDefaults: Keychain!
+	/// Provides access to the `Keychain` service used by [KurozoraKit](x-source-tag://KurozoraKit).
+	var keychainDefaults: Keychain {
+		get {
+			return _keychainDefaults
+		}
+	}
 
-	/// The shared instance of `KKServices`.
-	static let shared = KKServices()
+	/**
+		Show or hide expressive success/error alerts to users.
+
+		If set to `true`, whenever the API request encounters an error or receives an informational message, an expressive alert is shown to the users.
+	*/
+	var showAlerts: Bool = true
 
 	// MARK: - Initializers
-	private init() {}
+	/**
+		[KKServices](x-source-tag://KKServices) is a root object, that serves as a provider for KurozoraKit services.
+
+		- Parameter keychain: The main `Keychain` service used for managing secrets.
+		- Parameter showAlerts: Show or hide expressive success/error alerts to users.
+	*/
+	public init(keychain: Keychain = Keychain(), showAlerts: Bool = true) {
+		self._keychainDefaults = keychain
+		self.showAlerts = showAlerts
+	}
 
 	// MARK: - Functions
 	/**
-		Processes some user data such as saving the current user's username in the Keychain.
+		Sets the `showAlert` property with the given boolean value.
 
-		- Parameter userSession: The user session from which the data should be fetched and processed.
+		- Parameter bool: A boolean value indicating whether to show or hide expressive success/error alerts.
+
+		- Returns: Reference to `self`.
 	*/
-	func processUserData(fromSession userSession: UserSessions) {
-		if let userID = userSession.user?.id, userID != 0 {
-			try? KKServices.shared.KeychainDefaults.set(String(userID), key: "user_id")
-		}
+	func showAlerts(_ bool: Bool) -> KKServices {
+		self.showAlerts = bool
+		return self
+	}
 
-		if let username = userSession.user?.username, !username.isEmpty {
-			try? KKServices.shared.KeychainDefaults.set(username, key: "username")
-		}
+	/**
+		Sets the `keychainDefaults` property with the given `Keychain` object.
 
-		if let profileImage = userSession.user?.profileImage, !profileImage.isEmpty {
-			try? KKServices.shared.KeychainDefaults.set(profileImage, key: "profile_image")
-		}
+		- Parameter keychain: An object representing the desired Keychain properties to use.
 
-		if let authToken = userSession.authToken, !authToken.isEmpty {
-			try? KKServices.shared.KeychainDefaults.set(authToken, key: "auth_token")
-		}
-
-		if let sessionID = userSession.currentSessions?.id, sessionID != 0 {
-			try? KKServices.shared.KeychainDefaults.set(String(sessionID), key: "session_id")
-		}
+		- Returns: Reference to `self`.
+	*/
+	func keychainDefaults(_ keychain: Keychain) -> KKServices {
+		self._keychainDefaults = keychain
+		return self
 	}
 }

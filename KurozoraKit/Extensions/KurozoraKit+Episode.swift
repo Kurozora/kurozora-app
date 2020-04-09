@@ -15,15 +15,15 @@ extension KurozoraKit {
 
 		- Parameter episodeID: The id of the episode that should be marked as watched/unwatched.
 		- Parameter watchStatus: The new watch status by which the episode's current watch status is updated.
-		- Parameter successHandler: A closure returning a `WatchStatus` value indicating the episode's watch status.
-		- Parameter isSuccess: A `WatchStatus` value indicating the episode's watch status.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateEpisodeWatchStatus(_ episodeID: Int, withWatchStatus watchStatus: WatchStatus, withSuccess successHandler: @escaping (_ watchStatus: WatchStatus) -> Void) {
+	public func updateEpisodeWatchStatus(_ episodeID: Int, withWatchStatus watchStatus: WatchStatus, completion completionHandler: @escaping (_ result: Result<WatchStatus, JSONError>) -> Void) {
 		let animeEpisodesWatched = self.kurozoraKitEndpoints.animeEpisodesWatched.replacingOccurrences(of: "?", with: "\(episodeID)")
 		let request: APIRequest<EpisodesUserDetails, JSONError> = tron.swiftyJSON.request(animeEpisodesWatched)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
@@ -32,12 +32,14 @@ extension KurozoraKit {
 			"watched": watchStatus.rawValue
 		]
 		request.perform(withSuccess: { episode in
-			if let watchedStatus = episode.watched {
-				successHandler(watchedStatus ? .watched : .notWatched)
-			}
+			let watchedStatus = episode.watched ?? false
+			completionHandler(.success(watchedStatus ? .watched : .notWatched))
 		}, failure: { error in
-			SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)
+			}
 			print("Received mark episode error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

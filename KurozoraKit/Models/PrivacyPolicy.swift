@@ -10,9 +10,11 @@ import TRON
 import SwiftyJSON
 
 public class PrivacyPolicy: JSONDecodable {
-    public let success: Bool?
+	// MARK: - Properties
+    internal let success: Bool?
 	public let privacyPolicy: PrivacyPolicyElement?
 
+	// MARK: - Initializers
     required public init(json: JSON) throws {
         self.success = json["success"].boolValue
 		self.privacyPolicy = try? PrivacyPolicyElement(json: json["privacy_policy"])
@@ -20,9 +22,11 @@ public class PrivacyPolicy: JSONDecodable {
 }
 
 public class PrivacyPolicyElement: JSONDecodable {
+	// MARK: - Properties
 	public let text: String?
 	public let lastUpdate: String?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.text = json["text"].stringValue
 		self.lastUpdate = json["last_update"].stringValue

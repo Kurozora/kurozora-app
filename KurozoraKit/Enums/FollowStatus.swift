@@ -17,6 +17,7 @@ import Foundation
 	```
 */
 public enum FollowStatus: Int {
+	// MARK: - Cases
 	case unfollow = 0
 	case follow = 1
 }

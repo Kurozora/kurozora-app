@@ -13,23 +13,22 @@ extension KurozoraKit {
 	/**
 		Fetch the list of themes.
 
-		- Parameter successHandler: A closure returning a ThemesElement array.
-		- Parameter themes: The returned ThemesElement array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getThemes(withSuccess successHandler: @escaping (_ themes: [ThemesElement]?) -> Void) {
+	public func getThemes(completion completionHandler: @escaping (_ result: Result<[ThemesElement], JSONError>) -> Void) {
 		let themes = self.kurozoraKitEndpoints.themes
 		let request: APIRequest<Themes, JSONError> = tron.swiftyJSON.request(themes)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { themes in
-			if let success = themes.success {
-				if success {
-					successHandler(themes.themes)
-				}
-			}
+			completionHandler(.success(themes.themes ?? []))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get themes 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get themes 😔", subTitle: error.message)
+			}
 			print("Received get themes error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

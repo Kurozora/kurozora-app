@@ -16,6 +16,7 @@ import Foundation
 	```
 */
 public enum FavoriteStatus: Int {
+	// MARK: - Cases
 	case unfavorite = 0
 	case favorite = 1
 }

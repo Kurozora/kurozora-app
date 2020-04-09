@@ -10,10 +10,12 @@ import TRON
 import SwiftyJSON
 
 public class Episodes: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let season: EpisodesSeason?
 	public let episodes: [EpisodesElement]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.season = try? EpisodesSeason(json: json["season"])
@@ -31,6 +33,7 @@ public class Episodes: JSONDecodable {
 }
 
 public class EpisodesElement: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let number: Int?
 	public let name: String?
@@ -40,6 +43,7 @@ public class EpisodesElement: JSONDecodable {
 	public let verified: Bool?
 	public let userDetails: EpisodesUserDetails?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.number = json["number"].intValue
@@ -53,9 +57,11 @@ public class EpisodesElement: JSONDecodable {
 }
 
 public class EpisodesUserDetails: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public var watched: Bool?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.watched = json["watched"].boolValue
@@ -63,11 +69,13 @@ public class EpisodesUserDetails: JSONDecodable {
 }
 
 public class EpisodesSeason: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let showID: Int?
 	public let title: String?
 	public let episodeCount: Int?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.showID = json["anime_id"].intValue

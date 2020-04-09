@@ -13,23 +13,22 @@ extension KurozoraKit {
 	/**
 		Fetch the list of feed sections.
 
-		- Parameter successHandler: A closure returning a FeedSectionsElement array.
-		- Parameter feedSections: The returned FeedSectionsElement array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFeedSections(withSuccess successHandler: @escaping (_ feedSections: [FeedSectionsElement]?) -> Void) {
+	public func getFeedSections(completion completionHandler: @escaping (_ result: Result<[FeedSectionsElement], JSONError>) -> Void) {
 		let feedSection = self.kurozoraKitEndpoints.feedSection
 		let request: APIRequest<FeedSections, JSONError> = tron.swiftyJSON.request(feedSection)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
-			if let success = sections.success {
-				if success {
-					successHandler(sections.sections)
-				}
-			}
+			completionHandler(.success(sections.sections ?? []))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get feed sections 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get feed sections 😔", subTitle: error.message)
+			}
 			print("Received get feed sections error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 
@@ -38,10 +37,10 @@ extension KurozoraKit {
 
 		- Parameter sectionID: The id of the feed section for which the posts should be fetched.
 		- Parameter page: The page to retrieve posts from. (starts at 0)
-		- Parameter successHandler: A closure returning a FeedPosts array.
-		- Parameter feedPosts: The returned FeedPosts array.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFeedPosts(forSection sectionID: Int, page: Int, withSuccess successHandler: @escaping (_ feedPosts: FeedPosts?) -> Void) {
+	public func getFeedPosts(forSection sectionID: Int, page: Int, completion completionHandler: @escaping (_ result: Result<FeedPosts, JSONError>) -> Void) {
 		let feedSectionPost = self.kurozoraKitEndpoints.feedSectionPost.replacingOccurrences(of: "?", with: "\(sectionID)")
 		let request: APIRequest<FeedPosts, JSONError> = tron.swiftyJSON.request(feedSectionPost)
 		request.headers = headers
@@ -50,14 +49,13 @@ extension KurozoraKit {
 			"page": page
 		]
 		request.perform(withSuccess: { feedPosts in
-			if let success = feedPosts.success {
-				if success {
-					successHandler(feedPosts)
-				}
-			}
+			completionHandler(.success(feedPosts))
 		}, failure: { error in
-			SCLAlertView().showError("Can't get feed posts 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get feed posts 😔", subTitle: error.message)
+			}
 			print("Received get feed posts error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

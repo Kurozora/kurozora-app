@@ -18,6 +18,7 @@ import Foundation
 	```
 */
 public enum VoteStatus: Int {
+	// MARK: - Cases
 	case downVote = -1
 	case noVote = 0
 	case upVote = 1

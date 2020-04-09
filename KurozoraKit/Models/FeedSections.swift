@@ -10,9 +10,11 @@ import TRON
 import SwiftyJSON
 
 public class FeedSections: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let sections: [FeedSectionsElement]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		var sections = [FeedSectionsElement]()
@@ -28,10 +30,12 @@ public class FeedSections: JSONDecodable {
 }
 
 public class FeedSectionsElement: JSONDecodable {
+	// MARK: - Properties
 	public let id: Int?
 	public let name: String?
 	public let locked: Bool?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue

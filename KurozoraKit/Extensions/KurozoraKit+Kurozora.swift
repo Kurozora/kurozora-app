@@ -13,23 +13,24 @@ extension KurozoraKit {
 	/**
 		Fetch the latest privacy policy.
 
-		- Parameter successHandler: A closure returning a PrivacyPolicyElement object.
-		- Parameter privacyPolicy: The returned PrivacyPolicyElement object.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getPrivacyPolicy(withSuccess successHandler: @escaping (_ privacyPolicy: PrivacyPolicyElement?) -> Void) {
+	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<PrivacyPolicyElement, JSONError>) -> Void) {
 		let privacyPolicy = self.kurozoraKitEndpoints.privacyPolicy
 		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request(privacyPolicy)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { privacyPolicy in
-			if let success = privacyPolicy.success {
-				if success {
-					successHandler(privacyPolicy.privacyPolicy)
-				}
+			if let privacyPolicy = privacyPolicy.privacyPolicy {
+				completionHandler(.success(privacyPolicy))
 			}
 		}, failure: { error in
-			SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get privacy policy 😔", subTitle: error.message)
+			}
 			print("Received privacy policy error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }

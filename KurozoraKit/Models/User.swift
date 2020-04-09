@@ -12,70 +12,39 @@ import SwiftyJSON
 import TRON
 
 public class User: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let message: String?
-	public let profile: UserProfile?
-
-	public var current: CurrentUser? = nil
-
-	// MARK: - Initializers
-	public init() {
-		success = nil
-		message = nil
-		profile = nil
+	public let kuroAuthToken: String?
+	public static var current: CurrentUser? = nil
+	internal var _profile: UserProfile? = nil
+	public var profile: UserProfile? {
+		get {
+			return self._profile
+		}
 	}
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
-		self.profile = try? UserProfile(json: json["user"])
+		self.kuroAuthToken = json["kuro_auth_token"].stringValue
+
+		if !json["session"].isEmpty {
+			User.current = try? CurrentUser(json: json["user"])
+		} else {
+			self._profile = try? UserProfile(json: json["user"])
+		}
 	}
 }
 
 public class CurrentUser: UserProfile {
 	// MARK: - Properties
-	public var sessionID: Int {
-		guard let sessionID = KKServices.shared.KeychainDefaults["session_id"], !sessionID.isEmpty else { return 0 }
-		return Int(sessionID) ?? 0
-	}
-
-	/// The object used to start and stop the delivery of location-related events to the app.
-	fileprivate let locationManager = CLLocationManager()
-
-	/// The coordinates of the current location of the user.
-	fileprivate var currentUserLocation: CLLocationCoordinate2D {
-		locationManager.requestWhenInUseAuthorization()
-
-		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-			CLLocationManager.authorizationStatus() ==  .authorizedAlways {
-			if let currentLocation: CLLocation = locationManager.location {
-				try? KKServices.shared.KeychainDefaults.set("\(currentLocation.coordinate.latitude)", key: "latitude")
-				try? KKServices.shared.KeychainDefaults.set("\(currentLocation.coordinate.longitude)", key: "longitude")
-				return currentLocation.coordinate
-			}
-		}
-
-		return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-	}
-
-	public var latitude: Double {
-		guard let latitudeString = KKServices.shared.KeychainDefaults["latitude"], !latitudeString.isEmpty,
-			let latitude = Double(latitudeString) else { return currentUserLocation.latitude }
-		return latitude
-	}
-
-	public var longitude: Double {
-		guard let longitudeString = KKServices.shared.KeychainDefaults["longitude"], !longitudeString.isEmpty,
-			let longitude = Double(longitudeString) else { return currentUserLocation.longitude }
-		return longitude
-	}
-
-	public var deviceName: String {
-		return UIDevice.modelName
-	}
+	public let session: UserSessionsElement?
 
 	// MARK: - Initializers
 	public required init(json: JSON) throws {
+		self.session = try? UserSessionsElement(json: json["session"])
 		try super.init(json: json)
 	}
 }
@@ -149,33 +118,33 @@ public class UserProfile: JSONDecodable {
 
 // MARK: - Properties
 extension User {
-	/// Returns the Kurozora ID saved in KDefaults.
-	static var kurozoraID: String {
-		guard let kurozoraID = KKServices.shared.KeychainDefaults["kurozora_id"], !kurozoraID.isEmpty else { return "" }
-		return kurozoraID
-	}
-
-	/// Returns the current User 'Sign In With Apple' ID saved in KDefaults.
-	static var currentSIWAID: Int {
-		guard let currentSIWAID = KKServices.shared.KeychainDefaults["SIWA_user"] else { return 0 }
-		return Int(currentSIWAID) ?? 0
-	}
-
-	/// Returns the current user's Sign In With Apple ID Token saved in KDefaults.
-	static var currentIDToken: String {
-		guard let currentIDToken = KKServices.shared.KeychainDefaults["id_token"], !currentIDToken.isEmpty else { return ""}
-		return currentIDToken
-	}
-
-	/// Returns the Auth Token saved in KDefaults.
-	static var authToken: String {
-		guard let authToken = KKServices.shared.KeychainDefaults["auth_token"], !authToken.isEmpty else { return "" }
-		return authToken
-	}
+//	/// Returns the Kurozora ID saved in KDefaults.
+//	static var kurozoraID: String {
+//		guard let kurozoraID = KKServices.shared.KeychainDefaults["kurozora_id"], !kurozoraID.isEmpty else { return "" }
+//		return kurozoraID
+//	}
+//
+//	/// Returns the current User 'Sign In With Apple' ID saved in KDefaults.
+//	static var currentSIWAID: Int {
+//		guard let currentSIWAID = KKServices.shared.KeychainDefaults["SIWA_user"] else { return 0 }
+//		return Int(currentSIWAID) ?? 0
+//	}
+//
+//	/// Returns the current user's Sign In With Apple ID Token saved in KDefaults.
+//	static var currentIDToken: String {
+//		guard let currentIDToken = KKServices.shared.KeychainDefaults["id_token"], !currentIDToken.isEmpty else { return ""}
+//		return currentIDToken
+//	}
+//
+//	/// Returns the Auth Token saved in KDefaults.
+//	static var authToken: String {
+//		guard let authToken = KKServices.shared.KeychainDefaults["auth_token"], !authToken.isEmpty else { return "" }
+//		return authToken
+//	}
 
 	/// Returns a boolean indicating if the current user is signed in.
 	public static var isSignedIn: Bool {
-		return User().current != nil
+		return User.current != nil
 	}
 
 	/// Returns a boolean indicating if the current user has purchased PRO.

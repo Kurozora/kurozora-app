@@ -371,7 +371,6 @@
 		66CE8E4E24086F3500052AE9 /* BadgeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664B6D7B230F532500F9C726 /* BadgeElement.swift */; };
 		66CE8E4F24086F3500052AE9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660E9FC621455F3100F6813C /* Cast.swift */; };
 		66CE8E5024086F3500052AE9 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE79216FF31D00655B99 /* Episodes.swift */; };
-		66CE8E5124086F3500052AE9 /* EpisodesWatched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642D21D175110032FDCF /* EpisodesWatched.swift */; };
 		66CE8E5224086F3500052AE9 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66938FD5211CD3A800ADA5D6 /* Explore.swift */; };
 		66CE8E5324086F3500052AE9 /* FavoriteShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645D5EA23E496940042B4E0 /* FavoriteShow.swift */; };
 		66CE8E5424086F3500052AE9 /* FeedPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */; };
@@ -415,6 +414,7 @@
 		66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsViewController.swift */; };
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
+		66E9D48A243F923400257D4F /* Global+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D489243F923400257D4F /* Global+Swift.swift */; };
 		66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowDetail.swift */; };
 		66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */; };
 		66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */; };
@@ -503,7 +503,6 @@
 		6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraReachabilityViewController.swift; sourceTree = "<group>"; };
 		660A642521CE90080032FDCF /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		660A642721D01CEA0032FDCF /* ThreadReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplies.swift; sourceTree = "<group>"; };
-		660A642D21D175110032FDCF /* EpisodesWatched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesWatched.swift; sourceTree = "<group>"; };
 		660B42A621259E300051EF66 /* ManageThemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageThemesController.swift; sourceTree = "<group>"; };
 		660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesCollectionViewCell.swift; sourceTree = "<group>"; };
 		660B5B5E21523612002D05F3 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -892,6 +891,7 @@
 		66DEB4A921D26FBC0093725F /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
+		66E9D489243F923400257D4F /* Global+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Swift.swift"; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetail.swift; sourceTree = "<group>"; };
 		66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettings.storyboard; sourceTree = "<group>"; };
 		66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsCell.swift; sourceTree = "<group>"; };
@@ -1026,7 +1026,6 @@
 				664B6D7B230F532500F9C726 /* BadgeElement.swift */,
 				660E9FC621455F3100F6813C /* Cast.swift */,
 				6619EE79216FF31D00655B99 /* Episodes.swift */,
-				660A642D21D175110032FDCF /* EpisodesWatched.swift */,
 				66938FD5211CD3A800ADA5D6 /* Explore.swift */,
 				6645D5EA23E496940042B4E0 /* FavoriteShow.swift */,
 				66CBA53C22BCFE1E00FBEC13 /* FeedPosts.swift */,
@@ -2272,6 +2271,7 @@
 		66FC6DD62340BB5100A454DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				66E9D489243F923400257D4F /* Global+Swift.swift */,
 				66FC6DDB2340BC0900A454DD /* KurozoraKit+Episode.swift */,
 				66FC6DDF2340BC4600A454DD /* KurozoraKit+Feed.swift */,
 				66FC6DE12340BC6A00A454DD /* KurozoraKit+Forums.swift */,
@@ -2286,8 +2286,8 @@
 				66FC6DE32340BC9800A454DD /* KurozoraKit+Thread.swift */,
 				66FC6DEB2340BD5200A454DD /* KurozoraKit+User.swift */,
 				66C4DADA243BD63800C4B90A /* Notification+KurozoraKit.swift */,
-				66C4DAD6243BA2C100C4B90A /* UIDevice+KurozoraKit.swift */,
 				66C4DAE2243CFD5C00C4B90A /* String+Date.swift */,
+				66C4DAD6243BA2C100C4B90A /* UIDevice+KurozoraKit.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3081,12 +3081,12 @@
 			files = (
 				66CE8E5424086F3500052AE9 /* FeedPosts.swift in Sources */,
 				66C3A5522417C69500E7C972 /* WatchStatus.swift in Sources */,
+				66E9D48A243F923400257D4F /* Global+Swift.swift in Sources */,
 				66CE8E4F24086F3500052AE9 /* Cast.swift in Sources */,
 				66CE8E5A24086F3500052AE9 /* MALImport.swift in Sources */,
 				66CC2F2E243B6E0800816359 /* FollowList.swift in Sources */,
 				66CC2F2C243B6CF100816359 /* FollowStatus.swift in Sources */,
 				66CE8E4024086A3E00052AE9 /* KurozoraKit.swift in Sources */,
-				66CE8E5124086F3500052AE9 /* EpisodesWatched.swift in Sources */,
 				66CE8E5624086F3500052AE9 /* ForumsSections.swift in Sources */,
 				66CE8E4C24086F2500052AE9 /* KurozoraKit+Thread.swift in Sources */,
 				66CE8E5524086F3500052AE9 /* FeedSections.swift in Sources */,

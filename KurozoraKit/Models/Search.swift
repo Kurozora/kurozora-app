@@ -10,11 +10,13 @@ import TRON
 import SwiftyJSON
 
 public class Search: JSONDecodable {
-	public let success: Bool?
+	// MARK: - Properties
+	internal let success: Bool?
 	public let showResults: [ShowDetailsElement]?
 	public let threadResults: [ForumsThreadElement]?
 	public let userResults: [UserProfile]?
 
+	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.success = json["success"].boolValue
 

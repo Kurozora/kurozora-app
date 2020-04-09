@@ -15,12 +15,12 @@ extension KurozoraKit {
 
 		- Parameter kurozoraID: The Kurozora id of the user to be signed in.
 		- Parameter password: The password of the user to be signed in.
-		- Parameter successHandler: A closure returning a boolean indicating whether sign in is successful.
-		- Parameter isSuccess: A boolean value indicating whether sign in is successful.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signIn(_ kurozoraID: String, _ password: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<Bool, JSONError>) -> Void) {
 		let sessions = self.kurozoraKitEndpoints.sessions
-		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessions)
+		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -32,18 +32,16 @@ extension KurozoraKit {
 			"device_model": UIDevice.modelName
 		]
 
-		request.perform(withSuccess: { userSession in
-			if let success = userSession.success {
-				if success {
-//					try? Kurozora.shared.KDefaults.set(kurozoraID, key: "kurozora_id")
-//					WorkflowController.shared.processUserData(fromSession: userSession)
-					successHandler(success)
-				}
-			}
+		request.perform(withSuccess: { _ in
+//			try? self.services._keychainDefaults.set(kurozoraID, key: "KurozoraID")
+//			KKServices.shared.processUserData(fromSession:)
+			completionHandler(.success(true))
 		}, failure: { error in
-			SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
+			}
 			print("Received sign in error: \(error.message ?? "No message available")")
-			successHandler(false)
+			completionHandler(.failure(error))
 		})
 	}
 
@@ -52,15 +50,15 @@ extension KurozoraKit {
 
 		- Parameter sessionID: The ID of the session whose data should be updated.
 		- Parameter apnDeviceToken: The updated APN Device Token.
-		- Parameter successHandler: A closure returning a boolean indicating whether session validation is successful.
-		- Parameter isSuccess: A boolean value indicating whether session validation is successful.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func updateSession(_ sessionID: Int, withToken apnDeviceToken: String, completion completionHandler: @escaping (_ result: Result<Bool, JSONError>) -> Void) {
 		let sessionsUpdate = self.kurozoraKitEndpoints.sessionsUpdate.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsUpdate)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
@@ -68,15 +66,14 @@ extension KurozoraKit {
 		request.parameters = [
 			"apn_device_token": apnDeviceToken
 		]
-		request.perform(withSuccess: { session in
-			if let success = session.success {
-				if success {
-					successHandler(success)
-				}
-			}
+		request.perform(withSuccess: { _ in
+			completionHandler(.success(true))
 		}, failure: { error in
-//			SCLAlertView().showError("Can't update session 😔", subTitle: error.message)
+//			if self.services.showAlerts {
+//				SCLAlertView().showError("Can't update session 😔", subTitle: error.message)
+//			}
 			print("Received update session error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 
@@ -84,28 +81,27 @@ extension KurozoraKit {
 		Delete the specified session ID from the user's active sessions.
 
 		- Parameter sessionID: The session ID to be deleted.
-		- Parameter successHandler: A closure returning a boolean indicating whether session delete is successful.
-		- Parameter isSuccess: A boolean value indicating whether session delete is successful.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func deleteSession(_ sessionID: Int, withSuccess successHandler: @escaping (_ isSuccess: Bool) -> Void) {
+	public func deleteSession(_ sessionID: Int, completion completionHandler: @escaping (_ result: Result<Bool, JSONError>) -> Void) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<UserSessions, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
 		request.method = .post
 		request.perform(withSuccess: { session in
-			if let success = session.success {
-				if success {
-					successHandler(success)
-				}
-			}
+			completionHandler(.success(true))
 		}, failure: { error in
-			SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't delete session 😔", subTitle: error.message)
+			}
 			print("Received delete session error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 
@@ -116,30 +112,29 @@ extension KurozoraKit {
 		This notification can be observed to perform UI changes regarding the user's sign in status. For example you can remove buttons the user should not have access to if not signed in.
 
 		- Parameter sessionID: The session ID to be signed out of.
-		- Parameter successHandler: A closure returning a boolean indicating whether sign out is successful.
-		- Parameter isSuccess: A boolean value indicating whether sign out is successful.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signOut(ofSessionID sessionID: Int, withSuccess successHandler: ((_ isSuccess: Bool) -> Void)? = nil) {
+	public func signOut(ofSessionID sessionID: Int, completion completionHandler: @escaping (_ result: Result<Bool, JSONError>) -> Void) {
 		let sessionsDelete = self.kurozoraKitEndpoints.sessionsDelete.replacingOccurrences(of: "?", with: "\(sessionID)")
 		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(sessionsDelete)
 
 		request.headers = headers
-		if self._userAuthToken != "" {
+		if User.isSignedIn {
 			request.headers["kuro-auth"] = self._userAuthToken
 		}
 
 		request.method = .post
-		request.perform(withSuccess: { user in
-			if let success = user.success {
-				if success {
-					try? KKServices.shared.KeychainDefaults.removeAll()
-					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
-					successHandler?(success)
-				}
-			}
+		request.perform(withSuccess: { _ in
+//			try? self.services._keychainDefaults.removeAll()
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+			completionHandler(.success(true))
 		}, failure: { error in
-			SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)
+			}
 			print("Received sign out error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
 		})
 	}
 }
