@@ -22,7 +22,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserNotification, JSONError> = tron.swiftyJSON.request(notificationsDelete)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.perform(withSuccess: { notification in
@@ -50,7 +52,9 @@ extension KurozoraKit {
 		let request: APIRequest<UserNotificationsElement, JSONError> = tron.swiftyJSON.request(notificationsUpdate)
 
 		request.headers = headers
-		request.headers["kuro-auth"] = self._userAuthToken
+		if self._userAuthToken != "" {
+			request.headers["kuro-auth"] = self._userAuthToken
+		}
 
 		request.method = .post
 		request.parameters = [

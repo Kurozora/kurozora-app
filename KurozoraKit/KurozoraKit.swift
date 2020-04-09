@@ -47,8 +47,8 @@ public struct KurozoraKit {
 	]
 
 	/// The TRON singleton used to perform API requests.
-	internal let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
-
+//	internal let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+	internal let tron = TRON(baseURL: "http://kurozora-web.test/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 	// MARK: - Initializers
 	/**
 		Initializes `KurozoraKit` with the given user authentication key and Keychain access group.
