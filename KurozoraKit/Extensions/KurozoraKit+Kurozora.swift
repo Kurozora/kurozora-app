@@ -16,9 +16,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<PrivacyPolicyElement, JSONError>) -> Void) {
+	public func getPrivacyPolicy(completion completionHandler: @escaping (_ result: Result<PrivacyPolicyElement, KKError>) -> Void) {
 		let privacyPolicy = self.kurozoraKitEndpoints.privacyPolicy
-		let request: APIRequest<PrivacyPolicy, JSONError> = tron.swiftyJSON.request(privacyPolicy)
+		let request: APIRequest<PrivacyPolicy, KKError> = tron.swiftyJSON.request(privacyPolicy)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { privacyPolicy in

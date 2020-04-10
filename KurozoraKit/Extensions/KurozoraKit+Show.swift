@@ -19,9 +19,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getExplore(_ genreID: Int? = nil, completion completionHandler: @escaping (_ result: Result<Explore, JSONError>) -> Void) {
+	public func getExplore(_ genreID: Int? = nil, completion completionHandler: @escaping (_ result: Result<Explore, KKError>) -> Void) {
 		let explore = self.kurozoraKitEndpoints.explore
-		let request: APIRequest<Explore, JSONError> = tron.swiftyJSON.request(explore)
+		let request: APIRequest<Explore, KKError> = tron.swiftyJSON.request(explore)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -55,9 +55,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getDetails(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<ShowDetailsElement, JSONError>) -> Void) {
+	public func getDetails(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<ShowDetailsElement, KKError>) -> Void) {
 		let anime = self.kurozoraKitEndpoints.anime.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<ShowDetails, JSONError> = tron.swiftyJSON.request(anime)
+		let request: APIRequest<ShowDetails, KKError> = tron.swiftyJSON.request(anime)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -85,9 +85,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[ActorsElement], JSONError>) -> Void) {
+	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[ActorsElement], KKError>) -> Void) {
 		let animeActors = self.kurozoraKitEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Actors, JSONError> = tron.swiftyJSON.request(animeActors)
+		let request: APIRequest<Actors, KKError> = tron.swiftyJSON.request(animeActors)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { actors in
@@ -108,9 +108,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getSeasons(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[SeasonsElement], JSONError>) -> Void) {
+	public func getSeasons(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[SeasonsElement], KKError>) -> Void) {
 		let animeSeasons = self.kurozoraKitEndpoints.animeSeasons.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<Seasons, JSONError> = tron.swiftyJSON.request(animeSeasons)
+		let request: APIRequest<Seasons, KKError> = tron.swiftyJSON.request(animeSeasons)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { seasons in
@@ -132,9 +132,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func rateShow(_ showID: Int, with score: Double, completion completionHandler: @escaping (_ result: Result<Bool, JSONError>) -> Void) {
+	public func rateShow(_ showID: Int, with score: Double, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
 		let animeRate = self.kurozoraKitEndpoints.animeRate.replacingOccurrences(of: "?", with: "\(showID)")
-		let request: APIRequest<User, JSONError> = tron.swiftyJSON.request(animeRate)
+		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(animeRate)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -145,8 +145,8 @@ extension KurozoraKit {
 		request.parameters = [
 			"rating": score
 		]
-		request.perform(withSuccess: { _ in
-			completionHandler(.success(true))
+		request.perform(withSuccess: { success in
+			completionHandler(.success(success))
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't rate this show 😔", subTitle: error.message)
@@ -163,9 +163,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func search(forShow show: String, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], JSONError>) -> Void) {
+	public func search(forShow show: String, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
 		let animeSearch = self.kurozoraKitEndpoints.animeSearch
-		let request: APIRequest<Search, JSONError> = tron.swiftyJSON.request(animeSearch)
+		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(animeSearch)
 
 		request.headers = headers
 		if User.isSignedIn {

@@ -16,9 +16,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumSections(completion completionHandler: @escaping (_ result: Result<[ForumsSectionsElement], JSONError>) -> Void) {
+	public func getForumSections(completion completionHandler: @escaping (_ result: Result<[ForumsSectionsElement], KKError>) -> Void) {
 		let forumsSections = self.kurozoraKitEndpoints.forumsSections
-		let request: APIRequest<ForumsSections, JSONError> = tron.swiftyJSON.request(forumsSections)
+		let request: APIRequest<ForumsSections, KKError> = tron.swiftyJSON.request(forumsSections)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
@@ -41,9 +41,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, page: Int, completion completionHandler: @escaping (_ result: Result<ForumsThread, JSONError>) -> Void) {
+	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, page: Int, completion completionHandler: @escaping (_ result: Result<ForumsThread, KKError>) -> Void) {
 		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<ForumsThread, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
+		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -75,9 +75,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, completion completionHandler: @escaping (_ result: Result<Int, JSONError>) -> Void) {
+	public func postThread(inSection sectionID: Int, withTitle title: String, content: String, completion completionHandler: @escaping (_ result: Result<Int, KKError>) -> Void) {
 		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<ThreadPost, JSONError> = tron.swiftyJSON.request(forumsSectionsThreads)
+		let request: APIRequest<ThreadPost, KKError> = tron.swiftyJSON.request(forumsSectionsThreads)
 
 		request.headers = headers
 		if User.isSignedIn {

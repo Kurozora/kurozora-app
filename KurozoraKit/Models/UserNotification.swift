@@ -37,7 +37,7 @@ public class UserNotificationsElement: JSONDecodable {
 	// MARK: - Properties
 	public let id: String?
 	public let type: String?
-	public var read: Bool?
+	public var readStatus: ReadStatus?
 	public let data: UserNotificationData?
 	public let message: String?
 	public let creationDate: String?
@@ -46,7 +46,7 @@ public class UserNotificationsElement: JSONDecodable {
 	required public init(json: JSON) throws {
 		self.id = json["id"].stringValue
 		self.type = json["type"].stringValue
-		self.read = json["read"].boolValue
+		self.readStatus = ReadStatus(from: json["read"].boolValue)
 		self.data = try? UserNotificationData(json: json["data"])
 		self.message = json["string"].stringValue
 		self.creationDate = json["creation_date"].stringValue

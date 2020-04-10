@@ -16,9 +16,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getGenres(completion completionHandler: @escaping (_ result: Result<[GenreElement], JSONError>) -> Void) {
+	public func getGenres(completion completionHandler: @escaping (_ result: Result<[GenreElement], KKError>) -> Void) {
 		let genres = self.kurozoraKitEndpoints.genres
-		let request: APIRequest<Genres, JSONError> = tron.swiftyJSON.request(genres)
+		let request: APIRequest<Genres, KKError> = tron.swiftyJSON.request(genres)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { genres in
