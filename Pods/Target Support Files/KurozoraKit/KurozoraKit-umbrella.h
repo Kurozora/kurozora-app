@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_KurozoraKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_KurozoraKitVersionString[];
+FOUNDATION_EXPORT double KurozoraKitVersionNumber;
+FOUNDATION_EXPORT const unsigned char KurozoraKitVersionString[];
 

@@ -54,7 +54,8 @@ public class KurozoraKit {
 	]
 
 	/// The TRON singleton used to perform API requests.
-	internal let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+	//	internal let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+	internal let tron = TRON(baseURL: "http://kurozora-web.test/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
 	/// The [KKServices](x-source-tag://KKServices) object used to perform API requests.
 	public var services: KKServices!

@@ -22,6 +22,12 @@ PODS:
   - Kingfisher (5.13.3):
     - Kingfisher/Core (= 5.13.3)
   - Kingfisher/Core (5.13.3)
+  - KurozoraKit (0.1.0):
+    - KeychainAccess
+    - Kingfisher
+    - SCLAlertView (~> 0.8.3)
+    - TRON
+    - TRON/SwiftyJSON
   - MarqueeLabel (4.0.2)
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
@@ -31,7 +37,7 @@ PODS:
     - R.swift.Library (~> 5.1.0)
   - R.swift.Library (5.1.0)
   - ReachabilitySwift (5.0.0)
-  - SCLAlertView (0.8.1)
+  - SCLAlertView (0.8.3)
   - SnapKit (5.0.1)
   - Solar (2.1.0)
   - SPStorkController (1.8.2)
@@ -84,20 +90,16 @@ DEPENDENCIES:
   - EmptyDataSet-Swift
   - ESTabBarController-swift
   - IBPCollectionViewCompositionalLayout
-  - KeychainAccess
-  - Kingfisher
+  - KurozoraKit
   - NotificationBannerSwift
   - R.swift
   - ReachabilitySwift
-  - SCLAlertView (from `https://github.com/vikmeup/SCLAlertView-Swift.git`, branch `master`)
   - Solar
   - SPStorkController
   - SwifterSwift
   - SwiftTheme
   - SwipeCellKit
   - Tabman
-  - TRON (~> 5.0.0-beta.5)
-  - TRON/SwiftyJSON
   - UIImageColors
   - WhatsNew
 
@@ -132,16 +134,9 @@ SPEC REPOS:
     - TRON
     - UIImageColors
     - WhatsNew
-
-EXTERNAL SOURCES:
-  SCLAlertView:
-    :branch: master
-    :git: https://github.com/vikmeup/SCLAlertView-Swift.git
-
-CHECKOUT OPTIONS:
-  SCLAlertView:
-    :commit: d98c3e647ad77ed537d021e7d6ad07bb71f83186
-    :git: https://github.com/vikmeup/SCLAlertView-Swift.git
+  https://github.com/kiritokatklian/Specs.git:
+    - KurozoraKit
+    - SCLAlertView
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
@@ -156,13 +151,14 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Kingfisher: d2b3d6a7200c93b34de9afcdf25c8dd9282ec277
+  KurozoraKit: 2533281b030d50d2221c644b77a476787c440495
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 288353d4cc848c24deec2f7542f325089247c136
   R.swift: 8cbc4fc69b740305b6a17c8a8ed968eb788962d9
   R.swift.Library: fa85ce1e0d0b7e818cd9e080df910ba54d2776cc
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SCLAlertView: 776813fb1f62248965f37cb7edf4088ee6394460
+  SCLAlertView: 1f7e3aeb080d7962d3f228e580456e992698bbe6
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPStorkController: d809adb3e333ec07760f8bf1b4c628a2801675ac
@@ -175,6 +171,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: a772d9c14571d9d7500d13386e0f4d64dab0865e
+PODFILE CHECKSUM: 51d263b3887226ddaecd35f25eedbaf64890d17b
 
 COCOAPODS: 1.9.1

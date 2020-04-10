@@ -1,3 +1,4 @@
+source 'https://github.com/kiritokatklian/Specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
@@ -7,14 +8,6 @@ inhibit_all_warnings!
 use_frameworks!
 
 # MARK: - Defs
-def common_pods
-	pod 'Kingfisher'
-	pod 'KeychainAccess'
-	pod 'SCLAlertView', :git => 'https://github.com/vikmeup/SCLAlertView-Swift.git', :branch => 'master'
-	pod 'TRON', '~> 5.0.0-beta.5'
-	pod 'TRON/SwiftyJSON'
-end
-
 def kurozora_pods
 	pod 'AXPhotoViewer'
 	pod 'Cosmos'
@@ -22,10 +15,14 @@ def kurozora_pods
 	pod 'ESTabBarController-swift'
 	pod 'EmptyDataSet-Swift'
 	pod 'IBPCollectionViewCompositionalLayout'
+	pod 'KeychainAccess'
+	pod 'Kingfisher'
+	pod 'KurozoraKit'
 	pod 'NotificationBannerSwift'
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
+  pod 'SCLAlertView'
 	pod 'Solar'
 	pod 'SPStorkController'
 #	pod 'SnowGlobe'
@@ -33,6 +30,8 @@ def kurozora_pods
 	pod 'SwifterSwift'
 	pod 'SwipeCellKit'
 	pod 'Tabman'
+	pod 'TRON'
+	pod 'TRON/SwiftyJSON'
 	pod 'UIImageColors'
 	pod 'WhatsNew'
 #	pod 'Zip'
@@ -41,10 +40,6 @@ end
 # MARK: - Targets
 target 'Kurozora' do
 	kurozora_pods
-end
-
-target 'KurozoraKit' do
-	common_pods
 end
 
 # MARK: - Post install scripts
