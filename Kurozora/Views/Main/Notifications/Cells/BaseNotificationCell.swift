@@ -72,12 +72,10 @@ class BaseNotificationCell: SwipeTableViewCell {
 		- Parameter animation: A boolean value indicating whether the update should be animated.
 	*/
 	func updateReadStatus(animated: Bool = false) {
-		if let notificationIsRead = userNotificationsElement?.read {
-			notificationMark.numberOfPages = notificationIsRead ? 0 : 1
+		notificationMark.numberOfPages = userNotificationsElement?.readStatus == .read ? 0 : 1
 
-			if animated {
-				notificationMark.animateBounce()
-			}
+		if animated {
+			notificationMark.animateBounce()
 		}
 	}
 }

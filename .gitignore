@@ -1,6 +1,9 @@
 # Xcode
 *.entitlements
 
+# Xcode scripts
+cpd-output.xml
+
 ## Build generated
 build/
 DerivedData/

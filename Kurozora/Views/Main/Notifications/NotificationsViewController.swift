@@ -217,24 +217,24 @@ class NotificationsViewController: KTableViewController {
 
 		- Parameter indexPath: The IndexPath of the notifications in the tableView.
 		- Parameter notificationID: The id of the notification to be updated. Accepts array of id’s or all.
-		- Parameter status: The integer indicating whether to mark the notification as read or unread.
+		- Parameter readStatus: The `ReadStatus` value indicating whether to mark the notification as read or unread.
 	*/
-	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, with status: Int) {
-		KService.updateNotification(notificationID, withStatus: status) { result in
+	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, withReadStatus readStatus: ReadStatus) {
+		KService.updateNotification(notificationID, withReadStatus: readStatus) { result in
 			switch result {
-			case .success(let read):
+			case .success(let readStatus):
 				if indexPaths == nil {
 					for userNotificationElement in self.userNotificationsElement ?? [] {
-						userNotificationElement.read = read
+						userNotificationElement.readStatus = readStatus
 					}
 					self.tableView.reloadData()
 				} else {
 					for indexPath in indexPaths ?? [] {
 						switch self.grouping {
 						case .automatic, .byType:
-							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
+							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus = readStatus
 						case .off:
-							self.userNotificationsElement?[indexPath.row].read = read
+							self.userNotificationsElement?[indexPath.row].readStatus = readStatus
 						}
 
 						let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
@@ -258,7 +258,7 @@ class NotificationsViewController: KTableViewController {
 
 		// Mark all as read action
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
-			self.updateNotification(for: "all", with: 1)
+			self.updateNotification(for: "all", withReadStatus: .read)
 		})
 		markAllAsRead.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -266,7 +266,7 @@ class NotificationsViewController: KTableViewController {
 
 		// Mark all as unread action
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
-			self.updateNotification(for: "all", with: 0)
+			self.updateNotification(for: "all", withReadStatus: .unread)
 		})
 		markAllAsUnread.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
@@ -292,7 +292,7 @@ class NotificationsViewController: KTableViewController {
 	@objc func notificationMarkButtonPressed(_ sender: UIButton) {
 		let section = sender.tag
 		let numberOfRows = tableView.numberOfRows(inSection: section)
-		var status = 0
+		var readStatus: ReadStatus = .unread
 
 		// Iterate over all the rows of a section
 		var notificationIDs = ""
@@ -300,8 +300,8 @@ class NotificationsViewController: KTableViewController {
 		for row in 0..<numberOfRows {
 			switch self.grouping {
 			case .automatic, .byType:
-				if let read = groupedNotifications[section].sectionNotifications[row].read, !read && status == 0 {
-					status = 1
+				if let notificationStatus = groupedNotifications[section].sectionNotifications[row].readStatus, notificationStatus == .unread && readStatus == .unread {
+					readStatus = .read
 				}
 				if row == groupedNotifications[section].sectionNotifications.count - 1 {
 					if let notificationID = groupedNotifications[section].sectionNotifications[row].id {
@@ -311,8 +311,8 @@ class NotificationsViewController: KTableViewController {
 					notificationIDs += "\(notificationID),"
 				}
 			case .off:
-				if let notificationStatus = userNotificationsElement?[row].read, notificationStatus {
-					status = 0
+				if let notificationStatus = userNotificationsElement?[row].readStatus, notificationStatus == .read {
+					readStatus = .unread
 				}
 				if let userNotificationsElementCount = userNotificationsElement?.count, row == userNotificationsElementCount - 1 {
 					if let notificationID = userNotificationsElement?[row].id {
@@ -325,8 +325,8 @@ class NotificationsViewController: KTableViewController {
 
 			indexPaths.append(IndexPath(row: row, section: section))
 		}
-		sender.setTitle(status == 0 ? "Mark as read" : "Mark as unread", for: .normal)
-		updateNotification(at: indexPaths, for: notificationIDs, with: status)
+		sender.setTitle(readStatus == .unread ? "Mark as read" : "Mark as unread", for: .normal)
+		updateNotification(at: indexPaths, for: notificationIDs, withReadStatus: readStatus)
 	}
 }
 
@@ -368,7 +368,7 @@ extension NotificationsViewController {
 		switch self.grouping {
 		case .automatic, .byType:
 			notificationTitleCell?.notificationTitleLabel.text = groupedNotifications[section].sectionTitle
-			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.read ?? false })
+			let allNotificationsRead = groupedNotifications[section].sectionNotifications.contains(where: { $0.readStatus == .read })
 			notificationTitleCell?.notificationMarkButton.setTitle(allNotificationsRead ? "Mark as unread" : "Marks as read", for: .normal)
 			return notificationTitleCell?.contentView
 		case .off: break
@@ -403,7 +403,7 @@ extension NotificationsViewController {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 		// Change notification status to read
 		guard let notificationID = baseNotificationCell?.userNotificationsElement?.id else { return }
-		self.updateNotification(at: [indexPath], for: notificationID, with: 1)
+		self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: .read)
 
 		if baseNotificationCell?.notificationType == .session {
 			// Show sessions view
@@ -470,15 +470,15 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			deleteAction.transitionDelegate = ScaleTransition.default
 			return [deleteAction]
 		case .left:
-			var isRead = false
+			var readStatus: ReadStatus = .unread
 			switch self.grouping {
 			case .automatic, .byType:
-				if let read = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read {
-					isRead = read
+				if let newReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus {
+					readStatus = newReadStatus
 				}
 			case .off:
-				if let read = self.userNotificationsElement?[indexPath.row].read {
-					isRead = read
+				if let newReadStatus = self.userNotificationsElement?[indexPath.row].readStatus {
+					readStatus = newReadStatus
 				}
 			}
 
@@ -496,12 +496,13 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 					}
 				}
 
-				self.updateNotification(at: [indexPath], for: notificationID, with: isRead ? 0 : 1)
+				self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: readStatus)
 			}
+			let statusIsRead = readStatus == .read
 			markedAction.backgroundColor = .clear
-			markedAction.title = isRead ? "Mark as Unread" : "Mark as Read"
-			markedAction.image = isRead ? R.image.watched_circle()! : R.image.unwatched_circle()!
-			markedAction.textColor = isRead ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
+			markedAction.title = statusIsRead ? "Mark as Unread" : "Mark as Read"
+			markedAction.image = statusIsRead ? R.image.watched_circle()! : R.image.unwatched_circle()!
+			markedAction.textColor = statusIsRead ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
 			markedAction.font = .systemFont(ofSize: 16, weight: .semibold)
 			markedAction.transitionDelegate = ScaleTransition.default
 			return [markedAction]
