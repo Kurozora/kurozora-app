@@ -20,4 +20,15 @@ public enum LockStatus: Int {
 	// MARK: - Cases
 	case unlocked = 0
 	case locked = 1
+
+	// MARK: - Properties
+	/// The boolean value of a lock status.
+	public var boolValue: Bool {
+		switch self {
+		case .unlocked:
+			return false
+		case .locked:
+			return true
+		}
+	}
 }

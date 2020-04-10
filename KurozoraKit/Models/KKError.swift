@@ -1,5 +1,5 @@
 //
-//  JSONError.swift
+//  KKError.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 22/12/2018.
@@ -9,7 +9,7 @@
 import SwiftyJSON
 import TRON
 
-public class JSONError: ErrorSerializable {
+public class KKError: ErrorSerializable {
 	// MARK: - Properties
 	internal var success: Bool?
 	public var message: String?

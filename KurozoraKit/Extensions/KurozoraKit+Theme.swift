@@ -16,9 +16,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getThemes(completion completionHandler: @escaping (_ result: Result<[ThemesElement], JSONError>) -> Void) {
+	public func getThemes(completion completionHandler: @escaping (_ result: Result<[ThemesElement], KKError>) -> Void) {
 		let themes = self.kurozoraKitEndpoints.themes
-		let request: APIRequest<Themes, JSONError> = tron.swiftyJSON.request(themes)
+		let request: APIRequest<Themes, KKError> = tron.swiftyJSON.request(themes)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { themes in

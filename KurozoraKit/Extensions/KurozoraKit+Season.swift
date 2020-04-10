@@ -17,9 +17,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getEpisodes(forSeasonID seasonID: Int, completion completionHandler: @escaping (_ result: Result<Episodes, JSONError>) -> Void) {
+	public func getEpisodes(forSeasonID seasonID: Int, completion completionHandler: @escaping (_ result: Result<Episodes, KKError>) -> Void) {
 		let animeSeasonsEpisodes = self.kurozoraKitEndpoints.animeSeasonsEpisodes.replacingOccurrences(of: "?", with: "\(seasonID)")
-		let request: APIRequest<Episodes, JSONError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
+		let request: APIRequest<Episodes, KKError> = tron.swiftyJSON.request(animeSeasonsEpisodes)
 
 		request.headers = headers
 		if User.isSignedIn {

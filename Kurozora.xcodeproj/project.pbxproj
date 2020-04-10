@@ -379,7 +379,7 @@
 		66CE8E5624086F3500052AE9 /* ForumsSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619EE6F216F86C500655B99 /* ForumsSections.swift */; };
 		66CE8E5724086F3500052AE9 /* ForumsThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6669386F21AF39A000BA9620 /* ForumsThread.swift */; };
 		66CE8E5824086F3500052AE9 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A065B21EA1187008CF4A6 /* Genres.swift */; };
-		66CE8E5924086F3500052AE9 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642521CE90080032FDCF /* JSONError.swift */; };
+		66CE8E5924086F3500052AE9 /* KKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660A642521CE90080032FDCF /* KKError.swift */; };
 		66CE8E5A24086F3500052AE9 /* MALImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669FD7FE23FA15BD001440EC /* MALImport.swift */; };
 		66CE8E5B24086F3500052AE9 /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD721454618007154BD /* PrivacyPolicy.swift */; };
 		66CE8E5C24086F3500052AE9 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A921D26FBC0093725F /* Search.swift */; };
@@ -416,6 +416,8 @@
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
 		66E9D48A243F923400257D4F /* Global+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D489243F923400257D4F /* Global+Swift.swift */; };
+		66E9D48C2440B5B200257D4F /* ReadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D48B2440B5B200257D4F /* ReadStatus.swift */; };
+		66E9D48E2440C68900257D4F /* KKSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D48D2440C68900257D4F /* KKSuccess.swift */; };
 		66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowDetail.swift */; };
 		66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */; };
 		66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */; };
@@ -502,7 +504,7 @@
 		6609FAD621D8D237008DF5E4 /* Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kurozora.swift; sourceTree = "<group>"; };
 		6609FAD821D90C13008DF5E4 /* KNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNetworkManager.swift; sourceTree = "<group>"; };
 		6609FADA21D91369008DF5E4 /* KurozoraReachabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraReachabilityViewController.swift; sourceTree = "<group>"; };
-		660A642521CE90080032FDCF /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
+		660A642521CE90080032FDCF /* KKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KKError.swift; sourceTree = "<group>"; };
 		660A642721D01CEA0032FDCF /* ThreadReplies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplies.swift; sourceTree = "<group>"; };
 		660B42A621259E300051EF66 /* ManageThemesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageThemesController.swift; sourceTree = "<group>"; };
 		660B42AA2125AF830051EF66 /* ThemesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -894,6 +896,8 @@
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
 		66E9D489243F923400257D4F /* Global+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Swift.swift"; sourceTree = "<group>"; };
+		66E9D48B2440B5B200257D4F /* ReadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadStatus.swift; sourceTree = "<group>"; };
+		66E9D48D2440C68900257D4F /* KKSuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KKSuccess.swift; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetail.swift; sourceTree = "<group>"; };
 		66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettings.storyboard; sourceTree = "<group>"; };
 		66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsCell.swift; sourceTree = "<group>"; };
@@ -1035,7 +1039,8 @@
 				6619EE6F216F86C500655B99 /* ForumsSections.swift */,
 				6669386F21AF39A000BA9620 /* ForumsThread.swift */,
 				664A065B21EA1187008CF4A6 /* Genres.swift */,
-				660A642521CE90080032FDCF /* JSONError.swift */,
+				660A642521CE90080032FDCF /* KKError.swift */,
+				66E9D48D2440C68900257D4F /* KKSuccess.swift */,
 				669FD7FE23FA15BD001440EC /* MALImport.swift */,
 				66B69BD721454618007154BD /* PrivacyPolicy.swift */,
 				66DEB4A921D26FBC0093725F /* Search.swift */,
@@ -2119,6 +2124,7 @@
 				66CC2F31243B6F1A00816359 /* LockStatus.swift */,
 				66CC2F29243B657F00816359 /* VoteStatus.swift */,
 				66C3A5512417C69500E7C972 /* WatchStatus.swift */,
+				66E9D48B2440B5B200257D4F /* ReadStatus.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -3114,9 +3120,10 @@
 				66CE8E4C24086F2500052AE9 /* KurozoraKit+Thread.swift in Sources */,
 				66CE8E5524086F3500052AE9 /* FeedSections.swift in Sources */,
 				66CE8E5024086F3500052AE9 /* Episodes.swift in Sources */,
+				66E9D48E2440C68900257D4F /* KKSuccess.swift in Sources */,
 				66CE8E6724086F3500052AE9 /* VoteThread.swift in Sources */,
 				66C4DAD7243BA2C100C4B90A /* UIDevice+KurozoraKit.swift in Sources */,
-				66CE8E5924086F3500052AE9 /* JSONError.swift in Sources */,
+				66CE8E5924086F3500052AE9 /* KKError.swift in Sources */,
 				66CE8E4624086F2500052AE9 /* KurozoraKit+Notifications.swift in Sources */,
 				66CE8E5724086F3500052AE9 /* ForumsThread.swift in Sources */,
 				66CE8E5C24086F3500052AE9 /* Search.swift in Sources */,
@@ -3127,6 +3134,7 @@
 				66CE8E4824086F2500052AE9 /* KurozoraKit+Season.swift in Sources */,
 				66CE8E6324086F3500052AE9 /* ThreadReply.swift in Sources */,
 				66CE8E6624086F3500052AE9 /* UserNotification.swift in Sources */,
+				66E9D48C2440B5B200257D4F /* ReadStatus.swift in Sources */,
 				66CE8E6024086F3500052AE9 /* Themes.swift in Sources */,
 				66CE8E6B2408820600052AE9 /* KKLibrary.swift in Sources */,
 				66CE8E4724086F2500052AE9 /* KurozoraKit+Reply.swift in Sources */,

@@ -16,9 +16,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFeedSections(completion completionHandler: @escaping (_ result: Result<[FeedSectionsElement], JSONError>) -> Void) {
+	public func getFeedSections(completion completionHandler: @escaping (_ result: Result<[FeedSectionsElement], KKError>) -> Void) {
 		let feedSection = self.kurozoraKitEndpoints.feedSection
-		let request: APIRequest<FeedSections, JSONError> = tron.swiftyJSON.request(feedSection)
+		let request: APIRequest<FeedSections, KKError> = tron.swiftyJSON.request(feedSection)
 		request.headers = headers
 		request.method = .get
 		request.perform(withSuccess: { sections in
@@ -40,9 +40,9 @@ extension KurozoraKit {
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFeedPosts(forSection sectionID: Int, page: Int, completion completionHandler: @escaping (_ result: Result<FeedPosts, JSONError>) -> Void) {
+	public func getFeedPosts(forSection sectionID: Int, page: Int, completion completionHandler: @escaping (_ result: Result<FeedPosts, KKError>) -> Void) {
 		let feedSectionPost = self.kurozoraKitEndpoints.feedSectionPost.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<FeedPosts, JSONError> = tron.swiftyJSON.request(feedSectionPost)
+		let request: APIRequest<FeedPosts, KKError> = tron.swiftyJSON.request(feedSectionPost)
 		request.headers = headers
 		request.method = .get
 		request.parameters = [
