@@ -84,9 +84,14 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	/// Fetches the user's favorite list.
 	@objc fileprivate func fetchFavoritesList() {
-		KService.getFavourites(forUserID: self.userID) { (showDetailsElements) in
-			DispatchQueue.main.async {
-				self.showDetailsElements = showDetailsElements
+		KService.getFavourites(forUserID: self.userID) { result in
+			switch result {
+			case .success(let showDetailsElements):
+				DispatchQueue.main.async {
+					self.showDetailsElements = showDetailsElements
+				}
+			case .failure:
+				break
 			}
 		}
 	}

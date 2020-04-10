@@ -141,13 +141,18 @@ class NotificationsViewController: KTableViewController {
 				self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing notifications list...", attributes: [.foregroundColor: KThemePicker.tintColor.colorValue])
 			}
 
-			guard let userID = User().current?.id else { return }
-			KService.getNotifications(forUserID: userID, withSuccess: { (notifications) in
-				self.userNotificationsElement = []
-				DispatchQueue.main.async {
-					self.userNotificationsElement = notifications
+			guard let userID = User.current?.id else { return }
+			KService.getNotifications(forUserID: userID) { result in
+				switch result {
+				case .success(let notifications):
+					self.userNotificationsElement = []
+					DispatchQueue.main.async {
+						self.userNotificationsElement = notifications
+					}
+				case .failure:
+					break
 				}
-			})
+			}
 		} else {
 			self.userNotificationsElement = nil
 			self.groupedNotifications = []
@@ -215,24 +220,29 @@ class NotificationsViewController: KTableViewController {
 		- Parameter status: The integer indicating whether to mark the notification as read or unread.
 	*/
 	func updateNotification(at indexPaths: [IndexPath]? = nil, for notificationID: String, with status: Int) {
-		KService.updateNotification(notificationID, withStatus: status) { (read) in
-			if indexPaths == nil {
-				for userNotificationElement in self.userNotificationsElement ?? [] {
-					userNotificationElement.read = read
-				}
-				self.tableView.reloadData()
-			} else {
-				for indexPath in indexPaths ?? [] {
-					switch self.grouping {
-					case .automatic, .byType:
-						self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
-					case .off:
-						self.userNotificationsElement?[indexPath.row].read = read
+		KService.updateNotification(notificationID, withStatus: status) { result in
+			switch result {
+			case .success(let read):
+				if indexPaths == nil {
+					for userNotificationElement in self.userNotificationsElement ?? [] {
+						userNotificationElement.read = read
 					}
+					self.tableView.reloadData()
+				} else {
+					for indexPath in indexPaths ?? [] {
+						switch self.grouping {
+						case .automatic, .byType:
+							self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].read = read
+						case .off:
+							self.userNotificationsElement?[indexPath.row].read = read
+						}
 
-					let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
-					baseNotificationCell?.updateReadStatus(animated: indexPaths?.count == 1)
+						let baseNotificationCell = self.tableView.cellForRow(at: indexPath) as? BaseNotificationCell
+						baseNotificationCell?.updateReadStatus(animated: indexPaths?.count == 1)
+					}
 				}
+			case .failure:
+				break
 			}
 		}
 	}
@@ -421,9 +431,10 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 				switch self.grouping {
 				case .automatic, .byType:
 					guard let notificationID = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].id else { return }
-					KService.deleteNotification(notificationID, withSuccess: { (success) in
-						DispatchQueue.main.async {
-							if success {
+					KService.deleteNotification(notificationID) { result in
+						switch result {
+						case .success:
+							DispatchQueue.main.async {
 								self.groupedNotifications[indexPath.section].sectionNotifications.remove(at: indexPath.row)
 								tableView.deleteRows(at: [indexPath], with: .left)
 
@@ -433,18 +444,23 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 								}
 								tableView.endUpdates()
 							}
+						case .failure:
+							break
 						}
-					})
+					}
 				case .off:
 					guard let notificationID = self.userNotificationsElement?[indexPath.row].id else { return }
-					KService.deleteNotification(notificationID, withSuccess: { (success) in
-						if success {
+					KService.deleteNotification(notificationID) { result in
+						switch result {
+						case .success:
 							self.userNotificationsElement?.remove(at: indexPath.row)
 							tableView.beginUpdates()
 							tableView.deleteRows(at: [indexPath], with: .left)
 							tableView.endUpdates()
+						case .failure:
+							break
 						}
-					})
+					}
 				}
 			}
 			deleteAction.backgroundColor = .clear

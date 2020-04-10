@@ -62,11 +62,16 @@ class SeasonsCollectionViewController: KCollectionViewController {
 
 	/// Fetch seasons for the current show.
     fileprivate func fetchSeasons() {
-		KService.getSeasons(forShowID: showID, withSuccess: { (seasons) in
-			DispatchQueue.main.async {
-				self.seasonsElements = seasons
+		KService.getSeasons(forShowID: showID) { result in
+			switch result {
+			case .success(let seasons):
+				DispatchQueue.main.async {
+					self.seasonsElements = seasons
+				}
+			case .failure:
+				break
 			}
-        })
+        }
     }
 
 	// MARK: - Segue

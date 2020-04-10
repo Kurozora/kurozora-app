@@ -28,7 +28,7 @@ class SearchForumsResultsCell: SearchBaseResultsCell {
 
 		// Configure lock
 		if let locked = forumsThreadElement.locked {
-			searchImageView.isHidden = !locked
+			searchImageView.isHidden = !locked.boolValue
 		}
 	}
 }

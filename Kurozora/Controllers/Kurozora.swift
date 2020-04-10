@@ -104,7 +104,7 @@ class Kurozora {
 			}
 		case .profile, .user:
 			let userID = url.lastPathComponent
-			let isCurrentUser = userID.isEmpty || userID.int == User().current?.sessionID
+			let isCurrentUser = userID.isEmpty || userID.int == User.current?.session?.id
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 

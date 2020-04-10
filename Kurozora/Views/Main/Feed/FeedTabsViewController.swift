@@ -40,8 +40,8 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 
-		if let profileImage = User().current?.profileImage /*Kurozora.shared.KDefaults["profile_image"]*/ {
-			if let usernameInitials = User().current?.username?.initials /*Kurozora.shared.KDefaults["username"]?.initials*/ {
+		if let profileImage = User.current?.profileImage /*Kurozora.shared.KDefaults["profile_image"]*/ {
+			if let usernameInitials = User.current?.username?.initials /*Kurozora.shared.KDefaults["username"]?.initials*/ {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
 				navigationProfileButton.imageView?.setImage(with: profileImage, placeholder: placeholderImage)
 			}

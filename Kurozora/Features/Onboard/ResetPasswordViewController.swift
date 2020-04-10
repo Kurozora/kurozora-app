@@ -25,15 +25,20 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 			return
 		}
 
-		KService.resetPassword(withEmailAddress: emailAddress, withSuccess: { _ in
-			let appearance = SCLAlertView.SCLAppearance(
-				showCloseButton: false
-			)
-			let alertView = SCLAlertView(appearance: appearance)
-			alertView.addButton("Done", action: {
-				self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-			})
-			alertView.showSuccess("Success!", subTitle: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.")
-		})
+		KService.resetPassword(withEmailAddress: emailAddress) { result in
+			switch result {
+			case .success:
+				let appearance = SCLAlertView.SCLAppearance(
+					showCloseButton: false
+				)
+				let alertView = SCLAlertView(appearance: appearance)
+				alertView.addButton("Done", action: {
+					self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+				})
+				alertView.showSuccess("Success!", subTitle: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.")
+			case .failure:
+				break
+			}
+		}
 	}
 }

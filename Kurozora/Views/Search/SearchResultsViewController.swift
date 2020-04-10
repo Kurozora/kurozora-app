@@ -92,22 +92,37 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
-				KService.search(forShow: text) { (showResults) in
-					DispatchQueue.main.async {
-						self.showResults = showResults
+				KService.search(forShow: text) { result in
+					switch result {
+					case .success(let showResults):
+						DispatchQueue.main.async {
+							self.showResults = showResults
+						}
+					case .failure:
+						break
 					}
 				}
 			case .myLibrary: break
 			case .thread:
-				KService.search(forThread: text) { (threadResults) in
-					DispatchQueue.main.async {
-						self.threadResults = threadResults
+				KService.search(forThread: text) { result in
+					switch result {
+					case .success(let threadResults):
+						DispatchQueue.main.async {
+							self.threadResults = threadResults
+						}
+					case .failure:
+						break
 					}
 				}
 			case .user:
-				KService.search(forUsername: text) { (userResults) in
-					DispatchQueue.main.async {
-						self.userResults = userResults
+				KService.search(forUsername: text) { result in
+					switch result {
+					case .success(let userResults):
+						DispatchQueue.main.async {
+							self.userResults = userResults
+						}
+					case .failure:
+						break
 					}
 				}
 			}

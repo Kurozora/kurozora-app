@@ -56,11 +56,16 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	/// Fetches themes from the server.
 	func fetchThemes() {
-		KService.getThemes(withSuccess: { (themes) in
-			DispatchQueue.main.async {
-				self.themes[1].append(contentsOf: themes ?? [])
+		KService.getThemes { result in
+			switch result {
+			case .success(let themes):
+				DispatchQueue.main.async {
+					self.themes[1].append(contentsOf: themes)
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 
 	override func setupEmptyDataSetView() {

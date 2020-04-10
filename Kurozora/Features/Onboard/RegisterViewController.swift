@@ -70,14 +70,17 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 			guard let password = textFieldArray.last??.text else { return }
 			let profileImage = profileImageView.image
 
-			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { (success) in
-				if success {
+			KService.register(withUsername: username, emailAddress: emailAddress, password: password, profileImage: profileImage) { result in
+				switch result {
+				case .success:
 					let alertController = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
 					alertController.showSuccess("Hooray!", subTitle: "Account created successfully! Please check your email for confirmation!")
 					alertController.addButton("Done", action: {
 						self.navigationController?.popViewController(animated: true)
 						self.dismiss(animated: true, completion: nil)
 					})
+				case .failure:
+					break
 				}
 			}
 		} else if onboardingType == .siwa {

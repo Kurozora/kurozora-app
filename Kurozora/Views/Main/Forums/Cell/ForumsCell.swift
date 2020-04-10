@@ -139,18 +139,23 @@ class ForumsCell: UITableViewCell {
 
 		WorkflowController.shared.isSignedIn {
 			guard var threadScore = self.forumThreadsElement?.voteCount else { return }
-			KService.voteOnThread(threadID, withVoteStatus: voteStatus, withSuccess: { (voteStatus) in
-				DispatchQueue.main.async {
-					self.updateVoting(withVoteStatus: voteStatus)
-					if voteStatus == .upVote {
-						threadScore += 1
-					} else if voteStatus == .downVote {
-						threadScore -= 1
-					}
+			KService.voteOnThread(threadID, withVoteStatus: voteStatus) { result in
+				switch result {
+				case .success(let voteStatus):
+					DispatchQueue.main.async {
+						self.updateVoting(withVoteStatus: voteStatus)
+						if voteStatus == .upVote {
+							threadScore += 1
+						} else if voteStatus == .downVote {
+							threadScore -= 1
+						}
 
-					self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+					}
+				case .failure:
+					break
 				}
-			})
+			}
 		}
 	}
 
@@ -170,11 +175,11 @@ class ForumsCell: UITableViewCell {
 	/**
 		Shows and hides some elements according to the lock status of the current thread.
 		
-		- Parameter locked: The boolean indicating whather to show or hide the element.
+		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide some views.
 	*/
-	fileprivate func isLocked(_ locked: Bool) {
-		forumThreadsElement?.locked = locked
-		if locked {
+	fileprivate func isLocked(_ lockStatus: LockStatus) {
+		forumThreadsElement?.locked = lockStatus
+		if lockStatus == .locked {
 			lockImageView.isHidden = false
 			upvoteButton.isHidden = true
 			downvoteButton.isHidden = true
@@ -224,7 +229,7 @@ class ForumsCell: UITableViewCell {
 //		}
 
 		// Upvote, downvote and reply actions
-		if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 && !locked {
+		if let threadID = forumThreadsElement.id, threadID != 0 && forumThreadsElement.locked == .unlocked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 1)
 			})

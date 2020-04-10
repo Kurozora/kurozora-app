@@ -93,28 +93,43 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	func fetchDetails() {
 		// If the air status is empty then the details are incomplete and should be fetched anew.
 		if showDetailsElement?.airStatus == "" {
-			KService.getDetails(forShowID: self.showID) { (showDetailsElement) in
-				DispatchQueue.main.async {
-					self.showDetailsElement = showDetailsElement
-					self.collectionView.reloadData()
+			KService.getDetails(forShowID: self.showID) { result in
+				switch result {
+				case .success(let showDetailsElement):
+					DispatchQueue.main.async {
+						self.showDetailsElement = showDetailsElement
+						self.collectionView.reloadData()
+					}
+				case .failure:
+					break
 				}
 			}
 		}
 
 		if seasons == nil {
-			KService.getSeasons(forShowID: self.showID) { (seasons) in
-				DispatchQueue.main.async {
-					self.seasons = seasons
-					self.collectionView.reloadData()
+			KService.getSeasons(forShowID: self.showID) { result in
+				switch result {
+				case .success(let seasons):
+					DispatchQueue.main.async {
+						self.seasons = seasons
+						self.collectionView.reloadData()
+					}
+				case .failure:
+					break
 				}
 			}
 		}
 
 		if actors == nil {
-			KService.getCast(forShowID: self.showID) { (actors) in
-				DispatchQueue.main.async {
-					self.actors = actors
-					self.collectionView.reloadData()
+			KService.getCast(forShowID: self.showID) { result in
+				switch result {
+				case .success(let actors):
+					DispatchQueue.main.async {
+						self.actors = actors
+						self.collectionView.reloadData()
+					}
+				case .failure:
+					break
 				}
 			}
 		}

@@ -81,25 +81,30 @@ class FeedTableViewController: KTableViewController {
 	func fetchFeedPosts() {
 		guard let sectionID = sectionID else { return }
 
-		KService.getFeedPosts(forSection: sectionID, page: pageNumber, withSuccess: { (feed) in
-			DispatchQueue.main.async {
-				if let feedPages = feed?.feedPages {
-					self.totalPages = feedPages
-				}
-
-				if self.pageNumber == 0 {
-					self.feedPostElements = feed?.posts
-					self.pageNumber += 1
-				} else if self.pageNumber <= self.totalPages - 1 {
-					for feedPostsElement in (feed?.posts)! {
-						self.feedPostElements?.append(feedPostsElement)
+		KService.getFeedPosts(forSection: sectionID, page: pageNumber) { result in
+			switch result {
+			case .success(let feed):
+				DispatchQueue.main.async {
+					if let feedPages = feed.feedPages {
+						self.totalPages = feedPages
 					}
-					self.pageNumber += 1
-				}
 
-				self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+					if self.pageNumber == 0 {
+						self.feedPostElements = feed.posts
+						self.pageNumber += 1
+					} else if self.pageNumber <= self.totalPages - 1 {
+						for feedPostsElement in (feed.posts)! {
+							self.feedPostElements?.append(feedPostsElement)
+						}
+						self.pageNumber += 1
+					}
+
+					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 
 		self.refreshControl?.endRefreshing()
 	}

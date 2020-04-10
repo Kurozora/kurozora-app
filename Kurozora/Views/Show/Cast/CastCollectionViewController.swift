@@ -61,11 +61,16 @@ class CastCollectionViewController: KCollectionViewController {
 
 	/// Fetch actors for the current show.
 	fileprivate func fetchActors() {
-		KService.getCast(forShowID: showID, withSuccess: { (actors) in
-			DispatchQueue.main.async {
-				self.actorsElements = actors
+		KService.getCast(forShowID: showID) { result in
+			switch result {
+			case .success(let actors):
+				DispatchQueue.main.async {
+					self.actorsElements = actors
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 }
 

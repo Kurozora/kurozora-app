@@ -327,6 +327,7 @@
 		66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */; };
 		66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */; };
 		66C4DAE3243CFD5C00C4B90A /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE2243CFD5C00C4B90A /* String+Date.swift */; };
+		66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */; };
 		66C5797922A83726001B8F51 /* ThemeStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797822A83726001B8F51 /* ThemeStore.storyboard */; };
 		66C5797B22A86435001B8F51 /* DebugSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797A22A86435001B8F51 /* DebugSettings.storyboard */; };
 		66C5797D22A864CB001B8F51 /* Legal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C5797C22A864CB001B8F51 /* Legal.storyboard */; };
@@ -825,6 +826,7 @@
 		66C4DADE243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortType+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE0243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KKLibrarySortTypeOptions+Kurozora.swift"; sourceTree = "<group>"; };
 		66C4DAE2243CFD5C00C4B90A /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
+		66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTabbedViewController.swift; sourceTree = "<group>"; };
 		66C5797822A83726001B8F51 /* ThemeStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemeStore.storyboard; sourceTree = "<group>"; };
 		66C5797A22A86435001B8F51 /* DebugSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DebugSettings.storyboard; sourceTree = "<group>"; };
 		66C5797C22A864CB001B8F51 /* Legal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Legal.storyboard; sourceTree = "<group>"; };
@@ -1906,6 +1908,7 @@
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
 				665385BA23D3CD1E008ADEF3 /* KTableViewController.swift */,
 				66AC3D2123D923ED00D28EE6 /* KViewController.swift */,
+				66C4DAE5243E133F00C4B90A /* KTabbedViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2356,15 +2359,16 @@
 			buildPhases = (
 				C4D3519F59E49E683C3D0828 /* [CP] Check Pods Manifest.lock */,
 				6645D5F523E7062F0042B4E0 /* R.swift */,
+				66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */,
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
 				66647B4E2084995500CF624F /* Resources */,
 				EADEF8E9DAFBA77C64EB699E /* [CP] Embed Pods Frameworks */,
-				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
 				66CF0BBC231AEE8A00EEF947 /* SwiftLint */,
 				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				66C6A54B23FB0568000A6617 /* Embed App Extensions */,
 				66C4DAD3243B77FB00C4B90A /* Embed Frameworks */,
+				6666F88320BF4A4C0003A72F /* Run Build Bump Script */,
 			);
 			buildRules = (
 			);
@@ -2692,6 +2696,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run. \n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
+		66C4DAE4243DE98F00C4B90A /* [CPD] Copy/Paste Detector */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CPD] Copy/Paste Detector";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which pmd >/dev/null; then\n  # Running CPD\n  pmd cpd --files ${EXECUTABLE_NAME} --minimum-tokens 50 --language swift --format xml > cpd-output.xml --failOnViolation true\n\n  # Running script\n  php ./cpd_script.php -cpd-xml cpd-output.xml\nelse\n  echo \"warning: PMD not installed, run brew install pmd\"\nfi\n";
+		};
 		66CF0BBC231AEE8A00EEF947 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2947,6 +2969,7 @@
 				661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */,
 				6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */,
 				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
+				66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,
 				66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */,
 				66112350208F70D200E6033A /* UIApplication+Navigation.swift in Sources */,

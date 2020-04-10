@@ -143,11 +143,16 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	/// Fetches the explore page from the server.
 	fileprivate func fetchExplore() {
-		KService.getExplore(genreElement?.id, withSuccess: { (explore) in
-			DispatchQueue.main.async {
-				self.exploreCategories = explore?.categories
+		KService.getExplore(genreElement?.id) { result in
+			switch result {
+			case .success(let explore):
+				DispatchQueue.main.async {
+					self.exploreCategories = explore.categories
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 
 	// MARK: - Segue

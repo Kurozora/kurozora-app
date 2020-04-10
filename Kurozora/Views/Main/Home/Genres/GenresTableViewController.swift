@@ -51,9 +51,14 @@ class GenresTableViewController: KTableViewController {
 
 	/// Fetches genres from the server.
 	func fetchGenres() {
-		KService.getGenres { (genres) in
-			DispatchQueue.main.async {
-				self.genresElements = genres
+		KService.getGenres { result in
+			switch result {
+			case .success(let genres):
+				DispatchQueue.main.async {
+					self.genresElements = genres
+				}
+			case .failure:
+				break
 			}
 		}
 	}

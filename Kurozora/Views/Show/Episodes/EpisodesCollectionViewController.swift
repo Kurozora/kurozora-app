@@ -63,11 +63,16 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	/// Fetches the episodes from the server.
 	func fetchEpisodes() {
-		KService.getEpisodes(forSeasonID: seasonID, withSuccess: { (episodes) in
-			DispatchQueue.main.async {
-				self.episodesElements = episodes?.episodes
+		KService.getEpisodes(forSeasonID: seasonID) { result in
+			switch result {
+			case .success(let episodes):
+				DispatchQueue.main.async {
+					self.episodesElements = episodes.episodes
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 
 	/**
@@ -315,9 +320,14 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 			guard let episodeID = episodesElements?[indexPath.row].id else { return }
 			let watchStatus: WatchStatus = cell.episodeWatchedButton.tag == 0 ? .watched : .notWatched
 
-			KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { (watchStatus) in
-				DispatchQueue.main.async {
-					cell.configureCell(withWatchStatus: watchStatus, shouldUpdate: true)
+			KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { result in
+				switch result {
+				case .success(let watchStatus):
+					DispatchQueue.main.async {
+						cell.configureCell(withWatchStatus: watchStatus, shouldUpdate: true)
+					}
+				case .failure:
+					break
 				}
 			}
 		}

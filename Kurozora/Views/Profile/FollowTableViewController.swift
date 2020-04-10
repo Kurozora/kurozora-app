@@ -49,7 +49,7 @@ class FollowTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
-			if let username = self.user?.username, let userID = User().current?.id {
+			if let username = self.user?.username, let userID = User.current?.id {
 				if self.followList == .followers {
 					let detailLabelString = self.user?.id != userID ? "Be the first to follow \(username)!" : "Follow other users so they will follow you back. Who knows, you might meet your next BFF!"
 
@@ -87,9 +87,12 @@ class FollowTableViewController: KTableViewController {
 	func followUser() {
 		guard let userID = user?.id else { return }
 
-		KService.updateFollowStatus(userID, withFollowStatus: .follow) { (success) in
-			if success {
+		KService.updateFollowStatus(userID, withFollowStatus: .follow) { result in
+			switch result {
+			case .success:
 				self.fetchFollowList()
+			case .failure:
+				break
 			}
 		}
 	}
@@ -98,18 +101,23 @@ class FollowTableViewController: KTableViewController {
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
 
-		KService.getFollowList(userID, self.followList, page: currentPage) { (userFollow) in
-			DispatchQueue.main.async {
-				self.currentPage = userFollow?.currentPage ?? 1
-				self.lastPage = userFollow?.lastPage ?? 1
+		KService.getFollowList(userID, self.followList, page: currentPage) { result in
+			switch result {
+			case .success(let userFollow):
+				DispatchQueue.main.async {
+					self.currentPage = userFollow.currentPage ?? 1
+					self.lastPage = userFollow.lastPage ?? 1
 
-				if self.currentPage == 1 {
-					self.userFollow = userFollow?.following?.isEmpty ?? true ? userFollow?.followers : userFollow?.following
-				} else {
-					for userProfile in (userFollow?.following?.isEmpty ?? true ? userFollow?.followers : userFollow?.following) ?? [] {
-						self.userFollow.append(userProfile)
+					if self.currentPage == 1 {
+						self.userFollow = userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following
+					} else {
+						for userProfile in (userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following) ?? [] {
+							self.userFollow.append(userProfile)
+						}
 					}
 				}
+			case .failure:
+				break
 			}
 		}
 	}

@@ -96,10 +96,15 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 		guard let episodeID = episodeElement?.id else { return }
 		let watchStatus: WatchStatus = episodeWatchedButton.tag == 0 ? .watched : .notWatched
 
-		KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { (watchStatus) in
-			DispatchQueue.main.async {
-				self.delegate?.updateWatchStatus(with: watchStatus)
-				self.updateWatchStatus(with: watchStatus)
+		KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { result in
+			switch result {
+			case .success(let watchStatus):
+				DispatchQueue.main.async {
+					self.delegate?.updateWatchStatus(with: watchStatus)
+					self.updateWatchStatus(with: watchStatus)
+				}
+			case .failure:
+				break
 			}
 		}
 	}

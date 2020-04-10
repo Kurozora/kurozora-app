@@ -48,7 +48,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		}
 
 		// Configure follow button
-		if userProfile.id == User().current?.id {
+		if userProfile.id == User.current?.id {
 			actionButton?.isHidden = true
 		} else {
 			if userProfile.following ?? false {
@@ -65,7 +65,7 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	fileprivate func updateFollowStatusLabel() {
 		guard let userProfile = userProfile else { return }
 
-		if let followerCount = userProfile.followerCount, let userID = User().current?.id {
+		if let followerCount = userProfile.followerCount, let userID = User.current?.id {
 			var secondaryLabelText = userProfile.id == userID ? "You, followed by you!" : "Be the first to follow!"
 
 			switch followerCount {
@@ -102,8 +102,9 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 			let followStatus: FollowStatus = self.userProfile?.following ?? false ? .unfollow : .follow
 
 			if let userID = self.userProfile?.id {
-				KService.updateFollowStatus(userID, withFollowStatus: followStatus) { (success) in
-					if success {
+				KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
+					switch result {
+					case .success:
 						if followStatus == .unfollow {
 							sender.setTitle("＋ Follow", for: .normal)
 							self.userProfile?.following = false
@@ -115,6 +116,8 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 						}
 
 						self.updateFollowStatusLabel()
+					case .failure:
+						break
 					}
 				}
 			}

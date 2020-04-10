@@ -76,8 +76,9 @@ class RatingCollectionViewCell: UICollectionViewCell {
 	func rateShow(with rating: Double) {
 		guard let showID = showDetailsElement?.id else { return }
 
-		KService.rateShow(showID, with: rating, withSuccess: { (success) in
-			if success {
+		KService.rateShow(showID, with: rating) { result in
+			switch result {
+			case .success:
 				// Update current rating for the user.
 				self.showDetailsElement?.currentUser?.currentRating = rating
 
@@ -88,7 +89,9 @@ class RatingCollectionViewCell: UICollectionViewCell {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 					sclAlertView.close()
 				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 }

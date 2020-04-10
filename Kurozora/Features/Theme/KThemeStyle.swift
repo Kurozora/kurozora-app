@@ -447,8 +447,10 @@ extension KThemeStyle {
 
 	/// Wheather it's currently night time.
 	static var isSolarNighttime: Bool {
-		guard let currentUser = User().current else { return false }
-		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: currentUser.latitude, longitude: currentUser.longitude)) else { return false }
+		guard let currentUser = User.current else { return false }
+		guard let latitude = currentUser.session?.location?.latitude else { return false }
+		guard let longitude = currentUser.session?.location?.longitude else { return false }
+		guard let solar = Solar(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) else { return false }
 		let isNighttime = solar.isNighttime
 
 		return isNighttime

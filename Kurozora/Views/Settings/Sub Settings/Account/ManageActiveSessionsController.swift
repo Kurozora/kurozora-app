@@ -97,12 +97,17 @@ class ManageActiveSessionsController: KTableViewController {
 	// MARK: - Functions
 	/// Fetches sessions for the current user from the server.
 	private func fetchSessions() {
-		guard let userID = User().current?.id else { return }
-		KService.getSessions(forUserID: userID, withSuccess: { (sessions) in
+		guard let userID = User.current?.id else { return }
+		KService.getSessions(forUserID: userID) { result in
+			switch result {
+			case .success(let sessions):
 			DispatchQueue.main.async {
 				self.sessions = sessions
 			}
-		})
+			case .failure:
+				break
+			}
+		}
 	}
 
 	/**
@@ -120,19 +125,19 @@ class ManageActiveSessionsController: KTableViewController {
 
 		for session in otherSessions {
 			let annotation = ImageAnnotation()
-			if let deviceString = session.device, let range = deviceString.range(of: " on ") {
-				let device = deviceString[deviceString.startIndex..<range.lowerBound]
-				annotation.title = "\(device)"
+			if let deviceName = session.platform?.deviceName {
+				annotation.title = deviceName
 
-				if device.contains("iPhone") {
+				switch deviceName {
+				case "iPhone":
 					annotation.image = R.image.devices.iphone()
-				} else if device.contains("iPad") {
+				case "iPad":
 					annotation.image = R.image.devices.ipad()
-				} else if device.contains("Apple TV") {
+				case "Apple TV":
 					annotation.image = R.image.devices.apple_tv()
-				} else if device.contains("MacBook") {
+				case "MacBook":
 					annotation.image = R.image.devices.macbook()
-				} else {
+				default:
 					annotation.image = R.image.devices.other()
 				}
 			}
@@ -159,8 +164,9 @@ class ManageActiveSessionsController: KTableViewController {
 		alertView.addButton("Yes!", action: {
 			guard let sessionID = otherSessionsCell.sessions?.id else { return }
 
-			KService.deleteSession(sessionID, withSuccess: { (success) in
-				if success {
+			KService.deleteSession(sessionID) { result in
+				switch result {
+				case .success:
 					// Get index path for cell
 					if let indexPath = self.tableView.indexPath(for: otherSessionsCell) {
 						// Start delete process
@@ -169,8 +175,10 @@ class ManageActiveSessionsController: KTableViewController {
 						self.tableView.deleteRows(at: [indexPath], with: .left)
 						self.tableView.endUpdates()
 					}
+				case .failure:
+					break
 				}
-			})
+			}
 		})
 
 		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")

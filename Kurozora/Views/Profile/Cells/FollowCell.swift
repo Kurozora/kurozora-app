@@ -57,7 +57,7 @@ class FollowCell: UITableViewCell {
 
 		// Configure follow button
 		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)
-		followButton.isHidden = userProfile.id == User().current?.id
+		followButton.isHidden = userProfile.id == User.current?.id
 	}
 
 	// MARK: - IBActions
@@ -65,8 +65,9 @@ class FollowCell: UITableViewCell {
 		guard let userID = userProfile?.id else { return }
 		let followStatus: FollowStatus = userProfile?.following ?? false ? .unfollow : .follow
 
-		KService.updateFollowStatus(userID, withFollowStatus: followStatus) { (success) in
-			if success {
+		KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
+			switch result {
+			case .success:
 				if followStatus == .unfollow {
 					sender.setTitle("＋ Follow", for: .normal)
 					self.userProfile?.following = false
@@ -74,6 +75,8 @@ class FollowCell: UITableViewCell {
 					sender.setTitle("✓ Following", for: .normal)
 					self.userProfile?.following = true
 				}
+			case .failure:
+				break
 			}
 		}
 	}

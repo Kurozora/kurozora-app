@@ -132,22 +132,27 @@ class ReplyCell: UITableViewCell {
 		WorkflowController.shared.isSignedIn {
 			guard var replyScore = self.threadRepliesElement?.score else { return }
 
-			KService.voteOnReply(replyID, withVoteStatus: voteStatus) { voteStatus in
-				DispatchQueue.main.async {
-					if voteStatus == .upVote {
-						replyScore += 1
-						self.upvoteButton.tintColor = .kGreen
-						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if voteStatus == .noVote {
-						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if voteStatus == .downVote {
-						replyScore -= 1
-						self.downvoteButton.tintColor = .kLightRed
-						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					}
+			KService.voteOnReply(replyID, withVoteStatus: voteStatus) { result in
+				switch result {
+				case .success(let voteStatus):
+					DispatchQueue.main.async {
+						if voteStatus == .upVote {
+							replyScore += 1
+							self.upvoteButton.tintColor = .kGreen
+							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						} else if voteStatus == .noVote {
+							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						} else if voteStatus == .downVote {
+							replyScore -= 1
+							self.downvoteButton.tintColor = .kLightRed
+							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						}
 
-					self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
+					}
+				case .failure:
+					break
 				}
 			}
 		}
@@ -179,10 +184,10 @@ class ReplyCell: UITableViewCell {
 	/**
 		Shows and hides some elements according to the lock status of the current thread.
 
-		- Parameter locked: The boolean indicating whather to show or hide the element.
+		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide some views.
 	*/
-	fileprivate func isLocked(_ locked: Bool) {
-		if locked {
+	fileprivate func isLocked(_ lockStatus: LockStatus) {
+		if lockStatus == .locked {
 			upvoteButton.isHidden = true
 			downvoteButton.isHidden = true
 			upvoteButton.isUserInteractionEnabled = false
@@ -204,7 +209,7 @@ class ReplyCell: UITableViewCell {
 		// Mod and Admin features actions
 
 		// Upvote, downvote and reply actions
-		if let replyID = threadRepliesElement.id, let locked = forumsThreadElement?.locked, replyID != 0 && !locked {
+		if let replyID = threadRepliesElement.id, replyID != 0 && forumsThreadElement?.locked == .unlocked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForReply(with: 1)
 			})

@@ -70,8 +70,8 @@ class OtherSessionsCell: UITableViewCell {
 		}
 
 		// Device Type
-		if let deviceType = sessions.device {
-			deviceTypeValueLabel.text = deviceType
+		if let deviceName = sessions.platform?.deviceName {
+			deviceTypeValueLabel.text = deviceName
 		} else {
 			deviceTypeValueLabel.text = "-"
 		}

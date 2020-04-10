@@ -189,13 +189,14 @@ extension ShowDetailHeaderCollectionViewCell {
 		WorkflowController.shared.isSignedIn {
 			guard let libraryStatusString = self.libraryStatus else { return }
 			guard let showID = self.showDetailsElement?.id else { return }
-			guard let userID = User().current?.id else { return }
+			guard let userID = User.current?.id else { return }
 
 			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
 			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
-					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID, withSuccess: { (success) in
-						if success {
+					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
+						switch result {
+						case .success:
 							// Update entry in library
 							self.libraryStatus = value.stringValue
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
@@ -204,20 +205,25 @@ extension ShowDetailHeaderCollectionViewCell {
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 							self.libraryStatusButton?.setTitle("\(title) ▾", for: .normal)
+						case .failure:
+							break
 						}
-					})
+					}
 				}
 			})
 
 			if !libraryStatusString.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.removeFromLibrary(forUserID: userID, showID: showID, withSuccess: { (success) in
-						if success {
+					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
+						switch result {
+						case .success:
 							self.libraryStatus = ""
 							self.delegate?.updateShowInLibrary(for: self.libraryBaseCollectionViewCell)
 							self.libraryStatusButton.setTitle("ADD", for: .normal)
+						case .failure:
+							break
 						}
-					})
+					}
 				}))
 			}
 			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
@@ -240,10 +246,15 @@ extension ShowDetailHeaderCollectionViewCell {
 			var isFavoriteBoolValue = self.showDetailsElement?.currentUser?.isFavorite ?? false
 			isFavoriteBoolValue = !isFavoriteBoolValue
 
-			if let favoriteStatus = FavoriteStatus(rawValue: isFavoriteBoolValue.int), let userID = User().current?.id {
-				KService.updateFavoriteStatus(forUserID: userID, forShow: showID, withFavoriteStatus: favoriteStatus) { (favoriteStatus) in
-					DispatchQueue.main.async {
-						self.updateFavoriteStatus(withFavoriteStatus: favoriteStatus)
+			if let favoriteStatus = FavoriteStatus(rawValue: isFavoriteBoolValue.int), let userID = User.current?.id {
+				KService.updateFavoriteStatus(forUserID: userID, forShow: showID, withFavoriteStatus: favoriteStatus) { result in
+					switch result {
+					case .success(let favoriteStatus):
+						DispatchQueue.main.async {
+							self.updateFavoriteStatus(withFavoriteStatus: favoriteStatus)
+						}
+					case .failure:
+						break
 					}
 				}
 			}

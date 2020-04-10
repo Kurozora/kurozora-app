@@ -215,33 +215,43 @@ class ThreadTableViewController: KTableViewController {
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
 		if forumsThreadElement == nil {
-			KService.getDetails(forThread: forumThreadID, withSuccess: { (thread) in
-				DispatchQueue.main.async {
-					self.forumsThreadElement = thread
-					self.updateThreadDetails()
-					self.tableView.reloadData()
+			KService.getDetails(forThread: forumThreadID) { result in
+				switch result {
+				case .success(let thread):
+					DispatchQueue.main.async {
+						self.forumsThreadElement = thread
+						self.updateThreadDetails()
+						self.tableView.reloadData()
+					}
+				case .failure:
+					break
 				}
-			})
+			}
 		}
 		getThreadReplies()
 	}
 
 	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
-		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, page: lastPage) { (replies) in
-			DispatchQueue.main.async {
-				self.currentPage = replies?.currentPage ?? 1
-				self.lastPage = replies?.lastPage ?? 1
+		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, page: lastPage) { result in
+			switch result {
+			case .success(let replies):
+				DispatchQueue.main.async {
+					self.currentPage = replies.currentPage ?? 1
+					self.lastPage = replies.lastPage ?? 1
 
-				if self.currentPage == 1 {
-					self.replies = replies?.replies
-				} else {
-					for threadRepliesElement in replies?.replies ?? [] {
-						self.replies?.append(threadRepliesElement)
+					if self.currentPage == 1 {
+						self.replies = replies.replies
+					} else {
+						for threadRepliesElement in replies.replies ?? [] {
+							self.replies?.append(threadRepliesElement)
+						}
 					}
-				}
 
-				self.tableView.reloadData()
+					self.tableView.reloadData()
+				}
+			case .failure:
+				break
 			}
 		}
 	}
@@ -255,24 +265,29 @@ class ThreadTableViewController: KTableViewController {
 		WorkflowController.shared.isSignedIn {
 			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
 
-			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus, withSuccess: { (voteStatus) in
-				DispatchQueue.main.async {
-					if voteStatus == .upVote {
-						threadScore += 1
-						self.upvoteButton.tintColor = .kGreen
-						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if voteStatus == .noVote {
-						self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					} else if voteStatus == .downVote {
-						threadScore -= 1
-						self.downvoteButton.tintColor = .kLightRed
-						self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
-					}
+			KService.voteOnThread(self.forumThreadID, withVoteStatus: voteStatus) { result in
+				switch result {
+				case .success(let voteStatus):
+					DispatchQueue.main.async {
+						if voteStatus == .upVote {
+							threadScore += 1
+							self.upvoteButton.tintColor = .kGreen
+							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						} else if voteStatus == .noVote {
+							self.downvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						} else if voteStatus == .downVote {
+							threadScore -= 1
+							self.downvoteButton.tintColor = .kLightRed
+							self.upvoteButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+						}
 
-					self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
+					}
+				case .failure:
+					break
 				}
-			})
+			}
 		}
 	}
 
@@ -339,12 +354,12 @@ class ThreadTableViewController: KTableViewController {
 	/**
 		Shows and hides some elements according to the lock status of the current thread.
 
-		- Parameter locked: The boolean indicating whather to show or hide the element.
+		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide the lock.
 	*/
-	func isLocked(_ locked: Bool) {
-		forumsThreadElement?.locked = locked
+	func isLocked(_ lockStatus: LockStatus) {
+		forumsThreadElement?.locked = lockStatus
 		// Set lock label
-		if locked {
+		if lockStatus == .locked {
 			lockImageView.isHidden = false
 			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
@@ -411,7 +426,7 @@ class ThreadTableViewController: KTableViewController {
 //		}
 
 		// Upvote, downvote and reply actions
-		if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 && !locked {
+		if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 && locked == .unlocked {
 			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
 				self.voteOnThread(withVoteStatus: .upVote)
 			})

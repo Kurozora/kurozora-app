@@ -88,7 +88,7 @@ class KCommentEditorViewController: KViewController {
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}
-		currentUsernameLabel.text = User().current?.username
+		currentUsernameLabel.text = User.current?.username
 
 		characterCountLabel.text = "\(characterLimit)"
 
@@ -113,9 +113,9 @@ class KCommentEditorViewController: KViewController {
 
 			KService.postReply(inThread: threadID, withComment: comment) { (replyID) in
 				DispatchQueue.main.async {
-					guard let userID = User().current?.id else { return }
-					guard let username = User().current?.username else { return }
-					guard let profileImage = User().current?.profileImage else { return }
+					guard let userID = User.current?.id else { return }
+					guard let username = User.current?.username else { return }
+					guard let profileImage = User.current?.profileImage else { return }
 
 					let postedAt = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
 					let replyJSON: JSON = [

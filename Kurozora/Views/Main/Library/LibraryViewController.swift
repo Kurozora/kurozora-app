@@ -29,28 +29,27 @@ protocol LibraryViewControllerDelegate: class {
 	func sortValue() -> KKLibrary.SortType
 }
 
-class LibraryViewController: TabmanViewController {
+class LibraryViewController: KTabbedViewController {
 	// MARK: - IBOutlets
 	@IBOutlet var changeLayoutBarButtonItem: UIBarButtonItem!
 	@IBOutlet var sortTypeBarButtonItem: UIBarButtonItem!
-	@IBOutlet var bottomBarView: UIView!
 
 	// MARK: - Properties
-	lazy var viewControllers = [UIViewController]()
 	var kSearchController: KSearchController = KSearchController()
-
 	var rightBarButtonItems: [UIBarButtonItem]? = nil
 	var leftBarButtonItems: [UIBarButtonItem]? = nil
 
-	let bar = TMBar.KBar()
-
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
+
+	// MARK: - Initializers
+//	required init?(coder aDecoder: NSCoder) {
+//		super.init(coder: aDecoder)
+//		self.tabBarDataSource = self
+//	}
 
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
 		navigationItem.hidesSearchBarWhenScrolling = false
@@ -61,11 +60,8 @@ class LibraryViewController: TabmanViewController {
 		// Setup search bar.
 		setupSearchBar()
 
-		// Tabman view controllers
-		dataSource = self
-
 		// Tabman bar
-		initTabmanBarView()
+//		initTabBarView()
     }
 
 	// MARK: - Functions
@@ -79,60 +75,7 @@ class LibraryViewController: TabmanViewController {
 		navigationItem.searchController = kSearchController
 	}
 
-	/// Applies the the style for the currently enabled theme on the tabman bar.
-	private func styleTabmanBarView() {
-		// Background view
-		bar.backgroundView.style = .blur(style: KThemePicker.visualEffect.blurValue)
-
-		// Indicator
-		bar.indicator.layout(in: bar)
-
-		// Scrolling
-		bar.scrollMode = .interactive
-
-		// State
-		bar.buttons.customize { (button) in
-			button.contentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
-			button.selectedTintColor = KThemePicker.tintColor.colorValue
-			button.tintColor = button.selectedTintColor.withAlphaComponent(0.25)
-		}
-
-		// Layout
-		bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 8.0)
-		bar.layout.interButtonSpacing = 0.0
-		if UIDevice.isPad {
-			bar.layout.contentMode = .fit
-		}
-
-		// Style
-		bar.fadesContentEdges = true
-	}
-
-	/// Initializes the tabman bar view.
-	private func initTabmanBarView() {
-		// Style tabman bar
-		styleTabmanBarView()
-
-		// Add tabman bar to view
-		addBar(bar, dataSource: self, at: .custom(view: bottomBarView, layout: { bar in
-			bar.translatesAutoresizingMaskIntoConstraints = false
-			NSLayoutConstraint.activate([
-				bar.topAnchor.constraint(equalTo: self.bottomBarView.topAnchor),
-				bar.bottomAnchor.constraint(equalTo: self.bottomBarView.bottomAnchor),
-				bar.leftAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.leftAnchor),
-				bar.rightAnchor.constraint(lessThanOrEqualTo: self.bottomBarView.rightAnchor),
-				bar.centerXAnchor.constraint(equalTo: self.bottomBarView.centerXAnchor)
-			])
-		}))
-
-		bar.cornerRadius = bar.height / 2
-
-		// Configure tabman bar visibility
-		tabmanBarViewIsEnabled()
-	}
-
-	/// Hides or unhides the tabman bar view according to the user's sign in state.
-	private func tabmanBarViewIsEnabled() {
+	override func configureTabBarViewVisibility() {
 		if User.isSignedIn {
 			if let barItemsCount = bar.items?.count {
 				bar.isHidden = barItemsCount <= 1
@@ -140,11 +83,6 @@ class LibraryViewController: TabmanViewController {
 		} else {
 			bar.isHidden = true
 		}
-	}
-
-	/// Reloads the tab bar with the new data.
-	@objc func reloadTabBarStyle() {
-		styleTabmanBarView()
 	}
 
 	/// Enables and disables actions such as buttons and the refresh control according to the user sign in state.
@@ -168,41 +106,10 @@ class LibraryViewController: TabmanViewController {
 		}
 	}
 
-	/// Reload the data on the view.
-	@objc private func reloadView() {
+	@objc override func reloadView() {
 		enableActions()
-		reloadData()
-		tabmanBarViewIsEnabled()
+		super.reloadView()
 	}
-
-	/**
-		Initializes the view controllers which will be used for pagination.
-
-		- Parameter count: The number of view controller to initialize.
-	*/
-    private func initializeViewControllers(with count: Int) {
-        var viewControllers = [UIViewController]()
-
-        for index in 0 ..< count {
-			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
-				let libraryStatus = KKLibrary.Status.all[index]
-
-				// Get the user's preferred library layout
-				let libraryLayouts = UserSettings.libraryCellStyles
-				let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
-				if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
-					libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
-				}
-
-				libraryListCollectionViewController.libraryStatus = libraryStatus
-				libraryListCollectionViewController.sectionIndex = index
-				libraryListCollectionViewController.delegate = self
-				viewControllers.append(libraryListCollectionViewController)
-			}
-        }
-
-        self.viewControllers = viewControllers
-    }
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
 	fileprivate func updateChangeLayoutBarButtonItem(_ cellStyle: KKLibrary.CellStyle) {
@@ -325,6 +232,22 @@ class LibraryViewController: TabmanViewController {
 	@IBAction func sortTypeBarButtonItemPressed(_ sender: UIBarButtonItem) {
 		populateSortActions(sender)
 	}
+
+	// MARK: - TMBarDataSource
+	override func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+		let sectionTitle = KKLibrary.Status.all[index].stringValue
+		return TMBarItem(title: sectionTitle)
+	}
+
+	// MARK: - PageboyViewControllerDataSource
+	override func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+		let sectionsCount = User.isSignedIn ? KKLibrary.Status.all.count : 1
+		return sectionsCount
+	}
+
+	override func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+		return User.isSignedIn ? .at(index: UserSettings.libraryPage) : nil
+	}
 }
 
 // MARK: - LibraryListViewControllerDelegate
@@ -339,27 +262,29 @@ extension LibraryViewController: LibraryListViewControllerDelegate {
 	}
 }
 
-// MARK: - PageboyViewControllerDataSource
-extension LibraryViewController: PageboyViewControllerDataSource {
-	func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-		let sectionsCount = User.isSignedIn ? KKLibrary.Status.all.count : 1
-		initializeViewControllers(with: sectionsCount)
-		return sectionsCount
-	}
+// MARK: - KTabbedViewControllerDataSource
+extension LibraryViewController {
+	override func initializeViewControllers(with count: Int) -> [UIViewController]? {
+		var viewControllers = [UIViewController]()
 
-	func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-		return self.viewControllers[index]
-	}
+		for index in 0 ..< count {
+			if let libraryListCollectionViewController = R.storyboard.library.libraryListCollectionViewController() {
+				let libraryStatus = KKLibrary.Status.all[index]
 
-	func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-		return User.isSignedIn ? .at(index: UserSettings.libraryPage) : nil
-	}
-}
+				// Get the user's preferred library layout
+				let libraryLayouts = UserSettings.libraryCellStyles
+				let preferredLayout = libraryLayouts[libraryStatus.sectionValue] ?? 0
+				if let libraryCellStyle = KKLibrary.CellStyle(rawValue: preferredLayout) {
+					libraryListCollectionViewController.libraryCellStyle = libraryCellStyle
+				}
 
-// MARK: - TMBarDataSource
-extension LibraryViewController: TMBarDataSource {
-	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-		let sectionTitle = KKLibrary.Status.all[index].stringValue
-		return TMBarItem(title: sectionTitle)
+				libraryListCollectionViewController.libraryStatus = libraryStatus
+				libraryListCollectionViewController.sectionIndex = index
+				libraryListCollectionViewController.delegate = self
+				viewControllers.append(libraryListCollectionViewController)
+			}
+		}
+
+		return viewControllers
 	}
 }

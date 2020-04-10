@@ -91,13 +91,14 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		WorkflowController.shared.isSignedIn {
 			guard let libraryStatusString = self.showDetailsElement?.currentUser?.libraryStatus else { return }
 			guard let showID = self.showDetailsElement?.id else { return }
-			guard let userID = User().current?.id else { return }
+			guard let userID = User.current?.id else { return }
 
 			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
 			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
-					KService.addToLibrary(forUserID: userID, withLibraryStatus: libraryStatus, showID: showID, withSuccess: { (success) in
-						if success {
+					KService.addToLibrary(forUserID: userID, withLibraryStatus: libraryStatus, showID: showID) { result in
+						switch result {
+						case .success:
 							// Update entry in library
 							self.showDetailsElement?.currentUser?.libraryStatus = value.stringValue
 
@@ -105,19 +106,24 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 							NotificationCenter.default.post(name: libraryUpdateNotificationName, object: nil)
 
 							self.actionButton?.setTitle("\(title) ▾", for: .normal)
+						case .failure:
+							break
 						}
-					})
+					}
 				}
 			})
 
 			if !libraryStatusString.isEmpty {
 				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
-					KService.removeFromLibrary(forUserID: userID, showID: showID, withSuccess: { (success) in
-						if success {
+					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
+						switch result {
+						case .success:
 							self.showDetailsElement?.currentUser?.libraryStatus = ""
 							self.actionButton?.setTitle("ADD", for: .normal)
+						case .failure:
+							break
 						}
-					})
+					}
 				}))
 			}
 			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))

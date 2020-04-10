@@ -140,7 +140,7 @@ class ProfileTableViewController: KTableViewController {
 		self.view.layoutIfNeeded()
 
 		// Fetch user details
-		fetchUserDetails(for: userID ?? User().current?.id)
+		fetchUserDetails(for: userID ?? User.current?.id)
 
 		// Setup refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -164,7 +164,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
-			let detailLabel = self.userID == User().current?.id || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+			let detailLabel = self.userID == User.current?.id || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -204,11 +204,16 @@ class ProfileTableViewController: KTableViewController {
 	private func fetchUserDetails(for userID: Int?) {
 		guard let userID = userID else { return }
 
-		KService.getProfile(forUserID: userID, withSuccess: { user in
-			DispatchQueue.main.async {
-				self.user = user
+		KService.getProfile(forUserID: userID) { result in
+			switch result {
+			case .success(let user):
+				DispatchQueue.main.async {
+					self.user = user
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 	}
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
@@ -293,7 +298,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Setup follow button
-		if self.userID == User().current?.id || self.userID == nil {
+		if self.userID == User.current?.id || self.userID == nil {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
@@ -486,12 +491,15 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.updateInformation(forUserID: 0, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { (user) in
-				if let success = user?.success {
-					self.editMode(!success)
-					if let profileImage = user?.profile?.profileImage, shouldUpdateProfileImage {
+			KService.updateInformation(forUserID: 0, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { result in
+				switch result {
+				case .success(let user):
+					self.editMode(false)
+					if let profileImage = user.profile?.profileImage, shouldUpdateProfileImage {
 						try? Kurozora.shared.KDefaults.set(profileImage, key: "profile_image")
 					}
+				case .failure:
+					break
 				}
 			}
 		}
@@ -569,8 +577,9 @@ class ProfileTableViewController: KTableViewController {
 			guard let userID = self.userID else { return }
 			let followStatus: FollowStatus = self.user?.profile?.following ?? false ? .unfollow : .follow
 
-			KService.updateFollowStatus(userID, withFollowStatus: followStatus) { (success) in
-				if success {
+			KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
+				switch result {
+				case .success:
 					if followStatus == .unfollow {
 						sender.setTitle("＋ Follow", for: .normal)
 						self.user?.profile?.following = false
@@ -578,6 +587,8 @@ class ProfileTableViewController: KTableViewController {
 						sender.setTitle("✓ Following", for: .normal)
 						self.user?.profile?.following = true
 					}
+				case .failure:
+					break
 				}
 			}
 		}

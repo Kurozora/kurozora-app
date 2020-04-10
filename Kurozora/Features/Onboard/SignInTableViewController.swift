@@ -46,15 +46,10 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 
 		guard let kurozoraID = textFieldArray.first??.trimmedText else { return }
 		guard let password = textFieldArray.last??.text else { return }
-		#if targetEnvironment(macCatalyst)
-		let platform = " on macOS "
-		#else
-		let platform = " on iOS "
-		#endif
-		let device = UIDevice.modelName + platform + UIDevice.current.systemVersion
 
-		KService.signIn(kurozoraID, password, device, withSuccess: { (success) in
-			if success {
+		KService.signIn(kurozoraID, password) { result in
+			switch result {
+			case .success:
 				DispatchQueue.main.async {
 					NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 					self.dismiss(animated: true) {
@@ -62,9 +57,11 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 						WorkflowController.shared.registerForPushNotifications()
 					}
 				}
+				self.rightNavigationBarButton.isEnabled = false
+			case .failure:
+				break
 			}
-			self.rightNavigationBarButton.isEnabled = false
-		})
+		}
 	}
 }
 
@@ -102,8 +99,9 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 //		print("Identity Token \(identityTokenString)")
 
 		guard let emailAddress = appleIDCredential.email else { return }
-		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { (success) in
-			if success {
+		KService.register(withAppleUserID: appleIDCredential.user, emailAddress: emailAddress) { result in
+			switch result {
+			case .success:
 //				if let registerTableViewController = R.storyboard.onboarding.registerTableViewController() {
 //					registerTableViewController.isSIWA = true
 //					self.show(registerTableViewController, sender: nil)
@@ -120,6 +118,8 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 						}
 					}
 				})
+			case .failure:
+				break
 			}
 		}
 	}

@@ -42,15 +42,20 @@ class LegalViewController: KViewController {
 		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.navigationController?.navigationBar.backgroundColor = .clear
 
-		KService.getPrivacyPolicy(withSuccess: { (privacyPolicy) in
-			if let privacyPolicyText = privacyPolicy?.text {
-				self.privacyPolicyTextView.text = privacyPolicyText
-			}
+		KService.getPrivacyPolicy { result in
+			switch result {
+			case .success(let privacyPolicy):
+				if let privacyPolicyText = privacyPolicy.text {
+					self.privacyPolicyTextView.text = privacyPolicyText
+				}
 
-			if let lastUpdatedAt = privacyPolicy?.lastUpdate {
-				self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
+				if let lastUpdatedAt = privacyPolicy.lastUpdate {
+					self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 		self.navigationTitleView.alpha = 0
 
 		scrollView.delegate = self

@@ -59,8 +59,8 @@ class CurrentSessionCell: UITableViewCell {
 			ipAddressValueLabel.text = "-"
 		}
 
-		if let sessionDevice = session.device, !sessionDevice.isEmpty {
-			deviceValueLabel.text = sessionDevice
+		if let deviceName = session.platform?.deviceName, !deviceName.isEmpty {
+			deviceValueLabel.text = deviceName
 		} else {
 			deviceValueLabel.text = "-"
 		}

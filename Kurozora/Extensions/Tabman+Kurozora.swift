@@ -9,7 +9,10 @@
 import Tabman
 
 extension TMBar {
-	/// Kurozora style bar, very reminiscent of the iOS 13 Photos app bottom tab bar. It consists
-	/// of a horizontal layout containing label bar buttons, and a line indicator at the bottom.
+	/**
+		Kurozora style bar, very reminiscent of the iOS 13 Photos app bottom tab bar. It consistsof a horizontal layout containing label bar buttons, and a pill shaped tint as the indicator.
+
+		- Tag: KBar
+	*/
 	typealias KBar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, KFillBarIndicator>
 }

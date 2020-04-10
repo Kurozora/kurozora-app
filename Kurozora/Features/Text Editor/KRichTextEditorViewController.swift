@@ -78,29 +78,34 @@ class KRichTextEditorViewController: KViewController {
 		}
 		print("Input: \(content)")
 
-		KService.postThread(inSection: sectionID, withTitle: title, content: content, withSuccess: { (threadID) in
-			DispatchQueue.main.async {
-				guard let userID = User().current?.id else { return }
-				guard let username = User().current?.username else { return }
+		KService.postThread(inSection: sectionID, withTitle: title, content: content) { result in
+			switch result {
+			case .success(let threadID):
+				DispatchQueue.main.async {
+					guard let userID = User.current?.id else { return }
+					guard let username = User.current?.username else { return }
 
-				let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
-				let forumThreadJSON: JSON = [
-					"id": threadID,
-					"title": title,
-					"content": content,
-					"locked": false,
-					"poster_user_id": userID,
-					"poster_username": username,
-					"creation_date": creationDate,
-					"reply_count": 0,
-					"score": 0
-					]
-				if let forumThreadsElement = try? ForumsThreadElement(json: forumThreadJSON) {
-					self.delegate?.updateThreadsList(with: forumThreadsElement)
+					let creationDate = Date().string(withFormat: "yyyy-MM-dd HH:mm:ss")
+					let forumThreadJSON: JSON = [
+						"id": threadID,
+						"title": title,
+						"content": content,
+						"locked": false,
+						"poster_user_id": userID,
+						"poster_username": username,
+						"creation_date": creationDate,
+						"reply_count": 0,
+						"score": 0
+						]
+					if let forumThreadsElement = try? ForumsThreadElement(json: forumThreadJSON) {
+						self.delegate?.updateThreadsList(with: forumThreadsElement)
+					}
 				}
+				self.dismiss(animated: true, completion: nil)
+			case .failure:
+				break
 			}
-			self.dismiss(animated: true, completion: nil)
-		})
+		}
 	}
 
 //	@IBAction func insertYouTubeButtonPressed(_ sender: UIBarButtonItem) {

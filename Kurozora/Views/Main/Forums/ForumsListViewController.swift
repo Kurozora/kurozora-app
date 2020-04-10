@@ -92,22 +92,27 @@ class ForumsListViewController: KTableViewController {
 		guard let sectionID = sectionID else { return }
 		guard let forumOrder = ForumOrder(rawValue: threadOrder) else { return }
 
-		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, page: currentPage, withSuccess: { (threads) in
-			DispatchQueue.main.async {
-				self.currentPage = threads?.currentPage ?? 1
-				self.lastPage = threads?.lastPage ?? 1
+		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, page: currentPage) { result in
+			switch result {
+			case .success(let threads):
+				DispatchQueue.main.async {
+					self.currentPage = threads.currentPage ?? 1
+					self.lastPage = threads.lastPage ?? 1
 
-				if self.currentPage == 1 {
-					self.forumThreadsElements = threads?.threads
-				} else {
-					for forumThreadElement in threads?.threads ?? [] {
-						self.forumThreadsElements?.append(forumThreadElement)
+					if self.currentPage == 1 {
+						self.forumThreadsElements = threads.threads
+					} else {
+						for forumThreadElement in threads.threads ?? [] {
+							self.forumThreadsElements?.append(forumThreadElement)
+						}
 					}
-				}
 
-				self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
+				}
+			case .failure:
+				break
 			}
-		})
+		}
 
 		DispatchQueue.main.async {
 			self.refreshController.endRefreshing()
