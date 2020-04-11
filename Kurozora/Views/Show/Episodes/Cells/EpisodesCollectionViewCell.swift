@@ -66,7 +66,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 		}
 
 		if shouldUpdate {
-			self.episodesElement?.userDetails?.watched = Bool(exactly: NSNumber(value: watchStatus.rawValue))
+			self.episodesElement?.userDetails?.watchStatus = watchStatus
 		}
 	}
 
@@ -87,9 +87,9 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 		self.episodeFirstAiredLabel.text = episodesElement.firstAired
 
 		self.shadowView.applyShadow()
-		if let episodeWatched = episodesElement.userDetails?.watched {
-			let watchStatus: WatchStatus = episodeWatched ? .watched : .notWatched
-			configureCell(withWatchStatus: watchStatus)
+
+		if let episodeWatchStatus = episodesElement.userDetails?.watchStatus {
+			configureCell(withWatchStatus: episodeWatchStatus)
 		}
 	}
 

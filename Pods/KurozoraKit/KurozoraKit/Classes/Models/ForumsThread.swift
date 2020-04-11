@@ -9,17 +9,26 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a single forums thread, such as the thred's last page number, and collection of threads it contains.
+*/
 public class ForumsThread: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The current page number of the forums thread.
 	public let currentPage: Int?
+
+	/// The last page of the forums thread.
 	public let lastPage: Int?
+
+	/// The thread object.
 	public let thread: ForumsThreadElement?
+
+	/// The collection of threads in the forums thread.
 	public let threads: [ForumsThreadElement]?
 
 	// MARK: - Initializers
+	/// Initialize an empty instance of `ForumThreads`.
 	internal init() {
-		self.success = nil
 		self.currentPage = nil
 		self.lastPage = nil
 		self.thread = nil
@@ -27,7 +36,6 @@ public class ForumsThread: JSONDecodable {
 	}
 
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
 		self.thread = try ForumsThreadElement(json: json["thread"])
@@ -43,20 +51,43 @@ public class ForumsThread: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single forums thread, such as the thread's title, content, and lock status.
+*/
 public class ForumsThreadElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the forums thread.
 	public let id: Int?
+
+	/// The title of the forums thread.
 	public let title: String?
+
+	/// The content of the forums thread.
 	public let content: String?
+
+	/// The lock status of the forums thread.
 	public var locked: LockStatus?
+
+	/// The thread poster's id.
 	public let posterUserID: Int?
+
+	/// The thread poster's username.
 	public let posterUsername: String?
+
+	/// The creation date of the forums thread.
 	public let creationDate: String?
+
+	/// The comment count of the forums thread.
 	public let commentCount: Int?
+
+	/// The vote count of the forums thread.
 	public let voteCount: Int?
+
+	/// The current user's data related to the forums thread.
 	public let currentUser: UserProfile?
 
 	// MARK: - Initializers
+	/// Initialize an empty instance of `ForumsThreadElement`.
 	internal init() {
 		self.id = nil
 		self.title = nil

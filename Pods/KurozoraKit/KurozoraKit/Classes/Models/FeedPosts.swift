@@ -9,16 +9,22 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of feed posts, such as the feed's total pages count.
+*/
 public class FeedPosts: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The current page number of the feed.
 	public let page: Int?
+
+	/// The total page number of the feed.
 	public let feedPages: Int?
+
+	/// The collection of posts in the feed.
 	public let posts: [FeedPostElement]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.page = json["page"].intValue
 		self.feedPages = json["feed_pages"].intValue
 		var posts = [FeedPostElement]()
@@ -34,16 +40,36 @@ public class FeedPosts: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single feed post, such as the posts's content, creation date, and share count.
+*/
 public class FeedPostElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the post.
 	public let id: Int?
+
+	/// The post's poster's id.
 	public let posterUserID: Int?
+
+	/// The post's poster's username.
 	public let posterUsername: String?
+
+	/// The content of the post.
 	public let content: String?
+
+	/// The post's poster's profile image.
 	public let profileImage: String?
+
+	/// The creation date fo the post.
 	public let creationDate: String?
+
+	/// The reply count of the post.
 	public let replyCount: Int?
+
+	/// The share count of the post.
 	public let shareCount: Int?
+
+	/// The hearts count of the post.
 	public let heartsCount: Int?
 
 	// MARK: - Initializers

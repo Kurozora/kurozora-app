@@ -9,14 +9,17 @@
 import TRON
 import SwiftyJSON
 
+
+/**
+	A mutable object that stores information about a single thread post.
+*/
 public class ThreadPost: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The id of the thread post.
 	public let threadID: Int?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.threadID = json["thread_id"].intValue
 	}
 }

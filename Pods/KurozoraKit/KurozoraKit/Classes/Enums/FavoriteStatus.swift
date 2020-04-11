@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of favorite status.
+	The set of available favorite status types.
 	```
 	case unfavorite = 0
 	case favorite = 1
@@ -17,6 +17,9 @@ import Foundation
 */
 public enum FavoriteStatus: Int {
 	// MARK: - Cases
+	/// The show is unfavorited.
 	case unfavorite = 0
+
+	/// The show is favorited.
 	case favorite = 1
 }

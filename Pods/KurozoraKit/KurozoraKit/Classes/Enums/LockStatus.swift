@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of lock status.
+	The set of available lock status types.
 
 	```
 	case unlocked = 0
@@ -18,11 +18,14 @@ import Foundation
 */
 public enum LockStatus: Int {
 	// MARK: - Cases
+	/// The thread is unlocked.
 	case unlocked = 0
+
+	/// The thread is locked.
 	case locked = 1
 
 	// MARK: - Properties
-	/// The boolean value of a lock status.
+	/// The boolean value of a lock status type.
 	public var boolValue: Bool {
 		switch self {
 		case .unlocked:

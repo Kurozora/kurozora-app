@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of follow status.
+	The set of available follow status types.
 
 	```
 	case unfollow = 0
@@ -18,6 +18,9 @@ import Foundation
 */
 public enum FollowStatus: Int {
 	// MARK: - Cases
+	/// Unfollow another user.
 	case unfollow = 0
+
+	/// Follow another user.
 	case follow = 1
 }

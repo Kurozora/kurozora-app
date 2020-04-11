@@ -743,7 +743,7 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2020 Kiritokatklian &lt;casillaskhoren1@gmail.com&gt;
+			<string>Copyright (c) 2020 Khoren Katklian (Kiritokatklian)
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
@@ -1408,7 +1408,7 @@ For more information on this, and how to apply and follow the GNU AGPL, see
 &lt;http://www.gnu.org/licenses/&gt;.
 </string>
 			<key>License</key>
-			<string>AGPL-3.0</string>
+			<string>AGPLv3.0</string>
 			<key>Title</key>
 			<string>KurozoraKit</string>
 			<key>Type</key>

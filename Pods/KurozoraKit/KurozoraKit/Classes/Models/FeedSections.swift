@@ -9,14 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of feed sections.
+*/
 public class FeedSections: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The collection of feed sections.
 	public let sections: [FeedSectionsElement]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		var sections = [FeedSectionsElement]()
 
 		let feedSectionsArray = json["sections"].arrayValue
@@ -29,16 +31,24 @@ public class FeedSections: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single feed section, such as the section's name, and lock status.
+*/
 public class FeedSectionsElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the feed section.
 	public let id: Int?
+
+	/// The name of the feed section.
 	public let name: String?
-	public let locked: Bool?
+
+	/// The lock status of the feed section.
+	public let lockStatus: LockStatus?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.id = json["id"].intValue
 		self.name = json["name"].stringValue
-		self.locked = json["locked"].boolValue
+		self.lockStatus = LockStatus(rawValue: json["locked"].intValue)
 	}
 }

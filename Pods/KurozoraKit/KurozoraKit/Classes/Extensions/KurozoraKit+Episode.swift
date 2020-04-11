@@ -32,8 +32,7 @@ extension KurozoraKit {
 			"watched": watchStatus.rawValue
 		]
 		request.perform(withSuccess: { episode in
-			let watchedStatus = episode.watched ?? false
-			completionHandler(.success(watchedStatus ? .watched : .notWatched))
+			completionHandler(.success(episode.watchStatus ?? .disabled))
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't update episode 😔", subTitle: error.message)

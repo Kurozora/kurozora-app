@@ -9,15 +9,19 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of shows.
+*/
 public class ShowDetails: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The single show details object.
 	public var showDetailsElement: ShowDetailsElement?
+
+	/// The collection view of show details.
 	public let showDetailsElements: [ShowDetailsElement]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.showDetailsElement = try? ShowDetailsElement(json: json["anime"])
 
 		var showDetailsElements = [ShowDetailsElement]()
@@ -31,59 +35,133 @@ public class ShowDetails: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single show, such as the show's title, episode count, and air date.
+*/
 public class ShowDetailsElement: JSONDecodable {
 	// MARK: - Properties
 	// General
+	/// The id of the show.
 	public let id: Int?
+
+	/// The IMDB if of the show.
 	public let imdbID: String?
+
+	/// The link to the banner of the show.
 	public let banner: String?
+
+	/// The link to the banner thumbnail of the show.
 	public let bannerThumbnail: String?
+
+	/// The collection of genres of the show.
 	public let genres: [GenreElement]?
+
+	/// The link to the poster of the show.
 	public let poster: String?
+
+	/// The link to the poster thumbnail of the show.
 	public let posterThumbnail: String?
+
+	/// The title of the show.
 	public let title: String?
 
 	// Details
+	/// The air date of the show.
 	public let airDate: String?
+
+	/// The episodes count of the show.
 	public let episodes: Int?
+
+	/// The run time of the show.
 	public let runtime: Int?
+
+	/// The collection of screenshot links of the show.
 	public let screenshots: [String]?
+
+	/// The seasons count of the show.
 	public let seasons: Int?
+
+	/// The air status of the show.
 	public let airStatus: String?
+
+	/// The synopsis of the show.
 	public let synopsis: String?
+
+	/// The tagline of the show.
 	public let tagline: String?
+
+	/// The type of the show.
 	public let type: String?
+
+	/// The watch rating of the show.
 	public let watchRating: String?
+
+	/// The year the show has aired in.
 	public let year: Int?
 
 	// Ratings & ranks
+	/// The average rating of the show.
 	public let averageRating: Double?
+
+	/// The end date of the show.
 	public let endDate: String?
+
+	/// The network the show has aired on.
 	public let network: String?
+
+	/// Whether the show is Not Safe For Work.
 	public let nsfw: Bool?
+
+	/// The popularity rank of the show.
 	public let popularityRank: Int?
+
+	/// The name of the producers of the show.
 	public let producers: String?
+
+	/// The current rank of the show.
 	public let rank: Int?
+
+	/// The age group the show is meant for.
 	public let age: String?
+
+	/// The rating count of the show.
 	public let ratingCount: Int?
 
 	// Schedule
+	/// The date show has aired on.
 	public let startDate: String?
+
+	/// The time the show has aired at.
 	public let airTime: String?
+
+	/// The day the show has aired on.
 	public let airDay: Int?
 
 	// Extra's
+	/// The english title of the show.
 	public let englishTitles: String?
+
+	/// The external links where the show can be found.
 	public let externalLinks: String?
+
+	/// The japanese title of the show.
 	public let japaneseTitles: String?
+
+	/// The languages the show is offerd in.
 	public let languages: String?
+
+	/// The synonym titles of the show.
 	public let synonyms: String?
+
+	/// The video url of the show.
 	public let videoUrl: String?
 
 	// User details
+	/// The current user's information regarding the show.
 	public var currentUser: UserProfile?
 
 	// MARK: - Initializers
+	/// Initializes an empty instance of `ShowDetailsElement`
 	internal init() {
 		self.id = nil
 		self.imdbID = nil

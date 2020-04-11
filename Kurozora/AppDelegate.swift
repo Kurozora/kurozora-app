@@ -8,10 +8,18 @@
 
 import UIKit
 import KurozoraKit
+import KeychainAccess
 import StoreKit
 import Kingfisher
 import UserNotifications
 
+// MARK: - Kurozora Kit
+let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
+let keychain = Keychain(service: "Kurozora", accessGroup: "\(appIdentifierPrefix)app.kurozora.shared").synchronizable(true).accessibility(.afterFirstUnlock)
+let services = KKServices(keychain: keychain, showAlerts: true)
+let KService = KurozoraKit(debugURL: "http://kurozora-web.test/api/v1/").services(services)
+
+// MARK: - Kurozora
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Properties

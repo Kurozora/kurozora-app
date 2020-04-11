@@ -9,14 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a single thread reply.
+*/
 public class ThreadReply: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The id of the thread reply.
 	public let id: Int?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.id = json["reply_id"].intValue
 	}
 }

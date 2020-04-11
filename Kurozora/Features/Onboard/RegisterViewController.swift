@@ -10,8 +10,6 @@ import UIKit
 import KurozoraKit
 import SCLAlertView
 
-let KService = KurozoraKit()
-
 class RegisterTableViewController: BaseOnboardingTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var shadowView: UIView!

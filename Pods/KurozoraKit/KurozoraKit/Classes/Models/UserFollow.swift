@@ -9,17 +9,25 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of follow lists, such as the follow list's current page number, and last page number.
+*/
 public class UserFollow: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The current page number of the follow list.
 	public let currentPage: Int?
+
+	/// The last page number of the follow list.
 	public let lastPage: Int?
+
+	/// The collection of followers list.
 	public let followers: [UserProfile]?
+
+	/// The collection of following list.
 	public let following: [UserProfile]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
 

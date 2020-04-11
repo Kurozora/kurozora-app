@@ -9,15 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of genres.
+*/
 public class Genres: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The collection of genres.
 	public let genres: [GenreElement]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
-
 		var genres = [GenreElement]()
 		let genresArray = json["genres"].arrayValue
 		for genreItem in genresArray {
@@ -29,12 +30,24 @@ public class Genres: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single genre, such as the genre's name, color, and symbol.
+*/
 public class GenreElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the genre.
 	public let id: Int?
+
+	/// The name of the genre.
 	public let name: String?
+
+	/// The color of the genre.
 	public let color: String?
+
+	/// The link to the symbol of the genre.
 	public let symbol: String?
+
+	/// Whether the genre is Not Safe For Work.
 	public let nsfw: Bool?
 
 	// MARK: - Initializers

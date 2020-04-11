@@ -9,15 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of explore categories.
+*/
 public class Explore: JSONDecodable {
 	// MARK: - Properties
-    internal let success: Bool?
+	/// The collection of categories.
 	public let categories: [ExploreCategory]?
 
 	// MARK: - Initializers
     required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
-
 		var categories = [ExploreCategory]()
 		let categoriesArray = json["categories"].arrayValue
 		for categoriesItem in categoriesArray {
@@ -29,11 +30,21 @@ public class Explore: JSONDecodable {
     }
 }
 
+/**
+	A mutable object that stores information about a single explore category, such as the category's title, size, and collection of shows.
+*/
 public class ExploreCategory: JSONDecodable {
 	// MARK: - Properties
+	/// The title of the category.
 	public let title: String?
+
+	/// The size of the category.
 	public let size: String?
+
+	/// The collection of shows in the category.
 	public let shows: [ShowDetailsElement]?
+
+	/// The collection of genres in the category.
 	public let genres: [GenreElement]?
 
 	// MARK: - Initializers

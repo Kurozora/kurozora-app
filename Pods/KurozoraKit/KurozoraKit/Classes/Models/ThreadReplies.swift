@@ -9,17 +9,25 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of thread replies, such as the thread reply's current page, last page, and total pages count.
+*/
 public class ThreadReplies: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The current number page of the thread replies.
 	public let currentPage: Int?
+
+	/// The last page number of the thread replies.
 	public let lastPage: Int?
+
+	/// The total count of pages of the thread replies.
 	public let replyPages: Int?
+
+	/// The collection of thread replies.
 	public let replies: [ThreadRepliesElement]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.currentPage = json["page"].intValue
 		self.lastPage = json["last_page"].intValue
   		self.replyPages = json["reply_pages"].intValue
@@ -35,13 +43,25 @@ public class ThreadReplies: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single thread reply, such as the reply's content, and score.
+*/
 public class ThreadRepliesElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the reply.
 	public let id: Int?
-	public let postedAt: String?
-	public let userProfile: UserProfile?
-	public let score: Int?
+
+	/// The content fo the reply.
 	public let content: String?
+
+	/// The score of the reply.
+	public let score: Int?
+
+	/// The date the reply was posted at.
+	public let postedAt: String?
+
+	/// The user information related to the reply.
+	public let userProfile: UserProfile?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {

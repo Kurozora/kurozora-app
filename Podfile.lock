@@ -19,13 +19,13 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.1.0)
-  - Kingfisher (5.13.3):
-    - Kingfisher/Core (= 5.13.3)
-  - Kingfisher/Core (5.13.3)
-  - KurozoraKit (0.1.0):
+  - Kingfisher (5.13.4):
+    - Kingfisher/Core (= 5.13.4)
+  - Kingfisher/Core (5.13.4)
+  - KurozoraKit (0.1.7):
     - KeychainAccess
     - Kingfisher
-    - SCLAlertView (~> 0.8.3)
+    - SCLAlertView (~> 0.8)
     - TRON
     - TRON/SwiftyJSON
   - MarqueeLabel (4.0.2)
@@ -90,16 +90,21 @@ DEPENDENCIES:
   - EmptyDataSet-Swift
   - ESTabBarController-swift
   - IBPCollectionViewCompositionalLayout
+  - KeychainAccess
+  - Kingfisher
   - KurozoraKit
   - NotificationBannerSwift
   - R.swift
   - ReachabilitySwift
+  - SCLAlertView
   - Solar
   - SPStorkController
   - SwifterSwift
   - SwiftTheme
   - SwipeCellKit
   - Tabman
+  - TRON
+  - TRON/SwiftyJSON
   - UIImageColors
   - WhatsNew
 
@@ -150,8 +155,8 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  Kingfisher: d2b3d6a7200c93b34de9afcdf25c8dd9282ec277
-  KurozoraKit: 2533281b030d50d2221c644b77a476787c440495
+  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
+  KurozoraKit: ebb44ceb5ff56f91ccec2035d3cbd02614a4c329
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 288353d4cc848c24deec2f7542f325089247c136
@@ -171,6 +176,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 51d263b3887226ddaecd35f25eedbaf64890d17b
+PODFILE CHECKSUM: debfdd2a4b624a6987bbd231492c26f26f92f2d6
 
 COCOAPODS: 1.9.1

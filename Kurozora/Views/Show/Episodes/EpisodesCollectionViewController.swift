@@ -116,8 +116,8 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
 		guard let lastWatchedEpisode = episodesElements?.closestMatch(index: 0, predicate: {
-			if let watched = $0.userDetails?.watched {
-				return !watched
+			if let episodeWatchStatus = $0.userDetails?.watchStatus {
+				return episodeWatchStatus == .notWatched
 			}
 			return false
 		}) else { return }

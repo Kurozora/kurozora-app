@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of forum orders.
+	The set of available forum order types.
 
 	```
 	case top = "top"
@@ -18,6 +18,9 @@ import Foundation
 */
 public enum ForumOrder: String {
 	// MARK: - Cases
+	/// Order by top interacted thread.
 	case top
+
+	/// Order by most recent thread.
 	case recent
 }

@@ -9,14 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	An immutable object that stores information about a single successful request, such as the success message.
+*/
 public class KKSuccess: JSONDecodable {
 	// MARK: - Properties
-	internal var success: Bool?
+	/// The message of a successful request.
 	public var message: String?
 
 	// MARK: - Initializers
 	required public init(json: JSON) {
-		self.success = json["success"].boolValue
-		self.message = json["error_message"].stringValue
+		self.message = json["message"].stringValue
 	}
 }

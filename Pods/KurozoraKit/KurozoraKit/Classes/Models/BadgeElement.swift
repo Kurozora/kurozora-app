@@ -9,12 +9,24 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a single badge, such as the badge's name, description, and text color.
+*/
 public class BadgeElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the badge.
 	public let id: Int?
+
+	/// The name of the badge.
 	public let text: String?
+
+	/// The description of the badge.
 	public let description: String?
+
+	/// The text color of th badge.
 	public let textColor: String?
+
+	/// The background color of the badge.
 	public let backgroundColor: String?
 
 	// MARK: - Initializers

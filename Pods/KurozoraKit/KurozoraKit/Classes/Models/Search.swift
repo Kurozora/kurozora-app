@@ -9,17 +9,22 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of search results.
+*/
 public class Search: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The collection of shows in the search result.
 	public let showResults: [ShowDetailsElement]?
+
+	/// The collection of threads in the search result.
 	public let threadResults: [ForumsThreadElement]?
+
+	/// The collection of users in the search result.
 	public let userResults: [UserProfile]?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
-
 		var showResults = [ShowDetailsElement]()
 		let showResultsArray = json["results"].arrayValue
 		for showResultsItem in showResultsArray {

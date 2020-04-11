@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of read status.
+	The set of available read status types.
 
 	```
 	case unread = 0
@@ -18,7 +18,10 @@ import Foundation
 */
 public enum ReadStatus: Int {
 	// MARK: - Cases
+	/// The notification is unread.
 	case unread = 0
+
+	/// The notification is read.
 	case read = 1
 
 	// MARK: - Initializers
@@ -32,7 +35,7 @@ public enum ReadStatus: Int {
 	}
 
 	// MARK: - Properties
-	/// The boolean value of a read status.
+	/// The boolean value of a read status tpye.
 	var boolValue: Bool {
 		switch self {
 		case .read:

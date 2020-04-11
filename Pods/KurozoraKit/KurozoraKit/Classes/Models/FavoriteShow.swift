@@ -9,14 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a show's favorite status.
+*/
 public class FavoriteShow: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The favorite status of the show.
 	public let favoriteStatus: FavoriteStatus?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.favoriteStatus = FavoriteStatus(rawValue: json["is_favorite"].intValue)
 	}
 }

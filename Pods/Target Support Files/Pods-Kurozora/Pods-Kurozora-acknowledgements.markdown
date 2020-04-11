@@ -660,7 +660,7 @@ SOFTWARE.
 
 ## KurozoraKit
 
-Copyright (c) 2020 Kiritokatklian <casillaskhoren1@gmail.com>
+Copyright (c) 2020 Khoren Katklian (Kiritokatklian)
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007

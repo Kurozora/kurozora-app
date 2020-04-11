@@ -9,14 +9,16 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of notifications.
+*/
 public class UserNotification: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The collection of notifications.
 	public let notifications: [UserNotificationsElement]
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		var notifications = [UserNotificationsElement]()
 
 		let notificationsArray = json["notifications"].arrayValue
@@ -33,13 +35,27 @@ public class UserNotification: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single notification, such as the notification's type, read status, and containing data.
+*/
 public class UserNotificationsElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of a notification.
 	public let id: String?
+
+	/// The type of a notification.
 	public let type: String?
+
+	/// The read status of a notification.
 	public var readStatus: ReadStatus?
+
+	/// The data of the notification.
 	public let data: UserNotificationData?
+
+	/// The message of the notification.
 	public let message: String?
+
+	/// The creation date of the notification.
 	public let creationDate: String?
 
 	// MARK: - Initializers
@@ -53,15 +69,26 @@ public class UserNotificationsElement: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single notification type data.
+*/
 public class UserNotificationData: JSONDecodable {
 	// MARK: - Properties
 	// Session
+	/// [Session] The ip address of a session.
 	public let ip: String?
+
+	/// [Session] The id of a session.
 	public let sessionID: Int?
 
 	// Follower
+	/// [Follower] The if of a follower.
 	public let userID: Int?
+
+	/// [Follower] The username of a follower.
 	public let username: String?
+
+	/// [Follower] The profile image of the follower.
 	public let profileImage: String?
 
 	// MARK: - Initializers

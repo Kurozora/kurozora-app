@@ -11,70 +11,118 @@ import Kingfisher
 import SwiftyJSON
 import TRON
 
+/**
+	A mutable object that stores information about a single user, such as the user's profile, and authentication token.
+*/
 public class User: JSONDecodable {
 	// MARK: - Properties
-	internal let success: Bool?
+	/// The profile update message.
 	public let message: String?
+
+	/// The authentication token of the user.
 	public let kuroAuthToken: String?
+
+	/// An object which holds information about the current user.
 	public static var current: CurrentUser? = nil
-	internal var _profile: UserProfile? = nil
-	public var profile: UserProfile? {
-		get {
-			return self._profile
-		}
-	}
+
+	/// The profile details of the user.
+	public var profile: UserProfile?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
 		self.message = json["message"].stringValue
 		self.kuroAuthToken = json["kuro_auth_token"].stringValue
 
 		if !json["session"].isEmpty {
 			User.current = try? CurrentUser(json: json["user"])
 		} else {
-			self._profile = try? UserProfile(json: json["user"])
+			self.profile = try? UserProfile(json: json["user"])
 		}
 	}
 }
 
+/**
+	A mutable object that stores information about the current user, such as the current user's username, bio, and session.
+*/
 public class CurrentUser: UserProfile {
 	// MARK: - Properties
+	/// The session of the current user.
 	public let session: UserSessionsElement?
 
 	// MARK: - Initializers
-	public required init(json: JSON) throws {
+	/// Creates model object from SwiftyJSON.JSON struct.
+	required public init(json: JSON) throws {
 		self.session = try? UserSessionsElement(json: json["session"])
 		try super.init(json: json)
 	}
 }
 
+/**
+	A mutable object that stores information about the user profile, such as the user's username, bio, and session.
+*/
 public class UserProfile: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the user.
 	public let id: Int?
+
+	/// The role of the user.
 	public let role: Int?
 
+	/// The username of the user.
 	public let username: String?
+
+	/// The activity status of the user.
 	public let activityStatus: String?
+
+	/// The link to the profile image of the user.
 	public let profileImage: String?
+
+	/// The link to the banner image of the user.
 	public let banner: String?
+
+	/// The bio text of the user.
 	public let bio: String?
+
+	/// The collection of badges of the user.
 	public let badges: [BadgeElement]?
+
+	/// Whether the user has a pro badge.
 	public let proBadge: Bool?
+
+	/// The join date of the user.
 	public let joinDate: String?
 
+	/// The follower count of the user.
 	public var followerCount: Int?
+
+	/// The following count of the user.
 	public var followingCount: Int?
+
+	/// The reputation count of the user.
 	public let reputationCount: Int?
+
+	/// The posts count of the user.
 	public let postCount: Int?
 
+	/// Whether the user is followed by the current user.
 	public var following: Bool?
+
+	/// The rating of the show by the current user.
 	public var currentRating: Double?
+
+	/// The watched episodes count of the user.
 	public var watchedEpisodes: Int?
+
+	/// The library status of the show that belongs to the user.
 	public var libraryStatus: String?
+
+	/// The favorite status of the show that belongs to the user.
 	public var isFavorite: Bool?
 
+	/// The like action of the user.
 	public let likeAction: Int?
+
+	/// Whether the theme has been bought by the user.
 	public let themeBought: Bool?
 
 	// MARK: - Initializers

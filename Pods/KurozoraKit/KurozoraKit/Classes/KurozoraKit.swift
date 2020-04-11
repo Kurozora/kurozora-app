@@ -54,8 +54,7 @@ public class KurozoraKit {
 	]
 
 	/// The TRON singleton used to perform API requests.
-	//	internal let tron = TRON(baseURL: "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
-	internal let tron = TRON(baseURL: "http://kurozora-web.test/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
+	internal let tron: TRON!
 
 	/// The [KKServices](x-source-tag://KKServices) object used to perform API requests.
 	public var services: KKServices!
@@ -64,10 +63,12 @@ public class KurozoraKit {
 	/**
 		Initializes `KurozoraKit` with the given user authentication key and services.
 
+		- Parameter debugURL: The backend API URL used for debugging.
 		- Parameter authenticationKey: The current signed in user's authentication key.
 		- Parameter services: The desired [KKServices](x-source-tag://KKServices) to be used.
 	*/
-	public init(authenticationKey: String? = nil, services: KKServices = KKServices()) {
+	public init(debugURL: String? = nil, authenticationKey: String? = nil, services: KKServices = KKServices()) {
+		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 		self.userAuthToken = authenticationKey
 		self.services = services
 	}
@@ -97,8 +98,3 @@ public class KurozoraKit {
 		return self
 	}
 }
-
-//let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
-//let keychain = Keychain(service: "AppName", accessGroup: "\(appIdentifierPrefix)com.company.shared").synchronizable(true).accessibility(.afterFirstUnlock)
-//let services = KKServices()
-//let kurozoraKit = KurozoraKit(authenticationKey: "bearer-token").services(services)

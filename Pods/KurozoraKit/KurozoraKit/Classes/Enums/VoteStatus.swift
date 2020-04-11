@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of vote status.
+	The set of available vote status types.
 
 	```
 	case downVote = -1
@@ -19,7 +19,12 @@ import Foundation
 */
 public enum VoteStatus: Int {
 	// MARK: - Cases
+	/// The thread/reply is downvoted.
 	case downVote = -1
+
+	/// The thread/reply has no vote.
 	case noVote = 0
+
+	/// The thread/reply is upvoted.
 	case upVote = 1
 }

@@ -9,20 +9,22 @@
 import TRON
 import SwiftyJSON
 
+/**
+	A mutable object that stores information about a collection of user sessions, such as the current session, and a collection of other sessions.
+*/
 public class UserSessions: JSONDecodable {
 	// MARK: - Properties
-    internal let success: Bool?
-	public let message: String?
-//	public let authToken: String?
+	/// The user profile related to the session.
 	public let user: UserProfile?
+
+	/// The user's current session.
 	public let currentSessions: UserSessionsElement?
+
+	/// The collection of the user's other sessions.
     public var otherSessions: [UserSessionsElement]?
 
 	// MARK: - Initializers
     required public init(json: JSON) throws {
-		self.success = json["success"].boolValue
-		self.message = json["message"].stringValue
-//		self.authToken = json["kuro_auth_token"].stringValue
 		self.user = try? UserProfile(json: json["user"])
 		if !json["current_session"].isEmpty {
 			self.currentSessions = try? UserSessionsElement(json: json["current_session"])
@@ -42,12 +44,24 @@ public class UserSessions: JSONDecodable {
     }
 }
 
+/**
+	A mutable object that stores information about a single user session, such as the session's ip address, last validated date, and platform.
+*/
 public class UserSessionsElement: JSONDecodable {
 	// MARK: - Properties
+	/// The id of the session.
 	public var id: Int?
+
+	/// The ip address form where the session was created.
 	public let ip: String?
+
+	/// The last time the session has been validated.
 	public let lastValidated: String?
+
+	/// The platform on which the session was created.
 	public let platform: PlatformElement?
+
+	/// The location where the session was created.
 	public let location: LocationElement?
 
 	// MARK: - Initializers
@@ -60,12 +74,24 @@ public class UserSessionsElement: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single location, such as the location's region, latitude, and longitude.
+*/
 public class LocationElement: JSONDecodable {
 	// MARK: - Properties
+	/// The city's name of the location.
 	public let city: String?
+
+	/// The region's name of the location.
 	public let region: String?
+
+	/// The country's name of the location.
 	public let country: String?
+
+	/// The latitude of the location.
 	public let latitude: Double?
+
+	/// The longitude of the location.
 	public let longitude: Double?
 
 //	/// The object used to start and stop the delivery of location-related events to the app.
@@ -109,12 +135,24 @@ public class LocationElement: JSONDecodable {
 	}
 }
 
+/**
+	A mutable object that stores information about a single platform, such as the platform's system name, version, and device vendor.
+*/
 public class PlatformElement: JSONDecodable {
 	// MARK: - Properties
+	/// The localized string of the platform.
 	public let localized: String?
+
+	/// The system name of the platform.
 	public let system: String?
+
+	/// The version of the platform.
 	public let version: String?
+
+	/// The device vendor name of the platofrm.
 	public let deviceVendor: String?
+
+	/// The device name of the platform.
 	public let deviceName: String?
 
 	// MARK: - Initializers

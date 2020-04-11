@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-	List of watch status.
+	The set of available watch status types.
 
 	```
 	case notWatched = -1
@@ -19,7 +19,12 @@ import Foundation
 */
 public enum WatchStatus: Int {
 	// MARK: - Cases
+	/// The episode is not watched.
 	case notWatched = -1
+
+	/// The episode can't be watched or unwatched.
 	case disabled = 0
+
+	/// The episode is watched.
 	case watched = 1
 }

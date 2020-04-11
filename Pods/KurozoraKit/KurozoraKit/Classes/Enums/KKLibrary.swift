@@ -8,9 +8,15 @@
 
 import UIKit
 
+/**
+	The set of available enums for managing the user's library.
+
+	`KKLibrary` offers the [Status](x-source-tag://KKL-Status) enum for managing a show's status as well as populate a library view.
+	It also offers the [SortType](x-source-tag://KKL-SortType) enum for managing the way shows are sorted. Which in turn offers the [Options](x-source-tag://KKL-ST-Options) enum for managing the sorting order.
+*/
 public enum KKLibrary {
 	/**
-		List of library status.
+		The set of available library status types.
 
 		```
 		case watching = 0
@@ -19,29 +25,31 @@ public enum KKLibrary {
 		case onHold = 3
 		case dropped = 4
 		```
+
+		- Tag: KKL-Status
 	*/
 	public enum Status: Int {
 		// MARK: - Cases
-		/// The watching status of a show.
+		/// The library's watching list.
 		case watching = 0
 
-		/// The planning status of a show.
+		/// The library's planning list.
 		case planning = 1
 
-		/// The completed status of a show.
+		/// The library's completed list.
 		case completed = 2
 
-		/// The on-hold status of a show.
+		/// The library's on-hold list.
 		case onHold = 3
 
-		/// The dropped status of a show.
+		/// The library's dropped list.
 		case dropped = 4
 
 		// MARK: - Properties
-		/// An array containing all library status.
+		/// An array containing all library status types.
 		public static let all: [Status] = [.watching, .planning, .completed, .onHold, .dropped]
 
-		/// The string value of a library status.
+		/// The string value of a library status type.
 		public var stringValue: String {
 			switch self {
 			case .watching:
@@ -87,23 +95,35 @@ public enum KKLibrary {
 	}
 
 	/**
-		List of library sorting types.
+		The set of available library sorting types.
 
 		```
 		case none = 0
 		case alphabetically = 1
 		...
 		```
+
+		- Tag: KKL-SortType
 	*/
 	public enum SortType: Int {
 		// MARK: - Cases
+		/// Sorted by no specific type.
 		case none = 0
+
+		/// Sorted by alphabetical order.
 		case alphabetically = 1
+
 //		case popularity = 2
 //		case nextAiringEpisode = 3
 //		case nextEpisodeToWatch = 4
+
+		/// Sorted by date.
 		case date = 5
+
+		/// Sorted by global rating.
 		case rating = 6
+
+		/// Sorted by user's rating.
 		case myRating = 7
 
 		// MARK: - Properties
@@ -168,7 +188,7 @@ public enum KKLibrary {
 
 extension KKLibrary.SortType {
 	/**
-		List of library sorting type options.
+		The set of available library sort type option types.
 
 		```
 		case none = 0
@@ -176,16 +196,34 @@ extension KKLibrary.SortType {
 		case newest, oldest
 		case worst, best
 		```
+
+		- Tag: KKL-ST-Options
 	*/
 	public enum Options: Int {
 		// MARK: - Cases
+		/// Sorted by no options.
 		case none = 0
-		case ascending, descending
-		case newest, oldest
-		case worst, best
+
+		/// Sorted in ascending order.
+		case ascending
+
+		/// Sorted in descending order.
+		case descending
+
+		/// Sorted by newest first.
+		case newest
+
+		/// Sorted by oldest first.
+		case oldest
+
+		/// Sorted by worst first.
+		case worst
+
+		/// Sorted by best first
+		case best
 
 		// MARK: - Properties
-		/// An array containing all sort type options.
+		/// An array containing all sort type option types.
 		public static let all: [KKLibrary.SortType.Options] = [.ascending, .descending, .newest, .oldest, .worst, .best]
 
 		/// The string value of a sort type option.
