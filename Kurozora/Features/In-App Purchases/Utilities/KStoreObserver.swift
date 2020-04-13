@@ -48,13 +48,6 @@ class KStoreObserver: NSObject {
 
 	weak var delegate: KStoreObserverDelegate?
 
-	/// Indicates whether payment actions should be logged.
-	#if DEBUG
-	var isLogEnabled: Bool = true
-	#else
-	var isLogEnabled: Bool = false
-	#endif
-
 	//MARK: - Functions
 	/// Sets the product ids.
 	func setProductIDs(ids: [String]) {
@@ -70,7 +63,7 @@ class KStoreObserver: NSObject {
 			let payment = SKPayment(product: product)
 			SKPaymentQueue.default().add(payment)
 
-			log("PRODUCT TO PURCHASE: \(product.productIdentifier)")
+			print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
 			productID = product.productIdentifier
 		} else {
 			complition(AlertType.disabled, nil, nil)
@@ -90,7 +83,7 @@ class KStoreObserver: NSObject {
 		self.fetchProductComplition = complition
 
 		if self.productIDs.isEmpty {
-			log(AlertType.setProductIDs.message)
+			print(AlertType.setProductIDs.message)
 			fatalError(AlertType.setProductIDs.message)
 		} else {
 			productsRequest = SKProductsRequest(productIdentifiers: Set(self.productIDs))
@@ -102,14 +95,14 @@ class KStoreObserver: NSObject {
 	/// Handles successful purchase transactions.
 	fileprivate func handlePurchased(_ transaction: SKPaymentTransaction) {
 		purchased.append(transaction)
-		log("Deliver content for \(transaction.payment.productIdentifier).")
+		print("Deliver content for \(transaction.payment.productIdentifier).")
 
 		// Finish the successful transaction.
 		SKPaymentQueue.default().finishTransaction(transaction)
 	}
 
 	func handleFailed(_ transaction: SKPaymentTransaction) {
-		log("Product purchase failed")
+		print("Product purchase failed")
 		/// Handles failed purchase transactions.
 		var message = "Purchase of \(transaction.payment.productIdentifier) failed."
 
@@ -132,20 +125,13 @@ class KStoreObserver: NSObject {
 	fileprivate func handleRestored(_ transaction: SKPaymentTransaction) {
 		hasRestorablePurchases = true
 		restored.append(transaction)
-		log("Restore content for \(transaction.payment.productIdentifier).")
+		print("Restore content for \(transaction.payment.productIdentifier).")
 
 		DispatchQueue.main.async {
 			self.delegate?.storeObserverRestoreDidSucceed()
 		}
 		// Finishes the restored transaction.
 		SKPaymentQueue.default().finishTransaction(transaction)
-	}
-
-	/// Custom print function. Prints only when `isLogEnabled` is `true`.
-	fileprivate func log<T>(_ object: T) {
-		if isLogEnabled {
-			print("\(object)")
-		}
 	}
 }
 
@@ -170,7 +156,7 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 			case .purchasing: break
 			case .deferred:
 				// Do not block your UI. Allow the user to continue using your app.
-				log("Transaction in progress: \(transaction)")
+				print("Transaction in progress: \(transaction)")
 			case .purchased:
 				// The purchase was successful.
 				handlePurchased(transaction)
@@ -203,12 +189,12 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 
 	func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
 		for transaction in transactions {
-			log("\(transaction.payment.productIdentifier) was removed from the payment queue.")
+			print("\(transaction.payment.productIdentifier) was removed from the payment queue.")
 		}
 	}
 
 	func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-		log("All restorable transactions have been processed by the payment queue.")
+		print("All restorable transactions have been processed by the payment queue.")
 
 		if !hasRestorablePurchases {
 			if let complition = self.purchaseProductComplition {

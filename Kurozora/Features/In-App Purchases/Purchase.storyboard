@@ -83,7 +83,7 @@
                                     <outlet property="collectionView" destination="UMG-zI-Qqu" id="gnj-l4-n8h"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" rowHeight="70" id="sk0-06-hNr" customClass="SubscriptionButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseButtonTableViewCell" rowHeight="70" id="sk0-06-hNr" customClass="PurchaseButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="395.5" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sk0-06-hNr" id="Jfw-kD-TiJ">
@@ -758,7 +758,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hyu-la-4qQ"/>
+        <segue reference="kHh-sP-pcn"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

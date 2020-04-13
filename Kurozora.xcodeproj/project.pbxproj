@@ -55,6 +55,7 @@
 		662DB4DD237EF40800B7FE7E /* Tabman+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */; };
 		662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */; };
 		662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */; };
+		663266CA2444960100295CE7 /* InAppPurchasesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663266C92444960100295CE7 /* InAppPurchasesTableViewController.swift */; };
 		66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
 		6634735E23343D55006B7F99 /* String+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634735D23343D55006B7F99 /* String+Kurozora.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
@@ -68,7 +69,6 @@
 		663E34292360D34C003386D1 /* SmallLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E34282360D34C003386D1 /* SmallLockupCollectionViewCell.swift */; };
 		663E342B2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */; };
 		663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */; };
-		663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */; };
 		663F8C4B22F1882F00F1EACB /* ProductPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */; };
 		663F8C4F22F199A400F1EACB /* PurchasePreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */; };
 		66407C9423F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */; };
@@ -474,6 +474,7 @@
 		662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tabman+Kurozora.swift"; sourceTree = "<group>"; };
 		662F706C22A45C2A00C3599D /* NotificationTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitleCell.swift; sourceTree = "<group>"; };
 		662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNotificationCell.swift; sourceTree = "<group>"; };
+		663266C92444960100295CE7 /* InAppPurchasesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesTableViewController.swift; sourceTree = "<group>"; };
 		66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
 		6634735D23343D55006B7F99 /* String+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Kurozora.swift"; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -487,7 +488,6 @@
 		663E34282360D34C003386D1 /* SmallLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		663E342A2360D3B8003386D1 /* LargeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		663E342C2360D559003386D1 /* VerticalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCollectionCellStyle.swift; sourceTree = "<group>"; };
-		663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionButtonTableViewCell.swift; sourceTree = "<group>"; };
 		663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		663F8C4E22F199A300F1EACB /* PurchasePreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasePreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		66407C8F23F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-Icon-iPad-Love-Bug@2x.png"; sourceTree = "<group>"; };
@@ -1535,6 +1535,7 @@
 			isa = PBXGroup;
 			children = (
 				669EA9A122C1491600784181 /* Purchase.storyboard */,
+				663266C92444960100295CE7 /* InAppPurchasesTableViewController.swift */,
 				669EA99F22C1490A00784181 /* PurchaseTableViewController.swift */,
 				66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */,
 				661DBC50234A4E00009292DF /* TipJarTableViewController.swift */,
@@ -1865,7 +1866,6 @@
 				661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */,
 				663F8C4822F1882F00F1EACB /* ProductPreviewTableViewCell.swift */,
 				66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */,
-				663F8C4722F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -2709,7 +2709,6 @@
 				6634735E23343D55006B7F99 /* String+Kurozora.swift in Sources */,
 				6663985B2366298100713B8B /* UICollectionViewCell+Kurozora.swift in Sources */,
 				66B216AA21C16817006E167D /* KRichTextEditorViewController.swift in Sources */,
-				663F8C4A22F1882F00F1EACB /* SubscriptionButtonTableViewCell.swift in Sources */,
 				6699A1C123779E6800517C2C /* TimeInterval+String.swift in Sources */,
 				66AEABDC2298A92500949FD8 /* NotificationAlertStyle.swift in Sources */,
 				662F706D22A45C2A00C3599D /* NotificationTitleCell.swift in Sources */,
@@ -2724,6 +2723,7 @@
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,
 				66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
+				663266CA2444960100295CE7 /* InAppPurchasesTableViewController.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
@@ -2961,7 +2961,7 @@
 				CURRENT_PROJECT_VERSION = 10227;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_LOCATION = NO;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_BITCODE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3002,7 +3002,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10227;
 				DEPLOYMENT_LOCATION = NO;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
 				ENABLE_BITCODE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;

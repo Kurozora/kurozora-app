@@ -15,9 +15,9 @@ protocol PurchaseButtonTableViewCellDelegate: class {
 
 class PurchaseButtonTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var bubbleView: UIView! {
+	@IBOutlet weak var bubbleView: UIView? {
 		didSet {
-			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
 	@IBOutlet weak var purchaseButton: UIButton! {
@@ -34,9 +34,9 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 
 	// MARK: - Properties
 	weak var purchaseButtonTableViewCellDelegate: PurchaseButtonTableViewCellDelegate?
-	var productsArray: [SKProduct]?
 	var productNumber: Int = 0
-	var purchaseDetail: String = "" {
+	var productTitle: String = ""
+	var productsArray: [SKProduct]? {
 		didSet {
 			configureCell()
 		}
@@ -44,11 +44,36 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.
-	fileprivate func configureCell() {
+	func configureCell() {
 		guard let purchaseItem = productsArray?[productNumber] else { return }
+		let localPrice = purchaseItem.priceLocaleFormatted
 
-		purchaseButton.setTitle("\(purchaseItem.priceLocaleFormatted)", for: .normal)
-		primaryLabel.text = purchaseDetail
+		// Global configs.
+		self.purchaseButton.tag = productNumber
+
+		// If the product is a subscription.
+		if let subscriptionPeriod = purchaseItem.subscriptionPeriod, let firstProductPrice = productsArray?.first?.price {
+			let subscriptionDescription: String = subscriptionPeriod.fullString.lowercased() + " at " + purchaseItem.pricePerMonthLocalized + "mo. Save " + purchaseItem.priceSaved(comparedTo: firstProductPrice)
+
+			self.purchaseButton.setTitle("\(localPrice) / \(subscriptionPeriod.fullString)", for: .normal)
+
+			// If it has an introduction price. For example a week of trial period.
+			if let introductoryPrice = purchaseItem.introductoryPrice {
+				let subscriptionPeriod = introductoryPrice.subscriptionPeriod.fullString.lowercased()
+				let subscriptionTrialPeriod = "Includes " + subscriptionPeriod + " free trial!"
+				if productNumber == 0 {
+					self.primaryLabel.text = subscriptionTrialPeriod
+				} else {
+					self.primaryLabel.text = """
+					\(subscriptionTrialPeriod)
+					(\(subscriptionDescription))
+					"""
+				}
+			}
+		} else { // If the product is a one time purchase.
+			self.purchaseButton.setTitle(localPrice, for: .normal)
+			self.primaryLabel.text = self.productTitle
+		}
 	}
 
 	// MARK: - IBActions
