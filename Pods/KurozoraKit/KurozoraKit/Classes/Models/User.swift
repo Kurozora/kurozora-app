@@ -71,17 +71,20 @@ public class UserProfile: JSONDecodable {
 	/// The username of the user.
 	public let username: String?
 
+	/// The Kurozora ID (email address) of the user.
+	public let kurozoraID: String?
+
 	/// The activity status of the user.
-	public let activityStatus: String?
+	public let activityStatus: ActivityStatus?
 
-	/// The link to the profile image of the user.
-	public let profileImage: String?
+	/// The URL to the profile image of the user.
+	public let profileImageURL: String?
 
-	/// The link to the banner image of the user.
-	public let banner: String?
+	/// The URL to the banner image of the user.
+	public let bannerImageURL: String?
 
-	/// The bio text of the user.
-	public let bio: String?
+	/// The biography text of the user.
+	public let biography: String?
 
 	/// The collection of badges of the user.
 	public let badges: [BadgeElement]?
@@ -131,10 +134,11 @@ public class UserProfile: JSONDecodable {
 		self.role = json["role"].intValue
 
 		self.username = json["username"].stringValue
-		self.activityStatus = json["activity_status"].stringValue
-		self.profileImage = json["avatar_url"].stringValue
-		self.banner = json["banner_url"].stringValue
-		self.bio = json["biography"].stringValue
+		self.kurozoraID = json["email_address"].stringValue
+		self.activityStatus = ActivityStatus(rawValue: json["activity_status"].stringValue)
+		self.profileImageURL = json["avatar_url"].stringValue
+		self.bannerImageURL = json["banner_url"].stringValue
+		self.biography = json["biography"].stringValue
 		var badges = [BadgeElement]()
 
 		let badgesArray = json["badges"].arrayValue

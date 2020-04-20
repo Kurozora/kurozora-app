@@ -37,7 +37,7 @@ pod 'KurozoraKit'
 KurozoraKit can be implemented using one line in the `global` scope.
 
 ```swift
-let KurozoraKit = KurozoraKit()
+let kurozoraKit = KurozoraKit()
 ```
 
 KurozoraKit also accepts a `KKServices` object to enable and manage extra functionality. For example to manage Keychain data and enable built-in HUD alerts you can do something like the following:

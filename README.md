@@ -10,15 +10,26 @@
 
 * **🏃🏻‍♂️ Responsive:** Kurozora is built with Swift, one of the **fast**, **modern**, **safe** and **interactive** programming languages.
 
-* **💻 Colossal:** The app is carefully designed work perfectly on all screen sizes. Yes even on Samsung's Insane 292-Inch Wall TV.
+* **💻 Colossal:** The app is carefully designed to work perfectly on all screen sizes. Yes even on Samsung's Insane 292-Inch Wall TV.
 
-* **🎨 Chameleon:** Whether black, blue, purple, or orange, it looks too good to be true.
+* **🎨 Chameleon:** Whether black, blue, purple, or orange, it looks too good to… uh oh, it’s gone hiding again, dammit!
 
-* **📚 Documented:** With up to 65% documentation coverage and more to go.
+* **📚 Documented:** With up to 65% documentation coverage and more in production. Just need my publisher to finalise some last minute details.
 
-* **⚙️ Reliable:** Built on top of the best [API](https://github.com/musa11971/kurozora-web). It’s like peanut butter and jelly, like yin and yang, like a lace in a shoe, like you're the sail of my love boat wait.. ughhh…
+* **💕 Excellence:** [Kurozora API](https://github.com/musa11971/kurozora-web) and Kurozora app are simply meant to be for each other. It’s like peanut butter and jelly, like yin and yang, like a lace in a shoe, like you're the sail of my love boat wait.. ughhh…
+
+* **🧩 Essence:** All brought together with [KurozoraKit](https://github.com/kiritokatklian/KurozoraKit), creating a perfect harmony. It’s the piece of the puzzle you don’t want to be missing.
 
 # Screenshots
+![The explore page containing multiple sections of shows, used to discover new shows.](.github/Assets/Screenshots/1.png)
+
+![The library page showing the user’s watching list.](.github/Assets/Screenshots/2.png)
+
+![The forums page with multiple sections containing threads.](.github/Assets/Screenshots/3.png)
+
+![The notifications page previewing notifications in different colours.](.github/Assets/Screenshots/4.png)
+
+![The feed page showing the user’s current feed of posts by their followers and users they are following.](.github/Assets/Screenshots/5.png)
 
 # Requirements
 

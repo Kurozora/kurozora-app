@@ -28,6 +28,11 @@ class ProfileTableViewController: KTableViewController {
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
+	@IBOutlet weak var onlineIndicatorLabel: UILabel! {
+		didSet {
+			onlineIndicatorLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: UITextView! {
 		didSet {
@@ -222,32 +227,30 @@ class ProfileTableViewController: KTableViewController {
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
 
-		// Setup username
+		// Configure username
 		if let username = user.profile?.username, !username.isEmpty {
 			usernameLabel.text = username
 		} else {
 			usernameLabel.text = "Unknown"
 		}
 
-		// Setup profile image
-		if let profileImage = user.profile?.profileImage {
-			if let usernameInitials = user.profile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
-			}
+		// Configure online status
+		onlineIndicatorLabel.text = user.profile?.activityStatus?.stringValue
+
+		// Configure profile image
+		profileImageView.image = User.current?.profileImage
+
+		// Configure banner image
+		if let bannerImageURL = user.profile?.bannerImageURL {
+			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.banner_image()!)
 		}
 
-		// Setup banner image
-		if let bannerImage = user.profile?.banner {
-			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.banner_image()!)
+		// Configure user bio
+		if let biography = user.profile?.biography, !biography.isEmpty {
+			self.bioTextView.text = biography
 		}
 
-		// Setup user bio
-		if let bio = user.profile?.bio, !bio.isEmpty {
-			self.bioTextView.text = bio
-		}
-
-		// Setup reputation count
+		// Configure reputation count
 		if let reputationCount = user.profile?.reputationCount {
 			let count = NSAttributedString(string: "\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
@@ -264,7 +267,7 @@ class ProfileTableViewController: KTableViewController {
 			self.reputationButton.setAttributedTitle(reputationButtonTitle, for: .normal)
 		}
 
-		// Setup following & followers count
+		// Configure following & followers count
 		if let followingCount = user.profile?.followingCount {
 			let count = NSAttributedString(string: "\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)")", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
@@ -297,7 +300,7 @@ class ProfileTableViewController: KTableViewController {
 			self.followersButton.setAttributedTitle(followersButtonTitle, for: .normal)
 		}
 
-		// Setup follow button
+		// Configure follow button
 		if self.userID == User.current?.id || self.userID == nil {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
@@ -312,7 +315,7 @@ class ProfileTableViewController: KTableViewController {
 			editProfileButton.isHidden = true
 		}
 
-		// Setup pro badge
+		// Configure pro badge
 		proBadgeButton.isHidden = true
 		if let proBadge = user.profile?.proBadge, !String(proBadge).isEmpty {
 			if proBadge {
@@ -321,9 +324,9 @@ class ProfileTableViewController: KTableViewController {
 			}
 		}
 
-		// Setup badge & badge button
+		// Configure badge & badge button
 		if let badges = user.profile?.badges {
-			// Setup user badge (a.k.a tag)
+			// Configure user badge (a.k.a tag)
 			if !badges.isEmpty {
 				self.tagBadgeButton.isHidden = false
 				for badge in badges {
@@ -338,7 +341,7 @@ class ProfileTableViewController: KTableViewController {
 				self.tagBadgeButton.isHidden = true
 			}
 
-			// Setup badge button
+			// Configure badge button
 			let count = NSAttributedString(string: "\(badges.count)", attributes: [
 				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
 				NSAttributedString.Key.paragraphStyle: centerAlign
@@ -354,7 +357,7 @@ class ProfileTableViewController: KTableViewController {
 			self.badgesButton.setAttributedTitle(badgesButtonTitle, for: .normal)
 		}
 
-		// Setup AutoLayout
+		// Configure AutoLayout
 		self.tableView.setTableHeaderView(headerView: self.tableView.tableHeaderView)
 
 		// First layout update
@@ -491,12 +494,13 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageCache = nil
 
 		if shouldUpdate {
-			KService.updateInformation(forUserID: 0, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { result in
+			guard let userID = User.current?.id else { return }
+			KService.updateInformation(forUserID: userID, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { result in
 				switch result {
 				case .success(let user):
 					self.editMode(false)
-					if let profileImage = user.profile?.profileImage, shouldUpdateProfileImage {
-						try? Kurozora.shared.KDefaults.set(profileImage, key: "profile_image")
+					if let profileImageURL = user.profile?.profileImageURL, shouldUpdateProfileImage {
+						try? Kurozora.shared.KDefaults.set(profileImageURL, key: "profile_image")
 					}
 				case .failure:
 					break
@@ -599,16 +603,16 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	@IBAction func showProfileImage(_ sender: AnyObject) {
-		if let profileImage = user?.profile?.profileImage, !profileImage.isEmpty {
-			presentPhotoViewControllerWith(url: profileImage, from: profileImageView)
+		if let profileImageURL = user?.profile?.profileImageURL, !profileImageURL.isEmpty {
+			presentPhotoViewControllerWith(url: profileImageURL, from: profileImageView)
 		} else {
 			presentPhotoViewControllerWith(image: profileImageView.image, from: profileImageView)
 		}
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let banner = user?.profile?.banner, !banner.isEmpty {
-			presentPhotoViewControllerWith(url: banner, from: bannerImageView)
+		if let bannerImageURL = user?.profile?.bannerImageURL, !bannerImageURL.isEmpty {
+			presentPhotoViewControllerWith(url: bannerImageURL, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "default_banner_image", from: bannerImageView)
 		}

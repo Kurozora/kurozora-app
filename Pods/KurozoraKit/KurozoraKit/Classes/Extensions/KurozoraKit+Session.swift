@@ -11,16 +11,18 @@ import SCLAlertView
 
 extension KurozoraKit {
 	/**
-		Create a new session a.k.a sign in.
+		Create a new session with the given `kurozoraID` and `password`.
+
+		This endpoint is used for signing in a user to their account. If the sign in was successful then a Kurozora authentication token is returned in the success closure.
 
 		- Parameter kurozoraID: The Kurozora id of the user to be signed in.
 		- Parameter password: The password of the user to be signed in.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<KKSuccess, KKError>) -> Void) {
+	public func signIn(_ kurozoraID: String, _ password: String, completion completionHandler: @escaping (_ result: Result<String, KKError>) -> Void) {
 		let sessions = self.kurozoraKitEndpoints.sessions
-		let request: APIRequest<KKSuccess, KKError> = tron.swiftyJSON.request(sessions)
+		let request: APIRequest<User, KKError> = tron.swiftyJSON.request(sessions)
 		request.headers = headers
 		request.method = .post
 		request.parameters = [
@@ -32,10 +34,9 @@ extension KurozoraKit {
 			"device_model": UIDevice.modelName
 		]
 
-		request.perform(withSuccess: { success in
+		request.perform(withSuccess: { user in
 //			try? self.services._keychainDefaults.set(kurozoraID, key: "KurozoraID")
-//			KKServices.shared.processUserData(fromSession:)
-			completionHandler(.success(success))
+			completionHandler(.success(user.kuroAuthToken ?? ""))
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
@@ -59,7 +60,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .post
@@ -90,7 +91,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .post
@@ -121,7 +122,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .post

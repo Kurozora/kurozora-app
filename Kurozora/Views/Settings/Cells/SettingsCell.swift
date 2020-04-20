@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 import Kingfisher
 
 class SettingsCell: UITableViewCell {
@@ -71,12 +72,7 @@ class SettingsCell: UITableViewCell {
 	/// Configure the cell with the given details.
 	func configureCell() {
 		if sectionRow?.imageValue == UIImage() {
-			if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
-				if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
-					let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-					iconImageView?.setImage(with: profileImage, placeholder: placeholderImage)
-				}
-			}
+			iconImageView?.image = User.current?.profileImage
 		} else {
 			iconImageView?.image = sectionRow?.imageValue
 		}

@@ -25,7 +25,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		if genreID != nil || genreID != 0 {
@@ -61,7 +61,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .get
@@ -138,7 +138,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .post
@@ -169,7 +169,7 @@ extension KurozoraKit {
 
 		request.headers = headers
 		if User.isSignedIn {
-			request.headers["kuro-auth"] = self._userAuthToken
+			request.headers["kuro-auth"] = self._authenticationKey
 		}
 
 		request.method = .get

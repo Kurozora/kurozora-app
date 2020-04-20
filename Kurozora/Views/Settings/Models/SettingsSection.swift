@@ -235,7 +235,7 @@ extension SettingsTableViewController {
 		var primaryStringValue: String {
 			switch self {
 			case .account:
-				return Kurozora.shared.KDefaults["username"] ?? "Sign in to your Kurozora account"
+				return User.current?.username ?? "Sign in to your Kurozora account"
 			case .keychain:
 				return "Keys Manager"
 			case .notifications:

@@ -41,12 +41,6 @@ class LibraryViewController: KTabbedViewController {
 
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
-	// MARK: - Initializers
-//	required init?(coder aDecoder: NSCoder) {
-//		super.init(coder: aDecoder)
-//		self.tabBarDataSource = self
-//	}
-
 	// MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,9 +53,6 @@ class LibraryViewController: KTabbedViewController {
 
 		// Setup search bar.
 		setupSearchBar()
-
-		// Tabman bar
-//		initTabBarView()
     }
 
 	// MARK: - Functions

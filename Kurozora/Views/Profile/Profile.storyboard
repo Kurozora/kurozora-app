@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="q9O-KI-xnB">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -336,6 +336,12 @@
                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxg-Vi-HwP">
+                                            <rect key="frame" x="178" y="57.666666666666664" width="44" height="20.333333333333336"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <button hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKV-6f-pSz">
                                             <rect key="frame" x="96" y="78" width="39" height="20"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -361,16 +367,18 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="3HD-ij-bhm"/>
                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="centerY" secondItem="Ak5-fH-5eB" secondAttribute="centerY" id="3J5-Z0-oKA"/>
-                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="5Oy-qg-5oa"/>
+                                        <constraint firstItem="Kxg-Vi-HwP" firstAttribute="leading" secondItem="Ak5-fH-5eB" secondAttribute="trailing" constant="8" symbolic="YES" id="7lv-Yw-AU4"/>
                                         <constraint firstItem="bkn-1Z-yJM" firstAttribute="top" secondItem="fLr-h5-O9N" secondAttribute="top" id="Gmi-u3-uqf"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="centerY" secondItem="bkn-1Z-yJM" secondAttribute="centerY" id="Iy1-oE-bVA"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="top" secondItem="bkn-1Z-yJM" secondAttribute="top" id="Nni-n8-lMe"/>
                                         <constraint firstAttribute="trailing" secondItem="fLr-h5-O9N" secondAttribute="trailing" id="Nq0-Wr-dpD"/>
+                                        <constraint firstItem="bkn-1Z-yJM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kxg-Vi-HwP" secondAttribute="trailing" id="OZ3-Mm-vsU"/>
                                         <constraint firstItem="EtH-JN-qoL" firstAttribute="trailing" secondItem="bkn-1Z-yJM" secondAttribute="trailing" id="Pmw-vr-VSr"/>
+                                        <constraint firstItem="Kxg-Vi-HwP" firstAttribute="top" secondItem="Ak5-fH-5eB" secondAttribute="top" id="TFY-mC-gb4"/>
                                         <constraint firstItem="fLr-h5-O9N" firstAttribute="centerY" secondItem="EtH-JN-qoL" secondAttribute="centerY" id="TZi-2i-UcE"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="PR0-Kq-mbS" secondAttribute="leading" id="Whk-A3-nGc"/>
+                                        <constraint firstItem="EtH-JN-qoL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kxg-Vi-HwP" secondAttribute="trailing" id="ZdJ-1H-paY"/>
                                         <constraint firstItem="Ak5-fH-5eB" firstAttribute="leading" secondItem="PR0-Kq-mbS" secondAttribute="trailing" constant="8" symbolic="YES" id="f21-Gx-KX8"/>
                                         <constraint firstItem="PR0-Kq-mbS" firstAttribute="top" secondItem="L3e-NK-2YU" secondAttribute="top" id="gbb-eF-UPj"/>
                                         <constraint firstItem="fLr-h5-O9N" firstAttribute="leading" secondItem="bkn-1Z-yJM" secondAttribute="trailing" constant="8" symbolic="YES" id="m7m-W4-uqG"/>
@@ -378,6 +386,7 @@
                                         <constraint firstItem="bKV-6f-pSz" firstAttribute="leading" secondItem="Ak5-fH-5eB" secondAttribute="leading" id="wrH-Oi-mOH"/>
                                         <constraint firstAttribute="bottom" secondItem="bKV-6f-pSz" secondAttribute="bottom" id="wro-nS-cHU"/>
                                         <constraint firstItem="bKV-6f-pSz" firstAttribute="top" secondItem="Ak5-fH-5eB" secondAttribute="bottom" id="zR6-H9-BJ5"/>
+                                        <constraint firstItem="Kxg-Vi-HwP" firstAttribute="bottom" secondItem="Ak5-fH-5eB" secondAttribute="bottom" id="zXu-Kw-N8U"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qhJ-dz-VUa" userLabel="User Details Body">
@@ -732,6 +741,7 @@
                         <outlet property="followersButton" destination="ggb-4z-Awv" id="0tj-jo-lQ8"/>
                         <outlet property="followingButton" destination="T5J-l1-I4p" id="AzJ-6a-vDQ"/>
                         <outlet property="moreButton" destination="fLr-h5-O9N" id="OCR-f4-iMM"/>
+                        <outlet property="onlineIndicatorLabel" destination="Kxg-Vi-HwP" id="pav-Y4-hc4"/>
                         <outlet property="proBadgeButton" destination="bKV-6f-pSz" id="HdW-4t-lxJ"/>
                         <outlet property="profileBorderView" destination="wJX-ls-ZaG" id="hOw-07-B1J"/>
                         <outlet property="profileImageView" destination="NzS-ZZ-Ald" id="FNo-NK-Uze"/>
@@ -950,6 +960,11 @@
             <point key="canvasLocation" x="190" y="-1112"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Uy1-s4-x1D"/>
+        <segue reference="QET-aj-S7i"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/banner_image" width="1130" height="706"/>
         <image name="Placeholders/profile_image" width="100" height="100"/>
@@ -958,9 +973,4 @@
         <image name="Symbols/heart_fill_small" width="24" height="24"/>
         <image name="Symbols/message_fill" width="24" height="24"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Uy1-s4-x1D"/>
-        <segue reference="QET-aj-S7i"/>
-    </inferredMetricsTieBreakers>
-    <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

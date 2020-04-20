@@ -85,10 +85,10 @@ class ReplyCell: UITableViewCell {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
 		// Configure profile image
-		if let profileImage = threadRepliesElement.userProfile?.profileImage {
+		if let profileImageURL = threadRepliesElement.userProfile?.profileImageURL {
 			if let usernameInitials = threadRepliesElement.userProfile?.username?.initials {
 				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
+				profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
 			}
 		}
 

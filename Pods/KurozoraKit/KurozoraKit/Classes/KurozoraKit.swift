@@ -20,16 +20,16 @@ import TRON
 public class KurozoraKit {
 	// MARK: - Properties
 	/// The current user's authentication token.
-	internal var _userAuthToken: String = ""
+	internal var _authenticationKey: String = ""
 
-	/// The current user's authentication token.
-	public var userAuthToken: String? {
+	/// The current user's authentication key.
+	public var authenticationKey: String? {
 		get {
-			fatalError("Access to authentication token denied.")
+			fatalError("Access to authentication key denied.")
 		}
 		set {
 			guard let newValue = newValue else { return }
-			_userAuthToken = newValue
+			_authenticationKey = newValue
 		}
 	}
 
@@ -69,7 +69,7 @@ public class KurozoraKit {
 	*/
 	public init(debugURL: String? = nil, authenticationKey: String? = nil, services: KKServices = KKServices()) {
 		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
-		self.userAuthToken = authenticationKey
+		self.authenticationKey = authenticationKey
 		self.services = services
 	}
 
@@ -82,7 +82,7 @@ public class KurozoraKit {
 		- Returns: Reference to `self`.
 	*/
 	public func authenticationKey(_ authKey: String) -> KurozoraKit {
-		self.userAuthToken = authKey
+		self.authenticationKey = authKey
 		return self
 	}
 

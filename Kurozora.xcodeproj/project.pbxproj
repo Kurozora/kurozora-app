@@ -338,7 +338,6 @@
 		66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */; };
 		66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumsSortingStyle.swift */; };
 		66CE8E1D2406C41500052AE9 /* UIButton+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */; };
-		66CE8E3324086A1100052AE9 /* KurozoraKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8E3224086A1100052AE9 /* KurozoraKitTests.swift */; };
 		66CF5D7E21E7773F00969BBB /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */; };
 		66CF5D8021E798C800969BBB /* UIScrollView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */; };
 		66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */; };
@@ -385,13 +384,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 66C6A53C23FB0567000A6617;
 			remoteInfo = XMLImport;
-		};
-		66CE8E2F24086A1100052AE9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66647B482084995500CF624F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 66647B4F2084995500CF624F;
-			remoteInfo = Kurozora;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -758,9 +750,6 @@
 		66CE1B09209BB1400007A4DE /* PostImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		66CE342E2325519300A41558 /* ForumsSortingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsSortingStyle.swift; sourceTree = "<group>"; };
 		66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Kurozora.swift"; sourceTree = "<group>"; };
-		66CE8E2B24086A1000052AE9 /* KurozoraKitTests. */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KurozoraKitTests.; sourceTree = BUILT_PRODUCTS_DIR; };
-		66CE8E3224086A1100052AE9 /* KurozoraKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurozoraKitTests.swift; sourceTree = "<group>"; };
-		66CE8E3424086A1100052AE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66CF5D7D21E7773F00969BBB /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Kurozora.swift"; sourceTree = "<group>"; };
 		66CF6D6620A987D100F98375 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
@@ -813,13 +802,6 @@
 				73E9082EEADA42DDD54D9805 /* Pods_Kurozora.framework in Frameworks */,
 				664A4040234C922700D29DD5 /* PassKit.framework in Frameworks */,
 				66AC3D1F23D8FB0800D28EE6 /* GameKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		66CE8E2824086A1000052AE9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1357,7 +1339,6 @@
 			isa = PBXGroup;
 			children = (
 				66647B522084995500CF624F /* Kurozora */,
-				66CE8E3124086A1100052AE9 /* KurozoraKitTests */,
 				66647B512084995500CF624F /* Products */,
 				D4A795E40A9FE3FA76278C67 /* Pods */,
 				08E5591EE4C9B9016ACCB5C6 /* Frameworks */,
@@ -1368,7 +1349,6 @@
 			isa = PBXGroup;
 			children = (
 				66647B502084995500CF624F /* Kurozora.app */,
-				66CE8E2B24086A1000052AE9 /* KurozoraKitTests. */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1898,15 +1878,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		66CE8E3124086A1100052AE9 /* KurozoraKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				66CE8E3224086A1100052AE9 /* KurozoraKitTests.swift */,
-				66CE8E3424086A1100052AE9 /* Info.plist */,
-			);
-			path = KurozoraKitTests;
-			sourceTree = "<group>";
-		};
 		66CF6D6320A9875600F98375 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -2130,24 +2101,6 @@
 			productReference = 66647B502084995500CF624F /* Kurozora.app */;
 			productType = "com.apple.product-type.application";
 		};
-		66CE8E2A24086A1000052AE9 /* KurozoraKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 66CE8E3D24086A1100052AE9 /* Build configuration list for PBXNativeTarget "KurozoraKitTests" */;
-			buildPhases = (
-				66CE8E2724086A1000052AE9 /* Sources */,
-				66CE8E2824086A1000052AE9 /* Frameworks */,
-				66CE8E2924086A1000052AE9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				66CE8E3024086A1100052AE9 /* PBXTargetDependency */,
-			);
-			name = KurozoraKitTests;
-			productName = KurozoraKitTests;
-			productReference = 66CE8E2B24086A1000052AE9 /* KurozoraKitTests. */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2177,12 +2130,6 @@
 							};
 						};
 					};
-					66CE8E2A24086A1000052AE9 = {
-						CreatedOnToolsVersion = 11.3.1;
-						DevelopmentTeam = 47ZEU5J4BF;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 66647B4F2084995500CF624F;
-					};
 				};
 			};
 			buildConfigurationList = 66647B4B2084995500CF624F /* Build configuration list for PBXProject "Kurozora" */;
@@ -2199,7 +2146,6 @@
 			projectRoot = "";
 			targets = (
 				66647B4F2084995500CF624F /* Kurozora */,
-				66CE8E2A24086A1000052AE9 /* KurozoraKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2349,13 +2295,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66CE8E2924086A1000052AE9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -2391,7 +2330,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/R.generated.swift,
+				"$SRCROOT/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2775,25 +2714,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		66CE8E2724086A1000052AE9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66CE8E3324086A1100052AE9 /* KurozoraKitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		66C6A54E23FB05C2000A6617 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			targetProxy = 66C6A54D23FB05C2000A6617 /* PBXContainerItemProxy */;
-		};
-		66CE8E3024086A1100052AE9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 66647B4F2084995500CF624F /* Kurozora */;
-			targetProxy = 66CE8E2F24086A1100052AE9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3032,41 +2958,6 @@
 			};
 			name = Release;
 		};
-		66CE8E3E24086A1100052AE9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				INFOPLIST_FILE = KurozoraKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KurozoraKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-			};
-			name = Debug;
-		};
-		66CE8E3F24086A1100052AE9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 47ZEU5J4BF;
-				INFOPLIST_FILE = KurozoraKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = app.kurozora.KurozoraKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kurozora.app/Kurozora";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3084,15 +2975,6 @@
 			buildConfigurations = (
 				66647B7B2084995E00CF624F /* Debug */,
 				66647B7C2084995E00CF624F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		66CE8E3D24086A1100052AE9 /* Build configuration list for PBXNativeTarget "KurozoraKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66CE8E3E24086A1100052AE9 /* Debug */,
-				66CE8E3F24086A1100052AE9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
