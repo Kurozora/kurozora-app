@@ -9,6 +9,7 @@
 import UIKit
 
 extension UITableViewCell {
+	// MARK: - Properties
 	/// Returns an instance of the tableView containing the cell.
 	var parentTableView: UITableView? {
 		return (next as? UITableView) ?? (parentViewController as? UITableViewController)?.tableView

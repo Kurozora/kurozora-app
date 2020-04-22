@@ -9,6 +9,7 @@
 import UIKit
 
 extension UITableView {
+	// MARK: - Properties
 	/// A boolean indicating if the scrollview is at the top
 	var isAtTop: Bool {
 		return contentOffset.y <= verticalOffsetForTop

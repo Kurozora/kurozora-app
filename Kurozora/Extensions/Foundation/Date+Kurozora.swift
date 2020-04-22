@@ -9,6 +9,7 @@
 import Foundation
 
 extension Date {
+	// MARK: - Functions
 	/**
 		Return device's system uptime.
 
@@ -29,7 +30,12 @@ extension Date {
 		return uptime
 	}
 
-	public func etaForDate() -> (days: Int?, hours: Int?, minutes: Int?) {
+	/**
+		Returns the date components of the date object in days, hours and minutes.
+
+		- Returns: the date components of the date object in days, hours and minutes.
+	*/
+	func etaForDate() -> (days: Int?, hours: Int?, minutes: Int?) {
 		let now = Date()
 		let cal = Calendar.current
 		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute])
@@ -38,11 +44,16 @@ extension Date {
 		return (components.day, components.hour, components.minute)
 	}
 
-	public func etaStringForDate(short: Bool = false) -> String {
-		return etaForDateWithString(short: short).etaString
-	}
+	/**
+		Returns the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
 
-	public func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
+		If `short` is set to `true` the returned string will be in short format. Default value is `false`.
+
+		- Parameter short: Boolean value indicating whether to shorten the returned date string.
+
+		- Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
+	*/
+	func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
 		let (days, hours, minutes) = etaForDate()
 
 		var etaTime = ""
@@ -55,5 +66,18 @@ extension Date {
 		}
 
 		return (days, hours, minutes, etaTime)
+	}
+
+	/**
+		Returns the eta string of the date string in readable form.
+
+		If `short` is set to `true` the returned string will be in short format. Default value is `false`.
+
+		- Parameter short: Boolean value indicating whether to shorten the returned date string.
+
+		- Returns: the eta string of the date string in readable form.
+	*/
+	func etaStringForDate(short: Bool = false) -> String {
+		return etaForDateWithString(short: short).etaString
 	}
 }

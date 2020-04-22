@@ -34,7 +34,7 @@ public class User: JSONDecodable {
 		self.kuroAuthToken = json["kuro_auth_token"].stringValue
 
 		if !json["session"].isEmpty {
-			User.current = try? CurrentUser(json: json["user"])
+			User.current = try? CurrentUser(json: json)
 		} else {
 			self.profile = try? UserProfile(json: json["user"])
 		}
@@ -53,7 +53,7 @@ public class CurrentUser: UserProfile {
 	/// Creates model object from SwiftyJSON.JSON struct.
 	required public init(json: JSON) throws {
 		self.session = try? UserSessionsElement(json: json["session"])
-		try super.init(json: json)
+		try super.init(json: json["user"])
 	}
 }
 

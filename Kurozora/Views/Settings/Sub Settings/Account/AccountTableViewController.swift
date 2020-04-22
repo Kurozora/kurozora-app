@@ -54,6 +54,7 @@ extension AccountTableViewController {
 		switch (indexPath.section, indexPath.row) {
 //		case (0, 0): break
 		case (1, 0):
+			let username = User.current?.username ?? ""
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 😞", action: {
 				if User.isSignedIn {
@@ -61,7 +62,7 @@ extension AccountTableViewController {
 					KService.signOut(ofSessionID: sessionID) { result in
 						switch result {
 						case .success:
-							break
+							try? Kurozora.shared.KDefaults.remove("Account_\(username)")
 						case .failure:
 							break
 						}

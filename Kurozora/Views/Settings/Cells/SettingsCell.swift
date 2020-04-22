@@ -72,7 +72,7 @@ class SettingsCell: UITableViewCell {
 	/// Configure the cell with the given details.
 	func configureCell() {
 		if sectionRow?.imageValue == UIImage() {
-			iconImageView?.image = User.current?.profileImage
+			iconImageView?.image = User.current?.profileImage ?? R.image.placeholders.profile_image()
 		} else {
 			iconImageView?.image = sectionRow?.imageValue
 		}

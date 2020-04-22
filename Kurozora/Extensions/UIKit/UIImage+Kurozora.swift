@@ -9,7 +9,7 @@
 import UIKit
 
 /**
-	A list of image formats.
+	A set of available image formats.
 
 	```
 	case png
@@ -17,6 +17,7 @@ import UIKit
 	```
 */
 public enum ImageFormat {
+	// MARK: - Cases
 	/// Indicates the image has a `png` format.
 	case png
 
@@ -25,6 +26,7 @@ public enum ImageFormat {
 }
 
 extension UIImage {
+	// MARK: - Functions
 	/**
 		Convert UIImage to Base-64.
 
@@ -32,7 +34,7 @@ extension UIImage {
 
 		- Returns: the Base-64 encoded string.
 	*/
-	public func toBase64(format: ImageFormat) -> String? {
+	func toBase64(format: ImageFormat) -> String? {
 		var imageData: Data?
 		switch format {
 		case .png:

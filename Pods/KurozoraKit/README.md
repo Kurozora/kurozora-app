@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/kiritokatklian/KurozoraKit/master/.github/Assets/KurozoraKit_icon.png?token=ABSAU6MKJBNP5CCTDKQ7HC26TL366"></p>
+<p align="center"><img src=".github/Assets/KurozoraKit_icon.png"></p>
 
 <p align="center">
     <sup><b>KurozoraKit</b></sup>

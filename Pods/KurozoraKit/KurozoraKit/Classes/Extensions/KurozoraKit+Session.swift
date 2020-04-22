@@ -128,6 +128,7 @@ extension KurozoraKit {
 		request.method = .post
 		request.perform(withSuccess: { success in
 //			try? self.services._keychainDefaults.removeAll()
+			User.current = nil
 			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			completionHandler(.success(success))
 		}, failure: { error in

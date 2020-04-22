@@ -39,7 +39,7 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
-		navigationProfileButton.setImage(User.current?.profileImage, for: .normal)
+		navigationProfileButton.setImage(User.current?.profileImage ?? R.image.placeholders.profile_image(), for: .normal)
 
 		// Fetch feed sections
 //		KurozoraKit.shared.getFeedSections(withSuccess: { (sections) in
@@ -174,20 +174,5 @@ extension FeedTabsViewController: TMBarDataSource {
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		guard let sectionTitle = sections?[index].name else { return TMBarItem(title: "Section \(index)") }
 		return TMBarItem(title: sectionTitle)
-	}
-}
-
-
-
-
-// MARK: - Extension
-extension UserProfile {
-	var profileImage: UIImage? {
-		let profileImageView = UIImageView()
-		if let usernameInitials = username?.initials {
-			let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
-			profileImageView.setImage(with: profileImageURL ?? "", placeholder: placeholderImage)
-		}
-		return profileImageView.image
 	}
 }

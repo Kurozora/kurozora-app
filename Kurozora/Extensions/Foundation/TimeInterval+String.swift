@@ -9,6 +9,7 @@
 import Foundation
 
 extension TimeInterval {
+	/// The time interval in a humanly readable string format.
 	var toString: String {
 		let timeIntervalInteger = Int(self)
 		let seconds = timeIntervalInteger % 60

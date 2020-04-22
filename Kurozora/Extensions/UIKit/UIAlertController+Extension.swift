@@ -34,7 +34,7 @@ extension UIAlertController {
 			alertController.addAction(action)
 		}
 
-		alertController.view.tintColor = .kurozora
+		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 		return alertController
 	}
 
@@ -65,7 +65,7 @@ extension UIAlertController {
 			alertController.addAction(action)
 		}
 
-		alertController.view.tintColor = .kurozora
+		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 		return alertController
 	}
 }

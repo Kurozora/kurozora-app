@@ -138,6 +138,7 @@
 		666C82582162898400C93A70 /* CastCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C82572162898400C93A70 /* CastCollectionViewController.swift */; };
 		666C825A2168031B00C93A70 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 666C82592168031B00C93A70 /* Home.storyboard */; };
 		666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666C825B2168063000C93A70 /* HomeCollectionViewController.swift */; };
+		666D3E8C244DE7240068A103 /* UserProfile+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666D3E8B244DE7240068A103 /* UserProfile+UIImage.swift */; };
 		666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */; };
 		666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */; };
 		666FBD9022C4E170007DB5D8 /* Black.plist in Resources */ = {isa = PBXBuildFile; fileRef = 666FBD8F22C4E16F007DB5D8 /* Black.plist */; };
@@ -358,6 +359,9 @@
 		66DEB4AB21D283800093725F /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4A421D247810093725F /* SearchResultsViewController.swift */; };
 		66DEB4B221D419420093725F /* KSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEB4B121D419420093725F /* KSearchController.swift */; };
 		66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E08368211324D300B39A75 /* OtherSessionsCell.swift */; };
+		66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBD244E1579007248EE /* String+UIImage.swift */; };
+		66E54EC0244E160F007248EE /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EBF244E160F007248EE /* String+Date.swift */; };
+		66E54EC3244E1698007248EE /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E54EC2244E1698007248EE /* Array+String.swift */; };
 		66EC939A2274B90100D584F7 /* ShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC93992274B90100D584F7 /* ShowDetail.swift */; };
 		66ED9D8722ABD60400C7A45C /* NotificationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */; };
 		66ED9D8922ABE06D00C7A45C /* NotificationSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */; };
@@ -541,6 +545,7 @@
 		666C82572162898400C93A70 /* CastCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewController.swift; sourceTree = "<group>"; };
 		666C82592168031B00C93A70 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		666C825B2168063000C93A70 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
+		666D3E8B244DE7240068A103 /* UserProfile+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+UIImage.swift"; sourceTree = "<group>"; };
 		666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationController.swift; sourceTree = "<group>"; };
 		666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationStyle.swift; sourceTree = "<group>"; };
 		666FBD8F22C4E16F007DB5D8 /* Black.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Black.plist; sourceTree = "<group>"; };
@@ -770,6 +775,9 @@
 		66DEB4A721D248710093725F /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		66DEB4B121D419420093725F /* KSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSearchController.swift; sourceTree = "<group>"; };
 		66E08368211324D300B39A75 /* OtherSessionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSessionsCell.swift; sourceTree = "<group>"; };
+		66E54EBD244E1579007248EE /* String+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIImage.swift"; sourceTree = "<group>"; };
+		66E54EBF244E160F007248EE /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
+		66E54EC2244E1698007248EE /* Array+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		66EC93992274B90100D584F7 /* ShowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetail.swift; sourceTree = "<group>"; };
 		66ED9D8622ABD60400C7A45C /* NotificationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettings.storyboard; sourceTree = "<group>"; };
 		66ED9D8822ABE06D00C7A45C /* NotificationSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsCell.swift; sourceTree = "<group>"; };
@@ -933,30 +941,10 @@
 		6611234C208F70B500E6033A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				66B2C740232F99440042AB12 /* Array+Kurozora.swift */,
-				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
-				66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */,
-				66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */,
-				661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */,
-				6634735D23343D55006B7F99 /* String+Kurozora.swift */,
-				662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */,
-				6699A1C023779E6800517C2C /* TimeInterval+String.swift */,
-				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
-				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
-				6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */,
-				66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */,
-				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
-				66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */,
-				661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */,
-				66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */,
-				664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */,
-				663E341F2360BB06003386D1 /* UITableViewCell+Kurozora.swift */,
-				66496EEA2373423D00911F2C /* UITextField+Kurozora.swift */,
-				66496EE623733CD000911F2C /* UITextView+Kurozora.swift */,
-				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
-				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
-				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
-				66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */,
+				66E54EBC244E1486007248EE /* Foundation */,
+				666D3E8D244DE73F0068A103 /* KurozoraKit */,
+				66E54EC1244E166E007248EE /* Tabman */,
+				66E54EBB244E147A007248EE /* UIKit */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1381,6 +1369,14 @@
 				66DE85B322C0E6B500FACDD2 /* Cells */,
 			);
 			path = Cast;
+			sourceTree = "<group>";
+		};
+		666D3E8D244DE73F0068A103 /* KurozoraKit */ = {
+			isa = PBXGroup;
+			children = (
+				666D3E8B244DE7240068A103 /* UserProfile+UIImage.swift */,
+			);
+			path = KurozoraKit;
 			sourceTree = "<group>";
 		};
 		666E0D1E22888AFC00AA8BA4 /* Navigation */ = {
@@ -2005,6 +2001,54 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		66E54EBB244E147A007248EE /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				66BEC13423191D090039D683 /* NSLayoutManager+Kurozora.swift */,
+				66E54EBD244E1579007248EE /* String+UIImage.swift */,
+				66D4735121AB5FE300A894B7 /* UIAlertController+Extension.swift */,
+				6611234F208F70D200E6033A /* UIApplication+Navigation.swift */,
+				66CE8E1C2406C41500052AE9 /* UIButton+Kurozora.swift */,
+				6663985A2366298100713B8B /* UICollectionViewCell+Kurozora.swift */,
+				66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */,
+				6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */,
+				66EF26C5215F960A00FB2B19 /* UIImage+Kurozora.swift */,
+				661B26B22351E5A100840AF5 /* UIImageView+Kurozora.swift */,
+				66CF5D7F21E798C800969BBB /* UIScrollView+Kurozora.swift */,
+				664B6D7D230F5AA300F9C726 /* UITableView+Kurozora.swift */,
+				663E341F2360BB06003386D1 /* UITableViewCell+Kurozora.swift */,
+				66496EEA2373423D00911F2C /* UITextField+Kurozora.swift */,
+				66496EE623733CD000911F2C /* UITextView+Kurozora.swift */,
+				66B216A721C033B9006E167D /* UIView+Kurozora.swift */,
+				6611234D208F70CB00E6033A /* UIViewController+Kurozora.swift */,
+				6646A26D236A54A700DCC0A4 /* URL+Kurozora.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		66E54EBC244E1486007248EE /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				66B2C740232F99440042AB12 /* Array+Kurozora.swift */,
+				66E54EC2244E1698007248EE /* Array+String.swift */,
+				667F9ADA21B57D5C003F6629 /* Date+Kurozora.swift */,
+				66973DF92311E4400097A9F8 /* Notification+Kurozora.swift */,
+				661DBC4E234947D7009292DF /* SKProduct+Kurozora.swift */,
+				66E54EBF244E160F007248EE /* String+Date.swift */,
+				6634735D23343D55006B7F99 /* String+Kurozora.swift */,
+				6699A1C023779E6800517C2C /* TimeInterval+String.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		66E54EC1244E166E007248EE /* Tabman */ = {
+			isa = PBXGroup;
+			children = (
+				662DB4DC237EF40800B7FE7E /* Tabman+Kurozora.swift */,
+			);
+			path = Tabman;
+			sourceTree = "<group>";
+		};
 		66E748BA20987E1A0039A105 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -2330,7 +2374,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2509,6 +2553,7 @@
 				6609FAD921D90C13008DF5E4 /* KNetworkManager.swift in Sources */,
 				663E342D2360D559003386D1 /* VerticalCollectionCellStyle.swift in Sources */,
 				661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */,
+				66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
@@ -2600,6 +2645,7 @@
 				6603F5EA22E9BC350064BE62 /* KModalTransition.swift in Sources */,
 				66DEB4B221D419420093725F /* KSearchController.swift in Sources */,
 				663E34252360D2F2003386D1 /* BannerLockupCollectionViewCell.swift in Sources */,
+				66E54EC0244E160F007248EE /* String+Date.swift in Sources */,
 				6694202723EAF1C800D69B5E /* Scheme.swift in Sources */,
 				6640E18D22ADD0A500D0F575 /* BiometricType.swift in Sources */,
 				66B2C741232F99440042AB12 /* Array+Kurozora.swift in Sources */,
@@ -2656,12 +2702,14 @@
 				662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */,
 				66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */,
 				665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */,
+				666D3E8C244DE7240068A103 /* UserProfile+UIImage.swift in Sources */,
 				667F9AD421B47E6D003F6629 /* BadgeTableViewCell.swift in Sources */,
 				66C4DAE1243BE52900C4B90A /* KKLibrarySortTypeOptions+Kurozora.swift in Sources */,
 				6617D536222C9CC0001FD649 /* RelatedShowCollectionViewCell.swift in Sources */,
 				666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */,
 				66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */,
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
+				66E54EC3244E1698007248EE /* Array+String.swift in Sources */,
 				663266CA2444960100295CE7 /* InAppPurchasesTableViewController.swift in Sources */,
 				667943652273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,

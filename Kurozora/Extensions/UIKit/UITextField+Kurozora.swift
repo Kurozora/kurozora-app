@@ -1,5 +1,5 @@
 //
-//  UITextView+Kurozora.swift
+//  UITextField+Kurozora.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 06/11/2019.
@@ -8,7 +8,8 @@
 
 import UIKit
 
-extension UITextView {
+extension UITextField {
+	// MARK: - Properties
 	#if targetEnvironment(macCatalyst)
 	@objc(_focusRingType)
 	var focusRingType: UInt {

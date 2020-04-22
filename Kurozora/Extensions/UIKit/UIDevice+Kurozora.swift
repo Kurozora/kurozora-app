@@ -11,6 +11,7 @@ import LocalAuthentication
 
 // MARK: - Model
 extension UIDevice {
+	// MARK: - Properties
 	/// The device's model name in a readable form.
 	static let modelName: String = {
 		var systemInfo = utsname()
@@ -21,6 +22,13 @@ extension UIDevice {
 			return identifier + String(UnicodeScalar(UInt8(value)))
 		}
 
+		/**
+			Maps the given identifier to a device name.
+
+			- Parameter identifier: The identifier used to map to a device name.
+
+			- Returns: the mapped device name. If no device with the given identifier is found then the `identifier` is returned.
+		*/
 		func mapToDevice(identifier: String) -> String {
 			#if os(iOS)
 			switch identifier {
@@ -121,6 +129,7 @@ extension UIDevice {
 
 // MARK: - Orientation
 extension UIDevice {
+	// MARK: - Properties
 	/// Returns true if the current device is an iPad
 	static var isPad: Bool {
 		return UIDevice.current.userInterfaceIdiom == .pad
@@ -169,6 +178,7 @@ extension UIDevice {
 
 // MARK: - Capabilities
 extension UIDevice {
+	// MARK: - Properties
 	/// A boolean indicating if the device has a `Top Notch`™.
 	static let hasTopNotch: Bool = {
 		return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
@@ -196,22 +206,55 @@ extension UIDevice {
 
 // MARK: - Screen
 extension UIDevice {
-	public enum `Type` {
-		// iPhone
+	// MARK: - Enums
+	/**
+		A set of available device types.
+
+		```
 		case iPhone5SSE
 		case iPhone66S78
 		case iPhone66S78PLUS
 		case iPhoneXXs
+		...
+		```
+	*/
+	enum `Type` {
+		// MARK: - Cases
+		// iPhone
+		/// The device is an iPhone 5, iPhone 5S or iPhone SE.
+		case iPhone5SSE
+
+		/// The device is an iPhone 6, iPhone 6S, iPhone 7 or iPhone 8.
+		case iPhone66S78
+
+		/// The device is an iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus.
+		case iPhone66S78PLUS
+
+		/// The device is an iPhone X or iPhone Xs.
+		case iPhoneXXs
+
+		/// The device is an iPhone Xs Max.
 		case iPhoneXsMax
+
+		/// The device is an iPhone Xr.
 		case iPhoneXr
 
 		// iPad
+		/// The device is an iPad.
 		case iPad
+
+		/// The device is an iPad Air 3.
 		case iPadAir3
+
+		/// The device is an iPad Pro 11".
 		case iPadPro11
+
+		/// The device is an iPad Pro 12".
 		case iPadPro12
 	}
 
+	// MARK: - Properties
+	/// The type of the current device.
 	static var type: Type {
 		switch UIDevice().userInterfaceIdiom {
 		case .phone:

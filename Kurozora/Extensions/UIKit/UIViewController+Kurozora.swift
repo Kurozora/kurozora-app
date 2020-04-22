@@ -13,6 +13,7 @@ import SPStorkController
 
 // MARK: - View
 extension UIViewController {
+	// MARK: - Functions
 	/**
 		Notifies the view controller that its view is about to be reloaded.
 
@@ -24,6 +25,7 @@ extension UIViewController {
 
 // MARK: - Present
 extension UIViewController {
+	// MARK: - Functions
 	/**
 		Modally present the given view controller.
 
@@ -49,7 +51,7 @@ extension UIViewController {
 		- Parameter image: The url of the image to pass onto the view.
 		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
 	*/
-	public func presentPhotoViewControllerWith(url image: String?, from startingImageView: UIImageView) {
+	func presentPhotoViewControllerWith(url image: String?, from startingImageView: UIImageView) {
 		guard let image = image else { return }
 		guard let imageUrl = URL(string: image) else { return }
 
@@ -77,7 +79,7 @@ extension UIViewController {
 		- Parameter image: The UIImage of the image view to pass onto the view.
 		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
 	*/
-	public func presentPhotoViewControllerWith(image: UIImage?, from startingImageView: UIImageView) {
+	func presentPhotoViewControllerWith(image: UIImage?, from startingImageView: UIImageView) {
 		guard let image = image else { return }
 
 		let photoUrl = [AXPhoto(image: image)]
@@ -104,7 +106,7 @@ extension UIViewController {
 		- Parameter image: The string of the image to pass onto the view.
 		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
 	*/
-	public func presentPhotoViewControllerWith(string image: String?, from startingImageView: UIImageView) {
+	func presentPhotoViewControllerWith(string image: String?, from startingImageView: UIImageView) {
 		guard let image = image else { return }
 
 		let photoUrl = [AXPhoto(image: UIImage(named: image))]
@@ -130,7 +132,7 @@ extension UIViewController {
 
 		- Parameter youtubeID: The id of the YouTube video that should be presented.
 	*/
-	public func presentVideoViewControllerWith(string videoUrl: String) {
+	func presentVideoViewControllerWith(string videoUrl: String) {
 		let videoURL = URL(string: videoUrl)
 		let player = AVPlayer(url: videoURL!)
 		let playerViewController = AVPlayerViewController()

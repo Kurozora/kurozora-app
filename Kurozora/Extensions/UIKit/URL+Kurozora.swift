@@ -9,13 +9,30 @@
 import UIKit
 
 extension URL {
+	// MARK: - Properties
+	/// The deep link URL to the Twitter page of Kurozora.
 	static let twitterPageDeepLink = URL(string: "twitter://user?id=991929359052177409")
+
+	/// The Twitter page URL of Kurozora.
 	static let twitterPageURL = URL(string: "https://www.twitter.com/KurozoraApp")
+
+	/// The deep link URL to the Medium page of Kurozora.
 	static let mediumPageDeepLink = URL(string: "medium://@kurozora")
+
+	/// The Medium page URL of Kurozora.
 	static let mediumPageURL = URL(string: "https://medium.com/@kurozora")
+
+	/// The deep link URL to the App Store page of Kurozora.
 	static let rateURL = URL(string: "itms-apps://apps.apple.com/gb/app/id1442061397?action=write-review")
 
-	/// Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
+	// MARK: - Functions
+	/**
+		Returns the preferred `URL` to open by the app.
+
+		Replaces the scheme of the url with ther user's preferred scheme if the scheme can be opened by the system, otherwise the url is returned as is.
+
+		- Returns: the preferred `URL` to open by the app.
+	*/
 	func withPreferredScheme() -> URL {
 		guard let scheme = self.scheme?.appending("://") else { return self }
 		let kBrowser = KBrowser(rawValue: UserSettings.defaultBrowser) ?? .safari

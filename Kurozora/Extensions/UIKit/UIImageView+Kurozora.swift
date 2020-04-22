@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 
 extension UIImageView {
+	// MARK: - Functions
 	/**
 		Sets up the image view with the given image url and placeholder. The downloaded image is also saved in the cache storage, so subsequent requests will load from the cache if the image is found.
 

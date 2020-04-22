@@ -9,6 +9,7 @@
 import UIKit
 
 extension UITableView {
+	// MARK: - Functions
 	/// Set table header view & add Auto layout.
 	func setTableHeaderView(headerView: UIView?) {
 		guard let headerView = headerView else { return }

@@ -22,7 +22,7 @@ PODS:
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
-  - KurozoraKit (0.2.1):
+  - KurozoraKit (0.2.2):
     - KeychainAccess
     - Kingfisher
     - SCLAlertView (~> 0.8)
@@ -69,8 +69,8 @@ PODS:
   - SwiftTheme (0.5.2)
   - SwiftyJSON (5.0.0)
   - SwipeCellKit (2.7.1)
-  - Tabman (2.8.0):
-    - Pageboy (~> 3.5.0)
+  - Tabman (2.8.1):
+    - Pageboy (~> 3.5.1)
   - TRON (5.0.3):
     - Alamofire (~> 5.0)
     - TRON/Core (= 5.0.3)
@@ -156,7 +156,7 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
-  KurozoraKit: 6724b8b3bd9c3a7da10725ac83f230737bf53b16
+  KurozoraKit: db1ba344e6ba252801315116f6d1d38f4af5c5ef
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 288353d4cc848c24deec2f7542f325089247c136
@@ -171,7 +171,7 @@ SPEC CHECKSUMS:
   SwiftTheme: 8b02c479bb4441b2b6790ac126e961b1b6fb0932
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
-  Tabman: f62ad94ee54a7d96e3fbab34f677d9ea4d38ece6
+  Tabman: b1d349045017c25d558aef052c2d7eeac1273c0c
   TRON: 3cb6a8c19230177c97225860d2ff38b618d51a53
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003

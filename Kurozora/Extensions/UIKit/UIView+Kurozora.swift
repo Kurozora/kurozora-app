@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIView {
+	// MARK: - Functions
 	/**
 		Adds parallax effect to the view.
 
