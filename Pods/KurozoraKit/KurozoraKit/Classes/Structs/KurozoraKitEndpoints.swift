@@ -81,12 +81,12 @@ internal struct KurozoraKitEndpoints {
 	/// **Replace:** `?` with the id of the thread.
 	let forumsThreadsVote = "forum-threads/?/vote"
 
-	/// The endpoint to lock a thread
+	/// The endpoint to lock a thread.
 	///
 	/// **Replace:** `?` with the id of the thread.
 	let forumsThreadsLock = "forum-threads/?/lock"
 
-	/// The endpoint to search for threads
+	/// The endpoint to search for threads.
 	let forumsThreadsSearch = "forum-threads/search"
 
 	// MARK: - Forums Replies
@@ -171,6 +171,11 @@ internal struct KurozoraKitEndpoints {
 	///
 	/// **Replace:** `?` with the id of the user.
 	let usersLibraryMALImport = "users/?/library/mal-import"
+
+	/// The endpoint to search for shows in the user's library.
+	///
+	/// **Replace:** `?` with the id of the user.
+	let animeSearchInLibrary = "users/?/library/search"
 
 	/// The endpoint to add or remove shows from the user's favorite shows list.
 	///

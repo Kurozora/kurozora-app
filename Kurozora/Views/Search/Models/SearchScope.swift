@@ -64,7 +64,7 @@ enum SearchScope: Int {
 		case .show:
 			return R.reuseIdentifier.searchShowResultsCell.identifier
 		case .myLibrary:
-			return "SearchLibraryResultCell"
+			return R.reuseIdentifier.searchShowResultsCell.identifier
 		case .thread:
 			return R.reuseIdentifier.searchForumsResultsCell.identifier
 		case .user:

@@ -363,6 +363,38 @@ extension KurozoraKit {
 	}
 
 	/**
+		Fetch a list of shows matching the search query in the user's library.
+
+		- Parameter userID: The id of the user in whose library the shows will searched.
+		- Parameter show: The search query by which the search list should be fetched.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func search(inUserLibrary userID: Int,forShow show: String, completion completionHandler: @escaping (_ result: Result<[ShowDetailsElement], KKError>) -> Void) {
+		let animeSearchInLibrary = self.kurozoraKitEndpoints.animeSearchInLibrary.replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<Search, KKError> = tron.swiftyJSON.request(animeSearchInLibrary)
+
+		request.headers = headers
+		if User.isSignedIn {
+			request.headers["kuro-auth"] = self._authenticationKey
+		}
+
+		request.method = .get
+		request.parameters = [
+			"query": show
+		]
+		request.perform(withSuccess: { search in
+			completionHandler(.success(search.showResults ?? []))
+		}, failure: { error in
+//			if self.services.showAlerts {
+//				SCLAlertView().showError("Can't get search results 😔", subTitle: error.message)
+//			}
+			print("Received library search error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
 		Fetch the favorite shows list for the given user.
 
 		- Parameter userID: The id of the user whose favorite list will be fetched.

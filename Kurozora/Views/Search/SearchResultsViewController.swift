@@ -8,35 +8,29 @@
 
 import UIKit
 import KurozoraKit
-import SwiftyJSON
-import SwiftTheme
+import TRON
 
+/**
+	The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
+*/
 class SearchResultsCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
-	var showResults: [ShowDetailsElement]? {
+	/// The collection of results fetched by the search request.
+	var searchResults: [JSONDecodable]? {
 		didSet {
-			if showResults != nil {
-				self.collectionView.reloadData()
-			}
-		}
-	}
-	var threadResults: [ForumsThreadElement]? {
-		didSet {
-			if threadResults != nil {
-				self.collectionView.reloadData()
-			}
-		}
-	}
-	var userResults: [UserProfile]? {
-		didSet {
-			if userResults != nil {
+			if searchResults != nil {
 				self.collectionView.reloadData()
 			}
 		}
 	}
 
+	/// A timer that fires after a certain time interval has elapsed, sending a specified message to a target object.
 	var timer: Timer?
-	var currentScope: Int = 0
+
+	/// The current scope of the search.
+	var currentScope: SearchScope = .show
+
+	/// The collection of suggested shows.
 	var suggestionElements: [ShowDetailsElement]? {
 		didSet {
 			if suggestionElements != nil {
@@ -83,12 +77,12 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 		- Parameter text: The string which to search for.
 		- Parameter searchScope: The scope in which the text should be searched.
 	*/
-	fileprivate func performSearch(forText text: String, searchScope: Int) {
+	fileprivate func performSearch(withText text: String, in searchScope: SearchScope) {
 		// Prepare view for search
-		currentScope = searchScope
+		self.emptySearchResults()
+		self.currentScope = searchScope
 
-		guard let searchScope = SearchScope(rawValue: searchScope) else { return }
-
+		// Decide with wich endpoint to perform the search
 		if !text.isEmpty {
 			switch searchScope {
 			case .show:
@@ -96,19 +90,32 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 					switch result {
 					case .success(let showResults):
 						DispatchQueue.main.async {
-							self.showResults = showResults
+							self.searchResults = showResults
 						}
 					case .failure:
 						break
 					}
 				}
-			case .myLibrary: break
+			case .myLibrary:
+				WorkflowController.shared.isSignedIn {
+					guard let userID = User.current?.id else { return }
+					KService.search(inUserLibrary: userID, forShow: text) { result in
+						switch result {
+						case .success(let showResults):
+							DispatchQueue.main.async {
+								self.searchResults = showResults
+							}
+						case .failure:
+							break
+						}
+					}
+				}
 			case .thread:
 				KService.search(forThread: text) { result in
 					switch result {
 					case .success(let threadResults):
 						DispatchQueue.main.async {
-							self.threadResults = threadResults
+							self.searchResults = threadResults
 						}
 					case .failure:
 						break
@@ -119,7 +126,7 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 					switch result {
 					case .success(let userResults):
 						DispatchQueue.main.async {
-							self.userResults = userResults
+							self.searchResults = userResults
 						}
 					case .failure:
 						break
@@ -131,17 +138,19 @@ class SearchResultsCollectionViewController: UICollectionViewController {
 
 	/// Sets all search results to nil and reloads the table view
 	fileprivate func emptySearchResults() {
-		showResults = nil
-		threadResults = nil
-		userResults = nil
+		searchResults = nil
 		collectionView.reloadData()
 	}
 
-	/// Performs search after the given amount of time has passed.
+	/**
+		Performs search after the given amount of time has passed.
+
+		 - Parameter timer: The timer object used to determin when to perform the search.
+	*/
 	@objc func search(_ timer: Timer) {
 		let userInfo = timer.userInfo as? [String: Any]
-		if let text = userInfo?["searchText"] as? String, let scope = userInfo?["searchScope"] as? Int {
-			performSearch(forText: text, searchScope: scope)
+		if let text = userInfo?["searchText"] as? String, let searchScope = userInfo?["searchScope"] as? SearchScope {
+			performSearch(withText: text, in: searchScope)
 		}
 	}
 }
@@ -154,28 +163,16 @@ extension SearchResultsCollectionViewController {
 			resultsCount = 6
 		}
 
-		if showResults != nil || threadResults != nil || userResults != nil {
-			if let searchScope = SearchScope(rawValue: currentScope) {
-				switch searchScope {
-				case .show:
-					resultsCount = showResults?.count
-				case .myLibrary: break
-				case .thread:
-					resultsCount = threadResults?.count
-				case .user:
-					resultsCount = userResults?.count
-				}
-			}
+		if searchResults != nil {
+			resultsCount = searchResults?.count
 		}
 
 		return resultsCount ?? 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if showResults != nil || threadResults != nil || userResults != nil {
-			let searchScope = SearchScope(rawValue: currentScope) ?? .show
-			let identifier = searchScope.identifierString
-			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! SearchBaseResultsCell
+		if searchResults != nil {
+			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: currentScope.identifierString, for: indexPath) as! SearchBaseResultsCell
 			return searchBaseResultsCell
 		}
 
@@ -186,12 +183,15 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if showResults != nil {
-			(cell as? SearchShowResultsCell)?.showDetailsElement = showResults?[indexPath.row]
-		} else if threadResults != nil {
-			(cell as? SearchForumsResultsCell)?.forumsThreadElement = threadResults?[indexPath.row]
-		} else if userResults != nil {
-			(cell as? SearchUserResultsCell)?.userProfile = userResults?[indexPath.row]
+		if searchResults != nil {
+			switch currentScope {
+			case .show, .myLibrary:
+				(cell as? SearchShowResultsCell)?.showDetailsElement = searchResults?[indexPath.row] as? ShowDetailsElement
+			case .thread:
+				(cell as? SearchForumsResultsCell)?.forumsThreadElement = searchResults?[indexPath.row] as? ForumsThreadElement
+			case .user:
+				(cell as? SearchUserResultsCell)?.userProfile = searchResults?[indexPath.row] as? UserProfile
+			}
 		} else {
 			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestionElements?[indexPath.row]
 		}
@@ -202,22 +202,25 @@ extension SearchResultsCollectionViewController {
 extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
-		if showResults != nil {
-			if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
-				let showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
-				showDetailsViewController.showDetailsElement = showDetailsElement
-				SearchHistory.saveContentsOf(showDetailsElement)
-				presentingViewController?.show(showDetailsViewController, sender: nil)
-			}
-		} else if threadResults != nil {
-			if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
-				threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
-				presentingViewController?.show(threadTableViewController, sender: nil)
-			}
-		} else if userResults != nil {
-			if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-				profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
-				presentingViewController?.show(profileTableViewController, sender: nil)
+		if searchResults != nil {
+			switch currentScope {
+			case .show, .myLibrary:
+				if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
+					let showDetailsElement = (searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement
+					showDetailsViewController.showDetailsElement = showDetailsElement
+					SearchHistory.saveContentsOf(showDetailsElement)
+					presentingViewController?.show(showDetailsViewController, sender: nil)
+				}
+			case .thread:
+				if let threadTableViewController = R.storyboard.forums.threadTableViewController() {
+					threadTableViewController.forumsThreadElement = (searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement
+					presentingViewController?.show(threadTableViewController, sender: nil)
+				}
+			case .user:
+				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
+					profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
+					presentingViewController?.show(profileTableViewController, sender: nil)
+				}
 			}
 		} else {
 			if let showDetailsViewController = R.storyboard.showDetails.showDetailCollectionViewController() {
@@ -231,7 +234,7 @@ extension SearchResultsCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension SearchResultsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		if showResults != nil || threadResults != nil || userResults != nil {
+		if searchResults != nil {
 			return 1
 		}
 
@@ -246,22 +249,26 @@ extension SearchResultsCollectionViewController {
 	}
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
-		if showResults != nil {
-			if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
-				return 0.40
-			}
-			return 0.25
-		} else if threadResults != nil {
-			if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
-				return 0.30
-			}
-			return 0.15
-		} else if userResults != nil {
-			if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
+		if searchResults != nil {
+			switch currentScope {
+			case .show, .myLibrary:
+				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
+					return 0.40
+				}
 				return 0.25
+			case .thread:
+				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
+					return 0.30
+				}
+				return 0.15
+			case .user:
+				if UIDevice.isPhone, UIDevice.isPortrait || UIDevice.isFlat {
+					return 0.25
+				}
+				return 0.20
 			}
-			return 0.20
 		}
+
 		return (1.50 / columnsCount.double).cgFloat
 	}
 
@@ -321,25 +328,26 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		guard let searchScope = SearchScope(rawValue: selectedScope) else { return }
 		guard let text = searchBar.text else { return }
 
-		emptySearchResults()
-
-		if !text.isEmpty {
-			switch searchScope {
-			case .show, .thread, .user:
-				performSearch(forText: text, searchScope: selectedScope)
-			case .myLibrary: break
+		switch searchScope {
+		case .myLibrary:
+			WorkflowController.shared.isSignedIn {
+				self.performSearch(withText: text, in: searchScope)
+				return
 			}
+			searchBar.selectedScopeButtonIndex = currentScope.rawValue
+		default:
+			self.performSearch(withText: text, in: searchScope)
 		}
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let text = searchBar.text else { return }
-		let scope = searchBar.selectedScopeButtonIndex
-		performSearch(forText: text, searchScope: scope)
+		performSearch(withText: text, in: searchScope)
 	}
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		let searchScope = searchBar.selectedScopeButtonIndex
+		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 
 		if !searchText.isEmpty {
 			timer?.invalidate()
