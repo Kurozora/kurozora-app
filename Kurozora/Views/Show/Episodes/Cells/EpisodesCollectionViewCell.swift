@@ -76,7 +76,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 		guard let episodesElement = episodesElement else { return }
 
 		if let episodeScreenshot = episodesElement.screenshot {
-			self.episodeImageView.setImage(with: episodeScreenshot, placeholder: R.image.placeholders.show_episode_image()!)
+			self.episodeImageView.setImage(with: episodeScreenshot, placeholder: R.image.placeholders.showEpisode()!)
 		}
 
 		if let episodeNumber = episodesElement.number {

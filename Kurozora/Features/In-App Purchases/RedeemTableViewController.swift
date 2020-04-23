@@ -31,7 +31,7 @@ class RedeemTableViewController: KTableViewController {
 
 	static let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 	let sclAlertView = SCLAlertView(appearance: appearance)
-	let previewImages = [R.image.redeem_code()]
+	let previewImages = [R.image.promotional.redeemCode()]
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {

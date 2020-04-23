@@ -28,7 +28,7 @@ class IconNotificationCell: BasicNotificationCell {
 
 		if let profileImage = userNotificationsElement?.data?.profileImage {
 			if let usernameInitials = userNotificationsElement?.data?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}

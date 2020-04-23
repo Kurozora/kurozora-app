@@ -13,27 +13,27 @@ class NotificationSettingsCell: SettingsCell {
 	@IBOutlet weak var basicNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				basicNotificationDeviceImageView.image = R.image.settings.notifications.basic_ipad()
+				basicNotificationDeviceImageView.image = R.image.settings.notifications.basicIPad()
 			} else {
-				basicNotificationDeviceImageView.image = R.image.settings.notifications.basic_iphone()
+				basicNotificationDeviceImageView.image = R.image.settings.notifications.basicIPhone()
 			}
 		}
 	}
 	@IBOutlet weak var iconNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				iconNotificationDeviceImageView.image = R.image.settings.notifications.icon_ipad()
+				iconNotificationDeviceImageView.image = R.image.settings.notifications.iconIPad()
 			} else {
-				iconNotificationDeviceImageView.image = R.image.settings.notifications.icon_iphone()
+				iconNotificationDeviceImageView.image = R.image.settings.notifications.iconIPhone()
 			}
 		}
 	}
 	@IBOutlet weak var statusBarNotificationDeviceImageView: UIImageView! {
 		didSet {
 			if UIDevice.isPad {
-				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbar_ipad()
+				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbarIPad()
 			} else {
-				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbar_iphone()
+				statusBarNotificationDeviceImageView.image = R.image.settings.notifications.statusbarIPhone()
 			}
 		}
 	}

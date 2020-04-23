@@ -242,7 +242,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure banner image
 		if let bannerImageURL = user.profile?.bannerImageURL {
-			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.banner_image()!)
+			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
 		}
 
 		// Configure user bio

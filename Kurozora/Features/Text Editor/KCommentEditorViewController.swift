@@ -84,7 +84,7 @@ class KCommentEditorViewController: KViewController {
 
 		if let profileImage = Kurozora.shared.KDefaults["profile_image"] {
 			if let usernameInitials = Kurozora.shared.KDefaults["username"]?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
 				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}

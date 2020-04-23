@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 import SCLAlertView
-import SwiftTheme
 
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
@@ -44,6 +43,20 @@ class AccountTableViewController: SubSettingsViewController {
 		// Setup profile image.
 		profileImageView.image = User.current?.profileImage
 	}
+
+	// MARK: - Segue
+	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+		if identifier == "SIWASegue" {
+			if #available(iOS 13.0, macCatalyst 13.0, *) {
+				return true
+			} else {
+				SCLAlertView().showInfo("Not supported 😵", subTitle: "Sign in with Apple is only supported on iOS 13.0 and up. If you would like to use this feature, please update your iOS version if possible.")
+				return false
+			}
+		}
+
+		return true
+	}
 }
 
 // MARK: - UITableViewDataSource
@@ -56,7 +69,7 @@ extension AccountTableViewController {
 		case (1, 0):
 			let username = User.current?.username ?? ""
 			let alertView = SCLAlertView()
-			alertView.addButton("Yes, sign me out 😞", action: {
+			alertView.addButton("Yes, sign me out 🤨", action: {
 				if User.isSignedIn {
 					guard let sessionID = User.current?.session?.id else { return }
 					KService.signOut(ofSessionID: sessionID) { result in

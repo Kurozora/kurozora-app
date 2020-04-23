@@ -18,7 +18,7 @@ class PurchaseTableViewController: InAppPurchasesTableViewController {
 	}
 
 	override var previewImages: [UIImage?] {
-		return [R.image.promo_icons(), R.image.promo_gif()]
+		return [R.image.promotional.inAppPurchases.icons(), R.image.promotional.inAppPurchases.gifs()]
 	}
 
 	// MARK: - IBActions

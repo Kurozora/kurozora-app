@@ -67,7 +67,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		self.taglineLabel?.text = showDetailsElement.tagline
 
 		if let bannerThumbnail = showDetailsElement.banner {
-			thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: R.image.placeholders.show_banner_image()!)
+			thumbnailPlaceholder.setImage(with: bannerThumbnail, placeholder: R.image.placeholders.showBanner()!)
 		}
 
 		// Configure video player

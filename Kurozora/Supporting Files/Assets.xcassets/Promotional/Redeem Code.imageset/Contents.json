@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "redeem_code.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

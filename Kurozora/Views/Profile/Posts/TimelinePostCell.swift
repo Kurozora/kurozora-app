@@ -52,7 +52,7 @@ class FeedPostCell: BaseFeedPostCell {
 		// Profile Image
 		if let profileImage = feedPostElement.profileImage {
 			if let usernameInitials = feedPostElement.posterUsername?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.profile_image()!)
+				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
 				profileImageView?.setImage(with: profileImage, placeholder: placeholderImage)
 			}
 		}

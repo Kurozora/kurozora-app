@@ -109,12 +109,12 @@ extension ShowDetailHeaderCollectionViewCell {
 
 		// Configure poster view
 		if let posterImage = showDetailsElement.poster {
-			posterImageView.setImage(with: posterImage, placeholder: R.image.placeholders.show_poster_image()!)
+			posterImageView.setImage(with: posterImage, placeholder: R.image.placeholders.showPoster()!)
 		}
 
 		// Configure banner view
 		if let bannerImage = showDetailsElement.banner {
-			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.show_banner_image()!)
+			bannerImageView.setImage(with: bannerImage, placeholder: R.image.placeholders.showBanner()!)
 		}
 
 		// Configre favorite status
@@ -142,7 +142,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.show_banner_image.name, from: bannerImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.showBanner.name, from: bannerImageView)
 		}
 	}
 
@@ -150,7 +150,7 @@ extension ShowDetailHeaderCollectionViewCell {
 		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.show_poster_image.name, from: posterImageView)
+			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.showPoster.name, from: posterImageView)
 		}
 	}
 }

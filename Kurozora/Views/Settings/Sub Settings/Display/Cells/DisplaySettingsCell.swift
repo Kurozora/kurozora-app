@@ -12,7 +12,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var lightOptionContainerView: UIView?
 	@IBOutlet weak var lightOptionImageView: UIImageView? {
 		didSet {
-			lightOptionImageView?.image = R.image.settings.display.light_option()
+			lightOptionImageView?.image = R.image.settings.display.lightOption()
 			toggleAppAppearanceOptions(!UserSettings.automaticDarkTheme)
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAppAppearance(_:)), name: .KSAppAppearanceDidChange, object: nil)
 		}
@@ -37,7 +37,7 @@ class DisplaySettingsCell: SettingsCell {
 	@IBOutlet weak var darkOptionContainerView: UIView?
 	@IBOutlet weak var darkOptionImageView: UIImageView? {
 		didSet {
-			darkOptionImageView?.image = R.image.settings.display.dark_option()
+			darkOptionImageView?.image = R.image.settings.display.darkOption()
 		}
 	}
 	@IBOutlet weak var darkOptionSelectedImageView: UIImageView? {

@@ -293,7 +293,7 @@ extension SettingsTableViewController {
 			case .account:
 				return UIImage()
 			case .keychain:
-				return R.image.icons.kdefaults()!
+				return R.image.icons.kDefaults()!
 			case .notifications:
 				return R.image.icons.notifications()!
 			case .displayBlindness:
@@ -307,14 +307,14 @@ extension SettingsTableViewController {
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					return R.image.icons.face_id()!
+					return R.image.icons.faceID()!
 				case .touchID:
-					return R.image.icons.touch_id()!
+					return R.image.icons.touchID()!
 				case .none:
 					return R.image.icons.lock()!
 				}
 			case .cache:
-				return R.image.icons.clear_cache()!
+				return R.image.icons.clearCache()!
 			case .privacy:
 				return R.image.icons.privacy()!
 			case .rate:
@@ -324,11 +324,11 @@ extension SettingsTableViewController {
 			case .restoreFeatures:
 				return R.image.icons.restore()!
 			case .tipjar:
-				return R.image.icons.tipjar()!
+				return R.image.icons.tipJar()!
 			case .followTwitter:
-				return R.image.icons.twitter()!
+				return R.image.icons.brands.twitter()!
 			case .followMedium:
-				return R.image.icons.medium()!
+				return R.image.icons.brands.medium()!
 			}
 		}
 	}

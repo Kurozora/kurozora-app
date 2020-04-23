@@ -39,7 +39,7 @@ class FeedTabsViewController: TabmanViewController {
 		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
-		navigationProfileButton.setImage(User.current?.profileImage ?? R.image.placeholders.profile_image(), for: .normal)
+		navigationProfileButton.setImage(User.current?.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
 
 		// Fetch feed sections
 //		KurozoraKit.shared.getFeedSections(withSuccess: { (sections) in
