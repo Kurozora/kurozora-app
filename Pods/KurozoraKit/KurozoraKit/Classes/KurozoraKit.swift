@@ -19,25 +19,21 @@ import TRON
 */
 public class KurozoraKit {
 	// MARK: - Properties
-	/// The current user's authentication token.
+	/// Storage to the current user's authentication key.
 	internal var _authenticationKey: String = ""
-
 	/// The current user's authentication key.
-	public var authenticationKey: String? {
+	public var authenticationKey: String {
 		get {
-			fatalError("Access to authentication key denied.")
+			let authenticationKey = User.current?.authenticationKey ?? self._authenticationKey
+			return self._authenticationKey.isEmpty ? authenticationKey : self._authenticationKey
 		}
 		set {
-			guard let newValue = newValue else { return }
-			_authenticationKey = newValue
+			self._authenticationKey = newValue
 		}
 	}
 
-	/// The app's identifier prefix.
-	internal let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
-
 	/// A collection of Kurozora API endpoints.
-	internal let kurozoraKitEndpoints: KurozoraKitEndpoints = KurozoraKitEndpoints()
+	internal let kurozoraKitEndpoints: KKEndpoints = KKEndpoints()
 
 	/**
 		Most common HTTP headers for the Kurozora API.
@@ -67,7 +63,7 @@ public class KurozoraKit {
 		- Parameter authenticationKey: The current signed in user's authentication key.
 		- Parameter services: The desired [KKServices](x-source-tag://KKServices) to be used.
 	*/
-	public init(debugURL: String? = nil, authenticationKey: String? = nil, services: KKServices = KKServices()) {
+	public init(debugURL: String? = nil, authenticationKey: String = "", services: KKServices = KKServices()) {
 		self.tron = TRON(baseURL: debugURL ?? "https://kurozora.app/api/v1/", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 		self.authenticationKey = authenticationKey
 		self.services = services
@@ -77,12 +73,12 @@ public class KurozoraKit {
 	/**
 		Sets the `authenticationKey` property with the given auth key.
 
-		- Parameter authKey: The current user's authentication token.
+		- Parameter authenticationKey: The current user's authentication key.
 
 		- Returns: Reference to `self`.
 	*/
-	public func authenticationKey(_ authKey: String) -> KurozoraKit {
-		self.authenticationKey = authKey
+	public func authenticationKey(_ authenticationKey: String) -> KurozoraKit {
+		self.authenticationKey = authenticationKey
 		return self
 	}
 

@@ -75,7 +75,7 @@ extension AccountTableViewController {
 					KService.signOut(ofSessionID: sessionID) { result in
 						switch result {
 						case .success:
-							try? Kurozora.shared.KDefaults.remove("Account_\(username)")
+							try? Kurozora.shared.keychain.remove("Account_\(username)")
 						case .failure:
 							break
 						}

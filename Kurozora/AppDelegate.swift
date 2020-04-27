@@ -8,16 +8,12 @@
 
 import UIKit
 import KurozoraKit
-import KeychainAccess
 import StoreKit
 import Kingfisher
 import UserNotifications
 
 // MARK: - Kurozora Kit
-let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
-let keychain = Keychain(service: "Kurozora", accessGroup: "\(appIdentifierPrefix)app.kurozora.shared").synchronizable(true).accessibility(.afterFirstUnlock)
-let services = KKServices(keychain: keychain, showAlerts: true)
-let KService = KurozoraKit(debugURL: "http://kurozora-web.test/api/v1/").services(services)
+let KService = KurozoraKit(debugURL: "http://kurozora-web.test/api/v1/").services(Kurozora.shared.services)
 
 // MARK: - Kurozora
 @UIApplicationMain
@@ -60,6 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if isUnreachable {
 			return true
 		}
+
+		// Restore current user session
+		WorkflowController.shared.restoreCurrentUserSession()
 
 		// Prepare home view
 		if #available(iOS 13.0, macCatalyst 13.0, *) {

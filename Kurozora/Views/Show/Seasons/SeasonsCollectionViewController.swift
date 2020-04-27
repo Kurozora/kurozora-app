@@ -12,7 +12,7 @@ import KurozoraKit
 class SeasonsCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var seasonsElements: [SeasonsElement]? {
+	var seasonsElements: [SeasonElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()

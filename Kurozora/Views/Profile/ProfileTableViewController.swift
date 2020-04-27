@@ -469,7 +469,7 @@ class ProfileTableViewController: KTableViewController {
 		var profileImage = profileImageView.image ?? UIImage()
 		var bannerImage = bannerImageView.image ?? UIImage()
 		var shouldUpdate = true
-		var shouldUpdateProfileImage = true
+//		var shouldUpdateProfileImage = true
 
 		// If everything is the same then dismiss and don't send a request to apply new information.
 		if self.bioTextCache == bioText && self.profileImageCache == profileImage && self.bannerImageCache == bannerImage {
@@ -480,7 +480,7 @@ class ProfileTableViewController: KTableViewController {
 		// If the profile image is the same, then ignore.
 		if self.profileImageCache == profileImage {
 			profileImage = UIImage()
-			shouldUpdateProfileImage = false
+//			shouldUpdateProfileImage = false
 		}
 
 		// If the banner is the same, then ignore.
@@ -497,11 +497,11 @@ class ProfileTableViewController: KTableViewController {
 			guard let userID = User.current?.id else { return }
 			KService.updateInformation(forUserID: userID, bio: bioText, profileImage: profileImage, bannerImage: bannerImage) { result in
 				switch result {
-				case .success(let user):
+				case .success:
 					self.editMode(false)
-					if let profileImageURL = user.profile?.profileImageURL, shouldUpdateProfileImage {
-						try? Kurozora.shared.KDefaults.set(profileImageURL, key: "profile_image")
-					}
+//					if let profileImageURL = user.profile?.profileImageURL, shouldUpdateProfileImage {
+//						try? Kurozora.shared.keychain.set(profileImageURL, key: "profile_image")
+//					}
 				case .failure:
 					break
 				}

@@ -7,30 +7,29 @@
 //
 
 import KurozoraKit
-import Foundation
-import Kingfisher
 
 // MARK: - User
 extension WorkflowController {
-//	func processUserData(fromSession userSession: UserSessions) {
-//		if let userID = userSession.user?.id {
-//			try? Kurozora.shared.KDefaults.set(String(userID), key: "user_id")
-//		}
-//
-//		if let username = userSession.user?.username {
-//			try? Kurozora.shared.KDefaults.set(username, key: "username")
-//		}
-//
-//		if let profileImage = userSession.user?.profileImage {
-//			try? Kurozora.shared.KDefaults.set(profileImage, key: "profile_image")
-//		}
-//
-//		if let authToken = userSession.authToken {
-//			try? Kurozora.shared.KDefaults.set(authToken, key: "auth_token")
-//		}
-//
-//		if let sessionID = userSession.currentSessions?.id {
-//			try? Kurozora.shared.KDefaults.set(String(sessionID), key: "session_id")
-//		}
-//	}
+	/**
+		Repopulates the current user's data.
+
+		This method can be used to restore the current user's data after the app has been completely closed.
+	*/
+	func restoreCurrentUserSession() {
+		if User.current == nil {
+			let kDefaults = Kurozora.shared.keychain
+			if let accountKey = kDefaults.allKeys(matching: "Account_*").first, let authenticationKey = kDefaults[accountKey] {
+				DispatchQueue.global(qos: .background).async {
+					KService.restoreDetails(forUserWith: authenticationKey) { result in
+						switch result {
+						case .success(let newAuthenticationKey):
+							try? kDefaults.set(newAuthenticationKey, key: accountKey)
+						case .failure:
+							break
+						}
+					}
+				}
+			}
+		}
+	}
 }

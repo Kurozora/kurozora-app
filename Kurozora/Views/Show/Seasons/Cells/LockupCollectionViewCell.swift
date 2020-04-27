@@ -67,7 +67,7 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	var seasonsElement: SeasonsElement? = nil {
+	var seasonsElement: SeasonElement? = nil {
 		didSet {
 			configureSeasonCell()
 		}

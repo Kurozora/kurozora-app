@@ -31,7 +31,7 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 
 	// MARK: - Properties
 	var episodeCell: EpisodesCollectionViewCell?
-	var episodeElement: EpisodesElement? {
+	var episodeElement: EpisodeElement? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()

@@ -53,7 +53,7 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 				DispatchQueue.main.async {
 					// Save user in keychain.
 					if let username = User.current?.username {
-						try? keychain.set(authenticationToken, key: "Account_\(username)")
+						try? Kurozora.shared.keychain.set(authenticationToken, key: "Account_\(username)")
 					}
 
 					// Update the user's authentication key in KurozoraKit.

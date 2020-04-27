@@ -26,7 +26,7 @@ class AuthenticationOptionsCell: SettingsCell {
 			if isSelected {
 				self.selectedImageView.image = R.image.symbols.checkmark()
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-				try? Kurozora.shared.KDefaults.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
+				try? Kurozora.shared.keychain.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
 			} else {
 				self.selectedImageView.image = nil
 			}
@@ -39,7 +39,7 @@ class AuthenticationOptionsCell: SettingsCell {
 		guard let requireAuthentication = requireAuthentication else { return }
 		primaryLabel?.text = requireAuthentication.stringValue
 
-		if let requireAuthenticationString = try? Kurozora.shared.KDefaults.get("requireAuthentication") {
+		if let requireAuthenticationString = try? Kurozora.shared.keychain.get("requireAuthentication") {
 			self.isSelected = requireAuthentication.equals(requireAuthenticationString)
 		}
 	}

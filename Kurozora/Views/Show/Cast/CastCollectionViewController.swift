@@ -12,7 +12,7 @@ import KurozoraKit
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var actorsElements: [ActorsElement]? {
+	var actorElements: [ActorElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -35,12 +35,12 @@ class CastCollectionViewController: KCollectionViewController {
         super.viewDidLoad()
 
 		// Stop activity indicator in case user doesn't need to fetch actors details.
-		if actorsElements != nil {
+		if actorElements != nil {
 			_prefersActivityIndicatorHidden = true
 		}
 
 		// Fetch actors
-		if actorsElements == nil {
+		if actorElements == nil {
 			DispatchQueue.global(qos: .background).async {
 				self.fetchActors()
 			}
@@ -65,7 +65,7 @@ class CastCollectionViewController: KCollectionViewController {
 			switch result {
 			case .success(let actors):
 				DispatchQueue.main.async {
-					self.actorsElements = actors
+					self.actorElements = actors
 				}
 			case .failure:
 				break
@@ -83,7 +83,7 @@ extension CastCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.actorElement = self.actorsElements?[indexPath.row]
+				castCollectionViewCell.actorElement = self.actorElements?[indexPath.row]
 
 				if collectionView.indexPathForLastItem == indexPath {
 					castCollectionViewCell.separatorView.isHidden = true
@@ -96,7 +96,7 @@ extension CastCollectionViewController {
 			}
 		}
 
-		let itemsPerSection = actorsElements?.count ?? 0
+		let itemsPerSection = actorElements?.count ?? 0
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])

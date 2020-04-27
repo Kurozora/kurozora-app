@@ -27,7 +27,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	@IBOutlet weak var cosmosView: CosmosView!
 
 	weak var episodesDelegate: EpisodesCollectionViewCellDelegate?
-	var episodesElement: EpisodesElement? = nil {
+	var episodesElement: EpisodeElement? = nil {
 		didSet {
 			configureCell()
 		}

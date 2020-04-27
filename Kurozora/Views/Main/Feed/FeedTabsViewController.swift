@@ -19,7 +19,7 @@ class FeedTabsViewController: TabmanViewController {
 	@IBOutlet weak var navigationProfileButton: UIButton!
 
 	// MARK: - Properties
-	var sections: [FeedSectionsElement]? {
+	var sections: [FeedSectionElement]? {
 		didSet {
 			self.reloadData()
 		}

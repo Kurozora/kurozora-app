@@ -18,7 +18,7 @@ class ForumsViewController: KTabbedViewController {
 	@IBOutlet weak var sortingBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var sections: [ForumsSectionsElement]? {
+	var sections: [ForumsSectionElement]? {
 		didSet {
 			self.reloadData()
 		}

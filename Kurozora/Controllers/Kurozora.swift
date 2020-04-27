@@ -13,22 +13,47 @@ import KeychainAccess
 import LocalAuthentication
 import SCLAlertView
 
+/**
+	A set of methods and properties used to manage shared behaviors for the `Kurozora` app.
+
+	The `Kurozora` object manages the app’s shared behaviors.
+	Use the `Kurozora` object to handle the following tasks:
+	- Ask the user for authentication before using the app.
+	- Handle URL schemes supported by the app.
+	- Initializing your app’s central data structures.
+	- Present aproriate views when the devices reachability changes.
+	- Registering for any required services at launch time, such as [KKServices](x-source-tag://KKServices).
+
+	- Tag: Kurozora
+*/
 class Kurozora {
 	// MARK: - Properties
-	var authenticationEnabled = false
-	var authenticationInterval = 0
+	// Authentication
+	/// Indicates whether authentication has been enabled by the user.
+	var authenticationEnabled: Bool = false
+
+	/// The interval used to determine whether the app should ask the user for authentication.
+	var authenticationInterval: Int = 0
 
 	/// Returns the singleton Kurozora instance.
-	static let shared = Kurozora()
+	static let shared: Kurozora = Kurozora()
 
+	// KurozoraKit
 	/// The app's identifier prefix.
-	static let appIdentifierPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
+	private let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as! String
 
 	/// The app's base keychain service.
-	let KDefaults = Keychain(service: "Kurozora", accessGroup: "\(appIdentifierPrefix)app.kurozora.shared" ).synchronizable(true).accessibility(.afterFirstUnlock)
+	let keychain: Keychain
+
+	/// KurozoraKit's enabled services
+	let services: KKServices
 
 	// MARK: - Initializers
-	private init() {}
+	/// Initializes an instance of `Kurozora` with `Keychain` and `KKService` objects.
+	private init() {
+		self.keychain = Keychain(service: "Kurozora", accessGroup: "\(self.appIdentifierPrefix)app.kurozora.shared").synchronizable(true).accessibility(.afterFirstUnlock)
+		self.services = KKServices(keychain: self.keychain, showAlerts: true)
+	}
 
 	// MARK: - Functions
 	/**
@@ -178,7 +203,7 @@ class Kurozora {
 extension Kurozora {
 	/// Asks the app if the user should authenticate so the app prepares for it.
 	func userShouldAuthenticate() {
-		if let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
+		if let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
 				self.authenticationEnabled = authenticationEnabled
 				prepareView()
@@ -189,7 +214,7 @@ extension Kurozora {
 
 	/// Tells the app that the user has to authenticate so the app prepares for it.
 	func userHasToAuthenticate() {
-		if let authenticationEnabledString = try? Kurozora.shared.KDefaults.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
+		if let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
 			if authenticationEnabled {
 				prepareForAuthentication()
 			}
@@ -205,7 +230,7 @@ extension Kurozora {
 
 	/// Prepare timer to prepare the app for authentication.
 	func prepareTimer() {
-		let requireAuthentication = try? Kurozora.shared.KDefaults.get("requireAuthentication")
+		let requireAuthentication = try? Kurozora.shared.keychain.get("requireAuthentication")
 		var interval = 0
 
 		switch RequireAuthentication.valueFrom(requireAuthentication) {

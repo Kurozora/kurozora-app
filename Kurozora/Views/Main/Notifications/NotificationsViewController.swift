@@ -26,7 +26,7 @@ class NotificationsViewController: KTableViewController {
 	var kSearchController: KSearchController = KSearchController()
 	var grouping: KNotification.GroupStyle = KNotification.GroupStyle(rawValue: UserSettings.notificationsGrouping) ?? .automatic
 	var oldGrouping: Int? = nil
-	var userNotificationsElement: [UserNotificationsElement]? {
+	var userNotificationsElement: [UserNotificationElement]? {
 		didSet {
 			self.groupNotifications(userNotificationsElement)
 
@@ -165,14 +165,14 @@ class NotificationsViewController: KTableViewController {
 	/**
 		Group the fetched notifications according to the user's notification preferences.
 
-		- Parameter userNotificationsElement: The array of the fetched notifications.
+		- Parameter userNotifications: The array of the fetched notifications.
 	*/
-	func groupNotifications(_ userNotificationsElement: [UserNotificationsElement]?) {
+	func groupNotifications(_ userNotifications: [UserNotificationElement]?) {
 		switch self.grouping {
 		case .automatic:
 			// Group notifications by date and assign a group title as key (Recent, Last Week, Yesterday etc.)
 			self.groupedNotifications = []
-			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
+			let groupedNotifications = userNotifications?.reduce(into: [String: [UserNotificationElement]](), { (result, userNotificationsElement) in
 				guard let creationDate = userNotificationsElement.creationDate else { return }
 				let timeKey = creationDate.groupTime
 
@@ -191,7 +191,7 @@ class NotificationsViewController: KTableViewController {
 			self.groupedNotifications = []
 
 			// Group notifications by type and assign a group title as key (Sessions, Messages etc.)
-			let groupedNotifications = userNotificationsElement?.reduce(into: [String: [UserNotificationsElement]](), { (result, userNotificationsElement) in
+			let groupedNotifications = userNotifications?.reduce(into: [String: [UserNotificationElement]](), { (result, userNotificationsElement) in
 				guard let type = userNotificationsElement.type else { return }
 				guard let notificationType = KNotification.CustomType(rawValue: type) else { return }
 				let timeKey = notificationType.stringValue
@@ -392,7 +392,7 @@ extension NotificationsViewController {
 		let baseNotificationCell = self.tableView.dequeueReusableCell(withIdentifier: notificationCellIdentifier, for: indexPath) as! BaseNotificationCell
 		baseNotificationCell.delegate = self
 		baseNotificationCell.notificationType = notificationType
-		baseNotificationCell.userNotificationsElement = notifications
+		baseNotificationCell.userNotificationElement = notifications
 		return baseNotificationCell
 	}
 }
@@ -402,7 +402,7 @@ extension NotificationsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let baseNotificationCell = tableView.cellForRow(at: indexPath) as? BaseNotificationCell
 		// Change notification status to read
-		guard let notificationID = baseNotificationCell?.userNotificationsElement?.id else { return }
+		guard let notificationID = baseNotificationCell?.userNotificationElement?.id else { return }
 		self.updateNotification(at: [indexPath], for: notificationID, withReadStatus: .read)
 
 		if baseNotificationCell?.notificationType == .session {
@@ -410,7 +410,7 @@ extension NotificationsViewController {
 			WorkflowController.shared.showSessions()
 		} else if baseNotificationCell?.notificationType == .follower {
 			// Change notification status to read
-			let userID = baseNotificationCell?.userNotificationsElement?.data?.userID
+			let userID = baseNotificationCell?.userNotificationElement?.data?.userID
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
 				profileViewController.userID = userID
 				profileViewController.dismissButtonIsEnabled = true

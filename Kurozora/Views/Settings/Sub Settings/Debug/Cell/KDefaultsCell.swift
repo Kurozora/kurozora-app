@@ -28,6 +28,6 @@ class KDefaultsCell: SettingsCell {
         guard let key = primaryLabel?.text else {return}
         guard let value = valueTextField.text else {return}
 
-        Kurozora.shared.KDefaults[key] = value
+		Kurozora.shared.keychain[key] = value
     }
 }

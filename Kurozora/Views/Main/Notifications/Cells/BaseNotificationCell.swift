@@ -35,7 +35,7 @@ class BaseNotificationCell: SwipeTableViewCell {
 
 	// MARK: - Properties
 	var notificationType: KNotification.CustomType?
-	var userNotificationsElement: UserNotificationsElement? {
+	var userNotificationElement: UserNotificationElement? {
 		didSet {
 			configureCell()
 		}
@@ -44,15 +44,15 @@ class BaseNotificationCell: SwipeTableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		guard let userNotificationsElement = userNotificationsElement else { return }
+		guard let userNotificationElement = userNotificationElement else { return }
 
 		// Configure date label.
-		if let creationDate = userNotificationsElement.creationDate {
+		if let creationDate = userNotificationElement.creationDate {
 			self.dateLabel.text = creationDate.timeAgo
 		}
 
 		// Configure text label.
-		if let notificationContent = userNotificationsElement.message {
+		if let notificationContent = userNotificationElement.message {
 			self.notificationTextLabel.text = notificationContent
 		}
 
@@ -72,7 +72,7 @@ class BaseNotificationCell: SwipeTableViewCell {
 		- Parameter animation: A boolean value indicating whether the update should be animated.
 	*/
 	func updateReadStatus(animated: Bool = false) {
-		notificationMark.numberOfPages = userNotificationsElement?.readStatus == .read ? 0 : 1
+		notificationMark.numberOfPages = userNotificationElement?.readStatus == .read ? 0 : 1
 
 		if animated {
 			notificationMark.animateBounce()

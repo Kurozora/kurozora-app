@@ -13,7 +13,7 @@ import SwiftTheme
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
-	var themes: [[ThemesElement]] = [[], []] {
+	var themes: [[ThemeElement]] = [[], []] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -33,9 +33,9 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 
 	// Default theme
 	var defaultThemes = [
-		try? ThemesElement(json: ["name": "Default", "color": "#353A50"]),
-		try? ThemesElement(json: ["name": "Day", "color": "#E6E5E5"]),
-		try? ThemesElement(json: ["name": "Night", "color": "#333333"])
+		try? ThemeElement(json: ["name": "Default", "color": "#353A50"]),
+		try? ThemeElement(json: ["name": "Day", "color": "#E6E5E5"]),
+		try? ThemeElement(json: ["name": "Night", "color": "#333333"])
 	]
 
 	// MARK: - View
@@ -43,9 +43,14 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 		super.viewDidLoad()
 
 		// Setup default themes
-		if let defaultThemes = self.defaultThemes as? [ThemesElement] {
+		if let defaultThemes = self.defaultThemes as? [ThemeElement] {
 			self.themes[0].append(contentsOf: defaultThemes)
 		}
+	}
+
+	// MARK: - Initializers
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
 
 		// Fetch themes
 		DispatchQueue.global(qos: .background).async {
@@ -91,7 +96,7 @@ extension ManageThemesCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let themesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.themesCollectionViewCell, for: indexPath) {
-				themesCollectionViewCell.themesElement = self.themes[indexPath.section][indexPath.item]
+				themesCollectionViewCell.themeElement = self.themes[indexPath.section][indexPath.item]
 				return themesCollectionViewCell
 			} else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.themesCollectionViewCell.identifier)")

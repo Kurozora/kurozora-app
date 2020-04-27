@@ -26,8 +26,8 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			self.showID = showDetailsElement?.id ?? self.showID
 		}
 	}
-	var seasons: [SeasonsElement]?
-	var actors: [ActorsElement]?
+	var seasons: [SeasonElement]?
+	var actors: [ActorElement]?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -149,7 +149,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.castSegue.identifier {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
-				castCollectionViewController.actorsElements = actors
+				castCollectionViewController.actorElements = actors
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {

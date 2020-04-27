@@ -236,7 +236,7 @@ extension KThemeStyle {
 		- Parameter successHandler: A closure returning a boolean indicating whether remove is successful.
 		- Parameter isSuccess: A boolean value indicating whether the remove is successful.
 	*/
-	static func removeThemeTask(for theme: ThemesElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	static func removeThemeTask(for theme: ThemeElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let themeID = theme?.id else {
 			DispatchQueue.main.async {
 				successHandler(false)
@@ -270,7 +270,7 @@ extension KThemeStyle {
 		- Parameter successHandler: A closure returning a boolean indicating whether download is successful.
 		- Parameter isSuccess: A boolean value indicating whether the download is successful.
 	*/
-	static func downloadThemeTask(for theme: ThemesElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
+	static func downloadThemeTask(for theme: ThemeElement?, _ successHandler:@escaping (_ isSuccess: Bool) -> Void) {
 		guard let urlString = theme?.downloadLink, !urlString.isEmpty else {
 			DispatchQueue.main.async {
 				successHandler(false)

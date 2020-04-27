@@ -43,7 +43,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - Properties
-	var actorElement: ActorsElement? {
+	var actorElement: ActorElement? {
 		didSet {
 			configureCell()
 		}

@@ -19,5 +19,5 @@ import Foundation
 */
 struct GroupedNotifications {
 	var sectionTitle: String!
-	var sectionNotifications: [UserNotificationsElement]!
+	var sectionNotifications: [UserNotificationElement]!
 }
