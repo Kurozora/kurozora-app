@@ -158,7 +158,7 @@
                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ct4-sA-QJa" userLabel="User Details Banner">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" image="Placeholders/banner_image" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
+                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" image="Placeholders/User Banner" translatesAutoresizingMaskIntoConstraints="NO" id="zl8-rJ-jxV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
                                             <gestureRecognizers/>
                                             <constraints>
@@ -200,7 +200,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJX-ls-ZaG" userLabel="Profile View">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Placeholders/profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald">
+                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="NzS-ZZ-Ald">
                                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -966,8 +966,8 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Placeholders/banner_image" width="1130" height="706"/>
-        <image name="Placeholders/profile_image" width="100" height="100"/>
+        <image name="Placeholders/User Banner" width="1130" height="706"/>
+        <image name="Placeholders/User Profile" width="100" height="100"/>
         <image name="Symbols/ellipsis" width="24" height="24"/>
         <image name="Symbols/ellipsis_circle" width="24" height="24"/>
         <image name="Symbols/heart_fill_small" width="24" height="24"/>

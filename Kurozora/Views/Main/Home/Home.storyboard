@@ -69,7 +69,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rci-tv-aw2">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/show_banner_image" translatesAutoresizingMaskIntoConstraints="NO" id="kgJ-PC-M0b">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="kgJ-PC-M0b">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="QKq-Oi-I0m">
@@ -414,7 +414,7 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Placeholders/show_banner_image" width="1920" height="1080"/>
+        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
         <image name="shadow" width="6" height="30"/>
     </resources>
 </document>

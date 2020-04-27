@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="38B-e3-pz3">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -68,7 +68,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q1P-dM-hNn">
                                             <rect key="frame" x="0.0" y="0.0" width="400" height="244"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/show_banner_image" translatesAutoresizingMaskIntoConstraints="NO" id="yVN-G7-fos">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Banner" translatesAutoresizingMaskIntoConstraints="NO" id="yVN-G7-fos">
                                                     <rect key="frame" x="0.0" y="0.0" width="400" height="244"/>
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
@@ -117,7 +117,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoi-zQ-WbM">
                                             <rect key="frame" x="10" y="146" width="60" height="88"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/show_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="t0f-bs-74z">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="t0f-bs-74z">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="88"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
@@ -187,7 +187,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v32-LL-f6S">
                                             <rect key="frame" x="10" y="0.0" width="105" height="147.66666666666666"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/show_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-XX-Xr2">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-XX-Xr2">
                                                     <rect key="frame" x="0.0" y="0.0" width="105" height="147.66666666666666"/>
                                                     <color key="backgroundColor" red="0.58431372550000005" green="0.61568627450000002" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
@@ -240,7 +240,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMn-Nz-SLg">
                                             <rect key="frame" x="0.0" y="10" width="96.333333333333329" height="140"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/show_poster_image" translatesAutoresizingMaskIntoConstraints="NO" id="sm3-bT-c7q">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/Show Poster" translatesAutoresizingMaskIntoConstraints="NO" id="sm3-bT-c7q">
                                                     <rect key="frame" x="0.0" y="0.0" width="96.333333333333329" height="140"/>
                                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -478,17 +478,17 @@
             <point key="canvasLocation" x="-478.26086956521743" y="864.50892857142856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="EsS-u8-dQS"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Placeholders/show_banner_image" width="1920" height="1080"/>
-        <image name="Placeholders/show_poster_image" width="680" height="1000"/>
+        <image name="Placeholders/Show Banner" width="1920" height="1080"/>
+        <image name="Placeholders/Show Poster" width="680" height="1000"/>
         <image name="Symbols/checkmark" width="24" height="24"/>
         <image name="Symbols/heart_circle" width="24" height="24"/>
         <image name="Symbols/line_horizontal_3_decrease_circle_fill" width="24" height="24"/>
         <image name="Symbols/rectangle_fill_on_rectangle_fill" width="24" height="24"/>
         <image name="shadow" width="6" height="30"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="EsS-u8-dQS"/>
-    </inferredMetricsTieBreakers>
-    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
