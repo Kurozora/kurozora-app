@@ -30,9 +30,9 @@ public class CurrentUser: UserProfile {
 	/**
 		Updates the user with the given details.
 
-		- Parameter userDetails: The details used to update the vurrent user's details.
+		- Parameter userDetails: The details used to update the current user's details.
 	*/
-	func updateDetails(with userDetails: UserProfile) {
+	internal func updateDetails(with userDetails: UserProfile) {
 		self.profileImageURL = userDetails.profileImageURL
 		self.bannerImageURL = userDetails.bannerImageURL
 		self.biography = userDetails.biography

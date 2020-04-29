@@ -22,7 +22,7 @@ PODS:
   - Kingfisher (5.13.4):
     - Kingfisher/Core (= 5.13.4)
   - Kingfisher/Core (5.13.4)
-  - KurozoraKit (0.5.2):
+  - KurozoraKit (0.5.3):
     - KeychainAccess
     - Kingfisher
     - SCLAlertView (~> 0.8)
@@ -33,7 +33,7 @@ PODS:
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - Pageboy (3.5.1)
-  - R.swift (5.2.1):
+  - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
   - ReachabilitySwift (5.0.0)
@@ -156,11 +156,11 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
-  KurozoraKit: a492183c36e7bdff37a09c40e62771fb85e307d7
+  KurozoraKit: a0865630f96dd9fd2a92d7c5c69410145c696a2a
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 288353d4cc848c24deec2f7542f325089247c136
-  R.swift: 2347df9a8294c2bbd99d94c6f068392d01e93406
+  R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SCLAlertView: 1f7e3aeb080d7962d3f228e580456e992698bbe6

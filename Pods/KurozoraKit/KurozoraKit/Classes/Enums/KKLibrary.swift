@@ -65,6 +65,16 @@ public enum KKLibrary {
 			}
 		}
 
+		/// The section value string of a library status type.
+		public var sectionValue: String {
+			switch self {
+			case .onHold:
+				return "OnHold"
+			default:
+				return self.stringValue
+			}
+		}
+
 		// MARK: - Functions
 		/**
 			Returns the `KKLibrary.Status` value for the given string.

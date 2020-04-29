@@ -17,12 +17,12 @@ extension KKLibrary.SortType {
 			return R.image.symbols.line_horizontal_3_decrease_circle_fill()!
 		case .alphabetically:
 			return R.image.symbols.textformat_abc()!
-			//			case .popularity:
-			//				return R.image.symbols.flame_fill()!
-			//			case .nextAiringEpisode:
-			//				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
-			//			case .nextEpisodeToWatch:
-		//				return R.image.symbols.tv_eye_fill()!
+//			case .popularity:
+//				return R.image.symbols.flame_fill()!
+//			case .nextAiringEpisode:
+//				return R.image.symbols.tv_arrowshape_turn_up_right_fill()!
+//			case .nextEpisodeToWatch:
+//				return R.image.symbols.tv_eye_fill()!
 		case .date:
 			return R.image.symbols.calendar()!
 		case .rating:

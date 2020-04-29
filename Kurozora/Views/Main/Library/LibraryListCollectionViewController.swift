@@ -135,7 +135,7 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			}
 
 			guard let userID = User.current?.id else { return }
-			KService.getLibrary(forUserID: userID, withLibraryStatus: .completed, withSortType: librarySortType, withSortOption: librarySortTypeOption) { result in
+			KService.getLibrary(forUserID: userID, withLibraryStatus: self.libraryStatus, withSortType: librarySortType, withSortOption: librarySortTypeOption) { result in
 				switch result {
 				case .success(let showDetailsElements):
 					DispatchQueue.main.async {

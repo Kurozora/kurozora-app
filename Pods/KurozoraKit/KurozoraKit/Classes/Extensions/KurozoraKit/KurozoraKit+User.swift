@@ -246,7 +246,7 @@ extension KurozoraKit {
 
 		request.method = .get
 		request.parameters = [
-			"status": libraryStatus.stringValue
+			"status": libraryStatus.sectionValue
 		]
 		if sortType != .none {
 			request.parameters["sort"] = "\(sortType.parameterValue)\(sortOption.parameterValue)"

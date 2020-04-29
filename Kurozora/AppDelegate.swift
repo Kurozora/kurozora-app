@@ -13,7 +13,7 @@ import Kingfisher
 import UserNotifications
 
 // MARK: - Kurozora Kit
-let KService = KurozoraKit(debugURL: "http://kurozora-web.test/api/v1/").services(Kurozora.shared.services)
+let KService = KurozoraKit(debugURL: "https://1b26951a.ngrok.io/api/v1/").services(Kurozora.shared.services)
 
 // MARK: - Kurozora
 @UIApplicationMain

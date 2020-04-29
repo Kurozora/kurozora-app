@@ -164,10 +164,6 @@ class LibraryViewController: KTabbedViewController {
 		})
 	}
 
-	fileprivate func populateSubActions(_ sender: UIBarButtonItem, with value: String) {
-
-	}
-
 	/**
 		Builds and presents the sort types in an action sheet.
 

@@ -10,7 +10,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>FooterText</key>
-			<string>Copyright © 2018 Kurozora B.V. All rights reserved.</string>
+			<string>Copyright © 2018-present Kurozora B.V. All rights reserved.</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -24,7 +24,7 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>DefaultValue</key>
-			<string>1.0.0</string>
+			<string>$(MARKETING_VERSION)</string>
 			<key>Title</key>
 			<string>Version</string>
 			<key>Key</key>
