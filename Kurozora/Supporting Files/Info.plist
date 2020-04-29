@@ -16,7 +16,9 @@
 				<string></string>
 			</array>
 			<key>CFBundleTypeIconFiles</key>
-			<array/>
+			<array>
+				<string>App-Icon-iPad-Day.png</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>XML File</string>
 			<key>CFBundleTypeRole</key>
@@ -414,6 +416,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>App-Icon-iPad-Day</string>
 			<key>CFBundleURLName</key>
 			<string>app.kurozora.anime</string>
 			<key>CFBundleURLSchemes</key>
