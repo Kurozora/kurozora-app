@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -267,7 +267,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba9-s8-qJl" userLabel="Create Thread Button">
-                                <rect key="frame" x="350" y="798" width="44" height="44"/>
+                                <rect key="frame" x="350" y="746" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="HOh-ph-Ise"/>
@@ -283,14 +283,24 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="createThreadButton:" destination="SFM-Od-em0" eventType="touchUpInside" id="lLX-gf-Atf"/>
+                                    <action selector="createPostButtonPressed:" destination="SFM-Od-em0" eventType="touchUpInside" id="JXp-8G-oUw"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnM-bI-uTx">
+                                <rect key="frame" x="20" y="810" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" placeholder="YES" id="UFb-h8-T4t"/>
+                                    <constraint firstAttribute="width" constant="374" placeholder="YES" id="VVC-sS-zry"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="DnM-bI-uTx" firstAttribute="top" secondItem="Ba9-s8-qJl" secondAttribute="bottom" constant="20" id="FNc-5N-XiV"/>
+                            <constraint firstItem="dmG-tJ-44S" firstAttribute="bottom" secondItem="DnM-bI-uTx" secondAttribute="bottom" constant="8" id="S7U-0I-KA2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ba9-s8-qJl" secondAttribute="trailing" id="ohN-qS-afG"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Ba9-s8-qJl" secondAttribute="bottom" constant="20" id="pkK-In-Xe3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DnM-bI-uTx" secondAttribute="trailing" id="sDJ-lr-R6X"/>
+                            <constraint firstItem="DnM-bI-uTx" firstAttribute="leading" secondItem="0ZA-DA-Zkg" secondAttribute="leadingMargin" id="w9j-Kv-rkj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dmG-tJ-44S"/>
                     </view>
@@ -327,7 +337,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createThreadButton" destination="Ba9-s8-qJl" id="MZa-NF-LTd"/>
+                        <outlet property="bottomBarView" destination="DnM-bI-uTx" id="ARX-YA-xas"/>
+                        <outlet property="createPostButton" destination="Ba9-s8-qJl" id="Nhl-ei-2NW"/>
                         <outlet property="navigationProfileButton" destination="u3h-cK-q29" id="8W4-VD-dzf"/>
                     </connections>
                 </viewController>
@@ -336,6 +347,7 @@
             <point key="canvasLocation" x="1261" y="-70"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Symbols/ellipsis" width="24" height="24"/>
         <image name="Symbols/gear" width="24" height="24"/>
@@ -343,5 +355,4 @@
         <image name="Symbols/message_fill" width="24" height="24"/>
         <image name="Symbols/pencil_circle" width="24" height="24"/>
     </resources>
-    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

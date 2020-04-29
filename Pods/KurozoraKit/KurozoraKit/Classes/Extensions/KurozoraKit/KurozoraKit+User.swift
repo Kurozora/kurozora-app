@@ -282,7 +282,7 @@ extension KurozoraKit {
 
 		request.method = .post
 		request.parameters = [
-			"status": libraryStatus.stringValue,
+			"status": libraryStatus.sectionValue,
 			"anime_id": showID
 		]
 		request.perform(withSuccess: { success in

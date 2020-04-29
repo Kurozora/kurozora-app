@@ -75,13 +75,20 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		self.reloadData()
+		self.configureTabBarViewVisibility()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .KUserIsSignedInDidChange, object: nil)
-//		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
 
-//		navigationItem.hidesSearchBarWhenScrolling = false
+		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Initialize view controllers.
 		self.viewControllers = self.tabBarDataSource?.initializeViewControllers(with: self.numberOfViewControllers(in: self))
@@ -159,16 +166,6 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/// Reloads the tab bar with the new data.
 	@objc func reloadTabBarStyle() {
 		styleTabBarView()
-	}
-
-	/**
-		Reloads the view controllers in the page view controller. This reloads the `dataSource` entirely, calling `reloadData()` and [configureTabBarViewVisibility()](x-source-tag://KTVC-configureTabBarViewVisibility).
-
-		You may override this method, but if you do, be sure to call `super` in the implementation of your method. If you do not, the view controller may not be able to perform all of the tasks needed to maintain the integrity of the `dataSource`.
-	*/
-	@objc func reloadView() {
-		self.reloadData()
-		self.configureTabBarViewVisibility()
 	}
 
 	// MARK: - TMBarDataSource

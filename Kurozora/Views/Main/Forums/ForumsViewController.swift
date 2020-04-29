@@ -10,7 +10,6 @@ import UIKit
 import KurozoraKit
 import Tabman
 import Pageboy
-import SCLAlertView
 
 class ForumsViewController: KTabbedViewController {
 	// MARK: - IBOutlets
@@ -29,10 +28,6 @@ class ForumsViewController: KTabbedViewController {
 	// MARK: - View
 	override func viewDidLoad() {
         super.viewDidLoad()
-		view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
-
-		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Setup search bar.
 		setupSearchBar()

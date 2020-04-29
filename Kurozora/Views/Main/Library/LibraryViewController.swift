@@ -42,11 +42,14 @@ class LibraryViewController: KTabbedViewController {
 	weak var libraryViewControllerDelegate: LibraryViewControllerDelegate?
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		enableActions()
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(reloadTabBarStyle), name: .ThemeUpdateNotification, object: nil)
-
-		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Actions
 		enableActions()
@@ -95,11 +98,6 @@ class LibraryViewController: KTabbedViewController {
 				}
 			}
 		}
-	}
-
-	@objc override func reloadView() {
-		enableActions()
-		super.reloadView()
 	}
 
 	/// Updates the layout button icon to reflect the current layout when switching between views.
