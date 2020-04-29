@@ -14,34 +14,44 @@ class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
+			self.profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
-			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
+			self.usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
 	@IBOutlet weak var userEmailLabel: UILabel! {
 		didSet {
-			userEmailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
+			self.userEmailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 
 	// MARK: - View
+	override func viewWillReload() {
+		super.viewWillReload()
+
+		configureUserDetails()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		configureUserDetails()
+	}
+
+	// MARK: - Functions
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
 		// Setup username.
-		usernameLabel.text = User.current?.username
+		self.usernameLabel.text = User.current?.username
 
 		// Setup email address.
-		userEmailLabel.text = User.current?.kurozoraID
-		userEmailLabel.textAlignment = .center
-		userEmailLabel.font = UIFont(name: "System", size: 13)
+		self.userEmailLabel.text = User.current?.kurozoraID
 
 		// Setup profile image.
-		profileImageView.image = User.current?.profileImage
+		self.profileImageView.image = User.current?.profileImage
 	}
 
 	// MARK: - Segue
@@ -66,7 +76,8 @@ extension AccountTableViewController {
 
 		switch (indexPath.section, indexPath.row) {
 //		case (0, 0): break
-		case (1, 0):
+//		case (1, 0): break
+		case (2, 0):
 			let username = User.current?.username ?? ""
 			let alertView = SCLAlertView()
 			alertView.addButton("Yes, sign me out 🤨", action: {

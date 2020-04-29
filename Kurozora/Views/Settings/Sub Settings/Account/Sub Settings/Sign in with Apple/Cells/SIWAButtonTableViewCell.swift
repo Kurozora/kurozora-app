@@ -17,7 +17,9 @@ class SIWAButtonTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
-		setupProviderSignInView()
+		if #available(iOS 13.0, *) {
+			setupProviderSignInView()
+		}
 	}
 
 	// MARK: - Functions

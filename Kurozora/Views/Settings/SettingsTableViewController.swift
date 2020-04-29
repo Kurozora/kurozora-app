@@ -38,6 +38,8 @@ class SettingsTableViewController: KTableViewController {
 
 	// MARK: - View
 	override func viewWillReload() {
+		super.viewWillReload()
+
 		tableView.reloadData()
 	}
 

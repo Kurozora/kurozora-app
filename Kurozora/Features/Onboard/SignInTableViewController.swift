@@ -50,22 +50,20 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 		KService.signIn(kurozoraID, password) { result in
 			switch result {
 			case .success(let authenticationToken):
-				DispatchQueue.main.async {
-					// Save user in keychain.
-					if let username = User.current?.username {
-						try? Kurozora.shared.keychain.set(authenticationToken, key: "Account_\(username)")
-					}
-
-					// Update the user's authentication key in KurozoraKit.
-					KService.authenticationKey = authenticationToken
-
-					// Dismiss the view and register user for push notifications.
-					self.dismiss(animated: true) {
-						UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
-						WorkflowController.shared.registerForPushNotifications()
-					}
+				// Save user in keychain.
+				if let username = User.current?.username {
+					try? Kurozora.shared.keychain.set(authenticationToken, key: username)
+					UserSettings.set(username, forKey: .selectedAccount)
 				}
-				self.rightNavigationBarButton.isEnabled = false
+
+				// Update the user's authentication key in KurozoraKit.
+				KService.authenticationKey = authenticationToken
+
+				// Dismiss the view and register user for push notifications.
+				self.dismiss(animated: true) {
+					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
+					WorkflowController.shared.registerForPushNotifications()
+				}
 			case .failure:
 				break
 			}

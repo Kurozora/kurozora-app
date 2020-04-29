@@ -9,16 +9,46 @@
 import UIKit
 
 class UserSettings: UserDefaults {
-	/// The base UserDefaults suit of the Kurozora Apps.
+	/// The base UserDefaults suit of the Kurozora apps.
 	static var shared: UserDefaults {
         let combined = UserDefaults.standard
         combined.addSuite(named: "group.settings.app.kurozora.anime")
         return combined
     }
 
-	/// Set value for key in shared KDefaults.
+	/// Set value for key in shared UserDefaults.
 	static func set(_ value: Any?, forKey key: UserSettingsKey) {
 		shared.set(value, forKey: key.rawValue)
+	}
+}
+
+// MARK: - Account
+extension UserSettings {
+	/// Returns a string of the currently selected account
+	static var selectedAccount: String {
+		guard let selectedAccount = shared.string(forKey: #function) else { return "" }
+		return selectedAccount
+	}
+}
+
+// MARK: - App customization
+extension UserSettings {
+	/// Returns a string indicating the currently used theme.
+	static var currentTheme: String {
+		guard let currentTheme = shared.string(forKey: #function) else { return "" }
+		return currentTheme
+	}
+
+	/// Returns a string indicating the currently used app icon.
+	static var appIcon: String {
+		let primaryIcon = "AppIcon60x60"
+		guard let appIcon = shared.string(forKey: #function) else { return primaryIcon }
+		return (UIImage(named: appIcon) != nil) ? appIcon : primaryIcon
+	}
+
+	/// Returns an integer indicating the default browser.
+	static var defaultBrowser: Int {
+		return shared.integer(forKey: #function)
 	}
 }
 
@@ -65,6 +95,14 @@ extension UserSettings {
 	}
 }
 
+// MARK: - Forums
+extension UserSettings {
+	/// Returns an integer indicating the forum page the user was on last.
+	static var forumsPage: Int {
+		return shared.integer(forKey: #function)
+	}
+}
+
 // MARK: - Library
 extension UserSettings {
 	/// Returns an integer indicating the library page the user was on last.
@@ -79,11 +117,12 @@ extension UserSettings {
 	}
 }
 
-// MARK: - Forums
+// MARK: - Notification registration
 extension UserSettings {
-	/// Returns an integer indicating the forum page the user was on last.
-	static var forumsPage: Int {
-		return shared.integer(forKey: #function)
+	/// Returns a string indicating the currently used theme.
+	static var lastNotificationRegistrationRequest: Date? {
+		guard let lastNotificationRegistrationRequest = shared.date(forKey: #function) else { return nil }
+		return lastNotificationRegistrationRequest
 	}
 }
 
@@ -122,35 +161,5 @@ extension UserSettings {
 	/// Returns an integer indicating the notifications alert trype.
 	static var alertType: Int {
 		return shared.integer(forKey: #function)
-	}
-}
-
-// MARK: - App customization
-extension UserSettings {
-	/// Returns a string indicating the currently used theme.
-	static var currentTheme: String {
-		guard let currentTheme = shared.string(forKey: #function) else { return "" }
-		return currentTheme
-	}
-
-	/// Returns a string indicating the currently used app icon.
-	static var appIcon: String {
-		let primaryIcon = "AppIcon60x60"
-		guard let appIcon = shared.string(forKey: #function) else { return primaryIcon }
-		return (UIImage(named: appIcon) != nil) ? appIcon : primaryIcon
-	}
-
-	/// Returns an integer indicating the default browser.
-	static var defaultBrowser: Int {
-		return shared.integer(forKey: #function)
-	}
-}
-
-// MARK: - Notification Registration
-extension UserSettings {
-	/// Returns a string indicating the currently used theme.
-	static var lastNotificationRegistrationRequest: Date? {
-		guard let lastNotificationRegistrationRequest = shared.date(forKey: #function) else { return nil }
-		return lastNotificationRegistrationRequest
 	}
 }

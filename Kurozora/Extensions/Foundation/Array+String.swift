@@ -32,4 +32,3 @@ extension Array where Element == String {
 		return matches
 	}
 }
-

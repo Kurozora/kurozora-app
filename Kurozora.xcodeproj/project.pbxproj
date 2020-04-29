@@ -306,6 +306,7 @@
 		66B4DBEF2450E5780097135A /* SignInWithAppleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4DBEE2450E5780097135A /* SignInWithAppleTableViewController.swift */; };
 		66B4DBF22450E5930097135A /* SIWAButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4DBF12450E5930097135A /* SIWAButtonTableViewCell.swift */; };
 		66B4DBF8245396650097135A /* KeychainAccess+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4DBF7245396650097135A /* KeychainAccess+Kurozora.swift */; };
+		66B4DC3E245797770097135A /* SwitchAccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4DC3D245797770097135A /* SwitchAccountsTableViewController.swift */; };
 		66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */; };
 		66B4F1DD223D334D007C5048 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B4F1DC223D334D007C5048 /* SearchScope.swift */; };
 		66B69BD6214544DB007154BD /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B69BD5214544DB007154BD /* LegalViewController.swift */; };
@@ -713,6 +714,7 @@
 		66B4DBEE2450E5780097135A /* SignInWithAppleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithAppleTableViewController.swift; sourceTree = "<group>"; };
 		66B4DBF12450E5930097135A /* SIWAButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIWAButtonTableViewCell.swift; sourceTree = "<group>"; };
 		66B4DBF7245396650097135A /* KeychainAccess+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainAccess+Kurozora.swift"; sourceTree = "<group>"; };
+		66B4DC3D245797770097135A /* SwitchAccountsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountsTableViewController.swift; sourceTree = "<group>"; };
 		66B4F1DA223D2CA5007C5048 /* SearchBaseResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBaseResultsCell.swift; sourceTree = "<group>"; };
 		66B4F1DC223D334D007C5048 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		66B69BD5214544DB007154BD /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
@@ -1665,6 +1667,7 @@
 				66B4DBF32450EF2C0097135A /* MAL Import */,
 				66B4DBF42450EF3E0097135A /* Manage Active Sessions */,
 				66B4DBED2450E55E0097135A /* Sign in with Apple */,
+				66B4DC3F245814EA0097135A /* Switch Accounts */,
 			);
 			path = "Sub Settings";
 			sourceTree = "<group>";
@@ -1717,6 +1720,14 @@
 				66B4DBF7245396650097135A /* KeychainAccess+Kurozora.swift */,
 			);
 			path = KeychainAccess;
+			sourceTree = "<group>";
+		};
+		66B4DC3F245814EA0097135A /* Switch Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				66B4DC3D245797770097135A /* SwitchAccountsTableViewController.swift */,
+			);
+			path = "Switch Accounts";
 			sourceTree = "<group>";
 		};
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
@@ -2695,6 +2706,7 @@
 				66A552D420A2D24F00E515DB /* ForumsViewController.swift in Sources */,
 				661DBC57234A6A78009292DF /* PurchaseButtonTableViewCell.swift in Sources */,
 				6674A0D420A5849D00AAB527 /* ThreadTableViewController.swift in Sources */,
+				66B4DC3E245797770097135A /* SwitchAccountsTableViewController.swift in Sources */,
 				66E08369211324D400B39A75 /* OtherSessionsCell.swift in Sources */,
 				66C4DAE6243E133F00C4B90A /* KTabbedViewController.swift in Sources */,
 				66CF6D6720A987D100F98375 /* ProfileTableViewController.swift in Sources */,

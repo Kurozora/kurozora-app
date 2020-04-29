@@ -8,38 +8,63 @@
 
 import Foundation
 
-/// Notificartions key used to get notifications settings
+/// The set of available user settings keys.
 enum UserSettingsKey: String {
-	// Library keys
-	case libraryPage
-	case libraryCellStyles
-
-	// Forums keys
-	case forumsPage
-
-	// Notification settings keys
-	case notificationsAllowed
-	case notificationsGrouping
-	case notificationsPersistent
-	case notificationsSound
-	case notificationsVibration
-	case notificationsBadge
-	case alertType
-
-	// Appearence settings keys
-	case appearanceOption
-	case automaticDarkTheme
-	case darkThemeOption
-	case darkThemeOptionStart
-	case darkThemeOptionEnd
-	case trueBlackEnabled
-	case largeTitlesEnabled
+	// Account keys
+	/// The key to the selected account.
+	case selectedAccount
 
 	// App customization keys
+	/// The key to the selected theme.
 	case currentTheme
+	/// The key to the selected app icon.
 	case appIcon
+	/// The key to the selected browser.
 	case defaultBrowser
 
+	// Appearence settings keys
+	/// The key to the selected appearance option.
+	case appearanceOption
+	/// The key to the automatic dark theme option.
+	case automaticDarkTheme
+	/// The key to the selected dark theme option.
+	case darkThemeOption
+	/// The key to the selected dark theme start time.
+	case darkThemeOptionStart
+	/// The key to the selected dark theme option end time.
+	case darkThemeOptionEnd
+	/// The key to the selected true black settings.
+	case trueBlackEnabled
+	/// The key to the selected large title enabled settings.
+	case largeTitlesEnabled
+
+	// Forums keys
+	/// The key to the last selected forums page.
+	case forumsPage
+
+	// Library keys
+	/// The key to the last selected library page.
+	case libraryPage
+	/// The key to the last selected library cell style.
+	case libraryCellStyles
+
+	// Notification settings keys
+	/// The key to the selected option for allowing notifications.
+	case notificationsAllowed
+	/// The key to the selected notification grouping option.
+	case notificationsGrouping
+	/// The key to the selected notification persistent option.
+	case notificationsPersistent
+	/// The key to the selected notification sound option.
+	case notificationsSound
+	/// The key to the selected notification vibration option.
+	case notificationsVibration
+	/// The key to the selcted notification badge option.
+	case notificationsBadge
+	/// The key to the selcted alert type option.
+	case alertType
+
 	// Register for notification
+	/// The key to the last notifcation registration reuest time.
 	case lastNotificationRegistrationRequest
 }
