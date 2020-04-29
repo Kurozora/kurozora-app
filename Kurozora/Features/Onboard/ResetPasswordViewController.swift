@@ -36,8 +36,7 @@ class ResetPasswordTableViewController: BaseOnboardingTableViewController {
 					self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 				})
 				alertView.showSuccess("Success!", subTitle: "If an account exists with this Kurozora ID, you should receive an email with your reset link shortly.")
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

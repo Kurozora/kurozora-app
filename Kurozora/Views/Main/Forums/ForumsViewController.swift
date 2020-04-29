@@ -132,8 +132,7 @@ extension ForumsViewController {
 				DispatchQueue.main.async {
 					self.sections = sections
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

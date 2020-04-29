@@ -101,8 +101,7 @@ class FeedTableViewController: KTableViewController {
 
 					self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh your \(self.sectionTitle) feed!", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 

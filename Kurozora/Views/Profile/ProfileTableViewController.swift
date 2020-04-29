@@ -215,8 +215,7 @@ class ProfileTableViewController: KTableViewController {
 				DispatchQueue.main.async {
 					self.user = user
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

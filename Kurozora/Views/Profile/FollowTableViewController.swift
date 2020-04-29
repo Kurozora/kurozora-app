@@ -91,8 +91,7 @@ class FollowTableViewController: KTableViewController {
 			switch result {
 			case .success:
 				self.fetchFollowList()
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}
@@ -116,8 +115,7 @@ class FollowTableViewController: KTableViewController {
 						}
 					}
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

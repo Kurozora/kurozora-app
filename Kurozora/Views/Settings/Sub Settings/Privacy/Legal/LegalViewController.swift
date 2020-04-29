@@ -52,8 +52,7 @@ class LegalViewController: KViewController {
 				if let lastUpdatedAt = privacyPolicy.lastUpdate {
 					self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 		self.navigationTitleView.alpha = 0

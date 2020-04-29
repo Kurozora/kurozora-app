@@ -149,8 +149,7 @@ class HomeCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.exploreCategories = explore.categories
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

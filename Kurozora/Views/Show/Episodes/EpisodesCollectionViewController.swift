@@ -69,8 +69,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.episodeElements = episodes.episodes
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

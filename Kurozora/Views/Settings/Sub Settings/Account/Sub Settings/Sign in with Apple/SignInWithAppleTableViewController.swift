@@ -127,15 +127,14 @@ extension SignInWithAppleTableViewController: ASAuthorizationControllerDelegate 
 				alertController.addButton("Done", action: {
 					DispatchQueue.main.async {
 						self.navigationController?.popViewController(animated: true)
-						NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
+
 						self.dismiss(animated: true) {
 							UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 							WorkflowController.shared.registerForPushNotifications()
 						}
 					}
 				})
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

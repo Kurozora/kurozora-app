@@ -75,8 +75,7 @@ class FollowCell: UITableViewCell {
 					sender.setTitle("✓ Following", for: .normal)
 					self.userProfile?.following = true
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

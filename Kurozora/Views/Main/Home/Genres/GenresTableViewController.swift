@@ -57,8 +57,7 @@ class GenresTableViewController: KTableViewController {
 				DispatchQueue.main.async {
 					self.genresElements = genres
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

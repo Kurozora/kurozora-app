@@ -37,6 +37,7 @@ extension KurozoraKit {
 		request.perform(withSuccess: { user in
 			self.authenticationKey = user.kuroAuthToken ?? ""
 			completionHandler(.success(self.authenticationKey))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign in 😔", subTitle: error.message)
@@ -128,8 +129,8 @@ extension KurozoraKit {
 		request.method = .post
 		request.perform(withSuccess: { success in
 			User.current = nil
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			completionHandler(.success(success))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign out 😔", subTitle: error.message)

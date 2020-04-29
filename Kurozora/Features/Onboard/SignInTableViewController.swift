@@ -64,8 +64,7 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 					UserSettings.shared.removeObject(forKey: UserSettingsKey.lastNotificationRegistrationRequest.rawValue)
 					WorkflowController.shared.registerForPushNotifications()
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}
@@ -124,8 +123,7 @@ extension SignInTableViewController: ASAuthorizationControllerDelegate {
 						}
 					}
 				})
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

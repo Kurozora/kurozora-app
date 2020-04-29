@@ -250,8 +250,7 @@ class ThreadTableViewController: KTableViewController {
 
 					self.tableView.reloadData()
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

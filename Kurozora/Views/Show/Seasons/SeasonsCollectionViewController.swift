@@ -68,8 +68,7 @@ class SeasonsCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.seasonsElements = seasons
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
         }
     }

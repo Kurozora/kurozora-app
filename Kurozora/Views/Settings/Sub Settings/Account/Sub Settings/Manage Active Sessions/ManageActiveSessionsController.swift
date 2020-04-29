@@ -104,8 +104,7 @@ class ManageActiveSessionsController: KTableViewController {
 			DispatchQueue.main.async {
 				self.sessions = sessions
 			}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

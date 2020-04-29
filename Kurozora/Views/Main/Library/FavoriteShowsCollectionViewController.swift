@@ -90,8 +90,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.showDetailsElements = showDetailsElements
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

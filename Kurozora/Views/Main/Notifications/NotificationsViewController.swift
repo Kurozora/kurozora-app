@@ -241,8 +241,7 @@ class NotificationsViewController: KTableViewController {
 						baseNotificationCell?.updateReadStatus(animated: indexPaths?.count == 1)
 					}
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

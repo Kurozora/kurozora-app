@@ -70,8 +70,8 @@ extension KurozoraKit {
 		request.perform(withSuccess: { success in
 //			try? self.services._keychainDefaults.set("\(userID)", key: "siwa_id")
 //			self.services.processUserData(fromSession: userSession)
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			completionHandler(.success(success))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { error in
 			UIView().endEditing(true)
 			if self.services.showAlerts {
@@ -105,8 +105,8 @@ extension KurozoraKit {
 		request.perform(withSuccess: { success in
 //			try? KKServices.shared.KeychainDefaults.set(idToken, key: "SIWA_id_token")
 //			KKServices.shared.processUserData(fromSession: userSession)
-			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 			completionHandler(.success(success))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't sign in with Apple 😔", subTitle: error.message)
@@ -474,6 +474,7 @@ extension KurozoraKit {
 		request.perform(withSuccess: { user in
 			self.authenticationKey = user.kuroAuthToken ?? ""
 			completionHandler(.success(self.authenticationKey))
+			NotificationCenter.default.post(name: .KUserIsSignedInDidChange, object: nil)
 		}, failure: { error in
 			if self.services.showAlerts {
 				SCLAlertView().showError("Can't get current user's details 😔", subTitle: error.message)

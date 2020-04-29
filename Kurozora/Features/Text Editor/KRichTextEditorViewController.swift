@@ -102,8 +102,7 @@ class KRichTextEditorViewController: KViewController {
 					}
 				}
 				self.dismiss(animated: true, completion: nil)
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

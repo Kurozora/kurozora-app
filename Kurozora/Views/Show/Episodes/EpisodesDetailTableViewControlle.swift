@@ -103,8 +103,7 @@ class EpisodesDetailTableViewControlle: KTableViewController {
 					self.delegate?.updateWatchStatus(with: watchStatus)
 					self.updateWatchStatus(with: watchStatus)
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

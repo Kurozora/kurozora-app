@@ -2,6 +2,7 @@
 [![CI Status](http://img.shields.io/travis/kishikawakatsumi/KeychainAccess.svg)](https://travis-ci.org/kishikawakatsumi/KeychainAccess)
 [![codecov](https://codecov.io/gh/kishikawakatsumi/KeychainAccess/branch/master/graph/badge.svg)](https://codecov.io/gh/kishikawakatsumi/KeychainAccess)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![SPM supported](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager)
 [![Version](https://img.shields.io/cocoapods/v/KeychainAccess.svg)](http://cocoadocs.org/docsets/KeychainAccess)
 [![Platform](https://img.shields.io/cocoapods/p/KeychainAccess.svg)](http://cocoadocs.org/docsets/KeychainAccess)
 
@@ -318,7 +319,7 @@ do {
 }
 ```
 
-### <a name="touch_id_integration"> :fu: Touch ID (Face ID) integration
+### <a name="touch_id_integration"> :cyclone: Touch ID (Face ID) integration
 
 **Any Operation that require authentication must be run in the background thread.**  
 **If you run in the main thread, UI thread will lock for the system to try to display the authentication dialog.**
@@ -476,7 +477,7 @@ let password = Keychain.generatePassword() // => Nhu-GKm-s3n-pMx
 **More details:**  
 <https://developer.apple.com/library/ios/documentation/Security/Reference/SharedWebCredentialsRef/>
 
-### :key: Debugging
+### :mag: Debugging
 
 #### Display all stored items if print keychain object
 

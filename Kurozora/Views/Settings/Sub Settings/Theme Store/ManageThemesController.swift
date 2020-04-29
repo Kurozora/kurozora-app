@@ -67,8 +67,7 @@ class ManageThemesCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.themes[1].append(contentsOf: themes)
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

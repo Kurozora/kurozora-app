@@ -67,8 +67,7 @@ class CastCollectionViewController: KCollectionViewController {
 				DispatchQueue.main.async {
 					self.actorElements = actors
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

@@ -89,8 +89,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 					sclAlertView.close()
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 	}

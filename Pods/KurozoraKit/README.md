@@ -14,7 +14,7 @@ KurozoraKit is designed to be:
 
 * **✨ Magical:** The kit is carefully designed to work as efficient and reliable as you would expect it to.
 
-* **📚 Documented:** With up to 100% documentation coverage and more to go.
+* **📚 Documented:** With up to 100% documentation coverage.
 
 * **⚙️ Reliable:** Built for the best [API](https://github.com/musa11971/kurozora-web). The way KurozoraKit works together with the Kurozora API is truly otherworldly.
 

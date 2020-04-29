@@ -109,8 +109,7 @@ class ForumsListViewController: KTableViewController {
 
 					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
-			case .failure:
-				break
+			case .failure: break
 			}
 		}
 
