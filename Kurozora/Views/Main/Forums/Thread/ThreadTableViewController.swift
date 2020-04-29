@@ -223,8 +223,7 @@ class ThreadTableViewController: KTableViewController {
 						self.updateThreadDetails()
 						self.tableView.reloadData()
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}
@@ -283,8 +282,7 @@ class ThreadTableViewController: KTableViewController {
 
 						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

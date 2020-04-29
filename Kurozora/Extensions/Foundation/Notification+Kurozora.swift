@@ -38,7 +38,7 @@ extension Notification.Name {
 	}
 
 	// MARK: - User settings
-	/// A notification posted after the value of `requireAuthentication` in `KDefaults` has changed.
+	/// A notification posted after the value of `authenticationInterval` in `UserSettings` has changed.
 	static var KSAuthenticationRequireTimeoutValueDidChange: NSNotification.Name {
 		return Notification.Name(#function)
 	}

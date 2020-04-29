@@ -38,6 +38,12 @@ enum UserSettingsKey: String {
 	/// The key to the selected large title enabled settings.
 	case largeTitlesEnabled
 
+	// Authentication
+	/// The key to the authentication enabled option.
+	case authenticationEnabled
+	/// The key to the authentication interval option.
+	case authenticationInterval
+
 	// Forums keys
 	/// The key to the last selected forums page.
 	case forumsPage

@@ -203,21 +203,17 @@ class Kurozora {
 extension Kurozora {
 	/// Asks the app if the user should authenticate so the app prepares for it.
 	func userShouldAuthenticate() {
-		if let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
-			if authenticationEnabled {
-				self.authenticationEnabled = authenticationEnabled
-				prepareView()
-				prepareTimer()
-			}
+		self.authenticationEnabled = UserSettings.authenticationEnabled
+		if self.authenticationEnabled {
+			prepareView()
+			setAuthenticationInterval()
 		}
 	}
 
 	/// Tells the app that the user has to authenticate so the app prepares for it.
 	func userHasToAuthenticate() {
-		if let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
-			if authenticationEnabled {
-				prepareForAuthentication()
-			}
+		if UserSettings.authenticationEnabled {
+			prepareForAuthentication()
 		}
 	}
 
@@ -228,28 +224,9 @@ extension Kurozora {
 		}
 	}
 
-	/// Prepare timer to prepare the app for authentication.
-	func prepareTimer() {
-		let requireAuthentication = try? Kurozora.shared.keychain.get("requireAuthentication")
-		var interval = 0
-
-		switch RequireAuthentication.valueFrom(requireAuthentication) {
-		case .immediately: break
-		case .thirtySeconds:
-			interval = 30
-		case .oneMinute:
-			interval = 60
-		case .twoMinutes:
-			interval = 120
-		case .threeMinutes:
-			interval = 180
-		case .fourMinutes:
-			interval = 240
-		case .fiveMinutes:
-			interval = 300
-		}
-
-		authenticationInterval = Date.uptime() + interval
+	/// Sets the authentication interval.
+	func setAuthenticationInterval() {
+		self.authenticationInterval = Date.uptime() + UserSettings.authenticationInterval.intervalValue
 	}
 
 	/// Prepare the app for authentication.

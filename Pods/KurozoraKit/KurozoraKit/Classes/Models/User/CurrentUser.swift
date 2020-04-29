@@ -25,4 +25,16 @@ public class CurrentUser: UserProfile {
 		self.session = try? UserSessionsElement(json: json["session"])
 		try super.init(json: json["user"])
 	}
+
+	// MARK: - Functions
+	/**
+		Updates the user with the given details.
+
+		- Parameter userDetails: The details used to update the vurrent user's details.
+	*/
+	func updateDetails(with userDetails: UserProfile) {
+		self.profileImageURL = userDetails.profileImageURL
+		self.bannerImageURL = userDetails.bannerImageURL
+		self.biography = userDetails.biography
+	}
 }

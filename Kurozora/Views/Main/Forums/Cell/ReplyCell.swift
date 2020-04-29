@@ -151,8 +151,7 @@ class ReplyCell: UITableViewCell {
 
 						self.voteCountButton.setTitle("\((replyScore >= 1000) ? replyScore.kFormatted : replyScore.string) · ", for: .normal)
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

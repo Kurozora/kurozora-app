@@ -15,7 +15,7 @@ class AuthenticationOptionsCell: SettingsCell {
 		}
 	}
 
-	var requireAuthentication: RequireAuthentication? {
+	var authenticationInterval: AuthenticationInterval = .immediately {
 		didSet {
 			configureCell()
 		}
@@ -26,7 +26,7 @@ class AuthenticationOptionsCell: SettingsCell {
 			if isSelected {
 				self.selectedImageView.image = R.image.symbols.checkmark()
 				self.selectedImageView.theme_tintColor = KThemePicker.tintColor.rawValue
-				try? Kurozora.shared.keychain.set(requireAuthentication?.stringValue ?? RequireAuthentication.immediately.stringValue, key: "requireAuthentication")
+				UserSettings.set(authenticationInterval.rawValue, forKey: .authenticationInterval)
 			} else {
 				self.selectedImageView.image = nil
 			}
@@ -36,12 +36,7 @@ class AuthenticationOptionsCell: SettingsCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	override func configureCell() {
-		guard let requireAuthentication = requireAuthentication else { return }
-		primaryLabel?.text = requireAuthentication.stringValue
-
-		if let requireAuthenticationString = try? Kurozora.shared.keychain.get("requireAuthentication") {
-			self.isSelected = requireAuthentication.equals(requireAuthenticationString)
-		}
+		primaryLabel?.text = authenticationInterval.stringValue
+		self.isSelected = authenticationInterval == UserSettings.authenticationInterval
 	}
-
 }

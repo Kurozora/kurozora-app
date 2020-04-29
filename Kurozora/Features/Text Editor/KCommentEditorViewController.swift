@@ -82,16 +82,9 @@ class KCommentEditorViewController: KViewController {
 			posterUsernameLabel.text = posterUsername
 		}
 
-		if let profileImage = Kurozora.shared.keychain["profile_image"] {
-			if let usernameInitials = Kurozora.shared.keychain["username"]?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
-				profileImageView.setImage(with: profileImage, placeholder: placeholderImage)
-			}
-		}
+		profileImageView.image = User.current?.profileImage
 		currentUsernameLabel.text = User.current?.username
-
 		characterCountLabel.text = "\(characterLimit)"
-
 		commentTextView.text = placeholderText
 		commentTextView.theme_textColor = KThemePicker.textFieldPlaceholderTextColor.rawValue
 		commentTextView.becomeFirstResponder()

@@ -84,7 +84,7 @@
 		6640E19722ADD30100D0F575 /* AuthenticationSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6640E19622ADD30100D0F575 /* AuthenticationSettings.storyboard */; };
 		6640E19922AE7FCB00D0F575 /* AuthenticationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */; };
 		6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */; };
-		6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */; };
+		6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */; };
 		664133E121DA64C800CE823A /* SettingsNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E021DA64C800CE823A /* SettingsNotificationCell.swift */; };
 		664133E521DA8E5F00CE823A /* NotificationsGroupingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */; };
 		664133E821DB828E00CE823A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664133E721DB828E00CE823A /* UserSettings.swift */; };
@@ -503,7 +503,7 @@
 		6640E19622ADD30100D0F575 /* AuthenticationSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuthenticationSettings.storyboard; sourceTree = "<group>"; };
 		6640E19822AE7FCB00D0F575 /* AuthenticationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsCell.swift; sourceTree = "<group>"; };
 		6640E19A22AE808C00D0F575 /* AuthenticationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationOptionsViewController.swift; sourceTree = "<group>"; };
-		6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequireAuthentication.swift; sourceTree = "<group>"; };
+		6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterval.swift; sourceTree = "<group>"; };
 		664133E021DA64C800CE823A /* SettingsNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNotificationCell.swift; sourceTree = "<group>"; };
 		664133E421DA8E5F00CE823A /* NotificationsGroupingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsGroupingCell.swift; sourceTree = "<group>"; };
 		664133E721DB828E00CE823A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -1540,7 +1540,7 @@
 		66A08C6E23E3AF26007B6418 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6640E19C22AE895A00D0F575 /* RequireAuthentication.swift */,
+				6640E19C22AE895A00D0F575 /* AuthenticationInterval.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2763,7 +2763,7 @@
 				66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */,
 				661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */,
 				66C2C5262107ACA10020E21F /* KTabBarController.swift in Sources */,
-				6640E19D22AE895A00D0F575 /* RequireAuthentication.swift in Sources */,
+				6640E19D22AE895A00D0F575 /* AuthenticationInterval.swift in Sources */,
 				66CAE6852337CFB000991E59 /* OnboardingTextFieldCell.swift in Sources */,
 				661F9F832087282500CF4153 /* RegisterViewController.swift in Sources */,
 				66FC6DD12340014500A454DD /* SettingsSection.swift in Sources */,

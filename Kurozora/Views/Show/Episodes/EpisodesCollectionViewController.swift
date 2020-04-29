@@ -325,8 +325,7 @@ extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
 					DispatchQueue.main.async {
 						cell.configureCell(withWatchStatus: watchStatus, shouldUpdate: true)
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

@@ -149,8 +149,7 @@ class NotificationsViewController: KTableViewController {
 					DispatchQueue.main.async {
 						self.userNotificationsElement = notifications
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		} else {

@@ -498,11 +498,7 @@ class ProfileTableViewController: KTableViewController {
 				switch result {
 				case .success:
 					self.editMode(false)
-//					if let profileImageURL = user.profile?.profileImageURL, shouldUpdateProfileImage {
-//						try? Kurozora.shared.keychain.set(profileImageURL, key: "profile_image")
-//					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}
@@ -590,8 +586,7 @@ class ProfileTableViewController: KTableViewController {
 						sender.setTitle("✓ Following", for: .normal)
 						self.user?.profile?.following = true
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

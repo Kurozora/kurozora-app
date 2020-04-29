@@ -179,6 +179,13 @@ extension KurozoraKit {
 			if self.services.showAlerts {
 				SCLAlertView().showSuccess("Settings updated ☺️", subTitle: updatedUser.message)
 			}
+
+			if updatedUser.profile?.id == User.current?.id {
+				if let userDetails = updatedUser.profile {
+					User.current?.updateDetails(with: userDetails)
+				}
+			}
+
 			completionHandler(.success(updatedUser))
 		}, failure: { error in
 			UIView().endEditing(true)

@@ -152,8 +152,7 @@ class ForumsCell: UITableViewCell {
 
 						self.voteCountButton.setTitle("\((threadScore >= 1000) ? threadScore.kFormatted : threadScore.string) · ", for: .normal)
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

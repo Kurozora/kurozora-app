@@ -26,7 +26,7 @@ class SignInTableViewController: BaseOnboardingTableViewController {
 	}
 
 	// MARK: - Functions
-	/// Prompts the user if an existing KDefaults credential or Apple ID credential is found.
+	/// Prompts the user if an existing Keychain credential or Apple ID credential is found.
 	@available(iOS 13.0, macCatalyst 13.0, *)
 	func performExistingAccountSetupFlows() {
 		// Prepare requests for both Apple ID and password providers.

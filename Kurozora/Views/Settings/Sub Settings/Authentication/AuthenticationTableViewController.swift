@@ -27,10 +27,7 @@ class AuthenticationTableViewController: SubSettingsViewController {
 // MARK: - UITableViewDataSource
 extension AuthenticationTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		guard let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"),
-			  let authenticationEnabled = Bool(authenticationEnabledString) else { return 1 }
-
-		return authenticationEnabled ? 2 : 1
+		return UserSettings.authenticationEnabled ? 2 : 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

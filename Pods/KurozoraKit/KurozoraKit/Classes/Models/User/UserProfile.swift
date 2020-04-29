@@ -29,13 +29,13 @@ public class UserProfile: JSONDecodable {
 	public let activityStatus: ActivityStatus?
 
 	/// The URL to the profile image of the user.
-	public let profileImageURL: String?
+	public var profileImageURL: String?
 
 	/// The URL to the banner image of the user.
-	public let bannerImageURL: String?
+	public var bannerImageURL: String?
 
 	/// The biography text of the user.
-	public let biography: String?
+	public var biography: String?
 
 	/// The collection of badges of the user.
 	public let badges: [BadgeElement]?

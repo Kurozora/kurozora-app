@@ -9,6 +9,7 @@
 import UIKit
 
 class AuthenticationSettingsCell: SettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var authenticationTitleLabel: UILabel? {
 		didSet {
 			authenticationTitleLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
@@ -40,31 +41,26 @@ class AuthenticationSettingsCell: SettingsCell {
 	@IBOutlet weak var enabledSwitch: UISwitch? {
 		didSet {
 			enabledSwitch?.theme_onTintColor = KThemePicker.tintColor.rawValue
-
-			if let authenticationEnabledString = try? Kurozora.shared.keychain.get("authenticationEnabled"), let authenticationEnabled = Bool(authenticationEnabledString) {
-				enabledSwitch?.isOn = authenticationEnabled
-			} else {
-				enabledSwitch?.isOn = false
-			}
+			enabledSwitch?.isOn = UserSettings.authenticationEnabled
 		}
 	}
 
 	@IBOutlet weak var authenticationRequireValueLabel: UILabel? {
 		didSet {
 			authenticationRequireValueLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
-			authenticationRequireValueLabel?.text = try? Kurozora.shared.keychain.get("requireAuthentication")
+			authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
 			NotificationCenter.default.addObserver(self, selector: #selector(updateAuthenticationRequireValueLabel), name: .KSAuthenticationRequireTimeoutValueDidChange, object: nil)
 		}
 	}
 
 	// MARK: - Functions
 	@objc func updateAuthenticationRequireValueLabel() {
-		authenticationRequireValueLabel?.text = try? Kurozora.shared.keychain.get("requireAuthentication")
+		authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
 	}
 
 	// MARK: IBActions
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
-		try? Kurozora.shared.keychain.set("\(sender.isOn)", key: "authenticationEnabled")
+		UserSettings.set(sender.isOn, forKey: .authenticationEnabled)
 
 		if let tableView = self.superview as? UITableView {
 			tableView.reloadData()

@@ -77,8 +77,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 						self.navigationController?.popViewController(animated: true)
 						self.dismiss(animated: true, completion: nil)
 					})
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		} else if onboardingType == .siwa {

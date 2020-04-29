@@ -174,8 +174,7 @@ class ManageActiveSessionsController: KTableViewController {
 						self.tableView.deleteRows(at: [indexPath], with: .left)
 						self.tableView.endUpdates()
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		})

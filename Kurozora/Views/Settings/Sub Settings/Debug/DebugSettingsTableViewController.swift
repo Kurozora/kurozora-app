@@ -19,7 +19,6 @@ class DebugSettingsTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	let kDefaultItems = Kurozora.shared.keychain.allItems()
-	let kDefaultKeys = Kurozora.shared.keychain.allKeys()
 	var kDefaultCount = Kurozora.shared.keychain.allItems().count
 
 	// Activity indicator

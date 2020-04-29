@@ -100,8 +100,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 						self.showDetailsElement = showDetailsElement
 						self.collectionView.reloadData()
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}
@@ -114,8 +113,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 						self.seasons = seasons
 						self.collectionView.reloadData()
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}
@@ -128,8 +126,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 						self.actors = actors
 						self.collectionView.reloadData()
 					}
-				case .failure:
-					break
+				case .failure: break
 				}
 			}
 		}

@@ -95,6 +95,20 @@ extension UserSettings {
 	}
 }
 
+// MARK: - Authentication
+extension UserSettings {
+	/// Returns a boolean indicating whether authentication is enabled.
+	static var authenticationEnabled: Bool {
+		return shared.bool(forKey: #function)
+	}
+
+	/// Returns an `AuthenticationInterval` type indicating the preferred authentication interval.
+	static var authenticationInterval: AuthenticationInterval {
+		guard let authenticationInterval = AuthenticationInterval(rawValue: shared.integer(forKey: #function)) else { return .immediately }
+		return authenticationInterval
+	}
+}
+
 // MARK: - Forums
 extension UserSettings {
 	/// Returns an integer indicating the forum page the user was on last.
