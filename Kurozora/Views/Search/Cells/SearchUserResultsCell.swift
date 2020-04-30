@@ -20,15 +20,6 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 	}
 	var searchImageViewSize: CGSize = .zero
 
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		if searchImageView.size != searchImageViewSize {
-			searchImageViewSize = searchImageView.size
-			searchImageView.cornerRadius = searchImageView.height / 2
-		}
-	}
-
 	// MARK: - Functions
 	override func configureCell() {
 		super.configureCell()

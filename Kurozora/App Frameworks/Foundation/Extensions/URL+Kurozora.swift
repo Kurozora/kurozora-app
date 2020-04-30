@@ -6,7 +6,8 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import UIKit.UIApplication
 
 extension URL {
 	// MARK: - Properties

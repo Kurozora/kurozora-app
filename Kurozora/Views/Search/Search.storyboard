@@ -105,16 +105,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Qy-7z-oAZ" userLabel="Rating View">
-                                                    <rect key="frame" x="100" y="114.33333333333333" width="115" height="27.666666666666671"/>
+                                                    <rect key="frame" x="100" y="118" width="115" height="24"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5x-Vn-yvK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="31" height="27.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="31" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                             <color key="textColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YhF-wz-du0" customClass="CosmosView" customModule="Cosmos">
-                                                            <rect key="frame" x="33" y="4" width="82" height="19.666666666666668"/>
+                                                            <rect key="frame" x="33" y="4" width="82" height="16"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                                                     <real key="value" value="0.0"/>
@@ -149,8 +149,11 @@
                                                     </constraints>
                                                 </view>
                                                 <button contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1C5-r3-CYT" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="287" y="114.33333333333333" width="53" height="27.666666666666671"/>
+                                                    <rect key="frame" x="287" y="118" width="53" height="24"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="p9H-uf-ERG"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                                     <state key="normal" title="ADD">
@@ -158,7 +161,7 @@
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="12.5"/>
+                                                            <integer key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
@@ -184,7 +187,6 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="jMT-bG-BUw" firstAttribute="top" secondItem="OlS-ok-hS0" secondAttribute="top" id="063-SU-ray"/>
-                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" secondItem="MaB-HT-zk9" secondAttribute="bottom" constant="10" id="2fd-lV-KLQ"/>
                                                 <constraint firstItem="MUS-DF-Bcc" firstAttribute="top" secondItem="OlS-ok-hS0" secondAttribute="top" id="3sf-hB-CtZ"/>
                                                 <constraint firstItem="4Qy-7z-oAZ" firstAttribute="leading" secondItem="MaB-HT-zk9" secondAttribute="leading" id="62U-FS-zuf"/>
                                                 <constraint firstAttribute="trailing" secondItem="eQA-Y6-YOP" secondAttribute="trailing" id="6HU-KP-x34"/>
@@ -205,6 +207,7 @@
                                                 <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" secondItem="1C5-r3-CYT" secondAttribute="top" id="kzA-ho-3W0"/>
                                                 <constraint firstAttribute="trailing" secondItem="1C5-r3-CYT" secondAttribute="trailing" id="mlc-Dc-iws"/>
                                                 <constraint firstItem="xqK-rd-pf8" firstAttribute="top" secondItem="MUS-DF-Bcc" secondAttribute="top" id="nQJ-dx-8gG"/>
+                                                <constraint firstItem="4Qy-7z-oAZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MaB-HT-zk9" secondAttribute="bottom" constant="12" id="raG-JR-Usq"/>
                                                 <constraint firstItem="chn-Uj-occ" firstAttribute="top" secondItem="xqK-rd-pf8" secondAttribute="bottom" constant="8" symbolic="YES" id="rmJ-dD-vZG"/>
                                                 <constraint firstItem="gkj-n8-ymY" firstAttribute="top" secondItem="chn-Uj-occ" secondAttribute="bottom" id="xRE-pv-noU"/>
                                             </constraints>
@@ -319,18 +322,13 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mtZ-pe-OJF">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="70"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h3f-B7-Hl0">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholders/User Profile" translatesAutoresizingMaskIntoConstraints="NO" id="h3f-B7-Hl0" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="h3f-B7-Hl0" secondAttribute="height" multiplier="1:1" id="KVX-6M-kMs"/>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="NgK-NX-i8S"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="sI6-pF-R7I"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="2"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drt-vQ-zrh">
                                                     <rect key="frame" x="68" y="0.0" width="74" height="20.333333333333332"/>
@@ -339,9 +337,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ol-rj-bPq">
-                                                    <rect key="frame" x="67.999999999999986" y="20.333333333333336" width="157.66666666666663" height="20.333333333333336"/>
+                                                    <rect key="frame" x="68.000000000000014" y="20.333333333333329" width="157.33333333333337" height="19.666666666666671"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FWB-gm-pSF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="157.66666666666663" height="20.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="157.33333333333337" height="19.666666666666671"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl">
@@ -365,8 +363,11 @@
                                                     </vibrancyEffect>
                                                 </visualEffectView>
                                                 <button contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3B-8L-Hn2" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="260" y="21" width="80" height="28"/>
+                                                    <rect key="frame" x="260" y="23" width="80" height="24"/>
                                                     <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="87u-ri-VEr"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                                     <state key="normal" title="+ Follow">
@@ -374,7 +375,7 @@
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="12.5"/>
+                                                            <integer key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
@@ -495,6 +496,7 @@
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
+        <image name="Placeholders/User Profile" width="300" height="300"/>
         <image name="Symbols/lock_fill" width="24" height="24"/>
         <image name="star_empty" width="48" height="46"/>
         <image name="star_filled" width="48" height="46"/>

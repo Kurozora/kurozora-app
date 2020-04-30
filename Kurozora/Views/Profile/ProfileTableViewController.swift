@@ -215,9 +215,11 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure username
 		usernameLabel.text = self.userProfile?.username
+		usernameLabel.isHidden = false
 
 		// Configure online status
 		onlineIndicatorLabel.text = self.userProfile?.activityStatus?.stringValue
+		onlineIndicatorLabel.isHidden = false
 
 		// Configure profile image
 		profileImageView.image = self.userProfile?.profileImage
