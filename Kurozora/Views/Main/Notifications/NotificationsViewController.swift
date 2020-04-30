@@ -471,12 +471,12 @@ extension NotificationsViewController: SwipeTableViewCellDelegate {
 			var readStatus: ReadStatus = .unread
 			switch self.grouping {
 			case .automatic, .byType:
-				if let newReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus {
-					readStatus = newReadStatus
+				if let notificationReadStatus = self.groupedNotifications[indexPath.section].sectionNotifications[indexPath.row].readStatus, notificationReadStatus == .unread {
+					readStatus = .read
 				}
 			case .off:
-				if let newReadStatus = self.userNotificationsElement?[indexPath.row].readStatus {
-					readStatus = newReadStatus
+				if let notificationReadStatus = self.userNotificationsElement?[indexPath.row].readStatus, notificationReadStatus == .unread {
+					readStatus = .read
 				}
 			}
 
