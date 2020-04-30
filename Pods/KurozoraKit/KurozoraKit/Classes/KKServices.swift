@@ -53,7 +53,7 @@ public class KKServices {
 
 		- Returns: Reference to `self`.
 	*/
-	func showAlerts(_ bool: Bool) -> KKServices {
+	func showAlerts(_ bool: Bool) -> Self {
 		self.showAlerts = bool
 		return self
 	}
@@ -65,7 +65,7 @@ public class KKServices {
 
 		- Returns: Reference to `self`.
 	*/
-	func keychainDefaults(_ keychain: Keychain) -> KKServices {
+	func keychainDefaults(_ keychain: Keychain) -> Self {
 		self._keychainDefaults = keychain
 		return self
 	}

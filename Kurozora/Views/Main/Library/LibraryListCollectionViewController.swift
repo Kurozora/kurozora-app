@@ -105,7 +105,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 			view.titleLabelString(NSAttributedString(string: "No Shows", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabelString, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.library())
-				.isScrollAllowed(true)
 
 			// Not signed in
 			if !User.isSignedIn {
@@ -118,6 +117,10 @@ class LibraryListCollectionViewController: KCollectionViewController {
 							self.present(kNavigationController)
 						}
 					}
+			} else {
+				view.verticalOffset(-50)
+					.verticalSpace(5)
+					.isScrollAllowed(true)
 			}
 		}
 	}

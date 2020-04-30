@@ -1,5 +1,5 @@
 //
-//  FeedTabsViewController.swift
+//  FeedViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 21/06/2019.
@@ -11,7 +11,7 @@ import KurozoraKit
 import Tabman
 import Pageboy
 
-class FeedTabsViewController: KTabbedViewController {
+class FeedViewController: KTabbedViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var createPostButton: UIButton!
 	@IBOutlet weak var navigationProfileButton: UIButton!
@@ -84,7 +84,7 @@ class FeedTabsViewController: KTabbedViewController {
 }
 
 // MARK: - KTabbedViewControllerDataSource
-extension FeedTabsViewController {
+extension FeedViewController {
 	override func initializeViewControllers(with count: Int) -> [UIViewController]? {
 		var viewControllers = [UIViewController]()
 

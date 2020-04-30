@@ -77,7 +77,7 @@ public class KurozoraKit {
 
 		- Returns: Reference to `self`.
 	*/
-	public func authenticationKey(_ authenticationKey: String) -> KurozoraKit {
+	public func authenticationKey(_ authenticationKey: String) -> Self {
 		self.authenticationKey = authenticationKey
 		return self
 	}
@@ -89,7 +89,7 @@ public class KurozoraKit {
 
 		- Returns: Reference to `self`.
 	*/
-	public func services(_ services: KKServices) -> KurozoraKit {
+	public func services(_ services: KKServices) -> Self {
 		self.services = services
 		return self
 	}

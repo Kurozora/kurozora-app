@@ -262,7 +262,7 @@
         <!--Feed-->
         <scene sceneID="Uq3-co-bh8">
             <objects>
-                <viewController storyboardIdentifier="FeedTabsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SFM-Od-em0" customClass="FeedTabsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedTabsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SFM-Od-em0" customClass="FeedViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ZA-DA-Zkg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>

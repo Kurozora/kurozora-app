@@ -524,10 +524,8 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
-		guard let userID = self.userID else { return }
 		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
-			favoriteShowsCollectionViewController.userID = userID
-			favoriteShowsCollectionViewController.username = user?.profile?.username
+			favoriteShowsCollectionViewController.userProfile = user?.profile
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
 			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)

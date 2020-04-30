@@ -158,9 +158,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 		- Tag: KTVC-configureTabBarViewVisibility
 	*/
 	func configureTabBarViewVisibility() {
-		if let barItemsCount = bar.items?.count {
-			bar.isHidden = barItemsCount <= 1
-		}
+		bar.isHidden = bar.items?.count ?? 0 <= 1
 	}
 
 	/// Reloads the tab bar with the new data.

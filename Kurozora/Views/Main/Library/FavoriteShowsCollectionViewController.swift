@@ -17,8 +17,15 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 			self.configureDataSource()
 		}
 	}
-	var userID: Int = 0
-	var username: String? = nil
+	var _userProfile: UserProfile? = User.current
+	var userProfile: UserProfile? {
+		get {
+			return _userProfile
+		}
+		set {
+			self._userProfile = newValue
+		}
+	}
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
 			if dismissButtonIsEnabled {
@@ -48,7 +55,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
 
 		// Observe NotificationCenter for an update.
-		if userID == 0 {
+		if userProfile?.id == User.current?.id {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)
 		}
 
@@ -71,7 +78,7 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { view in
-			let detailLabel = self.userID == 0 ? "Favorited shows will show up on this page!" : "\(self.username ?? "This user") hasn't favorited shows yet."
+			let detailLabel = self.userProfile?.id == User.current?.id ? "Favorited shows will show up on this page!" : "\(self.userProfile?.username ?? "This user") hasn't favorited shows yet."
 			view.titleLabelString(NSAttributedString(string: "No Favorites", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
 				.detailLabelString(NSAttributedString(string: detailLabel, attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.favorites()!)
@@ -84,7 +91,8 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 
 	/// Fetches the user's favorite list.
 	@objc fileprivate func fetchFavoritesList() {
-		KService.getFavourites(forUserID: self.userID) { result in
+		guard let userID = self.userProfile?.id else { return }
+		KService.getFavourites(forUserID: userID) { result in
 			switch result {
 			case .success(let showDetailsElements):
 				DispatchQueue.main.async {

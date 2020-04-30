@@ -336,7 +336,7 @@
 		66CAE68D2337D0FF00991E59 /* OnboardingCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE68C2337D0FF00991E59 /* OnboardingCellType.swift */; };
 		66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */; };
 		66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CBA53622BC454600FBEC13 /* Feed.storyboard */; };
-		66CBA53922BCEBD000FBEC13 /* FeedTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */; };
+		66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */; };
 		66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */; };
 		66CDC089234A829E009E799C /* ProductInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ProductInfoTableViewCell.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
@@ -748,7 +748,7 @@
 		66CAE68C2337D0FF00991E59 /* OnboardingCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCellType.swift; sourceTree = "<group>"; };
 		66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		66CBA53622BC454600FBEC13 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
-		66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabsViewController.swift; sourceTree = "<group>"; };
+		66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductActionTableViewCell.swift; sourceTree = "<group>"; };
 		66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTableViewController.swift; sourceTree = "<group>"; };
@@ -1887,7 +1887,7 @@
 			children = (
 				66CBA53622BC454600FBEC13 /* Feed.storyboard */,
 				66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */,
-				66CBA53822BCEBCF00FBEC13 /* FeedTabsViewController.swift */,
+				66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */,
 				664B6D73230F3A2000F9C726 /* Models */,
 			);
 			path = Feed;
@@ -2708,7 +2708,7 @@
 				66B13A572403CA4F00CD732B /* UICollectionViewController+KCollectionViewDataSource.swift in Sources */,
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */,
-				66CBA53922BCEBD000FBEC13 /* FeedTabsViewController.swift in Sources */,
+				66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */,
 				6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */,
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
