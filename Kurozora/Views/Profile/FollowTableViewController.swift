@@ -125,7 +125,7 @@ class FollowTableViewController: KTableViewController {
 		if let currentCell = sender as? FollowCell {
 			if segue.identifier == R.segue.followTableViewController.profileSegue.identifier {
 				if let profileTableViewController = segue.destination as? ProfileTableViewController {
-					profileTableViewController.userID = currentCell.userProfile?.id
+					profileTableViewController.userProfile = currentCell.userProfile
 				}
 			}
 		}

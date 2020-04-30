@@ -8,10 +8,7 @@
 
 import UIKit
 import KurozoraKit
-import FLAnimatedImage
-import Kingfisher
 import SCLAlertView
-import SwiftTheme
 
 class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
@@ -20,7 +17,7 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var profileImageView: UIImageView!
 	@IBOutlet weak var profileBorderView: UIView! {
 		didSet {
-			profileBorderView.theme_borderColor = KThemePicker.borderColor.rawValue
+			profileBorderView.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {
@@ -44,12 +41,6 @@ class ProfileTableViewController: KTableViewController {
 		didSet {
 			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
 			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
-	@IBOutlet weak var moreButton: UIButton! {
-		didSet {
-			moreButton.theme_tintColor = KThemePicker.tintColor.rawValue
-			moreButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
 
@@ -99,14 +90,8 @@ class ProfileTableViewController: KTableViewController {
 	var currentImageView: UIImageView?
 	var placeholderText = "Describe yourself!"
 
-	var user: User? {
-		didSet {
-			self.configureProfile()
-			_prefersActivityIndicatorHidden = true
-			self.tableView.reloadData()
-		}
-	}
-	var userID: Int? = nil
+	var userProfile: UserProfile? = User.current
+
 	var dismissButtonIsEnabled: Bool = false {
 		didSet {
 			if dismissButtonIsEnabled {
@@ -136,6 +121,12 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	// MARK: - View
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		self.fetchUserDetails(for: self.userProfile?.id)
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -143,9 +134,6 @@ class ProfileTableViewController: KTableViewController {
 		self.bannerImageViewHeightConstraint.constant = view.height / 3
 		self.view.setNeedsUpdateConstraints()
 		self.view.layoutIfNeeded()
-
-		// Fetch user details
-		fetchUserDetails(for: userID ?? User.current?.id)
 
 		// Setup refresh controller
 		refreshControl?.theme_tintColor = KThemePicker.tintColor.rawValue
@@ -169,7 +157,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		tableView.emptyDataSetView { (view) in
-			let detailLabel = self.userID == User.current?.id || self.userID == nil ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
+			let detailLabel = self.userProfile?.id == User.current?.id ? "There are no posts on your timeline!" : "There are no posts on this timeline! Be the first to post :D"
 			let verticalOffset = (self.tableView.tableHeaderView?.height ?? 0 - self.view.height) / 2
 
 			view.titleLabelString(NSAttributedString(string: "No Posts", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
@@ -212,9 +200,9 @@ class ProfileTableViewController: KTableViewController {
 		KService.getProfile(forUserID: userID) { result in
 			switch result {
 			case .success(let user):
-				DispatchQueue.main.async {
-					self.user = user
-				}
+				self.userProfile = user.profile
+				self.configureProfile()
+				self._prefersActivityIndicatorHidden = true
 			case .failure: break
 			}
 		}
@@ -222,41 +210,36 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Configure the profile view with the details of the user whose page is being viewed.
 	private func configureProfile() {
-		guard let user = user else { return }
 		let centerAlign = NSMutableParagraphStyle()
 		centerAlign.alignment = .center
 
 		// Configure username
-		if let username = user.profile?.username, !username.isEmpty {
-			usernameLabel.text = username
-		} else {
-			usernameLabel.text = "Unknown"
-		}
+		usernameLabel.text = self.userProfile?.username
 
 		// Configure online status
-		onlineIndicatorLabel.text = user.profile?.activityStatus?.stringValue
+		onlineIndicatorLabel.text = self.userProfile?.activityStatus?.stringValue
 
 		// Configure profile image
-		profileImageView.image = User.current?.profileImage
+		profileImageView.image = self.userProfile?.profileImage
 
 		// Configure banner image
-		if let bannerImageURL = user.profile?.bannerImageURL {
+		if let bannerImageURL = self.userProfile?.bannerImageURL {
 			bannerImageView.setImage(with: bannerImageURL, placeholder: R.image.placeholders.userBanner()!)
 		}
 
 		// Configure user bio
-		if let biography = user.profile?.biography, !biography.isEmpty {
+		if let biography = self.userProfile?.biography, !biography.isEmpty {
 			self.bioTextView.text = biography
 		}
 
 		// Configure reputation count
-		if let reputationCount = user.profile?.reputationCount {
+		if let reputationCount = self.userProfile?.reputationCount {
 			let count = NSAttributedString(string: "\((reputationCount >= 10000) ? reputationCount.kFormatted : "\(reputationCount)")", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let title = NSAttributedString(string: "\nReputation", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.subTextColor.stringValue) ?? #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1),
+				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let reputationButtonTitle = NSMutableAttributedString()
@@ -267,13 +250,13 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Configure following & followers count
-		if let followingCount = user.profile?.followingCount {
+		if let followingCount = self.userProfile?.followingCount {
 			let count = NSAttributedString(string: "\((followingCount >= 10000) ? followingCount.kFormatted : "\(followingCount)")", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let title = NSAttributedString(string: "\nFollowing", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.subTextColor.stringValue) ?? #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1),
+				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let followingButtonTitle = NSMutableAttributedString()
@@ -283,13 +266,13 @@ class ProfileTableViewController: KTableViewController {
 			self.followingButton.setAttributedTitle(followingButtonTitle, for: .normal)
 		}
 
-		if let followerCount = user.profile?.followerCount {
+		if let followerCount = self.userProfile?.followerCount {
 			let count = NSAttributedString(string: "\((followerCount >= 10000) ? followerCount.kFormatted : "\(followerCount)")", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let title = NSAttributedString(string: "\nFollowers", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.subTextColor.stringValue) ?? #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1),
+				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let followersButtonTitle = NSMutableAttributedString()
@@ -300,11 +283,11 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Configure follow button
-		if self.userID == User.current?.id || self.userID == nil {
+		if self.userProfile?.id == User.current?.id {
 			followButton.isHidden = true
 			editProfileButton.isHidden = false
 		} else {
-			if let currentlyFollowing = user.profile?.following, currentlyFollowing == true {
+			if let currentlyFollowing = self.userProfile?.following, currentlyFollowing == true {
 				followButton.setTitle("✓ Following", for: .normal)
 			} else {
 				followButton.setTitle("＋ Follow", for: .normal)
@@ -316,7 +299,7 @@ class ProfileTableViewController: KTableViewController {
 
 		// Configure pro badge
 		proBadgeButton.isHidden = true
-		if let proBadge = user.profile?.proBadge, !String(proBadge).isEmpty {
+		if let proBadge = self.userProfile?.proBadge, !String(proBadge).isEmpty {
 			if proBadge {
 				self.proBadgeButton.isHidden = false
 				self.proBadgeButton.setTitle("PRO", for: .normal)
@@ -324,7 +307,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 
 		// Configure badge & badge button
-		if let badges = user.profile?.badges {
+		if let badges = self.userProfile?.badges {
 			// Configure user badge (a.k.a tag)
 			if !badges.isEmpty {
 				self.tagBadgeButton.isHidden = false
@@ -342,11 +325,11 @@ class ProfileTableViewController: KTableViewController {
 
 			// Configure badge button
 			let count = NSAttributedString(string: "\(badges.count)", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.textColor.stringValue) ?? #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+				NSAttributedString.Key.foregroundColor: KThemePicker.textColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let title = NSAttributedString(string: "\nBadges", attributes: [
-				NSAttributedString.Key.foregroundColor: ThemeManager.color(for: KThemePicker.subTextColor.stringValue) ?? #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1),
+				NSAttributedString.Key.foregroundColor: KThemePicker.subTextColor.colorValue,
 				NSAttributedString.Key.paragraphStyle: centerAlign
 			])
 			let badgesButtonTitle = NSMutableAttributedString()
@@ -525,7 +508,7 @@ class ProfileTableViewController: KTableViewController {
 	/// Performs segue to `FavoriteShowsCollectionViewController` with `FavoriteShowsSegue` as the identifier.
 	fileprivate func showFavoriteShowsList() {
 		if let favoriteShowsCollectionViewController = R.storyboard.library.favoriteShowsCollectionViewController() {
-			favoriteShowsCollectionViewController.userProfile = user?.profile
+			favoriteShowsCollectionViewController.userProfile = self.userProfile
 			favoriteShowsCollectionViewController.dismissButtonIsEnabled = true
 
 			let kNavigationViewController = KNavigationController(rootViewController: favoriteShowsCollectionViewController)
@@ -534,7 +517,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	/// Builds and presents an action sheet.
-	fileprivate func showActionList() {
+	fileprivate func showActionList(_ sender: UIBarButtonItem) {
 		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Go to last watched episode
@@ -552,8 +535,7 @@ class ProfileTableViewController: KTableViewController {
 
 		//Present the controller
 		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = moreButton
-			popoverController.sourceRect = moreButton.bounds
+			popoverController.barButtonItem = sender
 		}
 
 		self.present(action, animated: true, completion: nil)
@@ -571,18 +553,18 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBAction func followButtonPressed(_ sender: UIButton) {
 		WorkflowController.shared.isSignedIn {
-			guard let userID = self.userID else { return }
-			let followStatus: FollowStatus = self.user?.profile?.following ?? false ? .unfollow : .follow
+			guard let userID = self.userProfile?.id else { return }
+			let followStatus: FollowStatus = self.userProfile?.following ?? false ? .unfollow : .follow
 
 			KService.updateFollowStatus(userID, withFollowStatus: followStatus) { result in
 				switch result {
 				case .success:
 					if followStatus == .unfollow {
 						sender.setTitle("＋ Follow", for: .normal)
-						self.user?.profile?.following = false
+						self.userProfile?.following = false
 					} else {
 						sender.setTitle("✓ Following", for: .normal)
-						self.user?.profile?.following = true
+						self.userProfile?.following = true
 					}
 				case .failure: break
 				}
@@ -590,12 +572,12 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 
-	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		showActionList()
+	@IBAction func moreBarButtonPressed(_ sender: UIBarButtonItem) {
+		showActionList(sender)
 	}
 
 	@IBAction func showProfileImage(_ sender: AnyObject) {
-		if let profileImageURL = user?.profile?.profileImageURL, !profileImageURL.isEmpty {
+		if let profileImageURL = self.userProfile?.profileImageURL, !profileImageURL.isEmpty {
 			presentPhotoViewControllerWith(url: profileImageURL, from: profileImageView)
 		} else {
 			presentPhotoViewControllerWith(image: profileImageView.image, from: profileImageView)
@@ -603,7 +585,7 @@ class ProfileTableViewController: KTableViewController {
 	}
 
 	@IBAction func showBanner(_ sender: AnyObject) {
-		if let bannerImageURL = user?.profile?.bannerImageURL, !bannerImageURL.isEmpty {
+		if let bannerImageURL = self.userProfile?.bannerImageURL, !bannerImageURL.isEmpty {
 			presentPhotoViewControllerWith(url: bannerImageURL, from: bannerImageView)
 		} else {
 			presentPhotoViewControllerWith(string: "default_banner_image", from: bannerImageView)
@@ -614,10 +596,10 @@ class ProfileTableViewController: KTableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {
 			if let badgesTableViewController = segue.destination as? BadgesTableViewController {
-				badgesTableViewController.userProfile = user?.profile
+				badgesTableViewController.userProfile = self.userProfile
 			}
 		} else if let followTableViewController = segue.destination as? FollowTableViewController {
-			followTableViewController.user = user?.profile
+			followTableViewController.user = self.userProfile
 
 			if segue.identifier == R.segue.profileTableViewController.followingSegue.identifier {
 				followTableViewController.followList = .following

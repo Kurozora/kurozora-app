@@ -13,7 +13,7 @@ class IconNotificationCell: BasicNotificationCell {
 	// Body
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
+			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var notificationTitleLabel: UILabel!

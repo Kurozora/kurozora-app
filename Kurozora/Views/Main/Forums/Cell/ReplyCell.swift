@@ -12,7 +12,7 @@ import KurozoraKit
 class ReplyCell: UITableViewCell {
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
+			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1
@@ -85,12 +85,7 @@ class ReplyCell: UITableViewCell {
 		guard let threadRepliesElement = threadRepliesElement else { return }
 
 		// Configure profile image
-		if let profileImageURL = threadRepliesElement.userProfile?.profileImageURL {
-			if let usernameInitials = threadRepliesElement.userProfile?.username?.initials {
-				let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
-				profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
-			}
-		}
+		profileImageView.image = threadRepliesElement.userProfile?.profileImage
 
 		// Configure username
 		usernameLabel?.text = threadRepliesElement.userProfile?.username
@@ -167,7 +162,7 @@ class ReplyCell: UITableViewCell {
 	fileprivate func visitPosterProfilePage() {
 		if let userID = threadRepliesElement?.userProfile?.id, userID != 0 {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = userID
+				profileViewController.userProfile = threadRepliesElement?.userProfile
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)

@@ -408,9 +408,9 @@ extension NotificationsViewController {
 			WorkflowController.shared.showSessions()
 		} else if baseNotificationCell?.notificationType == .follower {
 			// Change notification status to read
-			let userID = baseNotificationCell?.userNotificationElement?.data?.userID
+			guard let userID = baseNotificationCell?.userNotificationElement?.data?.userID else { return }
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = userID
+				profileViewController.userProfile = try? UserProfile(json: ["id": userID])
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)

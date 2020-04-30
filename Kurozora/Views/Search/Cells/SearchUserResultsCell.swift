@@ -40,12 +40,8 @@ class SearchUserResultsCell: SearchBaseResultsCell {
 		updateFollowStatusLabel()
 
 		// Configure profile image
-		if let profileImageURL = userProfile.profileImageURL {
-			if let usernameInitials = userProfile.username?.initials {
-				let placeholderImage = usernameInitials.toImage(withFrameSize: searchImageView.frame, placeholder: R.image.placeholders.userProfile()!)
-				searchImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
-			}
-		}
+		searchImageView.borderColor = UIColor.white.withAlphaComponent(0.20)
+		searchImageView.image = userProfile.profileImage
 
 		// Configure follow button
 		if userProfile.id == User.current?.id {

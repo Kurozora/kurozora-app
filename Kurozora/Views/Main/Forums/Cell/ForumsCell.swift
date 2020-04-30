@@ -160,9 +160,9 @@ class ForumsCell: UITableViewCell {
 
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
-		if let posterId = forumThreadsElement?.posterUserID, posterId != 0 {
+		if let posterID = forumThreadsElement?.posterUserID, posterID != 0 {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = posterId
+				profileViewController.userProfile = try? UserProfile(json: ["id": posterID])
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)

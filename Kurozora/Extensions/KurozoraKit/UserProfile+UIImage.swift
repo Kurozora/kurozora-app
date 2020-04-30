@@ -19,7 +19,7 @@ extension UserProfile {
 	var profileImage: UIImage? {
 		let profileImageView = UIImageView()
 		if let usernameInitials = username?.initials {
-			let placeholderImage = usernameInitials.toImage(placeholder: R.image.placeholders.userProfile()!)
+			let placeholderImage = usernameInitials.toImage(withFrameSize: CGRect(x: 0, y: 0, width: 300, height: 300), placeholder: R.image.placeholders.userProfile()!)
 			profileImageView.setImage(with: profileImageURL ?? "", placeholder: placeholderImage)
 		}
 		return profileImageView.image?.withRenderingMode(.alwaysOriginal)

@@ -181,7 +181,10 @@ extension SearchResultsCollectionViewController {
 		}
 		return searchResultsCell
 	}
+}
 
+// MARK: - UICollectionViewDelegate
+extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		if searchResults != nil {
 			switch currentScope {
@@ -196,10 +199,7 @@ extension SearchResultsCollectionViewController {
 			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestionElements?[indexPath.row]
 		}
 	}
-}
 
-// MARK: - UICollectionViewDelegate
-extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if searchResults != nil {
@@ -218,7 +218,7 @@ extension SearchResultsCollectionViewController {
 				}
 			case .user:
 				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					profileTableViewController.userID = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile?.id
+					profileTableViewController.userProfile = (searchBaseResultsCell as? SearchUserResultsCell)?.userProfile
 					presentingViewController?.show(profileTableViewController, sender: nil)
 				}
 			}

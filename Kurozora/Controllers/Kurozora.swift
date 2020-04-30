@@ -128,20 +128,14 @@ class Kurozora {
 				}
 			}
 		case .profile, .user:
-			let userID = url.lastPathComponent
-			let isCurrentUser = userID.isEmpty || userID.int == User.current?.session?.id
+			guard let userID = url.lastPathComponent.int else { return }
+
 			if let tabBarController = UIApplication.topViewController?.tabBarController as? ESTabBarController {
 				tabBarController.selectedIndex = 4
 
 				if let profileTableViewController = R.storyboard.profile.profileTableViewController() {
-					if isCurrentUser {
-						WorkflowController.shared.isSignedIn {
-							tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
-						}
-					} else {
-						profileTableViewController.userID = userID.int
-						tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
-					}
+					profileTableViewController.userProfile = userID == User.current?.id ? User.current : try? UserProfile(json: ["id": userID])
+					tabBarController.selectedViewController?.show(profileTableViewController, sender: nil)
 				}
 			}
 		case .explore, .home:

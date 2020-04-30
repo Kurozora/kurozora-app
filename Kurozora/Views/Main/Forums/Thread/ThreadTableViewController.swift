@@ -376,7 +376,7 @@ class ThreadTableViewController: KTableViewController {
 	func visitPosterProfilePage() {
 		if let posterUserID = forumsThreadElement?.posterUserID, posterUserID != 0 {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
-				profileViewController.userID = posterUserID
+				profileViewController.userProfile = try? UserProfile(json: ["id": posterUserID])
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)

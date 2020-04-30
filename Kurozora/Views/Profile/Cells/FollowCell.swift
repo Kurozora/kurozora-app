@@ -17,7 +17,7 @@ class FollowCell: UITableViewCell {
 	}
 	@IBOutlet weak var profileImageViewContainer: UIView! {
 		didSet {
-			profileImageViewContainer.theme_borderColor = KThemePicker.borderColor.rawValue
+			profileImageViewContainer.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var profileImageView: UIImageView!
@@ -48,12 +48,7 @@ class FollowCell: UITableViewCell {
 		usernameLabel.text = userProfile.username
 
 		// Configure profile image
-		if let profileImageURL = userProfile.profileImageURL {
-			if let usernameInitials = userProfile.username?.initials {
-				let placeholderImage = usernameInitials.toImage(withFrameSize: profileImageView.frame, placeholder: R.image.placeholders.userProfile()!)
-				profileImageView.setImage(with: profileImageURL, placeholder: placeholderImage)
-			}
-		}
+		profileImageView.image = userProfile.profileImage
 
 		// Configure follow button
 		followButton.setTitle(userProfile.following ?? false ? "✓ Following" : "+ Follow", for: .normal)

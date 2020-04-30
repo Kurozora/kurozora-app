@@ -14,7 +14,7 @@ class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			self.profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
+			self.profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var usernameLabel: UILabel! {

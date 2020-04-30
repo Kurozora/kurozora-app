@@ -33,7 +33,7 @@ class FeedViewController: KTabbedViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Configure navigation profile button
-		navigationProfileButton.theme_borderColor = KThemePicker.borderColor.rawValue
+		navigationProfileButton.borderColor = UIColor.white.withAlphaComponent(0.2)
 		navigationProfileButton.borderWidth = 2
 		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
 		setNavigationButtonImage()

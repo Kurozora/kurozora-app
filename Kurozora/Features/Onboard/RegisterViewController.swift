@@ -15,7 +15,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var profileImageView: UIImageView! {
 		didSet {
-			profileImageView.theme_borderColor = KThemePicker.borderColor.rawValue
+			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var selectButton: UIButton! {

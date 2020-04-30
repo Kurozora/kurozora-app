@@ -12,7 +12,7 @@ extension String {
 	// MARK: - Properties
 	/// Returns the initial characters (up to 2 characters) of the string separated by a whitespace or a dot. For example "John Appleseed" and "John.Appleseed" returns "JA". Returned value is case insensitive which means "john appleseed" will return "ja".
 	var initials: String {
-		let stringSeparatedByWhiteSpace = self.components(separatedBy: [".", " "])
+		let stringSeparatedByWhiteSpace = self.components(separatedBy: [".", " ", "-"])
 		let initials = stringSeparatedByWhiteSpace.reduce("") { ($0 == "" ? "" : "\($0.first ?? " ")") + "\($1.first ?? " ")" }
 		return initials
 	}

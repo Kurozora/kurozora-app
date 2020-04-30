@@ -14,7 +14,7 @@ class SettingsCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var iconImageView: UIImageView? {
 		didSet {
-			iconImageView?.theme_borderColor = KThemePicker.borderColor.rawValue
+			iconImageView?.borderColor = UIColor.white.withAlphaComponent(0.2)
 		}
 	}
 	@IBOutlet weak var primaryLabel: UILabel? {
