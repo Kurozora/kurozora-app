@@ -620,7 +620,7 @@ extension KurozoraKit {
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
 	public func getFollowList(_ userID: Int, _ followList: FollowList, page: Int, completion completionHandler: @escaping (_ result: Result<UserFollow, KKError>) -> Void) {
-		var usersFollowerOrFollowing = followList == .following ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollower
+		var usersFollowerOrFollowing = followList == .following ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollowers
 		usersFollowerOrFollowing = usersFollowerOrFollowing.replacingOccurrences(of: "?", with: "\(userID)")
 
 		let request: APIRequest<UserFollow, KKError> = tron.swiftyJSON.request(usersFollowerOrFollowing)

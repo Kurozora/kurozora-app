@@ -12,11 +12,7 @@ import SCLAlertView
 
 class AccountTableViewController: SubSettingsViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var profileImageView: UIImageView! {
-		didSet {
-			self.profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
 			self.usernameLabel.theme_textColor = KThemePicker.textColor.rawValue

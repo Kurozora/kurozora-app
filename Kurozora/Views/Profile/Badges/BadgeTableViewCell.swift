@@ -12,7 +12,7 @@ import KurozoraKit
 class BadgeTableViewCell: UITableViewCell {
 	@IBOutlet weak var badgeTitleLabel: UILabel!
 	@IBOutlet weak var badgeDescriptionLabel: UILabel!
-	@IBOutlet weak var badgeImageView: UIImageView!
+	@IBOutlet weak var badgeImageView: ProfileImageView!
 
 	var badgeElement: BadgeElement? {
 		didSet {
@@ -43,6 +43,6 @@ class BadgeTableViewCell: UITableViewCell {
 		}
 
 		// Set badge image and border color
-		self.badgeImageView.image = R.image.symbols.person_crop_circle_fill()
+		self.badgeImageView.image = R.image.placeholders.userProfile()
 	}
 }

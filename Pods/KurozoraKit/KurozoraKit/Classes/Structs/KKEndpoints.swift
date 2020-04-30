@@ -192,7 +192,7 @@ internal struct KKEndpoints {
 	/// The endpoint to the user's followers list.
 	///
 	/// **Replace:** `?` with the id of the user.
-	let usersFollower = "users/?/follower"
+	let usersFollowers = "users/?/followers"
 
 	/// The endpoint to the user's following list.
 	///

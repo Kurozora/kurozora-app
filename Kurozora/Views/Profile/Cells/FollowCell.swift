@@ -15,12 +15,8 @@ class FollowCell: UITableViewCell {
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var profileImageViewContainer: UIView! {
-		didSet {
-			profileImageViewContainer.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
-	@IBOutlet weak var profileImageView: UIImageView!
+	@IBOutlet weak var profileImageViewContainer: UIView!
+	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: UIButton! {
 		didSet {
 			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue

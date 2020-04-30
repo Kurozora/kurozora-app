@@ -28,11 +28,7 @@ class KCommentEditorViewController: KViewController {
 		}
 	}
 
-	@IBOutlet weak var profileImageView: UIImageView! {
-		didSet {
-			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var currentUsernameLabel: UILabel! {
 		didSet {
 			currentUsernameLabel.theme_textColor = KThemePicker.textColor.rawValue

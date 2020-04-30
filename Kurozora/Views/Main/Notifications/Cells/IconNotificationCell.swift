@@ -11,11 +11,7 @@ import UIKit
 class IconNotificationCell: BasicNotificationCell {
 	// MARK: - IBOutlets
 	// Body
-	@IBOutlet weak var profileImageView: UIImageView! {
-		didSet {
-			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var notificationTitleLabel: UILabel!
 
 	// MARK: - Functions

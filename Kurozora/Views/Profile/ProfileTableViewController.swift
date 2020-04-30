@@ -14,12 +14,7 @@ class ProfileTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
-	@IBOutlet weak var profileImageView: UIImageView!
-	@IBOutlet weak var profileBorderView: UIView! {
-		didSet {
-			profileBorderView.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var usernameLabel: UILabel! {
 		didSet {
 			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
@@ -318,7 +313,7 @@ class ProfileTableViewController: KTableViewController {
 					self.tagBadgeButton.setTitleColor(UIColor(hexString: badge.textColor ?? "#00ABF1"), for: .normal)
 					self.tagBadgeButton.backgroundColor = UIColor(hexString: badge.backgroundColor ?? "#B6EAFF")
 					self.tagBadgeButton.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
-					self.profileBorderView.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
+					self.profileImageView.borderColor = UIColor(hexString: badge.textColor ?? "#00ABF1")
 					break
 				}
 			} else {

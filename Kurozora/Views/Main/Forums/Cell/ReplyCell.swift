@@ -10,9 +10,8 @@ import UIKit
 import KurozoraKit
 
 class ReplyCell: UITableViewCell {
-	@IBOutlet weak var profileImageView: UIImageView! {
+	@IBOutlet weak var profileImageView: ProfileImageView! {
 		didSet {
-			profileImageView.borderColor = UIColor.white.withAlphaComponent(0.2)
 			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(usernameLabelPressed))
 			gestureRecognizer.numberOfTouchesRequired = 1
 			gestureRecognizer.numberOfTapsRequired = 1

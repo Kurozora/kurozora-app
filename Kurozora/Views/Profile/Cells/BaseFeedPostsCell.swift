@@ -9,11 +9,7 @@
 import UIKit
 
 class BaseFeedPostCell: UITableViewCell {
-	@IBOutlet weak var profileImageView: UIImageView? {
-		didSet {
-			profileImageView?.borderColor = UIColor.white.withAlphaComponent(0.2)
-		}
-	}
+	@IBOutlet weak var profileImageView: ProfileImageView?
 	@IBOutlet weak var usernameLabel: UILabel? {
 		didSet {
 			usernameLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
