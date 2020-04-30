@@ -123,6 +123,7 @@ class ForumsListViewController: KTableViewController {
 		if segue.identifier == R.segue.forumsListViewController.threadSegue.identifier {
 			let threadViewController = segue.destination as? ThreadTableViewController
 			threadViewController?.hidesBottomBarWhenPushed = true
+			threadViewController?.sectionTitle = sectionTitle
 			threadViewController?.forumsThreadElement = sender as? ForumsThreadElement
 		}
 	}

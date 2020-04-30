@@ -14,9 +14,9 @@ import SCLAlertView
 class ThreadTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
-	@IBOutlet weak var discussionLabel: UILabel! {
+	@IBOutlet weak var topicLabel: UILabel! {
 		didSet {
-			discussionLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
+			topicLabel.theme_textColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
 	@IBOutlet weak var voteCountButton: UIButton! {
@@ -99,6 +99,7 @@ class ThreadTableViewController: KTableViewController {
 	var replyID: Int?
 	var newReplyID: Int!
 	var threadInformation: String?
+	var sectionTitle = "Discussion"
 
 	// Reply variables
 	var replies: [ThreadRepliesElement]?
@@ -176,6 +177,8 @@ class ThreadTableViewController: KTableViewController {
 	/// Update the thread view with the fetched details.
 	func updateThreadDetails() {
 		guard let forumsThreadElement = forumsThreadElement else { return }
+		// Set topic label
+		topicLabel.text = "In \(sectionTitle) by"
 
 		// Set thread title
 		self.title = forumsThreadElement.title
@@ -199,7 +202,7 @@ class ThreadTableViewController: KTableViewController {
 		}
 
 		if let creationDate = forumsThreadElement.creationDate {
-			dateTimeButton.setTitle(creationDate.timeAgo + " · by ", for: .normal)
+			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
 		}
 
 		// Thread vote state
