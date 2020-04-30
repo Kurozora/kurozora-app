@@ -519,7 +519,6 @@
                         <outlet property="profileImageView" destination="cG1-YT-L26" id="sqw-dy-AN9"/>
                         <outlet property="rightNavigationBarButton" destination="nw0-4m-Xlh" id="Fea-P0-jQO"/>
                         <outlet property="selectButton" destination="qUJ-dy-UZu" id="HAa-jl-zgF"/>
-                        <outlet property="shadowView" destination="bmz-p1-Cg7" id="Zyj-Np-IEJ"/>
                         <outlet property="subTextLabel" destination="UJ9-WL-FIr" id="Xe8-gr-hxc"/>
                         <outlet property="titleLabel" destination="xr5-LJ-ipy" id="OeE-KG-qwp"/>
                     </connections>

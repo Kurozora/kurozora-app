@@ -12,7 +12,6 @@ import SCLAlertView
 
 class RegisterTableViewController: BaseOnboardingTableViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var selectButton: UIButton! {
 		didSet {
@@ -28,9 +27,6 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		onboardingType = isSIWA ? .siwa : .register
-
-		// Apply shadow
-		self.shadowView.applyShadow(cornerRadius: profileImageView.bounds.height / 2)
 	}
 
 	// MARK: - Functions
