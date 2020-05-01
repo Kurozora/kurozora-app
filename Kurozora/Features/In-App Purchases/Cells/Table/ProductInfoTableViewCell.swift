@@ -14,11 +14,7 @@ class ProductInfoTableViewCell: UITableViewCell {
 			restorePurchaseButton?.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var purchaseInfoLabel: UILabel! {
-		didSet {
-			purchaseInfoLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var purchaseInfoLabel: KLabel!
 	@IBOutlet weak var privacyButton: UIButton! {
 		didSet {
 			let paragraphStyle = NSMutableParagraphStyle()

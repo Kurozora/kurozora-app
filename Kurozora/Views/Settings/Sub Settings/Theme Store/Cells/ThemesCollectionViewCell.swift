@@ -14,11 +14,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
     @IBOutlet weak var themeScreenshot: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var downloadCountLabel: UILabel! {
 		didSet {
 			downloadCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue

@@ -17,11 +17,7 @@ protocol KCommentEditorViewDelegate: class {
 
 class KCommentEditorViewController: KViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var threadTitleLabel: UILabel! {
-		didSet {
-			threadTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var threadTitleLabel: KLabel!
 	@IBOutlet weak var posterUsernameLabel: UILabel! {
 		didSet {
 			posterUsernameLabel.theme_textColor = KThemePicker.subTextColor.rawValue
@@ -29,11 +25,7 @@ class KCommentEditorViewController: KViewController {
 	}
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var currentUsernameLabel: UILabel! {
-		didSet {
-			currentUsernameLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var currentUsernameLabel: KLabel!
 
 	@IBOutlet weak var characterCountLabel: UILabel! {
 		didSet {

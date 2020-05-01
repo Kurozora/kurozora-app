@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIN-iJ-hMK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KIN-iJ-hMK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,56 +15,56 @@
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3JB-MM-4q9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9X-vF-wkR">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" layoutMarginsFollowReadableWidth="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9X-vF-wkR">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zjY-G1-AMd">
-                                        <rect key="frame" x="16" y="20" width="382" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zjY-G1-AMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="70" y="20" width="274" height="41"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" layoutMarginsFollowReadableWidth="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MX-Ez-3X2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="69" width="374" height="0.0"/>
+                                        <viewLayoutGuide key="safeArea" id="7rS-ag-moy"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WsW-zq-hQ7">
-                                        <rect key="frame" x="16" y="66" width="382" height="33"/>
+                                        <rect key="frame" x="20" y="85" width="374" height="38"/>
                                         <viewLayoutGuide key="safeArea" id="Ekj-29-ORr"/>
                                         <viewLayoutGuide key="contentLayoutGuide" id="V7q-IT-fS3"/>
                                         <viewLayoutGuide key="frameLayoutGuide" id="Igo-N9-Kmj"/>
-                                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" layoutMarginsFollowReadableWidth="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MX-Ez-3X2">
-                                        <rect key="frame" x="16" y="109" width="382" height="0.0"/>
-                                        <viewLayoutGuide key="safeArea" id="7rS-ag-moy"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="trailing" secondItem="zjY-G1-AMd" secondAttribute="trailing" id="143-D7-WTJ"/>
-                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="top" secondItem="zjY-G1-AMd" secondAttribute="bottom" constant="10" id="2qP-bF-hwy"/>
-                                    <constraint firstItem="zjY-G1-AMd" firstAttribute="top" secondItem="u9X-vF-wkR" secondAttribute="top" constant="20" id="QY8-ic-NkZ"/>
-                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="leading" secondItem="zjY-G1-AMd" secondAttribute="leading" id="Rg6-gl-uZf"/>
-                                    <constraint firstItem="zjY-G1-AMd" firstAttribute="trailing" secondItem="u9X-vF-wkR" secondAttribute="trailingMargin" constant="8" id="ZMO-3Y-GAB"/>
-                                    <constraint firstItem="1MX-Ez-3X2" firstAttribute="leading" secondItem="WsW-zq-hQ7" secondAttribute="leading" id="bhu-kT-VOy"/>
-                                    <constraint firstItem="zjY-G1-AMd" firstAttribute="leading" secondItem="u9X-vF-wkR" secondAttribute="leadingMargin" constant="8" id="ifw-FM-11o"/>
-                                    <constraint firstItem="1MX-Ez-3X2" firstAttribute="trailing" secondItem="WsW-zq-hQ7" secondAttribute="trailing" id="it4-w1-inv"/>
-                                    <constraint firstItem="1MX-Ez-3X2" firstAttribute="top" secondItem="WsW-zq-hQ7" secondAttribute="bottom" constant="10" id="s6t-w8-C19"/>
+                                    <constraint firstAttribute="bottom" secondItem="WsW-zq-hQ7" secondAttribute="bottom" id="8rj-1g-td4"/>
+                                    <constraint firstAttribute="trailing" secondItem="WsW-zq-hQ7" secondAttribute="trailing" constant="20" id="AbU-Hs-EeR"/>
+                                    <constraint firstItem="1MX-Ez-3X2" firstAttribute="centerX" secondItem="zjY-G1-AMd" secondAttribute="centerX" id="G8P-Ry-HxY"/>
+                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="top" secondItem="1MX-Ez-3X2" secondAttribute="bottom" constant="16" id="URF-ty-vKH"/>
+                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="leading" secondItem="u9X-vF-wkR" secondAttribute="leading" constant="20" id="Z1Q-aI-2cC"/>
+                                    <constraint firstItem="zjY-G1-AMd" firstAttribute="top" secondItem="u9X-vF-wkR" secondAttribute="top" constant="20" id="hzq-vp-6Qv"/>
+                                    <constraint firstItem="1MX-Ez-3X2" firstAttribute="top" secondItem="zjY-G1-AMd" secondAttribute="bottom" constant="8" symbolic="YES" id="nry-Et-SWs"/>
                                     <constraint firstItem="zjY-G1-AMd" firstAttribute="centerX" secondItem="u9X-vF-wkR" secondAttribute="centerX" id="tsI-rg-eax"/>
-                                    <constraint firstAttribute="bottom" secondItem="1MX-Ez-3X2" secondAttribute="bottom" id="x2U-yj-fGU"/>
                                 </constraints>
-                                <viewLayoutGuide key="safeArea" id="Lru-ej-ryq"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="jL2-lW-bh1"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="FQp-1y-B4O"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="1MX-Ez-3X2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3JB-MM-4q9" secondAttribute="leadingMargin" id="1ya-ic-cZN"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="1MX-Ez-3X2" secondAttribute="trailing" id="FQt-Bs-ZU2"/>
                             <constraint firstAttribute="bottom" secondItem="u9X-vF-wkR" secondAttribute="bottom" id="IFh-lp-g5z"/>
                             <constraint firstItem="u9X-vF-wkR" firstAttribute="leading" secondItem="zrH-FK-Tbt" secondAttribute="leading" id="LsF-Bn-iBo"/>
                             <constraint firstItem="u9X-vF-wkR" firstAttribute="top" secondItem="3JB-MM-4q9" secondAttribute="top" id="aFM-88-Dnm"/>
+                            <constraint firstItem="zjY-G1-AMd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3JB-MM-4q9" secondAttribute="leadingMargin" id="dDs-5S-raw"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zjY-G1-AMd" secondAttribute="trailing" id="iiF-ZB-GWU"/>
+                            <constraint firstItem="WsW-zq-hQ7" firstAttribute="leading" secondItem="3JB-MM-4q9" secondAttribute="leadingMargin" id="jhc-yG-4VM"/>
                             <constraint firstItem="zrH-FK-Tbt" firstAttribute="trailing" secondItem="u9X-vF-wkR" secondAttribute="trailing" id="khP-qQ-pLD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WsW-zq-hQ7" secondAttribute="trailing" id="vHX-FL-HZP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zrH-FK-Tbt"/>
                     </view>
@@ -75,7 +75,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZM-Ij-ukz">
-                                    <rect key="frame" x="8.5" y="6" width="148.5" height="21"/>
+                                    <rect key="frame" x="8.5" y="6.5" width="148.5" height="20"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                     <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -104,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="msM-VJ-f7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-810" y="-998"/>
+            <point key="canvasLocation" x="-810.14492753623199" y="-998.4375"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4eP-TD-pu1">

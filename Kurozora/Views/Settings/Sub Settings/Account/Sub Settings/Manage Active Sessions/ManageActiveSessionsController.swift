@@ -11,8 +11,8 @@ import KurozoraKit
 import CoreLocation
 import MapKit
 import SCLAlertView
-import SwifterSwift
 import SwiftyJSON
+import SwipeCellKit
 
 class ManageActiveSessionsController: KTableViewController {
 	// MARK: - IBOutlets
@@ -52,9 +52,6 @@ class ManageActiveSessionsController: KTableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(removeSessionFromTable(_:)), name: NSNotification.Name(rawValue: "removeSessionFromTable"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(addSessionToTable(_:)), name: NSNotification.Name(rawValue: "addSessionToTable"), object: nil)
-
 		// Fetch sessions
 		DispatchQueue.global(qos: .background).async {
 			self.fetchSessions()
@@ -161,13 +158,13 @@ class ManageActiveSessionsController: KTableViewController {
 	private func removeSession(_ otherSessionsCell: OtherSessionsCell) {
 		let alertView = SCLAlertView()
 		alertView.addButton("Yes!", action: {
-			guard let sessionID = otherSessionsCell.sessions?.id else { return }
+			guard let sessionID = otherSessionsCell.session?.id else { return }
 
 			KService.deleteSession(sessionID) { result in
 				switch result {
 				case .success:
 					// Get index path for cell
-					if let indexPath = self.tableView.indexPath(for: otherSessionsCell) {
+					if let indexPath = otherSessionsCell.indexPath {
 						// Start delete process
 						self.tableView.beginUpdates()
 						self.sessions?.otherSessions?.remove(at: indexPath.row)
@@ -182,48 +179,48 @@ class ManageActiveSessionsController: KTableViewController {
 		alertView.showNotice("Confirm deletion", subTitle: "Are you sure you want to delete this session?", closeButtonTitle: "Maybe not now")
 	}
 
-	/**
-		Removes session from the table view with the given notification object.
-
-		- Parameter notification: The notification object from which the data is fetched to decide which session to remove.
-	*/
-	@objc func removeSessionFromTable(_ notification: NSNotification) {
-		if let sessionID = notification.userInfo?["session_id"] as? Int {
-			self.tableView.beginUpdates()
-			let sessionIndex = self.sessions?.otherSessions?.firstIndex(where: { (json) -> Bool in
-				return json.id == sessionID
-			})
-
-			if let sessionIndex = sessionIndex, sessionIndex != 0 {
-				self.sessions?.otherSessions?.remove(at: sessionIndex)
-				self.tableView.deleteRows(at: [IndexPath(row: 0, section: sessionIndex)], with: .left)
-			}
-			self.tableView.endUpdates()
-		}
-	}
-
-	/**
-		Adds a new session to the table view from the given notification object.
-
-		- Parameter notification: the notification object from which a new notification cell is added to the table view.
-	*/
-	@objc func addSessionToTable(_ notification: NSNotification) {
-		if let sessionID = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
-			guard let sessionsCount = sessions?.otherSessions?.count else { return }
-			let newSession: JSON = ["id": sessionID,
-									"device": device,
-									"ip": ip,
-									"last_validated": lastValidated
-			]
-
-			if let newSessionElement = try? UserSessionsElement(json: newSession) {
-				self.tableView.beginUpdates()
-				self.sessions?.otherSessions?.append(newSessionElement)
-				self.tableView.insertRows(at: [[1, sessionsCount]], with: .right)
-				self.tableView.endUpdates()
-			}
-		}
-	}
+//	/**
+//		Removes session from the table view with the given notification object.
+//
+//		- Parameter notification: The notification object from which the data is fetched to decide which session to remove.
+//	*/
+//	@objc func removeSession(_ notification: NSNotification) {
+//		if let sessionID = notification.userInfo?["session_id"] as? Int {
+//			self.tableView.beginUpdates()
+//			let sessionIndex = self.sessions?.otherSessions?.firstIndex(where: { (json) -> Bool in
+//				return json.id == sessionID
+//			})
+//
+//			if let sessionIndex = sessionIndex, sessionIndex != 0 {
+//				self.sessions?.otherSessions?.remove(at: sessionIndex)
+//				self.tableView.deleteRows(at: [IndexPath(row: 0, section: sessionIndex)], with: .left)
+//			}
+//			self.tableView.endUpdates()
+//		}
+//	}
+//
+//	/**
+//		Adds a new session to the table view from the given notification object.
+//
+//		- Parameter notification: the notification object from which a new notification cell is added to the table view.
+//	*/
+//	@objc func addSession(_ notification: NSNotification) {
+//		if let sessionID = notification.userInfo?["id"] as? Int, let device = notification.userInfo?["device"] as? String, let ip = notification.userInfo?["ip"] as? String, let lastValidated = notification.userInfo?["last_validated"] as? String {
+//			guard let sessionsCount = sessions?.otherSessions?.count else { return }
+//			let newSession: JSON = ["id": sessionID,
+//									"device": device,
+//									"ip": ip,
+//									"last_validated": lastValidated
+//			]
+//
+//			if let newSessionElement = try? UserSessionsElement(json: newSession) {
+//				self.tableView.beginUpdates()
+//				self.sessions?.otherSessions?.append(newSessionElement)
+//				self.tableView.insertRows(at: [[1, sessionsCount]], with: .right)
+//				self.tableView.endUpdates()
+//			}
+//		}
+//	}
 }
 
 // MARK: - UITableViewDataSource
@@ -254,7 +251,6 @@ extension ManageActiveSessionsController {
 			guard let currentSessionCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.currentSessionCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.currentSessionCell.identifier)")
 			}
-			currentSessionCell.session = sessions?.currentSessions
 			return currentSessionCell
 		} else {
 			let otherSessionsCount = sessions?.otherSessions?.count
@@ -271,19 +267,67 @@ extension ManageActiveSessionsController {
 			guard let otherSessionsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.otherSessionsCell, for: indexPath) else {
 					fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.otherSessionsCell.identifier)")
 			}
-
-			otherSessionsCell.delegate = self
-			otherSessionsCell.sessions = sessions?.otherSessions?[indexPath.row]
-
 			return otherSessionsCell
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return indexPath.section != 0
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension ManageActiveSessionsController {
+	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let currentSessionCell = cell as? CurrentSessionCell {
+			currentSessionCell.session = sessions?.currentSessions
+		} else if let otherSessionsCell = cell as? OtherSessionsCell {
+			otherSessionsCell.delegate = self
+			otherSessionsCell.session = sessions?.otherSessions?[indexPath.row]
 		}
 	}
 }
 
-// MARK: - OtherSessionsCellDelegate
-extension ManageActiveSessionsController: OtherSessionsCellDelegate {
-	func removeSession(for otherSessionsCell: OtherSessionsCell) {
-		self.removeSession(otherSessionsCell)
+// MARK: - SwipeTableViewCellDelegate
+extension ManageActiveSessionsController: SwipeTableViewCellDelegate {
+	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+		switch orientation {
+		case .right:
+			let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+				if let otherSessionsCell = tableView.cellForRow(at: indexPath) as? OtherSessionsCell {
+					self.removeSession(otherSessionsCell)
+				}
+			}
+			deleteAction.backgroundColor = .clear
+			deleteAction.image = R.image.trash_circle()!
+			deleteAction.textColor = .kLightRed
+			deleteAction.font = .systemFont(ofSize: 13)
+			deleteAction.transitionDelegate = ScaleTransition.default
+			return [deleteAction]
+		case .left:
+			return nil
+		}
+	}
+
+	func visibleRect(for tableView: UITableView) -> CGRect? {
+		return tableView.safeAreaLayoutGuide.layoutFrame
+	}
+
+	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+		var options = SwipeOptions()
+
+		switch orientation {
+		case .right:
+			options.expansionStyle = .selection
+		case .left:
+			options.expansionStyle = .none
+		}
+
+		options.transitionStyle = .reveal
+		options.expansionDelegate = ScaleAndAlphaExpansion.default
+		options.buttonSpacing = 4
+		options.backgroundColor = .clear
+		return options
 	}
 }
 

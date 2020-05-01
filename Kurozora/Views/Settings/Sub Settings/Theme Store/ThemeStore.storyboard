@@ -229,7 +229,7 @@
                                                 <constraint firstItem="M8r-MS-gaT" firstAttribute="leading" secondItem="Eia-Cs-y4M" secondAttribute="leading" id="zsi-zT-tyy"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Strawberry" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Strawberry" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="320" width="69" height="15.666666666666686"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                             <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

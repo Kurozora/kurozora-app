@@ -26,11 +26,7 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 			purchaseButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var primaryLabel: UILabel! {
-		didSet {
-			primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var primaryLabel: KLabel!
 
 	// MARK: - Properties
 	weak var purchaseButtonTableViewCellDelegate: PurchaseButtonTableViewCellDelegate?

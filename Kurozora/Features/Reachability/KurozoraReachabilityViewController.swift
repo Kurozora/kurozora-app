@@ -17,16 +17,8 @@ class KurozoraReachabilityViewController: UIViewController {
 		}
 	}
 	@IBOutlet weak var noSignalImageView: UIImageView!
-	@IBOutlet weak var primaryLabel: UILabel! {
-		didSet {
-			primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var secondaryLabel: UILabel! {
-		didSet {
-			secondaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KLabel!
 	@IBOutlet weak var reconnectButton: UIButton! {
 		didSet {
 			reconnectButton.theme_tintColor = KThemePicker.tintColor.rawValue

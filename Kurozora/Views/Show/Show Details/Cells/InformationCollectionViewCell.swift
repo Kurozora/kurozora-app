@@ -14,15 +14,9 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
 			titleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-			titleLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var detailLabel: UILabel! {
-		didSet {
-			detailLabel.theme_textColor = KThemePicker.textColor.rawValue
-			detailLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var detailLabel: KLabel!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue

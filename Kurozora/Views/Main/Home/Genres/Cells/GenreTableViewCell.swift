@@ -11,11 +11,7 @@ import KurozoraKit
 
 class GenreTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var nameLabel: UILabel! {
-		didSet {
-			nameLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var nameLabel: KLabel!
 	@IBOutlet weak var nsfwButton: UIButton!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {

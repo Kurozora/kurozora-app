@@ -11,6 +11,7 @@ import KurozoraKit
 import SwiftyJSON
 import SCLAlertView
 
+// MARK: - CUSTOM UILABEL
 class ThreadTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
@@ -42,11 +43,7 @@ class ThreadTableViewController: KTableViewController {
 			posterUsernameLabel.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var threadTitleLabel: UILabel! {
-		didSet {
-			threadTitleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var threadTitleLabel: KLabel!
 
 	@IBOutlet weak var richTextView: UITextView! {
 		didSet {

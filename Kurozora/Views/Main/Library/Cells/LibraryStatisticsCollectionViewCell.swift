@@ -11,14 +11,10 @@ import KurozoraKit
 
 class LibraryStatisticsCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: UILabel! {
-		didSet {
-			primaryLabel.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: UILabel! {
 		didSet {
-			secondaryLabel.theme_textColor = KThemePicker.textColor.rawValue
+			self.secondaryLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 

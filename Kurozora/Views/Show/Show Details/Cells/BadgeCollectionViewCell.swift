@@ -37,7 +37,7 @@ class BadgeCollectionViewCell: UICollectionViewCell {
 
 	@IBOutlet weak var ratingScoreLabel: UILabel! {
 		didSet {
-			ratingScoreLabel.theme_textColor = KThemePicker.textColor.rawValue
+			ratingScoreLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
 	@IBOutlet weak var rankScoreLabel: UILabel! {

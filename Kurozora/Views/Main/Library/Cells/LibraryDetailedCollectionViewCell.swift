@@ -26,6 +26,8 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 		super.configureCell()
 		guard let showDetailsElement = showDetailsElement else { return }
 
+		self.titleLabel.textColor = .white
+
 		self.userProgressLabel?.text = showDetailsElement.informationStringShort
 
 		if let bannerImage = showDetailsElement.banner {

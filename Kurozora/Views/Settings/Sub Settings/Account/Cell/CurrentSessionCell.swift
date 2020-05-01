@@ -15,21 +15,13 @@ class CurrentSessionCell: UITableViewCell {
 			ipAddressTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var ipAddressValueLabel: UILabel! {
-		didSet {
-			ipAddressValueLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var ipAddressValueLabel: KLabel!
 	@IBOutlet weak var deviceTitleLabel: UILabel! {
 		didSet {
 			deviceTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var deviceValueLabel: UILabel! {
-		didSet {
-			deviceValueLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var deviceValueLabel: KLabel!
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
 			bubbleView.theme_backgroundColor = KThemePicker.tintedBackgroundColor.rawValue

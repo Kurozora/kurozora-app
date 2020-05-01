@@ -8,38 +8,17 @@
 
 import UIKit
 import KurozoraKit
+import SwipeCellKit
 
-protocol OtherSessionsCellDelegate: class {
-	func removeSession(for otherSessionsCell: OtherSessionsCell)
-}
-
-class OtherSessionsCell: UITableViewCell {
+class OtherSessionsCell: SwipeTableViewCell {
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
 			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var ipAddressValueLabel: UILabel! {
-		didSet {
-			ipAddressValueLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var deviceTypeValueLabel: UILabel! {
-		didSet {
-			deviceTypeValueLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var dateValueLabel: UILabel! {
-		didSet {
-			dateValueLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var removeSessionButton: UIButton! {
-		didSet {
-			removeSessionButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			removeSessionButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var ipAddressValueLabel: KLabel!
+	@IBOutlet weak var deviceTypeValueLabel: KLabel!
+	@IBOutlet weak var dateValueLabel: KLabel!
 	@IBOutlet weak var separatorView1: UIView! {
 		didSet {
 			separatorView1.theme_backgroundColor = KThemePicker.separatorColor.rawValue
@@ -51,8 +30,8 @@ class OtherSessionsCell: UITableViewCell {
 		}
 	}
 
-	weak var delegate: OtherSessionsCellDelegate?
-	var sessions: UserSessionsElement? {
+	// MARK: - Properties
+	var session: UserSessionsElement? {
 		didSet {
 			updateOtherSessions()
 		}
@@ -60,32 +39,27 @@ class OtherSessionsCell: UITableViewCell {
 
 	// MARK: - Functions
 	fileprivate func updateOtherSessions() {
-		guard let sessions = sessions else { return }
+		guard let session = session else { return }
 
 		// IP Address
-		if let ipAddress = sessions.ip {
+		if let ipAddress = session.ip {
 			ipAddressValueLabel.text = ipAddress
 		} else {
 			ipAddressValueLabel.text = "-"
 		}
 
 		// Device Type
-		if let deviceName = sessions.platform?.deviceName {
+		if let deviceName = session.platform?.deviceName {
 			deviceTypeValueLabel.text = deviceName
 		} else {
 			deviceTypeValueLabel.text = "-"
 		}
 
 		// Last Accessed
-		if let lastValidated = sessions.lastValidated, !lastValidated.isEmpty {
+		if let lastValidated = session.lastValidated, !lastValidated.isEmpty {
 			dateValueLabel?.text = lastValidated
 		} else {
 			dateValueLabel.text = "-"
 		}
-	}
-
-	// MARK: - IBActions
-	@IBAction func removeSessionButtonPressed(_ sender: UIButton) {
-		delegate?.removeSession(for: self)
 	}
 }

@@ -9,13 +9,6 @@
 import UIKit
 
 class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
-	// MARK: - IBOutlets
-	override var titleLabel: UILabel! {
-		didSet {
-			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-
 	// MARK: - Functions
 	override func layoutSubviews() {
 		super.layoutSubviews()

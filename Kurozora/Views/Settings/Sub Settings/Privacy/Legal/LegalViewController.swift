@@ -17,21 +17,13 @@ class LegalViewController: KViewController {
 		}
 	}
 
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var privacyPolicyTextView: UITextView! {
 		didSet {
 			privacyPolicyTextView.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var lastUpdatedLabel: UILabel! {
-		didSet {
-			lastUpdatedLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var lastUpdatedLabel: KLabel!
 	@IBOutlet weak var scrollView: UIScrollView!
 
 	// MARK: - View

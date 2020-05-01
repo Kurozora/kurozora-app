@@ -15,11 +15,7 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var profileNavigationItem: UINavigationItem!
 
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var usernameLabel: UILabel! {
-		didSet {
-			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var onlineIndicatorLabel: UILabel! {
 		didSet {
 			onlineIndicatorLabel.theme_textColor = KThemePicker.subTextColor.rawValue

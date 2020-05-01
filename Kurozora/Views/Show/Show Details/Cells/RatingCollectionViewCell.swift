@@ -19,11 +19,7 @@ class RatingCollectionViewCell: UICollectionViewCell {
 			cosmosDetailLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var ratingLabel: UILabel! {
-		didSet {
-			ratingLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet weak var ratingDetailLabel: UILabel! {
 		didSet {
 			ratingDetailLabel.theme_textColor = KThemePicker.subTextColor.rawValue

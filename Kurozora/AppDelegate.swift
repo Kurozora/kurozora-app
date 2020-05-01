@@ -11,6 +11,7 @@ import KurozoraKit
 import StoreKit
 import Kingfisher
 import UserNotifications
+import SwifterSwift
 
 // MARK: - Kurozora Kit
 let KService = KurozoraKit().services(Kurozora.shared.services)

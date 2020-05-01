@@ -28,11 +28,7 @@ class AuthenticationViewController: KViewController {
 			unlockButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 		}
 	}
-	@IBOutlet weak var subTextLabel: UILabel! {
-		didSet {
-			subTextLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var subTextLabel: KLabel!
 
 	// MARK: - Properties
 	override var preferredStatusBarStyle: UIStatusBarStyle {

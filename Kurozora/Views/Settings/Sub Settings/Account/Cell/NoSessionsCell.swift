@@ -9,9 +9,5 @@
 import UIKit
 
 class NoSessionsCell: UITableViewCell {
-	@IBOutlet weak var noSessionsLabel: UILabel! {
-		didSet {
-			noSessionsLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var noSessionsLabel: KLabel!
 }

@@ -13,12 +13,12 @@ class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var characterImageView: UIImageView?
 	@IBOutlet weak var characterShadowView: UIView?
-	@IBOutlet weak var characterName: KLabel? {
+	@IBOutlet weak var characterName: KCopyableLabel? {
 		didSet {
 			self.characterName?.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var characterRole: KLabel? {
+	@IBOutlet weak var characterRole: KCopyableLabel? {
 		didSet {
 			self.characterRole?.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
@@ -26,12 +26,12 @@ class CastCollectionViewCell: UICollectionViewCell {
 
 	@IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
-	@IBOutlet weak var actorName: KLabel! {
+	@IBOutlet weak var actorName: KCopyableLabel! {
 		didSet {
 			self.actorName.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var actorJob: KLabel! {
+	@IBOutlet weak var actorJob: KCopyableLabel! {
 		didSet {
 			self.actorJob.theme_textColor = KThemePicker.subTextColor.rawValue
 		}

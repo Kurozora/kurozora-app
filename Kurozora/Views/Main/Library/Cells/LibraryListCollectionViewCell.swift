@@ -9,21 +9,12 @@
 import UIKit
 
 class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
-	override var titleLabel: UILabel! {
-		didSet {
-			titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
 	@IBOutlet weak var estimatedAiringLabel: UILabel! {
 		didSet {
 			estimatedAiringLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var informationLabel: UILabel! {
-		didSet {
-			informationLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var informationLabel: KLabel!
 	@IBOutlet weak var genresLabel: UILabel! {
 		didSet {
 			genresLabel.theme_textColor = KThemePicker.subTextColor.rawValue

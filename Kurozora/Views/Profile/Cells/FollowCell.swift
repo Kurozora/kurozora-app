@@ -10,11 +10,7 @@ import UIKit
 import KurozoraKit
 
 class FollowCell: UITableViewCell {
-	@IBOutlet weak var usernameLabel: UILabel! {
-		didSet {
-			usernameLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileImageViewContainer: UIView!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: UIButton! {

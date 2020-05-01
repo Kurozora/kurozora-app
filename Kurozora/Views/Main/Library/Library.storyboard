@@ -204,7 +204,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="qlD-XX-Xr2" secondAttribute="trailing" id="hzI-U0-BN4"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="One Piece" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rF8-pX-2lH">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="One Piece" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rF8-pX-2lH" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="21.666666666666671" y="157.66666666666666" width="82" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -279,7 +279,7 @@
                                                 <constraint firstItem="sm3-bT-c7q" firstAttribute="top" secondItem="fMn-Nz-SLg" secondAttribute="top" id="xgO-XT-bsp"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Uua-qg-5ct">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One Piece" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Uua-qg-5ct" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="104.33333333333331" y="9.9999999999999982" width="82" height="20.333333333333329"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="hjC-R2-YfL"/>
@@ -377,7 +377,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="407" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8j-UI-aQF">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Shows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8j-UI-aQF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="8" y="0.0" width="153" height="33.666666666666664"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="33.666666666666664" id="tRb-Hg-npG"/>
@@ -479,7 +479,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="EsS-u8-dQS"/>
+        <segue reference="QhS-SJ-X7e"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>

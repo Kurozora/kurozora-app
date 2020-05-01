@@ -10,12 +10,7 @@ import UIKit
 
 class DebugSettingsTableViewController: KTableViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var warningLabel: UILabel! {
-		didSet {
-			warningLabel.theme_textColor = KThemePicker.textColor.rawValue
-			warningLabel.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var warningLabel: KLabel!
 
 	// MARK: - Properties
 	let kDefaultItems = Kurozora.shared.keychain.allItems()

@@ -57,7 +57,7 @@
                                             <action selector="unlockButtonPressed:" destination="5pL-t1-VJe" eventType="touchUpInside" id="Xo5-lp-LQp"/>
                                         </connections>
                                     </button>
-                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use the button above to unlock Kurozora or if you're snooping around someone else's device then press the home button to exit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfF-KK-GqB">
+                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use the button above to unlock Kurozora or if you're snooping around someone else's device then press the home button to exit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfF-KK-GqB" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="8" y="49" width="358" height="54"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>

@@ -10,14 +10,6 @@ import UIKit
 
 class ProductHeaderTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: UILabel! {
-		didSet {
-			primaryLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var secondaryLabel: UILabel? {
-		didSet {
-			secondaryLabel?.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var primaryLabel: KLabel!
+	@IBOutlet weak var secondaryLabel: KLabel?
 }

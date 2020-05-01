@@ -13,46 +13,30 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var countLabel: UILabel! {
+	@IBOutlet weak var countLabel: KLabel! {
 		didSet {
-			countLabel.theme_textColor = KThemePicker.textColor.rawValue
+			self.countLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-		titleLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var startDateTitleLabel: UILabel! {
 		didSet {
 			startDateTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var startDateLabel: UILabel! {
-		didSet {
-			startDateLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var startDateLabel: KLabel!
 	@IBOutlet weak var episodeCountTitleLabel: UILabel! {
 		didSet {
 			episodeCountTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
 	}
-	@IBOutlet weak var episodesCountLabel: UILabel! {
-		didSet {
-			episodesCountLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var episodesCountLabel: KLabel!
 	@IBOutlet weak var ratingTitleLabel: UILabel! {
 		didSet {
 			ratingTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
 		}
-}
-	@IBOutlet weak var ratingLabel: UILabel! {
-		didSet {
-			ratingLabel.theme_textColor = KThemePicker.textColor.rawValue
-		}
 	}
+	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
