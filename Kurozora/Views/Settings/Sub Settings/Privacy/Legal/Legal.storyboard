@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora &amp; Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zjY-G1-AMd" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="70" y="20" width="274" height="41"/>
+                                        <rect key="frame" x="0.0" y="20" width="414" height="41"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -43,10 +43,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="WsW-zq-hQ7" secondAttribute="bottom" id="8rj-1g-td4"/>
-                                    <constraint firstAttribute="trailing" secondItem="WsW-zq-hQ7" secondAttribute="trailing" constant="20" id="AbU-Hs-EeR"/>
                                     <constraint firstItem="1MX-Ez-3X2" firstAttribute="centerX" secondItem="zjY-G1-AMd" secondAttribute="centerX" id="G8P-Ry-HxY"/>
+                                    <constraint firstAttribute="trailing" secondItem="zjY-G1-AMd" secondAttribute="trailing" id="Ksf-El-W2g"/>
                                     <constraint firstItem="WsW-zq-hQ7" firstAttribute="top" secondItem="1MX-Ez-3X2" secondAttribute="bottom" constant="16" id="URF-ty-vKH"/>
-                                    <constraint firstItem="WsW-zq-hQ7" firstAttribute="leading" secondItem="u9X-vF-wkR" secondAttribute="leading" constant="20" id="Z1Q-aI-2cC"/>
+                                    <constraint firstItem="zjY-G1-AMd" firstAttribute="leading" secondItem="u9X-vF-wkR" secondAttribute="leading" id="ZOJ-kl-mrJ"/>
                                     <constraint firstItem="zjY-G1-AMd" firstAttribute="top" secondItem="u9X-vF-wkR" secondAttribute="top" constant="20" id="hzq-vp-6Qv"/>
                                     <constraint firstItem="1MX-Ez-3X2" firstAttribute="top" secondItem="zjY-G1-AMd" secondAttribute="bottom" constant="8" symbolic="YES" id="nry-Et-SWs"/>
                                     <constraint firstItem="zjY-G1-AMd" firstAttribute="centerX" secondItem="u9X-vF-wkR" secondAttribute="centerX" id="tsI-rg-eax"/>
@@ -60,8 +60,6 @@
                             <constraint firstAttribute="bottom" secondItem="u9X-vF-wkR" secondAttribute="bottom" id="IFh-lp-g5z"/>
                             <constraint firstItem="u9X-vF-wkR" firstAttribute="leading" secondItem="zrH-FK-Tbt" secondAttribute="leading" id="LsF-Bn-iBo"/>
                             <constraint firstItem="u9X-vF-wkR" firstAttribute="top" secondItem="3JB-MM-4q9" secondAttribute="top" id="aFM-88-Dnm"/>
-                            <constraint firstItem="zjY-G1-AMd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3JB-MM-4q9" secondAttribute="leadingMargin" id="dDs-5S-raw"/>
-                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zjY-G1-AMd" secondAttribute="trailing" id="iiF-ZB-GWU"/>
                             <constraint firstItem="WsW-zq-hQ7" firstAttribute="leading" secondItem="3JB-MM-4q9" secondAttribute="leadingMargin" id="jhc-yG-4VM"/>
                             <constraint firstItem="zrH-FK-Tbt" firstAttribute="trailing" secondItem="u9X-vF-wkR" secondAttribute="trailing" id="khP-qQ-pLD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WsW-zq-hQ7" secondAttribute="trailing" id="vHX-FL-HZP"/>

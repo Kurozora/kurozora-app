@@ -65,7 +65,7 @@ class LegalViewController: KViewController {
 // MARK: - UIScrollViewDelegate
 extension LegalViewController: UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if !scrollView.bounds.contains(titleLabel.center) {
+		if !scrollView.bounds.contains(titleLabel.frame.origin) {
 			if self.navigationTitleView.alpha == 0 {
 				UIView.animate(withDuration: 0.5) {
 					self.titleLabel.alpha = 0
