@@ -10,11 +10,6 @@ import UIKit
 
 class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 	// MARK: - IBOutlets
-	override var actionButton: KButton? {
-		didSet {
-			actionButton?.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		}
-	}
 	@IBOutlet weak var separatorView: UIView? {
 		didSet {
 			separatorView?.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue

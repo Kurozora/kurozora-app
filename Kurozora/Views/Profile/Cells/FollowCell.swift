@@ -11,14 +11,8 @@ import KurozoraKit
 
 class FollowCell: UITableViewCell {
 	@IBOutlet weak var usernameLabel: KLabel!
-	@IBOutlet weak var profileImageViewContainer: UIView!
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var followButton: UIButton! {
-		didSet {
-			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var followButton: KTintedButton!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue

@@ -16,12 +16,7 @@ class BaseLockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var shadowView: UIView?
 	@IBOutlet weak var bannerImageView: UIImageView?
 	@IBOutlet weak var posterImageView: UIImageView?
-	@IBOutlet weak var libraryStatusButton: UIButton? {
-		didSet {
-			libraryStatusButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			libraryStatusButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var libraryStatusButton: KTintedButton?
 
 	// MARK: - Properties
 	var showDetailCollectionViewController: ShowDetailCollectionViewController?

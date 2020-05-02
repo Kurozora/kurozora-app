@@ -22,7 +22,7 @@ class AuthenticationViewController: KViewController {
 		}
 	}
 	@IBOutlet weak var unlockDescriptionView: UIView!
-	@IBOutlet weak var unlockButton: KButton!
+	@IBOutlet weak var unlockButton: KTintedButton!
 	@IBOutlet weak var subTextLabel: KLabel!
 
 	// MARK: - Properties

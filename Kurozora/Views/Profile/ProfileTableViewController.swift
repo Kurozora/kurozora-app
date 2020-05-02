@@ -24,12 +24,7 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var bioTextView: KTextView!
 
-	@IBOutlet weak var followButton: UIButton! {
-		didSet {
-			followButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			followButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var followButton: KTintedButton!
 
 	@IBOutlet weak var buttonsStackView: UIStackView!
 	@IBOutlet weak var reputationButton: UIButton! {
@@ -58,12 +53,7 @@ class ProfileTableViewController: KTableViewController {
 
 	@IBOutlet weak var selectBannerImageButton: UIButton!
 	@IBOutlet weak var selectProfileImageButton: UIButton!
-	@IBOutlet weak var editProfileButton: UIButton! {
-		didSet {
-			editProfileButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			editProfileButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var editProfileButton: KTintedButton!
 
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
@@ -378,7 +368,7 @@ class ProfileTableViewController: KTableViewController {
 			// Enable bio editing
 			self.bioTextView.isEditable = true
 		} else {
-			UIView.animate(withDuration: 1) {
+			UIView.animate(withDuration: 0.5) {
 				self.buttonsStackView.alpha = 1
 				self.buttonsStackView.isUserInteractionEnabled = true
 

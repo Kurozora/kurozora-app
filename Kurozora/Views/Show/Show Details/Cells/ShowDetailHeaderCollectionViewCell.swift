@@ -29,12 +29,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreButton: UIButton!
 
 	// Action buttons
-	@IBOutlet weak var libraryStatusButton: UIButton! {
-		didSet {
-			libraryStatusButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			libraryStatusButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var libraryStatusButton: KTintedButton!
 	@IBOutlet weak var reminderButton: UIButton!
 
 	// Quick details view

@@ -19,12 +19,7 @@ class SearchBaseResultsCell: UICollectionViewCell {
 			textView?.textContainer.lineFragmentPadding = 0
 		}
 	}
-	@IBOutlet weak var actionButton: UIButton? {
-		didSet {
-			actionButton?.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			actionButton?.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var actionButton: KTintedButton?
 	@IBOutlet weak var searchImageView: UIImageView!
 	@IBOutlet weak var separatorView: UIVisualEffectView?
 

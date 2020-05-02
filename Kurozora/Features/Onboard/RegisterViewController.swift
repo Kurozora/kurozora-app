@@ -13,11 +13,7 @@ import SCLAlertView
 class RegisterTableViewController: BaseOnboardingTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
-	@IBOutlet weak var selectButton: UIButton! {
-		didSet {
-			selectButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var selectButton: KButton!
 
 	// MARK: - Properties
 	lazy var imagePicker = UIImagePickerController()

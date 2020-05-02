@@ -20,10 +20,8 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 			downloadCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var getThemeButton: UIButton! {
+	@IBOutlet weak var getThemeButton: KTintedButton! {
 		didSet {
-			getThemeButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			getThemeButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
 			NotificationCenter.default.addObserver(self, selector: #selector(updateGetThemeButton), name: .ThemeUpdateNotification, object: nil)
 		}
 	}

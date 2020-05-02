@@ -20,12 +20,7 @@ class PurchaseButtonTableViewCell: UITableViewCell {
 			bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var purchaseButton: UIButton! {
-		didSet {
-			purchaseButton.theme_backgroundColor = KThemePicker.tintColor.rawValue
-			purchaseButton.theme_setTitleColor(KThemePicker.tintedButtonTextColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var purchaseButton: KTintedButton!
 	@IBOutlet weak var primaryLabel: KLabel!
 
 	// MARK: - Properties

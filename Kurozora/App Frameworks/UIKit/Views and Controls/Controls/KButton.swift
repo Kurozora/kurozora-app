@@ -9,9 +9,12 @@
 import UIKit
 
 /**
-	A themed control that executes your custom code in response to user interactions.
+	A control that executes your custom code in response to user interactions.
 
-	When you tap a button, or select a button that has focus, the button performs any actions attached to it. You communicate the purpose of a button using a text label, an image, or both. The appearance of buttons is preconfigured, but you can tint buttons or format titles to match the design of your app. You can add buttons to your interface programmatically or using Interface Builder.
+	When you tap a button, or select a button that has focus, the button performs any actions attached to it.
+	You communicate the purpose of a button using a text label, an image, or both.
+	The appearance of buttons is configurable, so you can tint buttons or format titles to match the design of your app.
+	You can add buttons to your interface programmatically or using Interface Builder.
 
 	`KButton` provides selection feedback using [UISelectionFeedbackGenerator](apple-reference-documentation://hsnDczB7p0).
 */
@@ -48,9 +51,9 @@ class KButton: UIButton {
 
 	// MARK: - Functions
 	/// The shared settings used to initialize the button.
-	private func sharedInit() {
+	func sharedInit() {
 		// Configure properties
-		self.cornerRadius = self.cornerRadius == .zero ? 10 : self.cornerRadius
+		self.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
 		self.adjustsImageWhenHighlighted = false
 		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
 
