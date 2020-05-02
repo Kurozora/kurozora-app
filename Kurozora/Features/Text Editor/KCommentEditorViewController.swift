@@ -32,9 +32,8 @@ class KCommentEditorViewController: KViewController {
 			characterCountLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var commentTextView: UITextView! {
+	@IBOutlet weak var commentTextView: KTextView! {
 		didSet {
-			commentTextView.theme_textColor = KThemePicker.textColor.rawValue
 			commentTextView.textContainerInset = .zero
 			commentTextView.textContainer.lineFragmentPadding = 0
 		}

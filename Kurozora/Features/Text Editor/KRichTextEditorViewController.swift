@@ -31,11 +31,7 @@ class KRichTextEditorViewController: KViewController {
 			}
 		}
 	}
-	@IBOutlet var richTextView: UITextView! {
-		didSet {
-			richTextView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet var richTextView: KTextView!
 	@IBOutlet var titleTextFieldBubbleView: UIView! {
 		didSet {
 			titleTextFieldBubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue

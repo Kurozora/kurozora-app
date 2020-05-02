@@ -27,23 +27,14 @@ import EmptyDataSet_Swift
 */
 class KCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
-	private let activityIndicatorView: UIActivityIndicatorView = {
-		let activityIndicatorView = UIActivityIndicatorView()
-		if #available(iOS 13.0, *) {
-			activityIndicatorView.style = .large
-		}
-		activityIndicatorView.theme_color = KThemePicker.tintColor.rawValue
-		activityIndicatorView.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
-		activityIndicatorView.hidesWhenStopped = true
-		return activityIndicatorView
-	}()
+	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 
 		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCVC-setNeedsActivityIndicatorAppearanceUpdate) method.
 
-		By default, this method returns `false`.
+		By default, this property returns `false`.
 
 		- Returns: `true` if the activity indicator should be hidden or `false` if it should be shown.
 	*/
@@ -107,18 +98,7 @@ extension KCollectionViewController {
 		self.view.addSubview(activityIndicatorView)
 		self.activityIndicatorView.center = self.view.center
 
-		prefersActivityIndicatorHiddenToggle()
-	}
-
-	/**
-		Hides/unhides the activity indicator according to the `prefersActivityIndicatorHidden` value.
-	*/
-	private func prefersActivityIndicatorHiddenToggle() {
-		if prefersActivityIndicatorHidden {
-			self.activityIndicatorView.stopAnimating()
-		} else {
-			self.activityIndicatorView.startAnimating()
-		}
+		setNeedsActivityIndicatorAppearanceUpdate()
 	}
 
 	/**
@@ -129,7 +109,7 @@ extension KCollectionViewController {
 		- Tag: KCVC-setNeedsActivityIndicatorAppearanceUpdate
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
-		prefersActivityIndicatorHiddenToggle()
+		self.activityIndicatorView.prefersHidden = prefersActivityIndicatorHidden
 	}
 }
 

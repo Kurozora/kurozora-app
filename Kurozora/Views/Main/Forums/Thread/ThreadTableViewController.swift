@@ -45,9 +45,8 @@ class ThreadTableViewController: KTableViewController {
 	}
 	@IBOutlet weak var threadTitleLabel: KLabel!
 
-	@IBOutlet weak var richTextView: UITextView! {
+	@IBOutlet weak var richTextView: KTextView! {
 		didSet {
-			richTextView.theme_textColor = KThemePicker.textColor.rawValue
 			richTextView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
 			richTextView.textContainerInset = .zero
 			richTextView.textContainer.lineFragmentPadding = 0

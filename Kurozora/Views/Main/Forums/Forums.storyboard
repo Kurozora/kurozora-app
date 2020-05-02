@@ -249,7 +249,7 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Content..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HS0-r8-qMv">
+                                <textView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Content..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HS0-r8-qMv" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
                                     <rect key="frame" x="32" y="57.5" width="356" height="118.5"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>

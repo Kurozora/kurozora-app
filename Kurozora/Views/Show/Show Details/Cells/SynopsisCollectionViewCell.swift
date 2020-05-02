@@ -12,12 +12,7 @@ import SwiftTheme
 
 class SynopsisCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var synopsisTextView: UITextView! {
-		didSet {
-			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
-			synopsisTextView.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
-		}
-	}
+	@IBOutlet weak var synopsisTextView: KTextView!
 	@IBOutlet weak var moreSynopsisButton: UIButton? {
 		didSet {
 			moreSynopsisButton?.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)

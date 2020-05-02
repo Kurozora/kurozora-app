@@ -18,22 +18,45 @@ class LegalViewController: KViewController {
 	}
 
 	@IBOutlet weak var titleLabel: KLabel!
-	@IBOutlet weak var privacyPolicyTextView: UITextView! {
-		didSet {
-			privacyPolicyTextView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var privacyPolicyTextView: KTextView!
 	@IBOutlet weak var lastUpdatedLabel: KLabel!
 	@IBOutlet weak var scrollView: UIScrollView!
+
+	// MARK: - Initializers
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		DispatchQueue.global(qos: .background).async {
+			self.fetchData()
+		}
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		DispatchQueue.global(qos: .background).async {
+			self.fetchData()
+		}
+	}
 
 	// MARK: - View
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+	}
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		self.navigationController?.navigationBar.isTranslucent = true
 		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
 		self.navigationController?.navigationBar.backgroundColor = .clear
 
+		self.navigationTitleView.alpha = 0
+
+		scrollView.delegate = self
+	}
+
+	// MARK: - Functions
+	/// Makes an API request to fetch the relevant data for the view.
+	func fetchData() {
 		KService.getPrivacyPolicy { result in
 			switch result {
 			case .success(let privacyPolicy):
@@ -47,13 +70,6 @@ class LegalViewController: KViewController {
 			case .failure: break
 			}
 		}
-		self.navigationTitleView.alpha = 0
-
-		scrollView.delegate = self
-	}
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
 	}
 
 	// MARK: - IBActions

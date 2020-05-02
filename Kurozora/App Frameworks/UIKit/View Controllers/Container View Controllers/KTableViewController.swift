@@ -27,23 +27,15 @@ import EmptyDataSet_Swift
 */
 class KTableViewController: UITableViewController {
 	// MARK: - Properties
-	let activityIndicatorView: UIActivityIndicatorView = {
-		let activityIndicatorView = UIActivityIndicatorView()
-		if #available(iOS 13.0, *) {
-			activityIndicatorView.style = .large
-		}
-		activityIndicatorView.theme_color = KThemePicker.tintColor.rawValue
-		activityIndicatorView.autoresizingMask = [.flexibleRightMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleTopMargin]
-		activityIndicatorView.hidesWhenStopped = true
-		return activityIndicatorView
-	}()
+	/// The activity indicator view object of the view controller.
+	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 
 		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KTVC-setNeedsActivityIndicatorAppearanceUpdate) method.
 
-		By default, this method returns `false`.
+		By default, this property returns `false`.
 
 		- Returns: `true` if the activity indicator should be hidden or `false` if it should be shown.
 	*/
@@ -81,18 +73,7 @@ extension KTableViewController {
 		self.view.addSubview(activityIndicatorView)
 		self.activityIndicatorView.center = self.view.center
 
-		prefersActivityIndicatorHiddenToggle()
-	}
-
-	/**
-		Hides/unhides the activity indicator according to the `prefersActivityIndicatorHidden` value.
-	*/
-	private func prefersActivityIndicatorHiddenToggle() {
-		if prefersActivityIndicatorHidden {
-			self.activityIndicatorView.stopAnimating()
-		} else {
-			self.activityIndicatorView.startAnimating()
-		}
+		setNeedsActivityIndicatorAppearanceUpdate()
 	}
 
 	/**
@@ -103,7 +84,7 @@ extension KTableViewController {
 		- Tag: KTVC-setNeedsActivityIndicatorAppearanceUpdate
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
-		prefersActivityIndicatorHiddenToggle()
+		self.activityIndicatorView.prefersHidden = prefersActivityIndicatorHidden
 	}
 }
 

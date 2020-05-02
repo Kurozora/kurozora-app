@@ -22,11 +22,7 @@ class ProfileTableViewController: KTableViewController {
 		}
 	}
 	@IBOutlet weak var bannerImageView: UIImageView!
-	@IBOutlet weak var bioTextView: UITextView! {
-		didSet {
-			bioTextView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var bioTextView: KTextView!
 
 	@IBOutlet weak var followButton: UIButton! {
 		didSet {

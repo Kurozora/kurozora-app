@@ -9,14 +9,13 @@
 import UIKit
 
 class SynopsisViewController: KViewController {
-	@IBOutlet weak var synopsisTextView: UITextView! {
-		didSet {
-			synopsisTextView.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
+	// MARK: - IBOutlets
+	@IBOutlet weak var synopsisTextView: KTextView!
 
+	// MARK: - Properties
 	var synopsis: String?
 
+	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
