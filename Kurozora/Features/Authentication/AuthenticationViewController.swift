@@ -16,11 +16,7 @@ class AuthenticationViewController: KViewController {
 			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
 		}
 	}
-	@IBOutlet weak var lockImageView: UIImageView! {
-		didSet {
-			lockImageView.theme_tintColor = KThemePicker.textColor.rawValue
-		}
-	}
+	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var unlockDescriptionView: UIView!
 	@IBOutlet weak var unlockButton: KTintedButton!
 	@IBOutlet weak var subTextLabel: KLabel!

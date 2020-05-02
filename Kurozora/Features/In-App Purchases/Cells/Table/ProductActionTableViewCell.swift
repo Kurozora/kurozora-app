@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SCLAlertView
-import SwiftTheme
 
 protocol ProductActionTableViewCellDelegate: class {
 	func actionButtonPressed(_ sender: UIButton)
@@ -19,24 +17,8 @@ class ProductActionTableViewCell: UITableViewCell {
 	weak var delegate: ProductActionTableViewCellDelegate?
 
 	// MARK: - IBOutlets
-	@IBOutlet weak var actionButton: UIButton! {
-		didSet {
-			actionButton.theme_tintColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var actionTextField: UITextField! {
-		didSet {
-			actionTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
-			actionTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			actionTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
-
-				return titleTextAttributes
-			}
-		}
-	}
+	@IBOutlet weak var actionButton: KButton!
+	@IBOutlet weak var actionTextField: KTextField!
 
 	// MARK: - IBActions
 	@IBAction func actionButtonPressed(_ sender: UIButton) {

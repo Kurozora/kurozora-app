@@ -11,19 +11,7 @@ import SwiftTheme
 
 class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var textField: UITextField! {
-		didSet {
-			textField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
-			textField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			textField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
-
-				return titleTextAttributes
-			}
-		}
-	}
+	@IBOutlet weak var textField: KTextField!
 
 	// MARK: - Functions
 	override func configureCell() {

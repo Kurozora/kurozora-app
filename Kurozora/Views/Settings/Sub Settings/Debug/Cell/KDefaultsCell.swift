@@ -10,19 +10,7 @@ import UIKit
 import SwiftTheme
 
 class KDefaultsCell: SettingsCell {
-	@IBOutlet weak var valueTextField: UITextField! {
-		didSet {
-			valueTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			valueTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
-			valueTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
-
-				return titleTextAttributes
-			}
-		}
-	}
+	@IBOutlet weak var valueTextField: KTextField!
 
     @IBAction func valueTextFieldEditingDidEnd(_ sender: Any) {
         guard let key = primaryLabel?.text else {return}

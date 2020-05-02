@@ -18,19 +18,7 @@ protocol KRichTextEditorViewDelegate: class {
 
 class KRichTextEditorViewController: KViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleTextField: UITextField! {
-		didSet {
-			titleTextField.theme_textColor = KThemePicker.textFieldTextColor.rawValue
-			titleTextField.theme_backgroundColor = KThemePicker.textFieldBackgroundColor.rawValue
-			titleTextField.theme_placeholderAttributes = ThemeStringAttributesPicker(keyPath: KThemePicker.textFieldPlaceholderTextColor.stringValue) { value -> [NSAttributedString.Key: Any]? in
-				guard let rgba = value as? String else { return nil }
-				let color = UIColor(rgba: rgba)
-				let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
-
-				return titleTextAttributes
-			}
-		}
-	}
+	@IBOutlet weak var titleTextField: KTextField!
 	@IBOutlet var richTextView: KTextView!
 	@IBOutlet var titleTextFieldBubbleView: UIView! {
 		didSet {

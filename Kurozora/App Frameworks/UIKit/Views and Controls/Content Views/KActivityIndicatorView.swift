@@ -11,7 +11,8 @@ import UIKit
 /**
 	A themed view that shows that a task is in progress.
 
-	You control when an activity indicator animates by setting the `prefersHidden` property to true, and to stop animating you set `prefersHidden` to false. The activity indicator is automatically hidden when animation stops.
+	You control when an activity indicator animates by setting the `prefersHidden` property to true, and to stop animating you set `prefersHidden` to false.
+	The activity indicator is automatically hidden when animation stops.
 */
 class KActivityIndicatorView: UIActivityIndicatorView {
 	// MARK: - Properties
