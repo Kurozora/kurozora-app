@@ -315,7 +315,7 @@
                                 <rect key="frame" x="350" y="0.0" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3h-cK-q29">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3h-cK-q29" customClass="ProfileImageButton" customModule="Kurozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="u3h-cK-q29" secondAttribute="height" multiplier="1:1" id="oDv-wD-ra2"/>
@@ -339,7 +339,7 @@
                     <connections>
                         <outlet property="bottomBarView" destination="DnM-bI-uTx" id="ARX-YA-xas"/>
                         <outlet property="createPostButton" destination="Ba9-s8-qJl" id="Nhl-ei-2NW"/>
-                        <outlet property="navigationProfileButton" destination="u3h-cK-q29" id="8W4-VD-dzf"/>
+                        <outlet property="profileImageButton" destination="u3h-cK-q29" id="npe-gv-fkf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eV0-29-rQI" sceneMemberID="firstResponder"/>

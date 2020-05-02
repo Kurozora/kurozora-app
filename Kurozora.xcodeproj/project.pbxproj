@@ -99,6 +99,7 @@
 		6647236D245DB602008E5111 /* KTintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647236C245DB602008E5111 /* KTintedButton.swift */; };
 		66472370245DC531008E5111 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647236F245DC531008E5111 /* CircularView.swift */; };
 		66472372245E0070008E5111 /* KTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66472371245E0070008E5111 /* KTextField.swift */; };
+		66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66472373245E164B008E5111 /* ProfileImageButton.swift */; };
 		6648ED6C22A4630200E1BE18 /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6B22A4630200E1BE18 /* NotificationType.swift */; };
 		6648ED7022A4636E00E1BE18 /* GroupedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */; };
 		66496EE723733CD000911F2C /* UITextView+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66496EE623733CD000911F2C /* UITextView+Kurozora.swift */; };
@@ -524,6 +525,7 @@
 		6647236C245DB602008E5111 /* KTintedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTintedButton.swift; sourceTree = "<group>"; };
 		6647236F245DC531008E5111 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		66472371245E0070008E5111 /* KTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTextField.swift; sourceTree = "<group>"; };
+		66472373245E164B008E5111 /* ProfileImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageButton.swift; sourceTree = "<group>"; };
 		6648ED6B22A4630200E1BE18 /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		6648ED6F22A4636E00E1BE18 /* GroupedNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedNotifications.swift; sourceTree = "<group>"; };
 		664940992308B22E00C2565C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1535,6 +1537,7 @@
 			children = (
 				66D1358C228087920079438C /* KButton.swift */,
 				6647236C245DB602008E5111 /* KTintedButton.swift */,
+				66472373245E164B008E5111 /* ProfileImageButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -2839,6 +2842,7 @@
 				665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */,
 				665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */,
 				66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */,
+				66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */,
 				6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */,
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,

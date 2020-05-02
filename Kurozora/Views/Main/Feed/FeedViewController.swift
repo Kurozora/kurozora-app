@@ -14,7 +14,7 @@ import Pageboy
 class FeedViewController: KTabbedViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var createPostButton: UIButton!
-	@IBOutlet weak var navigationProfileButton: UIButton!
+	@IBOutlet weak var profileImageButton: ProfileImageButton!
 
 	// MARK: - Properties
 	var sections: [FeedSectionElement]? {
@@ -27,22 +27,19 @@ class FeedViewController: KTabbedViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		setNavigationButtonImage()
+		configureUserDetails()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Configure navigation profile button
-		navigationProfileButton.borderColor = UIColor.white.withAlphaComponent(0.2)
-		navigationProfileButton.borderWidth = 2
-		navigationProfileButton.cornerRadius = navigationProfileButton.height / 2
-		setNavigationButtonImage()
+
+		configureUserDetails()
 	}
 
 	// MARK: - Functions
-	/// Sets the profile button image with the curren user's profile image.
-	func setNavigationButtonImage() {
-		navigationProfileButton.setImage(User.current?.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
+	/// Configures the view with the user's details.
+	func configureUserDetails() {
+		profileImageButton.setImage(User.current?.profileImage ?? R.image.placeholders.userProfile(), for: .normal)
 	}
 
 	// MARK: - IBActions
