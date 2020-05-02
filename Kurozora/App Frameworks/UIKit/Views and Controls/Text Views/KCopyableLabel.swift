@@ -9,31 +9,22 @@
 import UIKit
 
 /**
-	A view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
+	A themed view that displays one or more lines of read-only text, often used in conjunction with controls to describe their intended purpose.
 
-	The color of the labels is pre-configured with the currently selected theme. You can add labels to your interface programmatically or by using Interface Builder.
+	The color of the labels is pre-configured with the currently selected theme.
+	You can add labels to your interface programmatically or by using Interface Builder.
 	The view also allows users to long press to copy the text within the label.
 */
-class KCopyableLabel: UILabel {
+class KCopyableLabel: KLabel {
 	// MARK: - Properties
 	override var canBecomeFirstResponder: Bool {
 		return true
 	}
 
-	// MARK: - Initializers
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		sharedInit()
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-		sharedInit()
-	}
-
 	// MARK: - Functions
 	/// The shared settings used to initialize the label.
-	private func sharedInit() {
+	override func sharedInit() {
+		super.sharedInit()
 		isUserInteractionEnabled = true
 		#if targetEnvironment(macCatalyst)
 		let interaction = UIContextMenuInteraction(delegate: self)
