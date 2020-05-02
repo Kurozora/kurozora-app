@@ -96,7 +96,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
 			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
-					KService.addToLibrary(forUserID: userID, withLibraryStatus: libraryStatus, showID: showID) { result in
+					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
 						switch result {
 						case .success:
 							// Update entry in library

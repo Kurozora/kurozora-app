@@ -33,8 +33,6 @@ extension UIAlertController {
 			}
 			alertController.addAction(action)
 		}
-
-		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 		return alertController
 	}
 
@@ -64,8 +62,6 @@ extension UIAlertController {
 			action.setValue(image, forKey: "image")
 			alertController.addAction(action)
 		}
-
-		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 		return alertController
 	}
 }

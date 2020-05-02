@@ -280,7 +280,7 @@ extension ManageActiveSessionsController {
 extension ManageActiveSessionsController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if let currentSessionCell = cell as? CurrentSessionCell {
-			currentSessionCell.session = sessions?.currentSessions
+			currentSessionCell.session = sessions?.currentSession
 		} else if let otherSessionsCell = cell as? OtherSessionsCell {
 			otherSessionsCell.delegate = self
 			otherSessionsCell.session = sessions?.otherSessions?[indexPath.row]

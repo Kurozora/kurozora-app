@@ -30,6 +30,9 @@ public enum KKLibrary {
 	*/
 	public enum Status: Int {
 		// MARK: - Cases
+		/// The library has no status.
+		case none = -1
+
 		/// The library's watching list.
 		case watching = 0
 
@@ -52,6 +55,8 @@ public enum KKLibrary {
 		/// The string value of a library status type.
 		public var stringValue: String {
 			switch self {
+			case .none:
+				return "None"
 			case .watching:
 				return "Watching"
 			case .planning:
@@ -99,7 +104,7 @@ public enum KKLibrary {
 			case dropped.stringValue.lowercased():
 				return .dropped
 			default:
-				return .watching
+				return .none
 			}
 		}
 	}

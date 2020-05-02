@@ -164,12 +164,9 @@
                                                 <constraint firstAttribute="height" constant="45" id="OBU-mo-l28"/>
                                                 <constraint firstAttribute="width" constant="310" id="lcs-KA-i9Z"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <state key="normal" title="Redeem"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="10"/>
-                                                </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="highlightBackgroundColorEnabled" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
@@ -258,7 +255,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="GenresTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pey-ss-6J5" customClass="GenresTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" id="wLF-aK-jIa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -409,6 +406,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="YYd-Uu-4EQ"/>
         <segue reference="JnJ-bm-wRc"/>
         <segue reference="gKM-pt-PFb"/>
     </inferredMetricsTieBreakers>

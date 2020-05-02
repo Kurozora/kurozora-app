@@ -49,6 +49,12 @@ class KButton: UIButton {
 	// MARK: - Functions
 	/// The shared settings used to initialize the button.
 	private func sharedInit() {
+		// Configure properties
+		self.cornerRadius = self.cornerRadius == .zero ? 10 : self.cornerRadius
+		self.adjustsImageWhenHighlighted = false
+		self.titleLabel?.font = .systemFont(ofSize: self.titleLabel?.font.pointSize ?? 18, weight: .semibold)
+
+		// Add targets
 		addTarget(self, action: #selector(touchDown), for: [.touchDown, .touchDragEnter])
 		addTarget(self, action: #selector(touchUp), for: [.touchUpInside, .touchDragExit, .touchCancel])
 	}

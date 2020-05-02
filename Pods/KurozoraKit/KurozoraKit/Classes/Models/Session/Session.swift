@@ -18,7 +18,7 @@ public class UserSessions: JSONDecodable {
 	public let user: UserProfile?
 
 	/// The user's current session.
-	public let currentSessions: UserSessionsElement?
+	public let currentSession: UserSessionsElement?
 
 	/// The collection of the user's other sessions.
     public var otherSessions: [UserSessionsElement]?
@@ -27,9 +27,9 @@ public class UserSessions: JSONDecodable {
     required public init(json: JSON) throws {
 		self.user = try? UserProfile(json: json["user"])
 		if !json["current_session"].isEmpty {
-			self.currentSessions = try? UserSessionsElement(json: json["current_session"])
+			self.currentSession = try? UserSessionsElement(json: json["current_session"])
 		} else {
-			self.currentSessions = try? UserSessionsElement(json: json["session"])
+			self.currentSession = try? UserSessionsElement(json: json["session"])
 		}
 		var otherSessions = [UserSessionsElement]()
 
