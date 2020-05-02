@@ -9,41 +9,29 @@
 import UIKit
 import Tabman
 
-/// Simple indicator that displays as a horizontal line.
+/// Simple indicator that displays as a filled pill.
 class KFillBarIndicator: TMBarIndicator {
-	// MARK: Properties
+	// MARK: - Properties
+	/// The top constraint of the bar indicator.
 	private var topConstraint: NSLayoutConstraint?
+	/// The bottom constraint of the bar indicator.
 	private var bottomConstraint: NSLayoutConstraint?
 
-	// MARK: Types
-	public enum CornerStyle {
-		case square
-		case rounded
-		case eliptical
-	}
-
-	// MARK: Properties
-	open override var displayMode: TMBarIndicator.DisplayMode {
+	// MARK: - Properties
+	override var displayMode: TMBarIndicator.DisplayMode {
 		return .fill
 	}
 
 	// MARK: Customization
-	/// Corner style for the indicator.
-	///
-	/// Options:
-	/// - square: Corners are squared off.
-	/// - rounded: Corners are rounded.
-	/// - eliptical: Corners are completely circular.
-	///
-	/// Default: `.square`.
-	open var cornerStyle: CornerStyle = .eliptical {
+	/// Corner style for the indicator. Default: `.eliptical`.
+	var cornerStyle: CornerStyle = .eliptical {
 		didSet {
 			setNeedsLayout()
 		}
 	}
 
-	// MARK: Lifecycle
-	open override func layout(in view: UIView) {
+	// MARK: - Lifecycle
+	override func layout(in view: UIView) {
 		super.layout(in: view)
 
 		let topConstraint = topAnchor.constraint(equalTo: view.topAnchor, constant: 5)
@@ -60,7 +48,7 @@ class KFillBarIndicator: TMBarIndicator {
 		self.transitionStyle = .progressive
 	}
 
-	open override func layoutSubviews() {
+	override func layoutSubviews() {
 		super.layoutSubviews()
 
 		superview?.layoutIfNeeded()
@@ -68,15 +56,44 @@ class KFillBarIndicator: TMBarIndicator {
 	}
 }
 
-private extension KFillBarIndicator.CornerStyle {
-	func cornerRadius(for frame: CGRect) -> CGFloat {
-		switch self {
-		case .square:
-			return 0.0
-		case .rounded:
-			return frame.size.height / 6.0
-		case .eliptical:
-			return frame.size.height / 2.0
+extension KFillBarIndicator {
+	// MARK: - Types
+	/**
+		The set of available corner style types.
+
+		```
+		case square
+		case rounded
+		case eliptical
+		```
+	*/
+	public enum CornerStyle {
+		/// Corners are squared off.
+		case square
+
+		/// Corners are rounded.
+		case rounded
+
+		/// Corners are completely circular.
+		case eliptical
+
+		// MARK: - Functions
+		/**
+			Returns a `CGFloat` value indicating how much the corners should be rounded.
+
+			- Parameter frame: The frame that should be rounded.
+
+			- Returns: a `CGFloat` value indicating how much the corners should be rounded.
+		*/
+		func cornerRadius(for frame: CGRect) -> CGFloat {
+			switch self {
+			case .square:
+				return 0.0
+			case .rounded:
+				return frame.size.height / 6.0
+			case .eliptical:
+				return frame.size.height / 2.0
+			}
 		}
 	}
 }

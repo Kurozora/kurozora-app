@@ -58,7 +58,7 @@ class AuthenticationSettingsCell: SettingsCell {
 		authenticationRequireValueLabel?.text = UserSettings.authenticationInterval.stringValue
 	}
 
-	// MARK: IBActions
+	// MARK: - IBActions
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .authenticationEnabled)
 

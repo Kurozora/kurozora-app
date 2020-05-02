@@ -38,7 +38,7 @@ class ProfileImageView: UIImageView {
 		configureImageViewStyle()
 	}
 
-	// MARK: View
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		self.cornerRadius = self.height / 2
