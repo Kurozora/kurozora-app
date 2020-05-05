@@ -19,18 +19,18 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="qZ0-D6-C6d"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Z1H-6u-fW1"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="eDH-tm-qS9">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKW-W9-8Iv">
-                                    <rect key="frame" x="142.5" y="20" width="129.5" height="39"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Kurozora ID" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKW-W9-8Iv">
+                                    <rect key="frame" x="137.5" y="20" width="139.5" height="34"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Sign in with your Kurozora ID to use the library and other Kurozora services." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDf-9Y-MC0">
-                                    <rect key="frame" x="8" y="69" width="398" height="41"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Sign in with your Kurozora ID to use the library and other Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDf-9Y-MC0">
+                                    <rect key="frame" x="8" y="62" width="398" height="38"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -40,13 +40,13 @@
                                 <constraint firstAttribute="bottom" secondItem="bDf-9Y-MC0" secondAttribute="bottom" constant="30" id="9tj-GX-RJV"/>
                                 <constraint firstItem="EKW-W9-8Iv" firstAttribute="centerX" secondItem="eDH-tm-qS9" secondAttribute="centerX" id="Bfg-zU-anu"/>
                                 <constraint firstAttribute="trailingMargin" secondItem="bDf-9Y-MC0" secondAttribute="trailing" id="H5W-2h-oJX"/>
-                                <constraint firstItem="bDf-9Y-MC0" firstAttribute="top" secondItem="EKW-W9-8Iv" secondAttribute="bottom" constant="10" id="f8a-CJ-9KV"/>
+                                <constraint firstItem="bDf-9Y-MC0" firstAttribute="top" secondItem="EKW-W9-8Iv" secondAttribute="bottom" constant="8" symbolic="YES" id="f8a-CJ-9KV"/>
                                 <constraint firstItem="bDf-9Y-MC0" firstAttribute="leading" secondItem="eDH-tm-qS9" secondAttribute="leadingMargin" id="xdc-zf-aUn"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" id="QUD-d6-Uvf" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="195.5" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="185.5" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QUD-d6-Uvf" id="Yfv-Zi-IPs">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -59,7 +59,7 @@
                                                 <constraint firstAttribute="height" constant="50" id="07y-EV-GdW"/>
                                             </constraints>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                         </textField>
                                     </subviews>
@@ -76,7 +76,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" id="VYz-yc-iXY" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="255.5" width="414" height="318"/>
+                                <rect key="frame" x="0.0" y="245.5" width="414" height="318"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYz-yc-iXY" id="5B2-1M-yaM">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="318"/>
@@ -85,9 +85,9 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OOy-ag-49a">
                                             <rect key="frame" x="20" y="10" width="374" height="94"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-c9-8O1">
                                                     <rect key="frame" x="17" y="0.0" width="340" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <state key="normal" title="Forgot your password? Time to use your email 📧"/>
                                                     <connections>
                                                         <segue destination="7C8-i2-q1I" kind="show" identifier="ResetPasswordSegue" id="MuH-mJ-aou"/>
@@ -95,13 +95,13 @@
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—————— or ——————" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uls-SB-5wS">
                                                     <rect key="frame" x="87.5" y="38" width="199.5" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-Lj-jIl">
                                                     <rect key="frame" x="20" y="64" width="334" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <state key="normal" title="New to Kurozora? Let's create a new account 🔥"/>
                                                     <connections>
                                                         <segue destination="PNG-qo-j4c" kind="show" id="Vsw-4g-A6f"/>
@@ -116,8 +116,8 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Kurozora ID is the email you use to access all Kurozora services." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C71-jA-gSI">
-                                            <rect key="frame" x="34" y="204" width="346" height="36"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="34" y="204" width="346" height="38"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -154,7 +154,7 @@
                                         <constraint firstItem="OOy-ag-49a" firstAttribute="leading" secondItem="5B2-1M-yaM" secondAttribute="leadingMargin" id="T5e-P6-Dky"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="top" secondItem="OOy-ag-49a" secondAttribute="bottom" constant="40" id="VgP-eI-qwd"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="F7x-5a-Rci" secondAttribute="trailing" id="Xwn-i8-Sbx"/>
-                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="10" id="Xyg-3T-SD1"/>
+                                        <constraint firstItem="F7x-5a-Rci" firstAttribute="top" secondItem="C71-jA-gSI" secondAttribute="bottom" constant="8" symbolic="YES" id="Xyg-3T-SD1"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Spl-yt-qj9" secondAttribute="trailing" id="ZRZ-a2-z4S"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="OOy-ag-49a" secondAttribute="trailing" id="ZtL-Sq-pdr"/>
                                         <constraint firstItem="Spl-yt-qj9" firstAttribute="centerX" secondItem="OOy-ag-49a" secondAttribute="centerX" id="c5q-t1-LH7"/>
@@ -236,24 +236,24 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="N1a-HI-vS3"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="MTf-3O-djR"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ba9-De-XYU">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="112.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Forgot Password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-mM-mJn">
-                                    <rect key="frame" x="107" y="20" width="200" height="32"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Forgot Password?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-mM-mJn">
+                                    <rect key="frame" x="100" y="20" width="214.5" height="34"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Enter your Kurozora ID to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-GC-XfQ">
-                                    <rect key="frame" x="73.5" y="62" width="267" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Enter your Kurozora ID to continue." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-GC-XfQ">
+                                    <rect key="frame" x="87.5" y="62" width="239.5" height="18"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="dYJ-GC-XfQ" firstAttribute="top" secondItem="Ayy-mM-mJn" secondAttribute="bottom" constant="10" id="EHo-Ij-rHW"/>
+                                <constraint firstItem="dYJ-GC-XfQ" firstAttribute="top" secondItem="Ayy-mM-mJn" secondAttribute="bottom" constant="8" symbolic="YES" id="EHo-Ij-rHW"/>
                                 <constraint firstAttribute="bottom" secondItem="dYJ-GC-XfQ" secondAttribute="bottom" constant="30" id="HYR-fR-Diw"/>
                                 <constraint firstItem="dYJ-GC-XfQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba9-De-XYU" secondAttribute="leadingMargin" id="Qqh-qv-qf6"/>
                                 <constraint firstItem="Ayy-mM-mJn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba9-De-XYU" secondAttribute="leadingMargin" id="iAS-A4-3eU"/>
@@ -266,20 +266,20 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" rowHeight="60" id="1iE-yl-9nN" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="168" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="165.5" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1iE-yl-9nN" id="XoT-En-fjn">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Khe-nX-yBW" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
+                                        <textField contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email address to the rescue 💌" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Khe-nX-yBW" customClass="KTextField" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="20" y="10" width="374" height="50"/>
                                             <color key="backgroundColor" red="0.27058823529999998" green="0.30980392159999998" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="rUv-Hx-1SF"/>
                                             </constraints>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="send" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                         </textField>
                                     </subviews>
@@ -293,33 +293,6 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="textField" destination="Khe-nX-yBW" id="kjb-be-QqS"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="65" id="DIc-ml-yv5" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="228" width="414" height="65"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DIc-ml-yv5" id="ujn-rt-3U9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the email address linked to your Kurozora ID to receive the magical link." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxE-Q9-ZJm">
-                                            <rect key="frame" x="25.5" y="10" width="363" height="45"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="top" secondItem="ujn-rt-3U9" secondAttribute="top" constant="10" id="7au-ee-7Rv"/>
-                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ujn-rt-3U9" secondAttribute="leadingMargin" id="9Az-iB-U7O"/>
-                                        <constraint firstItem="xxE-Q9-ZJm" firstAttribute="centerX" secondItem="ujn-rt-3U9" secondAttribute="centerX" id="LQF-K3-qTP"/>
-                                        <constraint firstAttribute="bottom" secondItem="xxE-Q9-ZJm" secondAttribute="bottom" constant="10" id="Sl6-Li-pcC"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xxE-Q9-ZJm" secondAttribute="trailing" id="dR9-dK-jhO"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="descriptionLabel" destination="xxE-Q9-ZJm" id="mdH-gK-gg7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -356,23 +329,23 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="Mpm-wV-BMc"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="dCM-bh-z8g"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="SeV-OI-6EK">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="202.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy">
-                                    <rect key="frame" x="108" y="20" width="198" height="32"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="New to Kurozora?" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xr5-LJ-ipy">
+                                    <rect key="frame" x="101" y="20" width="212" height="34"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr">
-                                    <rect key="frame" x="44" y="62" width="326.5" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Create an account and join the community." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ9-WL-FIr">
+                                    <rect key="frame" x="61" y="62" width="292.5" height="18"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-p1-Cg7" customClass="CircularView" customModule="Kurozora" customModuleProvider="target">
-                                    <rect key="frame" x="167" y="112.5" width="80" height="80"/>
+                                    <rect key="frame" x="167" y="110" width="80" height="80"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cG1-YT-L26" customClass="ProfileImageView" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -406,7 +379,7 @@
                                 <constraint firstItem="UJ9-WL-FIr" firstAttribute="centerX" secondItem="xr5-LJ-ipy" secondAttribute="centerX" id="8xQ-XH-zb6"/>
                                 <constraint firstAttribute="bottom" secondItem="bmz-p1-Cg7" secondAttribute="bottom" constant="10" id="UEm-Ak-pSa"/>
                                 <constraint firstItem="xr5-LJ-ipy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SeV-OI-6EK" secondAttribute="leadingMargin" id="XmB-Qg-3Gz"/>
-                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="top" secondItem="xr5-LJ-ipy" secondAttribute="bottom" constant="10" id="cum-ye-jJK"/>
+                                <constraint firstItem="UJ9-WL-FIr" firstAttribute="top" secondItem="xr5-LJ-ipy" secondAttribute="bottom" constant="8" symbolic="YES" id="cum-ye-jJK"/>
                                 <constraint firstItem="xr5-LJ-ipy" firstAttribute="top" secondItem="SeV-OI-6EK" secondAttribute="top" constant="20" id="j5I-nO-76I"/>
                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="xr5-LJ-ipy" secondAttribute="trailing" id="nZx-Px-Bmn"/>
                                 <constraint firstItem="bmz-p1-Cg7" firstAttribute="top" secondItem="UJ9-WL-FIr" secondAttribute="bottom" constant="30" id="rMR-UX-kuh"/>
@@ -418,7 +391,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingTextFieldCell" rowHeight="60" id="G6q-Q6-rZS" customClass="OnboardingTextFieldCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="258" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="255.5" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G6q-Q6-rZS" id="sFO-Iz-nh6">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -431,7 +404,7 @@
                                                 <constraint firstAttribute="height" constant="50" id="hkB-Sq-nMX"/>
                                             </constraints>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                         </textField>
                                     </subviews>
@@ -448,7 +421,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OnboardingFooterTableViewCell" rowHeight="82" id="Jl8-33-z0g" customClass="OnboardingFooterTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="318" width="414" height="82"/>
+                                <rect key="frame" x="0.0" y="315.5" width="414" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jl8-33-z0g" id="X0g-QN-Fjh">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>

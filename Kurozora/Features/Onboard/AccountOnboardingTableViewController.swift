@@ -1,5 +1,5 @@
 //
-//  BaseOnboardingTableViewController.swift
+//  AccountOnboardingTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/09/2019.
@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import SCLAlertView
 
-class BaseOnboardingTableViewController: KTableViewController {
+class AccountOnboardingTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: UILabel! {
 		didSet {
@@ -25,7 +24,7 @@ class BaseOnboardingTableViewController: KTableViewController {
 
 	// MARK: - Properties
 	var textFieldArray: [UITextField?] = []
-	var onboardingType: OnboardingType = .register
+	var accountOnboardingType: AccountOnboarding = .register
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -58,17 +57,17 @@ class BaseOnboardingTableViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension BaseOnboardingTableViewController {
+extension AccountOnboardingTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return onboardingType.cellType.count
+		return accountOnboardingType.cellTypes.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let identifier = onboardingType.cellType[indexPath.row] == .footer ? R.reuseIdentifier.onboardingFooterTableViewCell.identifier : R.reuseIdentifier.onboardingTextFieldCell.identifier
+		let identifier = accountOnboardingType.cellTypes[indexPath.row] == .footer ? R.reuseIdentifier.onboardingFooterTableViewCell.identifier : R.reuseIdentifier.onboardingTextFieldCell.identifier
 		let onboardingBaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OnboardingBaseTableViewCell
-		onboardingBaseTableViewCell.onboardingType = onboardingType
+		onboardingBaseTableViewCell.accountOnboardingType = accountOnboardingType
 
-		switch onboardingType.cellType[indexPath.row] {
+		switch accountOnboardingType.cellTypes[indexPath.row] {
 		case .username:
 			(onboardingBaseTableViewCell as? OnboardingTextFieldCell)?.textField.textType = .username
 		case .email:
@@ -95,7 +94,7 @@ extension BaseOnboardingTableViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension BaseOnboardingTableViewController: UITextFieldDelegate {
+extension AccountOnboardingTableViewController: UITextFieldDelegate {
 	@objc func editingChanged(_ textField: UITextField) {
 		if textField.text?.count == 1, textField.text?.first == " " {
 			textField.text = ""
@@ -115,7 +114,7 @@ extension BaseOnboardingTableViewController: UITextFieldDelegate {
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		switch onboardingType {
+		switch accountOnboardingType {
 		case .register, .siwa:
 			textField.returnKeyType = textField.tag == textFieldArray.count - 1 ? .join : .next
 		case .signIn:

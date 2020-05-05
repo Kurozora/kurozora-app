@@ -8,43 +8,40 @@
 
 import Foundation
 
-/**
-	List of onboarding types used to determin the onboarding view.
 
-	```
-	case register = 0
-	case siwa = 1
-	case signIn = 2
-	case reset = 3
-	```
-*/
-enum OnboardingType: Int {
-	/// Register onboarding.
-	case register = 0
+extension AccountOnboarding {
+	/**
+		Set of available onboarding cell types.
 
-	/// Sign In With Apple onboarding.
-	case siwa = 1
+		```
+		case register = 0
+		case siwa = 1
+		case signIn = 2
+		case reset = 3
+		```
+	*/
+	enum Cell: Int, CaseIterable {
+		// MARK: - Cases
+		/// Username cell type.
+		case username = 0
 
-	/// Sign in onboarding.
-	case signIn = 2
+		/// Email cell type.
+		case email = 1
 
-	/// Reset password onboarding.
-	case reset = 3
+		/// Password cell type.
+		case password = 2
 
-	/// An array containing all onboarding types.
-	static let all: [OnboardingType] = [.register, .siwa, .signIn, .reset]
+		/// Footer cell type.
+		case footer = 3
 
-	/// The onboarding cell type array of an onboarding type.
-	var cellType: [OnboardingCellType] {
-		switch self {
-		case .register:
-			return OnboardingCellType.all
-		case .siwa:
-			return OnboardingCellType.allSIWA
-		case .signIn:
-			return OnboardingCellType.allSignIn
-		case .reset:
-			return OnboardingCellType.allReset
-		}
+		// MARK: - Properties
+		/// An array containing all Sign in with Apple cell types.
+		static let siwaCases: [Cell] = [.username, .footer]
+
+		/// An array containing only sign in cell types.
+		static let signInCases: [Cell] = [.email, .password, .footer]
+
+		/// An array containing only reset password cell types.
+		static let resetCases: [Cell] = [.email]
 	}
 }

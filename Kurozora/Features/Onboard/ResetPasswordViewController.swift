@@ -9,11 +9,12 @@
 import UIKit
 import SCLAlertView
 
-class ResetPasswordTableViewController: BaseOnboardingTableViewController {
+class ResetPasswordTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		onboardingType = .reset
+		// Configure properties
+		self.accountOnboardingType = .reset
 	}
 
 	// MARK: - IBActions

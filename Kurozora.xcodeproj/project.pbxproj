@@ -146,7 +146,7 @@
 		666E0D2122888B2300AA8BA4 /* KNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */; };
 		666E0D2222888B2300AA8BA4 /* KNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */; };
 		666FBD9022C4E170007DB5D8 /* Black.plist in Resources */ = {isa = PBXBuildFile; fileRef = 666FBD8F22C4E16F007DB5D8 /* Black.plist */; };
-		667074D523382756008C1A75 /* BaseOnboardingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667074D423382756008C1A75 /* BaseOnboardingTableViewController.swift */; };
+		667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667074D423382756008C1A75 /* AccountOnboardingTableViewController.swift */; };
 		66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66707821208B1C6800471FBC /* LaunchScreen.xib */; };
 		66707835208B842E00471FBC /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66707834208B842E00471FBC /* Settings.storyboard */; };
 		66707838208B846C00471FBC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66707837208B846C00471FBC /* SettingsTableViewController.swift */; };
@@ -338,7 +338,7 @@
 		66CAE6852337CFB000991E59 /* OnboardingTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6842337CFB000991E59 /* OnboardingTextFieldCell.swift */; };
 		66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */; };
 		66CAE6892337D04C00991E59 /* OnboardingFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6882337D04C00991E59 /* OnboardingFooterTableViewCell.swift */; };
-		66CAE68D2337D0FF00991E59 /* OnboardingCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE68C2337D0FF00991E59 /* OnboardingCellType.swift */; };
+		66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */; };
 		66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */; };
 		66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CBA53622BC454600FBEC13 /* Feed.storyboard */; };
 		66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */; };
@@ -580,7 +580,7 @@
 		666E0D1F22888B2300AA8BA4 /* KNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationController.swift; sourceTree = "<group>"; };
 		666E0D2022888B2300AA8BA4 /* KNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNavigationStyle.swift; sourceTree = "<group>"; };
 		666FBD8F22C4E16F007DB5D8 /* Black.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Black.plist; sourceTree = "<group>"; };
-		667074D423382756008C1A75 /* BaseOnboardingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOnboardingTableViewController.swift; sourceTree = "<group>"; };
+		667074D423382756008C1A75 /* AccountOnboardingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOnboardingTableViewController.swift; sourceTree = "<group>"; };
 		66707822208B1C6800471FBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		66707834208B842E00471FBC /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		66707837208B846C00471FBC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -773,7 +773,7 @@
 		66CAE6842337CFB000991E59 /* OnboardingTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextFieldCell.swift; sourceTree = "<group>"; };
 		66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseTableViewCell.swift; sourceTree = "<group>"; };
 		66CAE6882337D04C00991E59 /* OnboardingFooterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFooterTableViewCell.swift; sourceTree = "<group>"; };
-		66CAE68C2337D0FF00991E59 /* OnboardingCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCellType.swift; sourceTree = "<group>"; };
+		66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOnboarding.swift; sourceTree = "<group>"; };
 		66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		66CBA53622BC454600FBEC13 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -1057,7 +1057,7 @@
 			isa = PBXGroup;
 			children = (
 				66B13A662405DBE000CD732B /* Onboarding.storyboard */,
-				667074D423382756008C1A75 /* BaseOnboardingTableViewController.swift */,
+				667074D423382756008C1A75 /* AccountOnboardingTableViewController.swift */,
 				661F9F7F2087282500CF4153 /* RegisterViewController.swift */,
 				661F9F7B208727D200CF4153 /* ResetPasswordViewController.swift */,
 				661F9F7E2087282400CF4153 /* SignInTableViewController.swift */,
@@ -2093,7 +2093,7 @@
 		66CAE68A2337D0D800991E59 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66CAE68C2337D0FF00991E59 /* OnboardingCellType.swift */,
+				66CAE68C2337D0FF00991E59 /* AccountOnboarding.swift */,
 				66ABF5F9233835FF00795750 /* OnboardingType.swift */,
 			);
 			path = Models;
@@ -2931,7 +2931,7 @@
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */,
 				667F9AD921B47FA4003F6629 /* BadgesTableViewController.swift in Sources */,
-				667074D523382756008C1A75 /* BaseOnboardingTableViewController.swift in Sources */,
+				667074D523382756008C1A75 /* AccountOnboardingTableViewController.swift in Sources */,
 				666C825C2168063100C93A70 /* HomeCollectionViewController.swift in Sources */,
 				6646A278236B8AE600DCC0A4 /* KBrowser.swift in Sources */,
 				66D6237B20A1BFD300304914 /* FavoriteShowsCollectionViewController.swift in Sources */,
@@ -3084,7 +3084,7 @@
 				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
 				66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */,
 				66CE81042460377900DB0C49 /* KCollectionViewDelegateLayout.swift in Sources */,
-				66CAE68D2337D0FF00991E59 /* OnboardingCellType.swift in Sources */,
+				66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */,
 				66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */,
 				66D6237D20A1CB9C00304914 /* LibraryCollectionViewCell.swift in Sources */,
 				661DBC5B234A6CC9009292DF /* ProductHeaderTableViewCell.swift in Sources */,

@@ -8,9 +8,6 @@
 
 import UIKit
 
-class OnboardingBaseTableViewCell: UITableViewCell {
-	var onboardingType: OnboardingType = .register
-
-	// MARK: - Functions
-	func configureCell() { }
+class OnboardingBaseTableViewCell: KTableViewCell {
+	var accountOnboardingType: AccountOnboarding = .register
 }

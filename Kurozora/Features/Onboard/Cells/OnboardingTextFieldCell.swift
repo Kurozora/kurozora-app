@@ -17,7 +17,7 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 	override func configureCell() {
 		super.configureCell()
 
-		switch onboardingType {
+		switch accountOnboardingType {
 		case .register:
 			switch textField.textType {
 			case .username:
@@ -45,7 +45,7 @@ class OnboardingTextFieldCell: OnboardingBaseTableViewCell {
 		case .reset:
 			switch textField.textType {
 			case .emailAddress:
-				textField.placeholder = "Your email to the rescue 💌"
+				textField.placeholder = "Your email address to the rescue 💌"
 			default : break
 			}
 		}

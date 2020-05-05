@@ -281,7 +281,7 @@ extension SettingsTableViewController {
 		var secondaryStringValue: String {
 			switch self {
 			case .account:
-				return User.isSignedIn ? "Kurozora ID" : "Setup Kurozora ID and more."
+				return User.isSignedIn ? "Kurozora ID, Sign in with Apple & MAL Import" : "Setup Kurozora ID and more."
 			default:
 				return ""
 			}

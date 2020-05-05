@@ -11,11 +11,12 @@ import KurozoraKit
 import AuthenticationServices
 import SCLAlertView
 
-class SignInTableViewController: BaseOnboardingTableViewController {
+class SignInTableViewController: AccountOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		onboardingType = .signIn
+		// Configure properties
+		self.accountOnboardingType = .signIn
 	}
 
 	override func viewDidAppear(_ animated: Bool) {

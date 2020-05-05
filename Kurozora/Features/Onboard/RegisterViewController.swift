@@ -10,7 +10,7 @@ import UIKit
 import KurozoraKit
 import SCLAlertView
 
-class RegisterTableViewController: BaseOnboardingTableViewController {
+class RegisterTableViewController: AccountOnboardingTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var selectButton: KButton!
@@ -22,7 +22,8 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		onboardingType = isSIWA ? .siwa : .register
+		// Configure properties
+		self.accountOnboardingType = isSIWA ? .siwa : .register
 	}
 
 	// MARK: - Functions
@@ -50,7 +51,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 	override func rightNavigationBarButtonPressed(sender: AnyObject) {
 		super.rightNavigationBarButtonPressed(sender: sender)
 
-		if onboardingType == .register {
+		if accountOnboardingType == .register {
 			guard let username = textFieldArray.first??.trimmedText else { return }
 			guard let emailAddress = textFieldArray[1]?.trimmedText else { return }
 			guard let password = textFieldArray.last??.text else { return }
@@ -68,7 +69,7 @@ class RegisterTableViewController: BaseOnboardingTableViewController {
 				case .failure: break
 				}
 			}
-		} else if onboardingType == .siwa {
+		} else if accountOnboardingType == .siwa {
 //			let username = textFieldArray.first??.trimmedText
 //			let profileImage = profileImageView.image
 //			
