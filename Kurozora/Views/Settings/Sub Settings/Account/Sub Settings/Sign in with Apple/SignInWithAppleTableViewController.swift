@@ -27,6 +27,7 @@ class SignInWithAppleTableViewController: ServiceTableViewController {
 		super.viewDidLoad()
 		// Configure properties
 		self.previewImage = R.image.promotional.signInWithApple()
+		self.serviceType = .signInWithApple
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -53,14 +54,10 @@ extension SignInWithAppleTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
-			let siwaButtonTableViewCell = cell as? SIWAButtonTableViewCell
-			siwaButtonTableViewCell?.onboardingFooterTableViewCellDelegate = self
-		case .footer:
-			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
-				serviceFooterTableViewCell.footerType = .signInWithApple
+			if let siwaButtonTableViewCell = cell as? SIWAButtonTableViewCell {
+				siwaButtonTableViewCell.onboardingFooterTableViewCellDelegate = self
 			}
-		default:
-			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+		default: break
 		}
 	}
 }

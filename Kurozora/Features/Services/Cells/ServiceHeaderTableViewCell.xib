@@ -10,46 +10,46 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceHeaderTableViewCell" id="hhf-Az-9ZR" customClass="ServiceHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="107"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceHeaderTableViewCell" id="xyn-N3-2aw" customClass="ServiceHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="88.5"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hhf-Az-9ZR" id="CO1-vO-TZq">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="107"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xyn-N3-2aw" id="bfj-jN-GPU">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="88.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Redeem your code using the camera on your device." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghk-hU-dwF" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="47.5" y="0.0" width="319" height="41"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem your code using the camera on your device." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYv-zJ-nOV" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="47.5" y="0.0" width="319" height="42.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Found a Kurozora code in the wild? This is the place to redeem it!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUt-WW-93s" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                        <rect key="frame" x="20" y="51" width="374" height="36"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Found a Kurozora code in the wild? This is the place to redeem it!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udL-n2-1Ye" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="20" y="50.5" width="374" height="38"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="IUt-WW-93s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CO1-vO-TZq" secondAttribute="leadingMargin" id="0mv-8v-egD"/>
-                    <constraint firstItem="ghk-hU-dwF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CO1-vO-TZq" secondAttribute="leadingMargin" id="CJn-aG-zhn"/>
-                    <constraint firstItem="ghk-hU-dwF" firstAttribute="top" secondItem="CO1-vO-TZq" secondAttribute="top" id="Ekt-WE-7Od"/>
-                    <constraint firstItem="IUt-WW-93s" firstAttribute="centerX" secondItem="ghk-hU-dwF" secondAttribute="centerX" id="Gim-AX-lLm"/>
-                    <constraint firstItem="IUt-WW-93s" firstAttribute="top" secondItem="ghk-hU-dwF" secondAttribute="bottom" constant="10" id="IUQ-bv-IyW"/>
-                    <constraint firstItem="ghk-hU-dwF" firstAttribute="centerX" secondItem="CO1-vO-TZq" secondAttribute="centerX" id="KSs-ub-NdW"/>
-                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ghk-hU-dwF" secondAttribute="trailing" id="KmG-ze-2sh"/>
-                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="IUt-WW-93s" secondAttribute="trailing" id="yuk-QN-I2g"/>
-                    <constraint firstAttribute="bottom" secondItem="IUt-WW-93s" secondAttribute="bottom" constant="20" id="z0x-NP-NkC"/>
+                    <constraint firstItem="oYv-zJ-nOV" firstAttribute="top" secondItem="bfj-jN-GPU" secondAttribute="top" id="EJk-sP-DTG"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="oYv-zJ-nOV" secondAttribute="trailing" id="ETK-h3-gKM"/>
+                    <constraint firstItem="udL-n2-1Ye" firstAttribute="centerX" secondItem="oYv-zJ-nOV" secondAttribute="centerX" id="NHL-Xt-gz4"/>
+                    <constraint firstItem="udL-n2-1Ye" firstAttribute="top" secondItem="oYv-zJ-nOV" secondAttribute="bottom" constant="8" symbolic="YES" id="WMB-8x-r2z"/>
+                    <constraint firstAttribute="bottom" secondItem="udL-n2-1Ye" secondAttribute="bottom" id="Wuk-Iu-CJp"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="udL-n2-1Ye" secondAttribute="trailing" id="Xng-2S-aAL"/>
+                    <constraint firstItem="udL-n2-1Ye" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bfj-jN-GPU" secondAttribute="leadingMargin" id="gjV-Zz-5sb"/>
+                    <constraint firstItem="oYv-zJ-nOV" firstAttribute="centerX" secondItem="bfj-jN-GPU" secondAttribute="centerX" id="hfa-KV-OdN"/>
+                    <constraint firstItem="oYv-zJ-nOV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bfj-jN-GPU" secondAttribute="leadingMargin" id="yIA-7f-rhE"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <viewLayoutGuide key="safeArea" id="unJ-Yh-DUC"/>
+            <viewLayoutGuide key="safeArea" id="Xma-02-TU8"/>
             <connections>
-                <outlet property="primaryLabel" destination="ghk-hU-dwF" id="Loh-tW-bUh"/>
-                <outlet property="secondaryLabel" destination="IUt-WW-93s" id="5nk-x4-20L"/>
+                <outlet property="headlineLabel" destination="oYv-zJ-nOV" id="LPv-RI-Wfj"/>
+                <outlet property="subheadLabel" destination="udL-n2-1Ye" id="OyV-Ju-4gN"/>
             </connections>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="137.68115942028987" y="160.37946428571428"/>
         </tableViewCell>
     </objects>
 </document>

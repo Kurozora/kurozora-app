@@ -26,18 +26,21 @@ class TipJarTableViewController: ProductTableViewController {
 				"20000331KTIPGOD"
 		]
 	}
+	override var serviceType: ServiceType? {
+		return .tipJar
+	}
 }
 
 // MARK: - UITableViewDataSource
 extension TipJarTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
-		case .header: // Override first section with an informational header cell.
+		case .header:
 			guard let purchaseHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseHeaderTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.purchaseHeaderTableViewCell.identifier)")
 			}
 			return purchaseHeaderTableViewCell
-		default: // Default implementation for all other sections.
+		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
 	}
@@ -45,14 +48,4 @@ extension TipJarTableViewController {
 
 // MARK: - UITableViewDelegate
 extension TipJarTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .footer: // Override the footer section.
-			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
-				serviceFooterTableViewCell.footerType = .tipJar
-			}
-		default: // Default implementation for all other sections.
-			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
-		}
-	}
 }

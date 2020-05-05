@@ -23,6 +23,9 @@ import UIKit
 class ServiceTableViewController: KTableViewController {
 	/// The preview image shown at the top of the table view.
 	var previewImage: UIImage?
+
+	/// The service type used to populate the table view cells.
+	var serviceType: ServiceType?
 }
 
 // MARK: - UITableViewDataSource
@@ -48,16 +51,19 @@ extension ServiceTableViewController {
 			guard let servicePreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.servicePreviewTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.servicePreviewTableViewCell.identifier)")
 			}
+			servicePreviewTableViewCell.previewImage = previewImage
 			return servicePreviewTableViewCell
 		case .header:
 			guard let serviceHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceHeaderTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceHeaderTableViewCell.identifier)")
 			}
+			serviceHeaderTableViewCell.serviceType = serviceType
 			return serviceHeaderTableViewCell
 		default:
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
 			}
+			serviceFooterTableViewCell.serviceType = serviceType
 			return serviceFooterTableViewCell
 		}
 	}
@@ -65,15 +71,6 @@ extension ServiceTableViewController {
 
 // MARK: - UITableViewDelegate
 extension ServiceTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .preview:
-			let servicePreviewTableViewCell = cell as? ServicePreviewTableViewCell
-			servicePreviewTableViewCell?.previewImage = previewImage
-		default: break
-		}
-	}
-
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return CGFloat.leastNormalMagnitude
 	}
@@ -83,8 +80,16 @@ extension ServiceTableViewController {
 		case .preview:
 			return CGFloat.leastNormalMagnitude
 		default:
-			return 20
+			return 28
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
 }
 
@@ -106,4 +111,3 @@ extension ServiceTableViewController {
 		case footer
 	}
 }
-

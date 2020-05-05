@@ -31,6 +31,11 @@ class ProductTableViewController: KTableViewController {
 		return []
 	}
 
+	/// The service type used to populate the table view cells.
+	var serviceType: ServiceType? {
+		return nil
+	}
+
 	/// A storage for the `leftBarButtonItems` of `navigationItem`.
 	fileprivate var _leftBarButtonItems: [UIBarButtonItem]?
 	/// Set to `false` to hide the left navigation bar.
@@ -123,11 +128,17 @@ extension ProductTableViewController {
 		switch Section(rawValue: indexPath.section) {
 		case .body:
 			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
+			purchaseButtonTableViewCell.productNumber = indexPath.row
+			purchaseButtonTableViewCell.productTitle = productTitles.isEmpty ? "" : productTitles[indexPath.row]
+			purchaseButtonTableViewCell.productsArray = productsArray
+			purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
+			purchaseButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
 			return purchaseButtonTableViewCell
 		default:
 			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
 			}
+			serviceFooterTableViewCell.serviceType = serviceType
 			return serviceFooterTableViewCell
 		}
 	}
@@ -135,26 +146,16 @@ extension ProductTableViewController {
 
 // MARK: - UITableViewDelegate
 extension ProductTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .body:
-			if let purchaseButtonTableViewCell = cell as? PurchaseButtonTableViewCell {
-				purchaseButtonTableViewCell.productNumber = indexPath.row
-				purchaseButtonTableViewCell.productTitle = productTitles.isEmpty ? "" : productTitles[indexPath.row]
-				purchaseButtonTableViewCell.productsArray = productsArray
-				purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
-				purchaseButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
-			}
-		case .footer:
-			if let promotionalFooterTableViewCell = cell as? ServiceFooterTableViewCell {
-				promotionalFooterTableViewCell.footerType = .subscription
-			}
-		default: break
-		}
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 28
 	}
 
-	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 22
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
 }
 

@@ -9,10 +9,28 @@
 import UIKit
 
 /**
+	The visual representation of a single promotional header row in a table view.
+
+	A `ServiceHeaderTableViewCell` object is a specialized type of view that displays header information about the content of a table view.
+
 	- Tag: ServiceHeaderTableViewCell
 */
-class ServiceHeaderTableViewCell: UITableViewCell {
+class ServiceHeaderTableViewCell: KTableViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var primaryLabel: KLabel!
-	@IBOutlet weak var secondaryLabel: KLabel?
+	@IBOutlet weak var headlineLabel: KLabel!
+	@IBOutlet weak var subheadLabel: KLabel!
+
+	// MARK: - Properties
+	/// The service type used to populate the cell.
+	var serviceType: ServiceType? {
+		didSet {
+			self.reloadCell()
+		}
+	}
+
+	// MARK: - Functions
+	override func reloadCell() {
+		self.headlineLabel.text = serviceType?.headlineStringValue
+		self.subheadLabel.text = serviceType?.subheadStringValue
+	}
 }

@@ -22,10 +22,10 @@ class ServiceFooterTableViewCell: KTableViewCell {
 	@IBOutlet weak var privacyButton: UIButton!
 
 	// MARK: - Properties
-	/// The footer type used to populate the cell.
-	var footerType: ServiceFooter = .subscription {
+	/// The service type used to populate the cell.
+	var serviceType: ServiceType? {
 		didSet {
-			self.reloadView()
+			self.reloadCell()
 		}
 	}
 
@@ -35,15 +35,13 @@ class ServiceFooterTableViewCell: KTableViewCell {
 		self.configureCell()
 	}
 
-	// MARK: - View
-	override func reloadView() {
-		self.descriptionLabel.text = footerType.stringValue
+	// MARK: - Cell
+	override func configureCell() {
+		self.privacyButton.setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, for: .normal)
 	}
 
-	// MARK: - Functions
-	/// Configure the cell with the given details.
-	private func configureCell() {
-		self.privacyButton.setAttributedTitle(ServiceFooterString.visitPrivacyPolicy, for: .normal)
+	override func reloadCell() {
+		self.descriptionLabel.text = serviceType?.footerStringValue
 	}
 
 	// MARK: - IBActions

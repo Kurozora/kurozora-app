@@ -25,12 +25,12 @@ class ServicePreviewTableViewCell: KTableViewCell {
 	/// The image that should be displayed in the cell.
 	var previewImage: UIImage? = nil {
 		didSet {
-			reloadView()
+			reloadCell()
 		}
 	}
 
 	// MARK: - View
-	override func reloadView() {
+	override func reloadCell() {
 		self.previewImageView?.image = previewImage
 	}
 }

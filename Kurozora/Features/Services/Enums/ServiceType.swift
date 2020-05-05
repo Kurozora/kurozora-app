@@ -6,12 +6,12 @@
 //  Copyright © 2020 Kurozora. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 /**
-	The set of available promotional service footer types.
+	The set of available service types.
 */
-enum ServiceFooter {
+enum ServiceType {
 	// MARK: - Cases
 	/// Used to display information related to importing from MAL.
 	case malImport
@@ -32,8 +32,36 @@ enum ServiceFooter {
 	case visitPrivacyPolicy
 
 	// MARK: - Properties
-	/// The string valaue of a promotional footer type.
-	var stringValue: String {
+	/// The headline string value of a service type.
+	var headlineStringValue: String {
+		switch self {
+		case .malImport:
+			return ServiceHeaderString.malImportHeadline
+		case .redeem:
+			return ServiceHeaderString.redeemHeadline
+		case .signInWithApple:
+			return ServiceHeaderString.signInWithAppleHeadline
+		default:
+			return ""
+		}
+	}
+
+	/// The subhead string value of a service type.
+	var subheadStringValue: String {
+		switch self {
+		case .malImport:
+			return ServiceHeaderString.malImportSubhead
+		case .redeem:
+			return ServiceHeaderString.redeemSubhead
+		case .signInWithApple:
+			return ServiceHeaderString.signInWithAppleSubhead
+		default:
+			return ""
+		}
+	}
+
+	/// The footer string value of a service type.
+	var footerStringValue: String {
 		switch self {
 		case .malImport:
 			return ServiceFooterString.malImport
@@ -50,8 +78,8 @@ enum ServiceFooter {
 		}
 	}
 
-	/// The attributed string value of a promotional footer type.
-	var attributedStringValue: NSMutableAttributedString {
+	/// The attributed footer string value of a service type.
+	var attributedFooterStringValue: NSMutableAttributedString {
 		switch self {
 		case .visitPrivacyPolicy:
 			return ServiceFooterString.visitPrivacyPolicy

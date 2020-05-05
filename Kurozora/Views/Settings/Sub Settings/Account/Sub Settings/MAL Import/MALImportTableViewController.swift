@@ -42,6 +42,7 @@ class MALImportTableViewController: ServiceTableViewController {
 		super.viewDidLoad()
 		// Confgure properties
 		self.previewImage = R.image.promotional.moveToKurozora()
+		self.serviceType = .malImport
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -95,12 +96,7 @@ extension MALImportTableViewController {
 				}
 				textFieldArray.append(malImportActionTableViewCell.actionTextField)
 			}
-		case .footer:
-			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
-				serviceFooterTableViewCell.footerType = .malImport
-			}
-		default:
-			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+		default: break
 		}
 	}
 }

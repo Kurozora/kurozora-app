@@ -14,5 +14,5 @@ import UIKit
 class ProductHeaderTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var primaryLabel: KLabel!
-	@IBOutlet weak var secondaryLabel: KLabel?
+	@IBOutlet weak var secondaryLabel: KLabel!
 }

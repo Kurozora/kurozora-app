@@ -47,6 +47,7 @@ class RedeemTableViewController: ServiceTableViewController {
 		super.viewDidLoad()
 		// Configure properties
 		self.previewImage = R.image.promotional.redeemCode()
+		self.serviceType = .redeem
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -190,12 +191,7 @@ extension RedeemTableViewController {
 					productActionTableViewCell.actionTextField.placeholder = "Please enter your code"
 				}
 			}
-		case .footer:
-			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
-				serviceFooterTableViewCell.footerType = .redeem
-			}
-		default:
-			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+		default: break
 		}
 	}
 

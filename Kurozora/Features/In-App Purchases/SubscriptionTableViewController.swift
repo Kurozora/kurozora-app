@@ -1,5 +1,5 @@
 //
-//  PurchaseTableViewController.swift
+//  SubscriptionTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/06/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PurchaseTableViewController: ProductTableViewController {
+class SubscriptionTableViewController: ProductTableViewController {
 	// MARK: - Properties
 	override var productIDs: [String] {
 		return ["20000331KPLUS1M",
@@ -21,6 +21,10 @@ class PurchaseTableViewController: ProductTableViewController {
 		return [R.image.promotional.inAppPurchases.icons(), R.image.promotional.inAppPurchases.gifs()]
 	}
 
+	override var serviceType: ServiceType? {
+		return .subscription
+	}
+
 	// MARK: - IBActions
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
 		self.dismiss(animated: true, completion: nil)
@@ -28,32 +32,23 @@ class PurchaseTableViewController: ProductTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension PurchaseTableViewController {
+extension SubscriptionTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch Section(rawValue: indexPath.section) {
-		case .header: // Override first section with a product preview cell.
+		case .header:
 			guard let productPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
 			}
+			productPreviewTableViewCell.previewImages = previewImages
 			return productPreviewTableViewCell
-		default: // Default implementation for all other sections.
+		default:
 			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
 	}
 }
 
 // MARK: -  UITableViewDelegate
-extension PurchaseTableViewController {
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section) {
-		case .header: // Override the header section.
-			let productPreviewTableViewCell = cell as? ProductPreviewTableViewCell
-			productPreviewTableViewCell?.previewImages = previewImages
-		default: // Default implementation for all other sections.
-			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
-		}
-	}
-
+extension SubscriptionTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch Section(rawValue: indexPath.section) {
 		case .header:

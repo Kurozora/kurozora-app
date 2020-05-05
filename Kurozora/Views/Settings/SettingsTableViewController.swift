@@ -59,7 +59,7 @@ class SettingsTableViewController: KTableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.settingsTableViewController.subscriptionSegue.identifier {
 			let kNavigationController = segue.destination as? KNavigationController
-			(kNavigationController?.viewControllers.first as? PurchaseTableViewController)?.leftNavigationBarButtonIsHidden = true
+			(kNavigationController?.viewControllers.first as? SubscriptionTableViewController)?.leftNavigationBarButtonIsHidden = true
 		}
 	}
 }
