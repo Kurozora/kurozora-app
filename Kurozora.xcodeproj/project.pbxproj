@@ -342,6 +342,7 @@
 		66CBA53522BC452700FBEC13 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */; };
 		66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CBA53622BC454600FBEC13 /* Feed.storyboard */; };
 		66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */; };
+		66CBDD902462085E00CA5F83 /* KTintedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBDD8F2462085E00CA5F83 /* KTintedLabel.swift */; };
 		66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */; };
 		66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ServiceFooterString.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
@@ -777,6 +778,7 @@
 		66CBA53422BC452700FBEC13 /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		66CBA53622BC454600FBEC13 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		66CBA53822BCEBCF00FBEC13 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		66CBDD8F2462085E00CA5F83 /* KTintedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTintedLabel.swift; sourceTree = "<group>"; };
 		66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductActionTableViewCell.swift; sourceTree = "<group>"; };
 		66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTableViewController.swift; sourceTree = "<group>"; };
@@ -1019,7 +1021,6 @@
 			children = (
 				66FC6DD22340028D00A454DD /* AccountSettings.storyboard */,
 				66160C3A215C04B900D0D722 /* AccountTableViewController.swift */,
-				6614409521DA417300E54915 /* Cell */,
 				66B4DBEC2450E5470097135A /* Sub Settings */,
 			);
 			path = Account;
@@ -1033,14 +1034,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		6614409521DA417300E54915 /* Cell */ = {
+		6614409521DA417300E54915 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				662C307E22A06A5E00AAD69B /* CurrentSessionCell.swift */,
 				660B5B652152F47A002D05F3 /* NoSessionsCell.swift */,
 				66E08368211324D300B39A75 /* OtherSessionsCell.swift */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		6614ABE2215EB23500A3A0C9 /* Reachability */ = {
@@ -1598,6 +1599,7 @@
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
 				66472371245E0070008E5111 /* KTextField.swift */,
 				66DB2547245D6B1D000AA6DB /* KTextView.swift */,
+				66CBDD8F2462085E00CA5F83 /* KTintedLabel.swift */,
 			);
 			path = "Text Views";
 			sourceTree = "<group>";
@@ -1919,6 +1921,7 @@
 			isa = PBXGroup;
 			children = (
 				665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */,
+				6614409521DA417300E54915 /* Cells */,
 				66B4DBF52450EF5A0097135A /* Views */,
 			);
 			path = "Manage Active Sessions";
@@ -2963,6 +2966,7 @@
 				66CE81122460908A00DB0C49 /* ServicePreviewTableViewCell.swift in Sources */,
 				66B13A632405AAED00CD732B /* WorkflowController+Onboarding.swift in Sources */,
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
+				66CBDD902462085E00CA5F83 /* KTintedLabel.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,
 				661DBC4F234947D7009292DF /* SKProduct+Kurozora.swift in Sources */,

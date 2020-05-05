@@ -173,33 +173,27 @@ extension SearchResultsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if searchResults != nil {
 			let searchBaseResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: currentScope.identifierString, for: indexPath) as! SearchBaseResultsCell
+			switch currentScope {
+			case .show, .myLibrary:
+				(searchBaseResultsCell as? SearchShowResultsCell)?.showDetailsElement = searchResults?[indexPath.row] as? ShowDetailsElement
+			case .thread:
+				(searchBaseResultsCell as? SearchForumsResultsCell)?.forumsThreadElement = searchResults?[indexPath.row] as? ForumsThreadElement
+			case .user:
+				(searchBaseResultsCell as? SearchUserResultsCell)?.userProfile = searchResults?[indexPath.row] as? UserProfile
+			}
 			return searchBaseResultsCell
 		}
 
 		guard let searchResultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.searchSuggestionResultCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.searchSuggestionResultCell.identifier)")
 		}
+		searchResultsCell.showDetailsElement = suggestionElements?[indexPath.row]
 		return searchResultsCell
 	}
 }
 
 // MARK: - UICollectionViewDelegate
 extension SearchResultsCollectionViewController {
-	override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if searchResults != nil {
-			switch currentScope {
-			case .show, .myLibrary:
-				(cell as? SearchShowResultsCell)?.showDetailsElement = searchResults?[indexPath.row] as? ShowDetailsElement
-			case .thread:
-				(cell as? SearchForumsResultsCell)?.forumsThreadElement = searchResults?[indexPath.row] as? ForumsThreadElement
-			case .user:
-				(cell as? SearchUserResultsCell)?.userProfile = searchResults?[indexPath.row] as? UserProfile
-			}
-		} else {
-			(cell as? SearchSuggestionResultCell)?.showDetailsElement = suggestionElements?[indexPath.row]
-		}
-	}
-
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let searchBaseResultsCell = collectionView.cellForItem(at: indexPath)
 		if searchResults != nil {

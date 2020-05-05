@@ -71,11 +71,7 @@ class SettingsCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	func configureCell() {
-		if sectionRow?.imageValue == UIImage() {
-			iconImageView?.image = User.current?.profileImage ?? R.image.placeholders.userProfile()
-		} else {
-			iconImageView?.image = sectionRow?.imageValue
-		}
+		iconImageView?.image = sectionRow?.imageValue
 		primaryLabel?.text = sectionRow?.primaryStringValue
 		secondaryLabel?.text = sectionRow?.secondaryStringValue
 

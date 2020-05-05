@@ -9,18 +9,11 @@
 import UIKit
 import KurozoraKit
 
-class CurrentSessionCell: UITableViewCell {
-	@IBOutlet weak var ipAddressTitleLabel: UILabel! {
-		didSet {
-			ipAddressTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
+class CurrentSessionCell: KTableViewCell {
+	// MARK: - IBOutlets
+	@IBOutlet weak var ipAddressTitleLabel: KTintedLabel!
+	@IBOutlet weak var deviceTitleLabel: KTintedLabel!
 	@IBOutlet weak var ipAddressValueLabel: KLabel!
-	@IBOutlet weak var deviceTitleLabel: UILabel! {
-		didSet {
-			deviceTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
 	@IBOutlet weak var deviceValueLabel: KLabel!
 	@IBOutlet weak var bubbleView: UIView! {
 		didSet {
@@ -35,14 +28,15 @@ class CurrentSessionCell: UITableViewCell {
 		}
 	}
 
+	// MARK: - Properties
 	var session: UserSessionsElement? {
 		didSet {
-			updateCurrentSession()
+			configureCell()
 		}
 	}
 
 	// MARK: - Functions
-	fileprivate func updateCurrentSession() {
+	override func configureCell() {
 		guard let session = session else { return }
 
 		if let sessionIP = session.ip, !sessionIP.isEmpty {

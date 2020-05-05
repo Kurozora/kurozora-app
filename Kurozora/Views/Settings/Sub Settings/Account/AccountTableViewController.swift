@@ -48,7 +48,7 @@ class AccountTableViewController: SubSettingsViewController {
 
 	// MARK: - Segue
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-		if identifier == "SIWASegue" {
+		if identifier == R.segue.accountTableViewController.siwASegue.identifier {
 			if #available(iOS 13.0, macCatalyst 13.0, *) {
 				return true
 			} else {

@@ -16,6 +16,9 @@ class OtherSessionsCell: SwipeTableViewCell {
 			bubbleView.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 		}
 	}
+	@IBOutlet weak var ipAddressTitleLabel: KTintedLabel!
+	@IBOutlet weak var deviceTypeTitleLabel: KTintedLabel!
+	@IBOutlet weak var dateTitleLabel: KTintedLabel!
 	@IBOutlet weak var ipAddressValueLabel: KLabel!
 	@IBOutlet weak var deviceTypeValueLabel: KLabel!
 	@IBOutlet weak var dateValueLabel: KLabel!

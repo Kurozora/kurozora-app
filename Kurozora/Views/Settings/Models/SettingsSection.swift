@@ -288,47 +288,47 @@ extension SettingsTableViewController {
 		}
 
 		/// The image value of a settings row.
-		var imageValue: UIImage {
+		var imageValue: UIImage? {
 			switch self {
 			case .account:
-				return UIImage()
+				return User.current?.profileImage ?? R.image.placeholders.userProfile()
 			case .keychain:
-				return R.image.icons.kDefaults()!
+				return R.image.icons.kDefaults()
 			case .notifications:
-				return R.image.icons.notifications()!
+				return R.image.icons.notifications()
 			case .displayBlindness:
-				return R.image.icons.display()!
+				return R.image.icons.display()
 			case .theme:
-				return R.image.icons.theme()!
+				return R.image.icons.theme()
 			case .icon:
 				return #imageLiteral(resourceName: UserSettings.appIcon)
 			case .browser:
-				return R.image.icons.browser()!
+				return R.image.icons.browser()
 			case .biometrics:
 				switch UIDevice.supportedBiomtetric {
 				case .faceID:
-					return R.image.icons.faceID()!
+					return R.image.icons.faceID()
 				case .touchID:
-					return R.image.icons.touchID()!
+					return R.image.icons.touchID()
 				case .none:
-					return R.image.icons.lock()!
+					return R.image.icons.lock()
 				}
 			case .cache:
-				return R.image.icons.clearCache()!
+				return R.image.icons.clearCache()
 			case .privacy:
-				return R.image.icons.privacy()!
+				return R.image.icons.privacy()
 			case .rate:
-				return R.image.icons.rate()!
+				return R.image.icons.rate()
 			case .unlockFeatures:
-				return R.image.icons.unlock()!
+				return R.image.icons.unlock()
 			case .restoreFeatures:
-				return R.image.icons.restore()!
+				return R.image.icons.restore()
 			case .tipjar:
-				return R.image.icons.tipJar()!
+				return R.image.icons.tipJar()
 			case .followTwitter:
-				return R.image.icons.brands.twitter()!
+				return R.image.icons.brands.twitter()
 			case .followMedium:
-				return R.image.icons.brands.medium()!
+				return R.image.icons.brands.medium()
 			}
 		}
 	}
