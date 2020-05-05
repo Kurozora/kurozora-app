@@ -10,10 +10,8 @@ import UIKit
 import AuthenticationServices
 import SCLAlertView
 
-class SignInWithAppleTableViewController: KTableViewController {
+class SignInWithAppleTableViewController: ServiceTableViewController {
 	// MARK: - Properties
-	let previewImages = [R.image.promotional.signInWithApple()]
-
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -27,6 +25,8 @@ class SignInWithAppleTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Configure properties
+		self.previewImage = R.image.promotional.signInWithApple()
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -35,66 +35,33 @@ class SignInWithAppleTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension SignInWithAppleTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 4
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
-			guard let productPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
-			}
-			return productPreviewTableViewCell
-		} else if indexPath.section == 1 {
-			guard let productHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productHeaderTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productHeaderTableViewCell.identifier)")
-			}
-			return productHeaderTableViewCell
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			guard let siwaButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.siwaButtonTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.siwaButtonTableViewCell.identifier)")
 			}
 			return siwaButtonTableViewCell
+		default:
+			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
-
-		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
-		}
-		return productInfoTableViewCell
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension SignInWithAppleTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == 0 {
-			let productPreviewTableViewCell = cell as? ProductPreviewTableViewCell
-			productPreviewTableViewCell?.previewImages = previewImages
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			let siwaButtonTableViewCell = cell as? SIWAButtonTableViewCell
 			siwaButtonTableViewCell?.onboardingFooterTableViewCellDelegate = self
+		case .footer:
+			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
+				serviceFooterTableViewCell.footerType = .signInWithApple
+			}
+		default:
+			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
 		}
-	}
-
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 0 {
-			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
-			return view.frame.height / cellRatio
-		}
-
-		return UITableView.automaticDimension
-	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return CGFloat.leastNormalMagnitude
-	}
-
-	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 22
 	}
 }
 

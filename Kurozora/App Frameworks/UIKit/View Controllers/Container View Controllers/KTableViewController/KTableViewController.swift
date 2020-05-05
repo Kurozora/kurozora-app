@@ -33,7 +33,7 @@ class KTableViewController: UITableViewController {
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 
-		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KTVC-setNeedsActivityIndicatorAppearanceUpdate) method.
+		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KTableViewController-setNeedsActivityIndicatorAppearanceUpdate) method.
 
 		By default, this property returns `false`.
 
@@ -56,11 +56,34 @@ class KTableViewController: UITableViewController {
 		// Observe theme update notification.
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadEmptyDataView), name: .ThemeUpdateNotification, object: nil)
 
+		// Configure table view.
+		configureTableView()
+
 		// Start activity indicator view.
 		setupActivityIndicator()
 
 		// Setup empty data view.
 		setupEmptyDataSetView()
+	}
+
+	// MARK: - Functions
+	/**
+		Configures the table view with default values.
+
+		Cells can also be registered during the configuration by using [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
+	*/
+	fileprivate func configureTableView() {
+		// Register cells with the table view.
+		registerCells()
+	}
+
+	/**
+		Registers cells returned by [registerCells(for tableView: UITableView)](x-source-tag://KTableViewController-registerCellsForTableView).
+	*/
+	fileprivate func registerCells() {
+		for cell in registerCells(for: tableView) {
+			tableView.register(nibWithCellClass: cell)
+		}
 	}
 }
 
@@ -81,7 +104,7 @@ extension KTableViewController {
 
 		Call this method if the view controller's activity indicator attributes, such as hidden/unhidden status or style, change. If you call this method within an animation block, the changes are animated along with the rest of the animation block.
 
-		- Tag: KTVC-setNeedsActivityIndicatorAppearanceUpdate
+		- Tag: KTableViewController-setNeedsActivityIndicatorAppearanceUpdate
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
 		self.activityIndicatorView.prefersHidden = prefersActivityIndicatorHidden

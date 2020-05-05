@@ -1,5 +1,5 @@
 //
-//  InAppPurchasesTableViewController.swift
+//  ProductTableViewController.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 13/04/2020.
@@ -10,7 +10,7 @@ import UIKit
 import StoreKit
 import SCLAlertView
 
-class InAppPurchasesTableViewController: KTableViewController {
+class ProductTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	/// The left navigation bar button of the navigation controller's `navigationItem`.
 	@IBOutlet weak var leftNavigationBarButton: UIBarButtonItem?
@@ -101,35 +101,43 @@ class InAppPurchasesTableViewController: KTableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension InAppPurchasesTableViewController {
+extension ProductTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 3
+		return Section.allCases.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 1 {
+		switch Section(rawValue: section) {
+		case .header:
+			return 1
+		case .body:
 			return productsArray.count
+		case .footer:
+			return 1
+		case .none:
+			return 0
 		}
-		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 1 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			let purchaseButtonTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PurchaseButtonTableViewCell", for: indexPath) as! PurchaseButtonTableViewCell
 			return purchaseButtonTableViewCell
+		default:
+			guard let serviceFooterTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.serviceFooterTableViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.serviceFooterTableViewCell.identifier)")
+			}
+			return serviceFooterTableViewCell
 		}
-
-		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
-		}
-		return productInfoTableViewCell
 	}
 }
 
 // MARK: - UITableViewDelegate
-extension InAppPurchasesTableViewController {
+extension ProductTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == 1 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			if let purchaseButtonTableViewCell = cell as? PurchaseButtonTableViewCell {
 				purchaseButtonTableViewCell.productNumber = indexPath.row
 				purchaseButtonTableViewCell.productTitle = productTitles.isEmpty ? "" : productTitles[indexPath.row]
@@ -137,6 +145,11 @@ extension InAppPurchasesTableViewController {
 				purchaseButtonTableViewCell.purchaseButton.tag = indexPath.row
 				purchaseButtonTableViewCell.purchaseButtonTableViewCellDelegate = self
 			}
+		case .footer:
+			if let promotionalFooterTableViewCell = cell as? ServiceFooterTableViewCell {
+				promotionalFooterTableViewCell.footerType = .subscription
+			}
+		default: break
 		}
 	}
 
@@ -145,13 +158,38 @@ extension InAppPurchasesTableViewController {
 	}
 }
 
-// MARK: - SubscriptionButtonTableViewCellDelegate
-extension InAppPurchasesTableViewController: PurchaseButtonTableViewCellDelegate {
+// MARK: - KTableViewDataSource
+extension ProductTableViewController {
+	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
+		return [ServiceFooterTableViewCell.self]
+	}
+}
+
+// MARK: - PurchaseButtonTableViewCellDelegate
+extension ProductTableViewController: PurchaseButtonTableViewCellDelegate {
 	func purchaseButtonPressed(_ sender: UIButton) {
 		if self.productsArray.count != 0 {
 			KStoreObserver.shared.purchase(product: self.productsArray[sender.tag]) { (alert, _, _) in
 				SCLAlertView().showWarning(alert.message)
 			}
 		}
+	}
+}
+
+// MARK: - Types
+extension ProductTableViewController {
+	/**
+		Set of available product table view sections.
+	*/
+	enum Section: Int, CaseIterable {
+		// MARK: - Cases
+		/// The heder section of the table view.
+		case header
+
+		/// The body section of the table view.
+		case body
+
+		/// The heder section of the table view.
+		case footer
 	}
 }

@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+	- Tag: ProductPreviewTableViewCell
+*/
 class ProductPreviewTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var collectionView: UICollectionView?

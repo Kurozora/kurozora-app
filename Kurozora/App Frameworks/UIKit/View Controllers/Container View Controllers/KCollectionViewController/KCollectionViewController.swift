@@ -27,12 +27,13 @@ import EmptyDataSet_Swift
 */
 class KCollectionViewController: UICollectionViewController {
 	// MARK: - Properties
+	/// The activity indicator view object of the view controller.
 	private let activityIndicatorView: KActivityIndicatorView = KActivityIndicatorView()
 
 	/**
 		Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 
-		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCVC-setNeedsActivityIndicatorAppearanceUpdate) method.
+		If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate) method.
 
 		By default, this property returns `false`.
 
@@ -69,7 +70,7 @@ class KCollectionViewController: UICollectionViewController {
 	/**
 		Configures the collection view with default values.
 
-		Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCVC-registerCellsForCollectionView).
+		Cells can also be registered during the configuration by using [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	*/
 	fileprivate func configureCollectionView() {
 		collectionView.collectionViewLayout = createLayout()
@@ -80,7 +81,7 @@ class KCollectionViewController: UICollectionViewController {
 	}
 
 	/**
-		Registers cells returned by [registerCells(for collectionView: UICollectionView)](x-source-tag://KCVC-registerCellsForCollectionView).
+		Registers cells returned by [registerCells(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerCellsForCollectionView).
 	*/
 	fileprivate func registerCells() {
 		for cell in registerCells(for: collectionView) {
@@ -106,7 +107,7 @@ extension KCollectionViewController {
 
 		Call this method if the view controller's activity indicator attributes, such as hidden/unhidden status or style, change. If you call this method within an animation block, the changes are animated along with the rest of the animation block.
 
-		- Tag: KCVC-setNeedsActivityIndicatorAppearanceUpdate
+		- Tag: KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate
 	*/
 	func setNeedsActivityIndicatorAppearanceUpdate() {
 		self.activityIndicatorView.prefersHidden = prefersActivityIndicatorHidden

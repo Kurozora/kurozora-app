@@ -24,7 +24,7 @@ import Pageboy
 
 		- Returns: A collection of view contorllers.
 
-		- Tag: KTVCDS-initializeViewControllersWithCount
+		- Tag: KTabbedViewControllerDataSource-initializeViewControllersWithCount
 	*/
 	@objc func initializeViewControllers(with count: Int) -> [UIViewController]?
 
@@ -33,7 +33,7 @@ import Pageboy
 
 		This method is called in `init(coder:)` when intializing the view from a storyboard.
 
-		- Tag: KTVCDS-fetchSections
+		- Tag: KTabbedViewControllerDataSource-fetchSections
 	*/
 	@objc optional func fetchSections()
 }
@@ -45,9 +45,9 @@ import Pageboy
 	- [KTabbedViewControllerDataSource](x-source-tag://KTabbedViewControllerDataSource) for managing the tab bar and its data.
 	- [KBar](x-source-tag://KBar), the bar reminiscent of the iOS 13 Photos app bottom tab bar.
 
-	Create a csutom subclass of `KTabbedViewController` for each tabbed view that you manage. You may only initialize a tabbed view controller through a storyboad. You must also override [initializeViewControllers(with:)](x-source-tag://KTVCDS-initializeViewControllersWithCount) method.
+	Create a csutom subclass of `KTabbedViewController` for each tabbed view that you manage. You may only initialize a tabbed view controller through a storyboad. You must also override [initializeViewControllers(with:)](x-source-tag://KTabbedViewControllerDataSource-initializeViewControllersWithCount) method.
 
-	You may override [fetchSections()](x-source-tag://KTVCDS-fetchSections) method if your tabbar sections are accessed through an external source, such as an API. This method will be called when the view controller is initialized, so make sure to run it on a background thread to avoid freezing the app.
+	You may override [fetchSections()](x-source-tag://KTabbedViewControllerDataSource-fetchSections) method if your tabbar sections are accessed through an external source, such as an API. This method will be called when the view controller is initialized, so make sure to run it on a background thread to avoid freezing the app.
 
 	- Tag: KTabbedViewController
 */
@@ -153,9 +153,9 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/**
 		Configures the tab bar's visibility.
 
-		By default, the bar is hidden if only one item is supplied in [barItem(for:at:)](x-source-tag://KTVC-barItemForBarAtIndex). You can override this method and implement your own logic for hiding and showing the bar.
+		By default, the bar is hidden if only one item is supplied in [barItem(for:at:)](x-source-tag://KTabbedViewController-barItemForBarAtIndex). You can override this method and implement your own logic for hiding and showing the bar.
 
-		- Tag: KTVC-configureTabBarViewVisibility
+		- Tag: KTabbedViewController-configureTabBarViewVisibility
 	*/
 	func configureTabBarViewVisibility() {
 		bar.isHidden = bar.items?.count ?? 0 <= 1
@@ -177,7 +177,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 
 		- Returns: The BarItem.
 
-		- Tag: KTVC-barItemForBarAtIndex
+		- Tag: KTabbedViewController-barItemForBarAtIndex
 	*/
 	func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
 		return TMBarItem(title: "Section \(index)")
@@ -187,7 +187,7 @@ class KTabbedViewController: TabmanViewController, TMBarDataSource, PageboyViewC
 	/**
 		The number of view controllers to display.
 
-		Make sure to call [numberOfViewControllers(in:)](x-source-tag://KTVCDS-initializeViewControllersWithCount) before returning and pass the results to `viewControllers` property to make sure your views are loaded correctly.
+		Make sure to call [numberOfViewControllers(in:)](x-source-tag://KTabbedViewControllerDataSource-initializeViewControllersWithCount) before returning and pass the results to `viewControllers` property to make sure your views are loaded correctly.
 
 		- Parameter pageboyViewController: The Page view controller.
 

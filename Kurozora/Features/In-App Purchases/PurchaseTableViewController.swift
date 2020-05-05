@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PurchaseTableViewController: InAppPurchasesTableViewController {
+class PurchaseTableViewController: ProductTableViewController {
 	// MARK: - Properties
 	override var productIDs: [String] {
 		return ["20000331KPLUS1M",
@@ -30,39 +30,38 @@ class PurchaseTableViewController: InAppPurchasesTableViewController {
 // MARK: - UITableViewDataSource
 extension PurchaseTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		// Override first section with a product preview cell.
-		if indexPath.section == 0 {
+		switch Section(rawValue: indexPath.section) {
+		case .header: // Override first section with a product preview cell.
 			guard let productPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
 			}
 			return productPreviewTableViewCell
+		default: // Default implementation for all other sections.
+			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
-
-		// Default implementation for all other sections.
-		return super.tableView(tableView, cellForRowAt: indexPath)
 	}
 }
 
 // MARK: -  UITableViewDelegate
 extension PurchaseTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		// Override first section a product preview cell.
-		if indexPath.section == 0 {
+		switch Section(rawValue: indexPath.section) {
+		case .header: // Override the header section.
 			let productPreviewTableViewCell = cell as? ProductPreviewTableViewCell
 			productPreviewTableViewCell?.previewImages = previewImages
+		default: // Default implementation for all other sections.
+			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
 		}
-
-		// Default implementation for all other sections.
-		super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
 	}
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 0 {
+		switch Section(rawValue: indexPath.section) {
+		case .header:
 			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
 			return view.frame.height / cellRatio
+		default:
+			return UITableView.automaticDimension
 		}
-
-		return UITableView.automaticDimension
 	}
 
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

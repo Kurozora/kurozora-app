@@ -8,16 +8,6 @@
 
 import UIKit
 
-/**
-	The KCollectionViewDataSource protocol defines methods that guide you with managing the cells registered with the collection view. The methods of this protocol are all optional.
-
-	- Tag: KCollectionViewDataSource
-*/
-@objc protocol KCollectionViewDataSource: class {
-	@objc optional func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type]
-	@objc optional func configureDataSource()
-}
-
 extension UICollectionViewController: KCollectionViewDataSource {
 	/**
 		Asks your data source object for the cells registered with the collection view.
@@ -28,10 +18,9 @@ extension UICollectionViewController: KCollectionViewDataSource {
 
 		- Returns: The collection view cells registered with `collectionView`.
 
-		- Tag: KCVC-registerCellsForCollectionView
+		- Tag: KCollectionViewDataSource-registerCellsForCollectionView
 	*/
 	func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		numberOfSections(in: collectionView)
 		return []
 	}
 

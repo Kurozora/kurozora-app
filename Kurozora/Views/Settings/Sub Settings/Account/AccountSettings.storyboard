@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -853,116 +852,8 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="gDd-z3-4al"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="EKX-29-mXG"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductPreviewTableViewCell" rowHeight="220" id="9gw-nL-3Op" customClass="ProductPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="220"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9gw-nL-3Op" id="qBd-vQ-lRL">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HBD-3r-GJm">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                        </imageView>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zoP-9E-N73">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <viewLayoutGuide key="safeArea" id="Of9-bc-mjr"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vyc-KD-t2I">
-                                                <size key="itemSize" width="413" height="220"/>
-                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            </collectionViewFlowLayout>
-                                            <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PurchasePreviewCollectionViewCell" id="CHH-7A-f5l" customClass="PurchasePreviewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6Mk-8F-SHp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SNG-tK-NXD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                            </imageView>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="SNG-tK-NXD" firstAttribute="leading" secondItem="6Mk-8F-SHp" secondAttribute="leading" id="81K-6i-22T"/>
-                                                            <constraint firstItem="SNG-tK-NXD" firstAttribute="top" secondItem="6Mk-8F-SHp" secondAttribute="top" id="S7I-3d-ysS"/>
-                                                            <constraint firstAttribute="bottom" secondItem="SNG-tK-NXD" secondAttribute="bottom" id="iw0-MV-MhX"/>
-                                                            <constraint firstAttribute="trailing" secondItem="SNG-tK-NXD" secondAttribute="trailing" id="y6N-u2-K4S"/>
-                                                        </constraints>
-                                                    </collectionViewCellContentView>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <connections>
-                                                        <outlet property="previewImageView" destination="SNG-tK-NXD" id="GGg-16-LPF"/>
-                                                    </connections>
-                                                </collectionViewCell>
-                                            </cells>
-                                            <connections>
-                                                <outlet property="dataSource" destination="9gw-nL-3Op" id="ge2-2r-eTv"/>
-                                                <outlet property="delegate" destination="9gw-nL-3Op" id="Eo4-JB-m74"/>
-                                            </connections>
-                                        </collectionView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="HBD-3r-GJm" secondAttribute="trailing" id="3Ob-3C-NaD"/>
-                                        <constraint firstItem="zoP-9E-N73" firstAttribute="top" secondItem="qBd-vQ-lRL" secondAttribute="top" id="6cS-QS-vhD"/>
-                                        <constraint firstItem="HBD-3r-GJm" firstAttribute="leading" secondItem="qBd-vQ-lRL" secondAttribute="leading" id="EOD-aS-fYq"/>
-                                        <constraint firstAttribute="bottom" secondItem="zoP-9E-N73" secondAttribute="bottom" id="LtH-tT-WMw"/>
-                                        <constraint firstAttribute="trailing" secondItem="zoP-9E-N73" secondAttribute="trailing" id="a07-Lc-Ksx"/>
-                                        <constraint firstItem="HBD-3r-GJm" firstAttribute="top" secondItem="qBd-vQ-lRL" secondAttribute="top" id="hMp-bI-kC7"/>
-                                        <constraint firstItem="zoP-9E-N73" firstAttribute="leading" secondItem="qBd-vQ-lRL" secondAttribute="leading" id="mUF-Cd-ZLM"/>
-                                        <constraint firstAttribute="bottom" secondItem="HBD-3r-GJm" secondAttribute="bottom" id="rlG-Os-tee"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="aCz-3L-6xo"/>
-                                <connections>
-                                    <outlet property="collectionView" destination="zoP-9E-N73" id="UE1-FG-AcH"/>
-                                    <outlet property="previewImageView" destination="HBD-3r-GJm" id="lEM-5u-4zE"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductHeaderTableViewCell" id="tcB-BT-gvH" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="275.5" width="414" height="86.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tcB-BT-gvH" id="7Jg-Lu-xEe">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="86.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Move from MyAnimeList" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gc-zW-VIF">
-                                            <rect key="frame" x="111" y="0.0" width="192" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="If you have an export of your anime library from MyAnimeList you can select it below." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUT-VJ-vcM">
-                                            <rect key="frame" x="43.5" y="30.5" width="327.5" height="36"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dUT-VJ-vcM" secondAttribute="trailing" id="8qj-vu-fD7"/>
-                                        <constraint firstItem="7Gc-zW-VIF" firstAttribute="centerX" secondItem="7Jg-Lu-xEe" secondAttribute="centerX" id="AEp-1t-2Io"/>
-                                        <constraint firstItem="7Gc-zW-VIF" firstAttribute="top" secondItem="7Jg-Lu-xEe" secondAttribute="top" id="MUn-WA-7I7"/>
-                                        <constraint firstItem="dUT-VJ-vcM" firstAttribute="top" secondItem="7Gc-zW-VIF" secondAttribute="bottom" constant="10" id="ld0-UC-Mua"/>
-                                        <constraint firstItem="dUT-VJ-vcM" firstAttribute="centerX" secondItem="7Gc-zW-VIF" secondAttribute="centerX" id="nDb-dN-v71"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="7Gc-zW-VIF" secondAttribute="trailing" id="uKL-dN-JUk"/>
-                                        <constraint firstAttribute="bottom" secondItem="dUT-VJ-vcM" secondAttribute="bottom" constant="20" id="uqm-FR-OBD"/>
-                                        <constraint firstItem="dUT-VJ-vcM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7Jg-Lu-xEe" secondAttribute="leadingMargin" id="uv3-Q3-0kR"/>
-                                        <constraint firstItem="7Gc-zW-VIF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7Jg-Lu-xEe" secondAttribute="leadingMargin" id="xmx-8D-A66"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="dLf-Lf-vem"/>
-                                <connections>
-                                    <outlet property="primaryLabel" destination="7Gc-zW-VIF" id="wGb-72-tPt"/>
-                                    <outlet property="secondaryLabel" destination="dUT-VJ-vcM" id="Xl7-ux-YVp"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MALImportActionTableViewCell" id="wzI-fo-fZU" customClass="MALImportActionTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="362" width="414" height="77"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wzI-fo-fZU" id="RzM-O7-AXb">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
@@ -1003,66 +894,6 @@
                                     <outlet property="actionTextField" destination="E7m-eK-qXP" id="7Sw-I8-eZH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductInfoTableViewCell" id="30c-yc-UVL" customClass="ProductInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="439" width="414" height="131"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="30c-yc-UVL" id="amR-FY-VfJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="131"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wx5-2b-1hh">
-                                            <rect key="frame" x="24" y="20" width="366" height="78"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="kGS-Jj-hSM"/>
-                                            </constraints>
-                                            <string key="text">Kurozora does not guarantee all shows will be imported to your library. Once the request has been processed an email which contains the status of the import request will be sent. Furthermore the uploaded file is deleted as soon as the import request has been processed.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-Uo-JQy">
-                                            <rect key="frame" x="50.5" y="103" width="313" height="28"/>
-                                            <state key="normal">
-                                                <attributedString key="attributedTitle">
-                                                    <fragment content="For more information, please visit our ">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="Privacy Policy">
-                                                        <attributes>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                            </state>
-                                            <connections>
-                                                <segue destination="cxg-Ib-ugs" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="VzY-iY-wFj"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Wx5-2b-1hh" firstAttribute="centerX" secondItem="amR-FY-VfJ" secondAttribute="centerX" id="2qi-Uu-mfJ"/>
-                                        <constraint firstItem="i0N-Uo-JQy" firstAttribute="top" secondItem="Wx5-2b-1hh" secondAttribute="bottom" constant="5" id="7eH-cd-hG6"/>
-                                        <constraint firstItem="i0N-Uo-JQy" firstAttribute="centerX" secondItem="Wx5-2b-1hh" secondAttribute="centerX" id="92T-7E-OQR"/>
-                                        <constraint firstItem="Wx5-2b-1hh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="amR-FY-VfJ" secondAttribute="leadingMargin" id="I48-Tr-z2b"/>
-                                        <constraint firstItem="i0N-Uo-JQy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="amR-FY-VfJ" secondAttribute="leadingMargin" id="URM-V0-VuI"/>
-                                        <constraint firstAttribute="bottom" secondItem="i0N-Uo-JQy" secondAttribute="bottom" id="gfA-ou-Pn5"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="i0N-Uo-JQy" secondAttribute="trailing" id="m5M-pa-vwJ"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Wx5-2b-1hh" secondAttribute="trailing" id="pij-xJ-PBb"/>
-                                        <constraint firstItem="Wx5-2b-1hh" firstAttribute="top" secondItem="amR-FY-VfJ" secondAttribute="top" constant="20" id="pyt-AV-dh7"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="OD5-4k-jRs"/>
-                                <connections>
-                                    <outlet property="privacyButton" destination="i0N-Uo-JQy" id="m7N-Lm-QEZ"/>
-                                    <outlet property="purchaseInfoLabel" destination="Wx5-2b-1hh" id="bwj-ro-lss"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="DIR-xz-9GA" id="Q46-3A-4Ww"/>
@@ -1084,16 +915,6 @@
             </objects>
             <point key="canvasLocation" x="-317" y="-546"/>
         </scene>
-        <!--Legal-->
-        <scene sceneID="eB0-es-ths">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Legal" id="cxg-Ib-ugs" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="lbM-uH-Yui"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X69-bc-BFl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="247" y="-562"/>
-        </scene>
         <!--Sign In With Apple-->
         <scene sceneID="VeV-4h-OPv">
             <objects>
@@ -1106,116 +927,8 @@
                         <viewLayoutGuide key="contentLayoutGuide" id="eMp-Js-4Xa"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="28X-av-ogq"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductPreviewTableViewCell" rowHeight="220" id="5ky-Vd-Vlc" customClass="ProductPreviewTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="220"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5ky-Vd-Vlc" id="vDD-Bm-XL9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VvQ-Pg-Ldx">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                        </imageView>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AlQ-t0-U9s">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <viewLayoutGuide key="safeArea" id="UlQ-Ea-JaP"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="UIp-U2-Hk0">
-                                                <size key="itemSize" width="413" height="220"/>
-                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                            </collectionViewFlowLayout>
-                                            <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PurchasePreviewCollectionViewCell" id="2TS-RO-sBe" customClass="PurchasePreviewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="40F-Cc-Utz">
-                                                        <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o1w-DM-d4q">
-                                                                <rect key="frame" x="0.0" y="0.0" width="413" height="220"/>
-                                                            </imageView>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="o1w-DM-d4q" firstAttribute="top" secondItem="40F-Cc-Utz" secondAttribute="top" id="Ayh-AQ-PuV"/>
-                                                            <constraint firstAttribute="trailing" secondItem="o1w-DM-d4q" secondAttribute="trailing" id="Oyk-xG-Jel"/>
-                                                            <constraint firstAttribute="bottom" secondItem="o1w-DM-d4q" secondAttribute="bottom" id="YYa-Y2-j1Y"/>
-                                                            <constraint firstItem="o1w-DM-d4q" firstAttribute="leading" secondItem="40F-Cc-Utz" secondAttribute="leading" id="wum-5e-arx"/>
-                                                        </constraints>
-                                                    </collectionViewCellContentView>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <connections>
-                                                        <outlet property="previewImageView" destination="o1w-DM-d4q" id="zPx-zr-ol2"/>
-                                                    </connections>
-                                                </collectionViewCell>
-                                            </cells>
-                                            <connections>
-                                                <outlet property="dataSource" destination="5ky-Vd-Vlc" id="pZm-9q-AXc"/>
-                                                <outlet property="delegate" destination="5ky-Vd-Vlc" id="XFD-gn-VHm"/>
-                                            </connections>
-                                        </collectionView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="AlQ-t0-U9s" firstAttribute="top" secondItem="vDD-Bm-XL9" secondAttribute="top" id="Jlb-T2-mM7"/>
-                                        <constraint firstItem="VvQ-Pg-Ldx" firstAttribute="leading" secondItem="vDD-Bm-XL9" secondAttribute="leading" id="KP2-0Y-0E8"/>
-                                        <constraint firstAttribute="trailing" secondItem="AlQ-t0-U9s" secondAttribute="trailing" id="T9S-uh-3SI"/>
-                                        <constraint firstItem="VvQ-Pg-Ldx" firstAttribute="top" secondItem="vDD-Bm-XL9" secondAttribute="top" id="avR-p5-HCU"/>
-                                        <constraint firstAttribute="trailing" secondItem="VvQ-Pg-Ldx" secondAttribute="trailing" id="cBR-bw-bhA"/>
-                                        <constraint firstAttribute="bottom" secondItem="VvQ-Pg-Ldx" secondAttribute="bottom" id="lTN-WL-OLn"/>
-                                        <constraint firstItem="AlQ-t0-U9s" firstAttribute="leading" secondItem="vDD-Bm-XL9" secondAttribute="leading" id="p8I-21-T3F"/>
-                                        <constraint firstAttribute="bottom" secondItem="AlQ-t0-U9s" secondAttribute="bottom" id="xH4-0g-qGg"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="6ZX-hu-zHW"/>
-                                <connections>
-                                    <outlet property="collectionView" destination="AlQ-t0-U9s" id="ksP-4c-i8j"/>
-                                    <outlet property="previewImageView" destination="VvQ-Pg-Ldx" id="hkM-HM-FOH"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductHeaderTableViewCell" id="lLa-qq-h2Y" customClass="ProductHeaderTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="275.5" width="414" height="86.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lLa-qq-h2Y" id="hMm-Bm-nee">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="86.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Start using Sign in with Apple" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyu-Mi-HfD">
-                                            <rect key="frame" x="89.5" y="0.0" width="235" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Sign in with Apple is the fast, easy way for you to sign in to Kurozora using the Apple ID you already have." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kg6-Te-SUN">
-                                            <rect key="frame" x="22" y="30.5" width="370.5" height="36"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Kg6-Te-SUN" secondAttribute="trailing" id="295-id-a7c"/>
-                                        <constraint firstItem="Kg6-Te-SUN" firstAttribute="centerX" secondItem="fyu-Mi-HfD" secondAttribute="centerX" id="5f7-o8-sM7"/>
-                                        <constraint firstItem="fyu-Mi-HfD" firstAttribute="centerX" secondItem="hMm-Bm-nee" secondAttribute="centerX" id="9OA-l5-6Yk"/>
-                                        <constraint firstItem="Kg6-Te-SUN" firstAttribute="top" secondItem="fyu-Mi-HfD" secondAttribute="bottom" constant="10" id="NBk-FJ-HKR"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="fyu-Mi-HfD" secondAttribute="trailing" id="St8-IU-XXI"/>
-                                        <constraint firstAttribute="bottom" secondItem="Kg6-Te-SUN" secondAttribute="bottom" constant="20" id="YoO-6P-qAf"/>
-                                        <constraint firstItem="fyu-Mi-HfD" firstAttribute="top" secondItem="hMm-Bm-nee" secondAttribute="top" id="b2d-ai-lCo"/>
-                                        <constraint firstItem="fyu-Mi-HfD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hMm-Bm-nee" secondAttribute="leadingMargin" id="jI9-4q-5DD"/>
-                                        <constraint firstItem="Kg6-Te-SUN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hMm-Bm-nee" secondAttribute="leadingMargin" id="zkX-Rn-x3e"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="qaT-nW-CcT"/>
-                                <connections>
-                                    <outlet property="primaryLabel" destination="fyu-Mi-HfD" id="Gn5-B3-hgi"/>
-                                    <outlet property="secondaryLabel" destination="Kg6-Te-SUN" id="DOl-Yy-Z1v"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SIWAButtonTableViewCell" rowHeight="70" id="9Dz-AS-Ze4" customClass="SIWAButtonTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="362" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9Dz-AS-Ze4" id="b1l-fR-G61">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
@@ -1223,66 +936,6 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="qzS-Kk-MYg"/>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductInfoTableViewCell" id="hfZ-mU-ro6" customClass="ProductInfoTableViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="432" width="414" height="162"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfZ-mU-ro6" id="aKV-Y7-EFI">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="162"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juP-g6-2Nx">
-                                            <rect key="frame" x="20" y="20" width="374" height="109"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="OM7-5q-4KW"/>
-                                            </constraints>
-                                            <string key="text">Kurozora offers Sign in with Apple for users who want the extra peace of mind when it comes to security and privacy. Sign in with Apple is a convenient way to sign in to apps and sites while having more control over the information you share. Kurozora is restricted to asking only for your name and email address, and Apple won’t track your app activity or build a profile of you.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f2R-KP-eFi">
-                                            <rect key="frame" x="50.5" y="134" width="313" height="28"/>
-                                            <state key="normal">
-                                                <attributedString key="attributedTitle">
-                                                    <fragment content="For more information, please visit our ">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="Privacy Policy">
-                                                        <attributes>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                            </state>
-                                            <connections>
-                                                <segue destination="cxg-Ib-ugs" kind="custom" identifier="LegalSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="rI8-8e-sCY"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="juP-g6-2Nx" firstAttribute="centerX" secondItem="aKV-Y7-EFI" secondAttribute="centerX" id="69q-1n-Zk8"/>
-                                        <constraint firstItem="f2R-KP-eFi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aKV-Y7-EFI" secondAttribute="leadingMargin" id="BA2-PX-wB2"/>
-                                        <constraint firstAttribute="bottom" secondItem="f2R-KP-eFi" secondAttribute="bottom" id="CXD-gv-0ze"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="juP-g6-2Nx" secondAttribute="trailing" id="OzI-Sa-ZVf"/>
-                                        <constraint firstItem="juP-g6-2Nx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aKV-Y7-EFI" secondAttribute="leadingMargin" id="WUN-JG-xPF"/>
-                                        <constraint firstItem="f2R-KP-eFi" firstAttribute="centerX" secondItem="juP-g6-2Nx" secondAttribute="centerX" id="dGQ-8q-Cur"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="f2R-KP-eFi" secondAttribute="trailing" id="hW0-a5-sxb"/>
-                                        <constraint firstItem="f2R-KP-eFi" firstAttribute="top" secondItem="juP-g6-2Nx" secondAttribute="bottom" constant="5" id="wVB-Kb-ybB"/>
-                                        <constraint firstItem="juP-g6-2Nx" firstAttribute="top" secondItem="aKV-Y7-EFI" secondAttribute="top" constant="20" id="y62-H2-1Ja"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="zQW-eO-7oZ"/>
-                                <connections>
-                                    <outlet property="privacyButton" destination="f2R-KP-eFi" id="Vsb-Ue-6dM"/>
-                                    <outlet property="purchaseInfoLabel" destination="juP-g6-2Nx" id="S91-lF-dfj"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1382,9 +1035,6 @@
             <point key="canvasLocation" x="-317" y="-1240"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="VzY-iY-wFj"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Icons/Account Switch" width="128" height="128"/>

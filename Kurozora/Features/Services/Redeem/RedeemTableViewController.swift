@@ -12,7 +12,7 @@ import SCLAlertView
 import Vision
 import VisionKit
 
-class RedeemTableViewController: KTableViewController {
+class RedeemTableViewController: ServiceTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 
@@ -31,7 +31,6 @@ class RedeemTableViewController: KTableViewController {
 
 	static let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
 	let sclAlertView = SCLAlertView(appearance: appearance)
-	let previewImages = [R.image.promotional.redeemCode()]
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -46,6 +45,8 @@ class RedeemTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Configure properties
+		self.previewImage = R.image.promotional.redeemCode()
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -156,46 +157,24 @@ class RedeemTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension RedeemTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 4
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
-			guard let subscriptionPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
-			}
-			return subscriptionPreviewTableViewCell
-		} else if indexPath.section == 1 {
-			guard let productHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productHeaderTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productHeaderTableViewCell.identifier)")
-			}
-			return productHeaderTableViewCell
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			guard let productActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productActionTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productActionTableViewCell.identifier)")
 			}
 			return productActionTableViewCell
+		default:
+			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
-
-		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
-		}
-		return productInfoTableViewCell
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension RedeemTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == 0 {
-			let subscriptionPreviewTableViewCell = cell as? ProductPreviewTableViewCell
-			subscriptionPreviewTableViewCell?.previewImages = previewImages
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			if let productActionTableViewCell = cell as? ProductActionTableViewCell {
 				productActionTableViewCell.delegate = self
 				productActionTableViewCell.actionTextField.tag = indexPath.row
@@ -211,25 +190,24 @@ extension RedeemTableViewController {
 					productActionTableViewCell.actionTextField.placeholder = "Please enter your code"
 				}
 			}
+		case .footer:
+			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
+				serviceFooterTableViewCell.footerType = .redeem
+			}
+		default:
+			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
 		}
 	}
 
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 0 {
-			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
-			return view.frame.height / cellRatio
-		}
-
-		return UITableView.automaticDimension
-	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return CGFloat.leastNormalMagnitude
-	}
-
-	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 22
-	}
+//	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//		switch Section(rawValue: indexPath.section) {
+//		case .preview:
+//			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
+//			return view.frame.height / cellRatio
+//		default:
+//			return UITableView.automaticDimension
+//		}
+//	}
 }
 
 // MARK: - UITextFieldDelegate

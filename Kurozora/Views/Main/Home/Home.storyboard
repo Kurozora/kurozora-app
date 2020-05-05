@@ -356,10 +356,10 @@
             </objects>
             <point key="canvasLocation" x="737" y="179"/>
         </scene>
-        <!--RedeemKNavigationController-->
+        <!--Redeem-->
         <scene sceneID="zeC-Uz-NjZ">
             <objects>
-                <viewControllerPlaceholder storyboardName="Purchase" referencedIdentifier="RedeemKNavigationController" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Redeem" id="SJ2-V2-Ihb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5a5-ET-Z3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1385" y="595"/>

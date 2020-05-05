@@ -9,20 +9,8 @@
 import UIKit
 import KurozoraKit
 import SCLAlertView
-import MobileCoreServices
 
-class MALImportActionTableViewCell: ProductActionTableViewCell {
-	// MARK: - Functions
-	override func actionButtonPressed(_ sender: UIButton) {
-		let types: [String] = [kUTTypeXML as String]
-		let documentPicker = UIDocumentPickerViewController(documentTypes: types, in: .import)
-		documentPicker.delegate = self.parentViewController as? MALImportTableViewController
-		documentPicker.modalPresentationStyle = .formSheet
-		self.parentViewController?.present(documentPicker, animated: true, completion: nil)
-	}
-}
-
-class MALImportTableViewController: KTableViewController {
+class MALImportTableViewController: ServiceTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var rightNavigationBarButton: UIBarButtonItem!
 
@@ -39,8 +27,6 @@ class MALImportTableViewController: KTableViewController {
 		}
 	}
 
-	let previewImages = [R.image.promotional.moveToKurozora()]
-
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -54,6 +40,8 @@ class MALImportTableViewController: KTableViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		// Confgure properties
+		self.previewImage = R.image.promotional.moveToKurozora()
 
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
@@ -77,46 +65,24 @@ class MALImportTableViewController: KTableViewController {
 
 // MARK: - UITableViewDataSource
 extension MALImportTableViewController {
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 4
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
-	}
-
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
-			guard let productPreviewTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productPreviewTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productPreviewTableViewCell.identifier)")
-			}
-			return productPreviewTableViewCell
-		} else if indexPath.section == 1 {
-			guard let productHeaderTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productHeaderTableViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productHeaderTableViewCell.identifier)")
-			}
-			return productHeaderTableViewCell
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			guard let malImportActionTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.malImportActionTableViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.malImportActionTableViewCell.identifier)")
 			}
 			return malImportActionTableViewCell
+		default:
+			return super.tableView(tableView, cellForRowAt: indexPath)
 		}
-
-		guard let productInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.productInfoTableViewCell, for: indexPath) else {
-			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.productInfoTableViewCell.identifier)")
-		}
-		return productInfoTableViewCell
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension MALImportTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if indexPath.section == 0 {
-			let productPreviewTableViewCell = cell as? ProductPreviewTableViewCell
-			productPreviewTableViewCell?.previewImages = previewImages
-		} else if indexPath.section == 2 {
+		switch Section(rawValue: indexPath.section) {
+		case .body:
 			if let malImportActionTableViewCell = cell as? ProductActionTableViewCell {
 				malImportActionTableViewCell.actionTextField.tag = indexPath.row
 				malImportActionTableViewCell.actionTextField.delegate = self
@@ -129,24 +95,13 @@ extension MALImportTableViewController {
 				}
 				textFieldArray.append(malImportActionTableViewCell.actionTextField)
 			}
+		case .footer:
+			if let serviceFooterTableViewCell = cell as? ServiceFooterTableViewCell {
+				serviceFooterTableViewCell.footerType = .malImport
+			}
+		default:
+			super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
 		}
-	}
-
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 0 {
-			let cellRatio: CGFloat = UIDevice.isLandscape ? 1.5 : 3
-			return view.frame.height / cellRatio
-		}
-
-		return UITableView.automaticDimension
-	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return CGFloat.leastNormalMagnitude
-	}
-
-	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 22
 	}
 }
 
