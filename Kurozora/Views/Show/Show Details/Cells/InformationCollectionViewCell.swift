@@ -11,11 +11,7 @@ import KurozoraKit
 
 class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: UILabel! {
-		didSet {
-			titleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
+	@IBOutlet weak var titleLabel: KTintedLabel!
 	@IBOutlet weak var detailLabel: KLabel!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {

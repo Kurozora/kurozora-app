@@ -55,8 +55,6 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
-
 		// Fetch explore details.
 		DispatchQueue.global(qos: .background).async {
 			self.fetchExplore()
@@ -266,6 +264,10 @@ extension HomeCollectionViewController {
 		]
 	}
 
+	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
+		return [TitleHeaderReusableView.self]
+	}
+
 	override func configureDataSource() {
 		if snapshot != nil, snapshot.numberOfItems != 0 {
 			snapshot.deleteAllItems()
@@ -315,7 +317,7 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
 
 			// Get a supplementary view of the desired kind.
-			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: SectionHeaderReusableView.self, for: indexPath)
+			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
 			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {

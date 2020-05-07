@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension AccountOnboarding {
 	/**
 		Set of available onboarding cell types.

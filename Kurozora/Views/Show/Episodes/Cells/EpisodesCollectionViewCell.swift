@@ -20,7 +20,7 @@ class EpisodesCollectionViewCell: SwipeCollectionViewCell {
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var shadowView: UIView!
 	@IBOutlet weak var episodeNumberLabel: UILabel!
-	@IBOutlet weak var episodeTitleLabel: UILabel!
+	@IBOutlet weak var episodeTitleLabel: KLabel!
 	@IBOutlet weak var episodeFirstAiredLabel: UILabel!
 	@IBOutlet weak var episodeWatchedButton: UIButton!
 	@IBOutlet weak var episodeMoreButton: UIButton!

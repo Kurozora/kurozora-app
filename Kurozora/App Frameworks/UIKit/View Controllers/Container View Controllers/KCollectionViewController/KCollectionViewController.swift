@@ -78,6 +78,9 @@ class KCollectionViewController: UICollectionViewController {
 
 		// Register cells with the collection view.
 		registerCells()
+
+		// Register reusable views with the collection view.
+		registerNibs()
 	}
 
 	/**
@@ -86,6 +89,15 @@ class KCollectionViewController: UICollectionViewController {
 	fileprivate func registerCells() {
 		for cell in registerCells(for: collectionView) {
 			collectionView.register(nibWithCellClass: cell)
+		}
+	}
+
+	/**
+		Registers reusable views returned by [registerNibs(for collectionView: UICollectionView)](x-source-tag://KCollectionViewDataSource-registerNibsForCollectionView).
+	*/
+	fileprivate func registerNibs() {
+		for nib in registerNibs(for: collectionView) {
+			collectionView.register(nib: UINib(nibName: String(describing: nib), bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: nib)
 		}
 	}
 }

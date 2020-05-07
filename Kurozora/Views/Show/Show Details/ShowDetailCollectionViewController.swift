@@ -72,8 +72,6 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			_prefersActivityIndicatorHidden = true
 		}
 
-		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
-
 		// Fetch show details.
 		DispatchQueue.global(qos: .background).async {
 			self.fetchDetails()
@@ -230,7 +228,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: SectionHeaderReusableView.self, for: indexPath)
+		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
 		return supplementaryView
 	}
 }
@@ -282,7 +280,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-		guard let sectionHeaderReusableView = view as? SectionHeaderReusableView else { return }
+		guard let sectionHeaderReusableView = view as? TitleHeaderReusableView else { return }
 		guard let showSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
 
 		sectionHeaderReusableView.segueID = showSection.segueIdentifier
@@ -297,6 +295,10 @@ extension ShowDetailCollectionViewController {
 		return [LockupCollectionViewCell.self,
 				CastCollectionViewCell.self
 		]
+	}
+
+	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
+		return [TitleHeaderReusableView.self]
 	}
 }
 

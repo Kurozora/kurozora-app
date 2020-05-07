@@ -178,20 +178,15 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 // MARK: - KCollectionViewDataSource
 extension EpisodesCollectionViewController {
-	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [EpisodesCollectionViewCell.self]
-	}
-
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			if let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) {
-				episodesCollectionViewCell.episodesDelegate = self
-				episodesCollectionViewCell.delegate = self
-				episodesCollectionViewCell.episodesElement = self.episodeElements?[indexPath.row]
-				return episodesCollectionViewCell
-			} else {
+			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodesCollectionViewCell.identifier)")
 			}
+			episodesCollectionViewCell.episodesDelegate = self
+			episodesCollectionViewCell.delegate = self
+			episodesCollectionViewCell.episodesElement = self.episodeElements?[indexPath.row]
+			return episodesCollectionViewCell
 		}
 
 		let itemsPerSection = episodeElements?.count ?? 0

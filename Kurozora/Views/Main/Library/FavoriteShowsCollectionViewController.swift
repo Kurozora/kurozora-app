@@ -52,8 +52,6 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 		// Stop activity indicator as it's not needed for now.
 		_prefersActivityIndicatorHidden = true
 
-		collectionView.register(nib: UINib(nibName: "SectionHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withClass: SectionHeaderReusableView.self)
-
 		// Observe NotificationCenter for an update.
 		if userProfile?.id == User.current?.id {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)

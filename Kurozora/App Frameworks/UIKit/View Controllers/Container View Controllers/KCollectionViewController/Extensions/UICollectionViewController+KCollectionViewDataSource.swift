@@ -10,7 +10,7 @@ import UIKit
 
 extension UICollectionViewController: KCollectionViewDataSource {
 	/**
-		Asks your data source object for the cells registered with the collection view.
+		Asks your data source object for the cells registered with the `collectionView`.
 
 		If you do not implement this method, the collection view uses a default value of an empty array.
 
@@ -21,6 +21,21 @@ extension UICollectionViewController: KCollectionViewDataSource {
 		- Tag: KCollectionViewDataSource-registerCellsForCollectionView
 	*/
 	func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return []
+	}
+
+	/**
+		Asks your data source object for the reusable views registered with the `collectionView`.
+
+		If you do not implement this method, the collection view uses a default value of an empty array.
+
+		- Parameter collectionView: The collection view requesting this information.
+
+		- Returns: The collection view reusable views registered with `collectionView`.
+
+		- Tag: KCollectionViewDataSource-registerNibsForCollectionView
+	*/
+	func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
 		return []
 	}
 

@@ -18,24 +18,12 @@ class LockupCollectionViewCell: UICollectionViewCell {
 			self.countLabel.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
+	@IBOutlet weak var startDateTitleLabel: KTintedLabel!
+	@IBOutlet weak var episodeCountTitleLabel: KTintedLabel!
+	@IBOutlet weak var ratingTitleLabel: KTintedLabel!
 	@IBOutlet weak var titleLabel: KLabel!
-	@IBOutlet weak var startDateTitleLabel: UILabel! {
-		didSet {
-			startDateTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
 	@IBOutlet weak var startDateLabel: KLabel!
-	@IBOutlet weak var episodeCountTitleLabel: UILabel! {
-		didSet {
-			episodeCountTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
 	@IBOutlet weak var episodesCountLabel: KLabel!
-	@IBOutlet weak var ratingTitleLabel: UILabel! {
-		didSet {
-			ratingTitleLabel.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
 	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {

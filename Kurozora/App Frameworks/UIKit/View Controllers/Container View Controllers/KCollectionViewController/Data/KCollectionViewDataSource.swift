@@ -15,5 +15,6 @@ import UIKit
 */
 @objc protocol KCollectionViewDataSource: class {
 	@objc optional func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type]
+	@objc optional func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type]
 	@objc optional func configureDataSource()
 }

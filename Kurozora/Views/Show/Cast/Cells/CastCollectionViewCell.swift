@@ -11,16 +11,16 @@ import KurozoraKit
 
 class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var characterImageView: UIImageView?
-	@IBOutlet weak var characterShadowView: UIView?
-	@IBOutlet weak var characterName: KCopyableLabel? {
+	@IBOutlet weak var characterImageView: UIImageView!
+	@IBOutlet weak var characterShadowView: UIView!
+	@IBOutlet weak var characterName: KCopyableLabel! {
 		didSet {
-			self.characterName?.theme_textColor = KThemePicker.textColor.rawValue
+			self.characterName.theme_textColor = KThemePicker.textColor.rawValue
 		}
 	}
-	@IBOutlet weak var characterRole: KCopyableLabel? {
+	@IBOutlet weak var characterRole: KCopyableLabel! {
 		didSet {
-			self.characterRole?.theme_textColor = KThemePicker.subTextColor.rawValue
+			self.characterRole.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
 
@@ -55,9 +55,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 		guard let actorElement = actorElement else { return }
 
 		// Configure actor
-		if let actorName = actorElement.name {
-			self.actorName.text = actorName
-		}
+		self.actorName.text = actorElement.name
 
 //		if let actorRole = actorElement.role {
 //			self.actorJob.text = "as \(actorRole)"
@@ -82,14 +80,12 @@ class CastCollectionViewCell: UICollectionViewCell {
 		}
 
 		let nameInitials = actorElement.role?.initials
-		if let imageFrame = characterImageView?.frame {
-			self.characterImageView?.image = nameInitials?.toImage(withFrameSize: imageFrame, placeholder: R.image.placeholders.showPerson()!)
-		}
-		self.characterShadowView?.applyShadow()
+		self.characterImageView.image = nameInitials?.toImage(withFrameSize: characterImageView.frame, placeholder: R.image.placeholders.showPerson()!)
+		self.characterShadowView.applyShadow()
 
-		if self.characterImageView?.gestureRecognizers?.count ?? 0 == 0 {
-			self.characterImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showImage(_:))))
-			self.characterImageView?.isUserInteractionEnabled = true
+		if self.characterImageView.gestureRecognizers?.count ?? 0 == 0 {
+			self.characterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showImage(_:))))
+			self.characterImageView.isUserInteractionEnabled = true
 		}
 	}
 
