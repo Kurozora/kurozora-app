@@ -124,11 +124,11 @@
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AccountCell" rowHeight="90" id="XOD-av-Oix" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="90"/>
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AccountCell" id="XOD-av-Oix" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOD-av-Oix" id="p4N-u1-SGA">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYv-gV-pbA">
@@ -152,14 +152,14 @@
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FC8-T5-cs1">
                                                     <rect key="frame" x="66" y="20" width="69" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSV-Pt-W5f">
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora ID" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSV-Pt-W5f">
                                                     <rect key="frame" x="66" y="41" width="80" height="18"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -174,6 +174,7 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="tSV-Pt-W5f" firstAttribute="leading" secondItem="FC8-T5-cs1" secondAttribute="leading" id="4ZD-iN-J9c"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tSV-Pt-W5f" secondAttribute="bottom" constant="20" id="Ams-zY-gIS"/>
                                                 <constraint firstItem="V8p-ZN-pnA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FC8-T5-cs1" secondAttribute="trailing" constant="10" id="BM5-G1-dW8"/>
                                                 <constraint firstItem="V8p-ZN-pnA" firstAttribute="centerY" secondItem="zYv-gV-pbA" secondAttribute="centerY" id="Bkt-MY-8dC"/>
                                                 <constraint firstItem="V8p-ZN-pnA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tSV-Pt-W5f" secondAttribute="trailing" constant="10" id="Pg2-xs-jdf"/>
@@ -181,14 +182,14 @@
                                                 <constraint firstItem="gN1-Tz-Lyt" firstAttribute="leading" secondItem="zYv-gV-pbA" secondAttribute="leadingMargin" id="btb-s5-df3"/>
                                                 <constraint firstItem="gN1-Tz-Lyt" firstAttribute="top" secondItem="zYv-gV-pbA" secondAttribute="top" constant="20" id="dqZ-eQ-Unh"/>
                                                 <constraint firstItem="tSV-Pt-W5f" firstAttribute="top" secondItem="FC8-T5-cs1" secondAttribute="bottom" id="ohv-GW-NV8"/>
-                                                <constraint firstAttribute="bottom" secondItem="gN1-Tz-Lyt" secondAttribute="bottom" constant="20" id="qgc-sW-gCt"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gN1-Tz-Lyt" secondAttribute="bottom" constant="20" id="qgc-sW-gCt"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="V8p-ZN-pnA" secondAttribute="trailing" id="w7E-0P-wny"/>
                                                 <constraint firstItem="FC8-T5-cs1" firstAttribute="top" secondItem="gN1-Tz-Lyt" secondAttribute="top" id="xZA-y2-s2x"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="zYv-gV-pbA" secondAttribute="bottom" id="0NE-Ha-X3L"/>
+                                        <constraint firstAttribute="bottom" secondItem="zYv-gV-pbA" secondAttribute="bottom" constant="5" id="0NE-Ha-X3L"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="zYv-gV-pbA" secondAttribute="leading" id="2hb-L2-bhu"/>
                                         <constraint firstItem="zYv-gV-pbA" firstAttribute="top" secondItem="p4N-u1-SGA" secondAttribute="top" id="MyN-aZ-u6g"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="zYv-gV-pbA" secondAttribute="trailing" id="Q4g-kZ-uky"/>
@@ -204,7 +205,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="UQH-b9-Icg" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="145.5" width="414" height="55"/>
+                                <rect key="frame" x="0.0" y="150.5" width="414" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UQH-b9-Icg" id="Mau-HO-YUq">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -237,7 +238,7 @@
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display &amp; Blindness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fe3-Xb-uIY">
                                                     <rect key="frame" x="46" y="14.5" width="150" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -249,9 +250,9 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="0.00MiB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gu0-ps-bFd">
-                                                    <rect key="frame" x="302.5" y="15" width="63.5" height="20.5"/>
+                                                    <rect key="frame" x="306" y="15.5" width="60" height="19.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -315,6 +316,7 @@
                         <segue destination="41N-ao-yZL" kind="showDetail" identifier="AccountSegue" id="ivv-DR-gda"/>
                         <segue destination="v7i-U9-USe" kind="showDetail" identifier="TipJarSegue" id="TGi-W3-7pk"/>
                         <segue destination="B3o-ew-EQQ" kind="showDetail" identifier="BroswerSegue" id="EJd-Ik-boK"/>
+                        <segue destination="rXI-hr-RBS" kind="showDetail" identifier="SwitchAccountSegue" id="RsV-c8-7Ym"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-0q-T6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -335,7 +337,15 @@
                 <viewControllerPlaceholder storyboardName="AccountSettings" id="41N-ao-yZL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRz-7w-VBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1862" y="-1134"/>
+            <point key="canvasLocation" x="-1863" y="-1159"/>
+        </scene>
+        <!--SwitchAccountSettings-->
+        <scene sceneID="xd8-H4-x5U">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SwitchAccountSettings" id="rXI-hr-RBS" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="my1-5u-UN1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1833" y="-1130"/>
         </scene>
         <!--TipJarKNavigationController-->
         <scene sceneID="71c-GG-QAR">

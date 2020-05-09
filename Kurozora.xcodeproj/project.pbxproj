@@ -337,6 +337,7 @@
 		66C5D5FF23BA9A5E003040BE /* SectionBackgroundDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C5D5FE23BA9A5E003040BE /* SectionBackgroundDecorationView.swift */; };
 		66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */; };
 		66C86404216DFB850054EE16 /* LockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */; };
+		66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */; };
 		66CAE6852337CFB000991E59 /* OnboardingTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6842337CFB000991E59 /* OnboardingTextFieldCell.swift */; };
 		66CAE6872337CFC800991E59 /* OnboardingBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */; };
 		66CAE6892337D04C00991E59 /* OnboardingFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAE6882337D04C00991E59 /* OnboardingFooterTableViewCell.swift */; };
@@ -783,6 +784,7 @@
 		66C5D5FE23BA9A5E003040BE /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
 		66C86401216DF9270054EE16 /* SeasonsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonsCollectionViewController.swift; sourceTree = "<group>"; };
 		66C86403216DFB850054EE16 /* LockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockupCollectionViewCell.swift; sourceTree = "<group>"; };
+		66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SwitchAccountSettings.storyboard; sourceTree = "<group>"; };
 		66CAE6842337CFB000991E59 /* OnboardingTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextFieldCell.swift; sourceTree = "<group>"; };
 		66CAE6862337CFC800991E59 /* OnboardingBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBaseTableViewCell.swift; sourceTree = "<group>"; };
 		66CAE6882337D04C00991E59 /* OnboardingFooterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFooterTableViewCell.swift; sourceTree = "<group>"; };
@@ -1911,7 +1913,6 @@
 				66B4DBF32450EF2C0097135A /* MAL Import */,
 				66B4DBF42450EF3E0097135A /* Manage Active Sessions */,
 				66B4DBED2450E55E0097135A /* Sign in with Apple */,
-				66B4DC3F245814EA0097135A /* Switch Accounts */,
 			);
 			path = "Sub Settings";
 			sourceTree = "<group>";
@@ -1966,14 +1967,6 @@
 				668142DE245B4B95008FC7BE /* Extensions */,
 			);
 			path = KeychainAccess;
-			sourceTree = "<group>";
-		};
-		66B4DC3F245814EA0097135A /* Switch Accounts */ = {
-			isa = PBXGroup;
-			children = (
-				66B4DC3D245797770097135A /* SwitchAccountsTableViewController.swift */,
-			);
-			path = "Switch Accounts";
 			sourceTree = "<group>";
 		};
 		66B4F1D1223BC8EB007C5048 /* Features */ = {
@@ -2087,6 +2080,7 @@
 			children = (
 				66A08C6F23E3B342007B6418 /* SubSettingsViewController.swift */,
 				6614409221DA411C00E54915 /* Account */,
+				66C8FBEF24671CAA00C82D60 /* Switch Account */,
 				6614409121DA40F300E54915 /* Debug */,
 				6640E19122ADD20700D0F575 /* Authentication */,
 				6646A26F236A5D1C00DCC0A4 /* Browser */,
@@ -2106,6 +2100,15 @@
 				66FDDB7423B97F6300364886 /* Cells */,
 			);
 			path = Seasons;
+			sourceTree = "<group>";
+		};
+		66C8FBEF24671CAA00C82D60 /* Switch Account */ = {
+			isa = PBXGroup;
+			children = (
+				66C8FBF024671CBC00C82D60 /* SwitchAccountSettings.storyboard */,
+				66B4DC3D245797770097135A /* SwitchAccountsTableViewController.swift */,
+			);
+			path = "Switch Account";
 			sourceTree = "<group>";
 		};
 		66CAE6832337CF9B00991E59 /* Cells */ = {
@@ -2682,6 +2685,7 @@
 				66CBA53722BC454600FBEC13 /* Feed.storyboard in Resources */,
 				668B166C23EDF7FC00C1306A /* App-Icon-iPhone-Kurogram@2x.png in Resources */,
 				66CE81202460E6F800DB0C49 /* Redeem.storyboard in Resources */,
+				66C8FBF124671CBC00C82D60 /* SwitchAccountSettings.storyboard in Resources */,
 				66B13A672405DBE000CD732B /* Onboarding.storyboard in Resources */,
 				6614408F21DA387800E54915 /* Settings.bundle in Resources */,
 				668B164F23EDF0CF00C1306A /* App-Icon-iPhone-Night@2x.png in Resources */,

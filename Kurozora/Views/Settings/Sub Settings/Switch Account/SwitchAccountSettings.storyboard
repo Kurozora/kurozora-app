@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oQA-sV-lQw">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Switch Accounts-->
+        <scene sceneID="Oti-RT-wjE">
+            <objects>
+                <tableViewController storyboardIdentifier="SwitchAccountsTableViewController" title="Switch Accounts" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YY3-qY-Fih" customClass="SwitchAccountsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="C5H-lI-6nP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="rjU-Rh-EaJ"/>
+                        <viewLayoutGuide key="contentLayoutGuide" id="bs5-Rr-DlQ"/>
+                        <viewLayoutGuide key="frameLayoutGuide" id="Xtb-ub-4I6"/>
+                        <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="mAH-rl-t1o" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mAH-rl-t1o" id="eoQ-G1-o2o">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v55-EO-bPg">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                            <subviews>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50r-B1-lkb">
+                                                    <rect key="frame" x="8" y="10" width="68.5" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="w8e-CU-Ajj">
+                                                    <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="Msm-Mm-o5P"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="50r-B1-lkb" firstAttribute="top" secondItem="v55-EO-bPg" secondAttribute="top" constant="10" id="NY9-aK-O5w"/>
+                                                <constraint firstAttribute="bottom" secondItem="50r-B1-lkb" secondAttribute="bottom" constant="10" id="WF5-Zy-0KX"/>
+                                                <constraint firstItem="50r-B1-lkb" firstAttribute="leading" secondItem="v55-EO-bPg" secondAttribute="leadingMargin" id="aQ0-PR-4S1"/>
+                                                <constraint firstItem="w8e-CU-Ajj" firstAttribute="centerY" secondItem="50r-B1-lkb" secondAttribute="centerY" id="c2R-Jm-XQJ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="w8e-CU-Ajj" secondAttribute="trailing" id="uuK-lQ-WrM"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="v55-EO-bPg" firstAttribute="top" secondItem="eoQ-G1-o2o" secondAttribute="top" id="JrB-pp-LuQ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="v55-EO-bPg" secondAttribute="trailing" id="ZQR-mY-Opi"/>
+                                        <constraint firstItem="v55-EO-bPg" firstAttribute="leading" secondItem="eoQ-G1-o2o" secondAttribute="leadingMargin" id="kQB-Aj-Nsz"/>
+                                        <constraint firstAttribute="bottom" secondItem="v55-EO-bPg" secondAttribute="bottom" constant="5" id="tJ8-S3-HrK"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="wGD-Bt-PjE"/>
+                                <connections>
+                                    <outlet property="primaryLabel" destination="50r-B1-lkb" id="TcT-Lh-Q8i"/>
+                                    <outlet property="selectedImageView" destination="w8e-CU-Ajj" id="0Gf-MG-eOB"/>
+                                    <outlet property="selectedView" destination="v55-EO-bPg" id="NRc-uE-HFH"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="YY3-qY-Fih" id="g3A-eq-1aG"/>
+                            <outlet property="delegate" destination="YY3-qY-Fih" id="5Yx-Kb-WrG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Switch Accounts" id="PTc-Cc-g26">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="azw-t2-Vge">
+                            <connections>
+                                <action selector="addAccountBarButtonItemPressed:" destination="YY3-qY-Fih" id="6gT-N7-GKN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bZb-iP-dEx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1072" y="-1452"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4tt-c5-4Ca">
+            <objects>
+                <navigationController storyboardIdentifier="SwitchAccountKNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oQA-sV-lQw" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Jmk-Mu-2wv">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.2274509804" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YY3-qY-Fih" kind="relationship" relationship="rootViewController" id="FWo-Wp-Red"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DE3-f7-clZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1935" y="-1452"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <resources>
+        <image name="Symbols/checkmark" width="24" height="24"/>
+    </resources>
+</document>

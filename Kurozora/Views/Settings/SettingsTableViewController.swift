@@ -19,12 +19,6 @@ class SettingsTableViewController: KTableViewController {
 	var settingsSection = Section.allUser
 	#endif
 
-	#if DEBUG
-	var sectionRow = Section.allRow
-	#else
-	var sectionRow = Section.allUserRow
-	#endif
-
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
 		didSet {
@@ -70,8 +64,7 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let numberOfRowsInSection = sectionRow[settingsSection[section]]
-		return numberOfRowsInSection?.count ?? 0
+		return settingsSection[section].rowsValue.count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -90,8 +83,7 @@ extension SettingsTableViewController {
 		guard let settingsCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(identifier.identifier)")
 		}
-		let sectionRows = sectionRow[settingsSection[indexPath.section]]
-		settingsCell.sectionRow = sectionRows?[indexPath.row]
+		settingsCell.sectionRow = settingsSection[indexPath.section].rowsValue[indexPath.row]
 		return settingsCell
 	}
 
@@ -144,7 +136,7 @@ extension SettingsTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let sectionRows = sectionRow[settingsSection[indexPath.section]]?[indexPath.row]
+		let sectionRows = settingsSection[indexPath.section].rowsValue[indexPath.row]
 		var shouldPerformSegue = true
 
 		switch sectionRows {
@@ -189,8 +181,8 @@ extension SettingsTableViewController {
 		default: break
 		}
 
-		guard let identifierString = sectionRows?.segueIdentifier, !identifierString.isEmpty else { return }
-		if shouldPerformSegue {
+		let identifierString = sectionRows.segueIdentifier
+		if shouldPerformSegue && !identifierString.isEmpty {
 			performSegue(withIdentifier: identifierString, sender: nil)
 		}
 	}

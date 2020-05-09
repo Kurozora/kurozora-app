@@ -11,12 +11,17 @@ import KurozoraKit
 
 extension SettingsTableViewController {
 	enum Accessory {
+		// MARK: - Cases
+		/// Indicates the cell has no accessory views.
 		case none
+		/// Indicates the cell has a cheevron as accessory.
 		case chevron
+		/// Indicates the cell has a label as accessory.
 		case label
 	}
 
 	enum Section {
+		// MARK: - Cases
 		/// The section representing the account group of cells.
 		case account
 
@@ -38,17 +43,32 @@ extension SettingsTableViewController {
 		/// The section representing the about group of cells.
 		case about
 
+		// MARK: - Properties
 		/// An array containing all settings sections.
 		static let all: [Section] = [.account, .debug, .alerts, .general, .support, .social, .about]
 
 		/// An array containing all normal user settings sections.
 		static let allUser: [Section] = [.account, .alerts, .general, .support, .social, .about]
 
-		/// An array containing all settings rows separated by all settings sections.
-		static let allRow: [Section: [Row]] = [.account: Row.allAccount, .debug: Row.allDebug, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
-
-		/// An array containing all user settings rows separated by user settings sections.
-		static let allUserRow: [Section: [Row]] = [.account: Row.allAccount, .alerts: Row.allAlerts, .general: Row.allGeneral, .support: Row.allSupport, .social: Row.allSocial, .about: Row.allAbout]
+		/// The row values of a settings section.
+		var rowsValue: [Row] {
+			switch self {
+			case .account:
+				return Row.allAccount
+			case .debug:
+				return Row.allDebug
+			case .alerts:
+				return Row.allAlerts
+			case .general:
+				return Row.allGeneral
+			case .support:
+				return Row.allSupport
+			case .social:
+				return Row.allSocial
+			case .about:
+				return Row.allAbout
+			}
+		}
 
 		/// The string value of a settings section.
 		var stringValue: String {
@@ -76,6 +96,9 @@ extension SettingsTableViewController {
 	enum Row {
 		/// The row representing the account cell.
 		case account
+
+		/// The row representing the switch account cell.
+		case switchAccount
 
 		/// The row representing the keychain cell.
 		case keychain
@@ -123,13 +146,19 @@ extension SettingsTableViewController {
 		case followMedium
 
 		/// An array containing all settings rows.
-		static let all: [Row] = [.account, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let all: [Row] = [.account, .switchAccount, .keychain, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all normal user settings rows.
-		static let allUser: [Row] = [.account, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
+		static let allUser: [Row] = [.account, .switchAccount, .notifications, .displayBlindness, .theme, .icon, .browser, .biometrics, .cache, .privacy, .rate, .unlockFeatures, .restoreFeatures, .tipjar, .followTwitter, .followMedium]
 
 		/// An array containing all account section settings rows.
-		static let allAccount: [Row] = [.account]
+		static var allAccount: [Row] {
+			if User.isSignedIn || !Kurozora.shared.keychain.allKeys().isEmpty {
+				return [.account, .switchAccount]
+			}
+
+			return [.account]
+		}
 
 		/// An array containing all debug section settings rows.
 		static let allDebug: [Row] = [.keychain]
@@ -160,6 +189,8 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return R.segue.settingsTableViewController.accountSegue.identifier
+			case .switchAccount:
+				return R.segue.settingsTableViewController.switchAccountSegue.identifier
 			case .keychain:
 				return R.segue.settingsTableViewController.keysSegue.identifier
 			case .notifications:
@@ -198,6 +229,8 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return User.isSignedIn ? .chevron : .none
+			case .switchAccount:
+				return .chevron
 			case .keychain:
 				return .chevron
 			case .notifications:
@@ -236,6 +269,8 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return User.current?.username ?? "Sign in to your Kurozora account"
+			case .switchAccount:
+				return "Switch Account"
 			case .keychain:
 				return "Keys Manager"
 			case .notifications:
@@ -292,6 +327,8 @@ extension SettingsTableViewController {
 			switch self {
 			case .account:
 				return User.current?.profileImage ?? R.image.placeholders.userProfile()
+			case .switchAccount:
+				return R.image.icons.accountSwitch()
 			case .keychain:
 				return R.image.icons.kDefaults()
 			case .notifications:

@@ -174,10 +174,10 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThemesCollectionViewCell" id="LQw-RA-Vgs" customClass="ThemesCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="18" y="18" width="170" height="351.33333333333331"/>
+                                <rect key="frame" x="18" y="18" width="170" height="354.66666666666669"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qnv-PM-vhM">
-                                    <rect key="frame" x="0.0" y="0.0" width="170" height="351.33333333333331"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="170" height="354.66666666666669"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eia-Cs-y4M">
@@ -230,23 +230,24 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Strawberry" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Sp-VC-gg2" customClass="KLabel" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="320" width="69" height="15.666666666666686"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <rect key="frame" x="0.0" y="320" width="84.333333333333329" height="20.333333333333314"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="923 Downloads" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="NMR-PH-sic">
-                                            <rect key="frame" x="0.0" y="335.66666666666669" width="93.333333333333329" height="15.666666666666686"/>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                            <rect key="frame" x="0.0" y="340.33333333333331" width="88.333333333333329" height="14.333333333333314"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <color key="textColor" red="1" green="1" blue="0.99999994039999995" alpha="0.86110805459999995" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-I3-cKU" customClass="KTintedButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="121" y="320" width="49" height="20"/>
+                                            <rect key="frame" x="120" y="320" width="50" height="20"/>
                                             <color key="backgroundColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="TUA-Ju-URN"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                             <state key="normal" title="GET">
                                                 <color key="titleColor" red="0.88217000000000001" green="0.88534999999999997" blue="0.90427000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
