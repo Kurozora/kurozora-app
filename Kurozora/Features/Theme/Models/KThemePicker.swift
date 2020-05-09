@@ -22,6 +22,7 @@ import SwiftTheme
 	etc.
 */
 enum KThemePicker: ThemeColorPicker {
+	// MARK: - Cases
 	case statusBarStyle = "UIStatusBarStyle"
 	case visualEffect = "UIVisualEffectView"
 
@@ -53,6 +54,7 @@ enum KThemePicker: ThemeColorPicker {
 	case tableViewCellSelectedChevronColor = "TableViewCell.selectedChevronColor"
 	case tableViewCellActionDefaultColor = "TableViewCell.actionDefaultColor"
 
+	// MARK: - Properties
 	/// The string value of a theme picker attribute.
 	var stringValue: String {
 		switch self {
@@ -172,5 +174,17 @@ enum KThemePicker: ThemeColorPicker {
 			}
 			return .default
 		}
+	}
+
+	// MARK: - Functions
+	/**
+		Returns a ThemeVisualEffectPicker from the currently selected theme.
+
+		- Parameter vibrancyEnabled: Boolean indicating whether the visual effect is vibrant.
+
+		Returns: a ThemeVisualEffectPicker from the currently selected theme.
+	*/
+	func effectValue(vibrancyEnabled: Bool = false) -> ThemeVisualEffectPicker {
+		return ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: vibrancyEnabled)
 	}
 }

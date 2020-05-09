@@ -18,9 +18,8 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 			bannerImageView.addGestureRecognizer(gestureRecognizer)
 		}
 	}
-	@IBOutlet weak var visualEffectView: UIVisualEffectView! {
+	@IBOutlet weak var visualEffectView: KVisualEffectView! {
 		didSet {
-			visualEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
 			visualEffectView.cornerRadius = 10
 		}
 	}

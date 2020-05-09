@@ -46,21 +46,21 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Hajimeru Isekai Seikatsu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqK-rd-pf8">
-                                                    <rect key="frame" x="100.00000000000001" y="0.0" width="186.33333333333337" height="42.333333333333336"/>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re: Zero Kara Hajimeru Isekai Seikatsu" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqK-rd-pf8">
+                                                    <rect key="frame" x="100" y="0.0" width="186" height="42.333333333333336"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMT-bG-BUw">
-                                                    <rect key="frame" x="296.33333333333331" y="0.0" width="43.666666666666686" height="18"/>
+                                                    <rect key="frame" x="296" y="0.0" width="44" height="18"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pa5-VX-a2N">
-                                                        <rect key="frame" x="0.0" y="0.0" width="43.666666666666686" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1X-Gb-qwx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="18"/>
+                                                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Ended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1X-Gb-qwx">
+                                                                <rect key="frame" x="0.0" y="0.0" width="44" height="18"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="tintColor" white="0.59936179577464788" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -326,7 +326,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="h3f-B7-Hl0" secondAttribute="height" multiplier="1:1" id="KVX-6M-kMs"/>
-                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="NgK-NX-i8S"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="NgK-NX-i8S"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="sI6-pF-R7I"/>
                                                     </constraints>
                                                 </imageView>
@@ -337,9 +337,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ol-rj-bPq">
-                                                    <rect key="frame" x="68.000000000000014" y="20.333333333333332" width="141.33333333333337" height="17.999999999999996"/>
+                                                    <rect key="frame" x="67.999999999999986" y="20.333333333333332" width="141.66666666666663" height="17.999999999999996"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FWB-gm-pSF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="141.33333333333337" height="17.999999999999996"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="141.66666666666663" height="17.999999999999996"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Be the first to follow!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-lH-gUl">

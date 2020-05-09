@@ -7,15 +7,10 @@
 //
 
 import UIKit
-import SwiftTheme
 
 class AuthenticationViewController: KViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var blurEffectView: UIVisualEffectView! {
-		didSet {
-			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
-		}
-	}
+	@IBOutlet weak var blurEffectView: KVisualEffectView!
 	@IBOutlet weak var lockImageView: UIImageView!
 	@IBOutlet weak var unlockDescriptionView: UIView!
 	@IBOutlet weak var unlockButton: KTintedButton!

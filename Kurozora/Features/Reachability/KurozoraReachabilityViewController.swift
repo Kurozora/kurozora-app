@@ -7,15 +7,10 @@
 //
 
 import UIKit
-import SwiftTheme
 
 class KurozoraReachabilityViewController: UIViewController {
 	// MARK: - IBOutlets
-	@IBOutlet weak var blurEffectView: UIVisualEffectView! {
-		didSet {
-			blurEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue)
-		}
-	}
+	@IBOutlet weak var blurEffectView: KVisualEffectView!
 	@IBOutlet weak var noSignalImageView: UIImageView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KLabel!

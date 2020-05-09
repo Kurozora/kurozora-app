@@ -119,6 +119,8 @@
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
 		665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */; };
+		665A45822466EFFA00154F41 /* KVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A45812466EFFA00154F41 /* KVisualEffectView.swift */; };
+		665A4584246702F100154F41 /* KVibrantVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A4583246702F100154F41 /* KVibrantVisualEffectView.swift */; };
 		665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */; };
 		665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */; };
 		665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */; };
@@ -571,6 +573,8 @@
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
 		665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingCollectionViewCell.xib; sourceTree = "<group>"; };
+		665A45812466EFFA00154F41 /* KVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVisualEffectView.swift; sourceTree = "<group>"; };
+		665A4583246702F100154F41 /* KVibrantVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVibrantVisualEffectView.swift; sourceTree = "<group>"; };
 		665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSettingsCell.swift; sourceTree = "<group>"; };
@@ -1396,6 +1400,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		665A45802466EFDB00154F41 /* Visual Effects */ = {
+			isa = PBXGroup;
+			children = (
+				665A4583246702F100154F41 /* KVibrantVisualEffectView.swift */,
+				665A45812466EFFA00154F41 /* KVisualEffectView.swift */,
+			);
+			path = "Visual Effects";
+			sourceTree = "<group>";
+		};
 		665F49C421F766A400A7A659 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1548,6 +1561,7 @@
 				668142D8245B49E4008FC7BE /* Content Views */,
 				668142D9245B4A11008FC7BE /* Controls */,
 				668142DA245B4A20008FC7BE /* Text Views */,
+				665A45802466EFDB00154F41 /* Visual Effects */,
 				668142DB245B4A46008FC7BE /* Related Types */,
 			);
 			path = "Views and Controls";
@@ -2959,6 +2973,7 @@
 				66CF6D6920A98CAA00F98375 /* FollowTableViewController.swift in Sources */,
 				666938B421B1D4E500BA9620 /* PostLinkCell.swift in Sources */,
 				663C65D9226AA60100825F89 /* EpisodesCollectionViewController.swift in Sources */,
+				665A4584246702F100154F41 /* KVibrantVisualEffectView.swift in Sources */,
 				66B13A5D2405AA1000CD732B /* WorkflowController+PushNotifications.swift in Sources */,
 				66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */,
 				662B9261233E513A001D49B7 /* SearchForumsResultsCell.swift in Sources */,
@@ -2980,6 +2995,7 @@
 				661F9F822087282500CF4153 /* SignInTableViewController.swift in Sources */,
 				66E54EBE244E1579007248EE /* String+UIImage.swift in Sources */,
 				66C86402216DF9270054EE16 /* SeasonsCollectionViewController.swift in Sources */,
+				665A45822466EFFA00154F41 /* KVisualEffectView.swift in Sources */,
 				66A254D822AABCE8002A0E34 /* IconTableViewCell.swift in Sources */,
 				6640E19522ADD2D800D0F575 /* AuthenticationTableViewController.swift in Sources */,
 				661B26B42351E71B00840AF5 /* UIImageView+Kurozora.swift in Sources */,

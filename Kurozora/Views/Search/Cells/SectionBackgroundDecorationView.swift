@@ -21,14 +21,14 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
+		configureView()
 	}
 
 	// MARK: - Functions
 	func configureView() {
 		// Blurred table view background
 		let blurEffect = UIBlurEffect()
-		let visualEffectView = UIVisualEffectView(effect: blurEffect)
-		visualEffectView.theme_effect = ThemeVisualEffectPicker(keyPath: KThemePicker.visualEffect.stringValue, vibrancyEnabled: true)
+		let visualEffectView = KVibrantVisualEffectView(effect: blurEffect)
 		visualEffectView.theme_backgroundColor = KThemePicker.blurBackgroundColor.rawValue
 		visualEffectView.cornerRadius = 10
 
