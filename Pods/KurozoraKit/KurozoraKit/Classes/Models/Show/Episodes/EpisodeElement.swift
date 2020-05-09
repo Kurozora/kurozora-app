@@ -34,8 +34,8 @@ public class EpisodeElement: JSONDecodable {
 	/// Whether the episode details have been verified.
 	public let verified: Bool?
 
-	/// The user details asocciated with the episode.
-	public let userDetails: EpisodeUserDetails?
+	/// The current user's details asocciated with the episode.
+	public let currentUser: EpisodeUserDetails?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
@@ -46,6 +46,6 @@ public class EpisodeElement: JSONDecodable {
 		self.firstAired = json["first_aired"].string
 		self.overview = json["overview"].string
 		self.verified = json["verified"].boolValue
-		self.userDetails = try? EpisodeUserDetails(json: json["user_details"])
+		self.currentUser = try? EpisodeUserDetails(json: json["current_user"])
 	}
 }

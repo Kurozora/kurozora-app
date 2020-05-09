@@ -22,7 +22,7 @@ class TitleHeaderReusableView: UICollectionReusableView {
 			configureView()
 		}
 	}
-	var segueID: String?
+	var segueID: String = ""
 	var indexPath: IndexPath?
 
 	// MARK: - Functions
@@ -32,14 +32,11 @@ class TitleHeaderReusableView: UICollectionReusableView {
 		self.titleLabel.text = title
 
 		// Show or hide see all button
-		if let segueID = segueID {
-			self.headerButton.isHidden = segueID.isEmpty
-		}
+		self.headerButton.isHidden = segueID.isEmpty
 	}
 
 	// MARK: - IBActions
 	@IBAction func headerButtonPressed(_ sender: UIButton) {
-		guard let segueID = segueID else { return }
 		self.parentViewController?.performSegue(withIdentifier: segueID, sender: indexPath)
 	}
 }

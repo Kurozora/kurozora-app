@@ -8,16 +8,11 @@
 
 import UIKit
 import KurozoraKit
-import SwiftTheme
 
 class SynopsisCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var synopsisTextView: KTextView!
-	@IBOutlet weak var moreSynopsisButton: UIButton? {
-		didSet {
-			moreSynopsisButton?.theme_setTitleColor(KThemePicker.tintColor.rawValue, forState: .normal)
-		}
-	}
+	@IBOutlet weak var moreSynopsisButton: KTintedButton?
 	@IBOutlet weak var moreSynopsisImageView: UIImageView? {
 		didSet {
 			moreSynopsisImageView?.theme_tintColor = KThemePicker.backgroundColor.rawValue
@@ -26,7 +21,7 @@ class SynopsisCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var moreSynopsisView: UIView?
 
 	// MARK: - Properties
-	weak var showDetailsElement: ShowDetailsElement? {
+	var synopsisText: String? {
 		didSet {
 			configureCell()
 		}
@@ -34,8 +29,7 @@ class SynopsisCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
-		guard let showDetails = showDetailsElement else { return }
-		synopsisTextView.text = showDetails.synopsis
+		synopsisTextView.text = synopsisText
 
 		if moreSynopsisView != nil {
 			// Synopsis text
@@ -44,7 +38,16 @@ class SynopsisCollectionViewCell: UICollectionViewCell {
 
 			// Synopsis background
 			moreSynopsisView?.isHidden = !(synopsisTextView.layoutManager.numberOfLines > 4)
+		}
+	}
 
+	// MARK: - IBActions
+	@IBAction func moreButtonPressed(_ sender: UIButton) {
+		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
+			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
+				synopsisViewController.synopsis = synopsisText
+			}
+			self.parentViewController?.present(synopsisKNavigationController)
 		}
 	}
 }

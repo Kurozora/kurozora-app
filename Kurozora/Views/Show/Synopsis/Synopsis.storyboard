@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="N9G-sb-gSG">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Synopsis-->
+        <scene sceneID="XVK-X5-HQI">
+            <objects>
+                <viewController storyboardIdentifier="SynopsisViewController" title="Synopsis" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Kd-NH-QB0" customClass="SynopsisViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DQx-J9-9qe"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z1f-V7-oVd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fbP-hf-b6l">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="_Test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MEw-Kt-dBT" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                                <rect key="frame" x="20" y="98" width="374" height="764"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="rJ9-KA-afy" firstAttribute="bottom" secondItem="MEw-Kt-dBT" secondAttribute="bottom" id="BKh-bl-GNI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MEw-Kt-dBT" secondAttribute="trailing" id="Gy0-s7-Ltx"/>
+                            <constraint firstItem="MEw-Kt-dBT" firstAttribute="top" secondItem="rJ9-KA-afy" secondAttribute="top" constant="10" id="MLI-9k-zjT"/>
+                            <constraint firstItem="MEw-Kt-dBT" firstAttribute="leading" secondItem="fbP-hf-b6l" secondAttribute="leadingMargin" id="NXe-kO-kV1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rJ9-KA-afy"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Synopsis" leftItemsSupplementBackButton="YES" id="r3t-Pi-o2n">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Pmi-Xw-0wr">
+                            <connections>
+                                <action selector="dismissPressed:" destination="4Kd-NH-QB0" id="QFr-lN-bwj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="synopsisTextView" destination="MEw-Kt-dBT" id="WHg-Hs-LKq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NMx-7d-e4I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2229" y="-984"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qi5-Y6-CYn">
+            <objects>
+                <navigationController storyboardIdentifier="SynopsisKNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N9G-sb-gSG" customClass="KNavigationController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="GPt-pj-r1z"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" largeTitles="YES" id="74O-0F-IJs">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1647058824" green="0.18039215689999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4Kd-NH-QB0" kind="relationship" relationship="rootViewController" id="Ce3-6y-fPr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ioo-Eh-YXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1449" y="-985"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+</document>

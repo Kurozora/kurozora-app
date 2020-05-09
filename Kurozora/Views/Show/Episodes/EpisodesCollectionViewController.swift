@@ -74,31 +74,6 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/**
-		Populate an action sheet for the given episode.
-
-		- Parameter episode: The episode for which the action sheet should be populated
-		- Parameter cell: The cell that needs to be updated if actions are taken.
-	*/
-	func populateActionSheet(for episode: EpisodeElement, at cell: EpisodesCollectionViewCell) {
-		let tag = cell.episodeWatchedButton.tag
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		action.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
-			self.episodesCellWatchedButtonPressed(for: cell)
-		}))
-		action.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-		action.addAction(UIAlertAction(title: "Share", style: .default, handler: nil))
-		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-		//Present the controller
-		if let popoverController = action.popoverPresentationController {
-			popoverController.sourceView = cell.episodeMoreButton
-			popoverController.sourceRect = cell.episodeMoreButton.bounds
-		}
-
-		self.present(action, animated: true, completion: nil)
-	}
-
 	/// Goes to the first item in the presented collection view.
 	fileprivate func goToFirstEpisode() {
 		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
@@ -115,7 +90,7 @@ class EpisodesCollectionViewController: KCollectionViewController {
 	/// Goes to the last watched episode in the presented collection view.
 	fileprivate func goToLastWatchedEpisode() {
 		guard let lastWatchedEpisode = episodeElements?.closestMatch(index: 0, predicate: {
-			if let episodeWatchStatus = $0.userDetails?.watchStatus {
+			if let episodeWatchStatus = $0.currentUser?.watchStatus {
 				return episodeWatchStatus == .notWatched
 			}
 			return false
@@ -166,26 +141,37 @@ class EpisodesCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodesCollectionViewCell {
-			if let episodeDetailViewController = segue.destination as? EpisodesDetailTableViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
+		if segue.identifier == R.segue.episodesCollectionViewController.episodeDetailSegue.identifier, let episodeCell = sender as? EpisodeLockupCollectionViewCell {
+			if let episodeDetailViewController = segue.destination as? EpisodeDetailCollectionViewControlle, let indexPath = collectionView.indexPath(for: episodeCell) {
 				episodeDetailViewController.episodeElement = episodeElements?[indexPath.row]
-				episodeDetailViewController.episodeCell = episodeCell
-				episodeDetailViewController.delegate = episodeCell
 			}
 		}
 	}
 }
 
+// MARK: - UICollectionViewDelegate
+extension EpisodesCollectionViewController {
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let collectionViewCell = collectionView.cellForItem(at: indexPath)
+		let segueIdentifier = R.segue.episodesCollectionViewController.episodeDetailSegue.identifier
+
+		self.performSegue(withIdentifier: segueIdentifier, sender: collectionViewCell)
+	}
+}
+
 // MARK: - KCollectionViewDataSource
 extension EpisodesCollectionViewController {
+	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
+		return [EpisodeLockupCollectionViewCell.self]
+	}
+
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
-			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodesCollectionViewCell, for: indexPath) else {
-				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodesCollectionViewCell.identifier)")
+			guard let episodesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.episodeLockupCollectionViewCell, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(R.reuseIdentifier.episodeLockupCollectionViewCell.identifier)")
 			}
-			episodesCollectionViewCell.episodesDelegate = self
 			episodesCollectionViewCell.delegate = self
-			episodesCollectionViewCell.episodesElement = self.episodeElements?[indexPath.row]
+			episodesCollectionViewCell.episodeElement = self.episodeElements?[indexPath.row]
 			return episodesCollectionViewCell
 		}
 
@@ -245,8 +231,7 @@ extension EpisodesCollectionViewController {
 // MARK: - SwipeCollectionViewCellDelegate
 extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 	func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-		guard let episode = episodeElements?[indexPath.item] else { return nil }
-		guard let cell = collectionView.cellForItem(at: indexPath) as? EpisodesCollectionViewCell else { return nil}
+		guard let episodeLockupCollectionViewCell = collectionView.cellForItem(at: indexPath) as? EpisodeLockupCollectionViewCell else { return nil}
 
 		switch orientation {
 		case .right:
@@ -259,7 +244,7 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			rateAction.transitionDelegate = ScaleTransition.default
 
 			let moreAction = SwipeAction(style: .default, title: "More") { _, _ in
-				self.populateActionSheet(for: episode, at: cell)
+				episodeLockupCollectionViewCell.populateActionSheet()
 			}
 			moreAction.backgroundColor = .clear
 			moreAction.image = R.image.more_circle()
@@ -270,10 +255,10 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 			return [rateAction, moreAction]
 		case .left:
 			let watchedAction = SwipeAction(style: .default, title: "") { _, _ in
-				self.episodesCellWatchedButtonPressed(for: cell)
+				episodeLockupCollectionViewCell.watchedButtonPressed()
 			}
 			watchedAction.backgroundColor = .clear
-			if let tag = cell.episodeWatchedButton?.tag {
+			if let tag = episodeLockupCollectionViewCell.episodeWatchedButton?.tag {
 				watchedAction.title = (tag == 0) ? "Mark as Watched" : "Mark as Unwatched"
 				watchedAction.image = (tag == 0) ? R.image.watched_circle() : R.image.unwatched_circle()
 				watchedAction.textColor = (tag == 0) ? .kurozora : #colorLiteral(red: 0.6078431373, green: 0.6078431373, blue: 0.6078431373, alpha: 1)
@@ -297,33 +282,6 @@ extension EpisodesCollectionViewController: SwipeCollectionViewCellDelegate {
 		options.buttonSpacing = 5
 		options.backgroundColor = .clear
 		return options
-	}
-}
-
-// MARK: - EpisodesCollectionViewCellDelegate
-extension EpisodesCollectionViewController: EpisodesCollectionViewCellDelegate {
-	func episodesCellMoreButtonPressed(for cell: EpisodesCollectionViewCell) {
-		if let indexPath = collectionView.indexPath(for: cell) {
-			guard let episode = episodeElements?[indexPath.row] else { return }
-			populateActionSheet(for: episode, at: cell)
-		}
-	}
-
-	func episodesCellWatchedButtonPressed(for cell: EpisodesCollectionViewCell) {
-		if let indexPath = collectionView.indexPath(for: cell) {
-			guard let episodeID = episodeElements?[indexPath.row].id else { return }
-			let watchStatus: WatchStatus = cell.episodeWatchedButton.tag == 0 ? .watched : .notWatched
-
-			KService.updateEpisodeWatchStatus(episodeID, withWatchStatus: watchStatus) { result in
-				switch result {
-				case .success(let watchStatus):
-					DispatchQueue.main.async {
-						cell.configureCell(withWatchStatus: watchStatus, shouldUpdate: true)
-					}
-				case .failure: break
-				}
-			}
-		}
 	}
 }
 

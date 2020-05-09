@@ -8,6 +8,6 @@
 
 import UIKit
 
-class DiscussionTableViewCell: UITableViewCell {
+class DiscussionCollectionViewCell: UICollectionViewCell {
 
 }

@@ -10,7 +10,6 @@ import UIKit
 import KurozoraKit
 import Intents
 import IntentsUI
-import SwiftTheme
 
 protocol ShowDetailCollectionViewControllerDelegate: class {
 	func updateShowInLibrary(for cell: LibraryBaseCollectionViewCell?)
@@ -132,13 +131,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == R.segue.showDetailCollectionViewController.synopsisSegue.identifier {
-			if let kNavigationController = segue.destination as? KNavigationController {
-				if let synopsisViewController = kNavigationController.viewControllers.first as? SynopsisViewController {
-					synopsisViewController.synopsis = showDetailsElement?.synopsis
-				}
-			}
-		} else if segue.identifier == R.segue.showDetailCollectionViewController.seasonSegue.identifier {
+		if segue.identifier == R.segue.showDetailCollectionViewController.seasonSegue.identifier {
 			if let seasonsCollectionViewController = segue.destination as? SeasonsCollectionViewController {
 				seasonsCollectionViewController.seasonsElements = seasons
 			}
@@ -159,14 +152,13 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return showDetailsElement != nil ? ShowDetail.Section.all.count : 0
+		return showDetailsElement != nil ? ShowDetail.Section.allCases.count : 0
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return 0 }
 		var numberOfRows = 0
 
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			numberOfRows = 1
 		case .badge:
@@ -178,7 +170,7 @@ extension ShowDetailCollectionViewController {
 		case .rating:
 			numberOfRows = 1
 		case .information:
-			numberOfRows = ShowDetail.Information.all.count
+			numberOfRows = ShowDetail.Information.allCases.count
 //			if !User.isAdmin {
 //				numberOfRows -= 1
 //			}
@@ -191,6 +183,7 @@ extension ShowDetailCollectionViewController {
 				numberOfRows = actorsCount >= 10 ? 10 : actorsCount
 			}
 		case .related: break
+		default: break
 		}
 
 		return numberOfRows
@@ -236,11 +229,10 @@ extension ShowDetailCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension ShowDetailCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		var segueIdentifier = ""
 
-		switch showDetailSection {
+		switch ShowDetail.Section(rawValue: indexPath.section) {
 		case .seasons:
 			segueIdentifier = R.segue.showDetailCollectionViewController.episodeSegue.identifier
 		default: return
@@ -260,13 +252,13 @@ extension ShowDetailCollectionViewController {
 			badgeCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .synopsis:
 			let synopsisCollectionViewCell = cell as? SynopsisCollectionViewCell
-			synopsisCollectionViewCell?.showDetailsElement = showDetailsElement
+			synopsisCollectionViewCell?.synopsisText = showDetailsElement?.synopsis
 		case .rating:
 			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
 			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
-			informationCollectionViewCell?.indexPathRow = indexPath.row
+//			informationCollectionViewCell?.indexPathRow = indexPath.row
 			informationCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .seasons:
 			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
@@ -292,7 +284,10 @@ extension ShowDetailCollectionViewController {
 // MARK: - KCollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [LockupCollectionViewCell.self,
+		return [SynopsisCollectionViewCell.self,
+				RatingCollectionViewCell.self,
+				InformationCollectionViewCell.self,
+				LockupCollectionViewCell.self,
 				CastCollectionViewCell.self
 		]
 	}
@@ -305,10 +300,9 @@ extension ShowDetailCollectionViewController {
 // MARK: - KCollectionViewDelegateLayout
 extension ShowDetailCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return 1 }
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .header, .badge, .synopsis:
 			return 1
 		case .rating:
@@ -334,8 +328,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return .absolute(0) }
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			return .fractionalHeight(0.90)
 		case .badge:
@@ -343,7 +336,7 @@ extension ShowDetailCollectionViewController {
 		case .synopsis:
 			return .absolute(110)
 		case .rating:
-			return .absolute(80)
+			return .absolute(88)
 		case .information:
 			return .estimated(55)
 		default:
@@ -353,8 +346,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return .zero }
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .seasons:
 			if let seasonsCount = seasons?.count, seasonsCount != 0 {
 				return (0.50 / columnsCount.double).cgFloat
@@ -370,8 +362,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return .zero }
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			return .zero
 		default:
@@ -380,8 +371,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		guard let showSections = ShowDetail.Section(rawValue: section) else { return .zero }
-		switch showSections {
+		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			return  NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		default:
@@ -391,7 +381,7 @@ extension ShowDetailCollectionViewController {
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-			guard let showSections = ShowDetail.Section(rawValue: section) else { fatalError("ShowDetail Section not supported") }
+			guard let showSections = ShowDetail.Section(rawValue: section) else { fatalError("ShowDetail section not supported") }
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
 

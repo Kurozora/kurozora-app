@@ -118,6 +118,7 @@
 		665385BD23D3CD3C008ADEF3 /* KCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */; };
 		6659E70D20C1C14E007F139D /* UIDevice+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */; };
 		665A0B7620CC72F20024E2E2 /* ManageActiveSessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */; };
+		665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */; };
 		665CBBA022C27E90004D0D3E /* SelectableSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */; };
 		665CBBA222C2B139004D0D3E /* DateSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */; };
 		665CBBA422C2B2C2004D0D3E /* DatePickerSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */; };
@@ -157,10 +158,10 @@
 		6675263022280ACB007C1617 /* Day.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262D22280ACB007C1617 /* Day.plist */; };
 		6675263122280ACB007C1617 /* Night.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6675262E22280ACB007C1617 /* Night.plist */; };
 		66752633222815C2007C1617 /* KThemeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66752632222815C2007C1617 /* KThemeStyle.swift */; };
-		6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */; };
+		6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */; };
 		66785E2A2363C714003EF24C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66785E292363C714003EF24C /* CastCollectionViewCell.swift */; };
 		667943632273933400E2D0D0 /* SynopsisCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */; };
-		667943652273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */; };
+		667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewControlle.swift */; };
 		667B38432361CE6500786EF6 /* KWhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667B38422361CE6500786EF6 /* KWhatsNewModel.swift */; };
 		667C0F13224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */; };
 		667C2C47239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayout+Interoperability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayout+Interoperability.swift */; };
@@ -345,6 +346,11 @@
 		66CBDD9224634AB700CA5F83 /* TitleHeaderReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CBDD9124634AB700CA5F83 /* TitleHeaderReusableView.xib */; };
 		66CBDD9424634DBA00CA5F83 /* HeaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBDD9324634DBA00CA5F83 /* HeaderButton.swift */; };
 		66CBDD96246352E900CA5F83 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBDD95246352E900CA5F83 /* SeparatorView.swift */; };
+		66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBDD972464772200CA5F83 /* SecondarySeparatorView.swift */; };
+		66CBDD9A24647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CBDD9924647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib */; };
+		66CBDD9C24649C3D00CA5F83 /* InformationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CBDD9B24649C3D00CA5F83 /* InformationCollectionViewCell.xib */; };
+		66CBDD9E24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66CBDD9D24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib */; };
+		66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66CBDDA024649CB300CA5F83 /* Synopsis.storyboard */; };
 		66CBFB6221217F60006A5E4F /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */; };
 		66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ServiceFooterString.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
@@ -564,6 +570,7 @@
 		665385BC23D3CD3C008ADEF3 /* KCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewController.swift; sourceTree = "<group>"; };
 		6659E70C20C1C14E007F139D /* UIDevice+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Kurozora.swift"; sourceTree = "<group>"; };
 		665A0B7520CC72F20024E2E2 /* ManageActiveSessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActiveSessionsController.swift; sourceTree = "<group>"; };
+		665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingCollectionViewCell.xib; sourceTree = "<group>"; };
 		665CBB9F22C27E90004D0D3E /* SelectableSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA122C2B139004D0D3E /* DateSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSettingsCell.swift; sourceTree = "<group>"; };
 		665CBBA322C2B2C2004D0D3E /* DatePickerSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSettingsCell.swift; sourceTree = "<group>"; };
@@ -594,10 +601,10 @@
 		6675262D22280ACB007C1617 /* Day.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Day.plist; sourceTree = "<group>"; };
 		6675262E22280ACB007C1617 /* Night.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Night.plist; sourceTree = "<group>"; };
 		66752632222815C2007C1617 /* KThemeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KThemeStyle.swift; sourceTree = "<group>"; };
-		6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesCollectionViewCell.swift; sourceTree = "<group>"; };
+		6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeLockupCollectionViewCell.swift; sourceTree = "<group>"; };
 		66785E292363C714003EF24C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisCollectionViewCell.swift; sourceTree = "<group>"; };
-		667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesDetailTableViewControlle.swift; sourceTree = "<group>"; };
+		667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailCollectionViewControlle.swift; sourceTree = "<group>"; };
 		667B38422361CE6500786EF6 /* KWhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWhatsNewModel.swift; sourceTree = "<group>"; };
 		667C0F12224CC50200A8CB56 /* HorizontalCollectionCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCellStyle.swift; sourceTree = "<group>"; };
 		667C2C46239BEEB600C04ED1 /* IBPCollectionViewCompositionalLayout+Interoperability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IBPCollectionViewCompositionalLayout+Interoperability.swift"; sourceTree = "<group>"; };
@@ -783,6 +790,11 @@
 		66CBDD9124634AB700CA5F83 /* TitleHeaderReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderReusableView.xib; sourceTree = "<group>"; };
 		66CBDD9324634DBA00CA5F83 /* HeaderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderButton.swift; sourceTree = "<group>"; };
 		66CBDD95246352E900CA5F83 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		66CBDD972464772200CA5F83 /* SecondarySeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondarySeparatorView.swift; sourceTree = "<group>"; };
+		66CBDD9924647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodeLockupCollectionViewCell.xib; sourceTree = "<group>"; };
+		66CBDD9B24649C3D00CA5F83 /* InformationCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationCollectionViewCell.xib; sourceTree = "<group>"; };
+		66CBDD9D24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SynopsisCollectionViewCell.xib; sourceTree = "<group>"; };
+		66CBDDA024649CB300CA5F83 /* Synopsis.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Synopsis.storyboard; sourceTree = "<group>"; };
 		66CBFB6121217F60006A5E4F /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductActionTableViewCell.swift; sourceTree = "<group>"; };
 		66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTableViewController.swift; sourceTree = "<group>"; };
@@ -918,7 +930,6 @@
 				66938FD7211CD3E600ADA5D6 /* ShowDetailCollectionViewController.swift */,
 				66D16CA0212D52AB00B6B882 /* Cells */,
 				66D1358B227F17180079438C /* Models */,
-				66714F4B226FA880006113DA /* Synopsis */,
 			);
 			path = "Show Details";
 			sourceTree = "<group>";
@@ -928,7 +939,7 @@
 			children = (
 				66AA35BF24030FA60006EC5B /* Episodes.storyboard */,
 				663C65D8226AA60100825F89 /* EpisodesCollectionViewController.swift */,
-				667943642273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift */,
+				667943642273A33D00E2D0D0 /* EpisodeDetailCollectionViewControlle.swift */,
 				66FDDB7523B97F8B00364886 /* Cells */,
 				66FDDB7623B97F9F00364886 /* Models */,
 			);
@@ -1233,6 +1244,7 @@
 			children = (
 				6647236F245DC531008E5111 /* CircularView.swift */,
 				66CBDD95246352E900CA5F83 /* SeparatorView.swift */,
+				66CBDD972464772200CA5F83 /* SecondarySeparatorView.swift */,
 			);
 			path = "View Fundementals";
 			sourceTree = "<group>";
@@ -1481,14 +1493,6 @@
 				66C27A7323E3A0C700BC09D3 /* Sub Settings */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		66714F4B226FA880006113DA /* Synopsis */ = {
-			isa = PBXGroup;
-			children = (
-				66714F49226FA84C006113DA /* SynopsisViewController.swift */,
-			);
-			path = Synopsis;
 			sourceTree = "<group>";
 		};
 		6674A0D220A5848100AAB527 /* Thread */ = {
@@ -1804,6 +1808,7 @@
 		66AA35C22403125F0006EC5B /* Show */ = {
 			isa = PBXGroup;
 			children = (
+				66CBDD9F24649C9C00CA5F83 /* Synopsis */,
 				666C82562162895700C93A70 /* Cast */,
 				66058DC3212E984F0084B79E /* Episodes */,
 				66C86400216DF9040054EE16 /* Seasons */,
@@ -2119,6 +2124,15 @@
 			path = Feed;
 			sourceTree = "<group>";
 		};
+		66CBDD9F24649C9C00CA5F83 /* Synopsis */ = {
+			isa = PBXGroup;
+			children = (
+				66CBDDA024649CB300CA5F83 /* Synopsis.storyboard */,
+				66714F49226FA84C006113DA /* SynopsisViewController.swift */,
+			);
+			path = Synopsis;
+			sourceTree = "<group>";
+		};
 		66CDC088234A8278009E799C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2317,6 +2331,9 @@
 				66058DB9212E97670084B79E /* ReviewCollectionViewCell.swift */,
 				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
 				667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */,
+				66CBDD9B24649C3D00CA5F83 /* InformationCollectionViewCell.xib */,
+				66CBDD9D24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib */,
+				665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2469,7 +2486,8 @@
 			isa = PBXGroup;
 			children = (
 				6645D5FC23E70BC80042B4E0 /* DiscussionCollectionViewCell.swift */,
-				6676B3C3216FF70B00877AFC /* EpisodesCollectionViewCell.swift */,
+				6676B3C3216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift */,
+				66CBDD9924647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2592,6 +2610,7 @@
 				668B162D23EDF0CF00C1306A /* App-Icon-iPad-Day@2x.png in Resources */,
 				668B163623EDF0CF00C1306A /* App-Icon-iPad-Red.png in Resources */,
 				66D6237F20A1CC1D00304914 /* Library.storyboard in Resources */,
+				66CBDD9E24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib in Resources */,
 				666938B821B1D50500BA9620 /* CommentImageCell.xib in Resources */,
 				668B166523EDF0CF00C1306A /* App-Icon-iPhone-Sky-Blue@3x.png in Resources */,
 				668B165B23EDF0CF00C1306A /* App-Icon-iPhone-Night@3x.png in Resources */,
@@ -2634,6 +2653,7 @@
 				66707823208B1C6800471FBC /* LaunchScreen.xib in Resources */,
 				66AA35BE24030F570006EC5B /* Seasons.storyboard in Resources */,
 				668B162B23EDF0CF00C1306A /* App-Icon-iPad-Ocean-Blue@2x.png in Resources */,
+				66CBDD9A24647B3500CA5F83 /* EpisodeLockupCollectionViewCell.xib in Resources */,
 				66AC260622F0E58A0064541B /* WebBrowser.storyboard in Resources */,
 				66407C9423F625DB008944AB /* App-Icon-iPad-Love-Bug@2x.png in Resources */,
 				668B163C23EDF0CF00C1306A /* App-Icon-iPad-Dutch-Orange.png in Resources */,
@@ -2667,6 +2687,7 @@
 				660C043223D1500A0040C749 /* MediumLockupCollectionViewCell.xib in Resources */,
 				6640E18922AD633500D0F575 /* Authentication.storyboard in Resources */,
 				66647B5D2084995E00CF624F /* Assets.xcassets in Resources */,
+				665A457F24660D9500154F41 /* RatingCollectionViewCell.xib in Resources */,
 				669FD7F723F9E9DB001440EC /* App-Icon-iPad-Kurolicious.png in Resources */,
 				668B162C23EDF0CF00C1306A /* App-Icon-iPad-Product-RED@2x.png in Resources */,
 				668B166123EDF0CF00C1306A /* App-Icon-iPad-Pro-Green@2x.png in Resources */,
@@ -2695,6 +2716,7 @@
 				666938BB21B1D51800BA9620 /* PostLinkCell.xib in Resources */,
 				660C042C23D149F20040C749 /* CastCollectionViewCell.xib in Resources */,
 				669FD7F923F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@2x.png in Resources */,
+				66CBDD9C24649C3D00CA5F83 /* InformationCollectionViewCell.xib in Resources */,
 				660C043623D150640040C749 /* LegalCollectionViewCell.xib in Resources */,
 				66707835208B842E00471FBC /* Settings.storyboard in Resources */,
 				668B163723EDF0CF00C1306A /* App-Icon-iPhone-Rose-Gold@3x.png in Resources */,
@@ -2706,6 +2728,7 @@
 				664B52D122C03C0900B988B3 /* DisplaySettings.storyboard in Resources */,
 				6675263022280ACB007C1617 /* Day.plist in Resources */,
 				669FD7FD23F9E9DB001440EC /* App-Icon-iPhone-Kurolicious@3x.png in Resources */,
+				66CBDDA124649CB300CA5F83 /* Synopsis.storyboard in Resources */,
 				668F639020986851003B1C1D /* Aller_BdIt.ttf in Resources */,
 				66058DB6212E95AB0084B79E /* ShowDetails.storyboard in Resources */,
 				668B165823EDF0CF00C1306A /* App-Icon-iPad-Pro-Night@2x.png in Resources */,
@@ -2966,6 +2989,7 @@
 				66AEABDA22987A4D00949FD8 /* KThemePicker.swift in Sources */,
 				66AEABEF22993E9C00949FD8 /* NotificationsOptionsViewController.swift in Sources */,
 				665F49C621F766CC00A7A659 /* ReplyCell.swift in Sources */,
+				66CBDD982464772200CA5F83 /* SecondarySeparatorView.swift in Sources */,
 				661049C022C0E42B00A2A354 /* DisplayTableViewController.swift in Sources */,
 				667F9ADB21B57D5C003F6629 /* Date+Kurozora.swift in Sources */,
 				660B42A721259E300051EF66 /* ManageThemesController.swift in Sources */,
@@ -3020,7 +3044,7 @@
 				665385BB23D3CD1E008ADEF3 /* KTableViewController.swift in Sources */,
 				66CBA53922BCEBD000FBEC13 /* FeedViewController.swift in Sources */,
 				66472374245E164B008E5111 /* ProfileImageButton.swift in Sources */,
-				6676B3C4216FF70B00877AFC /* EpisodesCollectionViewCell.swift in Sources */,
+				6676B3C4216FF70B00877AFC /* EpisodeLockupCollectionViewCell.swift in Sources */,
 				66D4735221AB5FE600A894B7 /* UIAlertController+Extension.swift in Sources */,
 				66AF50DD21D9B67900FC622E /* NotificationsSettingsViewController.swift in Sources */,
 				66C4DADF243BE4CF00C4B90A /* KKLibrarySortType+Kurozora.swift in Sources */,
@@ -3132,7 +3156,7 @@
 				66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */,
 				66E54EC3244E1698007248EE /* Array+String.swift in Sources */,
 				663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */,
-				667943652273A33D00E2D0D0 /* EpisodesDetailTableViewControlle.swift in Sources */,
+				667943652273A33D00E2D0D0 /* EpisodeDetailCollectionViewControlle.swift in Sources */,
 				66647B542084995500CF624F /* AppDelegate.swift in Sources */,
 				66B4F1DB223D2CA5007C5048 /* SearchBaseResultsCell.swift in Sources */,
 				6674A0C920A45EB700AAB527 /* ForumsCell.swift in Sources */,
