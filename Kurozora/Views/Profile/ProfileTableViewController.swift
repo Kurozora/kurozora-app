@@ -567,7 +567,7 @@ class ProfileTableViewController: KTableViewController {
 		if let bannerImageURL = self.userProfile?.bannerImageURL, !bannerImageURL.isEmpty {
 			presentPhotoViewControllerWith(url: bannerImageURL, from: bannerImageView)
 		} else {
-			presentPhotoViewControllerWith(string: "default_banner_image", from: bannerImageView)
+			presentPhotoViewControllerWith(image: bannerImageView.image, from: bannerImageView)
 		}
 	}
 

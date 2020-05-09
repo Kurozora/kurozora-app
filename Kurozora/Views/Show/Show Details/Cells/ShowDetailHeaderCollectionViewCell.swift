@@ -131,19 +131,29 @@ extension ShowDetailHeaderCollectionViewCell {
 		NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
 	}
 
+	/**
+		Presents the selected banner image in an image viewer.
+
+		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
+	*/
 	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
 		if let banner = showDetailsElement?.banner, !banner.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.showBanner.name, from: bannerImageView)
+			parentViewController?.presentPhotoViewControllerWith(image: bannerImageView.image, from: bannerImageView)
 		}
 	}
 
+	/**
+		Presents the selected poster image in an image viewer.
+
+		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
+	*/
 	@objc func showPoster(_ gestureRecognizer: UIGestureRecognizer) {
 		if let poster = showDetailsElement?.poster, !poster.isEmpty {
 			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
 		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: R.image.placeholders.showPoster.name, from: posterImageView)
+			parentViewController?.presentPhotoViewControllerWith(image: posterImageView.image, from: posterImageView)
 		}
 	}
 }

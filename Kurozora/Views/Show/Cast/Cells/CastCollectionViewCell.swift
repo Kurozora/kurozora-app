@@ -92,15 +92,10 @@ class CastCollectionViewCell: UICollectionViewCell {
 	/**
 		Presents the selected cast image in an image viewer.
 
-		- Parameter tap: The gesture recognizer object that contains information about the tapped location on the view.
+		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
 	*/
-	@objc func showImage(_ tap: UITapGestureRecognizer) {
-		guard let imageView = tap.view as? UIImageView else { return }
-
-		if let image = imageView.image {
-			parentViewController?.presentPhotoViewControllerWith(image: image, from: imageView)
-		} else {
-			parentViewController?.presentPhotoViewControllerWith(string: "placeholder_person_image", from: actorImageView)
-		}
+	@objc func showImage(_ gestureRecognizer: UITapGestureRecognizer) {
+		guard let imageView = gestureRecognizer.view as? UIImageView else { return }
+		parentViewController?.presentPhotoViewControllerWith(image: imageView.image, from: imageView)
 	}
 }
