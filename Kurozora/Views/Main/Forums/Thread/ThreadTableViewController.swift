@@ -328,9 +328,9 @@ class ThreadTableViewController: KTableViewController {
 			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
 		}
 
-		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
-		if let popoverController = activityVC.popoverPresentationController {
+		if let popoverController = activityViewController.popoverPresentationController {
 			if let sender = sender {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
@@ -338,7 +338,7 @@ class ThreadTableViewController: KTableViewController {
 				popoverController.barButtonItem = barButtonItem
 			}
 		}
-		self.present(activityVC, animated: true, completion: nil)
+		self.present(activityViewController, animated: true, completion: nil)
 	}
 
 	/// Sends a report of the selected thread to the mods.
@@ -391,7 +391,7 @@ class ThreadTableViewController: KTableViewController {
 	/// Builds and presents an action sheet.
 	func showActionList(_ sender: UIBarButtonItem) {
 		guard let forumsThreadElement = forumsThreadElement else { return }
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
 //		if User.isAdmin || User.isMod {
@@ -417,7 +417,7 @@ class ThreadTableViewController: KTableViewController {
 //					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
 //				}
 //
-//				action.addAction(lockAction)
+//				alertController.addAction(lockAction)
 //			}
 //		}
 
@@ -440,9 +440,9 @@ class ThreadTableViewController: KTableViewController {
 			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
 			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-			action.addAction(upvoteAction)
-			action.addAction(downvoteAction)
-			action.addAction(replyAction)
+			alertController.addAction(upvoteAction)
+			alertController.addAction(downvoteAction)
+			alertController.addAction(replyAction)
 		}
 
 		// Username action
@@ -452,7 +452,7 @@ class ThreadTableViewController: KTableViewController {
 			})
 			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(userAction)
+			alertController.addAction(userAction)
 		}
 
 		// Share thread action
@@ -461,7 +461,7 @@ class ThreadTableViewController: KTableViewController {
 		})
 		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(shareAction)
+		alertController.addAction(shareAction)
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
@@ -469,17 +469,17 @@ class ThreadTableViewController: KTableViewController {
 		})
 		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(reportAction)
+		alertController.addAction(reportAction)
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(action, animated: true, completion: nil)
+			self.present(alertController, animated: true, completion: nil)
 		}
 	}
 

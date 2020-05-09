@@ -9,9 +9,8 @@
 import UIKit
 import KurozoraKit
 import Cosmos
-import SwipeCellKit
 
-class EpisodeLockupCollectionViewCell: SwipeCollectionViewCell {
+class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var shadowImageview: UIImageView!
@@ -29,7 +28,7 @@ class EpisodeLockupCollectionViewCell: SwipeCollectionViewCell {
 	var simpleModeEnabled: Bool = false
 	var episodeElement: EpisodeElement? = nil {
 		didSet {
-			configureCell()
+			self.configureCell()
 		}
 	}
 
@@ -102,21 +101,45 @@ class EpisodeLockupCollectionViewCell: SwipeCollectionViewCell {
 	*/
 	func populateActionSheet() {
 		let tag = self.episodeWatchedButton.tag
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		action.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { (_) in
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		alertController.addAction(UIAlertAction(title: (tag == 0) ? "Mark as Watched" : "Mark as Unwatched", style: .default, handler: { _ in
 			self.watchedButtonPressed()
 		}))
-		action.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
-		action.addAction(UIAlertAction(title: "Share", style: .default, handler: nil))
-		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction(title: "Rate", style: .default, handler: nil))
+		alertController.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+			self.populateShareSheet()
+		}))
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.sourceView = self.episodeMoreButton
 			popoverController.sourceRect = self.episodeMoreButton.bounds
 		}
 
-		self.parentViewController?.present(action, animated: true, completion: nil)
+		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.parentViewController?.present(alertController, animated: true, completion: nil)
+		}
+	}
+
+	func populateShareSheet() {
+		guard let episodeID = episodeElement?.id else { return }
+		var shareText: [String] = ["https://kurozora.app/episode/\(episodeID)\nYou should watch this episode via @KurozoraApp"]
+
+		if let title = episodeElement?.name, !title.isEmpty {
+			shareText = ["https://kurozora.app/episode/\(episodeID)\nYou should watch \"\(title)\" via @KurozoraApp"]
+		}
+
+		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+
+		if let popoverController = activityViewController.popoverPresentationController {
+			popoverController.sourceView = episodeMoreButton
+			popoverController.sourceRect = episodeMoreButton.bounds
+		}
+
+		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.parentViewController?.present(activityViewController, animated: true, completion: nil)
+		}
 	}
 
 	func watchedButtonPressed() {

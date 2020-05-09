@@ -252,7 +252,7 @@ class NotificationsViewController: KTableViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	@IBAction func moreOptionsButtonPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mark all as read action
 		let markAllAsRead = UIAlertAction.init(title: "Mark all as read", style: .default, handler: { (_) in
@@ -260,7 +260,7 @@ class NotificationsViewController: KTableViewController {
 		})
 		markAllAsRead.setValue(R.image.symbols.checkmark_circle_fill()!, forKey: "image")
 		markAllAsRead.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(markAllAsRead)
+		alertController.addAction(markAllAsRead)
 
 		// Mark all as unread action
 		let markAllAsUnread = UIAlertAction.init(title: "Mark all as unread", style: .default, handler: { (_) in
@@ -268,17 +268,17 @@ class NotificationsViewController: KTableViewController {
 		})
 		markAllAsUnread.setValue(R.image.symbols.checkmark_circle()!, forKey: "image")
 		markAllAsUnread.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(markAllAsUnread)
+		alertController.addAction(markAllAsUnread)
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		// Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(action, animated: true, completion: nil)
+			self.present(alertController, animated: true, completion: nil)
 		}
 	}
 

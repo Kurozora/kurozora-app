@@ -48,10 +48,6 @@ class FavoriteShowsCollectionViewController: KCollectionViewController {
 	// MARK: - Views
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Stop activity indicator as it's not needed for now.
-		_prefersActivityIndicatorHidden = true
-
 		// Observe NotificationCenter for an update.
 		if userProfile?.id == User.current?.id {
 			NotificationCenter.default.addObserver(self, selector: #selector(fetchFavoritesList), name: .KFavoriteShowsListDidChange, object: nil)

@@ -2332,8 +2332,8 @@
 				6601C39F23BBB98000466BA3 /* ShowDetailHeaderCollectionViewCell.swift */,
 				667943622273933400E2D0D0 /* SynopsisCollectionViewCell.swift */,
 				66CBDD9B24649C3D00CA5F83 /* InformationCollectionViewCell.xib */,
-				66CBDD9D24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib */,
 				665A457E24660D9500154F41 /* RatingCollectionViewCell.xib */,
+				66CBDD9D24649C4C00CA5F83 /* SynopsisCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

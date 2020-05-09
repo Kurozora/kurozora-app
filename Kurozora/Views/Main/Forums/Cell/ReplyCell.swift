@@ -197,7 +197,7 @@ class ReplyCell: UITableViewCell {
 	fileprivate func showActionList() {
 		guard let threadViewController = threadViewController else { return }
 		guard let threadRepliesElement = threadRepliesElement else { return }
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
 
@@ -220,9 +220,9 @@ class ReplyCell: UITableViewCell {
 //			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
 //			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-			action.addAction(upvoteAction)
-			action.addAction(downvoteAction)
-//			action.addAction(replyAction)
+			alertController.addAction(upvoteAction)
+			alertController.addAction(downvoteAction)
+//			alertController.addAction(replyAction)
 		}
 
 		// Username action
@@ -232,7 +232,7 @@ class ReplyCell: UITableViewCell {
 			})
 			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(userAction)
+			alertController.addAction(userAction)
 		}
 
 		// Share thread action
@@ -241,7 +241,7 @@ class ReplyCell: UITableViewCell {
 		})
 		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(shareAction)
+		alertController.addAction(shareAction)
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
@@ -249,18 +249,18 @@ class ReplyCell: UITableViewCell {
 		})
 		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(reportAction)
+		alertController.addAction(reportAction)
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.sourceView = moreButton
 			popoverController.sourceRect = moreButton.bounds
 		}
 
 		if (threadViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
-			threadViewController.present(action, animated: true, completion: nil)
+			threadViewController.present(alertController, animated: true, completion: nil)
 		}
 	}
 
@@ -275,13 +275,13 @@ class ReplyCell: UITableViewCell {
 			shareText = ["\"\(replyContent)\"-\(posterUsername)"]
 		}
 
-		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
-		if let popoverController = activityVC.popoverPresentationController {
+		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.sourceView = moreButton
 			popoverController.sourceRect = moreButton.bounds
 		}
-		threadViewController.present(activityVC, animated: true, completion: nil)
+		threadViewController.present(activityViewController, animated: true, completion: nil)
 	}
 
 	/// Shows the relevant options for the selected reply.

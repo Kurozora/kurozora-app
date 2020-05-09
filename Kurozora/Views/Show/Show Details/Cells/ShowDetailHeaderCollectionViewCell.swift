@@ -164,9 +164,9 @@ extension ShowDetailHeaderCollectionViewCell {
 			shareText = ["https://kurozora.app/anime/\(showID)\nYou should watch \"\(title)\" via @KurozoraApp"]
 		}
 
-		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
-		if let popoverController = activityVC.popoverPresentationController {
+		if let popoverController = activityViewController.popoverPresentationController {
 			if let sender = sender as? UIBarButtonItem {
 				popoverController.barButtonItem = sender
 			} else {
@@ -174,10 +174,7 @@ extension ShowDetailHeaderCollectionViewCell {
 				popoverController.sourceRect = sender.bounds
 			}
 		}
-
-		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(activityVC, animated: true, completion: nil)
-		}
+		self.parentViewController?.present(activityViewController, animated: true, completion: nil)
 	}
 
 	@IBAction func chooseStatusButtonPressed(_ sender: UIButton) {
@@ -187,7 +184,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			guard let userID = User.current?.id else { return }
 
 			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
-			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
+			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
 					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
 						switch result {
@@ -208,7 +205,7 @@ extension ShowDetailHeaderCollectionViewCell {
 			})
 
 			if !libraryStatusString.isEmpty {
-				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
 					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
 						switch result {
 						case .success:
@@ -221,16 +218,16 @@ extension ShowDetailHeaderCollectionViewCell {
 					}
 				}))
 			}
-			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+			alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 			//Present the controller
-			if let popoverController = action.popoverPresentationController {
+			if let popoverController = alertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
 			}
 
 			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(action, animated: true, completion: nil)
+				self.parentViewController?.present(alertController, animated: true, completion: nil)
 			}
 		}
 	}

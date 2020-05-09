@@ -197,7 +197,7 @@ class ForumsCell: UITableViewCell {
 	fileprivate func showActionList() {
 		guard let forumsChildViewController = self.forumsChildViewController else { return }
 		guard let forumThreadsElement = forumThreadsElement else { return }
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Mod and Admin features actions
 //		if User.isAdmin || User.isMod {
@@ -229,13 +229,13 @@ class ForumsCell: UITableViewCell {
 
 		// Upvote, downvote and reply actions
 		if let threadID = forumThreadsElement.id, threadID != 0 && forumThreadsElement.locked == .unlocked {
-			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
+			let upvoteAction = UIAlertAction(title: "Upvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 1)
 			})
-			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
+			let downvoteAction = UIAlertAction(title: "Downvote", style: .default, handler: { (_) in
 				self.voteForThread(with: 0)
 			})
-			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+			let replyAction = UIAlertAction(title: "Reply", style: .default, handler: { (_) in
 				self.replyThread()
 			})
 
@@ -246,9 +246,9 @@ class ForumsCell: UITableViewCell {
 			replyAction.setValue(R.image.symbols.message_fill()!, forKey: "image")
 			replyAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-			action.addAction(upvoteAction)
-			action.addAction(downvoteAction)
-			action.addAction(replyAction)
+			alertController.addAction(upvoteAction)
+			alertController.addAction(downvoteAction)
+			alertController.addAction(replyAction)
 		}
 
 		// Username action
@@ -258,7 +258,7 @@ class ForumsCell: UITableViewCell {
 			})
 			userAction.setValue(R.image.symbols.person_crop_circle_fill()!, forKey: "image")
 			userAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(userAction)
+			alertController.addAction(userAction)
 		}
 
 		// Share thread action
@@ -267,7 +267,7 @@ class ForumsCell: UITableViewCell {
 		})
 		shareAction.setValue(R.image.symbols.square_and_arrow_up_fill()!, forKey: "image")
 		shareAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(shareAction)
+		alertController.addAction(shareAction)
 
 		// Report thread action
 		let reportAction = UIAlertAction.init(title: "Report", style: .destructive, handler: { (_) in
@@ -275,20 +275,20 @@ class ForumsCell: UITableViewCell {
 		})
 		reportAction.setValue(R.image.symbols.exclamationmark_circle_fill()!, forKey: "image")
 		reportAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-		action.addAction(reportAction)
+		alertController.addAction(reportAction)
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.sourceView = moreButton
 			popoverController.sourceRect = moreButton.bounds
 		}
 
 		if (forumsChildViewController.navigationController?.visibleViewController as? UIAlertController) == nil {
-			forumsChildViewController.present(action, animated: true, completion: nil)
+			forumsChildViewController.present(alertController, animated: true, completion: nil)
 		}
 	}
 
@@ -303,13 +303,13 @@ class ForumsCell: UITableViewCell {
 			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
 		}
 
-		let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
 
-		if let popoverController = activityVC.popoverPresentationController {
+		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.sourceView = moreButton
 			popoverController.sourceRect = moreButton.bounds
 		}
-		forumsChildViewController.present(activityVC, animated: true, completion: nil)
+		forumsChildViewController.present(activityViewController, animated: true, completion: nil)
 	}
 
 	/// Sends a report of the selected thread to the mods.

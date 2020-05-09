@@ -46,7 +46,7 @@ class ForumsViewController: KTabbedViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: [("Top", "top", R.image.symbols.arrow_up_line_horizontal_3_decrease()!), ("Recent", "recent", R.image.symbols.clock()!)], currentSelection: threadSorting, action: { (title, value)  in
+		let alertController = UIAlertController.actionSheetWithItems(items: [("Top", "top", R.image.symbols.arrow_up_line_horizontal_3_decrease()!), ("Recent", "recent", R.image.symbols.clock()!)], currentSelection: threadSorting, action: { (title, value)  in
 			let currentSection = self.currentViewController as? ForumsListViewController
 			currentSection?.threadOrder = value
 			currentSection?.currentPage = 1
@@ -55,14 +55,16 @@ class ForumsViewController: KTabbedViewController {
 			currentSection?.fetchThreads()
 		})
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
-		self.present(action, animated: true, completion: nil)
+		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
+			self.present(alertController, animated: true, completion: nil)
+		}
 	}
 
 	@IBAction func createThreadBarButtonItemPressed(_ sender: Any) {

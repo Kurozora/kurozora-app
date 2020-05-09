@@ -94,26 +94,6 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DPQ-by-daN" customClass="KButton" customModule="Kurozora" customModuleProvider="target">
-                                            <rect key="frame" x="9.6666666666666643" y="10" width="34" height="34"/>
-                                            <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="34" id="LLP-sU-pxP"/>
-                                                <constraint firstAttribute="width" constant="34" id="j6j-S3-kwA"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="tintColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <inset key="contentEdgeInsets" minX="8" minY="10" maxX="8" maxY="10"/>
-                                            <state key="normal" image="Symbols/checkmark"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="17"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoi-zQ-WbM">
                                             <rect key="frame" x="10" y="146" width="60" height="88"/>
                                             <subviews>
@@ -150,7 +130,6 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="DPQ-by-daN" firstAttribute="top" secondItem="Q1P-dM-hNn" secondAttribute="top" constant="10" id="4ao-42-HQy"/>
                                         <constraint firstItem="xoi-zQ-WbM" firstAttribute="leading" secondItem="Q1P-dM-hNn" secondAttribute="leading" constant="10" id="5po-tC-uq8"/>
                                         <constraint firstAttribute="bottom" secondItem="Q1P-dM-hNn" secondAttribute="bottom" id="8Yn-OF-Cpp"/>
                                         <constraint firstItem="Q1P-dM-hNn" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xrd-WQ-48M" secondAttribute="trailing" constant="10" id="ApE-hz-E7W"/>
@@ -160,7 +139,6 @@
                                         <constraint firstItem="Q1P-dM-hNn" firstAttribute="leading" secondItem="EPN-KX-Fa2" secondAttribute="leading" id="TdW-4F-YZN"/>
                                         <constraint firstItem="Xrd-WQ-48M" firstAttribute="leading" secondItem="sem-st-EOu" secondAttribute="leading" id="cei-CP-2vy"/>
                                         <constraint firstAttribute="trailing" secondItem="Q1P-dM-hNn" secondAttribute="trailing" id="kVc-tB-o3j"/>
-                                        <constraint firstItem="DPQ-by-daN" firstAttribute="leading" secondItem="Q1P-dM-hNn" secondAttribute="leading" constant="9.5" id="mDh-Zh-Am6"/>
                                         <constraint firstItem="sem-st-EOu" firstAttribute="leading" secondItem="xoi-zQ-WbM" secondAttribute="trailing" constant="10" id="t4t-Mm-IGS"/>
                                         <constraint firstItem="Q1P-dM-hNn" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sem-st-EOu" secondAttribute="trailing" constant="10" id="vST-Ca-rYj"/>
                                         <constraint firstItem="Q1P-dM-hNn" firstAttribute="top" secondItem="EPN-KX-Fa2" secondAttribute="top" id="yR0-t2-nle"/>
@@ -174,7 +152,6 @@
                                     <outlet property="posterShadowView" destination="xoi-zQ-WbM" id="v9k-Ac-mWq"/>
                                     <outlet property="titleLabel" destination="Xrd-WQ-48M" id="sZx-Uc-xcf"/>
                                     <outlet property="userProgressLabel" destination="sem-st-EOu" id="6aM-sm-8Cf"/>
-                                    <outlet property="watchedButton" destination="DPQ-by-daN" id="6yC-J1-OqQ"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCompactCollectionViewCell" id="qr0-Oa-TLT" customClass="LibraryCompactCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
@@ -479,13 +456,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QhS-SJ-X7e"/>
+        <segue reference="EsS-u8-dQS"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Placeholders/Show Banner" width="1920" height="1080"/>
         <image name="Placeholders/Show Poster" width="680" height="1000"/>
-        <image name="Symbols/checkmark" width="24" height="24"/>
         <image name="Symbols/heart_circle" width="24" height="24"/>
         <image name="Symbols/line_horizontal_3_decrease_circle_fill" width="24" height="24"/>
         <image name="Symbols/rectangle_fill_on_rectangle_fill" width="24" height="24"/>

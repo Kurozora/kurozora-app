@@ -12,7 +12,6 @@ class LibraryDetailedCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var episodeImageView: UIImageView!
 	@IBOutlet weak var userProgressLabel: UILabel!
-    @IBOutlet weak var watchedButton: UIButton!
 
 	// MARK: - View
 	override func layoutSubviews() {

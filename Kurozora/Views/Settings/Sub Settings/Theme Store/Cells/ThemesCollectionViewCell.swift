@@ -196,7 +196,7 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 	}
 
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		let redownloadAction = UIAlertAction(title: "Redownload theme", style: .default, handler: { (_) in
 			self.handleRedownloadTheme()
@@ -216,20 +216,20 @@ class ThemesCollectionViewCell: UICollectionViewCell {
 		redownloadAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 		removeAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
-		action.addAction(redownloadAction)
-		action.addAction(removeAction)
+		alertController.addAction(redownloadAction)
+		alertController.addAction(removeAction)
 
 		// Add cancel action
-		action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds
 		}
 
 		if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.parentViewController?.present(action, animated: true, completion: nil)
+			self.parentViewController?.present(alertController, animated: true, completion: nil)
 		}
 	}
 }

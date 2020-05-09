@@ -10,8 +10,6 @@ import UIKit
 import KurozoraKit
 import Tabman
 import Pageboy
-import SCLAlertView
-import SwiftTheme
 
 protocol LibraryViewControllerDelegate: class {
 	/**
@@ -168,20 +166,20 @@ class LibraryViewController: KTabbedViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let action = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems) { (_, value) in
-			let action = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, action: { (_, subValue) in
+		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems) { (_, value) in
+			let subAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, action: { (_, subValue) in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
 			})
 
-			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+			subAlertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 			//Present the controller
-			if let popoverController = action.popoverPresentationController {
+			if let popoverController = subAlertController.popoverPresentationController {
 				popoverController.barButtonItem = sender
 			}
 
 			if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.present(action, animated: true, completion: nil)
+				self.present(subAlertController, animated: true, completion: nil)
 			}
 		}
 
@@ -193,19 +191,19 @@ class LibraryViewController: KTabbedViewController {
 				})
 				stopSortingAction.setValue(R.image.symbols.xmark_circle_fill()!, forKey: "image")
 				stopSortingAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-				action.addAction(stopSortingAction)
+				alertController.addAction(stopSortingAction)
 			}
 		}
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
 		if (self.navigationController?.visibleViewController as? UIAlertController) == nil {
-			self.present(action, animated: true, completion: nil)
+			self.present(alertController, animated: true, completion: nil)
 		}
 	}
 

@@ -32,7 +32,7 @@ class EpisodeDetailCollectionViewControlle: KCollectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.title = "The End of the Beginning and the Beginning of the End"
+		self.title = episodeElement?.name
 	}
 }
 

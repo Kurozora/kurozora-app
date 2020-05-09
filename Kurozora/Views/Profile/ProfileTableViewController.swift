@@ -497,7 +497,7 @@ class ProfileTableViewController: KTableViewController {
 
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList(_ sender: UIBarButtonItem) {
-		let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		// Go to last watched episode
 		if User.isSignedIn {
@@ -506,18 +506,18 @@ class ProfileTableViewController: KTableViewController {
 			})
 			showFavoriteShowsList.setValue(R.image.symbols.heart_circle()!, forKey: "image")
 			showFavoriteShowsList.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-			action.addAction(showFavoriteShowsList)
+			alertController.addAction(showFavoriteShowsList)
 		}
 
-		action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-		action.view.theme_tintColor = KThemePicker.tintColor.rawValue
+		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
 
 		//Present the controller
-		if let popoverController = action.popoverPresentationController {
+		if let popoverController = alertController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
 
-		self.present(action, animated: true, completion: nil)
+		self.present(alertController, animated: true, completion: nil)
 	}
 
 	// MARK: - IBActions

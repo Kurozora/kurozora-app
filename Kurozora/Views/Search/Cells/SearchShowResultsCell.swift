@@ -94,7 +94,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 			guard let userID = User.current?.id else { return }
 
 			let libraryStatus = KKLibrary.Status.fromString(libraryStatusString)
-			let action = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
+			let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.Status.alertControllerItems, currentSelection: libraryStatus, action: { (title, value)  in
 				if libraryStatus != value {
 					KService.addToLibrary(forUserID: userID, withLibraryStatus: value, showID: showID) { result in
 						switch result {
@@ -114,7 +114,7 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 			})
 
 			if !libraryStatusString.isEmpty {
-				action.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
+				alertController.addAction(UIAlertAction.init(title: "Remove from library", style: .destructive, handler: { (_) in
 					KService.removeFromLibrary(forUserID: userID, showID: showID) { result in
 						switch result {
 						case .success:
@@ -126,16 +126,16 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 					}
 				}))
 			}
-			action.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+			alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
 			//Present the controller
-			if let popoverController = action.popoverPresentationController {
+			if let popoverController = alertController.popoverPresentationController {
 				popoverController.sourceView = sender
 				popoverController.sourceRect = sender.bounds
 			}
 
 			if (self.parentViewController?.navigationController?.visibleViewController as? UIAlertController) == nil {
-				self.parentViewController?.present(action, animated: true, completion: nil)
+				self.parentViewController?.present(alertController, animated: true, completion: nil)
 			}
 		}
 	}

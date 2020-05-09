@@ -8,9 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SwiftyJSON
-import SCLAlertView
-import SwiftTheme
 
 protocol LibraryListViewControllerDelegate: class {
 	func updateChangeLayoutButton(with cellStyle: KKLibrary.CellStyle)
@@ -50,6 +47,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		// Save current page index
 		UserSettings.set(sectionIndex, forKey: .libraryPage)
 
+		// Setup library view controller delegate
+		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
+
 		// Update change layout button to reflect user settings
 		delegate?.updateChangeLayoutButton(with: libraryCellStyle)
 
@@ -69,9 +69,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 
 		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
-
-		// Setup library view controller delegate
-		(tabmanParent as? LibraryViewController)?.libraryViewControllerDelegate = self
 
 		// Add Refresh Control to Collection View
 		collectionView.refreshControl = refreshControl

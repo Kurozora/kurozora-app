@@ -48,12 +48,12 @@ class KWebViewController: UIViewController {
 		guard let title = title else { return }
 
 		let shareText = ["\(title)\r\n\(url)"]
-		let activityVC = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
 
-		if let popoverController = activityVC.popoverPresentationController {
+		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.barButtonItem = sender
 		}
-		self.present(activityVC, animated: true, completion: nil)
+		self.present(activityViewController, animated: true, completion: nil)
 	}
 }
 
