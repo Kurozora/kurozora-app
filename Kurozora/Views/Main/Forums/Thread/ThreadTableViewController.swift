@@ -8,8 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SwiftyJSON
-import SCLAlertView
 
 // MARK: - CUSTOM UILABEL
 class ThreadTableViewController: KTableViewController {

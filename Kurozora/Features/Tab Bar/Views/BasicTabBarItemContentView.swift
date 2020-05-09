@@ -8,7 +8,6 @@
 
 import UIKit
 import ESTabBarController_swift
-import SwiftTheme
 
 class BasicTabBarItemContentView: ESTabBarItemContentView {
     override init(frame: CGRect) {
@@ -17,7 +16,7 @@ class BasicTabBarItemContentView: ESTabBarItemContentView {
 
 		updateTabBarItemStyle()
 
-		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: Notification.Name(rawValue: ThemeUpdateNotification), object: nil
+		NotificationCenter.default.addObserver(self, selector: #selector(updateTabBarItemStyle), name: .ThemeUpdateNotification, object: nil
 		)
     }
 

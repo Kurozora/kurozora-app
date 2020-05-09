@@ -8,9 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
-import SwiftTheme
-import SwiftyJSON
 
 class ForumsListViewController: KTableViewController {
 	// MARK: - Properties

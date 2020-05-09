@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SwiftyJSON
 
 class BadgesTableViewController: KTableViewController {
 	// MARK: - Properties

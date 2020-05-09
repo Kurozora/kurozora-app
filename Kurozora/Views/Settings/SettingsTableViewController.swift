@@ -10,7 +10,6 @@ import UIKit
 import KurozoraKit
 import Kingfisher
 import SCLAlertView
-import SwiftTheme
 
 class SettingsTableViewController: KTableViewController {
 	// MARK: - Properties

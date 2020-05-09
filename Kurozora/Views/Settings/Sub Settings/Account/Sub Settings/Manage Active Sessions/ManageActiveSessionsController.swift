@@ -11,7 +11,6 @@ import KurozoraKit
 import CoreLocation
 import MapKit
 import SCLAlertView
-import SwiftyJSON
 import SwipeCellKit
 
 class ManageActiveSessionsController: KTableViewController {

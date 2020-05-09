@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftTheme
 
 class SettingsSplitViewController: UISplitViewController {
 	// MARK: - Properties

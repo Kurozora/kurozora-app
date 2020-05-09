@@ -10,7 +10,6 @@ import UIKit
 import KurozoraKit
 import SCLAlertView
 import SwiftyJSON
-import SwiftTheme
 
 protocol KRichTextEditorViewDelegate: class {
 	func updateThreadsList(with thread: ForumsThreadElement)

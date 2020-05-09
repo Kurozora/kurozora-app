@@ -8,8 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
-import SwiftTheme
 
 class ManageThemesCollectionViewController: KCollectionViewController {
 	// MARK: - Properties

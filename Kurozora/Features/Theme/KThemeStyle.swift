@@ -9,10 +9,8 @@
 import UIKit
 import KurozoraKit
 import CoreLocation
-import Alamofire
 import Solar
 import SwiftTheme
-import TRON
 
 /**
 	List of app-wide theme styles.
@@ -25,6 +23,7 @@ import TRON
 	```
 */
 enum KThemeStyle: Int {
+	// MARK: - Cases
 	/// The default style of the app with purple background.
 	case `default` = 0
 
@@ -51,9 +50,6 @@ enum KThemeStyle: Int {
 	// Timer variables
 	fileprivate static var automaticDarkThemeSchedule: Timer?
 	fileprivate static let calendar = Calendar.current
-
-	// Networking variables
-	fileprivate static let tron = TRON(baseURL: "", plugins: [NetworkActivityPlugin(application: UIApplication.shared)])
 
 	/// The string value for a given KThemeStyle.
 	var stringValue: String {

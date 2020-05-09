@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
 
 class MALImportTableViewController: ServiceTableViewController {
 	// MARK: - IBOutlets

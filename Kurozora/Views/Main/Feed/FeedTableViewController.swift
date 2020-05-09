@@ -8,7 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SwiftTheme
 
 class FeedTableViewController: KTableViewController {
 	// MARK: - Properties

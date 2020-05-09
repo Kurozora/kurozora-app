@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import SwiftTheme
 
 class KDefaultsCell: SettingsCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var valueTextField: KTextField!
 
+	// MARK: - IBActions
     @IBAction func valueTextFieldEditingDidEnd(_ sender: Any) {
         guard let key = primaryLabel?.text else {return}
         guard let value = valueTextField.text else {return}

@@ -8,8 +8,6 @@
 
 import UIKit
 import KurozoraKit
-import SCLAlertView
-import SwiftyJSON
 import WhatsNew
 
 class HomeCollectionViewController: KCollectionViewController {

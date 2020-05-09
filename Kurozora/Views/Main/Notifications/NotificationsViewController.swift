@@ -8,10 +8,7 @@
 
 import UIKit
 import KurozoraKit
-import SwiftyJSON
-import SCLAlertView
 import SwipeCellKit
-import SwiftTheme
 
 protocol NotificationsViewControllerDelegate: class {
     func notificationsViewControllerHasUnreadNotifications(count: Int)
