@@ -124,13 +124,24 @@ class EpisodeLockupCollectionViewCell: UICollectionViewCell {
 
 	func populateShareSheet() {
 		guard let episodeID = episodeElement?.id else { return }
-		var shareText: [String] = ["https://kurozora.app/episode/\(episodeID)\nYou should watch this episode via @KurozoraApp"]
+		var activityItems: [Any] = []
+		var shareText: String = ""
+		var shareImage: UIImage = UIImage()
 
 		if let title = episodeElement?.name, !title.isEmpty {
-			shareText = ["https://kurozora.app/episode/\(episodeID)\nYou should watch \"\(title)\" via @KurozoraApp"]
+			shareText = "https://kurozora.app/episode/\(episodeID)\nYou should watch \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "https://kurozora.app/episode/\(episodeID)\nYou should watch this episode via @KurozoraApp"
 		}
 
-		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
+		if let episodeImage = episodeImageView.image {
+			shareImage = episodeImage
+		}
+
+		activityItems.append(shareText)
+		activityItems.append(shareImage)
+
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.sourceView = episodeMoreButton
