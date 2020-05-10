@@ -9,7 +9,6 @@ use_frameworks!
 
 # MARK: - Defs
 def kurozora_pods
-	pod 'AXPhotoViewer'
 	pod 'Cosmos'
 	pod 'DiffableDataSources'
 	pod 'ESTabBarController-swift'
@@ -22,7 +21,6 @@ def kurozora_pods
 	pod 'R.swift'
 	pod 'ReachabilitySwift'
 #	pod 'RichTextView'
-  pod 'SCLAlertView'
 	pod 'Solar'
 	pod 'SPStorkController'
 #	pod 'SnowGlobe'

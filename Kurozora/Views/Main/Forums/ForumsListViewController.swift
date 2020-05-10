@@ -137,7 +137,7 @@ extension ForumsListViewController {
 		guard let forumsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.forumsCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
 		}
-		forumsCell.forumThreadsElement = forumThreadsElements?[indexPath.row]
+		forumsCell.forumsThreadElement = forumThreadsElements?[indexPath.row]
 		forumsCell.forumsChildViewController = self
 		return forumsCell
 	}

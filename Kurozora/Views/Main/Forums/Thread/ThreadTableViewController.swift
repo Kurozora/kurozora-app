@@ -9,7 +9,6 @@
 import UIKit
 import KurozoraKit
 
-// MARK: - CUSTOM UILABEL
 class ThreadTableViewController: KTableViewController {
 	// MARK: - IBOutlets
 	@IBOutlet weak var lockImageView: UIImageView!
@@ -317,58 +316,6 @@ class ThreadTableViewController: KTableViewController {
 		}
 	}
 
-	/// Presents a share sheet to share the current thread.
-	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
-		let threadUrl = "https://kurozora.app/thread/\(forumThreadID)"
-		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
-
-		if let title = forumsThreadElement?.title, !title.isEmpty {
-			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
-		}
-
-		let activityViewController = UIActivityViewController(activityItems: shareText, applicationActivities: [])
-
-		if let popoverController = activityViewController.popoverPresentationController {
-			if let sender = sender {
-				popoverController.sourceView = sender
-				popoverController.sourceRect = sender.bounds
-			} else {
-				popoverController.barButtonItem = barButtonItem
-			}
-		}
-		self.present(activityViewController, animated: true, completion: nil)
-	}
-
-	/// Sends a report of the selected thread to the mods.
-	func reportThread() {
-		WorkflowController.shared.isSignedIn {
-		}
-	}
-
-	/**
-		Shows and hides some elements according to the lock status of the current thread.
-
-		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide the lock.
-	*/
-	func isLocked(_ lockStatus: LockStatus) {
-		forumsThreadElement?.locked = lockStatus
-		// Set lock label
-		if lockStatus == .locked {
-			lockImageView.isHidden = false
-			upvoteButton.isUserInteractionEnabled = false
-			downvoteButton.isUserInteractionEnabled = false
-			replyButton.isUserInteractionEnabled = false
-			actionsStackView.isHidden = true
-		} else {
-			lockImageView.isHidden = true
-			upvoteButton.isUserInteractionEnabled = true
-			downvoteButton.isUserInteractionEnabled = true
-			replyButton.isUserInteractionEnabled = true
-			actionsStackView.isHidden = false
-		}
-		tableView.reloadData()
-	}
-
 	/// Presents the profile view for the thread poster.
 	func visitPosterProfilePage() {
 		if let posterUserID = forumsThreadElement?.posterUserID, posterUserID != 0 {
@@ -377,13 +324,21 @@ class ThreadTableViewController: KTableViewController {
 				profileViewController.dismissButtonIsEnabled = true
 
 				let kurozoraNavigationController = KNavigationController.init(rootViewController: profileViewController)
-				if #available(iOS 13.0, macCatalyst 13.0, *) {
-					self.present(kurozoraNavigationController, animated: true, completion: nil)
-				} else {
-					self.presentAsStork(kurozoraNavigationController, height: nil, showIndicator: false, showCloseButton: false)
-				}
+				self.present(kurozoraNavigationController)
 			}
 		}
+	}
+
+	/**
+		Shows and hides some elements according to the lock status of the current thread.
+
+		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide some views.
+	*/
+	func isLocked(_ lockStatus: LockStatus) {
+		forumsThreadElement?.locked = lockStatus
+		lockImageView.isHidden = !lockStatus.boolValue
+		actionsStackView.isHidden = lockStatus.boolValue
+		tableView.reloadData()
 	}
 
 	/// Builds and presents an action sheet.
@@ -391,43 +346,15 @@ class ThreadTableViewController: KTableViewController {
 		guard let forumsThreadElement = forumsThreadElement else { return }
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-		// Mod and Admin features actions
-//		if User.isAdmin || User.isMod {
-//			if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 {
-//				var lock = 0
-//				var lockTitle = "Locked"
-//
-//				if !locked {
-//					lock = 1
-//					lockTitle = "Unlocked"
-//				}
-//
-//				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-//					KurozoraKit.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
-//						self.isLocked(locked)
-//					})
-//				})
-//				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//
-//				if locked {
-//					lockAction.setValue(R.image.symbols.lock_fill()!, forKey: "image")
-//				} else {
-//					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
-//				}
-//
-//				alertController.addAction(lockAction)
-//			}
-//		}
-
 		// Upvote, downvote and reply actions
-		if let threadID = forumsThreadElement.id, let locked = forumsThreadElement.locked, threadID != 0 && locked == .unlocked {
-			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { (_) in
+		if let threadID = forumsThreadElement.id, threadID != 0 && forumsThreadElement.locked == .unlocked {
+			let upvoteAction = UIAlertAction.init(title: "Upvote", style: .default, handler: { _ in
 				self.voteOnThread(withVoteStatus: .upVote)
 			})
-			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { (_) in
+			let downvoteAction = UIAlertAction.init(title: "Downvote", style: .default, handler: { _ in
 				self.voteOnThread(withVoteStatus: .downVote)
 			})
-			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { (_) in
+			let replyAction = UIAlertAction.init(title: "Reply", style: .default, handler: { _ in
 				self.replyThread()
 			})
 
@@ -481,6 +408,38 @@ class ThreadTableViewController: KTableViewController {
 		}
 	}
 
+	/// Presents a share sheet to share the current thread.
+	func shareThread(_ sender: UIButton? = nil, barButtonItem: UIBarButtonItem? = nil) {
+		let threadURLString = "https://kurozora.app/thread/\(forumThreadID)"
+		let threadURL: Any = URL(string: threadURLString) ?? threadURLString
+		var shareText: String = ""
+
+		if let title = forumsThreadElement?.title, !title.isEmpty {
+			shareText = "You should read \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "You should read this thread via @KurozoraApp"
+		}
+
+		let activityItems: [Any] = [threadURL, shareText]
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
+
+		if let popoverController = activityViewController.popoverPresentationController {
+			if let sender = sender {
+				popoverController.sourceView = sender
+				popoverController.sourceRect = sender.bounds
+			} else {
+				popoverController.barButtonItem = barButtonItem
+			}
+		}
+		self.present(activityViewController, animated: true, completion: nil)
+	}
+
+	/// Sends a report of the selected thread to the mods.
+	func reportThread() {
+		WorkflowController.shared.isSignedIn {
+		}
+	}
+
 	// MARK: - IBActions
 	@IBAction func showUserProfileButton(_ sender: UIButton) {
 		visitPosterProfilePage()
@@ -513,10 +472,7 @@ class ThreadTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ThreadTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		if let repliesCount = replies?.count, repliesCount != 0 {
-			return repliesCount
-		}
-		return 0
+		return replies?.count ?? 0
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -527,11 +483,9 @@ extension ThreadTableViewController {
 		guard let replyCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.replyCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.replyCell.identifier)")
 		}
-
 		replyCell.forumsThreadElement = forumsThreadElement
 		replyCell.threadRepliesElement = replies?[indexPath.section]
 		replyCell.threadViewController = self
-
 		return replyCell
 	}
 }

@@ -11,12 +11,7 @@ import KurozoraKit
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBoutlet
-	@IBOutlet weak var bannerImageView: UIImageView! {
-		didSet {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showBanner(_:)))
-			bannerImageView.addGestureRecognizer(gestureRecognizer)
-		}
-	}
+	@IBOutlet weak var bannerImageView: UIImageView!
 	@IBOutlet weak var visualEffectView: KVisualEffectView! {
 		didSet {
 			visualEffectView.cornerRadius = 10
@@ -36,12 +31,7 @@ class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var tagsLabel: UILabel!
 	@IBOutlet weak var statusButton: UIButton!
 	@IBOutlet weak var shadowView: UIView!
-	@IBOutlet weak var posterImageView: UIImageView! {
-		didSet {
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showPoster(_:)))
-			posterImageView.addGestureRecognizer(gestureRecognizer)
-		}
-	}
+	@IBOutlet weak var posterImageView: UIImageView!
 	@IBOutlet weak var favoriteButton: UIButton!
 
 	// MARK: - Properties
@@ -129,32 +119,6 @@ extension ShowDetailHeaderCollectionViewCell {
 		favoriteButton.tag = showIsFavorite ? 1 : 0
 		favoriteButton.setImage(favoriteImage, for: .normal)
 		NotificationCenter.default.post(name: .KFavoriteShowsListDidChange, object: nil)
-	}
-
-	/**
-		Presents the selected banner image in an image viewer.
-
-		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
-	*/
-	@objc func showBanner(_ gestureRecognizer: UIGestureRecognizer) {
-		if let banner = showDetailsElement?.banner, !banner.isEmpty {
-			parentViewController?.presentPhotoViewControllerWith(url: banner, from: bannerImageView)
-		} else {
-			parentViewController?.presentPhotoViewControllerWith(image: bannerImageView.image, from: bannerImageView)
-		}
-	}
-
-	/**
-		Presents the selected poster image in an image viewer.
-
-		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
-	*/
-	@objc func showPoster(_ gestureRecognizer: UIGestureRecognizer) {
-		if let poster = showDetailsElement?.poster, !poster.isEmpty {
-			parentViewController?.presentPhotoViewControllerWith(url: poster, from: posterImageView)
-		} else {
-			parentViewController?.presentPhotoViewControllerWith(image: posterImageView.image, from: posterImageView)
-		}
 	}
 }
 

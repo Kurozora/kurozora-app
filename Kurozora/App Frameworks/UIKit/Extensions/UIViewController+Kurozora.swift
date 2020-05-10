@@ -8,7 +8,6 @@
 
 import UIKit
 import AVKit
-import AXPhotoViewer
 import SPStorkController
 
 // MARK: - View
@@ -44,88 +43,6 @@ extension UIViewController {
 			self.present(controller, animated: true, completion: nil)
 		}
     }
-
-	/**
-		Present an image in a lightbox.
-
-		- Parameter image: The url of the image to pass onto the view.
-		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
-	*/
-	func presentPhotoViewControllerWith(url image: String?, from startingImageView: UIImageView) {
-		guard let image = image else { return }
-		guard let imageUrl = URL(string: image) else { return }
-
-		let photoUrl = [AXPhoto(url: imageUrl)]
-
-		// Set datasource
-		let dataSource = AXPhotosDataSource(photos: photoUrl)
-
-		// Transition info
-		let transitionInfo = AXTransitionInfo(interactiveDismissalEnabled: true, startingView: startingImageView) { (_, _) -> UIImageView? in
-			// this closure can be used to adjust your UI before returning an `endingImageView`.
-			return startingImageView
-		}
-
-		// Create an instance of AXPhotosViewController
-		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
-
-		// Present the video
-		self.present(photosViewController, animated: true, completion: nil)
-	}
-
-	/**
-		Present an image in a lightbox.
-
-		- Parameter image: The UIImage of the image view to pass onto the view.
-		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
-	*/
-	func presentPhotoViewControllerWith(image: UIImage?, from startingImageView: UIImageView) {
-		guard let image = image else { return }
-
-		let photoUrl = [AXPhoto(image: image)]
-
-		// Set datasource
-		let dataSource = AXPhotosDataSource(photos: photoUrl)
-
-		// Transition info
-		let transitionInfo = AXTransitionInfo(interactiveDismissalEnabled: true, startingView: startingImageView) { (_, _) -> UIImageView? in
-			// this closure can be used to adjust your UI before returning an `endingImageView`.
-			return startingImageView
-		}
-
-		// Create an instance of AXPhotosViewController
-		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
-
-		// Present the video
-		self.present(photosViewController, animated: true, completion: nil)
-	}
-
-	/**
-		Present an image in a lightbox.
-
-		- Parameter image: The string of the image to pass onto the view.
-		- Parameter startingImageView: The image view containing the image to be presented in a lightbox.
-	*/
-	func presentPhotoViewControllerWith(string image: String?, from startingImageView: UIImageView) {
-		guard let image = image else { return }
-
-		let photoUrl = [AXPhoto(image: UIImage(named: image))]
-
-		// Set datasource
-		let dataSource = AXPhotosDataSource(photos: photoUrl)
-
-		// Transition info
-		let transitionInfo = AXTransitionInfo(interactiveDismissalEnabled: true, startingView: startingImageView) { (_, _) -> UIImageView? in
-			// this closure can be used to adjust your UI before returning an `endingImageView`.
-			return startingImageView
-		}
-
-		// Create an instance of AXPhotosViewController
-		let photosViewController = AXPhotosViewController(dataSource: dataSource, pagingConfig: nil, transitionInfo: transitionInfo)
-
-		// Present the video
-		self.present(photosViewController, animated: true, completion: nil)
-	}
 
 	/**
 		Present a YouTube video in a view controller.

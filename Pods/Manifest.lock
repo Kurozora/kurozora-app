@@ -1,12 +1,5 @@
 PODS:
   - Alamofire (5.1.0)
-  - AXPhotoViewer (1.7.1):
-    - AXPhotoViewer/Core (= 1.7.1)
-  - AXPhotoViewer/Core (1.7.1):
-    - AXStateButton (>= 1.1.3)
-    - FLAnimatedImage (>= 1.0.0)
-    - FLAnimatedImage-tvOS (>= 1.0.16)
-  - AXStateButton (1.1.4)
   - Cosmos (21.0.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
@@ -16,7 +9,6 @@ PODS:
     - DifferenceKit/Core
   - EmptyDataSet-Swift (5.0.0)
   - ESTabBarController-swift (2.8.0)
-  - FLAnimatedImage (1.0.12)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.2.0)
   - Kingfisher (5.13.4):
@@ -36,7 +28,7 @@ PODS:
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
   - ReachabilitySwift (5.0.0)
-  - SCLAlertView (0.8.3)
+  - SCLAlertView (0.9.0)
   - SnapKit (5.0.1)
   - Solar (2.1.0)
   - SPStorkController (1.8.2)
@@ -83,7 +75,6 @@ PODS:
   - WhatsNew (0.4.6)
 
 DEPENDENCIES:
-  - AXPhotoViewer
   - Cosmos
   - DiffableDataSources
   - EmptyDataSet-Swift
@@ -95,7 +86,6 @@ DEPENDENCIES:
   - NotificationBannerSwift
   - R.swift
   - ReachabilitySwift
-  - SCLAlertView
   - Solar
   - SPStorkController
   - SwifterSwift
@@ -110,14 +100,11 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - AXPhotoViewer
-    - AXStateButton
     - Cosmos
     - DiffableDataSources
     - DifferenceKit
     - EmptyDataSet-Swift
     - ESTabBarController-swift
-    - FLAnimatedImage
     - IBPCollectionViewCompositionalLayout
     - KeychainAccess
     - Kingfisher
@@ -144,14 +131,11 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
-  AXPhotoViewer: f4b021c6e43b0b9dbc7b30cf8b9a4f577d0c1f51
-  AXStateButton: 6c515a433e37551505046429b5be04c12daa8c07
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
@@ -162,7 +146,7 @@ SPEC CHECKSUMS:
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SCLAlertView: 1f7e3aeb080d7962d3f228e580456e992698bbe6
+  SCLAlertView: 778e1b1dca4fa2cdfea4dc63f05d1780bd44db69
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   SPStorkController: d809adb3e333ec07760f8bf1b4c628a2801675ac
@@ -175,6 +159,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: debfdd2a4b624a6987bbd231492c26f26f92f2d6
+PODFILE CHECKSUM: 2d0b63920f1889e9e559fc42445eaaa2bb94ffba
 
 COCOAPODS: 1.9.1

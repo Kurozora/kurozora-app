@@ -555,22 +555,6 @@ class ProfileTableViewController: KTableViewController {
 		showActionList(sender)
 	}
 
-	@IBAction func showProfileImage(_ sender: AnyObject) {
-		if let profileImageURL = self.userProfile?.profileImageURL, !profileImageURL.isEmpty {
-			presentPhotoViewControllerWith(url: profileImageURL, from: profileImageView)
-		} else {
-			presentPhotoViewControllerWith(image: profileImageView.image, from: profileImageView)
-		}
-	}
-
-	@IBAction func showBanner(_ sender: AnyObject) {
-		if let bannerImageURL = self.userProfile?.bannerImageURL, !bannerImageURL.isEmpty {
-			presentPhotoViewControllerWith(url: bannerImageURL, from: bannerImageView)
-		} else {
-			presentPhotoViewControllerWith(image: bannerImageView.image, from: bannerImageView)
-		}
-	}
-
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.profileTableViewController.badgeSegue.identifier {

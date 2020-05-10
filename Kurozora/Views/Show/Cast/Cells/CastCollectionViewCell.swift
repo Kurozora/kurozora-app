@@ -69,11 +69,6 @@ class CastCollectionViewCell: UICollectionViewCell {
 		}
 		self.actorShadowView.applyShadow()
 
-		if self.actorImageView.gestureRecognizers?.count ?? 0 == 0 {
-			self.actorImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showImage(_:))))
-			self.actorImageView.isUserInteractionEnabled = true
-		}
-
 		// Configure character
 		if let characterName = actorElement.role {
 			self.characterName?.text = "as \(characterName)"
@@ -82,20 +77,5 @@ class CastCollectionViewCell: UICollectionViewCell {
 		let nameInitials = actorElement.role?.initials
 		self.characterImageView.image = nameInitials?.toImage(withFrameSize: characterImageView.frame, placeholder: R.image.placeholders.showPerson()!)
 		self.characterShadowView.applyShadow()
-
-		if self.characterImageView.gestureRecognizers?.count ?? 0 == 0 {
-			self.characterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showImage(_:))))
-			self.characterImageView.isUserInteractionEnabled = true
-		}
-	}
-
-	/**
-		Presents the selected cast image in an image viewer.
-
-		- Parameter gestureRecognizer: The gesture recognizer object that contains information about the tapped location on the view.
-	*/
-	@objc func showImage(_ gestureRecognizer: UITapGestureRecognizer) {
-		guard let imageView = gestureRecognizer.view as? UIImageView else { return }
-		parentViewController?.presentPhotoViewControllerWith(image: imageView.image, from: imageView)
 	}
 }

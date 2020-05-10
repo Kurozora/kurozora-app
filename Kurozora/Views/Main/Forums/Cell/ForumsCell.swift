@@ -75,7 +75,7 @@ class ForumsCell: UITableViewCell {
 
 	// MARK: - Properties
 	var forumsChildViewController: ForumsListViewController?
-	var forumThreadsElement: ForumsThreadElement? {
+	var forumsThreadElement: ForumsThreadElement? {
 		didSet {
 			configureCell()
 		}
@@ -85,39 +85,39 @@ class ForumsCell: UITableViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let forumThreadsElement = forumThreadsElement else { return }
+		guard let forumsThreadElement = forumsThreadElement else { return }
 
 		// Set title label
-		titleLabel.text = forumThreadsElement.title
+		titleLabel.text = forumsThreadElement.title
 
 		// Set content label
-		contentLabel.text = forumThreadsElement.content
+		contentLabel.text = forumsThreadElement.content
 
 		// Set poster username label
-		usernameButton.setTitle(forumThreadsElement.posterUsername, for: .normal)
+		usernameButton.setTitle(forumsThreadElement.posterUsername, for: .normal)
 
 		// Set thread stats
-		if let voteCount = forumThreadsElement.voteCount {
+		if let voteCount = forumsThreadElement.voteCount {
 			voteCountButton.setTitle("\((voteCount >= 1000) ? voteCount.kFormatted : voteCount.string) · ", for: .normal)
 		}
 
-		if let commentCount = forumThreadsElement.commentCount {
+		if let commentCount = forumsThreadElement.commentCount {
 			commentCountButton.setTitle("\((commentCount >= 1000) ? commentCount.kFormatted : commentCount.string) · ", for: .normal)
 		}
 
-		if let creationDate = forumThreadsElement.creationDate, !creationDate.isEmpty {
+		if let creationDate = forumsThreadElement.creationDate, !creationDate.isEmpty {
 			dateTimeButton.setTitle(creationDate.timeAgo, for: .normal)
 		}
 
 		// Thread vote status
-		if let voteStatusInt = forumThreadsElement.currentUser?.likeAction {
+		if let voteStatusInt = forumsThreadElement.currentUser?.likeAction {
 			let voteStatus = VoteStatus(rawValue: voteStatusInt) ?? .noVote
 			updateVoting(withVoteStatus: voteStatus)
 		}
 
 		// Check if thread is locked
 		lockImageView.tintColor = .kLightRed
-		if let locked = forumThreadsElement.locked {
+		if let locked = forumsThreadElement.locked {
 			isLocked(locked)
 		}
 
@@ -132,12 +132,12 @@ class ForumsCell: UITableViewCell {
 
 		- Parameter vote: The integer indicating whether to downvote or upvote a thread.  (0 = downvote, 1 = upvote)
 	*/
-	fileprivate func voteForThread(with vote: Int) {
-		guard let voteStatus = VoteStatus(rawValue: vote) else { return }
-		guard let threadID = self.forumThreadsElement?.id else { return }
+	fileprivate func voteOnThread(withVoteStatus voteStatus: VoteStatus) {
+		guard let threadID = self.forumsThreadElement?.id else { return }
 
 		WorkflowController.shared.isSignedIn {
-			guard var threadScore = self.forumThreadsElement?.voteCount else { return }
+			guard var threadScore = self.forumsThreadElement?.voteCount else { return }
+
 			KService.voteOnThread(threadID, withVoteStatus: voteStatus) { result in
 				switch result {
 				case .success(let voteStatus):
@@ -159,7 +159,7 @@ class ForumsCell: UITableViewCell {
 
 	/// Presents the profile view for the thread poster.
 	fileprivate func visitPosterProfilePage() {
-		if let posterID = forumThreadsElement?.posterUserID, posterID != 0 {
+		if let posterID = forumsThreadElement?.posterUserID, posterID != 0 {
 			if let profileViewController = R.storyboard.profile.profileTableViewController() {
 				profileViewController.userProfile = try? UserProfile(json: ["id": posterID])
 				profileViewController.dismissButtonIsEnabled = true
@@ -176,14 +176,17 @@ class ForumsCell: UITableViewCell {
 		- Parameter lockStatus: The `LockStatus` value indicating whather to show or hide some views.
 	*/
 	fileprivate func isLocked(_ lockStatus: LockStatus) {
-		forumThreadsElement?.locked = lockStatus
-		if lockStatus == .locked {
+		forumsThreadElement?.locked = lockStatus
+
+		// Set lock label
+		switch lockStatus {
+		case .locked:
 			lockImageView.isHidden = false
 			upvoteButton.isHidden = true
 			downvoteButton.isHidden = true
 			upvoteButton.isUserInteractionEnabled = false
 			downvoteButton.isUserInteractionEnabled = false
-		} else {
+		case .unlocked:
 			lockImageView.isHidden = true
 			upvoteButton.isHidden = false
 			downvoteButton.isHidden = false
@@ -195,46 +198,18 @@ class ForumsCell: UITableViewCell {
 	/// Builds and presents an action sheet.
 	fileprivate func showActionList() {
 		guard let forumsChildViewController = self.forumsChildViewController else { return }
-		guard let forumThreadsElement = forumThreadsElement else { return }
+		guard let forumsThreadElement = forumsThreadElement else { return }
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-		// Mod and Admin features actions
-//		if User.isAdmin || User.isMod {
-//			if let threadID = forumThreadsElement.id, let locked = forumThreadsElement.locked, threadID != 0 {
-//				var lock = 0
-//				var lockTitle = "Locked"
-//
-//				if !locked {
-//					lock = 1
-//					lockTitle = "Unlocked"
-//				}
-//
-//				let lockAction = UIAlertAction.init(title: lockTitle, style: .default, handler: { (_) in
-//					KurozoraKit.shared.lockThread(withID: threadID, lock: lock, withSuccess: { (locked) in
-//						self.isLocked(locked)
-//					})
-//				})
-//				lockAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-//
-//				if locked {
-//					lockAction.setValue(R.image.symbols.lock_fill()!, forKey: "image")
-//				} else {
-//					lockAction.setValue(R.image.symbols.lock_open_fill()!, forKey: "image")
-//				}
-//
-//				action.addAction(lockAction)
-//			}
-//		}
-
 		// Upvote, downvote and reply actions
-		if let threadID = forumThreadsElement.id, threadID != 0 && forumThreadsElement.locked == .unlocked {
-			let upvoteAction = UIAlertAction(title: "Upvote", style: .default, handler: { (_) in
-				self.voteForThread(with: 1)
+		if let threadID = forumsThreadElement.id, threadID != 0 && forumsThreadElement.locked == .unlocked {
+			let upvoteAction = UIAlertAction(title: "Upvote", style: .default, handler: { _ in
+				self.voteOnThread(withVoteStatus: .upVote)
 			})
-			let downvoteAction = UIAlertAction(title: "Downvote", style: .default, handler: { (_) in
-				self.voteForThread(with: 0)
+			let downvoteAction = UIAlertAction(title: "Downvote", style: .default, handler: { _ in
+				self.voteOnThread(withVoteStatus: .downVote)
 			})
-			let replyAction = UIAlertAction(title: "Reply", style: .default, handler: { (_) in
+			let replyAction = UIAlertAction(title: "Reply", style: .default, handler: { _ in
 				self.replyThread()
 			})
 
@@ -251,7 +226,7 @@ class ForumsCell: UITableViewCell {
 		}
 
 		// Username action
-		if let username = forumThreadsElement.posterUsername, !username.isEmpty {
+		if let username = forumsThreadElement.posterUsername, !username.isEmpty {
 			let userAction = UIAlertAction.init(title: username + "'s profile", style: .default, handler: { (_) in
 				self.visitPosterProfilePage()
 			})
@@ -278,8 +253,6 @@ class ForumsCell: UITableViewCell {
 
 		alertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 
-		alertController.view.theme_tintColor = KThemePicker.tintColor.rawValue
-
 		//Present the controller
 		if let popoverController = alertController.popoverPresentationController {
 			popoverController.sourceView = moreButton
@@ -293,16 +266,20 @@ class ForumsCell: UITableViewCell {
 
 	/// Presents a share sheet to share the selected thread.
 	func shareThread() {
-		guard let threadID = forumThreadsElement?.id else { return }
+		guard let threadID = forumsThreadElement?.id else { return }
 		guard let forumsChildViewController = forumsChildViewController else { return }
-		let threadUrl = "https://kurozora.app/thread/\(threadID)"
-		var shareText: [Any] = [URL(string: threadUrl) ?? threadUrl, "You should read this thread via @KurozoraApp"]
+		let threadURLString = "https://kurozora.app/thread/\(threadID)"
+		let threadURL: Any = URL(string: threadURLString) ?? threadURLString
+		var shareText: String = ""
 
-		if let title = self.titleLabel.text, !title.isEmpty {
-			shareText = [URL(string: threadUrl) ?? threadUrl, "You should read \"\(title)\" via @KurozoraApp"]
+		if let title = forumsThreadElement?.title, !title.isEmpty {
+			shareText = "You should read \"\(title)\" via @KurozoraApp"
+		} else {
+			shareText = "You should read this thread via @KurozoraApp"
 		}
 
-		let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+		let activityItems: [Any] = [threadURL, shareText]
+		let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: [])
 
 		if let popoverController = activityViewController.popoverPresentationController {
 			popoverController.sourceView = moreButton
@@ -354,13 +331,13 @@ class ForumsCell: UITableViewCell {
 
 	@IBAction func upvoteButtonAction(_ sender: UIButton) {
 		previousVote = 1
-		voteForThread(with: 1)
+		voteOnThread(withVoteStatus: .upVote)
 		upvoteButton.animateBounce()
 	}
 
 	@IBAction func downvoteButtonAction(_ sender: UIButton) {
 		previousVote = 0
-		voteForThread(with: 0)
+		voteOnThread(withVoteStatus: .downVote)
 		downvoteButton.animateBounce()
 	}
 
