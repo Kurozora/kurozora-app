@@ -60,6 +60,9 @@ class HomeCollectionViewController: KCollectionViewController {
 
 		// Setup search bar.
 		setupSearchBar()
+
+		// Setup scroll view.
+		collectionView.delaysContentTouches = false
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -189,7 +192,7 @@ extension HomeCollectionViewController {
 						   delay: 0.0,
 						   usingSpringWithDamping: 0.8,
 						   initialSpringVelocity: 0.2,
-						   options: [.beginFromCurrentState],
+						   options: [.beginFromCurrentState, .allowUserInteraction],
 						   animations: {
 							cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
 			}, completion: nil)
@@ -204,7 +207,7 @@ extension HomeCollectionViewController {
 						   delay: 0.0,
 						   usingSpringWithDamping: 0.4,
 						   initialSpringVelocity: 0.2,
-						   options: [.beginFromCurrentState],
+						   options: [.beginFromCurrentState, .allowUserInteraction],
 						   animations: {
 							cell?.transform = CGAffineTransform.identity
 			}, completion: nil)

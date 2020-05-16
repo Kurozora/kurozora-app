@@ -221,8 +221,12 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
-		return supplementaryView
+		let showSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
+		let titleHeaderReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
+		titleHeaderReusableView.segueID = showSection.segueIdentifier
+		titleHeaderReusableView.title = showSection.stringValue
+		titleHeaderReusableView.indexPath = indexPath
+		return titleHeaderReusableView
 	}
 }
 
@@ -269,15 +273,6 @@ extension ShowDetailCollectionViewController {
 		case .related: break
 //			let relatedShowCollectionViewCell = cell as? RelatedShowCollectionViewCell
 		}
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-		guard let sectionHeaderReusableView = view as? TitleHeaderReusableView else { return }
-		guard let showSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
-
-		sectionHeaderReusableView.segueID = showSection.segueIdentifier
-		sectionHeaderReusableView.title = showSection.stringValue
-		sectionHeaderReusableView.indexPath = indexPath
 	}
 }
 

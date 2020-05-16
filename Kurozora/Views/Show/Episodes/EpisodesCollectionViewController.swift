@@ -45,6 +45,9 @@ class EpisodesCollectionViewController: KCollectionViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.fetchEpisodes()
 		}
+
+		// Setup scroll view.
+		collectionView.delaysContentTouches = false
 	}
 
 	// MARK: - Functions
@@ -155,7 +158,7 @@ extension EpisodesCollectionViewController {
 					   delay: 0.0,
 					   usingSpringWithDamping: 0.8,
 					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState],
+					   options: [.beginFromCurrentState, .allowUserInteraction],
 					   animations: {
 						cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
 		}, completion: nil)
@@ -167,7 +170,7 @@ extension EpisodesCollectionViewController {
 					   delay: 0.0,
 					   usingSpringWithDamping: 0.4,
 					   initialSpringVelocity: 0.2,
-					   options: [.beginFromCurrentState],
+					   options: [.beginFromCurrentState, .allowUserInteraction],
 					   animations: {
 						cell?.transform = CGAffineTransform.identity
 		}, completion: nil)
