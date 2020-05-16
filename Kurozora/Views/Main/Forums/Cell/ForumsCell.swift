@@ -111,7 +111,7 @@ class ForumsCell: UITableViewCell {
 
 		// Thread vote status
 		if let voteStatusInt = forumsThreadElement.currentUser?.likeAction {
-			let voteStatus = VoteStatus(rawValue: voteStatusInt) ?? .noVote
+			let voteStatus = VoteStatus(rawValue: voteStatusInt) ?? .downVote
 			updateVoting(withVoteStatus: voteStatus)
 		}
 

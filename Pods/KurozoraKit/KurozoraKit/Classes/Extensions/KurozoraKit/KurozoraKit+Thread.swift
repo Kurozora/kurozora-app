@@ -42,11 +42,11 @@ extension KurozoraKit {
 		Upvote or downvote a thread with the given thread id.
 
 		- Parameter threadID: The id of the thread that should be up upvoted/downvoted.
-		- Parameter vote: An vote status value indicating whether the thread is upvoted or downvoted.
+		- Parameter voteStatus: A `VoteStatus` value indicating whether the thread is upvoted or downvoted.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func voteOnThread(_ threadID: Int, withVoteStatus vote: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKError>) -> Void) {
+	public func voteOnThread(_ threadID: Int, withVoteStatus voteStatus: VoteStatus, completion completionHandler: @escaping (_ result: Result<VoteStatus, KKError>) -> Void) {
 		let forumsThreadsVote = self.kurozoraKitEndpoints.forumsThreadsVote.replacingOccurrences(of: "?", with: "\(threadID)")
 		let request: APIRequest<VoteThread, KKError> = tron.swiftyJSON.request(forumsThreadsVote)
 
@@ -57,7 +57,7 @@ extension KurozoraKit {
 
 		request.method = .post
 		request.parameters = [
-			"vote": vote.rawValue
+			"vote": voteStatus.voteValue
 		]
 		request.perform(withSuccess: { voteThread in
 			completionHandler(.success(voteThread.voteStatus ?? .noVote))

@@ -29,7 +29,7 @@ extension KurozoraKit {
 
 		request.method = .post
 		request.parameters = [
-			"vote": voteStatus.rawValue
+			"vote": voteStatus.voteValue
 		]
 		request.perform(withSuccess: { voteThread in
 			completionHandler(.success(voteThread.voteStatus ?? .noVote))

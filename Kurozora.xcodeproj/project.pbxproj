@@ -1824,11 +1824,11 @@
 		66AA35C22403125F0006EC5B /* Show */ = {
 			isa = PBXGroup;
 			children = (
-				66CBDD9F24649C9C00CA5F83 /* Synopsis */,
 				666C82562162895700C93A70 /* Cast */,
 				66058DC3212E984F0084B79E /* Episodes */,
 				66C86400216DF9040054EE16 /* Seasons */,
 				66058DB2212E915D0084B79E /* Show Details */,
+				66CBDD9F24649C9C00CA5F83 /* Synopsis */,
 			);
 			path = Show;
 			sourceTree = "<group>";

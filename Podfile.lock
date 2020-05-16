@@ -11,10 +11,10 @@ PODS:
   - ESTabBarController-swift (2.8.0)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.2.0)
-  - Kingfisher (5.13.4):
-    - Kingfisher/Core (= 5.13.4)
-  - Kingfisher/Core (5.13.4)
-  - KurozoraKit (0.5.8):
+  - Kingfisher (5.14.0):
+    - Kingfisher/Core (= 5.14.0)
+  - Kingfisher/Core (5.14.0)
+  - KurozoraKit (0.5.9):
     - KeychainAccess
     - SCLAlertView (~> 0.8)
     - TRON
@@ -138,8 +138,8 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
-  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
-  KurozoraKit: b88b4c7c2dc517506af8fc25c2988d0df2eb3aa2
+  Kingfisher: 7b64389a43139c903ec434788344c288217c792d
+  KurozoraKit: e7435d1ef5a58f5205b42d79e8a9f1675c21812d
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 490c26be405987158660bb45ee2f404567395007
@@ -159,6 +159,6 @@ SPEC CHECKSUMS:
   UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
   WhatsNew: d66a52b294e90d5bc133877e270ea7ce0b945003
 
-PODFILE CHECKSUM: 2d0b63920f1889e9e559fc42445eaaa2bb94ffba
+PODFILE CHECKSUM: 0de3aba485ff77755280ffadc8d3b41273be0c54
 
 COCOAPODS: 1.9.1

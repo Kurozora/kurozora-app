@@ -27,4 +27,17 @@ public enum VoteStatus: Int {
 
 	/// The thread/reply is upvoted.
 	case upVote = 1
+
+	// MARK: - Properties
+	/// The vote value of a vote status type.
+	public var voteValue: Int {
+		switch self {
+		case .upVote:
+			return 1
+		case .downVote:
+			return 0
+		case .noVote:
+			return 0
+		}
+	}
 }
