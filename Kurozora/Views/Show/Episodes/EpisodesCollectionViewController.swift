@@ -225,7 +225,7 @@ extension EpisodesCollectionViewController {
 		return columnCount
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		return (0.60 / columnsCount.double).cgFloat
 	}
 
@@ -245,7 +245,7 @@ extension EpisodesCollectionViewController {
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 

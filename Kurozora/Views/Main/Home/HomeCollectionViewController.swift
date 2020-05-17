@@ -96,13 +96,17 @@ class HomeCollectionViewController: KCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+		let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
 											   heightDimension: .fractionalWidth(heightFraction))
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
 													   subitem: item, count: columns)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		#if targetEnvironment(macCatalyst)
+		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
 		layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+		#endif
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
@@ -458,7 +462,7 @@ extension HomeCollectionViewController {
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		let horizontalCollectionCellStyleString = self.exploreCategories?[section].size ?? "small"
 		let horizontalCollectionCellStyle: HorizontalCollectionCellStyle = section != 0 ? HorizontalCollectionCellStyle(rawValue: horizontalCollectionCellStyleString) ?? .small : .banner
 
@@ -489,7 +493,7 @@ extension HomeCollectionViewController {
 
 		switch section {
 		case let section where section < exploreCategoriesCount:
-			return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10)
+			return NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
 		default:
 			var verticalCollectionCellStyle: VerticalCollectionCellStyle = .actionList
 			switch section {

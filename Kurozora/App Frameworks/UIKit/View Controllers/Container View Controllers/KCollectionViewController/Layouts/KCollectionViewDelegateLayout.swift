@@ -13,7 +13,7 @@ import UIKit
 */
 @objc protocol KCollectionViewDelegateLayout: class {
 	@objc optional func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int
-	@objc optional func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat
+	@objc optional func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat
 	@objc optional func contentInset(forBackgroundInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets
 	@objc optional func contentInset(forItemInSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets
 	@objc optional func contentInset(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets

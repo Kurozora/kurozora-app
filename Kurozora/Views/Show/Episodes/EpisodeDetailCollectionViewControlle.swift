@@ -164,7 +164,7 @@ extension EpisodeDetailCollectionViewControlle {
 		case .information:
 			return .estimated(55)
 		default:
-			let groupHeight = groupHeightFraction(forSection: section, with: columnsCount)
+			let groupHeight = groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(groupHeight)
 		}
 	}

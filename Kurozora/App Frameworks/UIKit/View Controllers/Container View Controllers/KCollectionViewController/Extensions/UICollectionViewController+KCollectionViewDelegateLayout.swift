@@ -30,10 +30,11 @@ extension UICollectionViewController: KCollectionViewDelegateLayout {
 
 		- Parameter section: An index number identifying a section in collectionView. This index value is 0-based.
 		- Parameter columnsCount: The number of columns inside of a colelction view section.
+		- Parameter layoutEnvironment: The layout environment of the specified item.
 
 		- Returns: The group's height fraction value.
 	*/
-	func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+	func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		return .zero
 	}
 
@@ -98,7 +99,7 @@ extension UICollectionViewController: KCollectionViewDelegateLayout {
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 												   heightDimension: .fractionalWidth(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)

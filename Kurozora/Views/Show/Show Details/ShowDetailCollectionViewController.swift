@@ -262,7 +262,6 @@ extension ShowDetailCollectionViewController {
 			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
-//			informationCollectionViewCell?.indexPathRow = indexPath.row
 			informationCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .seasons:
 			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
@@ -335,12 +334,12 @@ extension ShowDetailCollectionViewController {
 		case .information:
 			return .estimated(55)
 		default:
-			let groupHeight = groupHeightFraction(forSection: section, with: columnsCount)
-			return .fractionalWidth(groupHeight)
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
+			return .fractionalWidth(heightFraction)
 		}
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		switch ShowDetail.Section(rawValue: section) {
 		case .seasons:
 			if let seasonsCount = seasons?.count, seasonsCount != 0 {

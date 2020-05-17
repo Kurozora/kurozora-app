@@ -242,7 +242,7 @@ extension SearchResultsCollectionViewController {
 		return columnCount
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int) -> CGFloat {
+	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		if searchResults != nil {
 			switch currentScope {
 			case .show, .myLibrary:
@@ -290,7 +290,7 @@ extension SearchResultsCollectionViewController {
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns)
+			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 												   heightDimension: .fractionalWidth(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
