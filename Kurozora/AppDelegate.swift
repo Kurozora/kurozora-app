@@ -13,7 +13,7 @@ import Kingfisher
 import UserNotifications
 import SwifterSwift
 
-// MARK: - Kurozora Kit
+// MARK: - KurozoraKit
 let KService = KurozoraKit().services(Kurozora.shared.services)
 
 // MARK: - Kurozora

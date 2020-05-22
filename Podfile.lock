@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.1.0)
+  - Alamofire (5.2.0)
   - Cosmos (21.0.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
@@ -23,7 +23,7 @@ PODS:
   - NotificationBannerSwift (3.0.2):
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
-  - Pageboy (3.6.0)
+  - Pageboy (3.6.1)
   - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
@@ -130,7 +130,7 @@ SPEC REPOS:
     - SCLAlertView
 
 SPEC CHECKSUMS:
-  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
+  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
@@ -142,7 +142,7 @@ SPEC CHECKSUMS:
   KurozoraKit: e7435d1ef5a58f5205b42d79e8a9f1675c21812d
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
-  Pageboy: 490c26be405987158660bb45ee2f404567395007
+  Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
