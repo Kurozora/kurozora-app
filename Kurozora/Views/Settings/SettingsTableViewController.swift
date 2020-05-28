@@ -90,8 +90,8 @@ extension SettingsTableViewController {
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch settingsSection[section] {
 		case .about:
-//			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
 			return """
+			Built with lack of 😴, lots of 🍵 and 🌸 allergy by Kirito
 			Kurozora \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1.0.0") (\(Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) ?? "0"))
 			"""
 		default:

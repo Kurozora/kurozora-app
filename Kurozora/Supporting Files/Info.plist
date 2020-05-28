@@ -216,8 +216,8 @@
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>App-Icon-iPad-Cookizora</string>
-					<string>App-Icon-iPad-Pro-Cookizora</string>
+					<string>App-Icon-iPad-Cookiezora</string>
+					<string>App-Icon-iPad-Pro-Cookiezora</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -431,11 +431,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>11126</string>
+	<string>11136</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.lifestyle</string>
+	<string>public.app-category.entertainment</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>opera</string>

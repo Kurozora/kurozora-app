@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (5.2.0)
-  - Cosmos (21.0.0)
+  - Alamofire (5.2.1)
+  - Cosmos (22.1.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
@@ -130,8 +130,8 @@ SPEC REPOS:
     - SCLAlertView
 
 SPEC CHECKSUMS:
-  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
-  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  Cosmos: 2795b36ad4bbea1af3050d6d65576ed63875f86a
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
