@@ -486,6 +486,7 @@ extension ShowDetailCollectionViewController {
 // MARK: - UIScrollViewDelegate
 extension ShowDetailCollectionViewController {
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		#if !targetEnvironment(macCatalyst)
 		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
 			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
 				self.navigationController?.navigationBar.alpha = 1.0
@@ -495,5 +496,6 @@ extension ShowDetailCollectionViewController {
 				self.navigationController?.navigationBar.alpha = 0.0
 			}, completion: nil)
 		}
+		#endif
 	}
 }
