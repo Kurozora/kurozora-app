@@ -62,8 +62,6 @@ class AuthenticationSettingsCell: SettingsCell {
 	@IBAction func enabledSwitchSwitched(_ sender: UISwitch) {
 		UserSettings.set(sender.isOn, forKey: .authenticationEnabled)
 
-		if let tableView = self.superview as? UITableView {
-			tableView.reloadData()
-		}
+		self.parentTableView?.reloadData()
 	}
 }

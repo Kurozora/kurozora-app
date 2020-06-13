@@ -170,9 +170,7 @@ class DisplaySettingsCell: SettingsCell {
 
 		KThemeStyle.startAutomaticDarkThemeSchedule()
 
-		if let tableView = self.superview as? UITableView {
-			tableView.reloadData()
-		}
+		self.parentTableView?.reloadData()
 	}
 
 	@IBAction func enableTrueBlackSwitched(_ sender: UISwitch) {

@@ -47,8 +47,9 @@ class KTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Set background color.
+		// Set table view theme.
 		self.view.theme_backgroundColor = KThemePicker.backgroundColor.rawValue
+		self.tableView.theme_separatorColor = KThemePicker.separatorColorLight.rawValue
 
 		// Observe user sign-in status.
 		NotificationCenter.default.addObserver(self, selector: #selector(viewWillReload), name: .KUserIsSignedInDidChange, object: nil)

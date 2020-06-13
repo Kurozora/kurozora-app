@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oQA-sV-lQw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oQA-sV-lQw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,28 +12,25 @@
         <scene sceneID="Oti-RT-wjE">
             <objects>
                 <tableViewController storyboardIdentifier="SwitchAccountsTableViewController" title="Switch Accounts" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YY3-qY-Fih" customClass="SwitchAccountsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="C5H-lI-6nP">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="C5H-lI-6nP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="rjU-Rh-EaJ"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="bs5-Rr-DlQ"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="Xtb-ub-4I6"/>
-                        <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectableSettingsCell" id="mAH-rl-t1o" customClass="SelectableSettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="55"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mAH-rl-t1o" id="eoQ-G1-o2o">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v55-EO-bPg">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kurozora" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50r-B1-lkb">
-                                                    <rect key="frame" x="8" y="10" width="68.5" height="30"/>
+                                                    <rect key="frame" x="8" y="10" width="68.5" height="35"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -41,7 +38,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Symbols/checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="w8e-CU-Ajj">
-                                                    <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                    <rect key="frame" x="342" y="19.5" width="24" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Msm-Mm-o5P"/>
                                                     </constraints>
@@ -59,9 +56,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="v55-EO-bPg" firstAttribute="top" secondItem="eoQ-G1-o2o" secondAttribute="top" id="JrB-pp-LuQ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="v55-EO-bPg" secondAttribute="trailing" id="ZQR-mY-Opi"/>
-                                        <constraint firstItem="v55-EO-bPg" firstAttribute="leading" secondItem="eoQ-G1-o2o" secondAttribute="leadingMargin" id="kQB-Aj-Nsz"/>
-                                        <constraint firstAttribute="bottom" secondItem="v55-EO-bPg" secondAttribute="bottom" constant="5" id="tJ8-S3-HrK"/>
+                                        <constraint firstAttribute="trailing" secondItem="v55-EO-bPg" secondAttribute="trailing" id="ZQR-mY-Opi"/>
+                                        <constraint firstItem="v55-EO-bPg" firstAttribute="leading" secondItem="eoQ-G1-o2o" secondAttribute="leading" id="kQB-Aj-Nsz"/>
+                                        <constraint firstAttribute="bottom" secondItem="v55-EO-bPg" secondAttribute="bottom" id="tJ8-S3-HrK"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

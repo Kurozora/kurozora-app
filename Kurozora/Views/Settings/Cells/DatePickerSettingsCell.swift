@@ -23,7 +23,7 @@ class DatePickerSettingsCell: SettingsCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		datePicker.setValue(KThemePicker.textColor.colorValue, forKeyPath: "textColor")
+		datePicker.textColor = KThemePicker.textColor.colorValue
 		datePicker.setValue(false, forKey: "highlightsToday")
 	}
 

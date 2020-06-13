@@ -43,8 +43,8 @@ extension AppearanceOptionsViewController {
 		} else if section == 1 {
 			return 2
 		}
-		guard let darkThemeOption = DarkThemeOption(rawValue: UserSettings.darkThemeOption) else { return 0 }
 
+		guard let darkThemeOption = DarkThemeOption(rawValue: UserSettings.darkThemeOption) else { return 0 }
 		switch darkThemeOption {
 		case .automatic: break
 		case .custom:

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDS-Jr-XTF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -307,7 +307,7 @@
                     <navigationItem key="navigationItem" title="Feed" id="grd-dn-AJE">
                         <barButtonItem key="leftBarButtonItem" title="Settings" image="Symbols/gear" id="brK-B2-mL4">
                             <connections>
-                                <segue destination="HFC-YJ-V83" kind="custom" identifier="SettingsSegue" customClass="KModalTransition" customModule="Kurozora" customModuleProvider="target" id="Ltj-lh-J5F"/>
+                                <segue destination="HFC-YJ-V83" kind="presentation" identifier="SettingsSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Ltj-lh-J5F"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Profile" id="SNm-Ym-mOT">

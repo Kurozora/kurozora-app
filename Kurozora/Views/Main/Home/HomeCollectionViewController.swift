@@ -21,7 +21,7 @@ class HomeCollectionViewController: KCollectionViewController {
 
 	var dataSource: UICollectionViewDiffableDataSource<Int, Int>! = nil
 	var snapshot: NSDiffableDataSourceSnapshot<Int, Int>! = nil
-	var exploreCategories: [ExploreCategory]? {
+	var exploreCategories: [ExploreCategory]? = nil {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			configureDataSource()
@@ -42,7 +42,9 @@ class HomeCollectionViewController: KCollectionViewController {
 	override func viewWillReload() {
 		super.viewWillReload()
 
-		fetchExplore()
+		if exploreCategories != nil {
+			fetchExplore()
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -274,11 +276,6 @@ extension HomeCollectionViewController {
 	}
 
 	override func configureDataSource() {
-		if snapshot != nil, snapshot.numberOfItems != 0 {
-			snapshot.deleteAllItems()
-			dataSource.apply(snapshot)
-		}
-
 		self.dataSource = UICollectionViewDiffableDataSource<Int, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _) -> UICollectionViewCell? in
 			if indexPath.section < self.exploreCategories?.count ?? 0 {
 				// Get a cell of the desired kind.

@@ -12,7 +12,7 @@ import KurozoraKit
 class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KTintedLabel!
-	@IBOutlet weak var detailLabel: KLabel!
+	@IBOutlet weak var detailLabel: KCopyableLabel!
 	@IBOutlet weak var separatorView: UIView! {
 		didSet {
 			separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue

@@ -26,12 +26,13 @@ class KCopyableLabel: KLabel {
 	override func sharedInit() {
 		super.sharedInit()
 		isUserInteractionEnabled = true
-		#if targetEnvironment(macCatalyst)
-		let interaction = UIContextMenuInteraction(delegate: self)
-		self.addInteraction(interaction)
-		#else
-		addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu(_:))))
-		#endif
+
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			let interaction = UIContextMenuInteraction(delegate: self)
+			self.addInteraction(interaction)
+		} else {
+			addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu(_:))))
+		}
 	}
 
 	/**
@@ -46,20 +47,20 @@ class KCopyableLabel: KLabel {
 
 		gestureView.becomeFirstResponder()
 
-		#if targetEnvironment(macCatalyst)
-		menuController.showMenu(from: superView, rect: gestureView.frame)
-		#else
-		menuController.setTargetRect(gestureView.frame, in: superView)
-		menuController.setMenuVisible(true, animated: true)
-		#endif
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			menuController.showMenu(from: superView, rect: gestureView.frame)
+		} else {
+			menuController.setTargetRect(gestureView.frame, in: superView)
+			menuController.setMenuVisible(true, animated: true)
+		}
 	}
 
-	#if targetEnvironment(macCatalyst)
 	/**
 		Creates and returns a `UIMenu` object with the preconfigured actions.
 
 		- Returns: a `UIMenu` object with the preconfigured actions.
 	*/
+	@available(iOS 13.0, macCatalyst 13.0, *)
 	private func makeContextMenu() -> UIMenu {
 		// Create a UIAction for sharing
 		let copyAction = UIAction(title: "Copy") { action in
@@ -69,7 +70,6 @@ class KCopyableLabel: KLabel {
 		// Create and return a UIMenu with the share action
 		return UIMenu(title: "", children: [copyAction])
 	}
-	#endif
 
 	override func copy(_ sender: Any?) {
 		// Copy the text to
@@ -78,11 +78,11 @@ class KCopyableLabel: KLabel {
 		// Hide the menu controller
 		let menuController = UIMenuController.shared
 
-		#if targetEnvironment(macCatalyst)
-		menuController.hideMenu()
-		#else
-		menuController.setMenuVisible(false, animated: true)
-		#endif
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			menuController.hideMenu()
+		} else {
+			menuController.setMenuVisible(false, animated: true)
+		}
 	}
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -91,7 +91,7 @@ class KCopyableLabel: KLabel {
 }
 
 // MARK: - UIContextMenuInteractionDelegate
-#if targetEnvironment(macCatalyst)
+@available(iOS 13.0, macCatalyst 13.0, *)
 extension KCopyableLabel: UIContextMenuInteractionDelegate {
 	func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
@@ -99,4 +99,3 @@ extension KCopyableLabel: UIContextMenuInteractionDelegate {
 		}
 	}
 }
-#endif

@@ -55,10 +55,8 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			let title = "Open \(title)"
 			userActivity?.title = title
 			userActivity?.userInfo = ["showID": self.showID]
-			if #available(iOS 12.0, *) {
-				userActivity?.suggestedInvocationPhrase = title
-				userActivity?.isEligibleForPrediction = true
-			}
+			userActivity?.suggestedInvocationPhrase = title
+			userActivity?.isEligibleForPrediction = true
 			userActivity?.isEligibleForSearch = true
 		}
 	}

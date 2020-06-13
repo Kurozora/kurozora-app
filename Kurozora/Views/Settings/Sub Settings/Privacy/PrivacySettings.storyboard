@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wY2-Ft-3es">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wY2-Ft-3es">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,27 +12,24 @@
         <scene sceneID="i00-Sh-GnB">
             <objects>
                 <tableViewController storyboardIdentifier="PrivacySettingsViewController" title="Privacy" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ayr-qs-4xC" customClass="PrivacySettingsViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" id="ztY-6M-mQl">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="ztY-6M-mQl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="1BJ-Ri-wjP"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="zjN-x7-jwl"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="g0E-d6-MaL"/>
-                        <color key="sectionIndexColor" red="0.99988999999999995" green="1" blue="0.99987999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection footerTitle="This will send you to Kurozora's privacy settings in the Settings app where you can adjust the app's permissions." id="jx8-FE-p0M">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" id="1SL-vR-ffh" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="22" width="414" height="55"/>
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="1SL-vR-ffh" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="18" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1SL-vR-ffh" id="93R-J5-LGI">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCt-ad-xlg">
-                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Open in Settings app" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFk-6v-Ql6">
                                                             <rect key="frame" x="8" y="10" width="160.5" height="30"/>
@@ -71,10 +68,10 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="RCt-ad-xlg" secondAttribute="trailing" id="6m2-qx-3BQ"/>
-                                                <constraint firstItem="RCt-ad-xlg" firstAttribute="top" secondItem="93R-J5-LGI" secondAttribute="top" constant="5" id="OCj-uM-p6X"/>
+                                                <constraint firstAttribute="trailing" secondItem="RCt-ad-xlg" secondAttribute="trailing" id="6m2-qx-3BQ"/>
+                                                <constraint firstItem="RCt-ad-xlg" firstAttribute="top" secondItem="93R-J5-LGI" secondAttribute="top" id="OCj-uM-p6X"/>
                                                 <constraint firstAttribute="bottom" secondItem="RCt-ad-xlg" secondAttribute="bottom" id="mJE-fr-Vma"/>
-                                                <constraint firstItem="RCt-ad-xlg" firstAttribute="leading" secondItem="93R-J5-LGI" secondAttribute="leadingMargin" id="mXE-Yw-SVI"/>
+                                                <constraint firstItem="RCt-ad-xlg" firstAttribute="leading" secondItem="93R-J5-LGI" secondAttribute="leading" id="mXE-Yw-SVI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,15 +87,15 @@
                             </tableViewSection>
                             <tableViewSection id="jDQ-ha-eiy">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" id="cyP-W4-hlH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="145" width="414" height="55"/>
+                                    <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="cyP-W4-hlH" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="148" width="374" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cyP-W4-hlH" id="yBU-vA-vDd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xnn-up-RZi">
-                                                    <rect key="frame" x="20" y="5" width="374" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                     <subviews>
                                                         <label multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" insetsLayoutMarginsFromSafeArea="NO" text="Privacy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0UW-QR-FTb">
                                                             <rect key="frame" x="8" y="10" width="56" height="30"/>
@@ -138,9 +135,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Xnn-up-RZi" secondAttribute="bottom" id="RTW-JJ-hma"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Xnn-up-RZi" secondAttribute="trailing" id="SL7-wx-lVf"/>
-                                                <constraint firstItem="Xnn-up-RZi" firstAttribute="top" secondItem="yBU-vA-vDd" secondAttribute="top" constant="5" id="U5J-Xm-oTW"/>
-                                                <constraint firstItem="Xnn-up-RZi" firstAttribute="leading" secondItem="yBU-vA-vDd" secondAttribute="leadingMargin" id="dke-37-gBI"/>
+                                                <constraint firstAttribute="trailing" secondItem="Xnn-up-RZi" secondAttribute="trailing" id="SL7-wx-lVf"/>
+                                                <constraint firstItem="Xnn-up-RZi" firstAttribute="top" secondItem="yBU-vA-vDd" secondAttribute="top" id="U5J-Xm-oTW"/>
+                                                <constraint firstItem="Xnn-up-RZi" firstAttribute="leading" secondItem="yBU-vA-vDd" secondAttribute="leading" id="dke-37-gBI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

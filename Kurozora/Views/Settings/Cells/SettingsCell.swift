@@ -30,15 +30,11 @@ class SettingsCell: UITableViewCell {
 	@IBOutlet weak var selectedView: UIView? {
 		didSet {
 			self.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			self.selectedView?.clipsToBounds = true
-			self.selectedView?.cornerRadius = 10
 		}
 	}
 	@IBOutlet weak var bubbleView: UIView? {
 		didSet {
 			self.bubbleView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
-			self.bubbleView?.clipsToBounds = true
-			self.bubbleView?.cornerRadius = 10
 		}
 	}
 	@IBOutlet weak var chevronImageView: UIImageView? {
@@ -68,7 +64,23 @@ class SettingsCell: UITableViewCell {
 		}
 	}
 
+	// MARK: - Lifecycle
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		self.sharedInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.sharedInit()
+	}
+
 	// MARK: - Functions
+	/// The shared settings used to initialize the view.
+	func sharedInit() {
+		self.separatorInset = UIEdgeInsets(horizontal: 15, vertical: 0)
+	}
+
 	/// Configure the cell with the given details.
 	func configureCell() {
 		iconImageView?.image = sectionRow?.imageValue
@@ -84,7 +96,8 @@ class SettingsCell: UITableViewCell {
 					self.secondaryLabel?.text = cacheSize
 				}
 			})
-		default: break
+		default:
+			NotificationCenter.default.removeObserver(self, name: .KSAppIconDidChange, object: nil)
 		}
 
 		switch sectionRow?.accessoryValue ?? .none {

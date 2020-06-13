@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FEY-7R-0UY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -115,24 +115,23 @@
         <scene sceneID="Rdk-Mk-c4g">
             <objects>
                 <tableViewController storyboardIdentifier="SettingsTableViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="A0l-x2-bz4" customClass="SettingsTableViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="ca0-7v-VHE">
+                    <tableView key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="ca0-7v-VHE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="contentLayoutGuide" id="wfm-vk-fMU"/>
                         <viewLayoutGuide key="frameLayoutGuide" id="gA3-PJ-IrV"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AccountCell" id="XOD-av-Oix" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="95"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="90.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOD-av-Oix" id="p4N-u1-SGA">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYv-gV-pbA">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gN1-Tz-Lyt">
                                                     <rect key="frame" x="8" y="20" width="50" height="50"/>
@@ -164,7 +163,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="V8p-ZN-pnA">
-                                                    <rect key="frame" x="342" y="37" width="24" height="16"/>
+                                                    <rect key="frame" x="342" y="37.5" width="24" height="16"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="P9v-03-Z1L"/>
@@ -189,10 +188,10 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="zYv-gV-pbA" secondAttribute="bottom" constant="5" id="0NE-Ha-X3L"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="zYv-gV-pbA" secondAttribute="leading" id="2hb-L2-bhu"/>
+                                        <constraint firstAttribute="bottom" secondItem="zYv-gV-pbA" secondAttribute="bottom" id="0NE-Ha-X3L"/>
+                                        <constraint firstAttribute="leading" secondItem="zYv-gV-pbA" secondAttribute="leading" id="2hb-L2-bhu"/>
                                         <constraint firstItem="zYv-gV-pbA" firstAttribute="top" secondItem="p4N-u1-SGA" secondAttribute="top" id="MyN-aZ-u6g"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="zYv-gV-pbA" secondAttribute="trailing" id="Q4g-kZ-uky"/>
+                                        <constraint firstAttribute="trailing" secondItem="zYv-gV-pbA" secondAttribute="trailing" id="Q4g-kZ-uky"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -205,20 +204,20 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="UQH-b9-Icg" customClass="SettingsCell" customModule="Kurozora" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="150.5" width="414" height="55"/>
+                                <rect key="frame" x="20" y="146" width="374" height="50.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UQH-b9-Icg" id="Mau-HO-YUq">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="50.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jft-fX-FVt">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50.5"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-rK-xnC">
-                                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                                    <rect key="frame" x="8" y="10" width="30" height="30.5"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T0T-T6-ssy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30.5"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -236,14 +235,14 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display &amp; Blindness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fe3-Xb-uIY">
-                                                    <rect key="frame" x="46" y="14.5" width="150" height="21"/>
+                                                    <rect key="frame" x="46" y="15" width="150" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="Symbols/chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="bh4-sh-f0G">
-                                                    <rect key="frame" x="342" y="17" width="24" height="16"/>
+                                                    <rect key="frame" x="342" y="17.5" width="24" height="16"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="IF1-uf-C4U"/>
@@ -275,10 +274,10 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="jft-fX-FVt" secondAttribute="trailing" id="2kT-5X-M8s"/>
+                                        <constraint firstAttribute="trailing" secondItem="jft-fX-FVt" secondAttribute="trailing" id="2kT-5X-M8s"/>
                                         <constraint firstItem="jft-fX-FVt" firstAttribute="top" secondItem="Mau-HO-YUq" secondAttribute="top" id="Eeu-gr-fXe"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="jft-fX-FVt" secondAttribute="leading" id="HqE-cc-fG8"/>
-                                        <constraint firstAttribute="bottom" secondItem="jft-fX-FVt" secondAttribute="bottom" constant="5" id="I30-EG-dO6"/>
+                                        <constraint firstAttribute="leading" secondItem="jft-fX-FVt" secondAttribute="leading" id="HqE-cc-fG8"/>
+                                        <constraint firstAttribute="bottom" secondItem="jft-fX-FVt" secondAttribute="bottom" id="I30-EG-dO6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -298,7 +297,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="NWr-hf-Is2">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="lqN-hC-QaJ">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="lqN-hC-QaJ">
                             <connections>
                                 <action selector="dismissPressed:" destination="A0l-x2-bz4" id="cbx-1R-06Y"/>
                             </connections>
