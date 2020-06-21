@@ -127,6 +127,15 @@ internal struct KKEndpoints {
 	/// **Replace:** `?` with the id of the session.
 	let sessionsUpdate = "sessions/?/update"
 
+	// MARK: - Studio
+	/// The endpoint to the details of a studio.
+	///
+	/// **Replace:** `?` with the id of the studio.
+	let studio = "studios/?"
+
+	/// The endpoint to the studios.
+	let studios = "studios"
+
 	// MARK: - Themes
 	/// The endpoint to the themes.
 	let themes = "themes"

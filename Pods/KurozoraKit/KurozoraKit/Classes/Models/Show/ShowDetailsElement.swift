@@ -39,9 +39,6 @@ public class ShowDetailsElement: JSONDecodable {
 	public let title: String?
 
 	// Details
-	/// The air date of the show.
-	public let airDate: String?
-
 	/// The episodes count of the show.
 	public let episodes: Int?
 
@@ -76,20 +73,11 @@ public class ShowDetailsElement: JSONDecodable {
 	/// The average rating of the show.
 	public let averageRating: Double?
 
-	/// The end date of the show.
-	public let endDate: String?
-
-	/// The network the show has aired on.
-	public let network: String?
-
 	/// Whether the show is Not Safe For Work.
 	public let nsfw: Bool?
 
 	/// The popularity rank of the show.
 	public let popularityRank: Int?
-
-	/// The name of the producers of the show.
-	public let producers: String?
 
 	/// The current rank of the show.
 	public let rank: Int?
@@ -100,9 +88,22 @@ public class ShowDetailsElement: JSONDecodable {
 	/// The rating count of the show.
 	public let ratingCount: Int?
 
+	// Network and Studio
+	/// The network the show has aired on.
+	public let network: String?
+
+	/// The studio that made the show.
+	public let studio: StudioElement?
+
+	/// The name of the producers of the show.
+	public let producers: String?
+
 	// Schedule
 	/// The date show has aired on.
 	public let startDate: String?
+
+	/// The end date of the show.
+	public let endDate: String?
 
 	/// The time the show has aired at.
 	public let airTime: String?
@@ -145,7 +146,6 @@ public class ShowDetailsElement: JSONDecodable {
 		self.posterThumbnail = nil
 		self.title = nil
 
-		self.airDate = nil
 		self.episodes = nil
 		self.runtime = nil
 		self.screenshots = nil
@@ -158,16 +158,18 @@ public class ShowDetailsElement: JSONDecodable {
 		self.year = nil
 
 		self.averageRating = nil
-		self.endDate = nil
-		self.network = nil
 		self.nsfw = nil
 		self.popularityRank = nil
-		self.producers = nil
 		self.rank = nil
 		self.age = nil
 		self.ratingCount = nil
 
+		self.network = nil
+		self.studio = nil
+		self.producers = nil
+
 		self.startDate = nil
+		self.endDate = nil
 		self.airTime = nil
 		self.airDay = nil
 
@@ -198,7 +200,6 @@ public class ShowDetailsElement: JSONDecodable {
 		self.title = json["title"].stringValue
 
 		// Details
-		self.airDate = json["air_date"].stringValue
 		self.episodes = json["episodes"].intValue
 		self.runtime = json["runtime"].intValue
 		self.screenshots = json["screenshots"].rawValue as? [String]
@@ -212,17 +213,20 @@ public class ShowDetailsElement: JSONDecodable {
 
 		// Ratings & ranks
 		self.averageRating = json["average_rating"].doubleValue
-		self.endDate = json["end_date"].stringValue
-		self.network = json["network"].stringValue
 		self.nsfw = json["nsfw"].boolValue
 		self.popularityRank = json["popularity_rank"].intValue
-		self.producers = json["producers"].stringValue
 		self.rank = json["rank"].intValue
 		self.age = json["age"].stringValue
 		self.ratingCount = json["rating_count"].intValue
 
+		// Network and Studio
+		self.network = json["network"].stringValue
+		self.studio = try? StudioElement(json: json["studio"])
+		self.producers = json["producers"].stringValue
+
 		// Schedule
 		self.startDate = json["first_aired"].stringValue
+		self.endDate = json["last_aired"].stringValue
 		self.airTime = json["air_time"].stringValue
 		self.airDay = json["air_time"].intValue
 
@@ -242,11 +246,11 @@ public class ShowDetailsElement: JSONDecodable {
 // MARK: - Helpers
 extension ShowDetailsElement {
 	/**
-	Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
+		Returns a string containing all the necessary information of a show. If one of the informations is missing then that particular part is ommitted.
 
-	```
-	"TV · TV-MA · 25eps · 25min · 2016"
-	```
+		```
+		"TV · TV-MA · 25eps · 25min · 2016"
+		```
 	*/
 	public var informationString: String {
 		var informationString = ""
@@ -275,11 +279,11 @@ extension ShowDetailsElement {
 	}
 
 	/**
-	Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
+		Returns a short version of the shows information. If one of the informations is missing then that particular part is ommitted.
 
-	```
-	"TV · ✓ 10/25 · ☆ 5"
-	```
+		```
+		"TV · ✓ 10/25 · ☆ 5"
+		```
 	*/
 	public var informationStringShort: String {
 		var informationString = ""
@@ -300,22 +304,29 @@ extension ShowDetailsElement {
 	}
 
 	/**
-	Returns the full air date of the show.
+		Returns the full air date of the show as a string.
 
-	```
-	"2016-04-16 18:30:00"
-	```
+		```
+		"2016-04-16 18:30:00"
+		```
 	*/
-	public var fullAirDate: String? {
-		guard let airDate = self.airDate?.toDate else { return nil }
-		guard let airTime = self.airTime?.toDate else { return nil }
+	public var fullAirDateString: String? {
+		guard let airDate = self.startDate, !airDate.isEmpty else { return nil }
+		guard let airTime = self.airTime, !airTime.isEmpty else { return nil }
 
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeStyle = .none
-		let airDateString = dateFormatter.string(from: airDate)
+		let airDateTimeString = airDate + " " + airTime
+		return airDateTimeString
+	}
 
-		print("------ \(airDateString)")
-		return "\(airDateString) \(airTime)"
+	/**
+		Returns the full air date of the show, or `null` if a date object cannot be created.
+
+		```
+		"2016-04-16 18:30:00"
+		```
+	*/
+	public var fullAirDate: Date? {
+		return fullAirDateString?.toDate
 	}
 
 	/// Create an NSUserActivity from the selected show.

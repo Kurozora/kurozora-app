@@ -9,11 +9,10 @@
 import Foundation
 
 extension String {
-	/// Returns a date object for the given string.
+	/// Returns a `Date` object for the given string.
 	var toDate: Date {
 		if self != "" {
 			let dateFormatter = DateFormatter()
-			dateFormatter.locale = Locale(identifier: "en_US")
 			dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
 			if let dateFromString = dateFormatter.date(from: self) {
