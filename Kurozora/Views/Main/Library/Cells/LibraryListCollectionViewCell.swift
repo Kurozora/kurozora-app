@@ -9,6 +9,7 @@
 import UIKit
 
 class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var estimatedAiringLabel: UILabel! {
 		didSet {
 			estimatedAiringLabel.theme_textColor = KThemePicker.tintColor.rawValue
@@ -24,13 +25,13 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	// MARK: - Properties
 	var timer: Timer?
 
+	// MARK: - View
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
 		posterShadowView?.applyShadow()
 	}
 
-	// MARK: - View
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -52,10 +53,9 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 	}
 
 	@objc func updateEstimatedAiringLabel() {
-		guard let fullAirDate = showDetailsElement?.fullAirDate else { return }
-		let fullAirDateValue = fullAirDate.toDate
-		let intervalSinceNow = fullAirDateValue.timeIntervalSinceNow.toString
-		let estimatedAiringString = "Episode # - \(intervalSinceNow)"
+		guard let fullAirDate = self.showDetailsElement?.fullAirDate else { return }
+		print("----- full air date", fullAirDate)
+		let estimatedAiringString = "Episode # - \(fullAirDate.etaStringForDate(short: true))"
 		self.estimatedAiringLabel.text = estimatedAiringString
 		print(estimatedAiringString)
 	}

@@ -65,8 +65,8 @@ class SearchShowResultsCell: SearchBaseResultsCell {
 		}
 
 		// Configure air date
-		if let airDate = showDetailsElement.airDate, !airDate.isEmpty {
-			airDateLabel?.text = airDate
+		if let yearAired = showDetailsElement.year?.string, !yearAired.isEmpty {
+			airDateLabel?.text = yearAired
 			airDateLabel?.isHidden = false
 		} else {
 			airDateLabel?.isHidden = true

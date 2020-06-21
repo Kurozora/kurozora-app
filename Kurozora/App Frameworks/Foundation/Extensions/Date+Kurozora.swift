@@ -35,13 +35,13 @@ extension Date {
 
 		- Returns: the date components of the date object in days, hours and minutes.
 	*/
-	func etaForDate() -> (days: Int?, hours: Int?, minutes: Int?) {
+	func etaForDate() -> (days: Int, hours: Int, minutes: Int, seconds: Int) {
 		let now = Date()
 		let cal = Calendar.current
-		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute])
+		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute, .second])
 		let components = cal.dateComponents(unitFlags, from: now, to: self)
 
-		return (components.day, components.hour, components.minute)
+		return (components.day ?? 0, components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
 	}
 
 	/**
@@ -54,15 +54,15 @@ extension Date {
 		- Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
 	*/
 	func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
-		let (days, hours, minutes) = etaForDate()
+		let (days, hours, minutes, seconds) = etaForDate()
 
 		var etaTime = ""
 		if days != 0 {
-			etaTime = short ? "\(String(describing: days))d \(String(describing: hours))h" : "\(String(describing: days))d \(String(describing: hours))h \(String(describing: minutes))m"
+			etaTime = short ? "\(days.string)d \(hours.string)h" : "\(days.string)d \(hours.string)h \(minutes.string)m"
 		} else if hours != 0 {
-			etaTime = "\(String(describing: hours))h \(String(describing: minutes))m"
+			etaTime = short ? "\(hours.string)h \(minutes.string)m" : "\(hours.string)h \(minutes.string)m \(seconds.string)s"
 		} else {
-			etaTime = "\(String(describing: minutes))m"
+			etaTime = short ? "\(minutes.string)m" : "\(minutes.string)m \(seconds.string)s"
 		}
 
 		return (days, hours, minutes, etaTime)
