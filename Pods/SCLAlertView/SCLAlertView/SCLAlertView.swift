@@ -401,7 +401,12 @@ open class SCLAlertView: UIViewController {
 			return
 		}
 
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+		let rv: UIWindow!
+		if #available(iOS 13.0, macOS 13.0, *) {
+			rv = UIApplication.shared.windows.first { $0.isKeyWindow }
+		} else {
+			rv = UIApplication.shared.keyWindow
+		}
 		let sz = rv.frame.size
 
 		// Set background frame
@@ -765,7 +770,12 @@ open class SCLAlertView: UIViewController {
 		view.alpha = 0
 		view.tag = uniqueTag
 		view.accessibilityIdentifier = uniqueAccessibilityIdentifier
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+		let rv: UIWindow!
+		if #available(iOS 13.0, macOS 13.0, *) {
+			rv = UIApplication.shared.windows.first { $0.isKeyWindow }
+		} else {
+			rv = UIApplication.shared.keyWindow
+		}
 		rv.addSubview(view)
 		view.frame = rv.bounds
 		baseView.frame = rv.bounds
@@ -800,7 +810,10 @@ open class SCLAlertView: UIViewController {
 
 		// Done button
 		if appearance.showCloseButton {
-			_ = addButton(completeText ?? "Done", target:self, selector:#selector(SCLAlertView.hideView))
+			// Retrieves the "done" word translated using Apple's UIKit dictionary
+			let localizedDone = Bundle(for: UIApplication.self).localizedString(forKey: "Done", value: nil, table: nil)
+
+			_ = addButton(completeText ?? localizedDone, target:self, selector:#selector(SCLAlertView.hideView))
 		}
 
 		//hidden/show circular view based on the ui option
@@ -881,7 +894,12 @@ open class SCLAlertView: UIViewController {
 	// Show animation in the alert view
 	fileprivate func showAnimation(_ animationStyle: SCLAnimationStyle = .topToBottom, animationStartOffset: CGFloat = -400.0, boundingAnimationOffset: CGFloat = 15.0, animationDuration: TimeInterval = 0.2) {
 
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+		let rv: UIWindow!
+		if #available(iOS 13.0, macOS 13.0, *) {
+			rv = UIApplication.shared.windows.first { $0.isKeyWindow }
+		} else {
+			rv = UIApplication.shared.keyWindow
+		}
 		var animationStartOrigin = self.baseView.frame.origin
 		var animationCenter : CGPoint = rv.center
 
@@ -1010,7 +1028,13 @@ open class SCLAlertView: UIViewController {
 
 	//Return true if a SCLAlertView is already being shown, false otherwise
 	open func isShowing() -> Bool {
-		if let subviews = UIApplication.shared.keyWindow?.subviews {
+		let rv: UIWindow!
+		if #available(iOS 13.0, macOS 13.0, *) {
+			rv = UIApplication.shared.windows.first { $0.isKeyWindow }
+		} else {
+			rv = UIApplication.shared.keyWindow
+		}
+		if let subviews = rv?.subviews {
 			for view in subviews {
 				if view.tag == uniqueTag && view.accessibilityIdentifier == uniqueAccessibilityIdentifier {
 					return true

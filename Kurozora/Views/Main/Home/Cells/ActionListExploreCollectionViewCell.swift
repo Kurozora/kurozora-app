@@ -10,11 +10,7 @@ import UIKit
 
 class ActionListExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var separatorView: UIView? {
-		didSet {
-			separatorView?.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SecondarySeparatorView?
 
 	// MARK: - Properties
 	var separatorIsHidden = false

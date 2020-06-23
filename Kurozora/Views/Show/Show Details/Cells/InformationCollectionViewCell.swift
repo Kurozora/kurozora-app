@@ -13,11 +13,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KTintedLabel!
 	@IBOutlet weak var detailLabel: KCopyableLabel!
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
 	var episodeElement: EpisodeElement? {

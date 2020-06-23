@@ -25,18 +25,8 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var startDateLabel: KLabel!
 	@IBOutlet weak var episodesCountLabel: KLabel!
 	@IBOutlet weak var ratingLabel: KLabel!
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-	@IBOutlet var separatorViewLight: [UIView]? {
-		didSet {
-			for separatorView in separatorViewLight ?? [] {
-				separatorView.theme_backgroundColor = KThemePicker.separatorColorLight.rawValue
-			}
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
+	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
 
 	// MARK: - Properties
 	var seasonsElement: SeasonElement? = nil {

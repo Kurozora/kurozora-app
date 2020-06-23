@@ -16,7 +16,7 @@ import UIKit
 	- Presenting a default profile image if non is specified.
 	- Rounding the image's corners.
 */
-class ProfileImageView: UIImageView {
+class ProfileImageView: CircularImageView {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -36,12 +36,6 @@ class ProfileImageView: UIImageView {
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		sharedInit()
-	}
-
-	// MARK: - View
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		self.cornerRadius = self.height / 2
 	}
 
 	// MARK: - Functions
