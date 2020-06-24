@@ -1,5 +1,5 @@
 //
-//  KSecondarText.swift
+//  KSecondaryLabel.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 24/06/2020.
@@ -14,7 +14,7 @@ import UIKit
 	The color of the labels is pre-configured with the currently selected theme's secondary text color.
 	You can add labels to your interface programmatically or by using Interface Builder.
 */
-class KSecondarText: UILabel {
+class KSecondaryLabel: UILabel {
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)

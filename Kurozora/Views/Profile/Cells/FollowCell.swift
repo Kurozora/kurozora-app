@@ -13,11 +13,7 @@ class FollowCell: UITableViewCell {
 	@IBOutlet weak var usernameLabel: KLabel!
 	@IBOutlet weak var profileImageView: ProfileImageView!
 	@IBOutlet weak var followButton: KTintedButton!
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
 
 	var userProfile: UserProfile? {
 		didSet {

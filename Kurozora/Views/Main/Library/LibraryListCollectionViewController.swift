@@ -67,6 +67,9 @@ class LibraryListCollectionViewController: KCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		// Add bottom inset to avoid the tabbar obscuring the view
+		collectionView.contentInset.bottom = 50
+
 		// Setup collection view.
 		collectionView.collectionViewLayout = createLayout()
 

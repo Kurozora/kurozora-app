@@ -75,7 +75,7 @@
                                                 <action selector="followButtonPressed:" destination="8x8-gW-6XI" eventType="touchUpInside" id="Jet-QE-I1E"/>
                                             </connections>
                                         </button>
-                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meB-oq-8YQ">
+                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meB-oq-8YQ" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="16" y="69.666666666666671" width="343" height="0.3333333333333286"/>
                                             <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -459,7 +459,7 @@
                                                 <constraint firstAttribute="height" constant="40" id="WHf-zV-MMs"/>
                                             </constraints>
                                         </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmS-Rs-je8">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmS-Rs-je8" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
                                             <rect key="frame" x="8" y="83" width="343" height="1"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>

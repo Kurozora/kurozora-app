@@ -11,7 +11,7 @@ import KurozoraKit
 
 class InformationCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var titleLabel: KSecondarText!
+	@IBOutlet weak var titleLabel: KSecondaryLabel!
 	@IBOutlet weak var detailLabel: KCopyableLabel!
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 

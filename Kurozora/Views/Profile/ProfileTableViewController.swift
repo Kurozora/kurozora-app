@@ -55,12 +55,7 @@ class ProfileTableViewController: KTableViewController {
 	@IBOutlet weak var selectProfileImageButton: UIButton!
 	@IBOutlet weak var editProfileButton: KTintedButton!
 
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-
+	@IBOutlet weak var separatorView: SeparatorView!
 	@IBOutlet weak var bannerImageViewHeightConstraint: NSLayoutConstraint!
 
 	// MARK: - Properties

@@ -56,7 +56,7 @@
 		662F706F22A45D0F00C3599D /* BasicNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */; };
 		663266CA2444960100295CE7 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663266C92444960100295CE7 /* ProductTableViewController.swift */; };
 		6633A52924A3DA11003C6390 /* InformationButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */; };
-		6633A52B24A3E5CE003C6390 /* KSecondarText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633A52A24A3E5CE003C6390 /* KSecondarText.swift */; };
+		6633A52B24A3E5CE003C6390 /* KSecondaryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633A52A24A3E5CE003C6390 /* KSecondaryLabel.swift */; };
 		66347356232FB51E006B7F99 /* UIColor+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */; };
 		6634735E23343D55006B7F99 /* String+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634735D23343D55006B7F99 /* String+Kurozora.swift */; };
 		66348C7A22AB17710019AB84 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66348C7922AB17710019AB84 /* SettingsCell.swift */; };
@@ -519,7 +519,7 @@
 		662F706E22A45D0F00C3599D /* BasicNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNotificationCell.swift; sourceTree = "<group>"; };
 		663266C92444960100295CE7 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		6633A52824A3DA11003C6390 /* InformationButtonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationButtonCollectionViewCell.xib; sourceTree = "<group>"; };
-		6633A52A24A3E5CE003C6390 /* KSecondarText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSecondarText.swift; sourceTree = "<group>"; };
+		6633A52A24A3E5CE003C6390 /* KSecondaryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSecondaryLabel.swift; sourceTree = "<group>"; };
 		66347355232FB51E006B7F99 /* UIColor+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Kurozora.swift"; sourceTree = "<group>"; };
 		6634735D23343D55006B7F99 /* String+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Kurozora.swift"; sourceTree = "<group>"; };
 		66348C7922AB17710019AB84 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -1642,7 +1642,7 @@
 			children = (
 				66DB2545245C667A000AA6DB /* KCopyableLabel.swift */,
 				6614ABE3215F65D100A3A0C9 /* KLabel.swift */,
-				6633A52A24A3E5CE003C6390 /* KSecondarText.swift */,
+				6633A52A24A3E5CE003C6390 /* KSecondaryLabel.swift */,
 				66472371245E0070008E5111 /* KTextField.swift */,
 				66DB2547245D6B1D000AA6DB /* KTextView.swift */,
 				66CBDD8F2462085E00CA5F83 /* KTintedLabel.swift */,
@@ -3065,7 +3065,7 @@
 				66CE81122460908A00DB0C49 /* ServicePreviewTableViewCell.swift in Sources */,
 				66B13A632405AAED00CD732B /* WorkflowController+Onboarding.swift in Sources */,
 				664133E821DB828E00CE823A /* UserSettings.swift in Sources */,
-				6633A52B24A3E5CE003C6390 /* KSecondarText.swift in Sources */,
+				6633A52B24A3E5CE003C6390 /* KSecondaryLabel.swift in Sources */,
 				66CBDD902462085E00CA5F83 /* KTintedLabel.swift in Sources */,
 				6699A1C323779E9B00517C2C /* LibraryListCollectionViewCell.swift in Sources */,
 				6640E19B22AE808C00D0F575 /* AuthenticationOptionsViewController.swift in Sources */,

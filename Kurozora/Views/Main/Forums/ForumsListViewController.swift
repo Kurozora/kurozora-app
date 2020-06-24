@@ -47,6 +47,9 @@ class ForumsListViewController: KTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		// Add bottom inset to avoid the tabbar obscuring the view
+		tableView.contentInset.bottom = 50
+
 		// Add Refresh Control to Table View
 		tableView.refreshControl = refreshController
 		refreshController.theme_tintColor = KThemePicker.tintColor.rawValue

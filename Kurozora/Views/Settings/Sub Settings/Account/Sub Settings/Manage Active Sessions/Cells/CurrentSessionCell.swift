@@ -22,11 +22,7 @@ class CurrentSessionCell: KTableViewCell {
 			bubbleView.cornerRadius = 10
 		}
 	}
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
 	var session: UserSessionsElement? {

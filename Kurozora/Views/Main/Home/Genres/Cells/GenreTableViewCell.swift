@@ -13,11 +13,7 @@ class GenreTableViewCell: UITableViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var nameLabel: KLabel!
 	@IBOutlet weak var nsfwButton: UIButton!
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
 	var genreElement: GenreElement? {

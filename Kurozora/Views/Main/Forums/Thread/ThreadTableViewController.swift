@@ -69,16 +69,8 @@ class ThreadTableViewController: KTableViewController {
 			shareButton.theme_tintColor = KThemePicker.tableViewCellActionDefaultColor.rawValue
 		}
 	}
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-	@IBOutlet weak var actionsSeparatorView: UIView! {
-		didSet {
-			actionsSeparatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
+	@IBOutlet weak var actionsSeparatorView: SeparatorView!
 	@IBOutlet weak var actionsStackView: UIStackView!
 
 	// MARK: - Properties

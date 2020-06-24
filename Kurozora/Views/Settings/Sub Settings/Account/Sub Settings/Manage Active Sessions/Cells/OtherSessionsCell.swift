@@ -22,16 +22,7 @@ class OtherSessionsCell: SwipeTableViewCell {
 	@IBOutlet weak var ipAddressValueLabel: KLabel!
 	@IBOutlet weak var deviceTypeValueLabel: KLabel!
 	@IBOutlet weak var dateValueLabel: KLabel!
-	@IBOutlet weak var separatorView1: UIView! {
-		didSet {
-			separatorView1.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-	@IBOutlet weak var separatorView2: UIView! {
-		didSet {
-			separatorView2.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet var separatorView: [SecondarySeparatorView]!
 
 	// MARK: - Properties
 	var session: UserSessionsElement? {

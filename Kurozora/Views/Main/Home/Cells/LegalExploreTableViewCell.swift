@@ -9,16 +9,8 @@
 import UIKit
 
 class LegalCollectionViewCell: UICollectionViewCell {
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
-	@IBOutlet weak var termsConditionsLabel: UILabel! {
-		didSet {
-			termsConditionsLabel.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
+	@IBOutlet weak var termsConditionsLabel: KSecondaryLabel!
 	@IBOutlet weak var chevronButtonView: UIButton! {
 		didSet {
 			chevronButtonView.theme_tintColor = KThemePicker.subTextColor.rawValue

@@ -10,9 +10,5 @@ import UIKit
 
 class BannerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
 }

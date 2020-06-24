@@ -36,11 +36,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 			self.actorJob.theme_textColor = KThemePicker.subTextColor.rawValue
 		}
 	}
-	@IBOutlet weak var separatorView: UIView! {
-		didSet {
-			self.separatorView.theme_backgroundColor = KThemePicker.separatorColor.rawValue
-		}
-	}
+	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
 	var actorElement: ActorElement? {
