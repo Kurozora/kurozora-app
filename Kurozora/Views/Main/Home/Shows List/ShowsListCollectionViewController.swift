@@ -38,7 +38,6 @@ class ShowsListCollectionViewController: KCollectionViewController {
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.showsListCollectionViewController.showDetailsSegue.identifier {
-			// Show detail for explore cell
 			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
 				if let selectedCell = sender as? BaseLockupCollectionViewCell {
 					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement

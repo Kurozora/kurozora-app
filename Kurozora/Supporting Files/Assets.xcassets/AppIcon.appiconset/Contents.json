@@ -211,13 +211,13 @@
       "size" : "1024x1024"
     },
     {
-      "filename" : "512x512pt.png",
+      "filename" : "icon_512x512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "512x512pt@2x.png",
+      "filename" : "icon_512x512@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"

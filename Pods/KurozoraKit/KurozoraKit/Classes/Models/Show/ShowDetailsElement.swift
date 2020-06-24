@@ -99,10 +99,10 @@ public class ShowDetailsElement: JSONDecodable {
 	public let producers: String?
 
 	// Schedule
-	/// The date show has aired on.
+	/// The date the show first aired on.
 	public let startDate: String?
 
-	/// The end date of the show.
+	/// The date the show last aired on.
 	public let endDate: String?
 
 	/// The time the show has aired at.
@@ -228,7 +228,7 @@ public class ShowDetailsElement: JSONDecodable {
 		self.startDate = json["first_aired"].stringValue
 		self.endDate = json["last_aired"].stringValue
 		self.airTime = json["air_time"].stringValue
-		self.airDay = json["air_time"].intValue
+		self.airDay = json["air_day"].intValue
 
 		// Extra's
 		self.englishTitles = json["english_titles"].stringValue
@@ -304,13 +304,13 @@ extension ShowDetailsElement {
 	}
 
 	/**
-		Returns the full air date of the show as a string.
+		Returns the first air date and time of the show as a string. Returns `nil` if either the date or time is missing.
 
 		```
 		"2016-04-16 18:30:00"
-		```
+	```
 	*/
-	public var fullAirDateString: String? {
+	public var startDateTime: String? {
 		guard let airDate = self.startDate, !airDate.isEmpty else { return nil }
 		guard let airTime = self.airTime, !airTime.isEmpty else { return nil }
 
@@ -319,14 +319,36 @@ extension ShowDetailsElement {
 	}
 
 	/**
-		Returns the full air date of the show, or `null` if a date object cannot be created.
+		Returns the end date and time of the show as a string. Returns `nil` if either the date or time is missing.
 
 		```
 		"2016-04-16 18:30:00"
 		```
 	*/
-	public var fullAirDate: Date? {
-		return fullAirDateString?.toDate
+	public var endDateTime: String? {
+		return (endDate ?? "?") + " " + (airTime ?? "?")
+	}
+
+	/**
+		Returns the next air date and time of the show as a string. Returns `nil` if either the date or time is missing.
+
+		```
+		"2016-04-16 18:30:00"
+		```
+	*/
+	public var nextAirDateString: String? {
+		return startDateTime
+	}
+
+	/**
+		Returns the next air date and time of the show.
+
+		```
+		"2016-04-16 18:30:00"
+		```
+	*/
+	public var nextAirDate: Date? {
+		return startDateTime?.toDate
 	}
 
 	/// Create an NSUserActivity from the selected show.

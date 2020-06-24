@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pQB-9h-1e8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="pQB-9h-1e8">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -374,13 +374,13 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rq9-SN-Oi9" userLabel="Rank View">
                                                             <rect key="frame" x="152" y="15" width="73.333333333333314" height="50"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="#1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chn-de-H8Q">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="#1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chn-de-H8Q">
                                                                     <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="32"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thriller" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HYE-dm-rjc">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Thriller" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HYE-dm-rjc">
                                                                     <rect key="frame" x="0.0" y="32" width="73.333333333333329" height="18"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -467,6 +467,8 @@
                         <segue destination="Eag-An-mcG" kind="show" identifier="CastSegue" id="1dN-70-6wE"/>
                         <segue destination="zyS-Rm-gq4" kind="show" identifier="EpisodeSegue" id="mxx-Wp-2WO"/>
                         <segue destination="N8r-ci-sq3" kind="show" identifier="SeasonSegue" id="pUW-ps-RKJ"/>
+                        <segue destination="hjy-D0-s0a" kind="show" identifier="StudioSegue" id="NXi-4T-3RO"/>
+                        <segue destination="Aon-Tb-Www" kind="show" identifier="ShowDetailsSegue" id="KuE-Kz-8mc"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CeS-tf-WrS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -481,7 +483,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBu-mk-lNg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302" y="-1508"/>
+            <point key="canvasLocation" x="1302" y="-1371"/>
         </scene>
         <!--SeasonsCollectionViewController-->
         <scene sceneID="kBc-Ew-psT">
@@ -491,7 +493,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bKp-nZ-Jhp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1319" y="-1446"/>
+            <point key="canvasLocation" x="1320" y="-1328"/>
         </scene>
         <!--EpisodesCollectionViewController-->
         <scene sceneID="t5y-ji-28z">
@@ -501,7 +503,27 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2O-op-a2c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1323" y="-1386"/>
+            <point key="canvasLocation" x="1323" y="-1281"/>
+        </scene>
+        <!--ShowDetails-->
+        <scene sceneID="BrW-jG-EKX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ShowDetails" id="Aon-Tb-Www" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Rrj-F5-71o"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qI2-h1-sO7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1229" y="-1236"/>
+        </scene>
+        <!--StudiosCollectionViewController-->
+        <scene sceneID="Hl9-0O-QFn">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Studios" referencedIdentifier="StudiosCollectionViewController" id="hjy-D0-s0a" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="jlk-J7-XWG"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GFz-wY-GSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1317" y="-1195"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.57647058823529407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

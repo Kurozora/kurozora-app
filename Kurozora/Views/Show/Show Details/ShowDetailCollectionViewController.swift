@@ -27,6 +27,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 	}
 	var seasons: [SeasonElement]?
 	var actors: [ActorElement]?
+	var studioElement: StudioElement?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -94,6 +95,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 					DispatchQueue.main.async {
 						self.showDetailsElement = showDetailsElement
 						self.collectionView.reloadData()
+						self.fetchStudio()
 					}
 				case .failure: break
 				}
@@ -127,6 +129,23 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Fetches studio details for the currently viewed show.
+	func fetchStudio() {
+		if studioElement == nil, let studioID = self.showDetailsElement?.studio?.id, studioID != 0 {
+			let limit = UIDevice.isPhone ? 2 : 10
+			KService.getDetails(forStudioID: studioID, includesShows: true, limit: limit) { result in
+				switch result {
+				case .success(let studioElement):
+					DispatchQueue.main.async {
+						self.studioElement = studioElement
+						self.collectionView.reloadData()
+					}
+				case .failure: break
+				}
+			}
+		}
+	}
+
 	// MARK: - Segue
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == R.segue.showDetailCollectionViewController.seasonSegue.identifier {
@@ -141,6 +160,20 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
 				if let lockupCollectionViewCell = sender as? LockupCollectionViewCell, let seasonID = lockupCollectionViewCell.seasonsElement?.id {
 					episodesCollectionViewController.seasonID = seasonID
+				}
+			}
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.showDetailsSegue.identifier {
+			if let showDetailCollectionViewController = segue.destination as? ShowDetailCollectionViewController {
+				if let selectedCell = sender as? BaseLockupCollectionViewCell {
+					showDetailCollectionViewController.showDetailsElement = selectedCell.showDetailsElement
+				} else if let showID = sender as? Int {
+					showDetailCollectionViewController.showID = showID
+				}
+			}
+		} else if segue.identifier == R.segue.showDetailCollectionViewController.studioSegue.identifier {
+			if let studiosCollectionViewController = segue.destination as? StudiosCollectionViewController {
+				if let studioID = studioElement?.id {
+					studiosCollectionViewController.studioID = studioID
 				}
 			}
 		}
@@ -180,6 +213,10 @@ extension ShowDetailCollectionViewController {
 			if let actorsCount = actors?.count {
 				numberOfRows = actorsCount >= 10 ? 10 : actorsCount
 			}
+		case .moreByStudio:
+			if let studioShowsCount = studioElement?.shows?.count {
+				numberOfRows = studioShowsCount
+			}
 		case .related: break
 		default: break
 		}
@@ -212,6 +249,9 @@ extension ShowDetailCollectionViewController {
 		case .cast:
 			let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! CastCollectionViewCell
 			return castCollectionViewCell
+		case .moreByStudio:
+			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! SmallLockupCollectionViewCell
+			return smallLockupCollectionViewCell
 		case .related:
 			let relatedShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! RelatedShowCollectionViewCell
 			return relatedShowCollectionViewCell
@@ -222,7 +262,7 @@ extension ShowDetailCollectionViewController {
 		let showSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
 		let titleHeaderReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
 		titleHeaderReusableView.segueID = showSection.segueIdentifier
-		titleHeaderReusableView.title = showSection.stringValue
+		titleHeaderReusableView.title = showSection != .moreByStudio ? showSection.stringValue : showSection.stringValue + (studioElement?.name ?? "this Studio")
 		titleHeaderReusableView.indexPath = indexPath
 		return titleHeaderReusableView
 	}
@@ -231,12 +271,15 @@ extension ShowDetailCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension ShowDetailCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { return }
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		var segueIdentifier = ""
 
-		switch ShowDetail.Section(rawValue: indexPath.section) {
+		switch showDetailSection {
 		case .seasons:
 			segueIdentifier = R.segue.showDetailCollectionViewController.episodeSegue.identifier
+		case .moreByStudio:
+			segueIdentifier = R.segue.showDetailCollectionViewController.showDetailsSegue.identifier
 		default: return
 		}
 
@@ -267,6 +310,9 @@ extension ShowDetailCollectionViewController {
 		case .cast:
 			let castCollectionViewCell = cell as? CastCollectionViewCell
 			castCollectionViewCell?.actorElement = actors?[indexPath.item]
+		case .moreByStudio:
+			let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell
+			smallLockupCollectionViewCell?.showDetailsElement = studioElement?.shows?[indexPath.item]
 		case .related: break
 //			let relatedShowCollectionViewCell = cell as? RelatedShowCollectionViewCell
 		}
@@ -280,6 +326,7 @@ extension ShowDetailCollectionViewController {
 				RatingCollectionViewCell.self,
 				InformationCollectionViewCell.self,
 				LockupCollectionViewCell.self,
+				SmallLockupCollectionViewCell.self,
 				CastCollectionViewCell.self
 		]
 	}
@@ -307,7 +354,7 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
-		case .seasons, .cast, .related:
+		case .seasons, .cast, .moreByStudio, .related:
 			let columnCount = (width / 374).rounded().int
 			if columnCount > 5 {
 				return 5
@@ -345,6 +392,10 @@ extension ShowDetailCollectionViewController {
 			}
 		case .cast:
 			if let actorsCount = actors?.count, actorsCount != 0 {
+				return (0.50 / columnsCount.double).cgFloat
+			}
+		case .moreByStudio:
+			if let showsCount = studioElement?.shows?.count, showsCount != 0 {
 				return (0.50 / columnsCount.double).cgFloat
 			}
 		default: break
@@ -410,13 +461,18 @@ extension ShowDetailCollectionViewController {
 					sectionLayout = gridSection
 					hasSectionHeader = true
 				}
+			case .moreByStudio:
+				if let studioShowCount = self.studioElement?.shows?.count, studioShowCount != 0 {
+					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
+					sectionLayout = gridSection
+					hasSectionHeader = true
+				}
 			case .related: break
 			}
 
 			if hasSectionHeader {
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 															  heightDimension: .estimated(50))
-
 				let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
 					layoutSize: headerFooterSize,
 					elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -482,18 +538,18 @@ extension ShowDetailCollectionViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-extension ShowDetailCollectionViewController {
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		#if !targetEnvironment(macCatalyst)
-		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
-			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-				self.navigationController?.navigationBar.alpha = 1.0
-			}, completion: nil)
-		} else {
-			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-				self.navigationController?.navigationBar.alpha = 0.0
-			}, completion: nil)
-		}
-		#endif
-	}
-}
+//extension ShowDetailCollectionViewController {
+//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//		#if !targetEnvironment(macCatalyst)
+//		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
+//			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+//				self.navigationController?.navigationBar.alpha = 1.0
+//			}, completion: nil)
+//		} else {
+//			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+//				self.navigationController?.navigationBar.alpha = 0.0
+//			}, completion: nil)
+//		}
+//		#endif
+//	}
+//}

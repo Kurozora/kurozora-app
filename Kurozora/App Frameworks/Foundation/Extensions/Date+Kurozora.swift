@@ -35,7 +35,7 @@ extension Date {
 
 		- Returns: the date components of the date object in days, hours and minutes.
 	*/
-	func etaForDate() -> (days: Int, hours: Int, minutes: Int, seconds: Int) {
+	func etaDate() -> (days: Int, hours: Int, minutes: Int, seconds: Int) {
 		let now = Date()
 		let cal = Calendar.current
 		let unitFlags = Set<Calendar.Component>([.day, .hour, .minute, .second])
@@ -54,28 +54,28 @@ extension Date {
 		- Returns: the date components of the date object in days, hours and minutes and the eta string of the date string in readable form.
 	*/
 	func etaForDateWithString(short: Bool = false) -> (days: Int?, hours: Int?, minutes: Int?, etaString: String) {
-		let (days, hours, minutes, seconds) = etaForDate()
+		let (days, hours, minutes, seconds) = etaDate()
 
 		var etaTime = ""
 		if days != 0 {
-			etaTime = short ? "\(days.string)d \(hours.string)h" : "\(days.string)d \(hours.string)h \(minutes.string)m"
+			etaTime = short ? "\(days)d \(hours)h" : "\(days)d \(hours)h \(minutes)m"
 		} else if hours != 0 {
-			etaTime = short ? "\(hours.string)h \(minutes.string)m" : "\(hours.string)h \(minutes.string)m \(seconds.string)s"
+			etaTime = short ? "\(hours)h \(minutes)m" : "\(hours)h \(minutes)m \(seconds)s"
 		} else {
-			etaTime = short ? "\(minutes.string)m" : "\(minutes.string)m \(seconds.string)s"
+			etaTime = "\(minutes)m \(seconds)s"
 		}
 
 		return (days, hours, minutes, etaTime)
 	}
 
 	/**
-		Returns the eta string of the date string in readable form.
+		Returns the eta string of the date in a human readable form.
 
 		If `short` is set to `true` the returned string will be in short format. Default value is `false`.
 
 		- Parameter short: Boolean value indicating whether to shorten the returned date string.
 
-		- Returns: the eta string of the date string in readable form.
+		- Returns: the eta string of the date in a human readable form.
 	*/
 	func etaStringForDate(short: Bool = false) -> String {
 		return etaForDateWithString(short: short).etaString

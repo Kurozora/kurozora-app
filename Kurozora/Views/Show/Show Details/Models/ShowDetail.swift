@@ -15,24 +15,26 @@ class ShowDetail {
 
 		```
 		case header = 0
-		case badge = 1
-		case synopsis = 2
-		case rating = 3
-		case information = 4
-		case seasons = 5
-		case cast = 6
-		case related = 7
+		case badge
+		case synopsis
+		case rating
+		case information
+		case seasons
+		case cast
+		case moreByStudio
+		case related
 		```
 	*/
 	enum Section: Int, CaseIterable {
 		case header = 0
-		case badge = 1
-		case synopsis = 2
-		case rating = 3
-		case information = 4
-		case seasons = 5
-		case cast = 6
-		case related = 7
+		case badge
+		case synopsis
+		case rating
+		case information
+		case seasons
+		case cast
+		case moreByStudio
+		case related
 
 		// MARK: - Properties
 		/// The string value of a show section.
@@ -52,6 +54,8 @@ class ShowDetail {
 				return "Seasons"
 			case .cast:
 				return "Cast"
+			case .moreByStudio:
+				return "More by "
 			case .related:
 				return "Related"
 			}
@@ -74,6 +78,8 @@ class ShowDetail {
 				return R.reuseIdentifier.lockupCollectionViewCell.identifier
 			case .cast:
 				return R.reuseIdentifier.castCollectionViewCell.identifier
+			case .moreByStudio:
+				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 			case .related:
 				return "RelatedShowCollectionViewCell" // R.reuseIdentifier.relatedShowCollectionViewCell.identifier
 			}
@@ -96,6 +102,8 @@ class ShowDetail {
 				return R.segue.showDetailCollectionViewController.seasonSegue.identifier
 			case .cast:
 				return R.segue.showDetailCollectionViewController.castSegue.identifier
+			case .moreByStudio:
+				return R.segue.showDetailCollectionViewController.studioSegue.identifier
 			case .related:
 				return "RelatedSegue" //R.segue.showDetailCollectionViewController.relatedSegue.identifier
 			}
@@ -151,32 +159,21 @@ class ShowDetail {
 	}
 
 	/**
-		List of informations.
-
-		```
-		case id = 0
-		case type = 1
-		case seasonsCount = 2
-		case episodesCount = 3
-		case aireDates = 4
-		case network = 5
-		case duration = 6
-		case rating = 7
-		case languages = 8
-		case genres = 9
-		```
+		List of available show information types.
 	*/
 	enum Information: Int, CaseIterable {
 		case id = 0
-		case type = 1
-		case seasonsCount = 2
-		case episodesCount = 3
-		case aireDates = 4
-		case network = 5
-		case duration = 6
-		case rating = 7
-		case languages = 8
-		case genres = 9
+		case studio
+		case network
+		case type
+		case aireDates
+		case broadcast
+		case genres
+		case rating
+		case seasonsCount
+		case episodesCount
+		case duration
+		case languages
 
 		// MARK: - Properties
 		/// The string value of an information type.
@@ -184,24 +181,28 @@ class ShowDetail {
 			switch self {
 			case .id:
 				return "ID"
+			case .studio:
+				return "Studio"
+			case .network:
+				return "Network"
 			case .type:
 				return "Type"
+			case .aireDates:
+				return "Aired"
+			case .broadcast:
+				return "Broadcast"
+			case .genres:
+				return "Genres"
+			case .rating:
+				return "Rating"
 			case .seasonsCount:
 				return "Seasons"
 			case .episodesCount:
 				return "Episodes"
-			case .aireDates:
-				return "Aired"
-			case .network:
-				return "Network"
 			case .duration:
 				return "Duration"
-			case .rating:
-				return "Rating"
 			case .languages:
 				return "Languages"
-			case .genres:
-				return "Genres"
 			}
 		}
 
@@ -216,50 +217,39 @@ class ShowDetail {
 		func information(from showDetailsElement: ShowDetailsElement) -> String {
 			switch self {
 			case .id:
-				if let showID = showDetailsElement.id, showID != 0 {
+				if let showID = showDetailsElement.id {
 					return showID.string
+				}
+			case .studio:
+				if let studioName = showDetailsElement.studio?.name, !studioName.isEmpty {
+					return studioName
+				}
+			case .network:
+				if let network = showDetailsElement.network, !network.isEmpty {
+					return network
 				}
 			case .type:
 				if let type = showDetailsElement.type, !type.isEmpty {
 					return type
 				}
-			case .seasonsCount:
-				if let seasons = showDetailsElement.seasons, seasons > 0 {
-					return seasons.description
-				}
-			case .episodesCount:
-				if let episode = showDetailsElement.episodes, episode > 0 {
-					return episode.description
-				}
 			case .aireDates:
 				var dateInfo: String = "-"
-				if let startDate = showDetailsElement.startDate {
-					dateInfo = startDate.isEmpty ? "N/A - " : startDate.mediumDate + " - "
+				if let startDateTime = showDetailsElement.startDateTime {
+					dateInfo = startDateTime.isEmpty ? "N/A - " : startDateTime.mediumDate + " - "
 				}
-				if let endDate = showDetailsElement.endDate {
-					dateInfo += endDate.isEmpty ? "N/A" : endDate.mediumDate
+				if let endDateTime = showDetailsElement.endDateTime {
+					dateInfo += endDateTime.isEmpty ? "N/A" : endDateTime.mediumDate
 				}
 				return dateInfo
-			case .network:
-				if let network = showDetailsElement.network, !network.isEmpty {
-					return network
-				} else {
-					return "-"
+			case .broadcast:
+				var broadcastInfo: String = "-"
+				if let airDay = showDetailsElement.airDay {
+					broadcastInfo = Calendar.current.weekdaySymbols[airDay]
 				}
-			case .duration:
-				if let duration = showDetailsElement.runtime, duration > 0 {
-					return "\(duration) min"
+				if let airTime = showDetailsElement.airTime {
+					broadcastInfo += airTime.isEmpty ? "-" : " at " + airTime
 				}
-			case .rating:
-				if let watchRating = showDetailsElement.watchRating, !watchRating.isEmpty {
-					return watchRating
-				}
-			case .languages:
-				if let languages = showDetailsElement.languages, !languages.isEmpty {
-					return languages
-				} else {
-					return "Japanese"
-				}
+				return broadcastInfo
 			case .genres:
 				if let genres = showDetailsElement.genres, !genres.isEmpty {
 					var genreText = ""
@@ -273,6 +263,26 @@ class ShowDetail {
 						}
 					}
 					return genreText
+				}
+			case .rating:
+				if let watchRating = showDetailsElement.watchRating, !watchRating.isEmpty {
+					return watchRating
+				}
+			case .seasonsCount:
+				if let seasons = showDetailsElement.seasons, seasons > 0 {
+					return seasons.description
+				}
+			case .episodesCount:
+				if let episode = showDetailsElement.episodes, episode > 0 {
+					return episode.description
+				}
+			case .duration:
+				if let duration = showDetailsElement.runtime, duration > 0 {
+					return "\(duration) min"
+				}
+			case .languages:
+				if let languages = showDetailsElement.languages, !languages.isEmpty {
+					return languages
 				}
 			}
 			return "-"

@@ -19,16 +19,13 @@ extension String {
 
 	/// Returns a string indicating the group a given date falls in.
 	var groupTime: String {
-		let formatter = DateFormatter()
-		formatter.locale = Locale(identifier: "US_en")
-		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-
-		guard let date = formatter.date(from: self) else { return "" }
-		let timeInterval = Int(-date.timeIntervalSince(Date()))
+		guard let dateTime = self.dateTime else { return "" }
+		let timeInterval = Int(-dateTime.timeIntervalSince(Date()))
 
 		// Name of week day
+		let formatter = DateFormatter()
 		formatter.dateFormat = "EEEE"
-		let weekDay = formatter.string(from: date)
+		let weekDay = formatter.string(from: dateTime)
 
 		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
 			return (yearsAgo == 1 ? "Last Year" : "\(yearsAgo) Years Ago") // If exactly 1 year, then Last Year, otherwise # Years Ago
@@ -46,12 +43,14 @@ extension String {
 
 	/// Returns a string with a medium fomatted date.
 	var mediumDate: String {
-		return mediumFormatter.string(from: self.toDate)
+		guard let dateTime = self.dateTime else { return "" }
+		return mediumFormatter.string(from: dateTime)
 	}
 
-	/// Returns a string with a medium fomatted date as time.
+	/// Returns a string with a medium fomatted date and time.
 	var mediumDateTime: String {
-		return mediumDateTimeFormatter.string(from: self.toDate)
+		guard let dateTime = self.dateTime else { return "" }
+		return mediumDateTimeFormatter.string(from: dateTime)
 	}
 
 	/// Returns an instance of a DateFormatter with medium date style and time style.
@@ -81,8 +80,8 @@ extension String {
 
 	/// Retunrs string representing how much time has passed since given date.
 	var timeAgo: String {
-		let date = self.toDate
-		let timeInterval = Int(-date.timeIntervalSince(Date()))
+		guard let dateTime = self.dateTime else { return "" }
+		let timeInterval = Int(-dateTime.timeIntervalSince(Date()))
 
 		if let yearsAgo = timeInterval / (12*4*7*24*60*60) as Int?, yearsAgo > 0 {
 			return "\(yearsAgo)Y ago"
@@ -98,16 +97,5 @@ extension String {
 			return "\(minutesAgo)m ago"
 		}
 		return "Just now"
-	}
-
-	// MARK: - Functions
-	/**
-		Returns an estimated time of arrival string for a given string.
-
-		- Parameter shortend: A boolean value indicating whether to return the short or long version of the eta string.
-		- Returns: an estimated time of arrival from a given string.
-	*/
-	func etaString(shortend: Bool = false) -> String {
-		return etaDateAndString(shortend: shortend).etaString
 	}
 }

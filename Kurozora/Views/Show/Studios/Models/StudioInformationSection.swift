@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KurozoraKit
 
 /**
 	Set of available studio information sections.
@@ -50,5 +51,25 @@ enum StudioInformationSection: Int, CaseIterable {
 		case .website:
 			return R.reuseIdentifier.informationButtonCollectionViewCell.identifier
 		}
+	}
+
+	// MARK: - Functions
+	/**
+		Returns the required information from the given object.
+
+		- Parameter studioElement: The object used to extract the infromation from.
+
+		Returns: the required information from the given object.
+	*/
+	func information(from studioElement: StudioElement) -> String {
+		switch self {
+		case .founded:
+			if let founded = studioElement.founded, !founded.isEmpty {
+				return founded
+			}
+		case .headquarters: break
+		case .website: break
+		}
+		return "-"
 	}
 }

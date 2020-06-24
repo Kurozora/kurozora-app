@@ -15,6 +15,7 @@ import Foundation
 	case main = 0
 	case about = 1
 	case information = 2
+	case shows = 3
 	```
 */
 enum StudioSection: Int, CaseIterable {
@@ -22,6 +23,7 @@ enum StudioSection: Int, CaseIterable {
 	case main = 0
 	case about = 1
 	case information = 2
+	case shows = 3
 
 	// MARK: - Properties
 	/// The string value of a studio section layout kind.
@@ -33,6 +35,8 @@ enum StudioSection: Int, CaseIterable {
 			return "About"
 		case .information:
 			return "Information"
+		case .shows:
+			return "Shows"
 		}
 	}
 
@@ -45,6 +49,8 @@ enum StudioSection: Int, CaseIterable {
 			return 1
 		case .information:
 			return StudioInformationSection.allCases.count
+		case .shows:
+			return 0
 		}
 	}
 
@@ -64,6 +70,8 @@ enum StudioSection: Int, CaseIterable {
 			return R.reuseIdentifier.synopsisCollectionViewCell.identifier
 		case .information:
 			return StudioInformationSection(rawValue: row)?.identifierString ?? StudioInformationSection.website.identifierString
+		case .shows:
+			return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 		}
 	}
 }

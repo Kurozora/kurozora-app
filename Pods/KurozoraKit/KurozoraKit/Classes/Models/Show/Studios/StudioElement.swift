@@ -31,6 +31,9 @@ public class StudioElement: JSONDecodable {
 	/// The link to the website of the studio.
 	public let websiteURL: String?
 
+	/// The shows created by the studio.
+	public let shows: [ShowDetailsElement]?
+
 	// MARK: - Initializers
 	/// Initializes an empty instance of `StudioElement`
 	internal init() {
@@ -40,6 +43,7 @@ public class StudioElement: JSONDecodable {
 		self.about = nil
 		self.founded = nil
 		self.websiteURL = nil
+		self.shows = nil
 	}
 
 	required public init(json: JSON) throws {
@@ -49,5 +53,14 @@ public class StudioElement: JSONDecodable {
 		self.about = json["about"].stringValue
 		self.founded = json["founded"].string
 		self.websiteURL = json["website_url"].string
+
+		var shows = [ShowDetailsElement]()
+		let showsArray = json["anime"].arrayValue
+		for showItem in showsArray {
+			if let showDetailsElement = try? ShowDetailsElement(json: showItem) {
+				shows.append(showDetailsElement)
+			}
+		}
+		self.shows = shows
 	}
 }

@@ -13,6 +13,7 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var logoImageView: CircularImageView!
 	@IBOutlet weak var nameLabel: KLabel!
+	@IBOutlet weak var foundedLabel: KLabel!
 
 	// MARK: - Properties
 	var studioElement: StudioElement? {
@@ -27,6 +28,11 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 		guard let studioElement = studioElement else { return }
 
 		self.nameLabel.text = studioElement.name
+		if let foundedString = studioElement.founded, !foundedString.isEmpty {
+			self.foundedLabel.text = "Founded on " + foundedString
+		} else {
+			self.foundedLabel.text = ""
+		}
 
 		if let studioLogo = studioElement.logo {
 			self.logoImageView.setImage(with: studioLogo, placeholder: R.image.placeholders.showBanner()!)

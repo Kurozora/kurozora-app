@@ -14,7 +14,7 @@ PODS:
   - Kingfisher (5.14.0):
     - Kingfisher/Core (= 5.14.0)
   - Kingfisher/Core (5.14.0)
-  - KurozoraKit (0.7.2):
+  - KurozoraKit (0.7.5):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
     - TRON
@@ -139,7 +139,7 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   Kingfisher: 7b64389a43139c903ec434788344c288217c792d
-  KurozoraKit: 79e1fafc76b2747def7d544fe592c2f524319647
+  KurozoraKit: 820c65fbf622455efbda15e0b69f96adb527c5e7
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
