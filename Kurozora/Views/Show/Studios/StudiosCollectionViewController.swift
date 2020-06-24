@@ -72,6 +72,7 @@ extension StudiosCollectionViewController {
 		return [
 			SynopsisCollectionViewCell.self,
 			InformationCollectionViewCell.self,
+			InformationButtonCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self
 		]
 	}
@@ -95,7 +96,7 @@ extension StudiosCollectionViewController {
 				if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
 					informationCollectionViewCell.studioElement = self.studioElement
 				} else if let informationButtonCollectionViewCell = studioCollectionViewCell as? InformationButtonCollectionViewCell {
-					informationButtonCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item)
+					informationButtonCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.row)
 					informationButtonCollectionViewCell.studioElement = self.studioElement
 				}
 			case .shows:

@@ -127,13 +127,16 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 				}
 			}
 		}
+
+		if showDetailsElement?.airStatus != "" {
+			self.fetchStudio()
+		}
 	}
 
 	/// Fetches studio details for the currently viewed show.
 	func fetchStudio() {
 		if studioElement == nil, let studioID = self.showDetailsElement?.studio?.id, studioID != 0 {
-			let limit = UIDevice.isPhone ? 2 : 10
-			KService.getDetails(forStudioID: studioID, includesShows: true, limit: limit) { result in
+			KService.getDetails(forStudioID: studioID, includesShows: true, limit: 10) { result in
 				switch result {
 				case .success(let studioElement):
 					DispatchQueue.main.async {
@@ -226,36 +229,8 @@ extension ShowDetailCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let showDetailSection = ShowDetail.Section(rawValue: indexPath.section) else { fatalError("Can't determine cellForItemAt indexPath: \(indexPath)") }
-
-		switch showDetailSection {
-		case .header:
-			let showDetailHeaderCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! ShowDetailHeaderCollectionViewCell
-			return showDetailHeaderCollectionViewCell
-		case .badge:
-			let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! BadgeCollectionViewCell
-			return badgeCollectionViewCell
-		case .synopsis:
-			let synopsisCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! SynopsisCollectionViewCell
-			return synopsisCollectionViewCell
-		case .rating:
-			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
-			return ratingCollectionViewCell
-		case .information:
-			let informationCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! InformationCollectionViewCell
-			return informationCollectionViewCell
-		case .seasons:
-			let lockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! LockupCollectionViewCell
-			return lockupCollectionViewCell
-		case .cast:
-			let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! CastCollectionViewCell
-			return castCollectionViewCell
-		case .moreByStudio:
-			let smallLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! SmallLockupCollectionViewCell
-			return smallLockupCollectionViewCell
-		case .related:
-			let relatedShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath) as! RelatedShowCollectionViewCell
-			return relatedShowCollectionViewCell
-		}
+		let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailSection.identifierString, for: indexPath)
+		return collectionViewCell
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -354,12 +329,23 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
-		case .seasons, .cast, .moreByStudio, .related:
+		case .seasons, .cast, .related:
 			let columnCount = (width / 374).rounded().int
 			if columnCount > 5 {
 				return 5
 			}
 			return columnCount > 0 ? columnCount : 1
+		case .moreByStudio:
+			var columnCount = 1
+			if width >= 414 {
+				columnCount = (width / 384).rounded().int
+			} else {
+				columnCount = (width / 284).rounded().int
+			}
+			if columnCount > 5 {
+				return 5
+			}
+			return columnCount
 		default:
 			let columnCount = (width / 374).rounded().int
 			return columnCount > 0 ? columnCount : 1
@@ -378,9 +364,21 @@ extension ShowDetailCollectionViewController {
 			return .absolute(88)
 		case .information:
 			return .estimated(55)
+		case .moreByStudio:
+			return .absolute(440)
 		default:
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(heightFraction)
+		}
+	}
+
+	func widthDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
+		switch ShowDetail.Section(rawValue: section) {
+		case .moreByStudio:
+			let widthFraction = self.groupWidthFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
+			return .fractionalWidth(widthFraction)
+		default:
+			return .fractionalWidth(1.0)
 		}
 	}
 
@@ -401,6 +399,17 @@ extension ShowDetailCollectionViewController {
 		default: break
 		}
 
+		return .zero
+	}
+
+	func groupWidthFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
+		switch ShowDetail.Section(rawValue: section) {
+		case .moreByStudio:
+			if let showsCount = studioElement?.shows?.count, showsCount != 0 {
+				return (0.90 / columnsCount.double).cgFloat
+			}
+		default: break
+		}
 		return .zero
 	}
 
@@ -504,17 +513,22 @@ extension ShowDetailCollectionViewController {
 	func gridSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											  heightDimension: .fractionalHeight(1.0))
+											  heightDimension: .fractionalHeight(0.5))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
 		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
+		let widthDimension = self.widthDimension(forSection: section, with: columns, layout: layoutEnvironment)
+		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension,
 											   heightDimension: heightDimension)
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-															 subitem: item, count: columns)
+		let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+															 subitem: item, count: 2)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		#if targetEnvironment(macCatalyst)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+		#else
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
+		#endif
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
 	}
@@ -538,18 +552,18 @@ extension ShowDetailCollectionViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-//extension ShowDetailCollectionViewController {
-//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//		#if !targetEnvironment(macCatalyst)
-//		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
-//			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-//				self.navigationController?.navigationBar.alpha = 1.0
-//			}, completion: nil)
-//		} else {
-//			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
-//				self.navigationController?.navigationBar.alpha = 0.0
-//			}, completion: nil)
-//		}
-//		#endif
-//	}
-//}
+extension ShowDetailCollectionViewController {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		#if !targetEnvironment(macCatalyst)
+		if scrollView.contentOffset.y >= scrollView.contentSize.height / 5 { // If user scrolled to 1/5 of the total scroll height
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.navigationController?.navigationBar.alpha = 1.0
+			}, completion: nil)
+		} else {
+			UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions(), animations: {
+				self.navigationController?.navigationBar.alpha = 0.0
+			}, completion: nil)
+		}
+		#endif
+	}
+}
