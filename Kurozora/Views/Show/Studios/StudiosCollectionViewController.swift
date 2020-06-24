@@ -94,9 +94,10 @@ extension StudiosCollectionViewController {
 				(studioCollectionViewCell as? SynopsisCollectionViewCell)?.synopsisText = self.studioElement?.about
 			case .information:
 				if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
+					informationCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item) ?? .founded
 					informationCollectionViewCell.studioElement = self.studioElement
 				} else if let informationButtonCollectionViewCell = studioCollectionViewCell as? InformationButtonCollectionViewCell {
-					informationButtonCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.row)
+					informationButtonCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item)
 					informationButtonCollectionViewCell.studioElement = self.studioElement
 				}
 			case .shows:

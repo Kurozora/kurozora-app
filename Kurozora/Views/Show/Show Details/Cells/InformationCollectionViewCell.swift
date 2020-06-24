@@ -16,6 +16,10 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var separatorView: SecondarySeparatorView!
 
 	// MARK: - Properties
+	var showDetailInformation: ShowDetail.Information = .id
+	var episodeDetailInformation: EpisodeDetail.Information = .id
+	var studioInformationSection: StudioInformationSection = .founded
+
 	var episodeElement: EpisodeElement? {
 		didSet {
 			configureCell()
@@ -39,7 +43,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			configureCellWithEpisodeElement()
 			return
 		}
-		guard let showDetailInformation = ShowDetail.Information(rawValue: indexPath?.row ?? 0) else { return }
 
 		titleLabel.text = showDetailInformation.stringValue
 		detailLabel.text = showDetailInformation.information(from: showDetailsElement)
@@ -51,7 +54,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			configureCellWithStudioElement()
 			return
 		}
-		guard let episodeDetailInformation = EpisodeDetail.Information(rawValue: indexPath?.row ?? 0) else { return }
 
 		titleLabel.text = episodeDetailInformation.stringValue
 		detailLabel.text = episodeDetailInformation.information(from: episodeElement)
@@ -60,7 +62,6 @@ class InformationCollectionViewCell: UICollectionViewCell {
 
 	fileprivate func configureCellWithStudioElement() {
 		guard let studioElement = studioElement else { return }
-		guard let studioInformationSection = StudioInformationSection(rawValue: indexPath?.row ?? 0) else { return }
 
 		titleLabel.text = studioInformationSection.stringValue
 		detailLabel.text = studioInformationSection.information(from: studioElement)

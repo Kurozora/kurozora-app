@@ -278,6 +278,7 @@ extension ShowDetailCollectionViewController {
 			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
+			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .id
 			informationCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .seasons:
 			let lockupCollectionViewCell = cell as? LockupCollectionViewCell

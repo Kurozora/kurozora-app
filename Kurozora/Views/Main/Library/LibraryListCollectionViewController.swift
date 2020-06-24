@@ -90,14 +90,6 @@ class LibraryListCollectionViewController: KCollectionViewController {
 		}
     }
 
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		super.viewWillTransition(to: size, with: coordinator)
-		guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-			return
-		}
-		flowLayout.invalidateLayout()
-	}
-
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { (view) in
