@@ -432,25 +432,11 @@ extension HomeCollectionViewController {
 
 			switch verticalCollectionCellStyle {
 			case .actionList:
-				if width <= 414 {
-					columnCount = 1
-				} else if width <= 828 {
-					columnCount = 2
-				} else {
-					if numberOfItems < 5 {
-						columnCount = numberOfItems
-					} else {
-						columnCount = 5
-					}
-				}
+				let actionListCount = (width / 414).rounded().int
+				columnCount = actionListCount > 5 ? 5 : actionListCount
 			case .actionButton:
-				if width <= 414 {
-					columnCount = 1
-				} else if width <= 828 {
-					columnCount = 2
-				} else {
-					columnCount = (width / 414).rounded().int
-				}
+				let actionButtonCount = (width / 414).rounded().int
+				columnCount = actionButtonCount > 2 ? 2 : actionButtonCount
 			case .legal:
 				columnCount = 1
 			}
@@ -509,13 +495,11 @@ extension HomeCollectionViewController {
 				if width > 828 {
 					let itemsWidth = (414 * numberOfItems + 20 * numberOfItems).cgFloat
 					var leadingInset: CGFloat = (width - itemsWidth) / 2
-					var trailingInset: CGFloat = 0
+					var trailingInset: CGFloat = leadingInset
 
 					if leadingInset < 10 {
 						leadingInset = 10
 						trailingInset = 10
-					} else if width < 1240 {
-						trailingInset = leadingInset
 					}
 
 					return NSDirectionalEdgeInsets(top: 0, leading: leadingInset, bottom: 20, trailing: trailingInset)
