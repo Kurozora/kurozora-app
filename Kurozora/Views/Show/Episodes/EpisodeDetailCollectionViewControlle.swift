@@ -65,7 +65,7 @@ extension EpisodeDetailCollectionViewControlle {
 			let episodeLockupCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! EpisodeLockupCollectionViewCell
 			return episodeLockupCollectionViewCell
 		case .synopsis:
-			let synopsisCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! SynopsisCollectionViewCell
+			let synopsisCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! TextViewCollectionViewCell
 			return synopsisCollectionViewCell
 		case .rating:
 			let ratingCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: episodeDetailSection.identifierString, for: indexPath) as! RatingCollectionViewCell
@@ -77,7 +77,7 @@ extension EpisodeDetailCollectionViewControlle {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
+		let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 		return supplementaryView
 	}
 }
@@ -91,8 +91,9 @@ extension EpisodeDetailCollectionViewControlle {
 			episodeLockupCollectionViewCell?.simpleModeEnabled = true
 			episodeLockupCollectionViewCell?.episodeElement = episodeElement
 		case .synopsis:
-			let synopsisCollectionViewCell = cell as? SynopsisCollectionViewCell
-			synopsisCollectionViewCell?.synopsisText = episodeElement?.overview
+			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
+			textViewCollectionViewCell?.textViewContent = episodeElement?.overview
 //		case .rating:
 //			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
 //			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
@@ -105,7 +106,7 @@ extension EpisodeDetailCollectionViewControlle {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-		guard let sectionHeaderReusableView = view as? TitleHeaderReusableView else { return }
+		guard let sectionHeaderReusableView = view as? TitleHeaderCollectionReusableView else { return }
 		guard let Section = EpisodeDetail.Section(rawValue: indexPath.section) else { return }
 
 		sectionHeaderReusableView.title = Section.stringValue
@@ -117,14 +118,14 @@ extension EpisodeDetailCollectionViewControlle {
 extension EpisodeDetailCollectionViewControlle {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [EpisodeLockupCollectionViewCell.self,
-				SynopsisCollectionViewCell.self,
+				TextViewCollectionViewCell.self,
 				RatingCollectionViewCell.self,
 				InformationCollectionViewCell.self
 		]
 	}
 
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderReusableView.self]
+		return [TitleHeaderCollectionReusableView.self]
 	}
 }
 
@@ -196,8 +197,8 @@ extension EpisodeDetailCollectionViewControlle {
 
 			switch episodeSection {
 			case .header:
-				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = headerSection
 			case .synopsis:
 				if let overview = self.episodeElement?.overview, !overview.isEmpty {
 					let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
@@ -229,7 +230,7 @@ extension EpisodeDetailCollectionViewControlle {
 		return layout
 	}
 
-	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	func headerSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											  heightDimension: .fractionalHeight(1.0))
@@ -240,6 +241,21 @@ extension EpisodeDetailCollectionViewControlle {
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
+	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
+		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												heightDimension: heightDimension)
+		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)

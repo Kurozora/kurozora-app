@@ -69,7 +69,7 @@ class ShowDetail {
 			case .badge:
 				return R.reuseIdentifier.badgeCollectionViewCell.identifier
 			case .synopsis:
-				return R.reuseIdentifier.synopsisCollectionViewCell.identifier
+				return R.reuseIdentifier.textViewCollectionViewCell.identifier
 			case .rating:
 				return R.reuseIdentifier.ratingCollectionViewCell.identifier
 			case .information:

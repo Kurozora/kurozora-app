@@ -67,7 +67,7 @@ enum StudioSection: Int, CaseIterable {
 		case .main:
 			return R.reuseIdentifier.studioHeaderCollectionViewCell.identifier
 		case .about:
-			return R.reuseIdentifier.synopsisCollectionViewCell.identifier
+			return R.reuseIdentifier.textViewCollectionViewCell.identifier
 		case .information:
 			return StudioInformationSection(rawValue: row)?.identifierString ?? StudioInformationSection.website.identifierString
 		case .shows:

@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TitleHeaderReusableView" id="Hf8-gr-7y4" customClass="TitleHeaderReusableView" customModule="Kurozora" customModuleProvider="target">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TitleHeaderCollectionReusableView" id="Hf8-gr-7y4" customClass="TitleHeaderCollectionReusableView" customModule="Kurozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="46.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>

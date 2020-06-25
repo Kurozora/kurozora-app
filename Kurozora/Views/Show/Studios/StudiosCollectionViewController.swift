@@ -70,7 +70,7 @@ class StudiosCollectionViewController: KCollectionViewController {
 extension StudiosCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
 		return [
-			SynopsisCollectionViewCell.self,
+			TextViewCollectionViewCell.self,
 			InformationCollectionViewCell.self,
 			InformationButtonCollectionViewCell.self,
 			SmallLockupCollectionViewCell.self
@@ -78,7 +78,7 @@ extension StudiosCollectionViewController {
 	}
 
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderReusableView.self]
+		return [TitleHeaderCollectionReusableView.self]
 	}
 
 	override func configureDataSource() {
@@ -91,7 +91,9 @@ extension StudiosCollectionViewController {
 			case .main:
 				(studioCollectionViewCell as? StudioHeaderCollectionViewCell)?.studioElement = self.studioElement
 			case .about:
-				(studioCollectionViewCell as? SynopsisCollectionViewCell)?.synopsisText = self.studioElement?.about
+				let textViewCollectionViewCell = studioCollectionViewCell as? TextViewCollectionViewCell
+				textViewCollectionViewCell?.textViewCollectionViewCellType = .about
+				textViewCollectionViewCell?.textViewContent = self.studioElement?.about
 			case .information:
 				if let informationCollectionViewCell = studioCollectionViewCell as? InformationCollectionViewCell {
 					informationCollectionViewCell.studioInformationSection = StudioInformationSection(rawValue: indexPath.item) ?? .founded
@@ -108,10 +110,10 @@ extension StudiosCollectionViewController {
 		}
 		dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
 			let studioSection = StudioSection(rawValue: indexPath.section) ?? .main
-			let titleHeaderReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
-			titleHeaderReusableView.title = studioSection.stringValue
-			titleHeaderReusableView.indexPath = indexPath
-			return titleHeaderReusableView
+			let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+			titleHeaderCollectionReusableView.title = studioSection.stringValue
+			titleHeaderCollectionReusableView.indexPath = indexPath
+			return titleHeaderCollectionReusableView
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<StudioSection, Int>()
@@ -151,7 +153,7 @@ extension StudiosCollectionViewController {
 		case .main:
 			return .estimated(230)
 		case .about:
-			return .absolute(110)
+			return .estimated(20)
 		case .information:
 			return .estimated(55)
 		case .shows:
@@ -222,15 +224,14 @@ extension StudiosCollectionViewController {
 
 	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											  heightDimension: .fractionalHeight(1.0))
-		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
+		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+											   heightDimension: heightDimension)
+
+		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-											   heightDimension: heightDimension)
-		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)

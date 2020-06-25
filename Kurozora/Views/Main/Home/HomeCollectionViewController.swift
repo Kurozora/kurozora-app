@@ -107,7 +107,7 @@ class HomeCollectionViewController: KCollectionViewController {
 		#if targetEnvironment(macCatalyst)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 		#else
-		layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+		layoutSection.orthogonalScrollingBehavior = .groupPaging
 		#endif
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 		return layoutSection
@@ -272,7 +272,7 @@ extension HomeCollectionViewController {
 	}
 
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderReusableView.self]
+		return [TitleHeaderCollectionReusableView.self]
 	}
 
 	override func configureDataSource() {
@@ -319,7 +319,7 @@ extension HomeCollectionViewController {
 			let exploreCategoriesCount = self.exploreCategories?.count ?? 0
 
 			// Get a supplementary view of the desired kind.
-			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
+			let exploreSectionTitleCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
 			exploreSectionTitleCell.indexPath = indexPath
 
 			if indexPath.section < exploreCategoriesCount {

@@ -1,5 +1,5 @@
 //
-//  SynopsisCollectionViewCell.swift
+//  TextViewCollectionViewCell.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 23/08/2018.
@@ -9,19 +9,20 @@
 import UIKit
 import KurozoraKit
 
-class SynopsisCollectionViewCell: UICollectionViewCell {
+class TextViewCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
-	@IBOutlet weak var synopsisTextView: KTextView!
+	@IBOutlet weak var textView: KTextView!
 	@IBOutlet weak var moreSynopsisButton: KTintedButton?
 	@IBOutlet weak var moreSynopsisImageView: UIImageView? {
 		didSet {
 			moreSynopsisImageView?.theme_tintColor = KThemePicker.backgroundColor.rawValue
 		}
 	}
-	@IBOutlet weak var moreSynopsisView: UIView?
+	@IBOutlet weak var moreButtonView: UIView?
 
 	// MARK: - Properties
-	var synopsisText: String? {
+	var textViewCollectionViewCellType: TextViewCollectionViewCellType = .synopsis
+	var textViewContent: String? {
 		didSet {
 			configureCell()
 		}
@@ -29,24 +30,23 @@ class SynopsisCollectionViewCell: UICollectionViewCell {
 
 	// MARK: - Functions
 	fileprivate func configureCell() {
-		synopsisTextView.text = synopsisText
+		// Synopsis text
+		textView.textContainer.maximumNumberOfLines = textViewCollectionViewCellType.maximumNumberOfLinesValue
+		textView.textContainer.lineBreakMode = .byWordWrapping
+		textView.text = textViewContent
 
-		if moreSynopsisView != nil {
-			// Synopsis text
-			synopsisTextView.textContainer.maximumNumberOfLines = 4
-			synopsisTextView.textContainer.lineBreakMode = .byWordWrapping
-
-			// Synopsis background
-			moreSynopsisView?.isHidden = !(synopsisTextView.layoutManager.numberOfLines > 4)
-		}
+		// Synopsis background
+		moreButtonView?.isHidden = !(textView.layoutManager.numberOfLines > textViewCollectionViewCellType.maximumNumberOfLinesValue)
 	}
 
 	// MARK: - IBActions
 	@IBAction func moreButtonPressed(_ sender: UIButton) {
 		if let synopsisKNavigationController = R.storyboard.synopsis.instantiateInitialViewController() {
 			if let synopsisViewController = synopsisKNavigationController.viewControllers.first as? SynopsisViewController {
-				synopsisViewController.synopsis = synopsisText
+				synopsisViewController.title = textViewCollectionViewCellType.stringValue
+				synopsisViewController.synopsis = textViewContent
 			}
+			synopsisKNavigationController.modalPresentationStyle = .fullScreen
 			self.parentViewController?.present(synopsisKNavigationController)
 		}
 	}

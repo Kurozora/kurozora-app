@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TextViewCollectionViewCell" id="ZIL-uF-qjk" customClass="TextViewCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="239.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jBW-lB-myt">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="239.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <textView contentMode="redraw" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqj-mm-w6d" customClass="KTextView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="239.5"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur asd. asda Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCO-kG-JxV">
+                        <rect key="frame" x="292" y="209.5" width="122" height="30"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_right" translatesAutoresizingMaskIntoConstraints="NO" id="4Zx-df-6pN">
+                                <rect key="frame" x="0.0" y="0.0" width="122" height="30"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idn-fr-QVs">
+                                <rect key="frame" x="0.0" y="0.0" width="122" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <inset key="contentEdgeInsets" minX="70" minY="0.0" maxX="8" maxY="8"/>
+                                <state key="normal" title="more">
+                                    <color key="titleColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="moreButtonPressed:" destination="ZIL-uF-qjk" eventType="touchUpInside" id="bLw-lb-RjI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="4Zx-df-6pN" secondAttribute="bottom" id="3RU-jD-I6S"/>
+                            <constraint firstItem="Idn-fr-QVs" firstAttribute="bottom" secondItem="4Zx-df-6pN" secondAttribute="bottom" id="535-y7-vRH"/>
+                            <constraint firstItem="Idn-fr-QVs" firstAttribute="trailing" secondItem="4Zx-df-6pN" secondAttribute="trailing" id="Edd-fW-Nox"/>
+                            <constraint firstItem="4Zx-df-6pN" firstAttribute="top" secondItem="SCO-kG-JxV" secondAttribute="top" id="Faa-y4-BEr"/>
+                            <constraint firstAttribute="trailing" secondItem="4Zx-df-6pN" secondAttribute="trailing" id="TmY-vJ-kIR"/>
+                            <constraint firstItem="4Zx-df-6pN" firstAttribute="leading" secondItem="SCO-kG-JxV" secondAttribute="leading" id="lHi-qM-Sw4"/>
+                            <constraint firstItem="Idn-fr-QVs" firstAttribute="top" secondItem="4Zx-df-6pN" secondAttribute="top" id="lwD-6u-gqj"/>
+                            <constraint firstItem="Idn-fr-QVs" firstAttribute="leading" secondItem="4Zx-df-6pN" secondAttribute="leading" id="tHb-2B-Y2t"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="qqj-mm-w6d" firstAttribute="leading" secondItem="jBW-lB-myt" secondAttribute="leading" id="05m-vF-OGF"/>
+                    <constraint firstItem="qqj-mm-w6d" firstAttribute="top" secondItem="jBW-lB-myt" secondAttribute="top" id="N08-Fp-Hbq"/>
+                    <constraint firstAttribute="bottom" secondItem="qqj-mm-w6d" secondAttribute="bottom" id="OdS-SD-HJP"/>
+                    <constraint firstItem="SCO-kG-JxV" firstAttribute="trailing" secondItem="qqj-mm-w6d" secondAttribute="trailing" id="RTX-1p-6qV"/>
+                    <constraint firstItem="SCO-kG-JxV" firstAttribute="bottom" secondItem="qqj-mm-w6d" secondAttribute="bottom" id="oa0-Ss-SGa"/>
+                    <constraint firstAttribute="trailing" secondItem="qqj-mm-w6d" secondAttribute="trailing" id="tXT-zs-FrS"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="moreButtonView" destination="SCO-kG-JxV" id="sCG-mr-Jwv"/>
+                <outlet property="moreSynopsisButton" destination="Idn-fr-QVs" id="DwO-bq-AEE"/>
+                <outlet property="moreSynopsisImageView" destination="4Zx-df-6pN" id="w3s-eg-E0o"/>
+                <outlet property="textView" destination="qqj-mm-w6d" id="7PV-fb-5iw"/>
+            </connections>
+            <point key="canvasLocation" x="111.59420289855073" y="40.513392857142854"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="shadow_right" width="30" height="6"/>
+    </resources>
+</document>

@@ -1,5 +1,5 @@
 //
-//  TitleHeaderReusableView.swift
+//  TitleHeaderCollectionReusableView.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 29/03/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TitleHeaderReusableView: UICollectionReusableView {
+class TitleHeaderCollectionReusableView: UICollectionReusableView {
 	// MARK: - IBOutlets
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var subTitleHeader: KLabel?
@@ -16,7 +16,7 @@ class TitleHeaderReusableView: UICollectionReusableView {
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	static let reuseIdentifier = "TitleHeaderReusableView"
+	static let reuseIdentifier = "TitleHeaderCollectionReusableView"
 	var title: String? = nil {
 		didSet {
 			configureView()

@@ -48,7 +48,7 @@ class EpisodeDetail {
 			case .header:
 				return R.reuseIdentifier.episodeLockupCollectionViewCell.identifier
 			case .synopsis:
-				return R.reuseIdentifier.synopsisCollectionViewCell.identifier
+				return R.reuseIdentifier.textViewCollectionViewCell.identifier
 			case .rating:
 				return R.reuseIdentifier.ratingCollectionViewCell.identifier
 			case .information:

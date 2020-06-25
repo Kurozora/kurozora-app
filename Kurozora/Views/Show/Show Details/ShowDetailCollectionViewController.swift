@@ -235,11 +235,11 @@ extension ShowDetailCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let showSection = ShowDetail.Section(rawValue: indexPath.section) ?? .header
-		let titleHeaderReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderReusableView.self, for: indexPath)
-		titleHeaderReusableView.segueID = showSection.segueIdentifier
-		titleHeaderReusableView.title = showSection != .moreByStudio ? showSection.stringValue : showSection.stringValue + (studioElement?.name ?? "this Studio")
-		titleHeaderReusableView.indexPath = indexPath
-		return titleHeaderReusableView
+		let titleHeaderCollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: TitleHeaderCollectionReusableView.self, for: indexPath)
+		titleHeaderCollectionReusableView.segueID = showSection.segueIdentifier
+		titleHeaderCollectionReusableView.title = showSection != .moreByStudio ? showSection.stringValue : showSection.stringValue + (studioElement?.name ?? "this Studio")
+		titleHeaderCollectionReusableView.indexPath = indexPath
+		return titleHeaderCollectionReusableView
 	}
 }
 
@@ -271,8 +271,9 @@ extension ShowDetailCollectionViewController {
 			let badgeCollectionViewCell = cell as? BadgeCollectionViewCell
 			badgeCollectionViewCell?.showDetailsElement = showDetailsElement
 		case .synopsis:
-			let synopsisCollectionViewCell = cell as? SynopsisCollectionViewCell
-			synopsisCollectionViewCell?.synopsisText = showDetailsElement?.synopsis
+			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
+			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
+			textViewCollectionViewCell?.textViewContent = showDetailsElement?.synopsis
 		case .rating:
 			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
 			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
@@ -298,7 +299,7 @@ extension ShowDetailCollectionViewController {
 // MARK: - KCollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func registerCells(for collectionView: UICollectionView) -> [UICollectionViewCell.Type] {
-		return [SynopsisCollectionViewCell.self,
+		return [TextViewCollectionViewCell.self,
 				RatingCollectionViewCell.self,
 				InformationCollectionViewCell.self,
 				LockupCollectionViewCell.self,
@@ -308,7 +309,7 @@ extension ShowDetailCollectionViewController {
 	}
 
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
-		return [TitleHeaderReusableView.self]
+		return [TitleHeaderCollectionReusableView.self]
 	}
 }
 
@@ -330,13 +331,7 @@ extension ShowDetailCollectionViewController {
 				}
 			}
 			return 1
-		case .seasons, .cast, .related:
-			let columnCount = (width / 374).rounded().int
-			if columnCount > 5 {
-				return 5
-			}
-			return columnCount > 0 ? columnCount : 1
-		case .moreByStudio:
+		case .seasons, .cast, .moreByStudio:
 			var columnCount = 1
 			if width >= 414 {
 				columnCount = (width / 384).rounded().int
@@ -358,14 +353,14 @@ extension ShowDetailCollectionViewController {
 		case .header:
 			return .fractionalHeight(0.90)
 		case .badge:
-			return .absolute(80)
+			return .estimated(50)
 		case .synopsis:
-			return .absolute(110)
+			return .estimated(100)
 		case .rating:
 			return .absolute(88)
 		case .information:
 			return .estimated(55)
-		case .moreByStudio:
+		case .seasons, .cast, .moreByStudio:
 			return .absolute(440)
 		default:
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
@@ -375,7 +370,8 @@ extension ShowDetailCollectionViewController {
 
 	func widthDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
 		switch ShowDetail.Section(rawValue: section) {
-		case .moreByStudio:
+		case .seasons, .cast, .moreByStudio, .related:
+			let columnsCount = columnsCount <= 1 ? columnsCount : columnsCount - 1
 			let widthFraction = self.groupWidthFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(widthFraction)
 		default:
@@ -383,32 +379,21 @@ extension ShowDetailCollectionViewController {
 		}
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
+	func groupWidthFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
 		switch ShowDetail.Section(rawValue: section) {
 		case .seasons:
 			if let seasonsCount = seasons?.count, seasonsCount != 0 {
-				return (0.50 / columnsCount.double).cgFloat
+				return (0.90 / columnsCount.double).cgFloat
 			}
 		case .cast:
-			if let actorsCount = actors?.count, actorsCount != 0 {
-				return (0.50 / columnsCount.double).cgFloat
+			if let castCount = actors?.count, castCount != 0 {
+				return (0.90 / columnsCount.double).cgFloat
 			}
-		case .moreByStudio:
-			if let showsCount = studioElement?.shows?.count, showsCount != 0 {
-				return (0.50 / columnsCount.double).cgFloat
-			}
-		default: break
-		}
-
-		return .zero
-	}
-
-	func groupWidthFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		switch ShowDetail.Section(rawValue: section) {
 		case .moreByStudio:
 			if let showsCount = studioElement?.shows?.count, showsCount != 0 {
 				return (0.90 / columnsCount.double).cgFloat
 			}
+		case .related: break
 		default: break
 		}
 		return .zero
@@ -440,8 +425,8 @@ extension ShowDetailCollectionViewController {
 
 			switch showSections {
 			case .header:
-				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
-				sectionLayout = fullSection
+				let headerSection = self.headerSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = headerSection
 			case .badge:
 				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
 				sectionLayout = fullSection
@@ -494,7 +479,7 @@ extension ShowDetailCollectionViewController {
 		return layout
 	}
 
-	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	func headerSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
 		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											  heightDimension: .fractionalHeight(1.0))
@@ -505,6 +490,21 @@ extension ShowDetailCollectionViewController {
 		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+
+		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
+		return layoutSection
+	}
+
+	func fullSection(for section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+		let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
+		let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+												heightDimension: heightDimension)
+		let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
+
+		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: columns)
 
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
@@ -523,7 +523,7 @@ extension ShowDetailCollectionViewController {
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension,
 											   heightDimension: heightDimension)
 		let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-															 subitem: item, count: 2)
+														   subitem: item, count: 2)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		#if targetEnvironment(macCatalyst)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
