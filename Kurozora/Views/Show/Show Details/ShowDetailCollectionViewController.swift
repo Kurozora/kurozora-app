@@ -348,6 +348,27 @@ extension ShowDetailCollectionViewController {
 		}
 	}
 
+	func verticalColumnCount(for section: Int) -> Int {
+		guard let showDetailSection = ShowDetail.Section(rawValue: section) else { return 1 }
+		var itemsCount = 0
+		switch showDetailSection {
+		case .seasons:
+			if let seasonsCount = seasons?.count, seasonsCount != 0 {
+				itemsCount = seasonsCount
+			}
+		case .cast:
+			if let castCount = actors?.count, castCount != 0 {
+				itemsCount = castCount
+			}
+		case .moreByStudio:
+			if let studioShowsCount = studioElement?.shows?.count, studioShowsCount != 0 {
+				itemsCount = studioShowsCount
+			}
+		default: break
+		}
+		return itemsCount > 5 ? 2 : 1
+	}
+
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
 		switch ShowDetail.Section(rawValue: section) {
 		case .header:
@@ -361,7 +382,8 @@ extension ShowDetailCollectionViewController {
 		case .information:
 			return .estimated(55)
 		case .seasons, .cast, .moreByStudio:
-			return .absolute(440)
+			let verticalColumnCount = self.verticalColumnCount(for: section)
+			return verticalColumnCount == 2 ? .estimated(440) : .estimated(220)
 		default:
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(heightFraction)
@@ -518,12 +540,13 @@ extension ShowDetailCollectionViewController {
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let widthDimension = self.widthDimension(forSection: section, with: columns, layout: layoutEnvironment)
+		let heightDimension = self.heightDimension(forSection: section, with: columns, layout: layoutEnvironment)
 		let groupSize = NSCollectionLayoutSize(widthDimension: widthDimension,
 											   heightDimension: heightDimension)
+		let verticalColumnCount = self.verticalColumnCount(for: section)
 		let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-														   subitem: item, count: 2)
+														   subitem: item, count: verticalColumnCount)
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		#if targetEnvironment(macCatalyst)
 		layoutSection.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
