@@ -14,7 +14,7 @@ import UserNotifications
 import SwifterSwift
 
 // MARK: - KurozoraKit
-let KService = KurozoraKit(debugURL: "https://d22fec220f4d.ngrok.io/api/v1").services(Kurozora.shared.services)
+let KService = KurozoraKit().services(Kurozora.shared.services)
 
 // MARK: - Kurozora
 @UIApplicationMain
