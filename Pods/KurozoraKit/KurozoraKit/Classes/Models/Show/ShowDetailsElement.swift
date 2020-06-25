@@ -99,11 +99,11 @@ public class ShowDetailsElement: JSONDecodable {
 	public let producers: String?
 
 	// Schedule
-	/// The date the show first aired on.
-	public let startDate: String?
+	/// The first air date of the show.
+	public let firstAired: String?
 
-	/// The date the show last aired on.
-	public let endDate: String?
+	/// The last air date of the show.
+	public let lastAired: String?
 
 	/// The time the show has aired at.
 	public let airTime: String?
@@ -168,8 +168,8 @@ public class ShowDetailsElement: JSONDecodable {
 		self.studio = nil
 		self.producers = nil
 
-		self.startDate = nil
-		self.endDate = nil
+		self.firstAired = nil
+		self.lastAired = nil
 		self.airTime = nil
 		self.airDay = nil
 
@@ -225,8 +225,8 @@ public class ShowDetailsElement: JSONDecodable {
 		self.producers = json["producers"].stringValue
 
 		// Schedule
-		self.startDate = json["first_aired"].stringValue
-		self.endDate = json["last_aired"].stringValue
+		self.firstAired = json["first_aired"].stringValue
+		self.lastAired = json["last_aired"].stringValue
 		self.airTime = json["air_time"].stringValue
 		self.airDay = json["air_day"].intValue
 
@@ -311,7 +311,7 @@ extension ShowDetailsElement {
 	```
 	*/
 	public var startDateTime: String? {
-		guard let airDate = self.startDate, !airDate.isEmpty else { return nil }
+		guard let airDate = self.firstAired, !airDate.isEmpty else { return nil }
 		guard let airTime = self.airTime, !airTime.isEmpty else { return nil }
 
 		let airDateTimeString = airDate + " " + airTime
@@ -326,7 +326,7 @@ extension ShowDetailsElement {
 		```
 	*/
 	public var endDateTime: String? {
-		return (endDate ?? "?") + " " + (airTime ?? "?")
+		return (lastAired ?? "?") + " " + (airTime ?? "?")
 	}
 
 	/**

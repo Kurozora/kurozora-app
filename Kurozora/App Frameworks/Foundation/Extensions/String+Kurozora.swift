@@ -43,8 +43,8 @@ extension String {
 
 	/// Returns a string with a medium fomatted date.
 	var mediumDate: String {
-		guard let dateTime = self.dateTime else { return "" }
-		return mediumFormatter.string(from: dateTime)
+		guard let date = self.date else { return "" }
+		return mediumFormatter.string(from: date)
 	}
 
 	/// Returns a string with a medium fomatted date and time.
@@ -58,6 +58,7 @@ extension String {
 		struct Static {
 			static let instance: DateFormatter = {
 				let formatter = DateFormatter()
+				formatter.locale = .posix
 				formatter.dateStyle = DateFormatter.Style.medium
 				formatter.timeStyle = DateFormatter.Style.medium
 				return formatter
@@ -71,6 +72,7 @@ extension String {
 		struct Static {
 			static let instance: DateFormatter = {
 				let formatter = DateFormatter()
+				formatter.locale = .posix
 				formatter.dateStyle = .medium
 				return formatter
 			}()

@@ -195,14 +195,14 @@
             <color key="tintColor" red="1" green="0.57647058819999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="countLabel" destination="Gbl-cp-8Ae" id="9v7-AC-IqZ"/>
+                <outlet property="episodeCountLabel" destination="Ejo-f5-wbY" id="hpb-Tb-Tue"/>
                 <outlet property="episodeCountTitleLabel" destination="J7l-lc-5VH" id="OIQ-sl-xRd"/>
-                <outlet property="episodesCountLabel" destination="Ejo-f5-wbY" id="Ytq-zs-yUi"/>
+                <outlet property="firstAiredLabel" destination="LPw-CP-IdP" id="Hhf-rY-YLQ"/>
                 <outlet property="posterImageView" destination="f7H-8b-Tc3" id="VmL-u1-bRs"/>
                 <outlet property="ratingLabel" destination="J5F-gX-VTT" id="4MJ-lP-aJR"/>
                 <outlet property="ratingTitleLabel" destination="lEP-J2-gh8" id="9cU-a4-ahK"/>
                 <outlet property="separatorView" destination="0R7-UE-vDr" id="S3M-sA-9Hr"/>
                 <outlet property="shadowView" destination="dls-0h-dle" id="0Tq-bE-d6d"/>
-                <outlet property="startDateLabel" destination="LPw-CP-IdP" id="fyu-nm-CyP"/>
                 <outlet property="startDateTitleLabel" destination="rLM-tP-JHv" id="T7w-Dk-hGS"/>
                 <outlet property="titleLabel" destination="zCt-N6-gAx" id="lOm-I7-QcB"/>
                 <outletCollection property="separatorViewLight" destination="O8q-YN-0zM" collectionClass="NSMutableArray" id="LKr-CI-XbT"/>

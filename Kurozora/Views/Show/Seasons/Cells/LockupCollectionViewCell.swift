@@ -22,8 +22,8 @@ class LockupCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var episodeCountTitleLabel: KTintedLabel!
 	@IBOutlet weak var ratingTitleLabel: KTintedLabel!
 	@IBOutlet weak var titleLabel: KLabel!
-	@IBOutlet weak var startDateLabel: KLabel!
-	@IBOutlet weak var episodesCountLabel: KLabel!
+	@IBOutlet weak var firstAiredLabel: KLabel!
+	@IBOutlet weak var episodeCountLabel: KLabel!
 	@IBOutlet weak var ratingLabel: KLabel!
 	@IBOutlet weak var separatorView: SeparatorView!
 	@IBOutlet var separatorViewLight: [SecondarySeparatorView]?
@@ -60,11 +60,13 @@ class LockupCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Season date
-		self.startDateLabel.text = "TBA"
+		if let firstAired = seasonsElement.firstAired {
+			self.firstAiredLabel.text = firstAired.mediumDate
+		}
 
 		// Season episode count
-		if let episodesCount = seasonsElement.episodesCount {
-			self.episodesCountLabel.text = "\(episodesCount)"
+		if let episodeCount = seasonsElement.episodeCount {
+			self.episodeCountLabel.text = "\(episodeCount)"
 		}
 
 		// Season rating

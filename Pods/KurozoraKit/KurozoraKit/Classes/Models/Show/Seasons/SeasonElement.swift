@@ -25,8 +25,11 @@ public class SeasonElement: JSONDecodable {
 	/// The link to a poster of the season.
 	public let poster: String?
 
-	/// The episodes count of the season.
-	public let episodesCount: Int?
+	/// The premiere date of the season.
+	public let firstAired: String?
+
+	/// The episode count of the season.
+	public let episodeCount: Int?
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
@@ -34,6 +37,7 @@ public class SeasonElement: JSONDecodable {
 		self.title = json["title"].stringValue
 		self.number = json["number"].intValue
 		self.poster = json["poster"].stringValue
-		self.episodesCount = json["episodes_count"].intValue
+		self.firstAired = json["first_aired"].stringValue
+		self.episodeCount = json["episode_count"].intValue
 	}
 }
