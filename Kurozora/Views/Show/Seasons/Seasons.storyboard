@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uW7-To-tBj">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uW7-To-tBj">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Seasons-->
-        <scene sceneID="xM2-o0-K1A">
+        <scene sceneID="EeV-KJ-MYm">
             <objects>
-                <collectionViewController storyboardIdentifier="SeasonsCollectionViewController" title="Seasons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q3a-Bd-6BM" customClass="SeasonsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" id="0Kf-Al-nNW">
+                <collectionViewController storyboardIdentifier="SeasonsCollectionViewController" title="Seasons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ckh-tZ-5T3" customClass="SeasonsCollectionViewController" customModule="Kurozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" id="3lG-Zb-Vv4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="Rfp-1z-h82">
-                            <size key="itemSize" width="374" height="170"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="CVL-Ew-Kft">
+                            <size key="itemSize" width="328" height="155"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells/>
                         <connections>
-                            <outlet property="dataSource" destination="q3a-Bd-6BM" id="Ohn-eK-htG"/>
-                            <outlet property="delegate" destination="q3a-Bd-6BM" id="okg-rT-Jzo"/>
+                            <outlet property="dataSource" destination="ckh-tZ-5T3" id="sJV-mJ-t2P"/>
+                            <outlet property="delegate" destination="ckh-tZ-5T3" id="ExT-pn-qaL"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Seasons" id="c5f-Cr-SHY"/>
+                    <navigationItem key="navigationItem" title="Seasons" id="XrL-pl-Oo8"/>
                     <connections>
-                        <segue destination="JI4-ia-Xsp" kind="show" identifier="EpisodeSegue" id="6WJ-1E-Sa4"/>
+                        <segue destination="JI4-ia-Xsp" kind="show" identifier="EpisodeSegue" id="N9c-l0-yGa"/>
                     </connections>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="THv-S9-lrl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P1b-j2-5rF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1558" y="-601"/>
+            <point key="canvasLocation" x="1588" y="-601"/>
         </scene>
         <!--EpisodesCollectionViewController-->
         <scene sceneID="Dou-93-a7w">
@@ -44,7 +44,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5M-Yf-1ul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2209" y="-601"/>
+            <point key="canvasLocation" x="2252" y="-601"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wj4-WE-m5x">
@@ -65,7 +65,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="q3a-Bd-6BM" kind="relationship" relationship="rootViewController" id="WFQ-q3-Gd1"/>
+                        <segue destination="ckh-tZ-5T3" kind="relationship" relationship="rootViewController" id="MJy-AG-rIO"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Utf-6u-7gX" userLabel="First Responder" sceneMemberID="firstResponder"/>

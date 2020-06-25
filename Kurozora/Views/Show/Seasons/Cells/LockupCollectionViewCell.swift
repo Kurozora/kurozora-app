@@ -50,17 +50,13 @@ class LockupCollectionViewCell: UICollectionViewCell {
 		}
 
 		// Season number
-		if let seasonNumber = seasonsElement.number, seasonNumber != 0 {
-			self.countLabel.text = "Season \(seasonNumber)"
-		} else {
-			self.countLabel.text = "Season ?"
+		if let seasonNumber = seasonsElement.number {
+			self.countLabel.text = seasonNumber != 0 ? "Season \(seasonNumber)" : ""
 		}
 
 		// Season title
-		if let seasonTitle = seasonsElement.title, !seasonTitle.isEmpty {
+		if let seasonTitle = seasonsElement.title {
 			self.titleLabel.text = seasonTitle
-		} else {
-			self.titleLabel.text = "Unknown"
 		}
 
 		// Season date

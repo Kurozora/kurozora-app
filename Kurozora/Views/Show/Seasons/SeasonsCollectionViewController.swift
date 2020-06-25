@@ -45,9 +45,6 @@ class SeasonsCollectionViewController: KCollectionViewController {
 				self.fetchSeasons()
 			}
 		}
-
-		// Setup scroll view.
-		collectionView.delaysContentTouches = false
     }
 
 	// MARK: - Functions
@@ -158,33 +155,34 @@ extension SeasonsCollectionViewController {
 extension SeasonsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
 		let width = layoutEnvironment.container.effectiveContentSize.width
-		let columnCount = (width / 374).rounded().int
+		var columnCount = 1
+		if width >= 414 {
+			columnCount = (width / 414).rounded().int
+		} else {
+			columnCount = (width / 284).rounded().int
+		}
 		return columnCount > 0 ? columnCount : 1
 	}
 
-	override func groupHeightFraction(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat {
-		return (0.50 / columnsCount.double).cgFloat
-	}
-
 	override func contentInset(forItemInSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
 	}
 
 	override func contentInset(forSection section: Int, layout collectionViewLayout: NSCollectionLayoutEnvironment) -> NSDirectionalEdgeInsets {
-		return NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+		return NSDirectionalEdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
 	}
 
 	override func createLayout() -> UICollectionViewLayout {
 		let layout = UICollectionViewCompositionalLayout { (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												  heightDimension: .fractionalHeight(1.0))
+													heightDimension: .absolute(196))
 			let item = NSCollectionLayoutItem(layoutSize: itemSize)
 			item.contentInsets = self.contentInset(forItemInSection: section, layout: layoutEnvironment)
 
-			let heightFraction = self.groupHeightFraction(forSection: section, with: columns, layout: layoutEnvironment)
+			let heightFraction = itemSize.heightDimension.dimension + 20
 			let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-												   heightDimension: .fractionalWidth(heightFraction))
+												   heightDimension: .absolute(heightFraction))
 			let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
