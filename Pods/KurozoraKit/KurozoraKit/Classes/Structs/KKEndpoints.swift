@@ -12,6 +12,15 @@ import Foundation
 	The object that stores information about the Kurozora API endpoints.
 */
 internal struct KKEndpoints {
+	// MARK: - Actor
+	/// The endpoint to the details of an actor.
+	///
+	/// **Replace:** `?` with the id of the character.
+	let actor = "actors/?"
+
+	/// The endpoint to the actors.
+	let actors = "actors"
+
 	// MARK: - Anime
 	/// The endpoint to the details of a show.
 	///
@@ -22,6 +31,16 @@ internal struct KKEndpoints {
 	///
 	/// **Replace:** `?` with the id of the show.
 	let animeActors = "anime/?/actors"
+
+	/// The endpoint to the cast of a show.
+	///
+	/// **Replace:** `?` with the id of the show.
+	let animeCast = "anime/?/cast"
+
+	/// The endpoint to the cast of a show.
+	///
+	/// **Replace:** `?` with the id of the show.
+	let animeCharacters = "anime/?/characters"
 
 	/// The endpoint to leave a rating on a show.
 	///
@@ -47,6 +66,15 @@ internal struct KKEndpoints {
 	///
 	/// **Replace:** `?` with the id of the season.
 	let animeSeasonsEpisodes = "anime-seasons/?/episodes"
+
+	// MARK: - Character
+	/// The endpoint to the details of a character.
+	///
+	/// **Replace:** `?` with the id of the character.
+	let character = "characters/?"
+
+	/// The endpoint to the characters.
+	let characters = "characters"
 
 	// MARK: - Explore
 	/// The endpoint to the explore page.

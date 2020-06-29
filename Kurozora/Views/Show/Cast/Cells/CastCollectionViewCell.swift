@@ -13,33 +13,16 @@ class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var characterImageView: UIImageView!
 	@IBOutlet weak var characterShadowView: UIView!
-	@IBOutlet weak var characterName: KCopyableLabel! {
-		didSet {
-			self.characterName.theme_textColor = KThemePicker.textColor.rawValue
-		}
-	}
-	@IBOutlet weak var characterRole: KCopyableLabel! {
-		didSet {
-			self.characterRole.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var characterNameLabel: KCopyableLabel!
+	@IBOutlet weak var characterRoleLabel: KSecondaryLabel!
 
 	@IBOutlet weak var actorImageView: UIImageView!
 	@IBOutlet weak var actorShadowView: UIView!
-	@IBOutlet weak var actorName: KCopyableLabel! {
-		didSet {
-			self.actorName.theme_textColor = KThemePicker.tintColor.rawValue
-		}
-	}
-	@IBOutlet weak var actorJob: KCopyableLabel! {
-		didSet {
-			self.actorJob.theme_textColor = KThemePicker.subTextColor.rawValue
-		}
-	}
+	@IBOutlet weak var actorNameLabel: KCopyableTintedLabel!
 	@IBOutlet weak var separatorView: SeparatorView!
 
 	// MARK: - Properties
-	var actorElement: ActorElement? {
+	var castElement: CastElement? {
 		didSet {
 			configureCell()
 		}
@@ -48,17 +31,11 @@ class CastCollectionViewCell: UICollectionViewCell {
 	// MARK: - Functions
 	/// Configure the cell with the given details.
 	fileprivate func configureCell() {
-		guard let actorElement = actorElement else { return }
-
 		// Configure actor
-		self.actorName.text = actorElement.name
+		self.actorNameLabel.text = castElement?.actor?.fullName ?? "Unknown"
 
-//		if let actorRole = actorElement.role {
-//			self.actorJob.text = "as \(actorRole)"
-//		}
-
-		if let actorImage = actorElement.image {
-			if let nameInitials = actorElement.name?.initials {
+		if let actorImage = castElement?.actor?.imageString {
+			if let nameInitials = castElement?.actor?.fullName?.initials {
 				let placeholderImage = nameInitials.toImage(withFrameSize: actorImageView.frame, placeholder: R.image.placeholders.showPerson()!)
 				self.actorImageView.setImage(with: actorImage, placeholder: placeholderImage)
 			}
@@ -66,12 +43,20 @@ class CastCollectionViewCell: UICollectionViewCell {
 		self.actorShadowView.applyShadow()
 
 		// Configure character
-		if let characterName = actorElement.role {
-			self.characterName?.text = "as \(characterName)"
+		if let characterName = castElement?.character?.name {
+			self.characterNameLabel.text = !characterName.isEmpty ? "as \(characterName)" : ""
 		}
 
-		let nameInitials = actorElement.role?.initials
-		self.characterImageView.image = nameInitials?.toImage(withFrameSize: characterImageView.frame, placeholder: R.image.placeholders.showPerson()!)
+		if let characterRole = castElement?.role {
+			self.characterRoleLabel.text = characterRole.stringValue
+		}
+
+		if let characterImage = castElement?.character?.imageString {
+			if let nameInitials = castElement?.character?.name?.initials {
+				let placeholderImage = nameInitials.toImage(withFrameSize: characterImageView.frame, placeholder: R.image.placeholders.showPerson()!)
+				self.characterImageView.setImage(with: characterImage, placeholder: placeholderImage)
+			}
+		}
 		self.characterShadowView.applyShadow()
 	}
 }

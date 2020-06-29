@@ -12,7 +12,7 @@ import KurozoraKit
 class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Properties
 	var showID: Int = 0
-	var actorElements: [ActorElement]? {
+	var castElements: [CastElement]? {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			self.configureDataSource()
@@ -34,15 +34,15 @@ class CastCollectionViewController: KCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		// Stop activity indicator in case user doesn't need to fetch actors details.
-		if actorElements != nil {
+		// Stop activity indicator in case user doesn't need to fetch cast details.
+		if castElements != nil {
 			_prefersActivityIndicatorHidden = true
 		}
 
-		// Fetch actors
-		if actorElements == nil {
+		// Fetch cast
+		if castElements == nil {
 			DispatchQueue.global(qos: .background).async {
-				self.fetchActors()
+				self.fetchCast()
 			}
 		}
     }
@@ -50,8 +50,8 @@ class CastCollectionViewController: KCollectionViewController {
 	// MARK: - Functions
 	override func setupEmptyDataSetView() {
 		collectionView.emptyDataSetView { view in
-			view.titleLabelString(NSAttributedString(string: "No Actors", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
-				.detailLabelString(NSAttributedString(string: "Can't get actors list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
+			view.titleLabelString(NSAttributedString(string: "No cast", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium), .foregroundColor: KThemePicker.textColor.colorValue]))
+				.detailLabelString(NSAttributedString(string: "Can't get cast list. Please reload the page or restart the app and check your WiFi connection.", attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: KThemePicker.subTextColor.colorValue]))
 				.image(R.image.empty.actor())
 				.verticalOffset(-50)
 				.verticalSpace(5)
@@ -59,13 +59,13 @@ class CastCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	/// Fetch actors for the current show.
-	fileprivate func fetchActors() {
+	/// Fetch cast for the current show.
+	fileprivate func fetchCast() {
 		KService.getCast(forShowID: showID) { result in
 			switch result {
-			case .success(let actors):
+			case .success(let cast):
 				DispatchQueue.main.async {
-					self.actorElements = actors
+					self.castElements = cast
 				}
 			case .failure: break
 			}
@@ -82,7 +82,7 @@ extension CastCollectionViewController {
 	override func configureDataSource() {
 		dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Int>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Int) -> UICollectionViewCell? in
 			if let castCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.castCollectionViewCell, for: indexPath) {
-				castCollectionViewCell.actorElement = self.actorElements?[indexPath.row]
+				castCollectionViewCell.castElement = self.castElements?[indexPath.row]
 
 				if collectionView.indexPathForLastItem == indexPath {
 					castCollectionViewCell.separatorView.isHidden = true
@@ -95,7 +95,7 @@ extension CastCollectionViewController {
 			}
 		}
 
-		let itemsPerSection = actorElements?.count ?? 0
+		let itemsPerSection = castElements?.count ?? 0
 		var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
 		SectionLayoutKind.allCases.forEach {
 			snapshot.appendSections([$0])

@@ -28,10 +28,8 @@ class StudioHeaderCollectionViewCell: UICollectionViewCell {
 		guard let studioElement = studioElement else { return }
 
 		self.nameLabel.text = studioElement.name
-		if let foundedString = studioElement.founded, !foundedString.isEmpty {
-			self.foundedLabel.text = "Founded on " + foundedString
-		} else {
-			self.foundedLabel.text = ""
+		if let foundedString = studioElement.founded {
+			self.foundedLabel.text = !foundedString.isEmpty ? "Founded on " + foundedString.mediumDate : ""
 		}
 
 		if let studioLogo = studioElement.logo {

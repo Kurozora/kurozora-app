@@ -135,7 +135,7 @@ public class ShowDetailsElement: JSONDecodable {
 	public var currentUser: UserProfile?
 
 	// MARK: - Initializers
-	/// Initializes an empty instance of `ShowDetailsElement`
+	/// Initializes an empty instance of `ShowDetailsElement`.
 	internal init() {
 		self.id = nil
 		self.imdbID = nil

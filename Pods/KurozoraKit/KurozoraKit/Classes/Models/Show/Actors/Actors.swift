@@ -10,19 +10,19 @@ import SwiftyJSON
 import TRON
 
 /**
-	A mutable object that stores information about a collection of actors, such as the total actor count, and a collection of actors.
+	A mutable object that stores information about a collection of actors.
 */
 public class Actors: JSONDecodable {
 	// MARK: - Properties
-	/// The total count of actors associated with the show.
-    public let totalActors: Int?
+	/// The single actor object.
+	public let actorElement: ActorElement?
 
-	/// The request collection of actors.
+	/// The collection of actors.
     public let actors: [ActorElement]?
 
 	// MARK: - Initializers
     required public init(json: JSON) throws {
-        self.totalActors = json["total_actors"].intValue
+		self.actorElement = try? ActorElement(json: json["actor"])
         var actors = [ActorElement]()
 
 		let actorsArray = json["actors"].arrayValue

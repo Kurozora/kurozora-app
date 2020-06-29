@@ -13,19 +13,46 @@ import TRON
 */
 public class ActorElement: JSONDecodable {
 	// MARK: - Properties
-	/// The name of the actor.
-	public let name: String?
+	/// The id of the actor.
+	public let id: Int?
 
-	/// The role of the actor in the show.
-	public let role: String?
+	/// The first name of the actor.
+	public let firstName: String?
+
+	/// The last name of the actor.
+	public let lastName: String?
+
+	/// The occupation of the actor.
+	public let occupation: String?
 
 	/// The link to an image of the actor.
-	public let image: String?
+	public let imageString: String?
 
 	// MARK: - Initializers
+	/// Initializes an empty instance of `ActorElement`.
+	internal init() {
+		self.id = nil
+		self.firstName = nil
+		self.lastName = nil
+		self.occupation = nil
+		self.imageString = nil
+	}
+
 	required public init(json: JSON) throws {
-		self.name = json["name"].stringValue
-		self.role = json["role"].stringValue
-		self.image = json["image"].stringValue
+		self.id = json["id"].intValue
+		self.firstName = json["first_name"].stringValue
+		self.lastName = json["last_name"].stringValue
+		self.occupation = json["occupation"].stringValue
+		self.imageString = json["image"].stringValue
+	}
+}
+
+// MARK: - Helpers
+extension ActorElement {
+	/// The full name of the actor.
+	public var fullName: String? {
+		guard let lastName = self.lastName else { return nil }
+		guard let firstName = self.firstName else { return nil }
+		return lastName.isEmpty ? firstName : lastName + ", " + firstName
 	}
 }

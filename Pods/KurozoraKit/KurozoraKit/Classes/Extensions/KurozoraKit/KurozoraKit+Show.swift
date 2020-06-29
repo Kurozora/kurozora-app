@@ -79,13 +79,13 @@ extension KurozoraKit {
 	}
 
 	/**
-		Fetch the cast details for the given show id.
+		Fetch the actor details for the given show id.
 
-		- Parameter showID: The show id for which the cast details should be fetched.
+		- Parameter showID: The show id for which the actor details should be fetched.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[ActorElement], KKError>) -> Void) {
+	public func getActors(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[ActorElement], KKError>) -> Void) {
 		let animeActors = self.kurozoraKitEndpoints.animeActors.replacingOccurrences(of: "?", with: "\(showID)")
 		let request: APIRequest<Actors, KKError> = tron.swiftyJSON.request(animeActors)
 		request.headers = headers
@@ -94,9 +94,55 @@ extension KurozoraKit {
 			completionHandler(.success(actors.actors ?? []))
 		}, failure: { error in
 			if self.services.showAlerts {
-				SCLAlertView().showError("Can't get casts list 😔", subTitle: error.message)
+				SCLAlertView().showError("Can't get actors list 😔", subTitle: error.message)
+			}
+			print("Received get actros error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
+		Fetch the cast details for the given show id.
+
+		- Parameter showID: The show id for which the cast details should be fetched.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func getCast(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[CastElement], KKError>) -> Void) {
+		let animeActors = self.kurozoraKitEndpoints.animeCast.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<Cast, KKError> = tron.swiftyJSON.request(animeActors)
+		request.headers = headers
+		request.method = .get
+		request.perform(withSuccess: { cast in
+			completionHandler(.success(cast.cast ?? []))
+		}, failure: { error in
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get cast list 😔", subTitle: error.message)
 			}
 			print("Received get cast error: \(error.message ?? "No message available")")
+			completionHandler(.failure(error))
+		})
+	}
+
+	/**
+		Fetch the character details for the given show id.
+
+		- Parameter showID: The show id for which the character details should be fetched.
+		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
+		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
+	*/
+	public func getCharacters(forShowID showID: Int, completion completionHandler: @escaping (_ result: Result<[CharacterElement], KKError>) -> Void) {
+		let animeActors = self.kurozoraKitEndpoints.animeCharacters.replacingOccurrences(of: "?", with: "\(showID)")
+		let request: APIRequest<Characters, KKError> = tron.swiftyJSON.request(animeActors)
+		request.headers = headers
+		request.method = .get
+		request.perform(withSuccess: { characters in
+			completionHandler(.success(characters.characters ?? []))
+		}, failure: { error in
+			if self.services.showAlerts {
+				SCLAlertView().showError("Can't get characters list 😔", subTitle: error.message)
+			}
+			print("Received get characters error: \(error.message ?? "No message available")")
 			completionHandler(.failure(error))
 		})
 	}

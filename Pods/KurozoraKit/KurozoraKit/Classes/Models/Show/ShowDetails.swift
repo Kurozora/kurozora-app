@@ -17,7 +17,7 @@ public class ShowDetails: JSONDecodable {
 	/// The single show details object.
 	public var showDetailsElement: ShowDetailsElement?
 
-	/// The collection view of show details.
+	/// The collection of show details.
 	public let showDetailsElements: [ShowDetailsElement]?
 
 	// MARK: - Initializers

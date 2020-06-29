@@ -26,7 +26,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 		}
 	}
 	var seasons: [SeasonElement]?
-	var actors: [ActorElement]?
+	var cast: [CastElement]?
 	var studioElement: StudioElement?
 
 	// Activity indicator
@@ -115,12 +115,12 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			}
 		}
 
-		if actors == nil {
+		if cast == nil {
 			KService.getCast(forShowID: self.showID) { result in
 				switch result {
-				case .success(let actors):
+				case .success(let cast):
 					DispatchQueue.main.async {
-						self.actors = actors
+						self.cast = cast
 						self.collectionView.reloadData()
 					}
 				case .failure: break
@@ -157,7 +157,7 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.castSegue.identifier {
 			if let castCollectionViewController = segue.destination as? CastCollectionViewController {
-				castCollectionViewController.actorElements = actors
+				castCollectionViewController.castElements = cast
 			}
 		} else if segue.identifier == R.segue.showDetailCollectionViewController.episodeSegue.identifier {
 			if let episodesCollectionViewController = segue.destination as? EpisodesCollectionViewController {
@@ -213,8 +213,8 @@ extension ShowDetailCollectionViewController {
 				numberOfRows = seasonsCount >= 10 ? 10 : seasonsCount
 			}
 		case .cast:
-			if let actorsCount = actors?.count {
-				numberOfRows = actorsCount >= 10 ? 10 : actorsCount
+			if let castCount = cast?.count {
+				numberOfRows = castCount >= 10 ? 10 : castCount
 			}
 		case .moreByStudio:
 			if let studioShowsCount = studioElement?.shows?.count {
@@ -286,7 +286,7 @@ extension ShowDetailCollectionViewController {
 			lockupCollectionViewCell?.seasonsElement = seasons?[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = cell as? CastCollectionViewCell
-			castCollectionViewCell?.actorElement = actors?[indexPath.item]
+			castCollectionViewCell?.castElement = cast?[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell
 			smallLockupCollectionViewCell?.showDetailsElement = studioElement?.shows?[indexPath.item]
@@ -334,7 +334,7 @@ extension ShowDetailCollectionViewController {
 		case .seasons, .cast, .moreByStudio:
 			var columnCount = 1
 			if width >= 414 {
-				columnCount = (width / 384).rounded().int
+				columnCount = (width / 414).rounded().int
 			} else {
 				columnCount = (width / 284).rounded().int
 			}
@@ -357,7 +357,7 @@ extension ShowDetailCollectionViewController {
 				itemsCount = seasonsCount
 			}
 		case .cast:
-			if let castCount = actors?.count, castCount != 0 {
+			if let castCount = cast?.count, castCount != 0 {
 				itemsCount = castCount
 			}
 		case .moreByStudio:
@@ -370,6 +370,8 @@ extension ShowDetailCollectionViewController {
 	}
 
 	func heightDimension(forSection section: Int, with columnsCount: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutDimension {
+		let width = layoutEnvironment.container.effectiveContentSize.width
+
 		switch ShowDetail.Section(rawValue: section) {
 		case .header:
 			return .fractionalHeight(0.90)
@@ -383,7 +385,10 @@ extension ShowDetailCollectionViewController {
 			return .estimated(55)
 		case .seasons, .cast, .moreByStudio:
 			let verticalColumnCount = self.verticalColumnCount(for: section)
-			return verticalColumnCount == 2 ? .estimated(440) : .estimated(220)
+			if width >= 414 {
+				return verticalColumnCount == 2 ? .absolute(440) : .absolute(220)
+			}
+			return verticalColumnCount == 2 ? .absolute(300) : .absolute(150)
 		default:
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(heightFraction)
@@ -408,7 +413,7 @@ extension ShowDetailCollectionViewController {
 				return (0.90 / columnsCount.double).cgFloat
 			}
 		case .cast:
-			if let castCount = actors?.count, castCount != 0 {
+			if let castCount = cast?.count, castCount != 0 {
 				return (0.90 / columnsCount.double).cgFloat
 			}
 		case .moreByStudio:
@@ -473,7 +478,7 @@ extension ShowDetailCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .cast:
-				if let actorsCount = self.actors?.count, actorsCount != 0 {
+				if let castCount = self.cast?.count, castCount != 0 {
 					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = gridSection
 					hasSectionHeader = true

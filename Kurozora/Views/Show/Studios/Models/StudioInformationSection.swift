@@ -65,7 +65,7 @@ enum StudioInformationSection: Int, CaseIterable {
 		switch self {
 		case .founded:
 			if let founded = studioElement.founded, !founded.isEmpty {
-				return founded
+				return founded.mediumDate
 			}
 		case .headquarters: break
 		case .website: break

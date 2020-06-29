@@ -35,7 +35,7 @@ public class StudioElement: JSONDecodable {
 	public let shows: [ShowDetailsElement]?
 
 	// MARK: - Initializers
-	/// Initializes an empty instance of `StudioElement`
+	/// Initializes an empty instance of `StudioElement`.
 	internal init() {
 		self.id = nil
 		self.name = nil
