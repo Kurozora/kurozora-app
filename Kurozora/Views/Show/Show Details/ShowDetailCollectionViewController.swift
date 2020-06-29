@@ -449,6 +449,7 @@ extension ShowDetailCollectionViewController {
 			guard let showSections = ShowDetail.Section(rawValue: section) else { fatalError("ShowDetail section not supported") }
 			var sectionLayout: NSCollectionLayoutSection? = nil
 			var hasSectionHeader = false
+			var hasBackgroundDecoration = false
 
 			switch showSections {
 			case .header:
@@ -488,6 +489,7 @@ extension ShowDetailCollectionViewController {
 					let gridSection = self.gridSection(for: section, layoutEnvironment: layoutEnvironment)
 					sectionLayout = gridSection
 					hasSectionHeader = true
+					hasBackgroundDecoration = true
 				}
 			case .related: break
 			}
@@ -501,8 +503,14 @@ extension ShowDetailCollectionViewController {
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 
+			if hasBackgroundDecoration {
+				let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+				sectionLayout?.decorationItems = [sectionBackgroundDecoration]
+			}
+
 			return sectionLayout
 		}
+		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
 		return layout
 	}
 

@@ -298,13 +298,13 @@ extension SearchResultsCollectionViewController {
 			let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 			layoutSection.contentInsets = self.contentInset(forSection: section, layout: layoutEnvironment)
 
-			let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+			let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundVisualEffectDecorationView.elementKindSectionBackground)
 			sectionBackgroundDecoration.contentInsets = self.contentInset(forBackgroundInSection: section, layout: layoutEnvironment)
 			layoutSection.decorationItems = [sectionBackgroundDecoration]
 
 			return layoutSection
 		}
-		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+		layout.register(SectionBackgroundVisualEffectDecorationView.self, forDecorationViewOfKind: SectionBackgroundVisualEffectDecorationView.elementKindSectionBackground)
 		return layout
 	}
 }

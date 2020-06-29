@@ -1,5 +1,5 @@
 //
-//  SectionBackgroundDecorationView.swift
+//  SectionBackgroundVisualEffectDecorationView.swift
 //  Kurozora
 //
 //  Created by Khoren Katklian on 30/12/2019.
@@ -8,23 +8,24 @@
 
 import UIKit
 
-class SectionBackgroundDecorationView: UICollectionReusableView {
+class SectionBackgroundVisualEffectDecorationView: UICollectionReusableView {
 	// MARK: - Properties
-	static let elementKindSectionBackground = "SectionBackgroundElementKind"
+	static let elementKindSectionBackground = "SectionBackgroundVisualEffectElementKind"
 
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		configureView()
+		self.configureView()
 	}
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		configureView()
+		self.configureView()
 	}
 
 	// MARK: - Functions
-	func configureView() {
+	/// Configures the views in the resuable view.
+	private func configureView() {
 		// Blurred table view background
 		let blurEffect = UIBlurEffect()
 		let visualEffectView = KVibrantVisualEffectView(effect: blurEffect)
