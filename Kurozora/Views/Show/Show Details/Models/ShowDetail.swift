@@ -11,19 +11,7 @@ import KurozoraKit
 
 class ShowDetail {
 	/**
-		Set of available show sections.
-
-		```
-		case header = 0
-		case badge
-		case synopsis
-		case rating
-		case information
-		case seasons
-		case cast
-		case moreByStudio
-		case related
-		```
+		Set of available show section types.
 	*/
 	enum Section: Int, CaseIterable {
 		case header = 0
@@ -35,9 +23,10 @@ class ShowDetail {
 		case cast
 		case moreByStudio
 		case related
+		case sosumi
 
 		// MARK: - Properties
-		/// The string value of a show section.
+		/// The string value of a show section type.
 		var stringValue: String {
 			switch self {
 			case .header:
@@ -58,10 +47,12 @@ class ShowDetail {
 				return "More by "
 			case .related:
 				return "Related"
+			case .sosumi:
+				return "Copyright"
 			}
 		}
 
-		/// The cell identifier string of a show section.
+		/// The cell identifier string of a show section type.
 		var identifierString: String {
 			switch self {
 			case .header:
@@ -82,10 +73,12 @@ class ShowDetail {
 				return R.reuseIdentifier.smallLockupCollectionViewCell.identifier
 			case .related:
 				return "RelatedShowCollectionViewCell" // R.reuseIdentifier.relatedShowCollectionViewCell.identifier
+			case .sosumi:
+				return R.reuseIdentifier.sosumiShowCollectionViewCell.identifier
 			}
 		}
 
-		/// The string value of a show section segue identifier.
+		/// The string value of a show section type segue identifier.
 		var segueIdentifier: String {
 			switch self {
 			case .header:
@@ -106,12 +99,14 @@ class ShowDetail {
 				return R.segue.showDetailCollectionViewController.studioSegue.identifier
 			case .related:
 				return "RelatedSegue" //R.segue.showDetailCollectionViewController.relatedSegue.identifier
+			case .sosumi:
+				return ""
 			}
 		}
 	}
 
 	/**
-		List of airing status.
+		List of airing status types.
 
 		```
 		case toBeAnnounced = "Tba"
@@ -130,10 +125,10 @@ class ShowDetail {
 		case finishedAiring = "Ended"
 
 		// MARK: - Properties
-		/// An array containing all airing status.
+		/// An array containing all airing status type.
 		static let all: [AiringStatus] = [.toBeAnnounced, .finishedAiring, .currentlyAiring]
 
-		/// The string value of an airing status.
+		/// The string value of an airing status type.
 		var stringValue: String {
 			switch self {
 			case .toBeAnnounced:
@@ -145,7 +140,7 @@ class ShowDetail {
 			}
 		}
 
-		/// The color value of an airing status.
+		/// The color value of an airing status type.
 		var colorValue: UIColor {
 			switch self {
 			case .toBeAnnounced:

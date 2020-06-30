@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SosumiShowCollectionViewCell" id="7lQ-JJ-GYE" customClass="SosumiShowCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="24.5"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Vsv-j9-d33">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="24.5"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-0w-kOL" customClass="SeparatorView" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="J34-PQ-ck1"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLt-Eu-z6B" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="9" width="33" height="15.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="qLt-Eu-z6B" firstAttribute="top" secondItem="GNb-0w-kOL" secondAttribute="bottom" constant="8" symbolic="YES" id="0jA-fX-NWX"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qLt-Eu-z6B" secondAttribute="trailing" id="2el-ec-JYh"/>
+                    <constraint firstItem="GNb-0w-kOL" firstAttribute="leading" secondItem="Vsv-j9-d33" secondAttribute="leading" id="AdT-qW-adO"/>
+                    <constraint firstItem="GNb-0w-kOL" firstAttribute="top" secondItem="Vsv-j9-d33" secondAttribute="top" id="CN0-Ux-lW9"/>
+                    <constraint firstAttribute="trailing" secondItem="GNb-0w-kOL" secondAttribute="trailing" id="Cvj-VQ-VT7"/>
+                    <constraint firstItem="qLt-Eu-z6B" firstAttribute="leading" secondItem="Vsv-j9-d33" secondAttribute="leading" id="QTY-q1-R9h"/>
+                    <constraint firstAttribute="bottom" secondItem="qLt-Eu-z6B" secondAttribute="bottom" id="nxd-3G-Bk6"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="copyrightLabel" destination="qLt-Eu-z6B" id="pbY-fI-MyF"/>
+                <outlet property="separatorView" destination="GNb-0w-kOL" id="U14-xr-XeK"/>
+            </connections>
+            <point key="canvasLocation" x="77" y="70"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -186,7 +186,15 @@ class ShowDetailCollectionViewController: KCollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension ShowDetailCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return showDetailsElement != nil ? ShowDetail.Section.allCases.count : 0
+		var numberOfSections = showDetailsElement != nil ? ShowDetail.Section.allCases.count : 0
+
+		if numberOfSections != 0 {
+			if let copyrightIsEmpty = showDetailsElement?.copyright?.isEmpty, copyrightIsEmpty {
+				numberOfSections -= 1
+			}
+		}
+
+		return numberOfSections
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -221,6 +229,10 @@ extension ShowDetailCollectionViewController {
 				numberOfRows = studioShowsCount
 			}
 		case .related: break
+		case .sosumi:
+			if let copyrightIsEmpty = showDetailsElement?.copyright?.isEmpty, !copyrightIsEmpty {
+				numberOfRows = 1
+			}
 		default: break
 		}
 
@@ -266,32 +278,35 @@ extension ShowDetailCollectionViewController {
 		switch showDetailSection {
 		case .header:
 			let showDetailHeaderCollectionViewCell = cell as? ShowDetailHeaderCollectionViewCell
-			showDetailHeaderCollectionViewCell?.showDetailsElement = showDetailsElement
+			showDetailHeaderCollectionViewCell?.showDetailsElement = self.showDetailsElement
 		case .badge:
 			let badgeCollectionViewCell = cell as? BadgeCollectionViewCell
-			badgeCollectionViewCell?.showDetailsElement = showDetailsElement
+			badgeCollectionViewCell?.showDetailsElement = self.showDetailsElement
 		case .synopsis:
 			let textViewCollectionViewCell = cell as? TextViewCollectionViewCell
 			textViewCollectionViewCell?.textViewCollectionViewCellType = .synopsis
-			textViewCollectionViewCell?.textViewContent = showDetailsElement?.synopsis
+			textViewCollectionViewCell?.textViewContent = self.showDetailsElement?.synopsis
 		case .rating:
 			let ratingCollectionViewCell = cell as? RatingCollectionViewCell
-			ratingCollectionViewCell?.showDetailsElement = showDetailsElement
+			ratingCollectionViewCell?.showDetailsElement = self.showDetailsElement
 		case .information:
 			let informationCollectionViewCell = cell as? InformationCollectionViewCell
 			informationCollectionViewCell?.showDetailInformation = ShowDetail.Information(rawValue: indexPath.item) ?? .id
-			informationCollectionViewCell?.showDetailsElement = showDetailsElement
+			informationCollectionViewCell?.showDetailsElement = self.showDetailsElement
 		case .seasons:
 			let lockupCollectionViewCell = cell as? LockupCollectionViewCell
-			lockupCollectionViewCell?.seasonsElement = seasons?[indexPath.item]
+			lockupCollectionViewCell?.seasonsElement = self.seasons?[indexPath.item]
 		case .cast:
 			let castCollectionViewCell = cell as? CastCollectionViewCell
-			castCollectionViewCell?.castElement = cast?[indexPath.item]
+			castCollectionViewCell?.castElement = self.cast?[indexPath.item]
 		case .moreByStudio:
 			let smallLockupCollectionViewCell = cell as? SmallLockupCollectionViewCell
-			smallLockupCollectionViewCell?.showDetailsElement = studioElement?.shows?[indexPath.item]
+			smallLockupCollectionViewCell?.showDetailsElement = self.studioElement?.shows?[indexPath.item]
 		case .related: break
 //			let relatedShowCollectionViewCell = cell as? RelatedShowCollectionViewCell
+		case .sosumi:
+			let sosumiShowCollectionViewCell = cell as? SosumiShowCollectionViewCell
+			sosumiShowCollectionViewCell?.copyrightText = self.showDetailsElement?.copyright
 		}
 	}
 }
@@ -304,7 +319,8 @@ extension ShowDetailCollectionViewController {
 				InformationCollectionViewCell.self,
 				LockupCollectionViewCell.self,
 				SmallLockupCollectionViewCell.self,
-				CastCollectionViewCell.self
+				CastCollectionViewCell.self,
+				SosumiShowCollectionViewCell.self
 		]
 	}
 
@@ -319,7 +335,7 @@ extension ShowDetailCollectionViewController {
 		let width = layoutEnvironment.container.effectiveContentSize.width
 
 		switch ShowDetail.Section(rawValue: section) {
-		case .header, .badge, .synopsis:
+		case .header, .badge, .synopsis, .sosumi:
 			return 1
 		case .rating:
 			if width > 828 {
@@ -389,6 +405,8 @@ extension ShowDetailCollectionViewController {
 				return verticalColumnCount == 2 ? .absolute(440) : .absolute(220)
 			}
 			return verticalColumnCount == 2 ? .absolute(300) : .absolute(150)
+		case .sosumi:
+			return .estimated(50)
 		default:
 			let heightFraction = self.groupHeightFraction(forSection: section, with: columnsCount, layout: layoutEnvironment)
 			return .fractionalWidth(heightFraction)
@@ -492,6 +510,10 @@ extension ShowDetailCollectionViewController {
 					hasBackgroundDecoration = true
 				}
 			case .related: break
+			case .sosumi:
+				let fullSection = self.fullSection(for: section, layoutEnvironment: layoutEnvironment)
+				sectionLayout = fullSection
+				hasBackgroundDecoration = true
 			}
 
 			if hasSectionHeader {

@@ -130,6 +130,9 @@ public class ShowDetailsElement: JSONDecodable {
 	/// The video url of the show.
 	public let videoUrl: String?
 
+	/// The copyright text of the show.
+	public let copyright: String?
+
 	// User details
 	/// The current user's information regarding the show.
 	public var currentUser: UserProfile?
@@ -179,6 +182,7 @@ public class ShowDetailsElement: JSONDecodable {
 		self.languages = nil
 		self.synonyms = nil
 		self.videoUrl = nil
+		self.copyright = nil
 	}
 
 	required public init(json: JSON) throws {
@@ -237,6 +241,7 @@ public class ShowDetailsElement: JSONDecodable {
 		self.languages = json["languages"].stringValue
 		self.synonyms = json["synonyms"].stringValue
 		self.videoUrl = json["video_url"].stringValue
+		self.copyright = json["copyright"].stringValue
 
 		// User details
 		self.currentUser = try? UserProfile(json: json["current_user"])
