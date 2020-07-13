@@ -60,10 +60,18 @@ class ManageActiveSessionsController: KTableViewController {
 		mapView.showsUserLocation = true
 
 		if CLLocationManager.locationServicesEnabled() == true {
-			if CLLocationManager.authorizationStatus() == .restricted ||
-				CLLocationManager.authorizationStatus() == .denied ||
-				CLLocationManager.authorizationStatus() == .notDetermined {
+			let authorizationStatus: CLAuthorizationStatus!
+
+			if #available(iOS 14.0, macCatalyst 14.0, *) {
+				authorizationStatus = locationManager.authorizationStatus()
+			} else {
+				authorizationStatus = CLLocationManager.authorizationStatus()
+			}
+
+			switch authorizationStatus {
+			case .restricted, .denied, .notDetermined:
 				locationManager.requestWhenInUseAuthorization()
+			default: break
 			}
 
 			locationManager.desiredAccuracy = 1.0

@@ -59,7 +59,7 @@ public class CharacterElement: JSONDecodable {
 	public let birthMonth: Int?
 
 	/// The astronomical sign of the character.
-	public let astrologicalSign: AstrologicalSign?
+	public let astrologicalSign: String?
 
 	// MARK: - Initializers
 	/// Initializes an empty instance of `CharacterElement`.
@@ -98,6 +98,6 @@ public class CharacterElement: JSONDecodable {
 		self.age = json["age"].intValue
 		self.birthDay = json["birth_day"].intValue
 		self.birthMonth = json["birth_month"].intValue
-		self.astrologicalSign = AstrologicalSign(rawValue: json["astrological_sign"].intValue)
+		self.astrologicalSign = json["astrological_sign"].stringValue
 	}
 }

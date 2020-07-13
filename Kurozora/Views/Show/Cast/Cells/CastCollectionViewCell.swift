@@ -47,9 +47,7 @@ class CastCollectionViewCell: UICollectionViewCell {
 			self.characterNameLabel.text = !characterName.isEmpty ? "as \(characterName)" : ""
 		}
 
-		if let characterRole = castElement?.role {
-			self.characterRoleLabel.text = characterRole.stringValue
-		}
+		self.characterRoleLabel.text = castElement?.role
 
 		if let characterImage = castElement?.character?.imageString {
 			if let nameInitials = castElement?.character?.name?.initials {

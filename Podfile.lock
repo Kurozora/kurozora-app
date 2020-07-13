@@ -11,10 +11,10 @@ PODS:
   - ESTabBarController-swift (2.8.0)
   - IBPCollectionViewCompositionalLayout (0.6.7)
   - KeychainAccess (4.2.0)
-  - Kingfisher (5.14.0):
-    - Kingfisher/Core (= 5.14.0)
-  - Kingfisher/Core (5.14.0)
-  - KurozoraKit (0.9.8):
+  - Kingfisher (5.14.1):
+    - Kingfisher/Core (= 5.14.1)
+  - Kingfisher/Core (5.14.1)
+  - KurozoraKit (0.9.10):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
     - TRON
@@ -138,8 +138,8 @@ SPEC CHECKSUMS:
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
-  Kingfisher: 7b64389a43139c903ec434788344c288217c792d
-  KurozoraKit: 0442da7cb1b2f2175acf324ae9c3baba4f72720b
+  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
+  KurozoraKit: f954db8b9d0c2b9e5df5ad7f7957083d5e6c73ca
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb

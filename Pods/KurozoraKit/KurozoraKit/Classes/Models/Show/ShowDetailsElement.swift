@@ -63,6 +63,9 @@ public class ShowDetailsElement: JSONDecodable {
 	/// The type of the show.
 	public let type: String?
 
+	/// The adaptation source of the show.
+	public let source: String?
+
 	/// The watch rating of the show.
 	public let watchRating: String?
 
@@ -157,6 +160,7 @@ public class ShowDetailsElement: JSONDecodable {
 		self.synopsis = nil
 		self.tagline = nil
 		self.type = nil
+		self.source = nil
 		self.watchRating = nil
 		self.year = nil
 
@@ -212,6 +216,7 @@ public class ShowDetailsElement: JSONDecodable {
 		self.synopsis = json["synopsis"].stringValue
 		self.tagline = json["tagline"].stringValue
 		self.type = json["type"].stringValue
+		self.source = json["source"].stringValue
 		self.watchRating = json["watch_rating"].stringValue
 		self.year = json["year"].intValue
 

@@ -169,7 +169,6 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 		}
 	}
 
-	#if !targetEnvironment(macCatalyst)
 	func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
 		if let purchaseTableViewController = R.storyboard.purchase.purchaseViewController() {
 			UIApplication.sharedKeyWindow?.rootViewController?.present(purchaseTableViewController)
@@ -177,7 +176,6 @@ extension KStoreObserver: SKPaymentTransactionObserver {
 
 		return true
 	}
-	#endif
 
 	func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
 		if let error = error as? SKError, error.code != .paymentCancelled {
