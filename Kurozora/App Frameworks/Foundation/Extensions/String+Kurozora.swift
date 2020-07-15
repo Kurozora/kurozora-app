@@ -100,4 +100,37 @@ extension String {
 		}
 		return "Just now"
 	}
+
+	/// Returns HTML string as `NSAttributedString`.
+	func htmlAttributedString() -> NSAttributedString? {
+		let htmlTemplate = """
+		<!doctype html>
+		<html>
+		  <head>
+			<style>
+			  body {
+				font-family: -apple-system;
+				font-size: 17px;
+			  }
+			</style>
+		  </head>
+		  <body>
+			\(self.replacingOccurrences(of: "<hr />", with: "* * *"))
+		  </body>
+		</html>
+		"""
+		guard let data = htmlTemplate.data(using: .utf16) else {
+			return nil
+		}
+
+		guard let attributedString = try? NSAttributedString(
+			data: data,
+			options: [.documentType: NSAttributedString.DocumentType.html],
+			documentAttributes: nil
+		) else {
+			return nil
+		}
+
+		return attributedString
+	}
 }

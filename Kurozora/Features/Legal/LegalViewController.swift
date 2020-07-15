@@ -19,7 +19,6 @@ class LegalViewController: KViewController {
 
 	@IBOutlet weak var titleLabel: KLabel!
 	@IBOutlet weak var privacyPolicyTextView: KTextView!
-	@IBOutlet weak var lastUpdatedLabel: KLabel!
 	@IBOutlet weak var scrollView: UIScrollView!
 
 	// MARK: - Initializers
@@ -40,6 +39,7 @@ class LegalViewController: KViewController {
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePrivacyPolicyTheme), name: .ThemeUpdateNotification, object: nil)
 
 		self.navigationController?.navigationBar.isTranslucent = true
 		self.navigationController?.navigationBar.theme_barTintColor = KThemePicker.barTintColor.rawValue
@@ -57,15 +57,16 @@ class LegalViewController: KViewController {
 			switch result {
 			case .success(let privacyPolicy):
 				if let privacyPolicyText = privacyPolicy.text {
-					self.privacyPolicyTextView.text = privacyPolicyText
-				}
-
-				if let lastUpdatedAt = privacyPolicy.lastUpdate {
-					self.lastUpdatedLabel.text = "Last updated at: \(lastUpdatedAt)"
+					self.privacyPolicyTextView.attributedText = privacyPolicyText.htmlAttributedString()?.colored(with: KThemePicker.textColor.colorValue)
 				}
 			case .failure: break
 			}
 		}
+	}
+
+	/// Updates the privacy policy text theme with the user's selected theme.
+	@objc fileprivate func updatePrivacyPolicyTheme() {
+		self.privacyPolicyTextView.attributedText = self.privacyPolicyTextView.attributedText.colored(with: KThemePicker.textColor.colorValue)
 	}
 
 	// MARK: - IBActions

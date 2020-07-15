@@ -16,12 +16,8 @@ public class PrivacyPolicyElement: JSONDecodable {
 	/// The text of the privacy policy.
 	public let text: String?
 
-	/// The alst updated date of the privavcy policy.
-	public let lastUpdate: String?
-
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
 		self.text = json["text"].stringValue
-		self.lastUpdate = json["last_update"].stringValue
 	}
 }
