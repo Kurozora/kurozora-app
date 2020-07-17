@@ -47,7 +47,7 @@ extension UIAlertController {
 
 		- Returns: a selectable action sheet from given items with an icon.
 	*/
-	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A, image: UIImage)], currentSelection: A? = nil, action: @escaping (_ title: String, _ value: A) -> Void) -> UIAlertController {
+	static func actionSheetWithItems<A: Equatable>(items: [(title: String, value: A, image: UIImage)], currentSelection: A? = nil, action: @escaping (_ title: String, _ value: A, _ image: UIImage) -> Void) -> UIAlertController {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		for (var title, value, image) in items {
@@ -56,7 +56,7 @@ extension UIAlertController {
 			}
 
 			let action = UIAlertAction(title: title, style: .default) {_ in
-				action(title, value)
+				action(title, value, image)
 			}
 			action.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 			action.setValue(image, forKey: "image")

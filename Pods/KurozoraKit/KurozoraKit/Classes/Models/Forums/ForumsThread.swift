@@ -10,15 +10,12 @@ import SwiftyJSON
 import TRON
 
 /**
-	A mutable object that stores information about a single forums thread, such as the thred's last page number, and collection of threads it contains.
+	A mutable object that stores information about a single forums thread, such as the thread's next page url, and collection of threads it contains.
 */
 public class ForumsThread: JSONDecodable {
 	// MARK: - Properties
-	/// The current page number of the forums thread.
-	public let currentPage: Int?
-
-	/// The last page of the forums thread.
-	public let lastPage: Int?
+	/// The URL to the next page in the paginated response.
+	public let nextPageURL: String?
 
 	/// The thread object.
 	public let thread: ForumsThreadElement?
@@ -29,15 +26,14 @@ public class ForumsThread: JSONDecodable {
 	// MARK: - Initializers
 	/// Initialize an empty instance of `ForumThreads`.
 	internal init() {
-		self.currentPage = nil
-		self.lastPage = nil
+		self.nextPageURL = nil
 		self.thread = nil
 		self.threads = nil
 	}
 
 	required public init(json: JSON) throws {
-		self.currentPage = json["page"].intValue
-		self.lastPage = json["last_page"].intValue
+		self.nextPageURL = json["next"].stringValue
+
 		self.thread = try ForumsThreadElement(json: json["thread"])
 
 		var threads = [ForumsThreadElement]()

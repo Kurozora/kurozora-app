@@ -24,7 +24,7 @@ extension WorkflowController {
 					case .success(let newAuthenticationKey):
 						try? Kurozora.shared.keychain.set(newAuthenticationKey, key: accountKey)
 					case .failure:
-						break
+						try? Kurozora.shared.keychain.remove(accountKey)
 					}
 				}
 			}

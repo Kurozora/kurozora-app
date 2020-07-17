@@ -22,7 +22,7 @@ class ForumsViewController: KTabbedViewController {
 			self.reloadData()
 		}
 	}
-	var threadSorting: String?
+	var forumOrder: ForumOrder = .top
 	var kSearchController: KSearchController = KSearchController()
 
 	// MARK: - View
@@ -46,12 +46,14 @@ class ForumsViewController: KTabbedViewController {
 
 	// MARK: - IBActions
 	@IBAction func sortingBarButtonItemPressed(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: [("Top", "top", R.image.symbols.arrow_up_line_horizontal_3_decrease()!), ("Recent", "recent", R.image.symbols.clock()!)], currentSelection: threadSorting, action: { (title, value)  in
+		let alertController = UIAlertController.actionSheetWithItems(items: ForumOrder.alertControllerItems, currentSelection: forumOrder, action: { (title, value, image)  in
+			self.forumOrder = value
+
 			let currentSection = self.currentViewController as? ForumsListViewController
-			currentSection?.threadOrder = value
-			currentSection?.currentPage = 1
-			self.sortingBarButtonItem.title = value
-			self.sortingBarButtonItem.image = ForumsSortingStyle(rawValue: value)?.imageValue
+			currentSection?.nextPageURL = nil
+			currentSection?.forumOrder = value
+			self.sortingBarButtonItem.title = title
+			self.sortingBarButtonItem.image = image
 			currentSection?.fetchThreads()
 		})
 

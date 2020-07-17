@@ -37,13 +37,13 @@ extension KurozoraKit {
 
 		- Parameter sectionID: The id of the forum section for which the forum threads should be fetched.
 		- Parameter orderedBy: The forum order value by which the threads should be ordered.
-		- Parameter page: The page to retrieve threads from. (starts at 0)
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, page: Int, completion completionHandler: @escaping (_ result: Result<ForumsThread, KKError>) -> Void) {
-		let forumsSectionsThreads = self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
-		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsSectionsThreads)
+	public func getForumsThreads(forSection sectionID: Int, orderedBy order: ForumOrder, next: String? = nil, completion completionHandler: @escaping (_ result: Result<ForumsThread, KKError>) -> Void) {
+		let forumsSectionsThreads = next ?? self.kurozoraKitEndpoints.forumsSectionsThreads.replacingOccurrences(of: "?", with: "\(sectionID)")
+		let request: APIRequest<ForumsThread, KKError> = tron.swiftyJSON.request(forumsSectionsThreads).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -52,8 +52,7 @@ extension KurozoraKit {
 
 		request.method = .get
 		request.parameters = [
-			"order": order.rawValue,
-			"page": page
+			"order": order.rawValue
 		]
 		request.perform(withSuccess: { threads in
 			completionHandler(.success(threads))

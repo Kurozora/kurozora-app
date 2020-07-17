@@ -372,7 +372,7 @@
 		66CDC089234A829E009E799C /* ServiceFooterString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DBC56234A6A74009292DF /* ServiceFooterString.swift */; };
 		66CDC08F234A95B8009E799C /* RedeemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08E234A95B8009E799C /* RedeemTableViewController.swift */; };
 		66CDC090234A9704009E799C /* ProductActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CDC08A234A91A2009E799C /* ProductActionTableViewCell.swift */; };
-		66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumsSortingStyle.swift */; };
+		66CE34302325522700A41558 /* ForumOrder+Kurozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */; };
 		66CE80FA2460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80F92460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift */; };
 		66CE80FD246035C700DB0C49 /* KTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80FC246035C700DB0C49 /* KTableViewDataSource.swift */; };
 		66CE81002460361800DB0C49 /* KCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE80FF2460361800DB0C49 /* KCollectionViewDataSource.swift */; };
@@ -841,7 +841,7 @@
 		66CE1B05209BAE1B0007A4DE /* ShowMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreCell.swift; sourceTree = "<group>"; };
 		66CE1B06209BAE1B0007A4DE /* ShowMoreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreCell.xib; sourceTree = "<group>"; };
 		66CE1B09209BB1400007A4DE /* PostImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
-		66CE342E2325519300A41558 /* ForumsSortingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForumsSortingStyle.swift; sourceTree = "<group>"; };
+		66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForumOrder+Kurozora.swift"; sourceTree = "<group>"; };
 		66CE80F92460348100DB0C49 /* KTableViewController+KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KTableViewController+KTableViewDataSource.swift"; sourceTree = "<group>"; };
 		66CE80FC246035C700DB0C49 /* KTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KTableViewDataSource.swift; sourceTree = "<group>"; };
 		66CE80FF2460361800DB0C49 /* KCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -2360,7 +2360,7 @@
 		66CE342D2325517600A41558 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				66CE342E2325519300A41558 /* ForumsSortingStyle.swift */,
+				66CE342E2325519300A41558 /* ForumOrder+Kurozora.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3297,7 +3297,7 @@
 				66ABF5FA233835FF00795750 /* OnboardingType.swift in Sources */,
 				66AE1E1924A10D7900FD3FFC /* StudioInformationSection.swift in Sources */,
 				6645D5F923E70A4D0042B4E0 /* ManageIconTableViewController.swift in Sources */,
-				66CE34302325522700A41558 /* ForumsSortingStyle.swift in Sources */,
+				66CE34302325522700A41558 /* ForumOrder+Kurozora.swift in Sources */,
 				66CE81042460377900DB0C49 /* KCollectionViewDelegateLayout.swift in Sources */,
 				66CAE68D2337D0FF00991E59 /* AccountOnboarding.swift in Sources */,
 				66FE5CFF215B665200E2844A /* DebugSettingsTableViewController.swift in Sources */,

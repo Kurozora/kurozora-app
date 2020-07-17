@@ -615,15 +615,13 @@ extension KurozoraKit {
 
 		- Parameter userID: The id of the user whose follower or following list should be fetched.
 		- Parameter followList: The follow list value indicating whather to fetch the followers or following list.
-		- Parameter page: The number of the page to fetch.
+		- Parameter next: The URL string of the next page in the paginated response. Use `nil` to get first page.
 		- Parameter completionHandler: A closure returning a value that represents either a success or a failure, including an associated value in each case.
 		- Parameter result: A value that represents either a success or a failure, including an associated value in each case.
 	*/
-	public func getFollowList(_ userID: Int, _ followList: FollowList, page: Int, completion completionHandler: @escaping (_ result: Result<UserFollow, KKError>) -> Void) {
-		var usersFollowerOrFollowing = followList == .following ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollowers
-		usersFollowerOrFollowing = usersFollowerOrFollowing.replacingOccurrences(of: "?", with: "\(userID)")
-
-		let request: APIRequest<UserFollow, KKError> = tron.swiftyJSON.request(usersFollowerOrFollowing)
+	public func getFollowList(_ userID: Int, _ followList: FollowList, next: String? = nil, completion completionHandler: @escaping (_ result: Result<UserFollow, KKError>) -> Void) {
+		let usersFollowerOrFollowing = next ?? (followList == .following ? self.kurozoraKitEndpoints.usersFollowing : self.kurozoraKitEndpoints.usersFollowers).replacingOccurrences(of: "?", with: "\(userID)")
+		let request: APIRequest<UserFollow, KKError> = tron.swiftyJSON.request(usersFollowerOrFollowing).buildURL(.relativeToBaseURL)
 
 		request.headers = headers
 		if User.isSignedIn {
@@ -631,9 +629,6 @@ extension KurozoraKit {
 		}
 
 		request.method = .get
-		request.parameters = [
-			"page": page
-		]
 		request.perform(withSuccess: { userFollow in
 			completionHandler(.success(userFollow))
 		}, failure: { error in

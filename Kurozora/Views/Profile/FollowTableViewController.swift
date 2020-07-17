@@ -11,7 +11,7 @@ import KurozoraKit
 
 class FollowTableViewController: KTableViewController {
 	// MARK: - Properties
-	var userFollow: [UserProfile]! {
+	var userFollow: [UserProfile] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
@@ -19,10 +19,7 @@ class FollowTableViewController: KTableViewController {
 	}
 	var followList: FollowList = .followers
 	var user: UserProfile?
-
-	// Pagination
-	var currentPage = 1
-	var lastPage = 1
+	var nextPageURL: String?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -100,20 +97,22 @@ class FollowTableViewController: KTableViewController {
     func fetchFollowList() {
 		guard let userID = user?.id else { return }
 
-		KService.getFollowList(userID, self.followList, page: currentPage) { result in
+		KService.getFollowList(userID, self.followList, next: nextPageURL) {[weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let userFollow):
 				DispatchQueue.main.async {
-					self.currentPage = userFollow.currentPage ?? 1
-					self.lastPage = userFollow.lastPage ?? 1
-
-					if self.currentPage == 1 {
-						self.userFollow = userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following
-					} else {
-						for userProfile in (userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following) ?? [] {
-							self.userFollow.append(userProfile)
-						}
+					// Prepare `userFollow` if necessary
+					if self.nextPageURL == nil {
+						self.userFollow = []
 					}
+
+					// Append new user follow data and save next page url
+					if let userFollow = userFollow.following?.isEmpty ?? true ? userFollow.followers : userFollow.following {
+						self.userFollow.append(contentsOf: userFollow)
+					}
+					self.nextPageURL = userFollow.nextPageURL
 				}
 			case .failure: break
 			}
@@ -135,15 +134,14 @@ class FollowTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension FollowTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let followCount = userFollow?.count else { return 0 }
-		return followCount
+		return userFollow.count
     }
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let followCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.followCell, for: indexPath) else {
 			fatalError("Cannot dequeue cell with reuse identifier \(R.reuseIdentifier.followCell.identifier)")
 		}
-		followCell.userProfile = userFollow?[indexPath.row]
+		followCell.userProfile = userFollow[indexPath.row]
         return followCell
     }
 }
@@ -153,9 +151,8 @@ extension FollowTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
-		if indexPath.row == numberOfRows - 2 {
-			if currentPage != lastPage {
-				currentPage += 1
+		if indexPath.row == numberOfRows - 5 {
+			if nextPageURL != "" {
 				fetchFollowList()
 			}
 		}

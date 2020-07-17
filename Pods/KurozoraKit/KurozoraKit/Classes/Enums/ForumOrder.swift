@@ -16,7 +16,7 @@ import Foundation
 	case recent = "recent"
 	```
 */
-public enum ForumOrder: String {
+public enum ForumOrder: String, CaseIterable {
 	// MARK: - Cases
 	/// Order by top interacted thread.
 	case top

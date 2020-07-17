@@ -10,15 +10,12 @@ import SwiftyJSON
 import TRON
 
 /**
-	A mutable object that stores information about a collection of follow lists, such as the follow list's current page number, and last page number.
+	A mutable object that stores information about a collection of follow lists, such as the follow list's next page url, and collection of followers it contains.
 */
 public class UserFollow: JSONDecodable {
 	// MARK: - Properties
-	/// The current page number of the follow list.
-	public let currentPage: Int?
-
-	/// The last page number of the follow list.
-	public let lastPage: Int?
+	/// The URL to the next page in the paginated response.
+	public let nextPageURL: String?
 
 	/// The collection of followers list.
 	public let followers: [UserProfile]?
@@ -28,8 +25,7 @@ public class UserFollow: JSONDecodable {
 
 	// MARK: - Initializers
 	required public init(json: JSON) throws {
-		self.currentPage = json["page"].intValue
-		self.lastPage = json["last_page"].intValue
+		self.nextPageURL = json["next"].stringValue
 
 		var followers = [UserProfile]()
 		let followersArray = json["followers"].arrayValue

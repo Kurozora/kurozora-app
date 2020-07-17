@@ -20,11 +20,18 @@ protocol LibraryViewControllerDelegate: class {
 	func sortLibrary(by sortType: KKLibrary.SortType, option: KKLibrary.SortType.Options)
 
 	/**
-		Tells your LibraryViewControllerDelegate the current sort value used to sort the items in the library.
+		Tells your `LibraryViewControllerDelegate` the current sort value used to sort the items in the library.
 
 		- Returns: The current sort value used to sort the items in the library.
 	*/
 	func sortValue() -> KKLibrary.SortType
+
+	/**
+		Tells your `LibraryViewControllerDelegate` the current sort option value used to sort the items in the library.
+
+		- Returns: The current sort option value used to sort the items in the library.
+	*/
+	func sortOptionValue() -> KKLibrary.SortType.Options
 }
 
 class LibraryViewController: KTabbedViewController {
@@ -166,10 +173,10 @@ class LibraryViewController: KTabbedViewController {
 		- Parameter sender: The object containing a reference to the button that initiated this action.
 	*/
 	fileprivate func populateSortActions(_ sender: UIBarButtonItem) {
-		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems) { (_, value) in
-			let subAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, action: { (_, subValue) in
+		let alertController = UIAlertController.actionSheetWithItems(items: KKLibrary.SortType.alertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortValue()) { (_, value, _)  in
+			let subAlertController = UIAlertController.actionSheetWithItems(items: value.subAlertControllerItems, currentSelection: self.libraryViewControllerDelegate?.sortOptionValue()) { (_, subValue, _) in
 				self.libraryViewControllerDelegate?.sortLibrary(by: value, option: subValue)
-			})
+			}
 
 			subAlertController.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
 

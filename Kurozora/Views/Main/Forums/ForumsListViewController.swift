@@ -16,17 +16,14 @@ class ForumsListViewController: KTableViewController {
 	var sectionTitle: String = ""
 	var sectionID: Int?
 	var sectionIndex: Int?
-	var forumThreadsElements: [ForumsThreadElement]? {
+	var forumThreadsElements: [ForumsThreadElement] = [] {
 		didSet {
 			_prefersActivityIndicatorHidden = true
 			tableView.reloadData()
 		}
 	}
-	var threadOrder: String?
-
-	// Pagination
-	var currentPage = 1
-	var lastPage = 1
+	var nextPageURL: String?
+	var forumOrder: ForumOrder = .top
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -70,7 +67,7 @@ class ForumsListViewController: KTableViewController {
 	*/
 	@objc private func refreshThreadsData(_ sender: Any) {
 		refreshController.attributedTitle = NSAttributedString(string: "Refreshing \(sectionTitle) threads...", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
-		currentPage = 0
+		self.nextPageURL = nil
 		fetchThreads()
 	}
 
@@ -88,25 +85,26 @@ class ForumsListViewController: KTableViewController {
 
 	/// Fetch threads list for the current section.
 	func fetchThreads() {
-		let threadOrder = self.threadOrder ?? "top"
 		guard let sectionID = sectionID else { return }
-		guard let forumOrder = ForumOrder(rawValue: threadOrder) else { return }
 
-		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, page: currentPage) { result in
+		KService.getForumsThreads(forSection: sectionID, orderedBy: forumOrder, next: nextPageURL) {[weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let threads):
 				DispatchQueue.main.async {
-					self.currentPage = threads.currentPage ?? 1
-					self.lastPage = threads.lastPage ?? 1
-
-					if self.currentPage == 1 {
-						self.forumThreadsElements = threads.threads
-					} else {
-						for forumThreadElement in threads.threads ?? [] {
-							self.forumThreadsElements?.append(forumThreadElement)
-						}
+					// Prepare `forumThreadsElements` if necessary
+					if self.nextPageURL == nil {
+						self.forumThreadsElements = []
 					}
 
+					// Append new threads data and save next page url
+					if let forumThreadsElements = threads.threads {
+						self.forumThreadsElements.append(contentsOf: forumThreadsElements)
+					}
+					self.nextPageURL = threads.nextPageURL
+
+					// Reset refresh controller title
 					self.refreshController.attributedTitle = NSAttributedString(string: "Pull to refresh \(self.sectionTitle) threads.", attributes: [NSAttributedString.Key.foregroundColor: KThemePicker.tintColor.colorValue])
 				}
 			case .failure: break
@@ -132,15 +130,14 @@ class ForumsListViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let threadsCount = forumThreadsElements?.count else { return 0 }
-		return threadsCount
+		return self.forumThreadsElements.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let forumsCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.forumsCell, for: indexPath) else {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.forumsCell.identifier)")
 		}
-		forumsCell.forumsThreadElement = forumThreadsElements?[indexPath.row]
+		forumsCell.forumsThreadElement = self.forumThreadsElements[indexPath.row]
 		forumsCell.forumsChildViewController = self
 		return forumsCell
 	}
@@ -149,15 +146,14 @@ extension ForumsListViewController {
 // MARK: - UITableViewDelegate
 extension ForumsListViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: forumThreadsElements?[indexPath.row])
+		performSegue(withIdentifier: R.segue.forumsListViewController.threadSegue, sender: self.forumThreadsElements[indexPath.row])
 	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfRows = tableView.numberOfRows()
 
-		if indexPath.row == numberOfRows - 2 {
-			if currentPage != lastPage {
-				currentPage += 1
+		if indexPath.row == numberOfRows - 5 {
+			if nextPageURL != "" {
 				fetchThreads()
 			}
 		}
@@ -171,11 +167,7 @@ extension ForumsListViewController: KRichTextEditorViewDelegate {
 
 	func updateThreadsList(with thread: ForumsThreadElement) {
 		DispatchQueue.main.async {
-			if self.forumThreadsElements == nil {
-				self.forumThreadsElements = [thread]
-			} else {
-				self.forumThreadsElements?.prepend(thread)
-			}
+			self.forumThreadsElements.prepend(thread)
 		}
 	}
 }

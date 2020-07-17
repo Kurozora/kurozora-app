@@ -87,12 +87,13 @@ class ThreadTableViewController: KTableViewController {
 	var sectionTitle = "Discussion"
 
 	// Reply variables
-	var replies: [ThreadRepliesElement]?
+	var replies: [ThreadRepliesElement] = [] {
+		didSet {
+			tableView.reloadData()
+		}
+	}
 	var repliesOrder: ForumOrder = .top
-
-	// Pagination
-	var currentPage = 1
-	var lastPage = 1
+	var nextPageURL: String?
 
 	// Activity indicator
 	var _prefersActivityIndicatorHidden = false {
@@ -203,13 +204,14 @@ class ThreadTableViewController: KTableViewController {
 	/// Fetch thread details for the current thread.
 	func fetchDetails() {
 		if forumsThreadElement == nil {
-			KService.getDetails(forThread: forumThreadID) { result in
+			KService.getDetails(forThread: forumThreadID) {[weak self] result in
+				guard let self = self else { return }
+
 				switch result {
 				case .success(let thread):
 					DispatchQueue.main.async {
 						self.forumsThreadElement = thread
 						self.updateThreadDetails()
-						self.tableView.reloadData()
 					}
 				case .failure: break
 				}
@@ -220,22 +222,22 @@ class ThreadTableViewController: KTableViewController {
 
 	/// Fetch the thread replies for the current thread.
 	func getThreadReplies() {
-		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, page: lastPage) { result in
+		KService.getReplies(forThread: forumThreadID, orderedBy: repliesOrder, next: nextPageURL) {[weak self] result in
+			guard let self = self else { return }
+
 			switch result {
 			case .success(let replies):
 				DispatchQueue.main.async {
-					self.currentPage = replies.currentPage ?? 1
-					self.lastPage = replies.lastPage ?? 1
-
-					if self.currentPage == 1 {
-						self.replies = replies.replies
-					} else {
-						for threadRepliesElement in replies.replies ?? [] {
-							self.replies?.append(threadRepliesElement)
-						}
+					// Prepare `replies` if necessary
+					if self.nextPageURL == nil {
+						self.replies = []
 					}
 
-					self.tableView.reloadData()
+					// Append new replies data and save next page url
+					if let replies = replies.replies {
+						self.replies.append(contentsOf: replies)
+					}
+					self.nextPageURL = replies.nextPageURL
 				}
 			case .failure: break
 			}
@@ -464,7 +466,7 @@ class ThreadTableViewController: KTableViewController {
 // MARK: - UITableViewDataSource
 extension ThreadTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return replies?.count ?? 0
+		return replies.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -476,7 +478,7 @@ extension ThreadTableViewController {
 			fatalError("Cannot dequeue resuable cell with identifier \(R.reuseIdentifier.replyCell.identifier)")
 		}
 		replyCell.forumsThreadElement = forumsThreadElement
-		replyCell.threadRepliesElement = replies?[indexPath.section]
+		replyCell.threadRepliesElement = replies[indexPath.section]
 		replyCell.threadViewController = self
 		return replyCell
 	}
@@ -487,9 +489,8 @@ extension ThreadTableViewController {
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let numberOfSections = tableView.numberOfSections
 
-		if indexPath.section == numberOfSections - 2 {
-			if currentPage != lastPage {
-				currentPage += 1
+		if indexPath.section == numberOfSections - 5 {
+			if nextPageURL != "" {
 				getThreadReplies()
 			}
 		}
@@ -500,12 +501,7 @@ extension ThreadTableViewController {
 extension ThreadTableViewController: KCommentEditorViewDelegate {
 	func updateReplies(with threadRepliesElement: ThreadRepliesElement) {
 		DispatchQueue.main.async {
-			if self.replies == nil {
-				self.replies = [threadRepliesElement]
-			} else {
-				self.replies?.prepend(threadRepliesElement)
-			}
-			self.tableView.reloadData()
+			self.replies.prepend(threadRepliesElement)
 		}
 	}
 }

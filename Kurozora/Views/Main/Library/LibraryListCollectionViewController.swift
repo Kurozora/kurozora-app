@@ -327,6 +327,10 @@ extension LibraryListCollectionViewController: LibraryViewControllerDelegate {
 	func sortValue() -> KKLibrary.SortType {
 		return librarySortType
 	}
+
+	func sortOptionValue() -> KKLibrary.SortType.Options {
+		return librarySortTypeOption
+	}
 }
 
 // MARK: - SectionLayoutKind

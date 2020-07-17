@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.2.1)
+  - Alamofire (5.2.2)
   - Cosmos (22.1.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
@@ -14,7 +14,7 @@ PODS:
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
-  - KurozoraKit (0.9.11):
+  - KurozoraKit (0.9.14):
     - KeychainAccess
     - SCLAlertView (~> 0.10)
     - TRON
@@ -130,7 +130,7 @@ SPEC REPOS:
     - SCLAlertView
 
 SPEC CHECKSUMS:
-  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Cosmos: 2795b36ad4bbea1af3050d6d65576ed63875f86a
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
@@ -139,7 +139,7 @@ SPEC CHECKSUMS:
   IBPCollectionViewCompositionalLayout: 06cf9aa021fd80807385d5c49ece4364609a0c97
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
-  KurozoraKit: 2160a5cfe681521361347542e3e669545e5eef58
+  KurozoraKit: 1cd696372d882b38c13ecb8c32fe0e3882016b89
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
