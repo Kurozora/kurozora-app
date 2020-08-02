@@ -431,7 +431,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>11203</string>
+	<string>11205</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -459,6 +459,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires access to your calendar so it can create events when subscribing to reminders in the app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your phone’s camera so you take pictures to use as your profile image or share in the app.</string>
 	<key>NSFaceIDUsageDescription</key>

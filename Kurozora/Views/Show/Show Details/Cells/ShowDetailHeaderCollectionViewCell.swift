@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 import KurozoraKit
 
 class ShowDetailHeaderCollectionViewCell: UICollectionViewCell {
@@ -223,5 +224,93 @@ extension ShowDetailHeaderCollectionViewCell {
 				}
 			}
 		}
+	}
+
+	@IBAction func raminderButtonPressed(_ sender: UIButton) {
+		let eventStore = EKEventStore()
+
+		switch EKEventStore.authorizationStatus(for: .event) {
+		case .authorized:
+			insertEvent(to: eventStore)
+		case .denied:
+			print("Access denied")
+		case .notDetermined:
+			eventStore.requestAccess(to: .event) { [weak self] granted, _ in
+				guard let self = self else { return }
+
+				if granted {
+					self.insertEvent(to: eventStore)
+				} else {
+					print("----- Access denied")
+				}
+			}
+		default:
+			print("----- Case default")
+		}
+	}
+
+	func createCalendar(for eventStore: EKEventStore) {
+		let calendar: EKCalendar = EKCalendar(for: .event, eventStore: eventStore)
+		calendar.title = "Kurozora"
+		calendar.source = eventStore.defaultCalendarForNewReminders()?.source
+		do {
+			try eventStore.saveCalendar(calendar, commit: true)
+		} catch {
+			print("---- failed to save calendar with err:", error)
+		}
+
+
+	}
+
+	func getCalendar(for eventStore: EKEventStore) -> EKCalendar? {
+		var calendar = eventStore.calendar(withIdentifier: "Kurozora")
+
+		if calendar == nil {
+			calendar = EKCalendar(for: .event, eventStore: eventStore)
+
+			calendar?.title = "Kurozora"
+			calendar?.cgColor = UIColor.kurozora.cgColor
+			calendar?.source = eventStore.defaultCalendarForNewEvents?.source
+
+			do {
+				try eventStore.saveCalendar(calendar!, commit: true)
+			} catch {
+				print("---- failed to save calendar with err:", error)
+			}
+		}
+
+		return calendar
+	}
+
+	func insertEvent(to eventStore: EKEventStore) {
+		guard let startDate = showDetailsElement?.startDateTime?.dateTime else { return }
+		let endTimeInterval = TimeInterval(60 * (showDetailsElement?.runtime ?? 25))
+		let endDate = startDate.addingTimeInterval(endTimeInterval)
+
+		let event: EKEvent = EKEvent(eventStore: eventStore)
+		event.calendar = getCalendar(for: eventStore)
+		event.title = showDetailsElement?.title
+		event.startDate = startDate
+		event.endDate = endDate
+
+		var recurrenceEnd: EKRecurrenceEnd? = nil
+		if let episodeCount = showDetailsElement?.episodes, episodeCount != 0 {
+			recurrenceEnd = EKRecurrenceEnd(occurrenceCount: episodeCount)
+		}
+		if let airDay = showDetailsElement?.airDay, let weekDay = EKWeekday(rawValue: airDay + 1) { // TODO: Remove 1
+			event.addRecurrenceRule(.init(recurrenceWith: .weekly, interval: 1, daysOfTheWeek: [.init(weekDay)], daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: recurrenceEnd))
+		}
+		event.notes = "This is a note"
+		if let showID = showDetailsElement?.id {
+			event.url = URL(string: "https://kurozora.app/anime/\(showID)")
+		}
+
+		do {
+			try eventStore.save(event, span: .futureEvents)
+		} catch {
+			print("----- failed to save event with error :", error)
+		}
+
+		print("----- Saved Event")
 	}
 }
